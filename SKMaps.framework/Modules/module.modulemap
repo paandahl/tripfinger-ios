@@ -1,0 +1,6 @@
+framework module SKMaps {
+  umbrella header "SKMaps.h"
+
+  export *
+  module * { export * }
+}

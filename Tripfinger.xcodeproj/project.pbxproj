@@ -1,0 +1,740 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		25243E621BC4072000EF5F64 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E611BC4072000EF5F64 /* TabBarController.swift */; };
+		25243E641BC410F400EF5F64 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E631BC410F400EF5F64 /* Region.swift */; };
+		25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E651BC4110E00EF5F64 /* GuideItem.swift */; };
+		257922C71BA308A9005EA785 /* Attraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922C61BA308A9005EA785 /* Attraction.swift */; };
+		257922CE1BA34444005EA785 /* SKMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFF51B9CD90E00C516C1 /* SKMaps.bundle */; };
+		257922D21BA48697005EA785 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D11BA48697005EA785 /* SwiftyJSON.swift */; };
+		257922D41BA488EB005EA785 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D31BA488EB005EA785 /* DataManager.swift */; };
+		25B506871BB3F33900A36BA1 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 25B506861BB3F33900A36BA1 /* Podfile */; };
+		25B5068B1BB3FD5800A36BA1 /* SwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B5068A1BB3FD5800A36BA1 /* SwipeController.swift */; };
+		25B5068F1BB4009600A36BA1 /* ChooseAttractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B5068E1BB4009600A36BA1 /* ChooseAttractionView.swift */; };
+		25B506911BB401F400A36BA1 /* ImageLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B506901BB401F400A36BA1 /* ImageLabelView.swift */; };
+		25B506931BB41AAA00A36BA1 /* Data in Resources */ = {isa = PBXBuildFile; fileRef = 25B506921BB41AAA00A36BA1 /* Data */; };
+		25C9DFD11B9CD84200C516C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C9DFD01B9CD84200C516C1 /* AppDelegate.swift */; };
+		25C9DFD31B9CD84200C516C1 /* MapDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C9DFD21B9CD84200C516C1 /* MapDisplayViewController.swift */; };
+		25C9DFD61B9CD84200C516C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFD41B9CD84200C516C1 /* Main.storyboard */; };
+		25C9DFD81B9CD84200C516C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFD71B9CD84200C516C1 /* Images.xcassets */; };
+		25C9DFDB1B9CD84200C516C1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFD91B9CD84200C516C1 /* LaunchScreen.xib */; };
+		25C9DFE71B9CD84200C516C1 /* TripfingerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C9DFE61B9CD84200C516C1 /* TripfingerTests.swift */; };
+		25C9DFF11B9CD8B300C516C1 /* SKMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFF01B9CD8B300C516C1 /* SKMaps.framework */; };
+		25C9DFF21B9CD8DC00C516C1 /* SKMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFF01B9CD8B300C516C1 /* SKMaps.framework */; };
+		25C9DFF31B9CD8DC00C516C1 /* SKMaps.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFF01B9CD8B300C516C1 /* SKMaps.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		25C9DFF61B9CD90E00C516C1 /* SKMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFF51B9CD90E00C516C1 /* SKMaps.bundle */; };
+		25C9DFF81B9CD97000C516C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFF71B9CD97000C516C1 /* UIKit.framework */; };
+		25C9DFFA1B9CD98000C516C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFF91B9CD98000C516C1 /* Foundation.framework */; };
+		25C9DFFC1B9CD98D00C516C1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFFB1B9CD98D00C516C1 /* CoreLocation.framework */; };
+		25C9DFFE1B9CD99E00C516C1 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFFD1B9CD99E00C516C1 /* OpenGLES.framework */; };
+		25C9E0001B9CD9A800C516C1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFFF1B9CD9A800C516C1 /* QuartzCore.framework */; };
+		25C9E0021B9CD9B500C516C1 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9E0011B9CD9B500C516C1 /* CoreGraphics.framework */; };
+		25C9E0041B9CD9BE00C516C1 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9E0031B9CD9BE00C516C1 /* CoreMotion.framework */; };
+		25C9E0061B9CD9D100C516C1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9E0051B9CD9D100C516C1 /* libz.dylib */; };
+		25C9E0081B9CD9E000C516C1 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9E0071B9CD9E000C516C1 /* libc++.dylib */; };
+		25D707BA1BC6606E005A4BBA /* GuideController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707B91BC6606E005A4BBA /* GuideController.swift */; };
+		25D707BD1BC66165005A4BBA /* GuideItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D707BC1BC66165005A4BBA /* GuideItemCell.xib */; };
+		25D707BF1BC669E6005A4BBA /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D707BE1BC669E6005A4BBA /* CategoryCell.xib */; };
+		25D707C11BC66A15005A4BBA /* TextChild.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D707C01BC66A15005A4BBA /* TextChild.xib */; };
+		25D707C31BC6BAA8005A4BBA /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707C21BC6BAA8005A4BBA /* Session.swift */; };
+		25D707C61BC6BC34005A4BBA /* ContentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707C51BC6BC34005A4BBA /* ContentService.swift */; };
+		25D707C81BC6CD05005A4BBA /* GuideText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707C71BC6CD05005A4BBA /* GuideText.swift */; };
+		25D707CA1BC6CD31005A4BBA /* GuideLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707C91BC6CD31005A4BBA /* GuideLocation.swift */; };
+		25D707CC1BC6D05B005A4BBA /* GuideItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707CB1BC6D05B005A4BBA /* GuideItemCell.swift */; };
+		25D707CE1BC82232005A4BBA /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707CD1BC82231005A4BBA /* CategoryCell.swift */; };
+		25D707D01BC98B0D005A4BBA /* SwipeViewNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707CF1BC98B0D005A4BBA /* SwipeViewNavigationBar.swift */; };
+		25D707D31BCA7620005A4BBA /* UINib+RegisterNib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707D21BCA7620005A4BBA /* UINib+RegisterNib.swift */; };
+		25D707D51BCA7848005A4BBA /* UIView+AddConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */; };
+		F15403DC29A8017C1BA97FA3 /* Pods_Tripfinger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D65EBCD3D5BCD8F85D4EA0F /* Pods_Tripfinger.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		25C9DFE11B9CD84200C516C1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25C9DFC31B9CD84200C516C1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25C9DFCA1B9CD84200C516C1;
+			remoteInfo = AdventureSpotter;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		25C9DFF41B9CD8DC00C516C1 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				25C9DFF31B9CD8DC00C516C1 /* SKMaps.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		25243E611BC4072000EF5F64 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		25243E631BC410F400EF5F64 /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
+		25243E651BC4110E00EF5F64 /* GuideItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItem.swift; sourceTree = "<group>"; };
+		257922C61BA308A9005EA785 /* Attraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attraction.swift; sourceTree = "<group>"; };
+		257922D11BA48697005EA785 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Tripfinger/SwiftyJSON.swift; sourceTree = "<group>"; };
+		257922D31BA488EB005EA785 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		25B506861BB3F33900A36BA1 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
+		25B5068A1BB3FD5800A36BA1 /* SwipeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeController.swift; sourceTree = "<group>"; };
+		25B5068C1BB3FDC300A36BA1 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
+		25B5068E1BB4009600A36BA1 /* ChooseAttractionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAttractionView.swift; sourceTree = "<group>"; };
+		25B506901BB401F400A36BA1 /* ImageLabelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLabelView.swift; sourceTree = "<group>"; };
+		25B506921BB41AAA00A36BA1 /* Data */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Data; sourceTree = "<group>"; };
+		25C9DFCB1B9CD84200C516C1 /* Tripfinger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripfinger.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		25C9DFCF1B9CD84200C516C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25C9DFD01B9CD84200C516C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		25C9DFD21B9CD84200C516C1 /* MapDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDisplayViewController.swift; sourceTree = "<group>"; };
+		25C9DFD51B9CD84200C516C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		25C9DFD71B9CD84200C516C1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		25C9DFDA1B9CD84200C516C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		25C9DFE01B9CD84200C516C1 /* TripfingerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripfingerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		25C9DFE51B9CD84200C516C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25C9DFE61B9CD84200C516C1 /* TripfingerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripfingerTests.swift; sourceTree = "<group>"; };
+		25C9DFF01B9CD8B300C516C1 /* SKMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SKMaps.framework; sourceTree = "<group>"; };
+		25C9DFF51B9CD90E00C516C1 /* SKMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SKMaps.bundle; sourceTree = "<group>"; };
+		25C9DFF71B9CD97000C516C1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		25C9DFF91B9CD98000C516C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		25C9DFFB1B9CD98D00C516C1 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		25C9DFFD1B9CD99E00C516C1 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		25C9DFFF1B9CD9A800C516C1 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		25C9E0011B9CD9B500C516C1 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		25C9E0031B9CD9BE00C516C1 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		25C9E0051B9CD9D100C516C1 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		25C9E0071B9CD9E000C516C1 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		25D707B91BC6606E005A4BBA /* GuideController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideController.swift; sourceTree = "<group>"; };
+		25D707BC1BC66165005A4BBA /* GuideItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuideItemCell.xib; sourceTree = "<group>"; };
+		25D707BE1BC669E6005A4BBA /* CategoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
+		25D707C01BC66A15005A4BBA /* TextChild.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TextChild.xib; sourceTree = "<group>"; };
+		25D707C21BC6BAA8005A4BBA /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		25D707C51BC6BC34005A4BBA /* ContentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentService.swift; sourceTree = "<group>"; };
+		25D707C71BC6CD05005A4BBA /* GuideText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideText.swift; sourceTree = "<group>"; };
+		25D707C91BC6CD31005A4BBA /* GuideLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideLocation.swift; sourceTree = "<group>"; };
+		25D707CB1BC6D05B005A4BBA /* GuideItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemCell.swift; sourceTree = "<group>"; };
+		25D707CD1BC82231005A4BBA /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		25D707CF1BC98B0D005A4BBA /* SwipeViewNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeViewNavigationBar.swift; sourceTree = "<group>"; };
+		25D707D21BCA7620005A4BBA /* UINib+RegisterNib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINib+RegisterNib.swift"; sourceTree = "<group>"; };
+		25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AddConstraints.swift"; sourceTree = "<group>"; };
+		356EFCE331E62CA7B8254017 /* Pods-Tripfinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.release.xcconfig"; sourceTree = "<group>"; };
+		6D65EBCD3D5BCD8F85D4EA0F /* Pods_Tripfinger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripfinger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F282B37EC8CE065ECCEE238 /* Pods-Tripfinger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		25C9DFC81B9CD84200C516C1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25C9E0081B9CD9E000C516C1 /* libc++.dylib in Frameworks */,
+				25C9E0061B9CD9D100C516C1 /* libz.dylib in Frameworks */,
+				25C9E0041B9CD9BE00C516C1 /* CoreMotion.framework in Frameworks */,
+				25C9E0021B9CD9B500C516C1 /* CoreGraphics.framework in Frameworks */,
+				25C9E0001B9CD9A800C516C1 /* QuartzCore.framework in Frameworks */,
+				25C9DFFE1B9CD99E00C516C1 /* OpenGLES.framework in Frameworks */,
+				25C9DFFC1B9CD98D00C516C1 /* CoreLocation.framework in Frameworks */,
+				25C9DFFA1B9CD98000C516C1 /* Foundation.framework in Frameworks */,
+				25C9DFF81B9CD97000C516C1 /* UIKit.framework in Frameworks */,
+				25C9DFF11B9CD8B300C516C1 /* SKMaps.framework in Frameworks */,
+				25C9DFF21B9CD8DC00C516C1 /* SKMaps.framework in Frameworks */,
+				F15403DC29A8017C1BA97FA3 /* Pods_Tripfinger.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25C9DFDD1B9CD84200C516C1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		25243E671BC411AC00EF5F64 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				257922D31BA488EB005EA785 /* DataManager.swift */,
+				25B5068C1BB3FDC300A36BA1 /* BridgingHeader.h */,
+				25D707D21BCA7620005A4BBA /* UINib+RegisterNib.swift */,
+				25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		257922CD1BA34429005EA785 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				25C9DFF51B9CD90E00C516C1 /* SKMaps.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		25A940AE1BA1AF7B0077C2E5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				257922D11BA48697005EA785 /* SwiftyJSON.swift */,
+				25C9DFF01B9CD8B300C516C1 /* SKMaps.framework */,
+				25C9E0071B9CD9E000C516C1 /* libc++.dylib */,
+				25C9E0051B9CD9D100C516C1 /* libz.dylib */,
+				25C9E0031B9CD9BE00C516C1 /* CoreMotion.framework */,
+				25C9E0011B9CD9B500C516C1 /* CoreGraphics.framework */,
+				25C9DFFF1B9CD9A800C516C1 /* QuartzCore.framework */,
+				25C9DFFD1B9CD99E00C516C1 /* OpenGLES.framework */,
+				25C9DFFB1B9CD98D00C516C1 /* CoreLocation.framework */,
+				25C9DFF91B9CD98000C516C1 /* Foundation.framework */,
+				25C9DFF71B9CD97000C516C1 /* UIKit.framework */,
+				6D65EBCD3D5BCD8F85D4EA0F /* Pods_Tripfinger.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		25B506881BB3FD1C00A36BA1 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				257922C61BA308A9005EA785 /* Attraction.swift */,
+				25243E631BC410F400EF5F64 /* Region.swift */,
+				25243E651BC4110E00EF5F64 /* GuideItem.swift */,
+				25D707C21BC6BAA8005A4BBA /* Session.swift */,
+				25D707C71BC6CD05005A4BBA /* GuideText.swift */,
+				25D707C91BC6CD31005A4BBA /* GuideLocation.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		25B506891BB3FD4800A36BA1 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				25C9DFD21B9CD84200C516C1 /* MapDisplayViewController.swift */,
+				25B5068A1BB3FD5800A36BA1 /* SwipeController.swift */,
+				25243E611BC4072000EF5F64 /* TabBarController.swift */,
+				25D707B91BC6606E005A4BBA /* GuideController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		25B5068D1BB4007F00A36BA1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				25B5068E1BB4009600A36BA1 /* ChooseAttractionView.swift */,
+				25B506901BB401F400A36BA1 /* ImageLabelView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		25C9DFC21B9CD84200C516C1 = {
+			isa = PBXGroup;
+			children = (
+				257922CD1BA34429005EA785 /* Resources */,
+				25A940AE1BA1AF7B0077C2E5 /* Frameworks */,
+				25C9DFCD1B9CD84200C516C1 /* Tripfinger */,
+				25C9DFE31B9CD84200C516C1 /* TripfingerTests */,
+				25C9DFCC1B9CD84200C516C1 /* Products */,
+				AC2F5AA79EC14D61943B87DD /* Pods */,
+			);
+			sourceTree = "<group>";
+		};
+		25C9DFCC1B9CD84200C516C1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				25C9DFCB1B9CD84200C516C1 /* Tripfinger.app */,
+				25C9DFE01B9CD84200C516C1 /* TripfingerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		25C9DFCD1B9CD84200C516C1 /* Tripfinger */ = {
+			isa = PBXGroup;
+			children = (
+				25C9DFD01B9CD84200C516C1 /* AppDelegate.swift */,
+				25B506891BB3FD4800A36BA1 /* Controllers */,
+				25B506921BB41AAA00A36BA1 /* Data */,
+				25C9DFD71B9CD84200C516C1 /* Images.xcassets */,
+				25C9DFD91B9CD84200C516C1 /* LaunchScreen.xib */,
+				25C9DFD41B9CD84200C516C1 /* Main.storyboard */,
+				25B506881BB3FD1C00A36BA1 /* Model */,
+				25D707C41BC6BC25005A4BBA /* Service */,
+				25C9DFCE1B9CD84200C516C1 /* Supporting Files */,
+				25D707BB1BC66145005A4BBA /* UI Components */,
+				25243E671BC411AC00EF5F64 /* Utils */,
+				25B5068D1BB4007F00A36BA1 /* Views */,
+			);
+			path = Tripfinger;
+			sourceTree = "<group>";
+		};
+		25C9DFCE1B9CD84200C516C1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				25B506861BB3F33900A36BA1 /* Podfile */,
+				25C9DFCF1B9CD84200C516C1 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		25C9DFE31B9CD84200C516C1 /* TripfingerTests */ = {
+			isa = PBXGroup;
+			children = (
+				25C9DFE61B9CD84200C516C1 /* TripfingerTests.swift */,
+				25C9DFE41B9CD84200C516C1 /* Supporting Files */,
+			);
+			path = TripfingerTests;
+			sourceTree = "<group>";
+		};
+		25C9DFE41B9CD84200C516C1 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				25C9DFE51B9CD84200C516C1 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		25D707BB1BC66145005A4BBA /* UI Components */ = {
+			isa = PBXGroup;
+			children = (
+				25D707CB1BC6D05B005A4BBA /* GuideItemCell.swift */,
+				25D707BC1BC66165005A4BBA /* GuideItemCell.xib */,
+				25D707CD1BC82231005A4BBA /* CategoryCell.swift */,
+				25D707BE1BC669E6005A4BBA /* CategoryCell.xib */,
+				25D707C01BC66A15005A4BBA /* TextChild.xib */,
+				25D707CF1BC98B0D005A4BBA /* SwipeViewNavigationBar.swift */,
+			);
+			name = "UI Components";
+			sourceTree = "<group>";
+		};
+		25D707C41BC6BC25005A4BBA /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				25D707C51BC6BC34005A4BBA /* ContentService.swift */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
+		AC2F5AA79EC14D61943B87DD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6F282B37EC8CE065ECCEE238 /* Pods-Tripfinger.debug.xcconfig */,
+				356EFCE331E62CA7B8254017 /* Pods-Tripfinger.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		25C9DFCA1B9CD84200C516C1 /* Tripfinger */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25C9DFEA1B9CD84200C516C1 /* Build configuration list for PBXNativeTarget "Tripfinger" */;
+			buildPhases = (
+				88DB0249FD790745C4ECDE4A /* Check Pods Manifest.lock */,
+				25C9DFC71B9CD84200C516C1 /* Sources */,
+				25C9DFC81B9CD84200C516C1 /* Frameworks */,
+				25C9DFC91B9CD84200C516C1 /* Resources */,
+				25C9DFF41B9CD8DC00C516C1 /* Embed Frameworks */,
+				CD43A831BA801A1DFF106FBA /* Embed Pods Frameworks */,
+				15BA807E4B0E01A50837D279 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Tripfinger;
+			productName = AdventureSpotter;
+			productReference = 25C9DFCB1B9CD84200C516C1 /* Tripfinger.app */;
+			productType = "com.apple.product-type.application";
+		};
+		25C9DFDF1B9CD84200C516C1 /* TripfingerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25C9DFED1B9CD84200C516C1 /* Build configuration list for PBXNativeTarget "TripfingerTests" */;
+			buildPhases = (
+				25C9DFDC1B9CD84200C516C1 /* Sources */,
+				25C9DFDD1B9CD84200C516C1 /* Frameworks */,
+				25C9DFDE1B9CD84200C516C1 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				25C9DFE21B9CD84200C516C1 /* PBXTargetDependency */,
+			);
+			name = TripfingerTests;
+			productName = AdventureSpotterTests;
+			productReference = 25C9DFE01B9CD84200C516C1 /* TripfingerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		25C9DFC31B9CD84200C516C1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = "Preben Ludviksen";
+				TargetAttributes = {
+					25C9DFCA1B9CD84200C516C1 = {
+						CreatedOnToolsVersion = 6.4;
+					};
+					25C9DFDF1B9CD84200C516C1 = {
+						CreatedOnToolsVersion = 6.4;
+						TestTargetID = 25C9DFCA1B9CD84200C516C1;
+					};
+				};
+			};
+			buildConfigurationList = 25C9DFC61B9CD84200C516C1 /* Build configuration list for PBXProject "Tripfinger" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 25C9DFC21B9CD84200C516C1;
+			productRefGroup = 25C9DFCC1B9CD84200C516C1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				25C9DFCA1B9CD84200C516C1 /* Tripfinger */,
+				25C9DFDF1B9CD84200C516C1 /* TripfingerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		25C9DFC91B9CD84200C516C1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25B506871BB3F33900A36BA1 /* Podfile in Resources */,
+				25C9DFF61B9CD90E00C516C1 /* SKMaps.bundle in Resources */,
+				25C9DFD61B9CD84200C516C1 /* Main.storyboard in Resources */,
+				25C9DFDB1B9CD84200C516C1 /* LaunchScreen.xib in Resources */,
+				25C9DFD81B9CD84200C516C1 /* Images.xcassets in Resources */,
+				25D707BF1BC669E6005A4BBA /* CategoryCell.xib in Resources */,
+				25B506931BB41AAA00A36BA1 /* Data in Resources */,
+				25D707C11BC66A15005A4BBA /* TextChild.xib in Resources */,
+				25D707BD1BC66165005A4BBA /* GuideItemCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25C9DFDE1B9CD84200C516C1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				257922CE1BA34444005EA785 /* SKMaps.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		15BA807E4B0E01A50837D279 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		88DB0249FD790745C4ECDE4A /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		CD43A831BA801A1DFF106FBA /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		25C9DFC71B9CD84200C516C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25C9DFD31B9CD84200C516C1 /* MapDisplayViewController.swift in Sources */,
+				25D707CE1BC82232005A4BBA /* CategoryCell.swift in Sources */,
+				25D707D31BCA7620005A4BBA /* UINib+RegisterNib.swift in Sources */,
+				257922D41BA488EB005EA785 /* DataManager.swift in Sources */,
+				25B5068B1BB3FD5800A36BA1 /* SwipeController.swift in Sources */,
+				25D707D51BCA7848005A4BBA /* UIView+AddConstraints.swift in Sources */,
+				25D707D01BC98B0D005A4BBA /* SwipeViewNavigationBar.swift in Sources */,
+				25243E641BC410F400EF5F64 /* Region.swift in Sources */,
+				25243E621BC4072000EF5F64 /* TabBarController.swift in Sources */,
+				25D707CA1BC6CD31005A4BBA /* GuideLocation.swift in Sources */,
+				25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */,
+				25B5068F1BB4009600A36BA1 /* ChooseAttractionView.swift in Sources */,
+				25D707C31BC6BAA8005A4BBA /* Session.swift in Sources */,
+				25D707CC1BC6D05B005A4BBA /* GuideItemCell.swift in Sources */,
+				257922C71BA308A9005EA785 /* Attraction.swift in Sources */,
+				25D707C61BC6BC34005A4BBA /* ContentService.swift in Sources */,
+				25B506911BB401F400A36BA1 /* ImageLabelView.swift in Sources */,
+				25C9DFD11B9CD84200C516C1 /* AppDelegate.swift in Sources */,
+				25D707BA1BC6606E005A4BBA /* GuideController.swift in Sources */,
+				257922D21BA48697005EA785 /* SwiftyJSON.swift in Sources */,
+				25D707C81BC6CD05005A4BBA /* GuideText.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25C9DFDC1B9CD84200C516C1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25C9DFE71B9CD84200C516C1 /* TripfingerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		25C9DFE21B9CD84200C516C1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25C9DFCA1B9CD84200C516C1 /* Tripfinger */;
+			targetProxy = 25C9DFE11B9CD84200C516C1 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		25C9DFD41B9CD84200C516C1 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				25C9DFD51B9CD84200C516C1 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		25C9DFD91B9CD84200C516C1 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				25C9DFDA1B9CD84200C516C1 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		25C9DFE81B9CD84200C516C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		25C9DFE91B9CD84200C516C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		25C9DFEB1B9CD84200C516C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6F282B37EC8CE065ECCEE238 /* Pods-Tripfinger.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = Tripfinger/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = Tripfinger;
+				SWIFT_OBJC_BRIDGING_HEADER = Tripfinger/BridgingHeader.h;
+			};
+			name = Debug;
+		};
+		25C9DFEC1B9CD84200C516C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 356EFCE331E62CA7B8254017 /* Pods-Tripfinger.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				INFOPLIST_FILE = Tripfinger/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"$(inherited)",
+				);
+				PRODUCT_NAME = Tripfinger;
+				SWIFT_OBJC_BRIDGING_HEADER = Tripfinger/BridgingHeader.h;
+				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = Tripfinger/BridgingHeader.h;
+			};
+			name = Release;
+		};
+		25C9DFEE1B9CD84200C516C1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = TripfingerTests;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
+			};
+			name = Debug;
+		};
+		25C9DFEF1B9CD84200C516C1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = TripfingerTests;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		25C9DFC61B9CD84200C516C1 /* Build configuration list for PBXProject "Tripfinger" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25C9DFE81B9CD84200C516C1 /* Debug */,
+				25C9DFE91B9CD84200C516C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25C9DFEA1B9CD84200C516C1 /* Build configuration list for PBXNativeTarget "Tripfinger" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25C9DFEB1B9CD84200C516C1 /* Debug */,
+				25C9DFEC1B9CD84200C516C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		25C9DFED1B9CD84200C516C1 /* Build configuration list for PBXNativeTarget "TripfingerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25C9DFEE1B9CD84200C516C1 /* Debug */,
+				25C9DFEF1B9CD84200C516C1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 25C9DFC31B9CD84200C516C1 /* Project object */;
+}

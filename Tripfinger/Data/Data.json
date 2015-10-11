@@ -1,0 +1,64 @@
+{"attractions": [
+                 {"title": "Grand-Place",
+                 "coordinateX": 50.8467316,
+                 "coordinateY": 4.3524138,
+                 "image": "grandplace"
+                 },
+                 
+                 {"title": "Town Hall",
+                 "coordinateX": 50.8470133,
+                 "coordinateY": 4.352831,
+                 "image": "townhall"
+
+                 },
+                 
+                 {"title": "St. Michael and St. Gudula Cathedral",
+                 "coordinateX": 50.8478332,
+                 "coordinateY": 4.3601075,
+                 "image": "stmichael"
+                 },
+                 
+                 {"title": "MIM - Musical Instruments Museum",
+                 "coordinateX": 50.8430942,
+                 "coordinateY": 4.3591283,
+                 "image": "mim"
+                 },
+
+                 {"title": "Royal Greenhouses Of Laeken",
+                 "coordinateX": 50.8902436,
+                 "coordinateY": 4.3587131,
+                 "image": "laeken"
+                 },
+                 
+                 {"title": "Sonian Forest",
+                 "coordinateX": 50.7873404,
+                 "coordinateY": 4.4083415,
+                 "image": "sonian"
+                 },
+                 
+                 {"title": "Royal Museum of the Armed Forces and of Military History",
+                 "coordinateX": 50.8412931,
+                 "coordinateY": 4.392922,
+                 "image": "royalmus"
+                 },
+                 
+                 {"title": "Notre Dame du Sablon",
+                 "coordinateX": 50.8403758,
+                 "coordinateY": 4.3561641,
+                 "image": "notredame"
+                 },
+                 
+                 {"title": "Museum of Natural Sciences",
+                 "coordinateX": 50.8365453,
+                 "coordinateY": 4.3767912,
+                 "image": "mns"
+                 },
+                 
+                 {"title": "Bois de la Cambre",
+                 "coordinateX": 50.8008128,
+                 "coordinateY": 4.3828024,
+                 "image": "bois"
+                 },
+
+                 ]
+}
