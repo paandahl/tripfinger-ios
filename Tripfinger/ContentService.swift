@@ -8,12 +8,14 @@
 
 import Foundation
 
+typealias ContentLoaded = (location: GuideItem, guideTexts: [GuideText], guideLocations: [GuideLocation]) -> ()
+
 class ContentService {
     
     let baseUrl = "http://tripfinger-server.appspot.com"
     var session = Session()
     
-    func getCurrentLocationData(updateUI: (location: GuideItem, guideTexts: [GuideText], guideLocations: [GuideLocation]) -> ()) {
+    func getCurrentLocationData(updateUI: ContentLoaded) {
         runJsonGetUrl(baseUrl + "/city", success: {
             json in
         
