@@ -25,29 +25,30 @@ class Attraction: GuideLocation {
         case FOOD_OR_DRINK = 250
         case SHOPPING = 260
         case INFORMATION = 270
-        
+
+        var entityName: String {
+            switch self {
+            case .EXPLORE_CITY:
+                return "Explore the city"
+            case .ACTIVITY_HIKE_DAYTRIP:
+                return "Activities"
+            case .TRANSPORTATION:
+                return "Transportation"
+            case .ACCOMODATION:
+                return "Accomodation"
+            case .FOOD_OR_DRINK:
+                return "Food and drinks"
+            case .SHOPPING:
+                return "Shopping"
+            case .INFORMATION:
+                return "Information"
+            }
+        }
+
         static let allValues = [EXPLORE_CITY, ACTIVITY_HIKE_DAYTRIP, TRANSPORTATION, ACCOMODATION,
             FOOD_OR_DRINK, SHOPPING, INFORMATION]
     }
     
-    class func getNameForType(type: Types) -> String {
-        switch type {
-        case Types.EXPLORE_CITY:
-            return "Explore the city"
-        case Types.ACTIVITY_HIKE_DAYTRIP:
-            return "Activities"
-        case Types.TRANSPORTATION:
-            return "Transportation"
-        case Types.ACCOMODATION:
-            return "Accomodation"
-        case Types.FOOD_OR_DRINK:
-            return "Food and drinks"
-        case Types.SHOPPING:
-            return "Shopping"
-        case Types.INFORMATION:
-            return "Information"
-        }
-    }
 }
 
 

@@ -90,7 +90,7 @@ extension GuideController: UITableViewDataSource {
             else {
                 index = indexPath.row + 2
             }
-            cell.textLabel?.text = Attraction.getNameForType(Attraction.Types.allValues[index])
+            cell.textLabel?.text = Attraction.Types.allValues[index].entityName
             return cell
         }
     }
