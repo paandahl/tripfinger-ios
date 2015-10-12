@@ -21,19 +21,28 @@ class GuideController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if let currentRegion = currentRegion {
+            title = currentRegion.name
+        }
+        else {
+            title = ""
+        }
+        
         UINib.registerNib(TableViewCellIdentifiers.guideItemCell, forTableView: tableView)
         UINib.registerNib(TableViewCellIdentifiers.categoryCell, forTableView: tableView)
         UINib.registerNib(TableViewCellIdentifiers.textChildCell, forTableView: tableView)
         
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        contentService.getCurrentLocationData() {
-            region, texts, locations in
-            
-            self.currentRegion = region
-            println("number of texts: \(texts.count)")
-            self.currentTexts = texts
-            self.tableView.reloadData()
+        if currentRegion == nil {
+            contentService.getCurrentLocationData() {
+                region, texts, locations in
+                
+                self.currentRegion = region
+                self.title = region.name
+                self.currentTexts = texts
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -91,17 +100,26 @@ extension GuideController: UITableViewDataSource {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.guideItemCell, forIndexPath: indexPath) as! GuideItemCell
             if let currentRegion = currentRegion {
-                let encodedData = currentRegion.description!.dataUsingEncoding(NSUTF8StringEncoding)!
-                let options : [String: AnyObject] = [
-                    NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-                    NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding,
-                ]
-                let attributedString = NSMutableAttributedString(data: encodedData, options: options, documentAttributes: nil, error: nil)!
-                attributedString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(18.0), range: NSMakeRange(0, attributedString.length))
-                let decodedString = attributedString.string
-                cell.content.attributedText = attributedString
+                if let description = currentRegion.description {
+                    let encodedData = description.dataUsingEncoding(NSUTF8StringEncoding)!
+                    let options : [String: AnyObject] = [
+                        NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
+                        NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding,
+                    ]
+                    let attributedString = NSMutableAttributedString(data: encodedData, options: options, documentAttributes: nil, error: nil)!
+                    attributedString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(18.0), range: NSMakeRange(0, attributedString.length))
+                    let decodedString = attributedString.string
+                    cell.content.attributedText = attributedString
+                }
+                else {
+                    println("No description for current item.")
+                }
                 cell.content.setContentOffset(CGPointZero, animated: false)
                 cell.delegate = self
+                if (guideItemExpanded) {
+                    cell.expand()
+                    contentService.getGuideTextsForGuideItem(currentRegion, handler: cell.loadGuideTexts)
+                }
             }
             return cell
         }
@@ -142,7 +160,16 @@ extension GuideController {
     
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 1 {
+        if indexPath.section == 1 && guideItemExpanded {
+            
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let vc = storyboard.instantiateViewControllerWithIdentifier("guideController") as! GuideController
+            vc.currentRegion = currentTexts[indexPath.row]
+            vc.guideItemExpanded = true
+            vc.contentService = contentService
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        if indexPath.section == 2 {
             self.tabBarController?.selectedIndex = 1
         }
     }

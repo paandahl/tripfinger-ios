@@ -173,10 +173,10 @@
             </objects>
             <point key="canvasLocation" x="1243" y="1151"/>
         </scene>
-        <!--Brussels-->
+        <!--GuideItemTitle-->
         <scene sceneID="jO8-L7-KlL">
             <objects>
-                <tableViewController id="ZvR-HF-C5x" customClass="GuideController" customModule="Tripfinger" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="guideController" id="ZvR-HF-C5x" customClass="GuideController" customModule="Tripfinger" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="l6O-n4-DG5">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -186,11 +186,11 @@
                             <outlet property="delegate" destination="ZvR-HF-C5x" id="DbT-Ag-GXH"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Brussels" id="I0A-OJ-d0m"/>
+                    <navigationItem key="navigationItem" title="GuideItemTitle" id="I0A-OJ-d0m"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V7f-sh-c0y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2055" y="1151"/>
+            <point key="canvasLocation" x="2001" y="1125"/>
         </scene>
     </scenes>
     <resources>

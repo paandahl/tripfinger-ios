@@ -20,21 +20,21 @@ class GuideItemCell: UITableViewCell {
     @IBOutlet weak var readMoreButton: UIButton!
     weak var delegate: GuideItemContainerDelegate!
     
-    
-    @IBAction func readMore() {
+    func expand() {
         let fixedWidth = content.frame.size.width
         let newSize = content.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
         contentHeight.constant = newSize.height;
         
         readMoreButton.hidden = true
         contentBottomMargin.constant = 0
-        
-        delegate.readMoreClicked()        
     }
     
-    override func updateConstraints() {
-        super.updateConstraints()
+    func loadGuideTexts(guideTexts: [GuideText]) {
         
-        
+    }
+    
+    @IBAction func readMore() {
+        expand()
+        delegate.readMoreClicked()        
     }
 }

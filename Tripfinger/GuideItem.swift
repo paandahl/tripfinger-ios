@@ -1,8 +1,10 @@
 import Foundation
 
-class GuideItem {
+public class GuideItem {
     
-    var id: Int?
+    public init() {}
+    
+    public var id: Int?
     var slug: String?
     var name: String?
     var longitude: Double?

@@ -8,6 +8,6 @@
 
 import Foundation
 
-class GuideLocation: GuideItem {
+public class GuideLocation: GuideItem {
     
 }
