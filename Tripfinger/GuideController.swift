@@ -11,18 +11,20 @@ class GuideController: UITableViewController {
         static let guideItemCell = "GuideItemCell"
         static let categoryCell = "CategoryCell"
         static let textChildCell = "TextChild"
+        static let loadingCell = "LoadingCell"
     }
     
-    var currentRegion: GuideItem?
+    var currentItem: GuideItem?
     var currentTexts = [GuideText]()
     var contentService: ContentService!
     var guideItemExpanded = false
+    var guideITemCreatedAsExpanded = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let currentRegion = currentRegion {
-            title = currentRegion.name
+        if let currentItem = currentItem {
+            title = currentItem.name
         }
         else {
             title = ""
@@ -31,18 +33,32 @@ class GuideController: UITableViewController {
         UINib.registerNib(TableViewCellIdentifiers.guideItemCell, forTableView: tableView)
         UINib.registerNib(TableViewCellIdentifiers.categoryCell, forTableView: tableView)
         UINib.registerNib(TableViewCellIdentifiers.textChildCell, forTableView: tableView)
+        UINib.registerNib(TableViewCellIdentifiers.loadingCell, forTableView: tableView)
         
         tableView.rowHeight = UITableViewAutomaticDimension
         
-        if currentRegion == nil {
+        if currentItem == nil {
             contentService.getCurrentLocationData() {
                 region, texts, locations in
                 
-                self.currentRegion = region
+                self.currentItem = region
                 self.title = region.name
                 self.currentTexts = texts
                 self.tableView.reloadData()
             }
+        }
+        
+        if guideItemExpanded {
+            loadGuideTexts()
+        }
+    }
+    
+    func loadGuideTexts() {
+        contentService.getGuideTextsForGuideItem(currentItem!) {
+            guideTexts in
+            
+            self.currentTexts = guideTexts
+            self.tableView.reloadData()
         }
     }
     
@@ -87,9 +103,9 @@ extension GuideController: UITableViewDataSource {
         case 1:
             return guideItemExpanded ? currentTexts.count : 0;
         case 2:
-            return 2
+            return (currentItem is GuideText) ? 0 : 2
         case 3:
-            return Attraction.Types.allValues.count - 2
+            return (currentItem is GuideText) ? 0 : Attraction.Types.allValues.count - 2
         default:
             return 0
         }
@@ -98,30 +114,21 @@ extension GuideController: UITableViewDataSource {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
-            let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.guideItemCell, forIndexPath: indexPath) as! GuideItemCell
-            if let currentRegion = currentRegion {
-                if let description = currentRegion.description {
-                    let encodedData = description.dataUsingEncoding(NSUTF8StringEncoding)!
-                    let options : [String: AnyObject] = [
-                        NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-                        NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding,
-                    ]
-                    let attributedString = NSMutableAttributedString(data: encodedData, options: options, documentAttributes: nil, error: nil)!
-                    attributedString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(18.0), range: NSMakeRange(0, attributedString.length))
-                    let decodedString = attributedString.string
-                    cell.content.attributedText = attributedString
-                }
-                else {
-                    println("No description for current item.")
-                }
-                cell.content.setContentOffset(CGPointZero, animated: false)
+            if let currentItem = currentItem {
+                let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.guideItemCell, forIndexPath: indexPath) as! GuideItemCell
+                cell.setContent(currentItem)
                 cell.delegate = self
                 if (guideItemExpanded) {
                     cell.expand()
-                    contentService.getGuideTextsForGuideItem(currentRegion, handler: cell.loadGuideTexts)
                 }
+                return cell
             }
-            return cell
+            else {
+                let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.loadingCell, forIndexPath: indexPath) as! UITableViewCell
+                let indicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
+                indicator.startAnimating()
+                return cell
+            }
         }
         else if indexPath.section == 1 && guideItemExpanded {
             let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.categoryCell, forIndexPath: indexPath) as! UITableViewCell
@@ -150,8 +157,9 @@ extension GuideController: GuideItemContainerDelegate {
         tableView.beginUpdates()
         tableView.endUpdates()
         
-        guideItemExpanded = true
         tableView.reloadData()
+        guideItemExpanded = true
+        loadGuideTexts()
     }
 }
 
@@ -164,7 +172,7 @@ extension GuideController {
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewControllerWithIdentifier("guideController") as! GuideController
-            vc.currentRegion = currentTexts[indexPath.row]
+            vc.currentItem = currentTexts[indexPath.row]
             vc.guideItemExpanded = true
             vc.contentService = contentService
             self.navigationController?.pushViewController(vc, animated: true)

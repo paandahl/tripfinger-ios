@@ -53,6 +53,7 @@
 		25D707D51BCA7848005A4BBA /* UIView+AddConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */; };
 		25F048E21BCC365C002DE14E /* ContentServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F048E11BCC365C002DE14E /* ContentServiceTest.swift */; };
 		25F048E51BCC3B3B002DE14E /* SKMaps.framework in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFF01B9CD8B300C516C1 /* SKMaps.framework */; };
+		25F048E71BCC4B7E002DE14E /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F048E61BCC4B7E002DE14E /* LoadingCell.xib */; };
 		F15403DC29A8017C1BA97FA3 /* Pods_Tripfinger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D65EBCD3D5BCD8F85D4EA0F /* Pods_Tripfinger.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -128,6 +129,7 @@
 		25D707D21BCA7620005A4BBA /* UINib+RegisterNib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINib+RegisterNib.swift"; sourceTree = "<group>"; };
 		25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AddConstraints.swift"; sourceTree = "<group>"; };
 		25F048E11BCC365C002DE14E /* ContentServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentServiceTest.swift; sourceTree = "<group>"; };
+		25F048E61BCC4B7E002DE14E /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 		356EFCE331E62CA7B8254017 /* Pods-Tripfinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.release.xcconfig"; sourceTree = "<group>"; };
 		6D65EBCD3D5BCD8F85D4EA0F /* Pods_Tripfinger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripfinger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F282B37EC8CE065ECCEE238 /* Pods-Tripfinger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.debug.xcconfig"; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 				25D707BE1BC669E6005A4BBA /* CategoryCell.xib */,
 				25D707C01BC66A15005A4BBA /* TextChild.xib */,
 				25D707CF1BC98B0D005A4BBA /* SwipeViewNavigationBar.swift */,
+				25F048E61BCC4B7E002DE14E /* LoadingCell.xib */,
 			);
 			name = "UI Components";
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				25D707BF1BC669E6005A4BBA /* CategoryCell.xib in Resources */,
 				25B506931BB41AAA00A36BA1 /* Data in Resources */,
 				25D707C11BC66A15005A4BBA /* TextChild.xib in Resources */,
+				25F048E71BCC4B7E002DE14E /* LoadingCell.xib in Resources */,
 				25D707BD1BC66165005A4BBA /* GuideItemCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

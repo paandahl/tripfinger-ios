@@ -13,7 +13,6 @@ public class GuideItem {
     var type: Int?
 
     var parent: GuideItem?
-    var description: String?
-    var openingHours: String?
-    
+    public var description: String?
+    var openingHours: String?    
 }

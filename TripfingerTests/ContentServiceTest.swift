@@ -33,6 +33,7 @@ class ContentServiceTest: XCTestCase {
             guideTexts in
             
             XCTAssertEqual(12, guideTexts.count)
+            XCTAssertNotEqual("", guideTexts[0].description!, "")
             println("got guidetexts: \(guideTexts.count)")
             readyExpectation.fulfill()
         }

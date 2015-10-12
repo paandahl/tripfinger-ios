@@ -112,6 +112,7 @@ public class ContentService {
         let guideText = GuideText()
         guideText.name = json["name"].string
         guideText.id = json["id"].int
+        guideText.description = json["description"].string
         return guideText
     }
     
