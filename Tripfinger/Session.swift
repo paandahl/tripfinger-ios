@@ -10,4 +10,5 @@ import Foundation
 
 class Session {
     var currentRegion = 5629499534213120
+    
 }

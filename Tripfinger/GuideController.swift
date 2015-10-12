@@ -14,7 +14,9 @@ class GuideController: UITableViewController {
     }
     
     var currentRegion: GuideItem?
+    var currentTexts = [GuideText]()
     var contentService: ContentService!
+    var guideItemExpanded = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +31,8 @@ class GuideController: UITableViewController {
             region, texts, locations in
             
             self.currentRegion = region
+            println("number of texts: \(texts.count)")
+            self.currentTexts = texts
             self.tableView.reloadData()
         }
     }
@@ -40,14 +44,31 @@ class GuideController: UITableViewController {
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
-
+    
+    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 1 && !guideItemExpanded {
+            return 1
+        }
+        else {
+            return super.tableView(tableView, heightForHeaderInSection: section)
+        }
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if section == 0 && !guideItemExpanded {
+            return 1
+        }
+        else {
+            return super.tableView(tableView, heightForHeaderInSection: section)
+        }
+    }
 }
 
 // MARK: - Table data source
 extension GuideController: UITableViewDataSource {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 3;
+        return 4;
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -55,8 +76,10 @@ extension GuideController: UITableViewDataSource {
         case 0:
             return 1
         case 1:
-            return 2
+            return guideItemExpanded ? currentTexts.count : 0;
         case 2:
+            return 2
+        case 3:
             return Attraction.Types.allValues.count - 2
         default:
             return 0
@@ -78,13 +101,19 @@ extension GuideController: UITableViewDataSource {
                 let decodedString = attributedString.string
                 cell.content.attributedText = attributedString
                 cell.content.setContentOffset(CGPointZero, animated: false)
+                cell.delegate = self
             }
+            return cell
+        }
+        else if indexPath.section == 1 && guideItemExpanded {
+            let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.categoryCell, forIndexPath: indexPath) as! UITableViewCell
+            cell.textLabel?.text = currentTexts[indexPath.row].name
             return cell
         }
         else {
             let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.categoryCell, forIndexPath: indexPath) as! UITableViewCell
             let index: Int
-            if indexPath.section == 1 {
+            if indexPath.section == 2 {
                 index = indexPath.row
             }
             else {
@@ -95,6 +124,17 @@ extension GuideController: UITableViewDataSource {
         }
     }
     
+}
+
+extension GuideController: GuideItemContainerDelegate {
+    
+    func readMoreClicked() {
+        tableView.beginUpdates()
+        tableView.endUpdates()
+        
+        guideItemExpanded = true
+        tableView.reloadData()
+    }
 }
 
 // MARK: - Navigation

@@ -17,9 +17,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="100" id="qc7-7t-pc0"/>
+                            <constraint firstAttribute="height" priority="999" constant="100" id="qc7-7t-pc0"/>
                         </constraints>
-                        <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat...</string>
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
@@ -28,6 +27,9 @@
                         <state key="normal" title="Read more">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
+                        <connections>
+                            <action selector="readMore" destination="6WX-7R-srN" eventType="touchUpInside" id="Qkn-t9-ZPP"/>
+                        </connections>
                     </button>
                 </subviews>
                 <constraints>
@@ -41,6 +43,9 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="content" destination="RVu-1l-Gea" id="eeW-by-oG6"/>
+                <outlet property="contentBottomMargin" destination="reL-Bm-Dt1" id="zD7-9z-bjf"/>
+                <outlet property="contentHeight" destination="qc7-7t-pc0" id="UPn-QC-Gib"/>
+                <outlet property="readMoreButton" destination="dke-8Q-KVJ" id="9FF-v8-pWM"/>
             </connections>
             <point key="canvasLocation" x="229" y="185.5"/>
         </tableViewCell>

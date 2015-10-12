@@ -4,7 +4,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
     </dependencies>
     <scenes>
-        <!--Brussels-->
+        <!--Map Display View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
                 <viewController id="vXZ-lx-hvc" customClass="MapDisplayViewController" customModule="Tripfinger" customModuleProvider="target" sceneMemberID="viewController">
@@ -17,7 +17,8 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Brussels" id="Jay-ob-ddB">
+                    <navigationItem key="navigationItem" id="Jay-ob-ddB">
+                        <barButtonItem key="leftBarButtonItem" title="Brussels" id="EPp-0k-OhF"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="Qu4-cl-ORy"/>
                     </navigationItem>
                 </viewController>
@@ -25,7 +26,7 @@
             </objects>
             <point key="canvasLocation" x="2067" y="-319"/>
         </scene>
-        <!--Explore the city-->
+        <!--Swipe Controller-->
         <scene sceneID="rSz-g7-hFW">
             <objects>
                 <viewController id="fNL-El-q7h" customClass="SwipeController" customModule="Tripfinger" customModuleProvider="target" sceneMemberID="viewController">
@@ -43,18 +44,22 @@
                                     <constraint firstAttribute="height" constant="44" id="gqB-Em-Ozg"/>
                                 </constraints>
                                 <items>
-                                    <barButtonItem style="plain" id="xb6-NL-EmC">
-                                        <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="zKC-Gt-Ttr">
-                                            <rect key="frame" x="238" y="7.5" width="123" height="30"/>
+                                    <barButtonItem style="plain" id="FqZ-bl-CeS">
+                                        <view key="customView" contentMode="scaleToFill" id="f73-N6-mDz">
+                                            <rect key="frame" x="16" y="5.5" width="130" height="33"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <segments>
-                                                <segment title="Swipe"/>
-                                                <segment title="List"/>
-                                            </segments>
-                                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        </segmentedControl>
-                                        <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Explore the city:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Sk-vR-UBx">
+                                                    <rect key="frame" x="0.0" y="5" width="124" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
                                     </barButtonItem>
+                                    <barButtonItem title="All" id="6tI-mV-f2J"/>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -65,12 +70,23 @@
                             <constraint firstItem="IRg-VG-MHk" firstAttribute="top" secondItem="5YC-sX-YMv" secondAttribute="bottom" id="H80-zr-0iP"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Explore the city" id="ZRW-Mh-fwO">
+                    <navigationItem key="navigationItem" id="ZRW-Mh-fwO">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="Brussels" id="eFh-ml-djp">
                             <connections>
                                 <action selector="back" destination="fNL-El-q7h" id="agT-ff-ucr"/>
                             </connections>
                         </barButtonItem>
+                        <segmentedControl key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="zFc-73-8bZ">
+                            <rect key="frame" x="238.5" y="7" width="123" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <segments>
+                                <segment title="Swipe"/>
+                                <segment title="List"/>
+                            </segments>
+                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        </segmentedControl>
+                        <barButtonItem key="rightBarButtonItem" title="Map" id="rkj-Mb-bus"/>
                     </navigationItem>
                     <connections>
                         <outlet property="toolbar" destination="IRg-VG-MHk" id="LRH-2w-hpq"/>
