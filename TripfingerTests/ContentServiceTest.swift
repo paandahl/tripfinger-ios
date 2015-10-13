@@ -38,7 +38,7 @@ class ContentServiceTest: XCTestCase {
             readyExpectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(5, handler: { error in
+        waitForExpectationsWithTimeout(15, handler: { error in
             XCTAssertNil(error, "Error")
         })
     }
