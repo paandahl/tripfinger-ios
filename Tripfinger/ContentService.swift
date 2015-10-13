@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias ContentLoaded = (listing: GuideItem, guideTexts: [GuideText], guideListings: [GuideListing]) -> ()
+public typealias ContentLoaded = (guideItem: GuideItem, guideTexts: [GuideText], guideListings: [GuideListing]) -> ()
 
 public class ContentService {
     
@@ -31,7 +31,7 @@ public class ContentService {
         
     }
     
-    func getContentForCurrentGuideItem(handler: ContentLoaded) {
+    public func getContentForCurrentGuideItem(handler: ContentLoaded) {
         getJsonFromUrl(baseUrl + "/city", success: {
         json in
         
@@ -43,15 +43,19 @@ public class ContentService {
         guideItem.id = parentId
 
         var guideTexts = [GuideText]()
+        var guideListings = [GuideListing]()
         for i in 1...(jsonArray.count - 1) {
             let child = jsonArray[i]
             if child["entityType"] == "guidetext" && child["parent"]["raw"]["id"].int == parentId {
                 guideTexts.append(self.parseGuideText(child))
             }
+            else if child["entityType"] == "attraction" && child["parent"]["raw"]["id"].int == parentId {
+                guideListings.append(self.parseGuideListing(child))
+            }
         }
         
         dispatch_async(dispatch_get_main_queue()) {
-            handler(listing: guideItem, guideTexts: guideTexts, guideListings: [GuideListing]())
+            handler(guideItem: guideItem, guideTexts: guideTexts, guideListings: guideListings)
         }
         
         }, failure: nil)
@@ -99,7 +103,22 @@ public class ContentService {
         }
         return nil
     }
-    
+
+    func parseGuideItem(json: JSON) -> GuideItem {
+        return parseGuideItem(GuideItem(), withJson: json)
+    }
+
+    func parseGuideItem(guideItem: GuideItem, withJson json: JSON) -> GuideItem {
+        guideItem.name = json["name"].string
+        guideItem.id = json["id"].int
+        guideItem.description = json["description"].string
+        return guideItem
+    }
+
+    func parseGuideListing(json: JSON) -> GuideListing {
+        return parseGuideItem(GuideListing(), withJson: json) as! GuideListing
+    }
+
     func parseGuideTexts(jsonArray: JSON) -> [GuideText] {
         var guideTexts = [GuideText]()
         for json in jsonArray.array! {
@@ -109,11 +128,7 @@ public class ContentService {
     }
     
     func parseGuideText(json: JSON) -> GuideText {
-        let guideText = GuideText()
-        guideText.name = json["name"].string
-        guideText.id = json["id"].int
-        guideText.description = json["description"].string
-        return guideText
+        return parseGuideItem(GuideText(), withJson: json) as! GuideText
     }
     
 }

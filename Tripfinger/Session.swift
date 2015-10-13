@@ -8,7 +8,10 @@
 
 import Foundation
 
-class Session {
-    var currentRegion = 5629499534213120
+public class Session {
+    
+    public init() {}
+    
+    public var currentRegion = 4888143618637824
     
 }

@@ -26,21 +26,36 @@ class ContentServiceTest: XCTestCase {
 
     func testContentService() {
         var guideItem = GuideItem()
-        guideItem.id = 5629499534213120
-        let readyExpectation = expectationWithDescription("ready")
+        guideItem.id = Session().currentRegion
+        var readyExpectation = expectationWithDescription("ready")
         
         contentService.getGuideTextsForGuideItem(guideItem) {
             guideTexts in
             
             XCTAssertEqual(12, guideTexts.count)
             XCTAssertNotEqual("", guideTexts[0].description!, "")
-            println("got guidetexts: \(guideTexts.count)")
             readyExpectation.fulfill()
         }
         
         waitForExpectationsWithTimeout(15, handler: { error in
             XCTAssertNil(error, "Error")
         })
+
         
+        readyExpectation = expectationWithDescription("ready")
+        
+        contentService.getContentForCurrentGuideItem() {
+            guideItem, guideTexts, guideListings in
+            
+            
+            XCTAssertEqual(12, guideTexts.count)
+            XCTAssertEqual(5, guideListings.count)
+            readyExpectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { error in
+            XCTAssertNil(error, "Error")
+        })
+
     }
 }
