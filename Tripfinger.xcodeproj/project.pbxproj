@@ -45,7 +45,7 @@
 		25D707C31BC6BAA8005A4BBA /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707C21BC6BAA8005A4BBA /* Session.swift */; };
 		25D707C61BC6BC34005A4BBA /* ContentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707C51BC6BC34005A4BBA /* ContentService.swift */; };
 		25D707C81BC6CD05005A4BBA /* GuideText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707C71BC6CD05005A4BBA /* GuideText.swift */; };
-		25D707CA1BC6CD31005A4BBA /* GuideLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707C91BC6CD31005A4BBA /* GuideLocation.swift */; };
+		25D707CA1BC6CD31005A4BBA /* GuideListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707C91BC6CD31005A4BBA /* GuideListing.swift */; };
 		25D707CC1BC6D05B005A4BBA /* GuideItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707CB1BC6D05B005A4BBA /* GuideItemCell.swift */; };
 		25D707CE1BC82232005A4BBA /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707CD1BC82231005A4BBA /* CategoryCell.swift */; };
 		25D707D01BC98B0D005A4BBA /* SwipeViewNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707CF1BC98B0D005A4BBA /* SwipeViewNavigationBar.swift */; };
@@ -122,7 +122,7 @@
 		25D707C21BC6BAA8005A4BBA /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		25D707C51BC6BC34005A4BBA /* ContentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentService.swift; sourceTree = "<group>"; };
 		25D707C71BC6CD05005A4BBA /* GuideText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideText.swift; sourceTree = "<group>"; };
-		25D707C91BC6CD31005A4BBA /* GuideLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideLocation.swift; sourceTree = "<group>"; };
+		25D707C91BC6CD31005A4BBA /* GuideListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideListing.swift; sourceTree = "<group>"; };
 		25D707CB1BC6D05B005A4BBA /* GuideItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemCell.swift; sourceTree = "<group>"; };
 		25D707CD1BC82231005A4BBA /* CategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		25D707CF1BC98B0D005A4BBA /* SwipeViewNavigationBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeViewNavigationBar.swift; sourceTree = "<group>"; };
@@ -211,7 +211,7 @@
 				25243E651BC4110E00EF5F64 /* GuideItem.swift */,
 				25D707C21BC6BAA8005A4BBA /* Session.swift */,
 				25D707C71BC6CD05005A4BBA /* GuideText.swift */,
-				25D707C91BC6CD31005A4BBA /* GuideLocation.swift */,
+				25D707C91BC6CD31005A4BBA /* GuideListing.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -504,7 +504,7 @@
 				25D707D01BC98B0D005A4BBA /* SwipeViewNavigationBar.swift in Sources */,
 				25243E641BC410F400EF5F64 /* Region.swift in Sources */,
 				25243E621BC4072000EF5F64 /* TabBarController.swift in Sources */,
-				25D707CA1BC6CD31005A4BBA /* GuideLocation.swift in Sources */,
+				25D707CA1BC6CD31005A4BBA /* GuideListing.swift in Sources */,
 				25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */,
 				25B5068F1BB4009600A36BA1 /* ChooseAttractionView.swift in Sources */,
 				25D707C31BC6BAA8005A4BBA /* Session.swift in Sources */,

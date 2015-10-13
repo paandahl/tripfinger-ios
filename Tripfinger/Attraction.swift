@@ -1,6 +1,6 @@
 import Foundation
 
-class Attraction: GuideLocation {
+class Attraction: GuideListing {
     
     var coordinateX: Double?
     var coordinateY: Double?

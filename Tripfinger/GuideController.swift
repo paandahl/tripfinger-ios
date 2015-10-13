@@ -38,8 +38,8 @@ class GuideController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         
         if currentItem == nil {
-            contentService.getCurrentLocationData() {
-                region, texts, locations in
+            contentService.getContentForCurrentGuideItem() {
+                region, texts, listings in
                 
                 self.currentItem = region
                 self.title = region.name

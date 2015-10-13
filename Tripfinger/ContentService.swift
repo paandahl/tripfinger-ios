@@ -8,7 +8,7 @@
 
 import Foundation
 
-public typealias ContentLoaded = (location: GuideItem, guideTexts: [GuideText], guideLocations: [GuideLocation]) -> ()
+public typealias ContentLoaded = (listing: GuideItem, guideTexts: [GuideText], guideListings: [GuideListing]) -> ()
 
 public class ContentService {
     
@@ -31,7 +31,7 @@ public class ContentService {
         
     }
     
-    func getCurrentLocationData(handler: ContentLoaded) {
+    func getContentForCurrentGuideItem(handler: ContentLoaded) {
         getJsonFromUrl(baseUrl + "/city", success: {
         json in
         
@@ -51,7 +51,7 @@ public class ContentService {
         }
         
         dispatch_async(dispatch_get_main_queue()) {
-            handler(location: guideItem, guideTexts: guideTexts, guideLocations: [GuideLocation]())
+            handler(listing: guideItem, guideTexts: guideTexts, guideListings: [GuideListing]())
         }
         
         }, failure: nil)

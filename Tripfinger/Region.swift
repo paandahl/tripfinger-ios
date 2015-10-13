@@ -1,6 +1,6 @@
 import Foundation
 
-class Region: GuideLocation {
+class Region: GuideListing {
     
     // radius
     var radius: Int?
