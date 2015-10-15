@@ -177,8 +177,21 @@ extension GuideController {
             vc.contentService = contentService
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        if indexPath.section == 2 {
+        else if indexPath.section == 2 {
             self.tabBarController?.selectedIndex = 1
+        }
+        else if indexPath.section == 3 {
+            if indexPath.row == 0 { // Transportation
+                
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let vc = storyboard.instantiateViewControllerWithIdentifier("guideController") as! GuideController
+                let guideText = GuideText()
+                
+                vc.currentItem = currentTexts[indexPath.row]
+                vc.guideItemExpanded = true
+                vc.contentService = contentService
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
 }

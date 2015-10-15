@@ -16,15 +16,14 @@ class ContentServiceTest: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        continueAfterFailure = false
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
 
-    func testContentService() {
+    func testGetGuideTextsForGuideItem() {
         var guideItem = GuideItem()
         guideItem.id = Session().currentRegion
         var readyExpectation = expectationWithDescription("ready")
@@ -32,30 +31,59 @@ class ContentServiceTest: XCTestCase {
         contentService.getGuideTextsForGuideItem(guideItem) {
             guideTexts in
             
+            println(guideTexts.count)
             XCTAssertEqual(12, guideTexts.count)
-            XCTAssertNotEqual("", guideTexts[0].description!, "")
+
+            var foundUnderstand = false
+            for guideText in guideTexts {
+                if guideText.name == "Understand" {
+                    XCTAssertNotNil(guideText.description)
+                    XCTAssertNotEqual("", guideText.description!)
+                    foundUnderstand = true
+                }
+            }
+            XCTAssertTrue(foundUnderstand)
             readyExpectation.fulfill()
         }
         
         waitForExpectationsWithTimeout(15, handler: { error in
             XCTAssertNil(error, "Error")
         })
+    }
+    
+    func testGetContentForCurrentGuideItem() {
+        var guideItem = GuideItem()
+        guideItem.id = Session().currentRegion
+        var readyExpectation = expectationWithDescription("ready")
 
-        
-        readyExpectation = expectationWithDescription("ready")
-        
         contentService.getContentForCurrentGuideItem() {
             guideItem, guideTexts, guideListings in
             
-            
             XCTAssertEqual(12, guideTexts.count)
-            XCTAssertEqual(5, guideListings.count)
+            XCTAssertEqual(17, guideListings.count)
             readyExpectation.fulfill()
         }
         
         waitForExpectationsWithTimeout(15, handler: { error in
             XCTAssertNil(error, "Error")
         })
-
     }
+
+    func testGetCategoryDescription() {
+        var guideItem = Region()
+        guideItem.id = Session().currentRegion
+        var readyExpectation = expectationWithDescription("ready")
+
+        contentService.getDescriptionForCategory(Attraction.Types.TRANSPORTATION.rawValue, forRegion: guideItem) {
+            guideText in
+            
+            XCTAssertNil(guideText.description)
+            readyExpectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { error in
+            XCTAssertNil(error, "Error")
+        })
+    }
+
 }

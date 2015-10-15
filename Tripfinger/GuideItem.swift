@@ -5,14 +5,14 @@ public class GuideItem {
     public init() {}
     
     public var id: Int?
-    var slug: String?
-    var name: String?
-    var longitude: Double?
-    var latitude: Double?
-    var price: Double?
-    var type: Int?
+    public var slug: String?
+    public var name: String?
+    public var longitude: Double?
+    public var latitude: Double?
+    public var price: Double?
+    public var type: Int?
 
-    var parent: GuideItem?
+    public var parent: GuideItem?
     public var description: String?
-    var openingHours: String?    
+    public var openingHours: String?    
 }

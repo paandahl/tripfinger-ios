@@ -1,13 +1,13 @@
 import Foundation
 
-class Attraction: GuideListing {
+public class Attraction: GuideListing {
     
     var coordinateX: Double?
     var coordinateY: Double?
     var title: String
     var image: UIImage?
     
-    required init(title: String, coordinateX: Double?, coordinateY: Double?) {
+    public required init(title: String, coordinateX: Double?, coordinateY: Double?) {
         self.title = title
         if let uCoordinateX = coordinateX {
             if let uCoordinateY = coordinateY {
@@ -17,7 +17,7 @@ class Attraction: GuideListing {
         }
     }
     
-    enum Types: Int {
+    public enum Types: Int {
         case EXPLORE_CITY = 210
         case ACTIVITY_HIKE_DAYTRIP = 220
         case TRANSPORTATION = 230

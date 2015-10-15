@@ -1,6 +1,6 @@
 import Foundation
 
-class Region: GuideListing {
+public class Region: GuideListing {
     
     // radius
     var radius: Int?
@@ -12,7 +12,7 @@ class Region: GuideListing {
         self.type = type.rawValue
     }
 
-    enum Types: Int {
+    public enum Types: Int {
         case CONTINENT = 110
         case WORLD_AREA = 120
         case COUNTRY = 130

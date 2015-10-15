@@ -20,15 +20,34 @@ public class ContentService {
     public func getGuideTextsForGuideItem(guideItem: GuideItem, handler: (guideTexts: [GuideText]) -> ()) {
         let id = String(guideItem.id!)
         getJsonFromUrl(baseUrl + "/region/\(id)/guideTexts", success: {
-        json in
+            json in
+            
+            var guideTexts = self.parseGuideTexts(json!)
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                handler(guideTexts: guideTexts)
+            }
+            }, failure: nil)
+    }
+    
+    public func getDescriptionForCategory(categoryId: Int, forRegion region: Region, handler: (categoryDescription: GuideText) -> ()) {
         
-        var guideTexts = self.parseGuideTexts(json)
-        
-        dispatch_async(dispatch_get_main_queue()) {
-            handler(guideTexts: guideTexts)
-        }
-        }, failure: nil)
-        
+        let regionId = String(region.id!)
+        getJsonFromUrl(baseUrl + "/region/\(regionId)/guideTextForCategory/\(categoryId)", success: {
+            json in
+            
+            var guideText: GuideText
+            if let json = json {
+                guideText = self.parseGuideText(json)
+            }
+            else {
+                guideText = GuideText()
+            }
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                handler(categoryDescription: guideText)
+            }
+            }, failure: nil)
     }
     
     public func getContentForCurrentGuideItem(handler: ContentLoaded) {
@@ -36,7 +55,7 @@ public class ContentService {
         json in
         
         let guideItem = GuideItem()
-        let jsonArray = json.array!
+        let jsonArray = json!.array!
         guideItem.name = jsonArray[0]["name"].string
         guideItem.description = jsonArray[0]["description"].string
         let parentId = jsonArray[0]["id"].int
@@ -61,7 +80,7 @@ public class ContentService {
         }, failure: nil)
     }
     
-    func getJsonFromUrl(url: String, success: (json: JSON) -> (), failure: (() -> ())?) {
+    func getJsonFromUrl(url: String, success: (json: JSON?) -> (), failure: (() -> ())?) {
         let nsUrl = NSURL(string: url)
         let session = NSURLSession.sharedSession()
         let dataTask = session.dataTaskWithURL(nsUrl!) {
@@ -78,7 +97,10 @@ public class ContentService {
                     success(json: json)
                     return
                 }
-                    else {
+                else if httpResponse.statusCode == 404 {
+                    success(json: nil)
+                }
+                else {
                     println("Faulire! \(response)")
                 }
             }
