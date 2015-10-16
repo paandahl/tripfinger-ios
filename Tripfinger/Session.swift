@@ -12,6 +12,6 @@ public class Session {
     
     public init() {}
     
-    public var currentRegion = 5575870693507072
+    public var currentRegion = 4565153488044032
     
 }

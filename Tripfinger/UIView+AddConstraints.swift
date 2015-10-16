@@ -23,7 +23,8 @@ extension UIView {
     func addConstraint(alignmentConstraint: NSLayoutAttribute, forView view: UIView) {
 
         view.setTranslatesAutoresizingMaskIntoConstraints(false)
-        let centerConstraint = NSLayoutConstraint(item: view,
+        let centerConstraint = NSLayoutConstraint(
+            item: view,
             attribute: alignmentConstraint,
             relatedBy: NSLayoutRelation.Equal,
             toItem: self,
@@ -33,4 +34,22 @@ extension UIView {
         self.addConstraint(centerConstraint)
 
     }
+    
+    func addMarginConstraintToView(view: UIView, side: NSLayoutAttribute, value: Int, target: UIView?, targetSide: NSLayoutAttribute?) {
+        
+        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        if let target = target {
+            let centerConstraint = NSLayoutConstraint(
+                item: view,
+                attribute: side,
+                relatedBy: NSLayoutRelation.Equal,
+                toItem: target,
+                attribute: targetSide!,
+                multiplier: 1.0,
+                constant: 0);
+            self.addConstraint(centerConstraint)
+        }
+        
+    }
+
 }

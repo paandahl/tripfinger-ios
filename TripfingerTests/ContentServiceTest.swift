@@ -51,18 +51,23 @@ class ContentServiceTest: XCTestCase {
         })
     }
     
-    func testGetContentForCurrentGuideItem() {
+    func testGetRegionWithId() {
         var guideItem = GuideItem()
         guideItem.id = Session().currentRegion
         var readyExpectation = expectationWithDescription("ready")
 
-        contentService.getContentForCurrentGuideItem() {
-            guideItem, guideTexts, guideListings in
-            
-            XCTAssertEqual(12, guideTexts.count)
-            XCTAssertEqual(17, guideListings.count)
-            readyExpectation.fulfill()
+        self.contentService.getRegions() {
+            regions in
+
+            self.contentService.getRegionWithId(regions[0].id) {
+                guideItem in
+                
+                XCTAssertEqual(12, guideItem.guideSections.count)
+                readyExpectation.fulfill()
+            }
+
         }
+
         
         waitForExpectationsWithTimeout(15, handler: { error in
             XCTAssertNil(error, "Error")
@@ -74,7 +79,7 @@ class ContentServiceTest: XCTestCase {
         guideItem.id = Session().currentRegion
         var readyExpectation = expectationWithDescription("ready")
 
-        contentService.getDescriptionForCategory(Attraction.Types.TRANSPORTATION.rawValue, forRegion: guideItem) {
+        contentService.getDescriptionForCategory(Attraction.Category.TRANSPORTATION.rawValue, forRegion: guideItem) {
             guideText in
             
             XCTAssertNil(guideText.description)

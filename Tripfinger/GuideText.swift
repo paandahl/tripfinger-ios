@@ -8,6 +8,8 @@
 
 import Foundation
 
+/** Class describing a text-item. Referred to as a GuideSection when listed as a loose child of a GuideItem,
+ *  and as a CategoryDescription when 'category' is set.
+ */
 public class GuideText: GuideItem {
-    
 }

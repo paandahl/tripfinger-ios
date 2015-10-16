@@ -1,31 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LoadingCell" id="kQy-Ky-hFz">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="199"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="kQy-Ky-hFz" id="a2g-yX-PRq">
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3NX-0y-KjW">
-                        <rect key="frame" x="80" y="50" width="160" height="100"/>
+                        <rect key="frame" x="80.5" y="40" width="159.5" height="100"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UDL-Zf-lBh">
-                                <rect key="frame" x="14" y="39" width="77" height="21"/>
+                                <rect key="frame" x="14" y="39" width="76.5" height="21"/>
+                                <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <activityIndicatorView opaque="NO" tag="1000" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="XY3-iH-B6h">
-                                <rect key="frame" x="113" y="40" width="20" height="20"/>
+                                <rect key="frame" x="112" y="40" width="20" height="20"/>
+                                <animations/>
                             </activityIndicatorView>
                         </subviews>
+                        <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="XY3-iH-B6h" firstAttribute="top" secondItem="3NX-0y-KjW" secondAttribute="top" constant="40" id="7dQ-Lc-T0e"/>
@@ -33,17 +35,21 @@
                             <constraint firstAttribute="trailing" secondItem="XY3-iH-B6h" secondAttribute="trailing" constant="27" id="Cur-Y0-kC5"/>
                             <constraint firstAttribute="height" constant="100" id="F8g-BY-boy"/>
                             <constraint firstItem="UDL-Zf-lBh" firstAttribute="leading" secondItem="3NX-0y-KjW" secondAttribute="leading" constant="14" id="Gm4-wP-F9Q"/>
+                            <constraint firstItem="UDL-Zf-lBh" firstAttribute="top" relation="greaterThanOrEqual" secondItem="3NX-0y-KjW" secondAttribute="top" constant="39" id="aaN-l4-WWS"/>
                             <constraint firstItem="XY3-iH-B6h" firstAttribute="leading" secondItem="UDL-Zf-lBh" secondAttribute="trailing" constant="22" id="bOO-D2-0BH"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="UDL-Zf-lBh" secondAttribute="bottom" constant="40" id="jnq-SK-cZr"/>
                             <constraint firstAttribute="bottom" secondItem="UDL-Zf-lBh" secondAttribute="bottom" constant="40" id="zU4-pS-zKG"/>
                         </constraints>
                     </view>
                 </subviews>
+                <animations/>
                 <constraints>
-                    <constraint firstAttribute="centerX" secondItem="3NX-0y-KjW" secondAttribute="centerX" id="2mx-WQ-1Aq"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="3NX-0y-KjW" secondAttribute="bottom" constant="40.5" id="SMP-mL-00j"/>
-                    <constraint firstItem="3NX-0y-KjW" firstAttribute="top" secondItem="a2g-yX-PRq" secondAttribute="topMargin" constant="42" id="lvn-mn-frg"/>
+                    <constraint firstAttribute="centerX" secondItem="3NX-0y-KjW" secondAttribute="centerX" id="1UR-yT-4Z5"/>
+                    <constraint firstAttribute="bottom" secondItem="3NX-0y-KjW" secondAttribute="bottom" constant="39.5" id="do8-ND-iYK"/>
+                    <constraint firstItem="3NX-0y-KjW" firstAttribute="top" secondItem="a2g-yX-PRq" secondAttribute="top" constant="40" id="unp-dw-Ayi"/>
                 </constraints>
             </tableViewCellContentView>
+            <animations/>
             <point key="canvasLocation" x="237" y="242"/>
         </tableViewCell>
     </objects>

@@ -17,22 +17,51 @@ class GuideItemCell: UITableViewCell {
     @IBOutlet weak var content: UITextView!
     @IBOutlet weak var contentHeight: NSLayoutConstraint!
     @IBOutlet weak var contentBottomMargin: NSLayoutConstraint!
-    @IBOutlet weak var readMoreButton: UIButton!
+    @IBOutlet var readMoreButton: UIButton!
     weak var delegate: GuideItemContainerDelegate!
+    var contentSize: CGRect = CGRectZero
+    
+    override func awakeFromNib() {
+        println("awake from nib")
+        if !readMoreButton.isDescendantOfView(self.contentView) {
+            println("adding button back")
+            self.contentView.addSubview(readMoreButton)
+        }
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        println("init")
+    }
+    
+    override func updateConstraints() {
+        super.updateConstraints()
+        println("updateconstraints")
+        
+        if readMoreButton.isDescendantOfView(self.contentView) {
+            self.contentView.addConstraints("V:[readMore]-10-|", forViews: ["readMore": readMoreButton])
+        }
+        else {
+            self.contentView.addConstraints("V:[content]-10-|", forViews: ["content": content])
+        }
+    }
+    
+    override func prepareForReuse() {
+        println("prepare for reuse")
+    }
     
     func expand() {
-        let fixedWidth = content.frame.size.width
-        let newSize = content.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-        contentHeight.constant = newSize.height;
+        println("Expanding")
         
-        readMoreButton.hidden = true
-        contentBottomMargin.constant = 0
+        contentHeight.constant = contentSize.height
+        readMoreButton.removeFromSuperview()
+        setNeedsUpdateConstraints()
+        
         content.setContentOffset(CGPointZero, animated: false)
     }
         
     @IBAction func readMore() {
-        expand()
-        delegate.readMoreClicked()        
+        delegate.readMoreClicked()
     }
     
     func setContent(guideItem: GuideItem) {
@@ -46,9 +75,12 @@ class GuideItemCell: UITableViewCell {
             attributedString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(18.0), range: NSMakeRange(0, attributedString.length))
             let decodedString = attributedString.string
             content.attributedText = attributedString
+            
+            let width = content.frame.size.width
+             contentSize = attributedString.boundingRectWithSize(CGSizeMake(width, 1000), options: NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading, context: nil)
+
         }
         content.scrollEnabled = false
         content.setContentOffset(CGPointZero, animated: true)
-        readMoreButton.hidden = false
     }
 }

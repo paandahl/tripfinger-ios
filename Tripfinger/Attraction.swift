@@ -17,7 +17,7 @@ public class Attraction: GuideListing {
         }
     }
     
-    public enum Types: Int {
+    public enum Category: Int {
         case EXPLORE_CITY = 210
         case ACTIVITY_HIKE_DAYTRIP = 220
         case TRANSPORTATION = 230
