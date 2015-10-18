@@ -12,7 +12,7 @@ extension UIView {
     
     func addConstraints(constraints: String, forViews views: [String : UIView]) -> [AnyObject] {
         
-        for (name, view) in views {
+        for (_, view) in views {
             view.translatesAutoresizingMaskIntoConstraints = false
         }
         let constraints = NSLayoutConstraint.constraintsWithVisualFormat(constraints, options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views)

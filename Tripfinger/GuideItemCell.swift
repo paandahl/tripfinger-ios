@@ -63,7 +63,6 @@ class GuideItemCell: UITableViewCell {
             ]
             let attributedString = try! NSMutableAttributedString(data: encodedData, options: options, documentAttributes: nil)
             attributedString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(18.0), range: NSMakeRange(0, attributedString.length))
-            let decodedString = attributedString.string
             content.attributedText = attributedString
             
             let width = content.frame.size.width

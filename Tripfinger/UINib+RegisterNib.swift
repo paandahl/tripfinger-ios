@@ -11,7 +11,7 @@ import Foundation
 extension UINib {
     
     class func registerNib(nibName: String, forTableView tableView: UITableView) {
-        var cellNib = UINib(nibName: nibName, bundle: nil)
+        let cellNib = UINib(nibName: nibName, bundle: nil)
         tableView.registerNib(cellNib, forCellReuseIdentifier: nibName)
     }
 }
