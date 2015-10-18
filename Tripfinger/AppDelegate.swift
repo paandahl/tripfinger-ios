@@ -16,13 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
-        let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as! [String]
-        println("Path: \(path[0])")
+        let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) 
+        print("Path: \(path[0])")
 
-        var session = Session()
+        let session = Session()
 
         let apiKey = "0511a5e338b00db8b426fb8ec0a7fb2ebd6816bb9324425d4edd9b726e40a3d5"
-        var initSettings: SKMapsInitSettings = SKMapsInitSettings()
+        let initSettings: SKMapsInitSettings = SKMapsInitSettings()
         initSettings.connectivityMode = SKConnectivityMode.Offline
         SKMapsService.sharedInstance().initializeSKMapsWithAPIKey(apiKey, settings: initSettings)
         SKMapsService.sharedInstance().mapsVersioningManager.delegate = self

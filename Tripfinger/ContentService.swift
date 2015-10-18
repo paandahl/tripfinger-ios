@@ -21,7 +21,7 @@ public class ContentService {
         getJsonFromUrl(baseUrl + "/regions/\(id)/guideTexts", success: {
             json in
             
-            var guideTexts = self.parseGuideTexts(json!)
+            let guideTexts = self.parseGuideTexts(json!)
             
             dispatch_async(dispatch_get_main_queue()) {
                 handler(guideTexts: guideTexts)
@@ -110,22 +110,22 @@ public class ContentService {
             data, response, error in
             
             if let error = error {
-                println("Failure! \(error)")
+                print("Failure! \(error)")
                 if error.code == -999 { return }
             }
                 else if let httpResponse = response as? NSHTTPURLResponse {
                 if httpResponse.statusCode == 200 {
                     
-                    let json = JSON(data: data)
+                    let json = JSON(data: data!)
                     success(json: json)
                     return
                 }
                 else if httpResponse.statusCode == 404 {
-                    println("Got 404 from url: \(url)")
+                    print("Got 404 from url: \(url)")
                     success(json: nil)
                 }
                 else {
-                    println("Faulire! \(response)")
+                    print("Faulire! \(response)")
                 }
             }
             
@@ -139,13 +139,16 @@ public class ContentService {
     }
     
     class func parseJSON(data: NSData) -> [String: AnyObject]? {
-        var error: NSError?
-        if let json = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error) as? [String: AnyObject] {
-            return json
-        } else if let error = error {
-            println("JSON error: \(error)")
-        } else {
-            println("Unknown JSON error")
+        do {
+            if let json = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(rawValue: 0)) as? [String: AnyObject] {
+                return json
+            } else {
+                print("Unknown JSON error")
+                
+            }
+        }
+        catch let error as NSError {
+            print("JSON error: \(error)")
         }
         return nil
     }
@@ -171,7 +174,7 @@ public class ContentService {
     }
 
     class func parseGuideListing(listing: GuideListing, withJson json: JSON) -> GuideListing {
-        var listing = parseGuideItem(listing, withJson: json) as! GuideListing
+        let listing = parseGuideItem(listing, withJson: json) as! GuideListing
         listing.latitude = json["latitude"].double
         listing.longitude = json["longitude"].double
         return listing
@@ -219,10 +222,10 @@ public class ContentService {
     class func parseChildren(guideItem: GuideItem, withJson json: JSON) {
 
         var guideSections = [GuideText]()
-        var categoryDescriptions = [GuideText]()
+        let categoryDescriptions = [GuideText]()
         for (id, name) in json["guideSections"].dictionary! {
             let guideSection = GuideText()
-            guideSection.id = id.toInt()
+            guideSection.id = Int(id)
             guideSection.name = name.string
             guideSections.append(guideSection)
         }

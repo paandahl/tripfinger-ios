@@ -27,7 +27,7 @@ class GuideItemCell: UITableViewCell {
         }
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
@@ -61,13 +61,13 @@ class GuideItemCell: UITableViewCell {
                 NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
                 NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding,
             ]
-            let attributedString = NSMutableAttributedString(data: encodedData, options: options, documentAttributes: nil, error: nil)!
+            let attributedString = try! NSMutableAttributedString(data: encodedData, options: options, documentAttributes: nil)
             attributedString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(18.0), range: NSMakeRange(0, attributedString.length))
             let decodedString = attributedString.string
             content.attributedText = attributedString
             
             let width = content.frame.size.width
-             contentSize = attributedString.boundingRectWithSize(CGSizeMake(width, 1000), options: NSStringDrawingOptions.UsesLineFragmentOrigin | NSStringDrawingOptions.UsesFontLeading, context: nil)
+             contentSize = attributedString.boundingRectWithSize(CGSizeMake(width, 1000), options: [NSStringDrawingOptions.UsesLineFragmentOrigin, NSStringDrawingOptions.UsesFontLeading], context: nil)
 
         }
         content.scrollEnabled = false

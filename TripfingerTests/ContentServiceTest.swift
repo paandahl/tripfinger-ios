@@ -40,7 +40,7 @@ class ContentServiceTest: XCTestCase {
             ContentService.getGuideTextsForGuideItem(guideItem) {
                 guideTexts in
                 
-                println(guideTexts.count)
+                print(guideTexts.count)
                 XCTAssertEqual(12, guideTexts.count)
                 
                 var foundUnderstand = false

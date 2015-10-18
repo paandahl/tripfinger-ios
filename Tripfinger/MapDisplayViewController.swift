@@ -10,20 +10,23 @@ import SKMaps
 class MapDisplayViewController : UIViewController, SKMapViewDelegate {
 
     var session: Session!
-    var attractions: [Attraction]
+    var attractions = [Attraction]()
     var mapView: SKMapView!
+ 
     
-    required init(coder aDecoder: NSCoder) {
-        attractions = [Attraction]()
-        super.init(coder: aDecoder)
-    }
-
     override func viewDidLoad() {
     
         super.viewDidLoad()
         
+        let searchBar:UISearchBar = UISearchBar(frame: CGRectMake(0, 0, 200, 20))
+        let searchBarItem = UIBarButtonItem(customView: searchBar)
+        
+        
+//        UIBarButtonItem *searchBarItem = [[UIBarButtonItem alloc] initWithCustomView:searchBar];
+        self.navigationItem.rightBarButtonItem = searchBarItem;
+        
         mapView = SKMapView(frame: CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame)))
-        mapView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        mapView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
         mapView.delegate = self
         mapView.settings.rotationEnabled = false
         mapView.settings.headingMode = SKHeadingMode.None
@@ -36,7 +39,7 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
 //        let lat = 41.39479 // Barcelona
 //        let long = 2.1487679
         
-        var region = SKCoordinateRegion(center: CLLocationCoordinate2DMake(lat, long), zoomLevel: 14)
+        let region = SKCoordinateRegion(center: CLLocationCoordinate2DMake(lat, long), zoomLevel: 14)
         mapView.visibleRegion = region
         
         self.view.addSubview(mapView)
@@ -61,11 +64,11 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
     
     func addAnnotations() {
         
-        println("adding annotations")
+        print("adding annotations")
 
         var identifier: Int32 = 0
         for attraction in attractions {
-            var annotation = SKAnnotation()
+            let annotation = SKAnnotation()
             annotation.identifier = identifier
             annotation.annotationType = SKAnnotationType.Purple
             annotation.location = CLLocationCoordinate2DMake(attraction.latitude, attraction.longitude)

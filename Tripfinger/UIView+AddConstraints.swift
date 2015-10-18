@@ -13,7 +13,7 @@ extension UIView {
     func addConstraints(constraints: String, forViews views: [String : UIView]) -> [AnyObject] {
         
         for (name, view) in views {
-            view.setTranslatesAutoresizingMaskIntoConstraints(false)
+            view.translatesAutoresizingMaskIntoConstraints = false
         }
         let constraints = NSLayoutConstraint.constraintsWithVisualFormat(constraints, options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: views)
         self.addConstraints(constraints)
@@ -22,7 +22,7 @@ extension UIView {
     
     func addConstraint(alignmentConstraint: NSLayoutAttribute, forView view: UIView) {
 
-        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.translatesAutoresizingMaskIntoConstraints = false
         let centerConstraint = NSLayoutConstraint(
             item: view,
             attribute: alignmentConstraint,
@@ -37,7 +37,7 @@ extension UIView {
     
     func addMarginConstraintToView(view: UIView, side: NSLayoutAttribute, value: Int, target: UIView?, targetSide: NSLayoutAttribute?) {
         
-        view.setTranslatesAutoresizingMaskIntoConstraints(false)
+        view.translatesAutoresizingMaskIntoConstraints = false
         if let target = target {
             let centerConstraint = NSLayoutConstraint(
                 item: view,

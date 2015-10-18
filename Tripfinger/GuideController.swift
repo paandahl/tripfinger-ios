@@ -101,7 +101,7 @@ class GuideController: UITableViewController {
 }
 
 // MARK: - Table data source
-extension GuideController: UITableViewDataSource {
+extension GuideController {
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 4;
@@ -135,19 +135,19 @@ extension GuideController: UITableViewDataSource {
                 return cell
             }
             else {
-                let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.loadingCell, forIndexPath: indexPath) as! UITableViewCell
+                let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.loadingCell, forIndexPath: indexPath)
                 let indicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
                 indicator.startAnimating()
                 return cell
             }
         }
         else if indexPath.section == 1 && guideItemExpanded {
-            let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.categoryCell, forIndexPath: indexPath) as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.categoryCell, forIndexPath: indexPath)
             cell.textLabel?.text = guideSections[indexPath.row].name
             return cell
         }
         else {
-            let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.categoryCell, forIndexPath: indexPath) as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.categoryCell, forIndexPath: indexPath)
             let index: Int
             if indexPath.section == 2 {
                 index = indexPath.row
@@ -194,7 +194,6 @@ extension GuideController {
                 
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let vc = storyboard.instantiateViewControllerWithIdentifier("guideController") as! GuideController
-                let guideText = GuideText()
                 
                 vc.currentItem = guideSections[indexPath.row]
                 vc.guideItemExpanded = true

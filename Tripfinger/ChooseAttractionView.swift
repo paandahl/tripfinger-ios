@@ -42,29 +42,28 @@ class ChooseAttractionView: MDCSwipeToChooseView {
         self.attraction = attraction
         
         self.imageView.image = UIImage(named: "Placeholder")
-        self.imageView.loadImageWithUrl(attraction.images.keys.array[0])
+        self.imageView.loadImageWithUrl(Array(attraction.images.keys)[0])
         
-        self.autoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
-        UIViewAutoresizing.FlexibleBottomMargin
+        self.autoresizingMask = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleBottomMargin]
         
         self.imageView.autoresizingMask = self.autoresizingMask
         constructInformationView()
     }
-    
-    required init(coder aDecoder: NSCoder) {
+
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     func constructInformationView() -> Void{
-        var bottomHeight:CGFloat = 60.0
-        var bottomFrame:CGRect = CGRectMake(0,
+        let bottomHeight:CGFloat = 60.0
+        let bottomFrame:CGRect = CGRectMake(0,
             CGRectGetHeight(self.bounds) - bottomHeight,
             CGRectGetWidth(self.bounds),
             bottomHeight);
         self.informationView = UIView(frame:bottomFrame)
         self.informationView.backgroundColor = UIColor.whiteColor()
         self.informationView.clipsToBounds = true
-        self.informationView.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleTopMargin
+        self.informationView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleTopMargin]
         self.addSubview(self.informationView)
         constructNameLabel()
         constructCameraImageLabelView()
@@ -73,9 +72,9 @@ class ChooseAttractionView: MDCSwipeToChooseView {
     }
     
     func constructNameLabel() -> Void{
-        var leftPadding:CGFloat = 12.0
-        var topPadding:CGFloat = 17.0
-        var frame:CGRect = CGRectMake(leftPadding,
+        let leftPadding:CGFloat = 12.0
+        let topPadding:CGFloat = 17.0
+        let frame:CGRect = CGRectMake(leftPadding,
             topPadding,
             floor(CGRectGetWidth(self.informationView.frame)/2),
             CGRectGetHeight(self.informationView.frame) - topPadding)
@@ -105,10 +104,10 @@ class ChooseAttractionView: MDCSwipeToChooseView {
     }
     
     func buildImageLabelViewLeftOf(x:CGFloat, image:UIImage, text:String) -> ImagelabelView{
-        var frame:CGRect = CGRect(x:x-ChoosePersonViewImageLabelWidth, y: 0,
+        let frame:CGRect = CGRect(x:x-ChoosePersonViewImageLabelWidth, y: 0,
             width: ChoosePersonViewImageLabelWidth,
             height: CGRectGetHeight(self.informationView.bounds))
-        var view:ImagelabelView = ImagelabelView(frame:frame, image:image, text:text)
+        let view:ImagelabelView = ImagelabelView(frame:frame, image:image, text:text)
         view.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin
         return view
     }

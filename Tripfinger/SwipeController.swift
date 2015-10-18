@@ -13,9 +13,9 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     var frontCardView: ChooseAttractionView!
     var orignalFrontCardFrame: CGRect!
     var backCardView: ChooseAttractionView!
-    var backCardVerticalConstraints = [AnyObject]()
+    var backCardVerticalConstraints = [NSLayoutConstraint]()
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -72,7 +72,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     func addBackCardConstraints() {
         let views = ["card": backCardView, "toolbar": toolbar]
         view.addConstraints("H:[card(300)]", forViews: views)
-        backCardVerticalConstraints = view.addConstraints("V:[toolbar]-20-[card]-60-|", forViews: views)
+        backCardVerticalConstraints = view.addConstraints("V:[toolbar]-20-[card]-60-|", forViews: views) as! [NSLayoutConstraint]
         view.addConstraint(NSLayoutAttribute.CenterX, forView: backCardView)
     }
     
@@ -90,7 +90,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     // This is called when a user didn't fully swipe left or right.
     func viewDidCancelSwipe(view: UIView) -> Void{
         
-        println("You couldn't decide on \(currentAttraction.name)");
+        print("You couldn't decide on \(currentAttraction.name)");
     }
     
     // This is called then a user swipes the view fully left or right.
@@ -99,11 +99,11 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
         // MDCSwipeToChooseView shows "NOPE" on swipes to the left,
         // and "LIKED" on swipes to the right.
         if(wasChosenWithDirection == MDCSwipeDirection.Left){
-            println("You noped: \(currentAttraction.name)")
+            print("You noped: \(currentAttraction.name)")
         }
         else{
             
-            println("You liked: \(currentAttraction.name)")
+            print("You liked: \(currentAttraction.name)")
         }
         
         // MDCSwipeToChooseView removes the view from the view hierarchy
@@ -150,13 +150,13 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
         // Each take an "options" argument. Here, we specify the view controller as
         // a delegate, and provide a custom callback that moves the back card view
         // based on how far the user has panned the front card view.
-        var options:MDCSwipeToChooseViewOptions = MDCSwipeToChooseViewOptions()
+        let options:MDCSwipeToChooseViewOptions = MDCSwipeToChooseViewOptions()
         options.delegate = self
         //options.threshold = 160.0
         options.onPan = { state -> Void in
             if(self.backCardView != nil) {
 //                var frame:CGRect = self.frontCardViewFrame()
-                var frame = self.orignalFrontCardFrame
+                let frame = self.orignalFrontCardFrame
                 self.backCardView.frame = CGRectMake(frame.origin.x, frame.origin.y+10-(state.thresholdRatio * 10.0), CGRectGetWidth(frame), CGRectGetHeight(frame))
             }
         }
@@ -165,23 +165,23 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
         // Create a personView with the top person in the people array, then pop
         // that person off the stack.
         
-        var personView: ChooseAttractionView = ChooseAttractionView(frame: frame, attraction: self.attractions[0], options: options)
+        let personView: ChooseAttractionView = ChooseAttractionView(frame: frame, attraction: self.attractions[0], options: options)
         self.attractions.removeAtIndex(0)
         return personView
         
     }
     func frontCardViewFrame() -> CGRect{
-        var horizontalPadding:CGFloat = 20.0
-        var topPadding:CGFloat = 60.0
-        var bottomPadding:CGFloat = 130.0
+        let horizontalPadding:CGFloat = 20.0
+        let topPadding:CGFloat = 60.0
+        let bottomPadding:CGFloat = 130.0
         return CGRectMake(horizontalPadding,topPadding,CGRectGetWidth(self.view.frame) - (horizontalPadding * 2), CGRectGetHeight(self.view.frame) - bottomPadding)
     }
     func backCardViewFrame() ->CGRect{
-        var frontFrame:CGRect = frontCardViewFrame()
+        let frontFrame:CGRect = frontCardViewFrame()
         return CGRectMake(frontFrame.origin.x, frontFrame.origin.y + 10.0, CGRectGetWidth(frontFrame), CGRectGetHeight(frontFrame))
     }
     func constructNopeButton() -> Void{
-        let button:UIButton =  UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        let button:UIButton =  UIButton(type: UIButtonType.System)
         let image:UIImage = UIImage(named:"nope")!
         button.frame = CGRectMake(ChooseAttractionButtonHorizontalPadding, CGRectGetMaxY(self.backCardView.frame) + ChooseAttractionButtonVerticalPadding, image.size.width, image.size.height)
         button.setImage(image, forState: UIControlState.Normal)
@@ -191,7 +191,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     }
     
     func constructLikedButton() -> Void{
-        let button:UIButton = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+        let button:UIButton = UIButton(type: UIButtonType.System)
         let image:UIImage = UIImage(named:"liked")!
         button.frame = CGRectMake(CGRectGetMaxX(self.view.frame) - image.size.width - ChooseAttractionButtonHorizontalPadding, CGRectGetMaxY(self.backCardView.frame) + ChooseAttractionButtonVerticalPadding, image.size.width, image.size.height)
         button.setImage(image, forState:UIControlState.Normal)

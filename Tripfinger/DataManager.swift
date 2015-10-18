@@ -8,10 +8,14 @@ class DataManager {
             let filePath = NSBundle.mainBundle().pathForResource("/Data/Data", ofType:"json")
             
             var readError:NSError?
-            if let data = NSData(contentsOfFile:filePath!,
-                options: NSDataReadingOptions.DataReadingUncached,
-                error: &readError) {
+            do {
+                let data = try NSData(contentsOfFile:filePath!,
+                    options: NSDataReadingOptions.DataReadingUncached)
                     success(data: data)
+            } catch let error as NSError {
+                readError = error
+            } catch {
+                fatalError()
             }
         })
     }

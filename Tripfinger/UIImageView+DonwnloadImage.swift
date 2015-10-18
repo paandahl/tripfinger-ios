@@ -20,7 +20,7 @@ extension UIImageView {
             [weak self] url, response, error in
             
             if error == nil && url != nil,
-                let data = NSData(contentsOfURL: url),
+                let data = NSData(contentsOfURL: url!),
                 let image = UIImage(data: data) {
                     dispatch_async(dispatch_get_main_queue()) {
                         if let strongSelf = self {
