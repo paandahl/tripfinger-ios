@@ -12,8 +12,6 @@ import Tripfinger
 
 class ContentServiceTest: XCTestCase {
     
-    var contentService = ContentService()
-
     override func setUp() {
         super.setUp()
         continueAfterFailure = false
@@ -22,28 +20,40 @@ class ContentServiceTest: XCTestCase {
     override func tearDown() {
         super.tearDown()
     }
+    
+    func getBrusselsId(handler: Int -> ()) {
+        ContentService.getRegions() {
+            regions in
+            
+            handler(regions[0].id)
+        }
+    }
 
     func testGetGuideTextsForGuideItem() {
         var guideItem = GuideItem()
-        guideItem.id = Session().currentRegion
         var readyExpectation = expectationWithDescription("ready")
-        
-        contentService.getGuideTextsForGuideItem(guideItem) {
-            guideTexts in
-            
-            println(guideTexts.count)
-            XCTAssertEqual(12, guideTexts.count)
 
-            var foundUnderstand = false
-            for guideText in guideTexts {
-                if guideText.name == "Understand" {
-                    XCTAssertNotNil(guideText.description)
-                    XCTAssertNotEqual("", guideText.description!)
-                    foundUnderstand = true
+        getBrusselsId() {
+            brusselsId in
+
+            guideItem.id = brusselsId
+            ContentService.getGuideTextsForGuideItem(guideItem) {
+                guideTexts in
+                
+                println(guideTexts.count)
+                XCTAssertEqual(12, guideTexts.count)
+                
+                var foundUnderstand = false
+                for guideText in guideTexts {
+                    if guideText.name == "Understand" {
+                        XCTAssertNotNil(guideText.description)
+                        XCTAssertNotEqual("", guideText.description!)
+                        foundUnderstand = true
+                    }
                 }
+                XCTAssertTrue(foundUnderstand)
+                readyExpectation.fulfill()
             }
-            XCTAssertTrue(foundUnderstand)
-            readyExpectation.fulfill()
         }
         
         waitForExpectationsWithTimeout(15, handler: { error in
@@ -53,22 +63,24 @@ class ContentServiceTest: XCTestCase {
     
     func testGetRegionWithId() {
         var guideItem = GuideItem()
-        guideItem.id = Session().currentRegion
         var readyExpectation = expectationWithDescription("ready")
 
-        self.contentService.getRegions() {
-            regions in
-
-            self.contentService.getRegionWithId(regions[0].id) {
-                guideItem in
+        getBrusselsId() {
+            brusselsId in
+            
+            guideItem.id = brusselsId
+            ContentService.getRegions() {
+                regions in
                 
-                XCTAssertEqual(12, guideItem.guideSections.count)
-                readyExpectation.fulfill()
+                ContentService.getRegionWithId(regions[0].id) {
+                    guideItem in
+                    
+                    XCTAssertEqual(12, guideItem.guideSections.count)
+                    readyExpectation.fulfill()
+                }
             }
-
         }
 
-        
         waitForExpectationsWithTimeout(15, handler: { error in
             XCTAssertNil(error, "Error")
         })
@@ -76,14 +88,18 @@ class ContentServiceTest: XCTestCase {
 
     func testGetCategoryDescription() {
         var guideItem = Region()
-        guideItem.id = Session().currentRegion
         var readyExpectation = expectationWithDescription("ready")
 
-        contentService.getDescriptionForCategory(Attraction.Category.TRANSPORTATION.rawValue, forRegion: guideItem) {
-            guideText in
+        getBrusselsId() {
+            brusselsId in
             
-            XCTAssertNil(guideText.description)
-            readyExpectation.fulfill()
+            guideItem.id = brusselsId
+            ContentService.getDescriptionForCategory(Attraction.Category.TRANSPORTATION.rawValue, forRegion: guideItem) {
+                guideText in
+                
+                XCTAssertNil(guideText.description)
+                readyExpectation.fulfill()
+            }
         }
         
         waitForExpectationsWithTimeout(15, handler: { error in

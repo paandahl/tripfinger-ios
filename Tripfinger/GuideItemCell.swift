@@ -22,21 +22,17 @@ class GuideItemCell: UITableViewCell {
     var contentSize: CGRect = CGRectZero
     
     override func awakeFromNib() {
-        println("awake from nib")
         if !readMoreButton.isDescendantOfView(self.contentView) {
-            println("adding button back")
             self.contentView.addSubview(readMoreButton)
         }
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        println("init")
     }
     
     override func updateConstraints() {
         super.updateConstraints()
-        println("updateconstraints")
         
         if readMoreButton.isDescendantOfView(self.contentView) {
             self.contentView.addConstraints("V:[readMore]-10-|", forViews: ["readMore": readMoreButton])
@@ -46,13 +42,7 @@ class GuideItemCell: UITableViewCell {
         }
     }
     
-    override func prepareForReuse() {
-        println("prepare for reuse")
-    }
-    
     func expand() {
-        println("Expanding")
-        
         contentHeight.constant = contentSize.height
         readMoreButton.removeFromSuperview()
         setNeedsUpdateConstraints()

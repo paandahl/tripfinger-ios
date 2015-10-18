@@ -19,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
         let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as! [String]
         println("Path: \(path[0])")
 
+        var session = Session()
 
         let apiKey = "0511a5e338b00db8b426fb8ec0a7fb2ebd6816bb9324425d4edd9b726e40a3d5"
         var initSettings: SKMapsInitSettings = SKMapsInitSettings()
@@ -30,46 +31,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
         if let tabBarViewControllers = tabBarController.viewControllers {
             var navigationController = tabBarViewControllers[0] as! UINavigationController
             let guideController = navigationController.viewControllers[0] as! GuideController
-            guideController.contentService = ContentService()
-        }
+            guideController.session = session
+
+            navigationController = tabBarViewControllers[1] as! UINavigationController
+            let swipeController = navigationController.viewControllers[0] as! SwipeController
+            swipeController.session = session
+
+            navigationController = tabBarViewControllers[2] as! UINavigationController
+            let mapController = navigationController.viewControllers[0] as! MapDisplayViewController
+            mapController.session = session
+}
         
 
         
-        DataManager.getAttractionDateFromFileWithSuccess { (data) -> Void in
-            
-            var attractions = [Attraction]()
-            let json = JSON(data: data)
-            if let attractionsJSON = json["attractions"].array {
-                for attractionJSON in attractionsJSON {
-                    if let title = attractionJSON["title"].string {
-                        if let coordinateX = attractionJSON["coordinateX"].double {
-                            if let coordinateY = attractionJSON["coordinateY"].double {
-                                var attraction = Attraction(title: title, coordinateX: coordinateX, coordinateY: coordinateY)
-                                if let image = attractionJSON["image"].string {
-                                    attraction.image = UIImage(named: image)
-                                }
-                                attractions.append(attraction)
-                            }
-                        }
-                    }
-                }
-            }
-            
-            let tabBarController = self.window!.rootViewController as! UITabBarController
-            
-            if let tabBarViewControllers = tabBarController.viewControllers {
-                
-                var navigationController = tabBarViewControllers[2] as! UINavigationController
-                let mapController = navigationController.viewControllers[0] as! MapDisplayViewController
-                let forceTheViewToLoad = mapController.view
-                mapController.attractions = attractions
-                mapController.addAnnotations()
-
-                navigationController = tabBarViewControllers[1] as! UINavigationController
-                let swipeController = navigationController.viewControllers[0] as! SwipeController
-                swipeController.attractions = attractions
-            }
-        }
+//        DataManager.getAttractionDateFromFileWithSuccess { (data) -> Void in
+//            
+//            var attractions = [Attraction]()
+//            let json = JSON(data: data)
+//            if let attractionsJSON = json["attractions"].array {
+//                for attractionJSON in attractionsJSON {
+//                    if let title = attractionJSON["title"].string {
+//                        if let coordinateX = attractionJSON["coordinateX"].double {
+//                            if let coordinateY = attractionJSON["coordinateY"].double {
+//                                var attraction = Attraction(title: title, coordinateX: coordinateX, coordinateY: coordinateY)
+//                                if let image = attractionJSON["image"].string {
+//                                    attraction.image = UIImage(named: image)
+//                                }
+//                                attractions.append(attraction)
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//            
+//            let tabBarController = self.window!.rootViewController as! UITabBarController
+//            
+//            if let tabBarViewControllers = tabBarController.viewControllers {
+//                
+//                var navigationController = tabBarViewControllers[2] as! UINavigationController
+//                let mapController = navigationController.viewControllers[0] as! MapDisplayViewController
+//                let forceTheViewToLoad = mapController.view
+//                mapController.attractions = attractions
+//                mapController.addAnnotations()
+//
+//                navigationController = tabBarViewControllers[1] as! UINavigationController
+//                let swipeController = navigationController.viewControllers[0] as! SwipeController
+//                swipeController.attractions = attractions
+//            }
+//        }
 
         return true
     }

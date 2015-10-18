@@ -41,9 +41,8 @@ class ChooseAttractionView: MDCSwipeToChooseView {
         super.init(frame: frame, options: options)
         self.attraction = attraction
         
-        if let image = self.attraction.image {
-            self.imageView.image = image
-        }
+        self.imageView.image = UIImage(named: "Placeholder")
+        self.imageView.loadImageWithUrl(attraction.images.keys.array[0])
         
         self.autoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
         UIViewAutoresizing.FlexibleBottomMargin
@@ -81,7 +80,7 @@ class ChooseAttractionView: MDCSwipeToChooseView {
             floor(CGRectGetWidth(self.informationView.frame)/2),
             CGRectGetHeight(self.informationView.frame) - topPadding)
         self.nameLabel = UILabel(frame:frame)
-        self.nameLabel.text = "\(attraction.title)"
+        self.nameLabel.text = "\(attraction.name!)"
         self.nameLabel.numberOfLines = 0
         self.nameLabel.lineBreakMode = .ByWordWrapping
         self.informationView .addSubview(self.nameLabel)

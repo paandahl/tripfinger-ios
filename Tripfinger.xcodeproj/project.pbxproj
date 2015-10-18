@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		250651EB1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250651EA1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift */; };
 		25243E621BC4072000EF5F64 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E611BC4072000EF5F64 /* TabBarController.swift */; };
 		25243E641BC410F400EF5F64 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E631BC410F400EF5F64 /* Region.swift */; };
 		25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E651BC4110E00EF5F64 /* GuideItem.swift */; };
@@ -82,6 +83,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		250651EA1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DonwnloadImage.swift"; sourceTree = "<group>"; };
 		25243E611BC4072000EF5F64 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		25243E631BC410F400EF5F64 /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		25243E651BC4110E00EF5F64 /* GuideItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItem.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 				25B5068C1BB3FDC300A36BA1 /* BridgingHeader.h */,
 				25D707D21BCA7620005A4BBA /* UINib+RegisterNib.swift */,
 				25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */,
+				250651EA1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 			files = (
 				25C9DFD31B9CD84200C516C1 /* MapDisplayViewController.swift in Sources */,
 				25D707CE1BC82232005A4BBA /* CategoryCell.swift in Sources */,
+				250651EB1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift in Sources */,
 				25D707D31BCA7620005A4BBA /* UINib+RegisterNib.swift in Sources */,
 				257922D41BA488EB005EA785 /* DataManager.swift in Sources */,
 				25B5068B1BB3FD5800A36BA1 /* SwipeController.swift in Sources */,

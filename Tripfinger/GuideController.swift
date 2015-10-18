@@ -14,22 +14,18 @@ class GuideController: UITableViewController {
         static let loadingCell = "LoadingCell"
     }
     
+    var session: Session!
+
     var currentItem: GuideItem?
     var guideSections = [GuideText]()
     var currentCategoryDescriptions = [GuideText]()
-    var contentService: ContentService!
     var guideItemExpanded = false
     var guideITemCreatedAsExpanded = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let currentItem = currentItem {
-            title = currentItem.name
-        }
-        else {
-            title = ""
-        }
+        title = (currentItem != nil) ? currentItem!.name : ""
         
         UINib.registerNib(TableViewCellIdentifiers.guideItemCell, forTableView: tableView)
         UINib.registerNib(TableViewCellIdentifiers.categoryCell, forTableView: tableView)
@@ -48,43 +44,34 @@ class GuideController: UITableViewController {
             }
         }
         else {
-            contentService.getRegions() {
+            ContentService.getRegions() {
                 regions in self.loadRegionWithID(regions[0].id)
             }
         }
     }
     
     func loadRegionWithID(regionId: Int) {
-        contentService.getRegionWithId(regionId) {
+        
+        ContentService.getRegionWithId(regionId) {
             region in
             
             self.currentItem = region
             self.title = region.name
             self.guideSections = region.guideSections
-            println("guideSections for region: \(self.guideSections.count)")
+            self.session.currentRegion = region
             self.tableView.reloadData()
         }
     }
     
     func loadGuideTextWithId(guideTextId: Int) {
-        contentService.getGuideTextWithId(guideTextId) {
+        ContentService.getGuideTextWithId(guideTextId) {
             guideText in
             
             self.currentItem = guideText
             self.guideSections = guideText.guideSections
-            println("guideSections for section: \(self.guideSections.count)")
             self.tableView.reloadData()
         }
     }
-    
-//    func showGuideSect() {
-//        contentService.getGuideTextsForGuideItem(currentItem!) {
-//            guideTexts in
-//            
-//            self.currentTexts = guideTexts
-//            self.tableView.reloadData()
-//        }
-//    }
     
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
@@ -139,9 +126,7 @@ extension GuideController: UITableViewDataSource {
         
         if indexPath.section == 0 {
             if let currentItem = currentItem {
-                println("fetching cell")
                 let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.guideItemCell, forIndexPath: indexPath) as! GuideItemCell
-                println("fetched cell")
                 cell.setContent(currentItem)
                 cell.delegate = self
                 if (guideItemExpanded) {
@@ -199,7 +184,6 @@ extension GuideController {
             let vc = storyboard.instantiateViewControllerWithIdentifier("guideController") as! GuideController
             vc.currentItem = guideSections[indexPath.row]
             vc.guideItemExpanded = true
-            vc.contentService = contentService
             self.navigationController?.pushViewController(vc, animated: true)
         }
         else if indexPath.section == 2 {
@@ -214,7 +198,6 @@ extension GuideController {
                 
                 vc.currentItem = guideSections[indexPath.row]
                 vc.guideItemExpanded = true
-                vc.contentService = contentService
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }

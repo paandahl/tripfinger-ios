@@ -2,21 +2,6 @@ import Foundation
 
 public class Attraction: GuideListing {
     
-    var coordinateX: Double?
-    var coordinateY: Double?
-    var title: String
-    var image: UIImage?
-    
-    public required init(title: String, coordinateX: Double?, coordinateY: Double?) {
-        self.title = title
-        if let uCoordinateX = coordinateX {
-            if let uCoordinateY = coordinateY {
-                self.coordinateX = uCoordinateX
-                self.coordinateY = uCoordinateY
-            }
-        }
-    }
-    
     public enum Category: Int {
         case EXPLORE_CITY = 210
         case ACTIVITY_HIKE_DAYTRIP = 220

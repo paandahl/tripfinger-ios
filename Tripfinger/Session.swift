@@ -12,6 +12,16 @@ public class Session {
     
     public init() {}
     
-    public var currentRegion = 4565153488044032
+    public var currentRegion: Region?
+    public var currentAttractions = [Attraction]()
     
+    public func loadAttractions(handler: () -> ()) {
+        ContentService.getAttractionsForRegion(self.currentRegion!) {
+            attractions in
+            
+            self.currentAttractions = attractions
+            handler()
+        }
+
+    }
 }

@@ -4,9 +4,11 @@ import MDCSwipeToChoose
 class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     
     @IBOutlet weak var toolbar: UIToolbar!
+    var session: Session!
+    
     var attractions:[Attraction] = []
-    let ChooseAttractionButtonHorizontalPadding:CGFloat = 80.0
-    let ChooseAttractionButtonVerticalPadding:CGFloat = 20.0
+    let ChooseAttractionButtonHorizontalPadding: CGFloat = 80.0
+    let ChooseAttractionButtonVerticalPadding: CGFloat = 20.0
     var currentAttraction: Attraction!
     var frontCardView: ChooseAttractionView!
     var orignalFrontCardFrame: CGRect!
@@ -24,6 +26,16 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     override func viewDidLoad(){
         super.viewDidLoad()
         
+        if (session.currentAttractions.count > 0) {
+            attractions = session.currentAttractions
+            displayCards()
+        }
+        else {
+            loadAttractions()
+        }
+    }
+    
+    func displayCards() {
         // Display the first ChoosePersonView in front. Users can swipe to indicate
         // whether they like or dislike the item displayed.
         setFrontCardViewFunc(popAttractionViewWithFrame(frontCardViewFrame())!)
@@ -36,11 +48,14 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
         backCardView = popAttractionViewWithFrame(backCardViewFrame())!
         view.insertSubview(backCardView, belowSubview: frontCardView)
         addBackCardConstraints()
-
-        // Add buttons to programmatically swipe the view left or right.
-        // See the `nopeFrontCardView` and `likeFrontCardView` methods.
-        constructNopeButton()
-        constructLikedButton()
+    }
+    
+    func loadAttractions() {
+        
+        session.loadAttractions() {
+            self.attractions = self.session.currentAttractions
+            self.displayCards()
+        }
     }
     
     @IBAction func back() {
@@ -62,7 +77,9 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     }
     
     override func viewDidLayoutSubviews() {
-        orignalFrontCardFrame = frontCardView.frame
+        if let frontCardView = frontCardView {
+            orignalFrontCardFrame = frontCardView.frame
+        }
     }
     
     func suportedInterfaceOrientations() -> UIInterfaceOrientationMask{
@@ -73,7 +90,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     // This is called when a user didn't fully swipe left or right.
     func viewDidCancelSwipe(view: UIView) -> Void{
         
-        println("You couldn't decide on \(currentAttraction.title)");
+        println("You couldn't decide on \(currentAttraction.name)");
     }
     
     // This is called then a user swipes the view fully left or right.
@@ -82,11 +99,11 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
         // MDCSwipeToChooseView shows "NOPE" on swipes to the left,
         // and "LIKED" on swipes to the right.
         if(wasChosenWithDirection == MDCSwipeDirection.Left){
-            println("You noped: \(currentAttraction.title)")
+            println("You noped: \(currentAttraction.name)")
         }
         else{
             
-            println("You liked: \(currentAttraction.title)")
+            println("You liked: \(currentAttraction.name)")
         }
         
         // MDCSwipeToChooseView removes the view from the view hierarchy

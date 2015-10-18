@@ -9,6 +9,7 @@
 import SKMaps
 class MapDisplayViewController : UIViewController, SKMapViewDelegate {
 
+    var session: Session!
     var attractions: [Attraction]
     var mapView: SKMapView!
     
@@ -39,20 +40,35 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
         mapView.visibleRegion = region
         
         self.view.addSubview(mapView)
+        
+        if (session.currentAttractions.count > 0) {
+            attractions = session.currentAttractions
+            addAnnotations()
+        }
+        else {
+            loadAttractions()
+        }
     }
     
+    func loadAttractions() {
+        
+        session.loadAttractions() {
+            self.attractions = self.session.currentAttractions
+            self.addAnnotations()
+        }
+    }
+
+    
     func addAnnotations() {
+        
+        println("adding annotations")
 
         var identifier: Int32 = 0
         for attraction in attractions {
             var annotation = SKAnnotation()
             annotation.identifier = identifier
             annotation.annotationType = SKAnnotationType.Purple
-            if let uCoordinateX = attraction.coordinateX {
-                if let uCoordinateY = attraction.coordinateY {
-                    annotation.location = CLLocationCoordinate2DMake(uCoordinateX, uCoordinateY)
-                }
-            }
+            annotation.location = CLLocationCoordinate2DMake(attraction.latitude, attraction.longitude)
             let animationSettings = SKAnimationSettings()
             mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
             identifier += 1
@@ -75,7 +91,7 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
     
     func mapView(mapView:SKMapView!, didSelectAnnotation annotation:SKAnnotation!) {
         let attraction = attractions[Int(annotation.identifier)]
-        mapView.calloutView.titleLabel.text = attraction.title;
+        mapView.calloutView.titleLabel.text = attraction.name;
         mapView.showCalloutForAnnotation(annotation, withOffset: CGPointMake(0, 42), animated: true);
     }
 
