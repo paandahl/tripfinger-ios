@@ -17,14 +17,7 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
     override func viewDidLoad() {
     
         super.viewDidLoad()
-        
-        let searchBar:UISearchBar = UISearchBar(frame: CGRectMake(0, 0, 200, 20))
-        let searchBarItem = UIBarButtonItem(customView: searchBar)
-        
-        
-//        UIBarButtonItem *searchBarItem = [[UIBarButtonItem alloc] initWithCustomView:searchBar];
-        self.navigationItem.rightBarButtonItem = searchBarItem;
-        
+                
         mapView = SKMapView(frame: CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame)))
         mapView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
         mapView.delegate = self

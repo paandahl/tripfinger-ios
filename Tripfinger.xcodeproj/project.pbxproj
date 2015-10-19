@@ -37,6 +37,10 @@
 		25C9E0041B9CD9BE00C516C1 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9E0031B9CD9BE00C516C1 /* CoreMotion.framework */; };
 		25C9E0061B9CD9D100C516C1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9E0051B9CD9D100C516C1 /* libz.dylib */; };
 		25C9E0081B9CD9E000C516C1 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9E0071B9CD9E000C516C1 /* libc++.dylib */; };
+		25D436301BD538810016E362 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4362F1BD538810016E362 /* SearchViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		25D436321BD548400016E362 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D436311BD548400016E362 /* SearchService.swift */; settings = {ASSET_TAGS = (); }; };
+		25D436361BD5546A0016E362 /* SearchServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D436351BD5546A0016E362 /* SearchServiceTest.swift */; settings = {ASSET_TAGS = (); }; };
+		25D4363A1BD57BAF0016E362 /* MultiStepSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D436391BD57BAF0016E362 /* MultiStepSearch.m */; settings = {ASSET_TAGS = (); }; };
 		25D707BA1BC6606E005A4BBA /* GuideController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707B91BC6606E005A4BBA /* GuideController.swift */; };
 		25D707BD1BC66165005A4BBA /* GuideItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D707BC1BC66165005A4BBA /* GuideItemCell.xib */; };
 		25D707BF1BC669E6005A4BBA /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D707BE1BC669E6005A4BBA /* CategoryCell.xib */; };
@@ -114,6 +118,11 @@
 		25C9E0031B9CD9BE00C516C1 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		25C9E0051B9CD9D100C516C1 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		25C9E0071B9CD9E000C516C1 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		25D4362F1BD538810016E362 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		25D436311BD548400016E362 /* SearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		25D436351BD5546A0016E362 /* SearchServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchServiceTest.swift; sourceTree = "<group>"; };
+		25D436381BD57BAF0016E362 /* MultiStepSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiStepSearch.h; sourceTree = "<group>"; };
+		25D436391BD57BAF0016E362 /* MultiStepSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiStepSearch.m; sourceTree = "<group>"; };
 		25D707B91BC6606E005A4BBA /* GuideController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideController.swift; sourceTree = "<group>"; };
 		25D707BC1BC66165005A4BBA /* GuideItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuideItemCell.xib; sourceTree = "<group>"; };
 		25D707BE1BC669E6005A4BBA /* CategoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
@@ -233,6 +242,7 @@
 				25B5068A1BB3FD5800A36BA1 /* SwipeController.swift */,
 				25243E611BC4072000EF5F64 /* TabBarController.swift */,
 				25D707B91BC6606E005A4BBA /* GuideController.swift */,
+				25D4362F1BD538810016E362 /* SearchViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -287,6 +297,7 @@
 				25F048E11BCC365C002DE14E /* ContentServiceTest.swift */,
 				25C9DFE41B9CD84200C516C1 /* Supporting Files */,
 				25C9DFE61B9CD84200C516C1 /* TripfingerTests.swift */,
+				25D436351BD5546A0016E362 /* SearchServiceTest.swift */,
 			);
 			path = TripfingerTests;
 			sourceTree = "<group>";
@@ -318,7 +329,10 @@
 		25D707C41BC6BC25005A4BBA /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				25D436381BD57BAF0016E362 /* MultiStepSearch.h */,
+				25D436391BD57BAF0016E362 /* MultiStepSearch.m */,
 				25D707C51BC6BC34005A4BBA /* ContentService.swift */,
+				25D436311BD548400016E362 /* SearchService.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -497,6 +511,7 @@
 				25C9DFD31B9CD84200C516C1 /* MapDisplayViewController.swift in Sources */,
 				25D707CE1BC82232005A4BBA /* CategoryCell.swift in Sources */,
 				250651EB1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift in Sources */,
+				25D4363A1BD57BAF0016E362 /* MultiStepSearch.m in Sources */,
 				25D707D31BCA7620005A4BBA /* UINib+RegisterNib.swift in Sources */,
 				257922D41BA488EB005EA785 /* DataManager.swift in Sources */,
 				25B5068B1BB3FD5800A36BA1 /* SwipeController.swift in Sources */,
@@ -507,6 +522,7 @@
 				25D707CA1BC6CD31005A4BBA /* GuideListing.swift in Sources */,
 				25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */,
 				25B5068F1BB4009600A36BA1 /* ChooseAttractionView.swift in Sources */,
+				25D436301BD538810016E362 /* SearchViewController.swift in Sources */,
 				25D707C31BC6BAA8005A4BBA /* Session.swift in Sources */,
 				25D707CC1BC6D05B005A4BBA /* GuideItemCell.swift in Sources */,
 				257922C71BA308A9005EA785 /* Attraction.swift in Sources */,
@@ -514,6 +530,7 @@
 				25B506911BB401F400A36BA1 /* ImageLabelView.swift in Sources */,
 				25C9DFD11B9CD84200C516C1 /* AppDelegate.swift in Sources */,
 				25D707BA1BC6606E005A4BBA /* GuideController.swift in Sources */,
+				25D436321BD548400016E362 /* SearchService.swift in Sources */,
 				257922D21BA48697005EA785 /* SwiftyJSON.swift in Sources */,
 				25D707C81BC6CD05005A4BBA /* GuideText.swift in Sources */,
 			);
@@ -524,6 +541,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25C9DFE71B9CD84200C516C1 /* TripfingerTests.swift in Sources */,
+				25D436361BD5546A0016E362 /* SearchServiceTest.swift in Sources */,
 				25F048E21BCC365C002DE14E /* ContentServiceTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

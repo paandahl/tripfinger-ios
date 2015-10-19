@@ -1,11 +1,3 @@
-//
-//  ContentServiceTest.swift
-//  Tripfinger
-//
-//  Created by Preben Ludviksen on 12/10/15.
-//  Copyright (c) 2015 Preben Ludviksen. All rights reserved.
-//
-
 import UIKit
 import XCTest
 import Tripfinger
@@ -30,9 +22,11 @@ class ContentServiceTest: XCTestCase {
     }
 
     func testGetGuideTextsForGuideItem() {
-        var guideItem = GuideItem()
-        var readyExpectation = expectationWithDescription("ready")
+        let guideItem = GuideItem()
+        let readyExpectation = expectationWithDescription("ready")
 
+        
+        
         getBrusselsId() {
             brusselsId in
 
@@ -62,8 +56,8 @@ class ContentServiceTest: XCTestCase {
     }
     
     func testGetRegionWithId() {
-        var guideItem = GuideItem()
-        var readyExpectation = expectationWithDescription("ready")
+        let guideItem = GuideItem()
+        let readyExpectation = expectationWithDescription("ready")
 
         getBrusselsId() {
             brusselsId in
@@ -87,8 +81,8 @@ class ContentServiceTest: XCTestCase {
     }
 
     func testGetCategoryDescription() {
-        var guideItem = Region()
-        var readyExpectation = expectationWithDescription("ready")
+        let guideItem = Region()
+        let readyExpectation = expectationWithDescription("ready")
 
         getBrusselsId() {
             brusselsId in

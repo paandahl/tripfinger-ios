@@ -4,5 +4,6 @@
 
 #import <UIKit/UIKit.h>
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
+#import "MultiStepSearch.h"
 
 #endif
