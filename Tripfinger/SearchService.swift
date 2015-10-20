@@ -3,37 +3,21 @@ import SKMaps
 class SearchService: NSObject, SKSearchServiceDelegate {
     var handler: ([SKSearchResult] -> ())!
     let packageCode = "BE"
+    
+    override init() {
+        super.init()
+        SKSearchService.sharedInstance().searchServiceDelegate = self
+        SKSearchService.sharedInstance().searchResultsNumber = 10000
+    }
 
     func getCities(handler: [SKSearchResult] -> ()) {
         self.handler = handler
-        SKSearchService.sharedInstance().searchServiceDelegate = self
-        SKSearchService.sharedInstance().searchResultsNumber = 10000
-        
-        let multiStepSearchObject = SKMultiStepSearchSettings()
-        multiStepSearchObject.listLevel = SKListLevel.CityList
-        multiStepSearchObject.offlinePackageCode = "BE"
-        multiStepSearchObject.searchTerm = ""
-        multiStepSearchObject.parentIndex = 0
-        
-        let searcher = MultiStepSearchViewController()
-        searcher.multiStepObject = multiStepSearchObject
-        searcher.fireSearch()
+        self.searchMapData(SKListLevel.CityList, searchString: "", parent: 0)
     }
     
-    func getStreetsForCity(identifier: UInt64, handler: [SKSearchResult] -> ()) {
+    func getStreetsForCity(identifier: UInt64, searchString: String, handler: [SKSearchResult] -> ()) {
         self.handler = handler
-        SKSearchService.sharedInstance().searchServiceDelegate = self
-        SKSearchService.sharedInstance().searchResultsNumber = 10000
-        
-        let multiStepSearchObject = SKMultiStepSearchSettings()
-        multiStepSearchObject.listLevel = SKListLevel.StreetList
-        multiStepSearchObject.offlinePackageCode = packageCode
-        multiStepSearchObject.searchTerm = "altitude"
-        multiStepSearchObject.parentIndex = 0
-        
-        let searcher = MultiStepSearchViewController()
-        searcher.multiStepObject = multiStepSearchObject
-        searcher.fireSearch()
+        self.searchMapData(SKListLevel.StreetList, searchString: searchString, parent: identifier)
     }
     
     func search(searchString: String, handler: [SKSearchResult] -> ()) {
@@ -48,9 +32,6 @@ class SearchService: NSObject, SKSearchServiceDelegate {
             self.handler = {
                 searchResults in
                 
-                if searchResults.count > 0 {
-                    print("Retrieved \(searchResults.count) results from \(searchResults[0].parentSearchResults)")
-                }
                 searchList.appendContentsOf(searchResults)
                 counter += 1
                 if counter < cities.count {
