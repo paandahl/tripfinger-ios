@@ -113,16 +113,16 @@ class SearchService {
         }
         var filteredResults = [SKSearchResult]()
         for result in results {
-            var keeper = true
-            for secondarySearchString in secondarySearchStrings {
-                if !result.name.lowercaseString.containsString(secondarySearchString) {
-                    keeper = false
-                    break
-                }
-            }
-            if keeper {
+            let nameParts = result.name.lowercaseString.characters.split{ $0 == " " }.map(String.init)
+            
+            if (secondarySearchStrings.reduce(true) {
+                (acc, value) in
+                
+                return acc && nameParts.reduce(false) { $0 || $1.hasPrefix(value) }
+                })
+            {
                 filteredResults.append(result)
-            }
+            }            
         }
         return filteredResults
     }

@@ -57,14 +57,14 @@ class SearchServiceTest: XCTestCase {
     func testSearchForBoulevardDixmude() {
         let startTime = NSDate()
         
-        let readyExpectation = expectationWithDescription("ready")
+        var readyExpectation = expectationWithDescription("ready")
         
         let searchService = SearchService()
-        searchService.search("dixmude") {
+        searchService.search("boulevard dixmude") {
             searchResults in
 
-//            XCTAssertEqual(1, searchResults.count)
-//            XCTAssertEqual("Brussels", searchResults[0].city)
+            XCTAssertEqual(1, searchResults.count)
+            XCTAssertEqual("Brussels", searchResults[0].city)
             readyExpectation.fulfill()
         }
         
@@ -75,6 +75,21 @@ class SearchServiceTest: XCTestCase {
         let endTime = NSDate()
         let executionTime = endTime.timeIntervalSinceDate(startTime)
         print("Time measured: \(executionTime * 1000.0)")
+        
+        readyExpectation = expectationWithDescription("ready")
+        
+        searchService.search("boulevard de dixmude") {
+            searchResults in
+            
+            XCTAssertEqual(1, searchResults.count)
+            XCTAssertEqual("Brussels", searchResults[0].city)
+            readyExpectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { error in
+            XCTAssertNil(error, "Error")
+        })
+
 }
     
     func testUnspecificSearch() {
