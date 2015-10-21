@@ -47,47 +47,53 @@ class SearchService {
     func cancelSearch() {
     }
     
-    func search(searchString: String, handler: [SKSearchResult] -> ()) {
+    func search(fullSearchString: String, handler: [SearchResult] -> ()) {
         SyncManager.run_async() {
+            
+            var searchStrings = fullSearchString.characters.split{ $0 == " " }.map(String.init)
+            searchStrings = searchStrings.sort { $0.characters.count > $1.characters.count }
+            searchStrings = searchStrings.map {return $0.lowercaseString }
+            let primarySearchString = searchStrings[0]
+            let secondarySearchStrings = Array(searchStrings[1..<searchStrings.count])
+
             if self.searchRunning {
-                print("Cancelling search")
                 SKSearchService.sharedInstance().cancelSearch()
                 self.searchCancelled = true
-                
                 usleep(100 * 1000)
-//                while (self.searchRunning) {
-//                }
-                print("Cancelled search")
             }
-            print("Running search")
-            
+
             self.searchCancelled = false
             self.searchRunning = true
             self.getCities() {
                 cities in
                 
-                print("got cities")
                 var counter = 0
-                let city = cities[counter]
-                var searchList = [SKSearchResult]()
+                var searchList = [SearchResult]()
                 
                 self.setDelegate() {
                     searchResults in
+                    
+                    counter += 1
                     
                     if self.searchCancelled {
                         self.searchRunning = false
                         return
                     }
-                    searchList.appendContentsOf(searchResults)
-                    counter += 1
-                    if searchList.count >= self.maxResults {
-                        searchList = Array(searchList[0..<self.maxResults])
-                        self.searchRunning = false
-                        handler(searchList)
+                    
+                    var resultsToParse = self.filterSearchResults(searchResults, secondarySearchStrings: secondarySearchStrings)
+                    var listIsFull = false
+                    if (searchList.count + resultsToParse.count) >= self.maxResults {
+                        let willTake = self.maxResults - searchList.count
+                        resultsToParse = Array(resultsToParse[0..<willTake])
+                        listIsFull = true
                     }
-                    else if counter < cities.count {
+                    let city = cities[counter - 1]
+                    let parsedResults = self.parseSearchResults(resultsToParse, city: city.name)
+                    searchList.appendContentsOf(parsedResults)
+                
+                    if counter < cities.count && !listIsFull {
                         let city = cities[counter]
-                        self.searchMapData(SKListLevel.StreetList, searchString: searchString, parent: city.identifier)
+                        self.searchMapData(SKListLevel.StreetList, searchString: primarySearchString, parent: city.identifier)
                     }
                     else {
                         self.searchRunning = false
@@ -95,11 +101,50 @@ class SearchService {
                     }
                 }
                 
-                self.searchMapData(SKListLevel.StreetList, searchString: searchString, parent: city.identifier)
+                let city = cities[counter]
+                self.searchMapData(SKListLevel.StreetList, searchString: primarySearchString, parent: city.identifier)
             }
         }
     }
     
+    private func filterSearchResults(results: [SKSearchResult], secondarySearchStrings: [String]) -> [SKSearchResult] {
+        if (secondarySearchStrings.count == 0 || results.count == 0) {
+            return results
+        }
+        var filteredResults = [SKSearchResult]()
+        for result in results {
+            var keeper = true
+            for secondarySearchString in secondarySearchStrings {
+                if !result.name.lowercaseString.containsString(secondarySearchString) {
+                    keeper = false
+                    break
+                }
+            }
+            if keeper {
+                filteredResults.append(result)
+            }
+        }
+        return filteredResults
+    }
+    
+    private func parseSearchResults(skobblerResults: [SKSearchResult], city: String) -> [SearchResult] {
+
+        var searchResults = [SearchResult]()
+        for skobblerResult in skobblerResults {
+            searchResults.append(parseSearchResult(skobblerResult, city: city))
+        }
+        return searchResults
+    }
+    
+    private func parseSearchResult(skobblerResult: SKSearchResult, city: String) -> SearchResult {
+        
+        let searchResult = SearchResult()
+        searchResult.name = skobblerResult.name
+        searchResult.latitude = skobblerResult.coordinate.latitude
+        searchResult.longitude = skobblerResult.coordinate.longitude
+        searchResult.city = city
+        return searchResult
+    }
     
     private func searchMapData(listLevel: SKListLevel, searchString: String, parent: UInt64) {
         let multiStepSearchObject = SKMultiStepSearchSettings()

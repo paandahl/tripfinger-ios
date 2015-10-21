@@ -22,7 +22,8 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
         mapView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
         mapView.delegate = self
         mapView.settings.rotationEnabled = false
-        mapView.settings.headingMode = SKHeadingMode.None
+        mapView.settings.orientationIndicatorType = SKOrientationIndicatorType.CustomImage
+        mapView.settings.headingMode = SKHeadingMode.RotatingHeading
         
         // second digit of first coordinate - higher means south, lower means north
         // second digit of second coordinate - higher means west, lower means east
@@ -36,6 +37,7 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
         mapView.visibleRegion = region
         
         self.view.addSubview(mapView)
+        addCircle(50.847031, longitude: 4.353559)
         
         if (session.currentAttractions.count > 0) {
             attractions = session.currentAttractions
@@ -54,6 +56,17 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
         }
     }
 
+    func addCircle(latitude: Double, longitude: Double) {
+        print("Adding circle at: \(latitude), \(longitude)")
+        let circle: SKCircle = SKCircle()
+        circle.centerCoordinate = CLLocationCoordinate2DMake(latitude, longitude)
+        circle.radius = 100;
+        circle.fillColor = UIColor(red: 244/255.0 , green: 71/255.0, blue: 140/255.0, alpha: 0.4)
+        circle.strokeColor = UIColor(red: 244/255.0 , green: 71/255.0, blue: 140/255.0, alpha: 0.4)
+        circle.isMask = false
+        circle.identifier = 300
+        mapView.addCircle(circle)
+    }
     
     func addAnnotations() {
         
@@ -93,5 +106,26 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
 
     func mapView(mapView: SKMapView!, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
         mapView.hideCallout()
+    }
+}
+
+// MARK: - Navigation
+
+extension MapDisplayViewController {
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowSearch" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let searchViewController = navigationController.viewControllers[0] as! SearchViewController
+            searchViewController.delegate = self
+        }
+    }
+}
+
+extension MapDisplayViewController: SearchViewControllerDelegate {
+    
+    func selectedSearchResult(searchResult: SearchResult) {
+        addCircle(searchResult.latitude, longitude: searchResult.longitude)
+
     }
 }

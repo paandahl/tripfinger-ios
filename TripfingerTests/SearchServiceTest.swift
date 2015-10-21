@@ -54,6 +54,29 @@ class SearchServiceTest: XCTestCase {
         })
     }
     
+    func testSearchForBoulevardDixmude() {
+        let startTime = NSDate()
+        
+        let readyExpectation = expectationWithDescription("ready")
+        
+        let searchService = SearchService()
+        searchService.search("dixmude") {
+            searchResults in
+
+//            XCTAssertEqual(1, searchResults.count)
+//            XCTAssertEqual("Brussels", searchResults[0].city)
+            readyExpectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { error in
+            XCTAssertNil(error, "Error")
+        })
+
+        let endTime = NSDate()
+        let executionTime = endTime.timeIntervalSinceDate(startTime)
+        print("Time measured: \(executionTime * 1000.0)")
+}
+    
     func testUnspecificSearch() {
         let readyExpectation = expectationWithDescription("ready")
         
@@ -61,14 +84,13 @@ class SearchServiceTest: XCTestCase {
         searchService.search("di") {
             searchResults in
             
-            XCTAssert(searchResults.count <= 500, "Too many search results")
+            XCTAssert(searchResults.count <= searchService.maxResults, "Too many search results")
             readyExpectation.fulfill()
         }
         
         waitForExpectationsWithTimeout(15, handler: { error in
             XCTAssertNil(error, "Error")
         })
-        
     }
     
 //    func testLocking() {

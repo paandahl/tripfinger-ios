@@ -1,26 +1,27 @@
 import Foundation
 
+protocol SearchViewControllerDelegate: class {
+    func selectedSearchResult(searchResult: SearchResult)
+}
+
 class SearchViewController: UITableViewController {
 
+    var delegate: SearchViewControllerDelegate?
     var searchService: SearchService!
     var searchController: UISearchController!
     var searchBarItem: UIBarButtonItem!
-    var searchResults = [SKSearchResult]()
+    var searchResults = [SearchResult]()
+    var searchText = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
         searchService = SearchService()
-        
-//        let searchBar:UISearchBar = UISearchBar(frame: CGRectMake(0, 0, 200, 20))
-//        let searchBarItem = UIBarButtonItem(customView: searchBar)
-//        self.navigationItem.leftBarButtonItem = searchBarItem;
-//        
+
         searchController = UISearchController(searchResultsController: nil)
         searchController.searchResultsUpdater = self
         searchController.delegate = self
         searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
-        searchController.active = true
         
         // Make sure the that the search bar is visible within the navigation bar.
         searchController.searchBar.delegate = self
@@ -37,13 +38,17 @@ class SearchViewController: UITableViewController {
     }
 }
 
+// MARK: - Search controller functionality
 
 extension SearchViewController: UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
     
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        let searchText = searchController.searchBar.text!
-        if (searchText.characters.count > 1) {
+        let newSearchText = searchController.searchBar.text!
+        if (newSearchText.characters.count > 1 && newSearchText != searchText) {
+            
+            searchText = newSearchText
             searchService.cancelSearch()
+            
             searchService.search(searchText) {
                 searchResults in
                 
@@ -60,7 +65,14 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        dismissViewControllerAnimated(true, completion: nil)
+  
+    }
 }
+
+// MARK: - Talbeview Data Source
 
 extension SearchViewController {
     
@@ -72,7 +84,21 @@ extension SearchViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell", forIndexPath: indexPath)
         let searchResult = searchResults[indexPath.row]
         cell.textLabel?.text = searchResult.name
-        cell.detailTextLabel?.text = String(searchResult.coordinate.latitude)
+        cell.detailTextLabel?.text = searchResult.city
         return cell
+    }
+}
+
+// MARK: Tableview selection
+
+extension SearchViewController {
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        if let delegate = delegate {
+            let searchResult = searchResults[indexPath.row]
+            delegate.selectedSearchResult(searchResult)
+        }
+        searchController.active = false
     }
 }

@@ -23,7 +23,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Brussels" id="EPp-0k-OhF"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="Qu4-cl-ORy">
                             <connections>
-                                <segue destination="M4M-Nd-WT6" kind="presentation" id="j2P-p8-OwC"/>
+                                <segue destination="M4M-Nd-WT6" kind="presentation" identifier="ShowSearch" id="j2P-p8-OwC"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
