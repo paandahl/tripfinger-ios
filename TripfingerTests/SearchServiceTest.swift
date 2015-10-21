@@ -34,19 +34,20 @@ class SearchServiceTest: XCTestCase {
         let readyExpectation = expectationWithDescription("ready")
         
         let searchService = SearchService()
-        searchService.search("altitude") {
+        var fulfilled = false
+        searchService.search("altitude", gradual: true) {
             searchResults in
 
-            print("Results: \(searchResults)")
-            var foundAltitudeCent = false
-            for number in 0...2 {
-                if searchResults[number].name.containsString("Altitude Cent") {
-                    foundAltitudeCent = true
+            for searchResult in searchResults {
+                if searchResult.name.containsString("Altitude Cent") {
+                    searchService.cancelSearch()
+                    if !fulfilled {
+                        fulfilled = true
+                        readyExpectation.fulfill()
+                    }
                     break
                 }
             }
-            XCTAssert(foundAltitudeCent)
-            readyExpectation.fulfill()
         }
         
         waitForExpectationsWithTimeout(15, handler: { error in
@@ -54,7 +55,7 @@ class SearchServiceTest: XCTestCase {
         })
     }
     
-    func testSearchForBoulevardDixmude() {
+    func testSearchForUniqueStreet() {
         let startTime = NSDate()
         
         var readyExpectation = expectationWithDescription("ready")

@@ -49,7 +49,7 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
             searchText = newSearchText
             searchService.cancelSearch()
             
-            searchService.search(searchText) {
+            searchService.search(searchText, gradual: true) {
                 searchResults in
                 
                 self.searchResults = searchResults

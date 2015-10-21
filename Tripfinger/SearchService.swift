@@ -47,7 +47,7 @@ class SearchService {
     func cancelSearch() {
     }
     
-    func search(fullSearchString: String, handler: [SearchResult] -> ()) {
+    func search(fullSearchString: String, gradual: Bool = false, handler: [SearchResult] -> ()) {
         SyncManager.run_async() {
             
             var searchStrings = fullSearchString.characters.split{ $0 == " " }.map(String.init)
@@ -92,6 +92,10 @@ class SearchService {
                     searchList.appendContentsOf(parsedResults)
                 
                     if counter < cities.count && !listIsFull {
+                        
+                        if gradual && parsedResults.count > 0 {
+                            handler(searchList)
+                        }
                         let city = cities[counter]
                         self.searchMapData(SKListLevel.StreetList, searchString: primarySearchString, parent: city.identifier)
                     }
