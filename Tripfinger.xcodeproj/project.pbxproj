@@ -41,6 +41,7 @@
 		25D436321BD548400016E362 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D436311BD548400016E362 /* SearchService.swift */; settings = {ASSET_TAGS = (); }; };
 		25D436361BD5546A0016E362 /* SearchServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D436351BD5546A0016E362 /* SearchServiceTest.swift */; settings = {ASSET_TAGS = (); }; };
 		25D4363A1BD57BAF0016E362 /* MultiStepSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D436391BD57BAF0016E362 /* MultiStepSearch.m */; settings = {ASSET_TAGS = (); }; };
+		25D4363D1BD6F05E0016E362 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4363C1BD6F05E0016E362 /* SyncManager.swift */; settings = {ASSET_TAGS = (); }; };
 		25D707BA1BC6606E005A4BBA /* GuideController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707B91BC6606E005A4BBA /* GuideController.swift */; };
 		25D707BD1BC66165005A4BBA /* GuideItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D707BC1BC66165005A4BBA /* GuideItemCell.xib */; };
 		25D707BF1BC669E6005A4BBA /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D707BE1BC669E6005A4BBA /* CategoryCell.xib */; };
@@ -123,6 +124,7 @@
 		25D436351BD5546A0016E362 /* SearchServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchServiceTest.swift; sourceTree = "<group>"; };
 		25D436381BD57BAF0016E362 /* MultiStepSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiStepSearch.h; sourceTree = "<group>"; };
 		25D436391BD57BAF0016E362 /* MultiStepSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiStepSearch.m; sourceTree = "<group>"; };
+		25D4363C1BD6F05E0016E362 /* SyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		25D707B91BC6606E005A4BBA /* GuideController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideController.swift; sourceTree = "<group>"; };
 		25D707BC1BC66165005A4BBA /* GuideItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuideItemCell.xib; sourceTree = "<group>"; };
 		25D707BE1BC669E6005A4BBA /* CategoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				25D707D21BCA7620005A4BBA /* UINib+RegisterNib.swift */,
 				25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */,
 				250651EA1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift */,
+				25D4363C1BD6F05E0016E362 /* SyncManager.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -522,6 +525,7 @@
 				25D707CA1BC6CD31005A4BBA /* GuideListing.swift in Sources */,
 				25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */,
 				25B5068F1BB4009600A36BA1 /* ChooseAttractionView.swift in Sources */,
+				25D4363D1BD6F05E0016E362 /* SyncManager.swift in Sources */,
 				25D436301BD538810016E362 /* SearchViewController.swift in Sources */,
 				25D707C31BC6BAA8005A4BBA /* Session.swift in Sources */,
 				25D707CC1BC6D05B005A4BBA /* GuideItemCell.swift in Sources */,
