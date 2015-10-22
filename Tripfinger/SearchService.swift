@@ -57,9 +57,10 @@ class SearchService {
             let secondarySearchStrings = Array(searchStrings[1..<searchStrings.count])
 
             if self.searchRunning {
-                SKSearchService.sharedInstance().cancelSearch()
                 self.searchCancelled = true
-                usleep(100 * 1000)
+                while (self.searchRunning) {
+                    usleep(10 * 1000)
+                }
             }
 
             self.searchCancelled = false
