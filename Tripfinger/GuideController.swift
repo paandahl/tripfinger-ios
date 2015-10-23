@@ -21,20 +21,24 @@ class GuideController: UITableViewController {
     var currentCategoryDescriptions = [GuideText]()
     var guideItemExpanded = false
     var guideITemCreatedAsExpanded = false
+    var containerFrame: CGRect!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = (currentItem != nil) ? currentItem!.name : ""
+        self.automaticallyAdjustsScrollViewInsets = false
         
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.tableHeaderView = UIView.init(frame: CGRectZero)
+        tableView.tableFooterView = UIView.init(frame: CGRectZero)       
+
+
         UINib.registerNib(TableViewCellIdentifiers.guideItemCell, forTableView: tableView)
         UINib.registerNib(TableViewCellIdentifiers.categoryCell, forTableView: tableView)
         UINib.registerNib(TableViewCellIdentifiers.textChildCell, forTableView: tableView)
         UINib.registerNib(TableViewCellIdentifiers.loadingCell, forTableView: tableView)
-        
-        tableView.rowHeight = UITableViewAutomaticDimension
-        
-        
+
         if let currentItem = currentItem {
             if currentItem is Region {
                 loadRegionWithID(currentItem.id)

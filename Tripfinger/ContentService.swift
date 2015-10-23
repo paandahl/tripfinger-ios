@@ -104,6 +104,7 @@ public class ContentService {
     }
     
     class func getJsonFromUrl(url: String, success: (json: JSON?) -> (), failure: (() -> ())?) {
+        print("Fetching URL: \(url)")
         let nsUrl = NSURL(string: url)
         let session = NSURLSession.sharedSession()
         let dataTask = session.dataTaskWithURL(nsUrl!) {

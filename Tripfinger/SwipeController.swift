@@ -15,6 +15,10 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     var backCardView: ChooseAttractionView!
     var backCardVerticalConstraints = [NSLayoutConstraint]()
     
+    var currentController: UIViewController!
+    var guideController: GuideController?
+    var mapController: MapDisplayViewController?
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -26,12 +30,25 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     override func viewDidLoad(){
         super.viewDidLoad()
         
-        if (session.currentAttractions.count > 0) {
-            attractions = session.currentAttractions
-            displayCards()
+        print("currentRegion \(session.currentRegion?.name)")
+        if session.currentRegion == nil {
+            print("fetching brussels")
+            ContentService.getRegions() {
+                regions in self.loadRegionWithID(regions[0].id)
+            }
         }
         else {
             loadAttractions()
+        }
+    }
+    
+    func loadRegionWithID(regionId: Int) {
+        
+        ContentService.getRegionWithId(regionId) {
+            region in
+            
+            self.session.currentRegion = region
+            self.loadAttractions()
         }
     }
     
@@ -39,6 +56,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
         // Display the first ChoosePersonView in front. Users can swipe to indicate
         // whether they like or dislike the item displayed.
         setFrontCardViewFunc(popAttractionViewWithFrame(frontCardViewFrame())!)
+        print(toolbar)
         view.insertSubview(frontCardView, belowSubview: toolbar)
         addFrontCardConstraints()
         
@@ -54,6 +72,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
         
         session.loadAttractions() {
             self.attractions = self.session.currentAttractions
+            print("loaded \(self.attractions.count) attractions")
             self.displayCards()
         }
     }
@@ -155,7 +174,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
         //options.threshold = 160.0
         options.onPan = { state -> Void in
             if(self.backCardView != nil) {
-//                var frame:CGRect = self.frontCardViewFrame()
+                //                var frame:CGRect = self.frontCardViewFrame()
                 let frame = self.orignalFrontCardFrame
                 self.backCardView.frame = CGRectMake(frame.origin.x, frame.origin.y+10-(state.thresholdRatio * 10.0), CGRectGetWidth(frame), CGRectGetHeight(frame))
             }

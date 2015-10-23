@@ -27,21 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
         SKMapsService.sharedInstance().initializeSKMapsWithAPIKey(apiKey, settings: initSettings)
         SKMapsService.sharedInstance().mapsVersioningManager.delegate = self
 
-        let tabBarController = self.window!.rootViewController as! UITabBarController
-        if let tabBarViewControllers = tabBarController.viewControllers {
-            var navigationController = tabBarViewControllers[0] as! UINavigationController
-            let guideController = navigationController.viewControllers[0] as! GuideController
-            guideController.session = session
-
-            navigationController = tabBarViewControllers[1] as! UINavigationController
-            let swipeController = navigationController.viewControllers[0] as! SwipeController
-            swipeController.session = session
-
-            navigationController = tabBarViewControllers[2] as! UINavigationController
-            let mapController = navigationController.viewControllers[0] as! MapDisplayViewController
-            mapController.session = session
-}
-        
+        let navigationController = self.window!.rootViewController as! UINavigationController
+        let rootController = navigationController.viewControllers[0] as! RootController
+        rootController.session = session
 
         
 //        DataManager.getAttractionDateFromFileWithSuccess { (data) -> Void in

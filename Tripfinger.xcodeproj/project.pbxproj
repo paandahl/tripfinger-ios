@@ -16,7 +16,7 @@
 		257922D21BA48697005EA785 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D11BA48697005EA785 /* SwiftyJSON.swift */; };
 		257922D41BA488EB005EA785 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D31BA488EB005EA785 /* DataManager.swift */; };
 		25B506871BB3F33900A36BA1 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 25B506861BB3F33900A36BA1 /* Podfile */; };
-		25B5068B1BB3FD5800A36BA1 /* SwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B5068A1BB3FD5800A36BA1 /* SwipeController.swift */; };
+		25B5068B1BB3FD5800A36BA1 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B5068A1BB3FD5800A36BA1 /* RootController.swift */; };
 		25B5068F1BB4009600A36BA1 /* ChooseAttractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B5068E1BB4009600A36BA1 /* ChooseAttractionView.swift */; };
 		25B506911BB401F400A36BA1 /* ImageLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B506901BB401F400A36BA1 /* ImageLabelView.swift */; };
 		25C9DFD11B9CD84200C516C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C9DFD01B9CD84200C516C1 /* AppDelegate.swift */; };
@@ -43,6 +43,7 @@
 		25D4363A1BD57BAF0016E362 /* MultiStepSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D436391BD57BAF0016E362 /* MultiStepSearch.m */; settings = {ASSET_TAGS = (); }; };
 		25D4363D1BD6F05E0016E362 /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4363C1BD6F05E0016E362 /* SyncManager.swift */; settings = {ASSET_TAGS = (); }; };
 		25D436411BD7B5F90016E362 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D436401BD7B5F80016E362 /* SearchResult.swift */; settings = {ASSET_TAGS = (); }; };
+		25D436431BDA3A680016E362 /* SwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D436421BDA3A680016E362 /* SwipeController.swift */; settings = {ASSET_TAGS = (); }; };
 		25D707BA1BC6606E005A4BBA /* GuideController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707B91BC6606E005A4BBA /* GuideController.swift */; };
 		25D707BD1BC66165005A4BBA /* GuideItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D707BC1BC66165005A4BBA /* GuideItemCell.xib */; };
 		25D707BF1BC669E6005A4BBA /* CategoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D707BE1BC669E6005A4BBA /* CategoryCell.xib */; };
@@ -95,7 +96,7 @@
 		257922D11BA48697005EA785 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Tripfinger/SwiftyJSON.swift; sourceTree = "<group>"; };
 		257922D31BA488EB005EA785 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		25B506861BB3F33900A36BA1 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
-		25B5068A1BB3FD5800A36BA1 /* SwipeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeController.swift; sourceTree = "<group>"; };
+		25B5068A1BB3FD5800A36BA1 /* RootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
 		25B5068C1BB3FDC300A36BA1 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		25B5068E1BB4009600A36BA1 /* ChooseAttractionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAttractionView.swift; sourceTree = "<group>"; };
 		25B506901BB401F400A36BA1 /* ImageLabelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLabelView.swift; sourceTree = "<group>"; };
@@ -127,6 +128,7 @@
 		25D436391BD57BAF0016E362 /* MultiStepSearch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiStepSearch.m; sourceTree = "<group>"; };
 		25D4363C1BD6F05E0016E362 /* SyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		25D436401BD7B5F80016E362 /* SearchResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
+		25D436421BDA3A680016E362 /* SwipeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeController.swift; sourceTree = "<group>"; };
 		25D707B91BC6606E005A4BBA /* GuideController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideController.swift; sourceTree = "<group>"; };
 		25D707BC1BC66165005A4BBA /* GuideItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GuideItemCell.xib; sourceTree = "<group>"; };
 		25D707BE1BC669E6005A4BBA /* CategoryCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CategoryCell.xib; sourceTree = "<group>"; };
@@ -247,8 +249,9 @@
 				25D707B91BC6606E005A4BBA /* GuideController.swift */,
 				25C9DFD21B9CD84200C516C1 /* MapDisplayViewController.swift */,
 				25D4362F1BD538810016E362 /* SearchViewController.swift */,
-				25B5068A1BB3FD5800A36BA1 /* SwipeController.swift */,
+				25B5068A1BB3FD5800A36BA1 /* RootController.swift */,
 				25243E611BC4072000EF5F64 /* TabBarController.swift */,
+				25D436421BDA3A680016E362 /* SwipeController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -520,8 +523,9 @@
 				25D4363A1BD57BAF0016E362 /* MultiStepSearch.m in Sources */,
 				25D707D31BCA7620005A4BBA /* UINib+RegisterNib.swift in Sources */,
 				257922D41BA488EB005EA785 /* DataManager.swift in Sources */,
-				25B5068B1BB3FD5800A36BA1 /* SwipeController.swift in Sources */,
+				25B5068B1BB3FD5800A36BA1 /* RootController.swift in Sources */,
 				25D707D51BCA7848005A4BBA /* UIView+AddConstraints.swift in Sources */,
+				25D436431BDA3A680016E362 /* SwipeController.swift in Sources */,
 				25D707D01BC98B0D005A4BBA /* SwipeViewNavigationBar.swift in Sources */,
 				25243E641BC410F400EF5F64 /* Region.swift in Sources */,
 				25D436411BD7B5F90016E362 /* SearchResult.swift in Sources */,
