@@ -26,6 +26,10 @@
 import UIKit
 import MDCSwipeToChoose
 
+protocol AttractionCardContainer: class {
+    func showDetail(attraction: Attraction)
+}
+
 class ChooseAttractionView: MDCSwipeToChooseView {
     
     let ChoosePersonViewImageLabelWidth:CGFloat = 42.0;
@@ -35,23 +39,35 @@ class ChooseAttractionView: MDCSwipeToChooseView {
     var carmeraImageLabelView: ImagelabelView!
     var interestsImageLabelView: ImagelabelView!
     var friendsImageLabelView: ImagelabelView!
+    var delegate: AttractionCardContainer!
     
-    init(frame: CGRect, attraction: Attraction, options: MDCSwipeToChooseViewOptions) {
+    init(frame: CGRect, attraction: Attraction, delegate: AttractionCardContainer, options: MDCSwipeToChooseViewOptions) {
         
         super.init(frame: frame, options: options)
         self.attraction = attraction
+        self.delegate = delegate
         
-        self.imageView.image = UIImage(named: "Placeholder")
-        self.imageView.loadImageWithUrl(Array(attraction.images.keys)[0])
+        imageView.image = UIImage(named: "Placeholder")
+        imageView.loadImageWithUrl(Array(attraction.images.keys)[0])
         
-        self.autoresizingMask = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleBottomMargin]
+        autoresizingMask = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleBottomMargin]
         
-        self.imageView.autoresizingMask = self.autoresizingMask
+        imageView.autoresizingMask = self.autoresizingMask
         constructInformationView()
+        
+        let singleTap = UITapGestureRecognizer(target: self, action: "imageClick:")
+        singleTap.numberOfTapsRequired = 1;
+        singleTap.numberOfTouchesRequired = 1;
+        imageView.addGestureRecognizer(singleTap)
+        imageView.userInteractionEnabled = true
     }
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    func imageClick(sender: UIImageView) {
+        delegate.showDetail(attraction)
     }
     
     func constructInformationView() -> Void{

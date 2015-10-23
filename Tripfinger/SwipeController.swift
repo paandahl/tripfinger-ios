@@ -30,24 +30,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     override func viewDidLoad(){
         super.viewDidLoad()
         
-        print("currentRegion \(session.currentRegion?.name)")
-        if session.currentRegion == nil {
-            print("fetching brussels")
-            ContentService.getRegions() {
-                regions in self.loadRegionWithID(regions[0].id)
-            }
-        }
-        else {
-            loadAttractions()
-        }
-    }
-    
-    func loadRegionWithID(regionId: Int) {
-        
-        ContentService.getRegionWithId(regionId) {
-            region in
-            
-            self.session.currentRegion = region
+        session.loadBrusselsAsCurrentRegionIfEmpty() {
             self.loadAttractions()
         }
     }
@@ -184,7 +167,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
         // Create a personView with the top person in the people array, then pop
         // that person off the stack.
         
-        let personView: ChooseAttractionView = ChooseAttractionView(frame: frame, attraction: self.attractions[0], options: options)
+        let personView: ChooseAttractionView = ChooseAttractionView(frame: frame, attraction: self.attractions[0], delegate: self, options: options)
         self.attractions.removeAtIndex(0)
         return personView
         
@@ -224,5 +207,19 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     }
     func likeFrontCardView() -> Void{
         self.frontCardView.mdc_swipe(MDCSwipeDirection.Right)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showDetail" {
+            let detailController = segue.destinationViewController as! DetailController
+            detailController.attraction = sender as! Attraction
+        }
+    }
+}
+
+extension SwipeController: AttractionCardContainer {
+
+    func showDetail(attraction: Attraction) {
+        performSegueWithIdentifier("showDetail", sender: attraction)
     }
 }

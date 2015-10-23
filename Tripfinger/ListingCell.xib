@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListingCell" rowHeight="218" id="sK9-hc-Qe1" customClass="ListingCell" customModule="Tripfinger" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="218"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sK9-hc-Qe1" id="ENL-mL-84E">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="217.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W06-Zf-Lwf">
+                        <rect key="frame" x="17" y="16" width="240" height="150"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="150" id="CN8-DM-w5M"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j2A-RJ-eXg">
+                        <rect key="frame" x="17" y="179" width="240" height="22"/>
+                        <animations/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <animations/>
+                <constraints>
+                    <constraint firstAttribute="trailingMargin" secondItem="j2A-RJ-eXg" secondAttribute="trailing" constant="55" id="8wg-rs-88O"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="W06-Zf-Lwf" secondAttribute="trailing" constant="55" id="Aj8-fr-DCb"/>
+                    <constraint firstItem="W06-Zf-Lwf" firstAttribute="top" secondItem="ENL-mL-84E" secondAttribute="topMargin" constant="8" id="F8a-3J-8oe"/>
+                    <constraint firstItem="W06-Zf-Lwf" firstAttribute="leading" secondItem="ENL-mL-84E" secondAttribute="leadingMargin" constant="9" id="G6b-Rc-3I6"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="j2A-RJ-eXg" secondAttribute="bottom" constant="8.5" id="SoT-ca-AWo"/>
+                    <constraint firstItem="j2A-RJ-eXg" firstAttribute="leading" secondItem="ENL-mL-84E" secondAttribute="leadingMargin" constant="9" id="YVm-ND-Q4z"/>
+                    <constraint firstItem="j2A-RJ-eXg" firstAttribute="top" secondItem="W06-Zf-Lwf" secondAttribute="bottom" constant="13" id="qLk-0R-EJn"/>
+                </constraints>
+            </tableViewCellContentView>
+            <animations/>
+            <connections>
+                <outlet property="mainImage" destination="W06-Zf-Lwf" id="Gmu-of-1re"/>
+                <outlet property="name" destination="j2A-RJ-eXg" id="XwQ-fL-c6Y"/>
+            </connections>
+            <point key="canvasLocation" x="263" y="402"/>
+        </tableViewCell>
+    </objects>
+</document>

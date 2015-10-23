@@ -9,19 +9,11 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
     @IBOutlet weak var secondSegmentedController: UISegmentedControl!
     var session: Session!
     
-    var attractions:[Attraction] = []
-    let ChooseAttractionButtonHorizontalPadding: CGFloat = 80.0
-    let ChooseAttractionButtonVerticalPadding: CGFloat = 20.0
-    var currentAttraction: Attraction!
-    var frontCardView: ChooseAttractionView!
-    var orignalFrontCardFrame: CGRect!
-    var backCardView: ChooseAttractionView!
-    var backCardVerticalConstraints = [NSLayoutConstraint]()
-
     var currentController: UIViewController!
     var guideController: GuideController?
     var mapController: MapDisplayViewController?
     var swipeController: SwipeController?
+    var listController: ListController?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -45,23 +37,10 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
         guideController = storyboard.instantiateViewControllerWithIdentifier("guideController") as? GuideController
         guideController?.session = session
         switchSubview(guideController!)
-        print("test: \(guideController?.tableView.contentInset)")
-        print("test: \(guideController?.tableView.contentOffset)")
-        
         
         segmentedControllerGuide.selectedSegmentIndex = 0
         secondSegmentedController.selectedSegmentIndex = UISegmentedControlNoSegment
 
-    }
-    
-    func loadRegionWithID(regionId: Int) {
-        
-        ContentService.getRegionWithId(regionId) {
-            region in
-            
-            self.session.currentRegion = region
-            self.loadAttractions()
-        }
     }
 
     @IBAction func firstSegmentChanged(sender: UISegmentedControl) {
@@ -80,7 +59,12 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
             }
             switchSubview(swipeController!)
         case 1:
-            break
+            if listController == nil {
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                listController = storyboard.instantiateViewControllerWithIdentifier("listController") as? ListController
+                listController?.session = session
+            }
+            switchSubview(listController!)
         case 2:
             if mapController == nil {
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -106,20 +90,5 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
             currentController.removeFromParentViewController()
         }
         currentController = newView
-
     }
-    
-    func loadAttractions() {
-        
-        session.loadAttractions() {
-            self.attractions = self.session.currentAttractions
-        }
-    }
-    
-    @IBAction func back() {
-        self.tabBarController?.selectedIndex = 0
-    }
-    
-    
-    
 }

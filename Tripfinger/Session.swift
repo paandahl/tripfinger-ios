@@ -7,15 +7,38 @@
 //
 
 import Foundation
+ class Session {
+    
+    init() {}
+    
+    var currentRegion: Region?
+    var currentAttractions = [Attraction]()
+    
+    func loadBrusselsAsCurrentRegionIfEmpty(handler: () -> ()) {
+        if currentRegion == nil {
+            ContentService.getRegions() {
+                regions in
+                
+                self.loadRegionWithID(regions[0].id, handler: handler)
+            }
+        }
+        else {
+            handler()
+        }
+    }
+    
+    func loadRegionWithID(regionId: Int, handler: () -> ()) {
+        
+        ContentService.getRegionWithId(regionId) {
+            region in
+            
+            self.currentRegion = region
+            handler()
+        }
+    }
 
-public class Session {
     
-    public init() {}
-    
-    public var currentRegion: Region?
-    public var currentAttractions = [Attraction]()
-    
-    public func loadAttractions(handler: () -> ()) {
+    func loadAttractions(handler: () -> ()) {
         ContentService.getAttractionsForRegion(self.currentRegion!) {
             attractions in
             
