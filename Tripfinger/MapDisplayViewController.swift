@@ -37,7 +37,6 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
         mapView.visibleRegion = region
         
         self.view.addSubview(mapView)
-        addCircle(50.847031, longitude: 4.353559)
         
         if (session.currentAttractions.count > 0) {
             attractions = session.currentAttractions
@@ -106,19 +105,6 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
 
     func mapView(mapView: SKMapView!, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
         mapView.hideCallout()
-    }
-}
-
-// MARK: - Navigation
-
-extension MapDisplayViewController {
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "ShowSearch" {
-            let navigationController = segue.destinationViewController as! UINavigationController
-            let searchViewController = navigationController.viewControllers[0] as! SearchViewController
-            searchViewController.delegate = self
-        }
     }
 }
 

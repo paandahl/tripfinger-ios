@@ -92,3 +92,16 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
         currentController = newView
     }
 }
+
+// MARK: - Navigation
+
+extension RootController {
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowSearch" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let searchViewController = navigationController.viewControllers[0] as! SearchViewController
+            searchViewController.delegate = currentController as? SearchViewControllerDelegate
+        }
+    }
+}

@@ -325,7 +325,7 @@
                         <barButtonItem key="rightBarButtonItem" width="86" systemItem="search" id="J6h-42-VBx">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="M4M-Nd-WT6" kind="presentation" id="3fe-gE-9V0"/>
+                                <segue destination="M4M-Nd-WT6" kind="presentation" identifier="ShowSearch" id="3fe-gE-9V0"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
