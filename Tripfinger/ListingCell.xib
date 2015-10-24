@@ -3,42 +3,45 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListingCell" rowHeight="218" id="sK9-hc-Qe1" customClass="ListingCell" customModule="Tripfinger" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="218"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ListingCell" rowHeight="294" id="sK9-hc-Qe1" customClass="ListingCell" customModule="Tripfinger" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="331" height="294"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sK9-hc-Qe1" id="ENL-mL-84E">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="217.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="331" height="294"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W06-Zf-Lwf">
-                        <rect key="frame" x="17" y="16" width="240" height="150"/>
+                        <rect key="frame" x="9" y="16" width="312" height="267"/>
                         <animations/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="150" id="CN8-DM-w5M"/>
+                            <constraint firstAttribute="height" constant="267" id="CN8-DM-w5M"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j2A-RJ-eXg">
-                        <rect key="frame" x="17" y="179" width="240" height="22"/>
+                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QLP-7R-WyR">
+                        <rect key="frame" x="23" y="199" width="279" height="68"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j2A-RJ-eXg">
+                                <rect key="frame" x="8" y="8" width="271" height="52"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <animations/>
-                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
+                        <color key="backgroundColor" white="1" alpha="0.74833720439189177" colorSpace="calibratedWhite"/>
+                    </view>
                 </subviews>
                 <animations/>
                 <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="j2A-RJ-eXg" secondAttribute="trailing" constant="55" id="8wg-rs-88O"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="W06-Zf-Lwf" secondAttribute="trailing" constant="55" id="Aj8-fr-DCb"/>
-                    <constraint firstItem="W06-Zf-Lwf" firstAttribute="top" secondItem="ENL-mL-84E" secondAttribute="topMargin" constant="8" id="F8a-3J-8oe"/>
-                    <constraint firstItem="W06-Zf-Lwf" firstAttribute="leading" secondItem="ENL-mL-84E" secondAttribute="leadingMargin" constant="9" id="G6b-Rc-3I6"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="j2A-RJ-eXg" secondAttribute="bottom" constant="8.5" id="SoT-ca-AWo"/>
-                    <constraint firstItem="j2A-RJ-eXg" firstAttribute="leading" secondItem="ENL-mL-84E" secondAttribute="leadingMargin" constant="9" id="YVm-ND-Q4z"/>
-                    <constraint firstItem="j2A-RJ-eXg" firstAttribute="top" secondItem="W06-Zf-Lwf" secondAttribute="bottom" constant="13" id="qLk-0R-EJn"/>
+                    <constraint firstItem="W06-Zf-Lwf" firstAttribute="leading" secondItem="ENL-mL-84E" secondAttribute="leading" constant="9" id="9ov-dQ-QEj"/>
+                    <constraint firstItem="W06-Zf-Lwf" firstAttribute="top" secondItem="ENL-mL-84E" secondAttribute="top" constant="16" id="WqI-SQ-Dl3"/>
+                    <constraint firstAttribute="trailing" secondItem="W06-Zf-Lwf" secondAttribute="trailing" constant="10" id="iQc-0h-rhn"/>
+                    <constraint firstAttribute="bottom" secondItem="W06-Zf-Lwf" secondAttribute="bottom" constant="11" id="qgZ-X5-WIG"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
@@ -46,7 +49,7 @@
                 <outlet property="mainImage" destination="W06-Zf-Lwf" id="Gmu-of-1re"/>
                 <outlet property="name" destination="j2A-RJ-eXg" id="XwQ-fL-c6Y"/>
             </connections>
-            <point key="canvasLocation" x="263" y="402"/>
+            <point key="canvasLocation" x="268.5" y="440"/>
         </tableViewCell>
     </objects>
 </document>

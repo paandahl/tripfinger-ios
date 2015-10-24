@@ -49,10 +49,8 @@ class ChooseAttractionView: MDCSwipeToChooseView {
         
         imageView.image = UIImage(named: "Placeholder")
         imageView.loadImageWithUrl(Array(attraction.images.keys)[0])
+        imageView.tag = 2000
         
-        autoresizingMask = [UIViewAutoresizing.FlexibleHeight, UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleBottomMargin]
-        
-        imageView.autoresizingMask = self.autoresizingMask
         constructInformationView()
         
         let singleTap = UITapGestureRecognizer(target: self, action: "imageClick:")
@@ -60,6 +58,12 @@ class ChooseAttractionView: MDCSwipeToChooseView {
         singleTap.numberOfTouchesRequired = 1;
         imageView.addGestureRecognizer(singleTap)
         imageView.userInteractionEnabled = true
+        
+        let views = ["image": imageView!, "info": informationView!]
+        self.addConstraints("V:|-0-[image(400)]-[info(80)]-0-|", forViews: views)
+        self.addConstraints("H:|-0-[info]-0-|", forViews: views)
+        self.addConstraints("H:|-0-[image]-0-|", forViews: views)
+
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -85,6 +89,7 @@ class ChooseAttractionView: MDCSwipeToChooseView {
         constructCameraImageLabelView()
         constructInterestsImageLabelView()
         constructFriendsImageLabelView()
+        informationView.tag = 3000
     }
     
     func constructNameLabel() -> Void{
