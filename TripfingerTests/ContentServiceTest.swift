@@ -13,7 +13,7 @@ class ContentServiceTest: XCTestCase {
         super.tearDown()
     }
     
-    func getBrusselsId(handler: Int -> ()) {
+    func getBrusselsId(handler: String -> ()) {
         ContentService.getRegions() {
             regions in
             

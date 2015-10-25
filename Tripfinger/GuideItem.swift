@@ -4,7 +4,7 @@ public class GuideItem {
     
     public init() {}
     
-    public var id: Int!
+    public var id: String!
     public var slug: String?
     public var name: String?
     public var price: Double?

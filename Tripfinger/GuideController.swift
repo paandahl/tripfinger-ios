@@ -54,7 +54,7 @@ class GuideController: UITableViewController {
         }
     }
     
-    func loadRegionWithID(regionId: Int) {
+    func loadRegionWithID(regionId: String) {
         
         ContentService.getRegionWithId(regionId) {
             region in
@@ -67,7 +67,7 @@ class GuideController: UITableViewController {
         }
     }
     
-    func loadGuideTextWithId(guideTextId: Int) {
+    func loadGuideTextWithId(guideTextId: String) {
         ContentService.getGuideTextWithId(guideTextId) {
             guideText in
             

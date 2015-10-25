@@ -27,7 +27,7 @@ import Foundation
         }
     }
     
-    func loadRegionWithID(regionId: Int, handler: () -> ()) {
+    func loadRegionWithID(regionId: String, handler: () -> ()) {
         
         ContentService.getRegionWithId(regionId) {
             region in

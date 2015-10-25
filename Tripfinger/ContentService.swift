@@ -66,7 +66,7 @@ public class ContentService {
         }, failure: nil)
     }
 
-    public class func getRegionWithId(regionId: Int, handler: Region -> ()) {
+    public class func getRegionWithId(regionId: String, handler: Region -> ()) {
         getJsonFromUrl(baseUrl + "/regions/\(regionId)", success: {
             json in
             
@@ -78,7 +78,7 @@ public class ContentService {
             }}, failure: nil)
     }
     
-    public class func getGuideTextWithId(guideTextId: Int, handler: GuideItem -> ()) {
+    public class func getGuideTextWithId(guideTextId: String, handler: GuideItem -> ()) {
         getJsonFromUrl(baseUrl + "/guideTexts/\(guideTextId)", success: {
             json in
             
@@ -160,7 +160,7 @@ public class ContentService {
 
     class func parseGuideItem(guideItem: GuideItem, withJson json: JSON) -> GuideItem {
         guideItem.name = json["name"].string
-        guideItem.id = json["id"].int
+        guideItem.id = json["id"].string
         guideItem.description = json["description"].string
         guideItem.category = json["category"].int
         for (url, description) in json["images"].dictionary! {
@@ -226,20 +226,20 @@ public class ContentService {
         let categoryDescriptions = [GuideText]()
         for (id, name) in json["guideSections"].dictionary! {
             let guideSection = GuideText()
-            guideSection.id = Int(id)
+            guideSection.id = id
             guideSection.name = name.string
             guideSections.append(guideSection)
         }
         
         let categoryDescriptionsDict = json["categoryDescriptions"].dictionary
         for category in Attraction.Category.allValues {
-            let categoryDescriptionId = categoryDescriptionsDict![String(category.rawValue)]
             let categoryDescription = GuideText()
+            let categoryDescriptionId = categoryDescriptionsDict![String(category.rawValue)]
             if (categoryDescriptionId != nil) {
-                categoryDescription.id = categoryDescriptionId!.int
+                categoryDescription.id = categoryDescriptionId!.string
             }
             else {
-                categoryDescription.id = -1
+                categoryDescription.id = "null"
             }
         }
         guideItem.guideSections = guideSections
