@@ -19,9 +19,9 @@ class GuideItemCell: UITableViewCell {
     @IBOutlet weak var contentBottomMargin: NSLayoutConstraint!
     @IBOutlet var readMoreButton: UIButton!
     weak var delegate: GuideItemContainerDelegate!
-    var contentSize: CGRect = CGRectZero
     
     override func awakeFromNib() {
+        content.textContainerInset = UIEdgeInsetsZero;
         if !readMoreButton.isDescendantOfView(self.contentView) {
             self.contentView.addSubview(readMoreButton)
         }
@@ -38,12 +38,15 @@ class GuideItemCell: UITableViewCell {
             self.contentView.addConstraints("V:[readMore]-10-|", forViews: ["readMore": readMoreButton])
         }
         else {
-            self.contentView.addConstraints("V:[content]-10-|", forViews: ["content": content])
+            self.contentView.addConstraints("V:[content]-0-|", forViews: ["content": content])
         }
     }
     
     func expand() {
-        contentHeight.constant = contentSize.height
+        let fixedWidth = content.frame.size.width
+        let newSize = content.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
+        contentHeight.constant = newSize.height;
+//        contentHeight.constant = contentSize.height
         readMoreButton.removeFromSuperview()
         setNeedsUpdateConstraints()
         
@@ -64,10 +67,6 @@ class GuideItemCell: UITableViewCell {
             let attributedString = try! NSMutableAttributedString(data: encodedData, options: options, documentAttributes: nil)
             attributedString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(18.0), range: NSMakeRange(0, attributedString.length))
             content.attributedText = attributedString
-            
-            let width = content.frame.size.width
-             contentSize = attributedString.boundingRectWithSize(CGSizeMake(width, 1000), options: [NSStringDrawingOptions.UsesLineFragmentOrigin, NSStringDrawingOptions.UsesFontLeading], context: nil)
-
         }
         content.scrollEnabled = false
         content.setContentOffset(CGPointZero, animated: true)
