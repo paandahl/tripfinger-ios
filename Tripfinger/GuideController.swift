@@ -60,7 +60,6 @@ class GuideController: UITableViewController {
             region in
             
             self.currentItem = region
-            self.title = region.name
             self.guideSections = region.guideSections
             self.session.currentRegion = region
             self.tableView.reloadData()
@@ -73,6 +72,7 @@ class GuideController: UITableViewController {
             
             self.currentItem = guideText
             self.guideSections = guideText.guideSections
+            self.title = guideText.name
             self.tableView.reloadData()
         }
     }
