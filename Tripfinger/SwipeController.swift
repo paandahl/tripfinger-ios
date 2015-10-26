@@ -39,7 +39,6 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
         // Display the first ChoosePersonView in front. Users can swipe to indicate
         // whether they like or dislike the item displayed.
         setFrontCardViewFunc(popAttractionViewWithFrame(frontCardViewFrame())!)
-        print(toolbar)
         view.insertSubview(frontCardView, belowSubview: toolbar)
         addFrontCardConstraints()
         
@@ -67,14 +66,14 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     func addFrontCardConstraints() {
         let views = ["card": frontCardView, "toolbar": toolbar]
         view.addConstraints("H:[card(300)]", forViews: views)
-        view.addConstraints("V:[toolbar]-10-[card]-70-|", forViews: views)
+        view.addConstraints("V:[toolbar]-10-[card]", forViews: views)
         view.addConstraint(NSLayoutAttribute.CenterX, forView: frontCardView)
     }
     
     func addBackCardConstraints() {
         let views = ["card": backCardView, "toolbar": toolbar]
         view.addConstraints("H:[card(300)]", forViews: views)
-        backCardVerticalConstraints = view.addConstraints("V:[toolbar]-20-[card]-60-|", forViews: views) as! [NSLayoutConstraint]
+        backCardVerticalConstraints = view.addConstraints("V:[toolbar]-20-[card]", forViews: views) as! [NSLayoutConstraint]
         view.addConstraint(NSLayoutAttribute.CenterX, forView: backCardView)
     }
     
