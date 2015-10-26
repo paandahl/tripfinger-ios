@@ -32,8 +32,9 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
         let long = 4.353559
 //        let lat = 41.39479 // Barcelona
 //        let long = 2.1487679
+        let coordinates = CLLocationCoordinate2DMake(lat, long)
         
-        let region = SKCoordinateRegion(center: CLLocationCoordinate2DMake(lat, long), zoomLevel: 14)
+        let region = SKCoordinateRegion(center: coordinates, zoomLevel: 14)
         mapView.visibleRegion = region
         
         self.view.addSubview(mapView)
@@ -82,6 +83,11 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
             identifier += 1
         }
         
+        let lat = 50.847031 // Brussels
+        let long = 4.353559
+        print("visible: \(mapView.isLocationVisible(lat, long: long))")
+
+        
 //        annotation.annotationType = SKAnnotationType.DestinationFlag
 //        annotation.annotationType = SKAnnotationType.Marker
 
@@ -97,13 +103,17 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
 //        mapView.addAnnotation(viewAnnotation, withAnimationSettings: animationSettings)
     }
     
-    func mapView(mapView:SKMapView!, didSelectAnnotation annotation:SKAnnotation!) {
+    func mapView(mapView: SKMapView!, didSelectAnnotation annotation: SKAnnotation!) {
         let attraction = attractions[Int(annotation.identifier)]
         mapView.calloutView.titleLabel.text = attraction.name;
         mapView.showCalloutForAnnotation(annotation, withOffset: CGPointMake(0, 42), animated: true);
     }
 
     func mapView(mapView: SKMapView!, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
+        if mapView.visibleRegion.zoomLevel < 12 {
+            // Manually check if an annotation was tapped.
+        }
+        
         mapView.hideCallout()
     }
 }
@@ -111,7 +121,23 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
 extension MapDisplayViewController: SearchViewControllerDelegate {
     
     func selectedSearchResult(searchResult: SearchResult) {
-        addCircle(searchResult.latitude, longitude: searchResult.longitude)
+        if !mapView.isLocationVisible(searchResult.latitude, long: searchResult.longitude) {
+            let location = CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude)
+            mapView.animateToLocation(location, withDuration: 1.0)
+        }
+        if mapView.visibleRegion.zoomLevel < 14 {
+            mapView.animateToZoomLevel(15)
+            let location = CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude)
+            mapView.animateToLocation(location, withDuration: 1.0)
+        }
+//        addCircle(searchResult.latitude, longitude: searchResult.longitude)
+        let annotation = SKAnnotation()
+        annotation.identifier = 5000
+        annotation.annotationType = SKAnnotationType.Green
+        annotation.location = CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude)
+        let animationSettings = SKAnimationSettings()
+        animationSettings.animationType = SKAnimationType.AnimationPinDrop
+        mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
 
     }
 }

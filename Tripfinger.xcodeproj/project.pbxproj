@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2503D3A51BDA5E2A0078C0F0 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3A41BDA5E2A0078C0F0 /* DetailController.swift */; settings = {ASSET_TAGS = (); }; };
+		2503D3A71BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3A61BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift */; settings = {ASSET_TAGS = (); }; };
 		250651EB1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250651EA1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift */; };
 		25243E621BC4072000EF5F64 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E611BC4072000EF5F64 /* TabBarController.swift */; };
 		25243E641BC410F400EF5F64 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E631BC410F400EF5F64 /* Region.swift */; };
@@ -93,6 +94,7 @@
 
 /* Begin PBXFileReference section */
 		2503D3A41BDA5E2A0078C0F0 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
+		2503D3A61BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKMapView+IsCoordinateVisible.swift"; sourceTree = "<group>"; };
 		250651EA1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DonwnloadImage.swift"; sourceTree = "<group>"; };
 		25243E611BC4072000EF5F64 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		25243E631BC410F400EF5F64 /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
@@ -206,6 +208,7 @@
 				25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */,
 				250651EA1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift */,
 				25D4363C1BD6F05E0016E362 /* SyncManager.swift */,
+				2503D3A61BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -532,6 +535,7 @@
 			files = (
 				2503D3A51BDA5E2A0078C0F0 /* DetailController.swift in Sources */,
 				25C9DFD31B9CD84200C516C1 /* MapDisplayViewController.swift in Sources */,
+				2503D3A71BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift in Sources */,
 				25D707CE1BC82232005A4BBA /* CategoryCell.swift in Sources */,
 				250651EB1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift in Sources */,
 				25D4363A1BD57BAF0016E362 /* MultiStepSearch.m in Sources */,
