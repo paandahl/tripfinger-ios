@@ -24,8 +24,8 @@
                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                     </textView>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dke-8Q-KVJ">
-                        <rect key="frame" x="6" y="120" width="75" height="68"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dke-8Q-KVJ">
+                        <rect key="frame" x="14" y="120" width="74" height="30"/>
                         <animations/>
                         <state key="normal" title="Read more">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -37,9 +37,9 @@
                 </subviews>
                 <animations/>
                 <constraints>
+                    <constraint firstItem="dke-8Q-KVJ" firstAttribute="leading" secondItem="aVP-4s-ksa" secondAttribute="leading" constant="14" id="O0p-W2-gOa"/>
                     <constraint firstAttribute="trailingMargin" secondItem="RVu-1l-Gea" secondAttribute="trailing" constant="-8" id="X2k-2j-lN7"/>
                     <constraint firstItem="RVu-1l-Gea" firstAttribute="top" secondItem="aVP-4s-ksa" secondAttribute="topMargin" constant="-8" id="bGZ-Sl-F7f"/>
-                    <constraint firstItem="dke-8Q-KVJ" firstAttribute="leading" secondItem="aVP-4s-ksa" secondAttribute="leadingMargin" constant="-2" id="m0n-p4-eEu"/>
                     <constraint firstItem="RVu-1l-Gea" firstAttribute="leading" secondItem="aVP-4s-ksa" secondAttribute="leadingMargin" constant="-8" id="phh-eU-Cgm"/>
                     <constraint firstItem="dke-8Q-KVJ" firstAttribute="top" secondItem="RVu-1l-Gea" secondAttribute="bottom" constant="20" id="reL-Bm-Dt1"/>
                 </constraints>

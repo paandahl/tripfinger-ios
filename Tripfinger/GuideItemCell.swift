@@ -21,7 +21,8 @@ class GuideItemCell: UITableViewCell {
     weak var delegate: GuideItemContainerDelegate!
     
     override func awakeFromNib() {
-        content.textContainerInset = UIEdgeInsetsZero;
+        content.linkTextAttributes[NSForegroundColorAttributeName] = UIColor.blackColor()
+        content.textContainerInset = UIEdgeInsetsMake(15, 10, 0, 10);
         if !readMoreButton.isDescendantOfView(self.contentView) {
             self.contentView.addSubview(readMoreButton)
         }
@@ -45,7 +46,7 @@ class GuideItemCell: UITableViewCell {
     func expand() {
         let fixedWidth = content.frame.size.width
         let newSize = content.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-        contentHeight.constant = newSize.height;
+        contentHeight.constant = newSize.height - 20 // last paragraphs margin
 //        contentHeight.constant = contentSize.height
         readMoreButton.removeFromSuperview()
         setNeedsUpdateConstraints()
@@ -65,7 +66,11 @@ class GuideItemCell: UITableViewCell {
                 NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding,
             ]
             let attributedString = try! NSMutableAttributedString(data: encodedData, options: options, documentAttributes: nil)
-            attributedString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(18.0), range: NSMakeRange(0, attributedString.length))
+            attributedString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(17.0), range: NSMakeRange(0, attributedString.length))
+            let style = NSMutableParagraphStyle()
+            style.lineSpacing = 5
+            style.paragraphSpacing = 20
+            attributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, attributedString.length))
             content.attributedText = attributedString
         }
         content.scrollEnabled = false
