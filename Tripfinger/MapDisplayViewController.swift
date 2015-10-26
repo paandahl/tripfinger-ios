@@ -82,30 +82,14 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
             mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
             identifier += 1
         }
-        
-        let lat = 50.847031 // Brussels
-        let long = 4.353559
-        print("visible: \(mapView.isLocationVisible(lat, long: long))")
-
-        
-//        annotation.annotationType = SKAnnotationType.DestinationFlag
-//        annotation.annotationType = SKAnnotationType.Marker
-
-        //Annotation with view
-        //create our view
-//        let coloredView = UIImageView(frame: CGRectMake(0.0, 0.0, 30.0, 30.0))
-//        coloredView.image = UIImage(named: "image.png")
-//        let view = SKAnnotationView(view: coloredView, reuseIdentifier: "viewID")
-//        let viewAnnotation = SKAnnotation()
-//        viewAnnotation.annotationView = view
-//        viewAnnotation.identifier = 100
-//        viewAnnotation.location = CLLocationCoordinate2DMake(50.837031, 4.343559)
-//        mapView.addAnnotation(viewAnnotation, withAnimationSettings: animationSettings)
     }
     
     func mapView(mapView: SKMapView!, didSelectAnnotation annotation: SKAnnotation!) {
         let attraction = attractions[Int(annotation.identifier)]
         mapView.calloutView.titleLabel.text = attraction.name;
+        mapView.calloutView.titleLabel.tag = 2000 + Int(annotation.identifier)
+        mapView.calloutView.delegate = self
+        mapView.calloutView.minZoomLevel = 1
         mapView.showCalloutForAnnotation(annotation, withOffset: CGPointMake(0, 42), animated: true);
     }
 
@@ -115,6 +99,21 @@ class MapDisplayViewController : UIViewController, SKMapViewDelegate {
         }
         
         mapView.hideCallout()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showDetail" {
+            let detailController = segue.destinationViewController as! DetailController
+            detailController.attraction = sender as! Attraction
+        }
+    }
+}
+
+extension MapDisplayViewController: SKCalloutViewDelegate {
+    
+    func calloutView(calloutView: SKCalloutView!, didTapRightButton rightButton: UIButton!) {
+        let attraction = attractions[calloutView.titleLabel.tag - 2000]
+        performSegueWithIdentifier("showDetail", sender: attraction)
     }
 }
 

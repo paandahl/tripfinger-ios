@@ -155,6 +155,9 @@
                         <barButtonItem key="leftBarButtonItem" title="Brussels" id="EPp-0k-OhF"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="search" id="Qu4-cl-ORy"/>
                     </navigationItem>
+                    <connections>
+                        <segue destination="s8T-eu-R1X" kind="show" identifier="showDetail" id="4g3-0X-Xrq"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
@@ -405,6 +408,6 @@
         <image name="group" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="haV-KH-7ar"/>
+        <segue reference="4g3-0X-Xrq"/>
     </inferredMetricsTieBreakers>
 </document>
