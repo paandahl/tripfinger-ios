@@ -224,19 +224,22 @@ public class ContentService {
 
         var guideSections = [GuideText]()
         let categoryDescriptions = [GuideText]()
-        for (id, name) in json["guideSections"].dictionary! {
+        for guideSectionArr in json["guideSections"].array! {
             let guideSection = GuideText()
-            guideSection.id = id
-            guideSection.name = name.string
+            guideSection.id = guideSectionArr[0].string
+            guideSection.name = guideSectionArr[1].string
             guideSections.append(guideSection)
         }
         
-        let categoryDescriptionsDict = json["categoryDescriptions"].dictionary
+        var categoryDescriptionsDict = Dictionary<Int, String>()
+        for categoryDescription in json["categoryDescriptions"].array! {
+            categoryDescriptionsDict[categoryDescription[0].int!] = categoryDescription[1].string!
+        }
         for category in Attraction.Category.allValues {
             let categoryDescription = GuideText()
-            let categoryDescriptionId = categoryDescriptionsDict![String(category.rawValue)]
+            let categoryDescriptionId = categoryDescriptionsDict[category.rawValue]
             if (categoryDescriptionId != nil) {
-                categoryDescription.id = categoryDescriptionId!.string
+                categoryDescription.id = categoryDescriptionId!
             }
             else {
                 categoryDescription.id = "null"
