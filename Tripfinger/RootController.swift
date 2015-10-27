@@ -95,7 +95,7 @@ extension RootController {
         if segue.identifier == "ShowSearch" {
             let navigationController = segue.destinationViewController as! UINavigationController
             let searchViewController = navigationController.viewControllers[0] as! SearchViewController
-            searchViewController.delegate = currentController as? SearchViewControllerDelegate
+            searchViewController.delegate = self
         }
     }
 }
@@ -104,7 +104,11 @@ extension RootController: SearchViewControllerDelegate {
     func selectedSearchResult(searchResult: SearchResult) {
         
         if searchResult.resultType == .Street {
-            
+            if !(currentController is MapDisplayViewController) {
+                navigateToSubview("mapController", controllerType: MapDisplayViewController.self)
+            }
+            let mapController = currentController as! MapDisplayViewController
+            mapController.selectedSearchResult(searchResult)
         }
     }
 }
