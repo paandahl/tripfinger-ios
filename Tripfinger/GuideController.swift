@@ -129,10 +129,10 @@ extension GuideController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
-            if let currentItem = currentItem {
+            if currentItem?.description != nil {
                 let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.guideItemCell, forIndexPath: indexPath) as! GuideItemCell
-                cell.setContent(currentItem)
                 cell.delegate = self
+                cell.setContent(currentItem!)
                 if (guideItemExpanded) {
                     cell.expand()
                 }
@@ -169,11 +169,17 @@ extension GuideController {
 extension GuideController: GuideItemContainerDelegate {
     
     func readMoreClicked() {
+        print("Readmoreclicked")
         tableView.beginUpdates()
         tableView.endUpdates()
         
         guideItemExpanded = true
         tableView.reloadData()
+    }
+    
+    func updateTableSize() {
+        tableView.beginUpdates()
+        tableView.endUpdates()        
     }
 }
 
@@ -184,6 +190,7 @@ extension GuideController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 && guideItemExpanded {
             
+            print("FETCHING NEW")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewControllerWithIdentifier("guideController") as! GuideController
             vc.currentItem = guideSections[indexPath.row]

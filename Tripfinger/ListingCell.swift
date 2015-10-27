@@ -30,7 +30,7 @@ class ListingCell: UITableViewCell {
     func setContent(attraction: Attraction) {
         name.text = attraction.name
         mainImage.image = UIImage(named: "Placeholder")
-        let imageUrl = Array(attraction.images.keys)[0] + "-712x534"
+        let imageUrl = attraction.images[0].url + "-712x534"
         mainImage.loadImageWithUrl(imageUrl)
         self.attraction = attraction
     }

@@ -163,8 +163,11 @@ public class ContentService {
         guideItem.id = json["id"].string
         guideItem.description = json["description"].string
         guideItem.category = json["category"].int
-        for (url, description) in json["images"].dictionary! {
-            guideItem.images[url] = description.string!
+        for imageJson in json["images"].array! {
+            let image = GuideItem.GuideItemImage()
+            image.url = imageJson["url"].string
+            image.description = imageJson["description"].string
+            guideItem.images.append(image)
         }
         return guideItem
     }

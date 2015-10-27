@@ -10,7 +10,7 @@ import Foundation
 
 extension UIView {
     
-    func addConstraints(constraints: String, forViews views: [String : UIView]) -> [AnyObject] {
+    func addConstraints(constraints: String, forViews views: [String : UIView]) -> [NSLayoutConstraint] {
         
         for (_, view) in views {
             view.translatesAutoresizingMaskIntoConstraints = false

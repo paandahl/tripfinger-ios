@@ -21,6 +21,6 @@ class DetailController: UIViewController {
         name.text = attraction.name
         descriptionText.text = attraction.description
         mainImage.image = UIImage(named: "Placeholder")
-        mainImage.loadImageWithUrl(Array(attraction.images.keys)[0])
+        mainImage.loadImageWithUrl(attraction.images[0].url)
     }
 }

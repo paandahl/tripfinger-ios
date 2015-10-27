@@ -14,9 +14,14 @@ public class GuideItem {
     public var description: String?
     public var openingHours: String?
     
-    public var images = Dictionary<String, String>()
+    var images = [GuideItemImage]()
     
     // temporary data to make things easier
     public var guideSections = [GuideText]()
     public var categoryDescriptions = [GuideText]()
+    
+    class GuideItemImage {
+        var url: String!
+        var description: String!
+    }
 }

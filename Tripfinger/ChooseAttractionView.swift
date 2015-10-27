@@ -48,7 +48,7 @@ class ChooseAttractionView: MDCSwipeToChooseView {
         self.delegate = delegate
         
         imageView.image = UIImage(named: "Placeholder")
-        let imageUrl = Array(attraction.images.keys)[0] + "-600x800"
+        let imageUrl = attraction.images[0].url + "-600x800"
         imageView.loadImageWithUrl(imageUrl)
         imageView.tag = 2000
         
