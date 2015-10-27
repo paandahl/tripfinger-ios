@@ -148,6 +148,7 @@ class SearchService {
         searchResult.latitude = skobblerResult.coordinate.latitude
         searchResult.longitude = skobblerResult.coordinate.longitude
         searchResult.city = city
+        searchResult.resultType = .Street
         return searchResult
     }
     

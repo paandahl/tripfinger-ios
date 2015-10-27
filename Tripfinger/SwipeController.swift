@@ -1,10 +1,10 @@
 import UIKit
 import MDCSwipeToChoose
 
-class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
+class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate {
     
-    @IBOutlet weak var toolbar: UIToolbar!
     var session: Session!
+    @IBOutlet weak var toolbar: UIToolbar!
     
     var attractions:[Attraction] = []
     let ChooseAttractionButtonHorizontalPadding: CGFloat = 80.0

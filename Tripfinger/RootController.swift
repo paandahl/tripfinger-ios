@@ -10,10 +10,7 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
     var session: Session!
     
     var currentController: UIViewController!
-    var guideController: GuideController?
-    var mapController: MapDisplayViewController?
-    var swipeController: SwipeController?
-    var listController: ListController?
+    var subControllers = Dictionary<String, UIViewController>()
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -33,10 +30,7 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
         frameRect.size.width = 55;
         itemView.frame = frameRect
         
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guideController = storyboard.instantiateViewControllerWithIdentifier("guideController") as? GuideController
-        guideController?.session = session
-        switchSubview(guideController!)
+        navigateToSubview("guideController", controllerType: GuideController.self)
         
         segmentedControllerGuide.selectedSegmentIndex = 0
         secondSegmentedController.selectedSegmentIndex = UISegmentedControlNoSegment
@@ -45,39 +39,39 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
 
     @IBAction func firstSegmentChanged(sender: UISegmentedControl) {
         secondSegmentedController.selectedSegmentIndex = UISegmentedControlNoSegment
-        switchSubview(guideController!)
+        navigateToSubview("guideController", controllerType: GuideController.self)
     }
     
     @IBAction func secondSegmentChanged(sender: UISegmentedControl) {
         segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
         switch (sender.selectedSegmentIndex) {
         case 0:
-            if swipeController == nil {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                swipeController = storyboard.instantiateViewControllerWithIdentifier("swipeController") as? SwipeController
-                swipeController?.session = session
-            }
-            switchSubview(swipeController!)
+            navigateToSubview("swipeController", controllerType: SwipeController.self)
         case 1:
-            if listController == nil {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                listController = storyboard.instantiateViewControllerWithIdentifier("listController") as? ListController
-                listController?.session = session
-            }
-            switchSubview(listController!)
+            navigateToSubview("listController", controllerType: ListController.self)
         case 2:
-            if mapController == nil {
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                mapController = storyboard.instantiateViewControllerWithIdentifier("mapController") as? MapDisplayViewController
-                mapController?.session = session
-            }
-            switchSubview(mapController!)
+            navigateToSubview("mapController", controllerType: MapDisplayViewController.self)
         default:
             break
         }
     }
     
+    func navigateToSubview<T: UIViewController>(name: String, controllerType: T.Type) {
+        var controller = subControllers[name]
+        if controller == nil {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            controller = storyboard.instantiateViewControllerWithIdentifier(name) as? T
+            var subController = controller as! SubController
+            subController.session = session
+            subControllers[name] = controller
+        }
+        switchSubview(controller!)
+    }
     
+    
+    func makeInstance<T: UIViewController >(type: T.Type) -> T? {
+        return T()
+    }
     
     func switchSubview(newView: UIViewController) {
         
@@ -102,6 +96,15 @@ extension RootController {
             let navigationController = segue.destinationViewController as! UINavigationController
             let searchViewController = navigationController.viewControllers[0] as! SearchViewController
             searchViewController.delegate = currentController as? SearchViewControllerDelegate
+        }
+    }
+}
+
+extension RootController: SearchViewControllerDelegate {
+    func selectedSearchResult(searchResult: SearchResult) {
+        
+        if searchResult.resultType == .Street {
+            
         }
     }
 }

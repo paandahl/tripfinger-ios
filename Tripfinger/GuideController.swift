@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Preben Ludviksen. All rights reserved.
 //
 
-class GuideController: UITableViewController {
+class GuideController: UITableViewController, SubController {
     struct TableViewCellIdentifiers {
         static let guideItemCell = "GuideItemCell"
         static let categoryCell = "CategoryCell"

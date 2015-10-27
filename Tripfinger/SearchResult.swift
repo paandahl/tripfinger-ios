@@ -14,4 +14,10 @@ class SearchResult {
     var city: String!
     var latitude: Double!
     var longitude: Double!
+    var resultType: ResultType!
+    
+    enum ResultType: Int {
+        case Street = 1
+    }
+
 }

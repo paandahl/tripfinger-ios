@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ListController: UITableViewController {
+class ListController: UITableViewController, SubController {
     struct TableViewCellIdentifiers {
         static let listingCell = "ListingCell"
     }

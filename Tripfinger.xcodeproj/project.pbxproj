@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		2503D3A51BDA5E2A0078C0F0 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3A41BDA5E2A0078C0F0 /* DetailController.swift */; settings = {ASSET_TAGS = (); }; };
 		2503D3A71BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3A61BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift */; settings = {ASSET_TAGS = (); }; };
+		2503D3AA1BDF7CFB0078C0F0 /* SubController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3A91BDF7CFB0078C0F0 /* SubController.swift */; settings = {ASSET_TAGS = (); }; };
 		250651EB1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250651EA1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift */; };
-		25243E621BC4072000EF5F64 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E611BC4072000EF5F64 /* TabBarController.swift */; };
 		25243E641BC410F400EF5F64 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E631BC410F400EF5F64 /* Region.swift */; };
 		25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E651BC4110E00EF5F64 /* GuideItem.swift */; };
 		257922C71BA308A9005EA785 /* Attraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922C61BA308A9005EA785 /* Attraction.swift */; };
@@ -95,8 +95,8 @@
 /* Begin PBXFileReference section */
 		2503D3A41BDA5E2A0078C0F0 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		2503D3A61BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKMapView+IsCoordinateVisible.swift"; sourceTree = "<group>"; };
+		2503D3A91BDF7CFB0078C0F0 /* SubController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubController.swift; sourceTree = "<group>"; };
 		250651EA1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DonwnloadImage.swift"; sourceTree = "<group>"; };
-		25243E611BC4072000EF5F64 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		25243E631BC410F400EF5F64 /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		25243E651BC4110E00EF5F64 /* GuideItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItem.swift; sourceTree = "<group>"; };
 		257922C61BA308A9005EA785 /* Attraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attraction.swift; sourceTree = "<group>"; };
@@ -261,10 +261,10 @@
 				25C9DFD21B9CD84200C516C1 /* MapDisplayViewController.swift */,
 				25D4362F1BD538810016E362 /* SearchViewController.swift */,
 				25B5068A1BB3FD5800A36BA1 /* RootController.swift */,
-				25243E611BC4072000EF5F64 /* TabBarController.swift */,
 				25D436421BDA3A680016E362 /* SwipeController.swift */,
 				25D436441BDA4B000016E362 /* ListController.swift */,
 				2503D3A41BDA5E2A0078C0F0 /* DetailController.swift */,
+				2503D3A91BDF7CFB0078C0F0 /* SubController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -545,11 +545,11 @@
 				25D707D51BCA7848005A4BBA /* UIView+AddConstraints.swift in Sources */,
 				25D436451BDA4B010016E362 /* ListController.swift in Sources */,
 				25D436431BDA3A680016E362 /* SwipeController.swift in Sources */,
+				2503D3AA1BDF7CFB0078C0F0 /* SubController.swift in Sources */,
 				25D707D01BC98B0D005A4BBA /* SwipeViewNavigationBar.swift in Sources */,
 				25243E641BC410F400EF5F64 /* Region.swift in Sources */,
 				25D436491BDA50570016E362 /* ListingCell.swift in Sources */,
 				25D436411BD7B5F90016E362 /* SearchResult.swift in Sources */,
-				25243E621BC4072000EF5F64 /* TabBarController.swift in Sources */,
 				25D707CA1BC6CD31005A4BBA /* GuideListing.swift in Sources */,
 				25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */,
 				25B5068F1BB4009600A36BA1 /* ChooseAttractionView.swift in Sources */,

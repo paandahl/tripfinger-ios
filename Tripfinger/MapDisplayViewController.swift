@@ -7,7 +7,7 @@
 //
 
 import SKMaps
-class MapDisplayViewController : UIViewController, SKMapViewDelegate {
+class MapDisplayViewController: UIViewController, SubController, SKMapViewDelegate {
 
     var session: Session!
     var attractions = [Attraction]()
