@@ -13,7 +13,7 @@ import Foundation
     
     var currentRegion: Region?
     var currentAttractions = [Attraction]()
-    var currentCategory: Attraction.Category!
+    var currentCategory = Attraction.Category.EXPLORE_CITY
     
     func loadBrusselsAsCurrentRegionIfEmpty(handler: () -> ()) {
         if currentRegion == nil {

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="NTM-Bm-kB4" customClass="FilterBox" customModule="Tripfinger" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="446" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DKC-Gm-sV8">
+                    <rect key="frame" x="150" y="6" width="147.5" height="33"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GqC-rs-UCL">
+                            <rect key="frame" x="74.5" y="8" width="63" height="18"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Region:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mbr-Tj-ODs">
+                            <rect key="frame" x="10" y="7" width="54.5" height="19.5"/>
+                            <animations/>
+                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <animations/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="GqC-rs-UCL" firstAttribute="leading" secondItem="mbr-Tj-ODs" secondAttribute="trailing" constant="10" id="0iG-dy-fd1"/>
+                        <constraint firstAttribute="trailing" secondItem="GqC-rs-UCL" secondAttribute="trailing" constant="10" id="8kv-vS-uk5"/>
+                        <constraint firstItem="mbr-Tj-ODs" firstAttribute="centerY" secondItem="DKC-Gm-sV8" secondAttribute="centerY" id="mrQ-VH-bhg"/>
+                        <constraint firstItem="mbr-Tj-ODs" firstAttribute="leading" secondItem="DKC-Gm-sV8" secondAttribute="leading" constant="10" id="vKa-o5-Ifd"/>
+                        <constraint firstItem="GqC-rs-UCL" firstAttribute="centerY" secondItem="DKC-Gm-sV8" secondAttribute="centerY" id="wcc-td-dz8"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <animations/>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="DKC-Gm-sV8" firstAttribute="top" secondItem="NTM-Bm-kB4" secondAttribute="top" constant="6" id="azO-9Z-bCS"/>
+                <constraint firstAttribute="bottom" secondItem="DKC-Gm-sV8" secondAttribute="bottom" constant="5" id="nWX-a0-q7h"/>
+                <constraint firstItem="DKC-Gm-sV8" firstAttribute="centerX" secondItem="NTM-Bm-kB4" secondAttribute="centerX" id="r5D-pZ-5sS"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="categoryLabel" destination="GqC-rs-UCL" id="w7j-4I-sH3"/>
+                <outlet property="filterControls" destination="DKC-Gm-sV8" id="kZg-d0-bdb"/>
+                <outlet property="regionNameLabel" destination="mbr-Tj-ODs" id="Y2m-kF-fxZ"/>
+            </connections>
+            <point key="canvasLocation" x="-192" y="-238"/>
+        </view>
+    </objects>
+</document>

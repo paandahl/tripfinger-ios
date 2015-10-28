@@ -4,11 +4,8 @@ import MDCSwipeToChoose
 class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate {
     
     var session: Session!
-    @IBOutlet weak var filterBox: UIView!
-    @IBOutlet weak var filterControls: UIView!
-    @IBOutlet weak var regionNameLabel: UILabel!
-    @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var noElementsLabel: UILabel!
+    var filterBox: FilterBox!
     
     var attractions:[Attraction] = []
     var category: Attraction.Category!
@@ -27,24 +24,14 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     
     override func viewDidLoad(){
         super.viewDidLoad()
-                
-        filterControls.layer.borderColor = UIColor.darkGrayColor().CGColor
-        filterControls.layer.borderWidth = 0.5;
         
-        let singleTap = UITapGestureRecognizer(target: self, action: "filterClick")
-        singleTap.numberOfTapsRequired = 1;
-        singleTap.numberOfTouchesRequired = 1;
-        filterControls.addGestureRecognizer(singleTap)
-        filterControls.userInteractionEnabled = true
-
+        filterBox = UINib(nibName: "FilterBox", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! FilterBox
+        filterBox.delegate = self
+        view.addSubview(filterBox)
+        view.addConstraints("V:|-10-[filters(44)]", forViews: ["filters": filterBox])
+        view.addConstraints("H:|-0-[filters]-0-|", forViews: ["filters": filterBox])
         
-        if let currentCategory = session.currentCategory {
-            category = currentCategory
-        }
-        else {
-            category = Attraction.Category.EXPLORE_CITY
-            session.currentCategory = category
-        }
+        category = session.currentCategory
         
         session.loadBrusselsAsCurrentRegionIfEmpty() {
             self.loadAttractions()
@@ -52,11 +39,9 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     }
     
     override func viewWillAppear(animated: Bool) {
-        if let currentCategory = session.currentCategory {
-            if category != currentCategory {
-                category = currentCategory
-                reloadCards()
-            }
+        if category != session.currentCategory {
+            category = session.currentCategory
+            reloadCards()
         }
     }
     
@@ -76,13 +61,9 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
         backCardVerticalConstraints = [NSLayoutConstraint]()
     }
     
-    func filterClick() {
-        performSegueWithIdentifier("showFilter", sender: nil)
-    }
-    
     func loadAttractions() {
-        self.regionNameLabel.text = "\(self.session.currentRegion!.name!):"
-        self.categoryLabel.text = self.category.entityName
+        filterBox.regionNameLabel.text = "\(self.session.currentRegion!.name!):"
+        filterBox.categoryLabel.text = self.category.entityName
 
         session.loadAttractions() {
             self.attractions = self.session.currentAttractions
@@ -283,11 +264,17 @@ extension SwipeController: AttractionCardContainer {
     }
 }
 
+extension SwipeController: FilterBoxDelegate {
+
+    func filterClick() {
+        performSegueWithIdentifier("showFilter", sender: nil)
+    }
+}
+
 extension SwipeController: FilterControllerDelegate {
 
     func filterChanged() {
         dismissViewControllerAnimated(true, completion: nil)
-        print("filterChanged")
-        viewWillAppear(true)        
+        viewWillAppear(true)
     }
 }

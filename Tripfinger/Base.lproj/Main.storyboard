@@ -17,47 +17,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d1d-2H-KI8">
-                                <rect key="frame" x="0.0" y="5" width="600" height="44"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJY-Mh-KfH">
-                                        <rect key="frame" x="157" y="6" width="286.5" height="33"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Region name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dTV-N2-KCA">
-                                                <rect key="frame" x="10" y="7" width="99" height="19.5"/>
-                                                <animations/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Explore the city" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d8j-W2-E7F">
-                                                <rect key="frame" x="119" y="8" width="106" height="18"/>
-                                                <animations/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                        <animations/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="d8j-W2-E7F" secondAttribute="trailing" constant="61.5" id="0WN-e0-dL8"/>
-                                            <constraint firstItem="d8j-W2-E7F" firstAttribute="leading" secondItem="dTV-N2-KCA" secondAttribute="trailing" constant="10" id="ATo-um-eXw"/>
-                                            <constraint firstItem="d8j-W2-E7F" firstAttribute="centerY" secondItem="KJY-Mh-KfH" secondAttribute="centerY" id="E0q-JG-ewh"/>
-                                            <constraint firstAttribute="trailing" secondItem="d8j-W2-E7F" secondAttribute="trailing" constant="61.5" id="Pvx-e2-Gmc"/>
-                                            <constraint firstItem="dTV-N2-KCA" firstAttribute="centerY" secondItem="KJY-Mh-KfH" secondAttribute="centerY" id="naB-ET-cOH"/>
-                                            <constraint firstItem="dTV-N2-KCA" firstAttribute="leading" secondItem="KJY-Mh-KfH" secondAttribute="leading" constant="10" id="pZX-AO-FFy"/>
-                                        </constraints>
-                                    </view>
-                                </subviews>
-                                <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="102-41-jde"/>
-                                    <constraint firstItem="KJY-Mh-KfH" firstAttribute="top" secondItem="d1d-2H-KI8" secondAttribute="top" constant="6" id="SnG-vf-Mx2"/>
-                                    <constraint firstItem="KJY-Mh-KfH" firstAttribute="centerX" secondItem="d1d-2H-KI8" secondAttribute="centerX" id="h0p-U1-VnC"/>
-                                    <constraint firstAttribute="bottom" secondItem="KJY-Mh-KfH" secondAttribute="bottom" constant="5" id="hSh-i2-F5G"/>
-                                </constraints>
-                            </view>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No attractions to swipe." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4a-X9-Nhc">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="No attractions to swipe." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="z4a-X9-Nhc">
                                 <rect key="frame" x="209.5" y="249" width="181.5" height="20.5"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -68,19 +28,11 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="d1d-2H-KI8" secondAttribute="trailing" id="5Na-vi-JrG"/>
                             <constraint firstItem="z4a-X9-Nhc" firstAttribute="centerX" secondItem="9Jt-ao-oXf" secondAttribute="centerX" id="Ox5-0Q-H0n"/>
-                            <constraint firstItem="z4a-X9-Nhc" firstAttribute="top" secondItem="d1d-2H-KI8" secondAttribute="bottom" constant="200" id="paP-bZ-yud"/>
-                            <constraint firstItem="d1d-2H-KI8" firstAttribute="top" secondItem="9Jt-ao-oXf" secondAttribute="top" constant="5" id="tDb-pg-twi"/>
-                            <constraint firstItem="d1d-2H-KI8" firstAttribute="leading" secondItem="9Jt-ao-oXf" secondAttribute="leading" id="zeN-pu-7hb"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="categoryLabel" destination="d8j-W2-E7F" id="X1J-xi-Txb"/>
-                        <outlet property="filterBox" destination="d1d-2H-KI8" id="K2c-EL-kEr"/>
-                        <outlet property="filterControls" destination="KJY-Mh-KfH" id="lw6-RT-edi"/>
                         <outlet property="noElementsLabel" destination="z4a-X9-Nhc" id="z4b-mq-wa4"/>
-                        <outlet property="regionNameLabel" destination="dTV-N2-KCA" id="4VD-Zz-8RQ"/>
                         <segue destination="s8T-eu-R1X" kind="show" identifier="showDetail" id="haV-KH-7ar"/>
                         <segue destination="Cmh-yd-QPw" kind="presentation" identifier="showFilter" id="K0g-Yh-zor"/>
                     </connections>
@@ -311,6 +263,7 @@
                     </tableView>
                     <connections>
                         <segue destination="s8T-eu-R1X" kind="show" identifier="showDetail" id="CUm-Ra-T5D"/>
+                        <segue destination="Cmh-yd-QPw" kind="presentation" identifier="showFilter" id="vbF-NY-WMH"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Tv-a2-eef" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -546,6 +499,7 @@
         <image name="group" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="haV-KH-7ar"/>
+        <segue reference="vbF-NY-WMH"/>
+        <segue reference="CUm-Ra-T5D"/>
     </inferredMetricsTieBreakers>
 </document>

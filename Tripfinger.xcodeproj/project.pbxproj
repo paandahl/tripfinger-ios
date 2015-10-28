@@ -11,6 +11,8 @@
 		2503D3A71BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3A61BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift */; settings = {ASSET_TAGS = (); }; };
 		2503D3AA1BDF7CFB0078C0F0 /* SubController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3A91BDF7CFB0078C0F0 /* SubController.swift */; settings = {ASSET_TAGS = (); }; };
 		2503D3AC1BE0DA430078C0F0 /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3AB1BE0DA430078C0F0 /* FilterController.swift */; settings = {ASSET_TAGS = (); }; };
+		2503D3AE1BE1330E0078C0F0 /* FilterBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2503D3AD1BE1330E0078C0F0 /* FilterBox.xib */; settings = {ASSET_TAGS = (); }; };
+		2503D3B01BE133290078C0F0 /* FilterBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3AF1BE133290078C0F0 /* FilterBox.swift */; settings = {ASSET_TAGS = (); }; };
 		250651EB1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250651EA1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift */; };
 		25243E641BC410F400EF5F64 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E631BC410F400EF5F64 /* Region.swift */; };
 		25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E651BC4110E00EF5F64 /* GuideItem.swift */; };
@@ -98,6 +100,8 @@
 		2503D3A61BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKMapView+IsCoordinateVisible.swift"; sourceTree = "<group>"; };
 		2503D3A91BDF7CFB0078C0F0 /* SubController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubController.swift; sourceTree = "<group>"; };
 		2503D3AB1BE0DA430078C0F0 /* FilterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
+		2503D3AD1BE1330E0078C0F0 /* FilterBox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterBox.xib; sourceTree = "<group>"; };
+		2503D3AF1BE133290078C0F0 /* FilterBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterBox.swift; sourceTree = "<group>"; };
 		250651EA1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DonwnloadImage.swift"; sourceTree = "<group>"; };
 		25243E631BC410F400EF5F64 /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		25243E651BC4110E00EF5F64 /* GuideItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItem.swift; sourceTree = "<group>"; };
@@ -349,6 +353,8 @@
 				25F048E61BCC4B7E002DE14E /* LoadingCell.xib */,
 				25D436461BDA4C560016E362 /* ListingCell.xib */,
 				25D436481BDA50570016E362 /* ListingCell.swift */,
+				2503D3AD1BE1330E0078C0F0 /* FilterBox.xib */,
+				2503D3AF1BE133290078C0F0 /* FilterBox.swift */,
 			);
 			name = "UI Components";
 			sourceTree = "<group>";
@@ -462,6 +468,7 @@
 				25B506871BB3F33900A36BA1 /* Podfile in Resources */,
 				25C9DFF61B9CD90E00C516C1 /* SKMaps.bundle in Resources */,
 				25C9DFD61B9CD84200C516C1 /* Main.storyboard in Resources */,
+				2503D3AE1BE1330E0078C0F0 /* FilterBox.xib in Resources */,
 				25C9DFDB1B9CD84200C516C1 /* LaunchScreen.xib in Resources */,
 				25D436471BDA4C560016E362 /* ListingCell.xib in Resources */,
 				25C9DFD81B9CD84200C516C1 /* Images.xcassets in Resources */,
@@ -561,6 +568,7 @@
 				25D436301BD538810016E362 /* SearchViewController.swift in Sources */,
 				25D707C31BC6BAA8005A4BBA /* Session.swift in Sources */,
 				25D707CC1BC6D05B005A4BBA /* GuideItemCell.swift in Sources */,
+				2503D3B01BE133290078C0F0 /* FilterBox.swift in Sources */,
 				257922C71BA308A9005EA785 /* Attraction.swift in Sources */,
 				25D707C61BC6BC34005A4BBA /* ContentService.swift in Sources */,
 				25B506911BB401F400A36BA1 /* ImageLabelView.swift in Sources */,
