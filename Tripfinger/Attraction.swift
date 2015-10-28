@@ -3,6 +3,7 @@ import Foundation
 public class Attraction: GuideListing {
     
     public enum Category: Int {
+        case ALL = 200
         case EXPLORE_CITY = 210
         case ACTIVITY_HIKE_DAYTRIP = 220
         case TRANSPORTATION = 230
@@ -13,6 +14,8 @@ public class Attraction: GuideListing {
 
         var entityName: String {
             switch self {
+            case .ALL:
+                return "All listings"
             case .EXPLORE_CITY:
                 return "Explore the city"
             case .ACTIVITY_HIKE_DAYTRIP:
@@ -30,7 +33,7 @@ public class Attraction: GuideListing {
             }
         }
 
-        static let allValues = [EXPLORE_CITY, ACTIVITY_HIKE_DAYTRIP, TRANSPORTATION, ACCOMODATION,
+        static let allValues = [ALL, EXPLORE_CITY, ACTIVITY_HIKE_DAYTRIP, TRANSPORTATION, ACCOMODATION,
             FOOD_OR_DRINK, SHOPPING, INFORMATION]
     }
     

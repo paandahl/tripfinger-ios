@@ -64,13 +64,15 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
             var subController = controller as! SubController
             subController.session = session
             subControllers[name] = controller
+            if controllerType == GuideController.self {
+                let guideController = controller as! GuideController
+                guideController.delegate = self
+            }
+        }
+        else {
+            controller?.viewWillAppear(true)            
         }
         switchSubview(controller!)
-    }
-    
-    
-    func makeInstance<T: UIViewController >(type: T.Type) -> T? {
-        return T()
     }
     
     func switchSubview(newView: UIViewController) {
@@ -105,10 +107,23 @@ extension RootController: SearchViewControllerDelegate {
         
         if searchResult.resultType == .Street {
             if !(currentController is MapDisplayViewController) {
+                segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
+                secondSegmentedController.selectedSegmentIndex = 2
                 navigateToSubview("mapController", controllerType: MapDisplayViewController.self)
             }
             let mapController = currentController as! MapDisplayViewController
             mapController.selectedSearchResult(searchResult)
         }
+    }
+}
+
+extension RootController: GuideControllerDelegate {
+
+    func categorySelected(category: Attraction.Category) {
+        
+        session.currentCategory = category
+        segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
+        secondSegmentedController.selectedSegmentIndex = 0
+        navigateToSubview("swipeController", controllerType: SwipeController.self)
     }
 }

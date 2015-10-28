@@ -10,6 +10,7 @@
 		2503D3A51BDA5E2A0078C0F0 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3A41BDA5E2A0078C0F0 /* DetailController.swift */; settings = {ASSET_TAGS = (); }; };
 		2503D3A71BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3A61BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift */; settings = {ASSET_TAGS = (); }; };
 		2503D3AA1BDF7CFB0078C0F0 /* SubController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3A91BDF7CFB0078C0F0 /* SubController.swift */; settings = {ASSET_TAGS = (); }; };
+		2503D3AC1BE0DA430078C0F0 /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3AB1BE0DA430078C0F0 /* FilterController.swift */; settings = {ASSET_TAGS = (); }; };
 		250651EB1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250651EA1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift */; };
 		25243E641BC410F400EF5F64 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E631BC410F400EF5F64 /* Region.swift */; };
 		25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E651BC4110E00EF5F64 /* GuideItem.swift */; };
@@ -96,6 +97,7 @@
 		2503D3A41BDA5E2A0078C0F0 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		2503D3A61BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKMapView+IsCoordinateVisible.swift"; sourceTree = "<group>"; };
 		2503D3A91BDF7CFB0078C0F0 /* SubController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubController.swift; sourceTree = "<group>"; };
+		2503D3AB1BE0DA430078C0F0 /* FilterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
 		250651EA1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DonwnloadImage.swift"; sourceTree = "<group>"; };
 		25243E631BC410F400EF5F64 /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		25243E651BC4110E00EF5F64 /* GuideItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItem.swift; sourceTree = "<group>"; };
@@ -257,14 +259,15 @@
 		25B506891BB3FD4800A36BA1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				25D707B91BC6606E005A4BBA /* GuideController.swift */,
-				25C9DFD21B9CD84200C516C1 /* MapDisplayViewController.swift */,
-				25D4362F1BD538810016E362 /* SearchViewController.swift */,
-				25B5068A1BB3FD5800A36BA1 /* RootController.swift */,
-				25D436421BDA3A680016E362 /* SwipeController.swift */,
-				25D436441BDA4B000016E362 /* ListController.swift */,
 				2503D3A41BDA5E2A0078C0F0 /* DetailController.swift */,
+				2503D3AB1BE0DA430078C0F0 /* FilterController.swift */,
+				25D707B91BC6606E005A4BBA /* GuideController.swift */,
+				25D436441BDA4B000016E362 /* ListController.swift */,
+				25C9DFD21B9CD84200C516C1 /* MapDisplayViewController.swift */,
+				25B5068A1BB3FD5800A36BA1 /* RootController.swift */,
+				25D4362F1BD538810016E362 /* SearchViewController.swift */,
 				2503D3A91BDF7CFB0078C0F0 /* SubController.swift */,
+				25D436421BDA3A680016E362 /* SwipeController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -542,6 +545,7 @@
 				25D707D31BCA7620005A4BBA /* UINib+RegisterNib.swift in Sources */,
 				257922D41BA488EB005EA785 /* DataManager.swift in Sources */,
 				25B5068B1BB3FD5800A36BA1 /* RootController.swift in Sources */,
+				2503D3AC1BE0DA430078C0F0 /* FilterController.swift in Sources */,
 				25D707D51BCA7848005A4BBA /* UIView+AddConstraints.swift in Sources */,
 				25D436451BDA4B010016E362 /* ListController.swift in Sources */,
 				25D436431BDA3A680016E362 /* SwipeController.swift in Sources */,

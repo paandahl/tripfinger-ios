@@ -4,13 +4,19 @@ import MDCSwipeToChoose
 class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate {
     
     var session: Session!
-    @IBOutlet weak var toolbar: UIToolbar!
+    @IBOutlet weak var filterBox: UIView!
+    @IBOutlet weak var filterControls: UIView!
+    @IBOutlet weak var regionNameLabel: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var noElementsLabel: UILabel!
     
     var attractions:[Attraction] = []
+    var category: Attraction.Category!
     let ChooseAttractionButtonHorizontalPadding: CGFloat = 80.0
     let ChooseAttractionButtonVerticalPadding: CGFloat = 20.0
     var currentAttraction: Attraction!
     var frontCardView: ChooseAttractionView!
+    var frontCardVerticalConstraints = [NSLayoutConstraint]()
     var orignalFrontCardFrame: CGRect!
     var backCardView: ChooseAttractionView!
     var backCardVerticalConstraints = [NSLayoutConstraint]()
@@ -19,43 +25,91 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     var guideController: GuideController?
     var mapController: MapDisplayViewController?
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-        // Here you can init your properties
-    }
-    
     override func viewDidLoad(){
         super.viewDidLoad()
+                
+        filterControls.layer.borderColor = UIColor.darkGrayColor().CGColor
+        filterControls.layer.borderWidth = 0.5;
+        
+        let singleTap = UITapGestureRecognizer(target: self, action: "filterClick")
+        singleTap.numberOfTapsRequired = 1;
+        singleTap.numberOfTouchesRequired = 1;
+        filterControls.addGestureRecognizer(singleTap)
+        filterControls.userInteractionEnabled = true
+
+        
+        if let currentCategory = session.currentCategory {
+            category = currentCategory
+        }
+        else {
+            category = Attraction.Category.EXPLORE_CITY
+            session.currentCategory = category
+        }
         
         session.loadBrusselsAsCurrentRegionIfEmpty() {
             self.loadAttractions()
         }
     }
     
-    func displayCards() {
-        // Display the first ChoosePersonView in front. Users can swipe to indicate
-        // whether they like or dislike the item displayed.
-        setFrontCardViewFunc(popAttractionViewWithFrame(frontCardViewFrame())!)
-        view.insertSubview(frontCardView, belowSubview: toolbar)
-        addFrontCardConstraints()
-        
-        // Display the second ChoosePersonView in back. This view controller uses
-        // the MDCSwipeToChooseDelegate protocol methods to update the front and
-        // back views after each user swipe.
-        backCardView = popAttractionViewWithFrame(backCardViewFrame())!
-        view.insertSubview(backCardView, belowSubview: frontCardView)
-        addBackCardConstraints()
+    override func viewWillAppear(animated: Bool) {
+        if let currentCategory = session.currentCategory {
+            if category != currentCategory {
+                category = currentCategory
+                reloadCards()
+            }
+        }
+    }
+    
+    func reloadCards() {
+        if (frontCardView != nil) {
+            cleanCards()
+        }
+        loadAttractions()
+    }
+    
+    func cleanCards() {
+        frontCardView.removeFromSuperview()
+        backCardView.removeFromSuperview()
+        view.removeConstraints(frontCardVerticalConstraints)
+        view.removeConstraints(backCardVerticalConstraints)
+        frontCardVerticalConstraints = [NSLayoutConstraint]()
+        backCardVerticalConstraints = [NSLayoutConstraint]()
+    }
+    
+    func filterClick() {
+        performSegueWithIdentifier("showFilter", sender: nil)
     }
     
     func loadAttractions() {
-        
+        self.regionNameLabel.text = "\(self.session.currentRegion!.name!):"
+        self.categoryLabel.text = self.category.entityName
+
         session.loadAttractions() {
             self.attractions = self.session.currentAttractions
             print("loaded \(self.attractions.count) attractions")
             self.displayCards()
+        }
+    }
+    
+    func displayCards() {
+        
+        if attractions.count > 0 {
+            noElementsLabel.hidden = true
+            // Display the first ChoosePersonView in front. Users can swipe to indicate
+            // whether they like or dislike the item displayed.
+            setFrontCardViewFunc(popAttractionViewWithFrame(frontCardViewFrame())!)
+            view.insertSubview(frontCardView, belowSubview: filterBox)
+            addFrontCardConstraints()
+            
+            // Display the second ChoosePersonView in back. This view controller uses
+            // the MDCSwipeToChooseDelegate protocol methods to update the front and
+            // back views after each user swipe.
+            backCardView = popAttractionViewWithFrame(backCardViewFrame())!
+            view.insertSubview(backCardView, belowSubview: frontCardView)
+            addBackCardConstraints()
+        }
+        else {
+            noElementsLabel.hidden = false
         }
     }
     
@@ -64,16 +118,16 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     }
     
     func addFrontCardConstraints() {
-        let views = ["card": frontCardView, "toolbar": toolbar]
-        view.addConstraints("H:[card(300)]", forViews: views)
-        view.addConstraints("V:[toolbar]-10-[card]", forViews: views)
+        let views = ["card": frontCardView, "filter": filterBox!]
+        view.addConstraints("H:[card(301)]", forViews: views)
+        frontCardVerticalConstraints = view.addConstraints("V:[filter]-10-[card]", forViews: views)
         view.addConstraint(NSLayoutAttribute.CenterX, forView: frontCardView)
     }
     
     func addBackCardConstraints() {
-        let views = ["card": backCardView, "toolbar": toolbar]
-        view.addConstraints("H:[card(300)]", forViews: views)
-        backCardVerticalConstraints = view.addConstraints("V:[toolbar]-20-[card]", forViews: views) as! [NSLayoutConstraint]
+        let views = ["card": backCardView, "filter": filterBox!]
+        view.addConstraints("H:[card(302)]", forViews: views)
+        backCardVerticalConstraints = view.addConstraints("V:[filter]-20-[card]", forViews: views) 
         view.addConstraint(NSLayoutAttribute.CenterX, forView: backCardView)
     }
     
@@ -213,6 +267,12 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
             let detailController = segue.destinationViewController as! DetailController
             detailController.attraction = sender as! Attraction
         }
+        else if segue.identifier == "showFilter" {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let filterController = navigationController.viewControllers[0] as! FilterController
+            filterController.session = session
+            filterController.delegate = self
+        }
     }
 }
 
@@ -220,5 +280,14 @@ extension SwipeController: AttractionCardContainer {
 
     func showDetail(attraction: Attraction) {
         performSegueWithIdentifier("showDetail", sender: attraction)
+    }
+}
+
+extension SwipeController: FilterControllerDelegate {
+
+    func filterChanged() {
+        dismissViewControllerAnimated(true, completion: nil)
+        print("filterChanged")
+        viewWillAppear(true)        
     }
 }

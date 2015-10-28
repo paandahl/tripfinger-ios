@@ -13,6 +13,7 @@ import Foundation
     
     var currentRegion: Region?
     var currentAttractions = [Attraction]()
+    var currentCategory: Attraction.Category!
     
     func loadBrusselsAsCurrentRegionIfEmpty(handler: () -> ()) {
         if currentRegion == nil {
@@ -39,11 +40,22 @@ import Foundation
 
     
     func loadAttractions(handler: () -> ()) {
-        ContentService.getAttractionsForRegion(self.currentRegion!) {
-            attractions in
-            
-            self.currentAttractions = attractions
-            handler()
+        
+        if currentCategory != Attraction.Category.ALL {
+            ContentService.getAttractionsForRegion(self.currentRegion!, withCategory: currentCategory) {
+                attractions in
+                
+                self.currentAttractions = attractions
+                handler()
+            }
+        }
+        else {
+            ContentService.getAttractionsForRegion(self.currentRegion!) {
+                attractions in
+                
+                self.currentAttractions = attractions
+                handler()
+            }
         }
 
     }

@@ -1,10 +1,6 @@
-//
-//  GuideController.swift
-//  Tripfinger
-//
-//  Created by Preben Ludviksen on 08/10/15.
-//  Copyright (c) 2015 Preben Ludviksen. All rights reserved.
-//
+protocol GuideControllerDelegate: class {
+    func categorySelected(category: Attraction.Category)
+}
 
 class GuideController: UITableViewController, SubController {
     struct TableViewCellIdentifiers {
@@ -15,6 +11,7 @@ class GuideController: UITableViewController, SubController {
     }
     
     var session: Session!
+    var delegate: GuideControllerDelegate!
 
     var currentItem: GuideItem?
     var guideSections = [GuideText]()
@@ -120,7 +117,7 @@ extension GuideController {
         case 2:
             return (currentItem is GuideText) ? 0 : 2
         case 3:
-            return (currentItem is GuideText) ? 0 : Attraction.Category.allValues.count - 2
+            return (currentItem is GuideText) ? 0 : Attraction.Category.allValues.count - 3
         default:
             return 0
         }
@@ -154,10 +151,10 @@ extension GuideController {
             let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.categoryCell, forIndexPath: indexPath)
             let index: Int
             if indexPath.section == 2 {
-                index = indexPath.row
+                index = indexPath.row + 1
             }
             else {
-                index = indexPath.row + 2
+                index = indexPath.row + 3
             }
             cell.textLabel?.text = Attraction.Category.allValues[index].entityName
             return cell
@@ -169,7 +166,6 @@ extension GuideController {
 extension GuideController: GuideItemContainerDelegate {
     
     func readMoreClicked() {
-        print("Readmoreclicked")
         tableView.beginUpdates()
         tableView.endUpdates()
         
@@ -190,7 +186,6 @@ extension GuideController {
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 && guideItemExpanded {
             
-            print("FETCHING NEW")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let vc = storyboard.instantiateViewControllerWithIdentifier("guideController") as! GuideController
             vc.currentItem = guideSections[indexPath.row]
@@ -198,7 +193,7 @@ extension GuideController {
             self.navigationController?.pushViewController(vc, animated: true)
         }
         else if indexPath.section == 2 {
-            self.tabBarController?.selectedIndex = 1
+            delegate.categorySelected(Attraction.Category.allValues[indexPath.row + 1])
         }
         else if indexPath.section == 3 {
             if indexPath.row == 0 { // Transportation
@@ -211,5 +206,6 @@ extension GuideController {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
 }

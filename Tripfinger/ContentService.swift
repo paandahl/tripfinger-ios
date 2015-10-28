@@ -102,7 +102,20 @@ public class ContentService {
             }}, failure: nil)
         
     }
-    
+
+    public class func getAttractionsForRegion(region: Region, withCategory category: Attraction.Category, handler: [Attraction] -> ()) {
+        getJsonFromUrl(baseUrl + "/regions/\(region.id)/attractions/\(category.rawValue)", success: {
+            json in
+            
+            let attractions = self.parseAttractions(json!)
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                handler(attractions)
+                
+            }}, failure: nil)
+        
+    }
+
     class func getJsonFromUrl(url: String, success: (json: JSON?) -> (), failure: (() -> ())?) {
         print("Fetching URL: \(url)")
         let nsUrl = NSURL(string: url)
