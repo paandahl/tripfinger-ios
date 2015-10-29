@@ -37,13 +37,6 @@ public class Attraction: GuideListing {
             FOOD_OR_DRINK, SHOPPING, INFORMATION]
     }
     
+    // Temprorary data for swiper
+    var swipedRight: Bool!
 }
-
-
-//        title = "MIM - Musical Instruments Museum"
-//        title = "Serres Royales De Laeken"
-//        title = "Foret des Soignes"
-//        title = "Royal Museum of the Armed Forces and of Military History"
-//        title = "Notre Dame du Sablon"
-//        title = "Museum of Natural Sciences"
-//        title = "Bois de la Cambre"

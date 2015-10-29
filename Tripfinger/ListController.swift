@@ -47,7 +47,11 @@ class ListController: UITableViewController, SubController {
         filterBox.regionNameLabel.text = "\(session.currentRegion!.name!):"
         filterBox.categoryLabel.text = session.currentCategory.entityName
         session.loadAttractions() {
-            self.tableView.reloadData()
+            loaded in
+            
+            if loaded {
+                self.tableView.reloadData()                
+            }
         }
     }
     

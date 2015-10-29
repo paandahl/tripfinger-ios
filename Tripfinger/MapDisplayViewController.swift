@@ -51,6 +51,8 @@ class MapDisplayViewController: UIViewController, SubController, SKMapViewDelega
     func loadAttractions() {
         
         session.loadAttractions() {
+            loaded in
+
             self.attractions = self.session.currentAttractions
             self.addAnnotations()
         }
@@ -69,14 +71,17 @@ class MapDisplayViewController: UIViewController, SubController, SKMapViewDelega
     }
     
     func addAnnotations() {
-        
-        print("adding annotations")
 
         var identifier: Int32 = 0
         for attraction in attractions {
             let annotation = SKAnnotation()
             annotation.identifier = identifier
-            annotation.annotationType = SKAnnotationType.Purple
+            if attraction.swipedRight != nil && attraction.swipedRight! {
+                annotation.annotationType = SKAnnotationType.Blue
+            }
+            else {
+                annotation.annotationType = SKAnnotationType.Purple
+            }
             annotation.location = CLLocationCoordinate2DMake(attraction.latitude, attraction.longitude)
             let animationSettings = SKAnimationSettings()
             mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)

@@ -11,7 +11,7 @@
             <rect key="frame" x="0.0" y="0.0" width="331" height="294"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sK9-hc-Qe1" id="ENL-mL-84E">
-                <rect key="frame" x="0.0" y="0.0" width="331" height="294"/>
+                <rect key="frame" x="0.0" y="0.0" width="331" height="293.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="W06-Zf-Lwf">
@@ -35,21 +35,35 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="0.74833720439189177" colorSpace="calibratedWhite"/>
                     </view>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="heart-24" translatesAutoresizingMaskIntoConstraints="NO" id="QDH-aM-UPY">
+                        <rect key="frame" x="278" y="31" width="24" height="24"/>
+                        <animations/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="24" id="Nfg-R3-mrs"/>
+                            <constraint firstAttribute="height" constant="24" id="QRs-CC-Tvk"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <animations/>
                 <constraints>
                     <constraint firstItem="W06-Zf-Lwf" firstAttribute="leading" secondItem="ENL-mL-84E" secondAttribute="leading" constant="9" id="9ov-dQ-QEj"/>
+                    <constraint firstItem="W06-Zf-Lwf" firstAttribute="top" secondItem="QDH-aM-UPY" secondAttribute="bottom" constant="-39" id="JGx-LO-D0i"/>
                     <constraint firstItem="W06-Zf-Lwf" firstAttribute="top" secondItem="ENL-mL-84E" secondAttribute="top" constant="16" id="WqI-SQ-Dl3"/>
                     <constraint firstAttribute="trailing" secondItem="W06-Zf-Lwf" secondAttribute="trailing" constant="10" id="iQc-0h-rhn"/>
                     <constraint firstAttribute="bottom" secondItem="W06-Zf-Lwf" secondAttribute="bottom" constant="11" id="qgZ-X5-WIG"/>
+                    <constraint firstItem="QDH-aM-UPY" firstAttribute="leading" secondItem="W06-Zf-Lwf" secondAttribute="trailing" constant="-43" id="qqh-HP-nWv"/>
                 </constraints>
             </tableViewCellContentView>
             <animations/>
             <connections>
+                <outlet property="heartImage" destination="QDH-aM-UPY" id="at7-aM-OH5"/>
                 <outlet property="mainImage" destination="W06-Zf-Lwf" id="Gmu-of-1re"/>
                 <outlet property="name" destination="j2A-RJ-eXg" id="XwQ-fL-c6Y"/>
             </connections>
             <point key="canvasLocation" x="268.5" y="440"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="heart-24" width="24" height="24"/>
+    </resources>
 </document>

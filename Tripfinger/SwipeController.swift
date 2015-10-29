@@ -3,8 +3,8 @@ import MDCSwipeToChoose
 
 class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate {
     
-    var session: Session!
     @IBOutlet weak var noElementsLabel: UILabel!
+    var session: Session!
     var filterBox: FilterBox!
     
     var attractions:[Attraction] = []
@@ -13,14 +13,8 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     let ChooseAttractionButtonVerticalPadding: CGFloat = 20.0
     var currentAttraction: Attraction!
     var frontCardView: ChooseAttractionView!
-    var frontCardVerticalConstraints = [NSLayoutConstraint]()
     var orignalFrontCardFrame: CGRect!
     var backCardView: ChooseAttractionView!
-    var backCardVerticalConstraints = [NSLayoutConstraint]()
-    
-    var currentController: UIViewController!
-    var guideController: GuideController?
-    var mapController: MapDisplayViewController?
     
     override func viewDidLoad(){
         super.viewDidLoad()
@@ -47,25 +41,18 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     
     func reloadCards() {
         if (frontCardView != nil) {
-            cleanCards()
+            frontCardView.removeFromSuperview()
+            backCardView.removeFromSuperview()
         }
         loadAttractions()
     }
-    
-    func cleanCards() {
-        frontCardView.removeFromSuperview()
-        backCardView.removeFromSuperview()
-        view.removeConstraints(frontCardVerticalConstraints)
-        view.removeConstraints(backCardVerticalConstraints)
-        frontCardVerticalConstraints = [NSLayoutConstraint]()
-        backCardVerticalConstraints = [NSLayoutConstraint]()
-    }
-    
     func loadAttractions() {
         filterBox.regionNameLabel.text = "\(self.session.currentRegion!.name!):"
         filterBox.categoryLabel.text = self.category.entityName
 
         session.loadAttractions() {
+            loaded in
+
             self.attractions = self.session.currentAttractions
             print("loaded \(self.attractions.count) attractions")
             self.displayCards()
@@ -100,15 +87,15 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     
     func addFrontCardConstraints() {
         let views = ["card": frontCardView, "filter": filterBox!]
-        view.addConstraints("H:[card(301)]", forViews: views)
-        frontCardVerticalConstraints = view.addConstraints("V:[filter]-10-[card]", forViews: views)
+        view.addConstraints("H:[card(300)]", forViews: views)
+        view.addConstraints("V:[filter]-10-[card]", forViews: views)
         view.addConstraint(NSLayoutAttribute.CenterX, forView: frontCardView)
     }
     
     func addBackCardConstraints() {
         let views = ["card": backCardView, "filter": filterBox!]
-        view.addConstraints("H:[card(302)]", forViews: views)
-        backCardVerticalConstraints = view.addConstraints("V:[filter]-20-[card]", forViews: views) 
+        view.addConstraints("H:[card(300)]", forViews: views)
+        view.addConstraints("V:[filter]-20-[card]", forViews: views)
         view.addConstraint(NSLayoutAttribute.CenterX, forView: backCardView)
     }
     
@@ -134,11 +121,12 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
         
         // MDCSwipeToChooseView shows "NOPE" on swipes to the left,
         // and "LIKED" on swipes to the right.
-        if(wasChosenWithDirection == MDCSwipeDirection.Left){
+        if(wasChosenWithDirection == MDCSwipeDirection.Left) {
+            currentAttraction.swipedRight = false
             print("You noped: \(currentAttraction.name)")
         }
         else{
-            
+            currentAttraction.swipedRight = true
             print("You liked: \(currentAttraction.name)")
         }
         
@@ -148,10 +136,13 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
         // move the back card to the front, and create a new back card.
         if(backCardView != nil){
             setFrontCardViewFunc(backCardView)
+            frontCardView.removeFromSuperview()
+            self.view.addSubview(backCardView)
+            addFrontCardConstraints()
         }
         
         backCardView = popAttractionViewWithFrame(backCardViewFrame())
-        //if(true){
+        
         // Fade the back card into view.
         if(backCardView != nil){
             backCardView.alpha = 0.0
@@ -169,11 +160,6 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
         // Quick and dirty, just for the purposes of this sample app.
         self.frontCardView = frontCardView
         currentAttraction = frontCardView.attraction
-        
-        if (backCardVerticalConstraints.count != 0) {
-            view.removeConstraints(backCardVerticalConstraints)
-            addFrontCardConstraints()
-        }
     }
     
     
