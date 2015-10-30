@@ -42,7 +42,10 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     func reloadCards() {
         if (frontCardView != nil) {
             frontCardView.removeFromSuperview()
+        }
+        if (backCardView != nil) {
             backCardView.removeFromSuperview()
+            backCardView = nil
         }
         loadAttractions()
     }
@@ -72,9 +75,11 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
             // Display the second ChoosePersonView in back. This view controller uses
             // the MDCSwipeToChooseDelegate protocol methods to update the front and
             // back views after each user swipe.
-            backCardView = popAttractionViewWithFrame(backCardViewFrame())!
-            view.insertSubview(backCardView, belowSubview: frontCardView)
-            addBackCardConstraints()
+            if attractions.count > 1 {
+                backCardView = popAttractionViewWithFrame(backCardViewFrame())!
+                view.insertSubview(backCardView, belowSubview: frontCardView)
+                addBackCardConstraints()
+            }
         }
         else {
             noElementsLabel.hidden = false
