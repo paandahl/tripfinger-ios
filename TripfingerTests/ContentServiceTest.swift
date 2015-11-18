@@ -29,8 +29,8 @@ class ContentServiceTest: XCTestCase {
             var foundUnderstand = false
             for guideText in guideTexts {
                 if guideText.name == "Understand" {
-                    XCTAssertNotNil(guideText.description)
-                    XCTAssertNotEqual("", guideText.description!)
+                    XCTAssertNotNil(guideText.content)
+                    XCTAssertNotEqual("", guideText.content!)
                     foundUnderstand = true
                 }
             }
@@ -66,7 +66,7 @@ class ContentServiceTest: XCTestCase {
         ContentService.getDescriptionForCategory(Attraction.Category.TRANSPORTATION.rawValue, forRegion: guideItem) {
             guideText in
             
-            XCTAssertNil(guideText.description)
+            XCTAssertNil(guideText.content)
             readyExpectation.fulfill()
         }
         
@@ -75,4 +75,17 @@ class ContentServiceTest: XCTestCase {
         })
     }
 
+    func testGetFullRegion() {
+        let readyExpectation = expectationWithDescription("ready")
+        
+        ContentService.getFullRegionTree(brusselsId) {
+            region in
+            
+            readyExpectation.fulfill()
+        }
+        
+        waitForExpectationsWithTimeout(15, handler: { error in
+            XCTAssertNil(error, "Error")
+        })
+    }
 }

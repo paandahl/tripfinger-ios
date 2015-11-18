@@ -1,11 +1,3 @@
-//
-//  ContentService.swift
-//  Tripfinger
-//
-//  Created by Preben Ludviksen on 08/10/15.
-//  Copyright (c) 2015 Preben Ludviksen. All rights reserved.
-//
-
 import Foundation
 
 public typealias ContentLoaded = (guideItem: GuideItem) -> ()
@@ -28,6 +20,19 @@ public class ContentService {
             }
             }, failure: nil)
     }
+    
+    public class func getFullRegionTree(regionId: String, handler: (region: Region) -> ()) {
+        getJsonFromUrl(baseUrl + "/regions/\(regionId)/full", success: {
+            json in
+            
+            let region = self.parseRegionTreeFromJson(json!)
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                handler(region: region)
+            }
+            }, failure: nil)
+    }
+
     
     public class func getDescriptionForCategory(categoryId: Int, forRegion region: Region, handler: (categoryDescription: GuideText) -> ()) {
         
@@ -83,10 +88,10 @@ public class ContentService {
             json in
             
             let guideText = self.parseGuideText(json!, fetchChildren: true)
-            
+
             dispatch_async(dispatch_get_main_queue()) {
                 handler(guideText)
-                
+
             }}, failure: nil)
     }
     
@@ -174,10 +179,10 @@ public class ContentService {
     class func parseGuideItem(guideItem: GuideItem, withJson json: JSON) -> GuideItem {
         guideItem.name = json["name"].string
         guideItem.id = json["id"].string
-        guideItem.description = json["description"].string
+        guideItem.content = json["description"].string
         guideItem.category = json["category"].int
         for imageJson in json["images"].array! {
-            let image = GuideItem.GuideItemImage()
+            let image = GuideItemImage()
             image.url = imageJson["url"].string
             image.description = imageJson["description"].string
             guideItem.images.append(image)
@@ -223,7 +228,14 @@ public class ContentService {
         }
         return region
     }
-    
+
+    class func parseRegionTreeFromJson(json: JSON) -> Region {
+        let region = parseGuideItem(Region(), withJson: json) as! Region
+        
+        region.guideSections = parseSectionTreeFromJson(json["sectionTree"])
+        return region
+    }
+
     class func parseAttractions(jsonArray: JSON) -> [Attraction] {
         var attractions = [Attraction]()
         for json in jsonArray.array! {
@@ -236,10 +248,21 @@ public class ContentService {
         return parseGuideListing(Attraction(), withJson: json) as! Attraction
     }
     
+    class func parseSectionTreeFromJson(json: JSON) -> [GuideText] {
+        var guideSections = [GuideText]()
+        for guideSectionObj in json.array! {
+            let guideSection = parseGuideText(guideSectionObj)
+            guideSection.guideSections = parseSectionTreeFromJson(guideSectionObj["sectionTree"])
+            guideSections.append(guideSection)
+        }
+        return guideSections
+    }
+    
     class func parseChildren(guideItem: GuideItem, withJson json: JSON) {
 
         var guideSections = [GuideText]()
         let categoryDescriptions = [GuideText]()
+        
         for guideSectionArr in json["guideSections"].array! {
             let guideSection = GuideText()
             guideSection.id = guideSectionArr[0].string

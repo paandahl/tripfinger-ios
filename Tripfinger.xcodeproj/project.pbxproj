@@ -42,6 +42,9 @@
 		25C9E0041B9CD9BE00C516C1 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9E0031B9CD9BE00C516C1 /* CoreMotion.framework */; };
 		25C9E0061B9CD9D100C516C1 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9E0051B9CD9D100C516C1 /* libz.dylib */; };
 		25C9E0081B9CD9E000C516C1 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9E0071B9CD9E000C516C1 /* libc++.dylib */; };
+		25D281C71BFB67760069BE86 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281C61BFB67760069BE86 /* DownloadService.swift */; settings = {ASSET_TAGS = (); }; };
+		25D281C91BFB69B80069BE86 /* DownloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281C81BFB69B80069BE86 /* DownloadController.swift */; settings = {ASSET_TAGS = (); }; };
+		25D281CD1BFBB6B30069BE86 /* GuideItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281CC1BFBB6B30069BE86 /* GuideItemImage.swift */; settings = {ASSET_TAGS = (); }; };
 		25D436301BD538810016E362 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4362F1BD538810016E362 /* SearchViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		25D436321BD548400016E362 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D436311BD548400016E362 /* SearchService.swift */; settings = {ASSET_TAGS = (); }; };
 		25D436361BD5546A0016E362 /* SearchServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D436351BD5546A0016E362 /* SearchServiceTest.swift */; settings = {ASSET_TAGS = (); }; };
@@ -108,7 +111,7 @@
 		257922C61BA308A9005EA785 /* Attraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attraction.swift; sourceTree = "<group>"; };
 		257922D11BA48697005EA785 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Tripfinger/SwiftyJSON.swift; sourceTree = "<group>"; };
 		257922D31BA488EB005EA785 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
-		25B506861BB3F33900A36BA1 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; };
+		25B506861BB3F33900A36BA1 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		25B5068A1BB3FD5800A36BA1 /* RootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
 		25B5068C1BB3FDC300A36BA1 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		25B5068E1BB4009600A36BA1 /* ChooseAttractionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAttractionView.swift; sourceTree = "<group>"; };
@@ -134,6 +137,9 @@
 		25C9E0031B9CD9BE00C516C1 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		25C9E0051B9CD9D100C516C1 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		25C9E0071B9CD9E000C516C1 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		25D281C61BFB67760069BE86 /* DownloadService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
+		25D281C81BFB69B80069BE86 /* DownloadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadController.swift; sourceTree = "<group>"; };
+		25D281CC1BFBB6B30069BE86 /* GuideItemImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemImage.swift; sourceTree = "<group>"; };
 		25D4362F1BD538810016E362 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		25D436311BD548400016E362 /* SearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		25D436351BD5546A0016E362 /* SearchServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchServiceTest.swift; sourceTree = "<group>"; };
@@ -160,9 +166,11 @@
 		25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AddConstraints.swift"; sourceTree = "<group>"; };
 		25F048E11BCC365C002DE14E /* ContentServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentServiceTest.swift; sourceTree = "<group>"; };
 		25F048E61BCC4B7E002DE14E /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
+		2E67C6EFCB47ABD4F936CCBC /* Pods-Tripfinger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.debug.xcconfig"; sourceTree = "<group>"; };
 		356EFCE331E62CA7B8254017 /* Pods-Tripfinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.release.xcconfig"; sourceTree = "<group>"; };
 		6D65EBCD3D5BCD8F85D4EA0F /* Pods_Tripfinger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripfinger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F282B37EC8CE065ECCEE238 /* Pods-Tripfinger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.debug.xcconfig"; sourceTree = "<group>"; };
+		C07551D86C743CDF471C2520 /* Pods-Tripfinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +264,7 @@
 				25D707C71BC6CD05005A4BBA /* GuideText.swift */,
 				25D707C91BC6CD31005A4BBA /* GuideListing.swift */,
 				25D436401BD7B5F80016E362 /* SearchResult.swift */,
+				25D281CC1BFBB6B30069BE86 /* GuideItemImage.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -272,6 +281,7 @@
 				25D4362F1BD538810016E362 /* SearchViewController.swift */,
 				2503D3A91BDF7CFB0078C0F0 /* SubController.swift */,
 				25D436421BDA3A680016E362 /* SwipeController.swift */,
+				25D281C81BFB69B80069BE86 /* DownloadController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -282,6 +292,8 @@
 				250651EC1BD40F89002C3883 /* Libraries */,
 				25C9DFCD1B9CD84200C516C1 /* Tripfinger */,
 				25C9DFE31B9CD84200C516C1 /* TripfingerTests */,
+				DC9F3E50233573A0D4A8AF6D /* Pods */,
+				F082A5E4983C2FEBAAE9AFA6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -298,10 +310,10 @@
 			isa = PBXGroup;
 			children = (
 				25C9DFD01B9CD84200C516C1 /* AppDelegate.swift */,
+				25B506881BB3FD1C00A36BA1 /* Model */,
 				25B506891BB3FD4800A36BA1 /* Controllers */,
 				25C9DFD71B9CD84200C516C1 /* Images.xcassets */,
 				25C9DFD41B9CD84200C516C1 /* Main.storyboard */,
-				25B506881BB3FD1C00A36BA1 /* Model */,
 				25D707C41BC6BC25005A4BBA /* Service */,
 				25C9DFCE1B9CD84200C516C1 /* Supporting Files */,
 				25D707BB1BC66145005A4BBA /* UI Components */,
@@ -366,6 +378,7 @@
 				25D436391BD57BAF0016E362 /* MultiStepSearch.m */,
 				25D707C51BC6BC34005A4BBA /* ContentService.swift */,
 				25D436311BD548400016E362 /* SearchService.swift */,
+				25D281C61BFB67760069BE86 /* DownloadService.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -377,6 +390,22 @@
 				356EFCE331E62CA7B8254017 /* Pods-Tripfinger.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		DC9F3E50233573A0D4A8AF6D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2E67C6EFCB47ABD4F936CCBC /* Pods-Tripfinger.debug.xcconfig */,
+				C07551D86C743CDF471C2520 /* Pods-Tripfinger.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F082A5E4983C2FEBAAE9AFA6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -546,6 +575,8 @@
 				2503D3A51BDA5E2A0078C0F0 /* DetailController.swift in Sources */,
 				25C9DFD31B9CD84200C516C1 /* MapDisplayViewController.swift in Sources */,
 				2503D3A71BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift in Sources */,
+				25D281C91BFB69B80069BE86 /* DownloadController.swift in Sources */,
+				25D281CD1BFBB6B30069BE86 /* GuideItemImage.swift in Sources */,
 				25D707CE1BC82232005A4BBA /* CategoryCell.swift in Sources */,
 				250651EB1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift in Sources */,
 				25D4363A1BD57BAF0016E362 /* MultiStepSearch.m in Sources */,
@@ -558,6 +589,7 @@
 				25D436431BDA3A680016E362 /* SwipeController.swift in Sources */,
 				2503D3AA1BDF7CFB0078C0F0 /* SubController.swift in Sources */,
 				25D707D01BC98B0D005A4BBA /* SwipeViewNavigationBar.swift in Sources */,
+				25D281C71BFB67760069BE86 /* DownloadService.swift in Sources */,
 				25243E641BC410F400EF5F64 /* Region.swift in Sources */,
 				25D436491BDA50570016E362 /* ListingCell.swift in Sources */,
 				25D436411BD7B5F90016E362 /* SearchResult.swift in Sources */,
@@ -704,7 +736,7 @@
 		};
 		25C9DFEB1B9CD84200C516C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F282B37EC8CE065ECCEE238 /* Pods-Tripfinger.debug.xcconfig */;
+			baseConfigurationReference = 2E67C6EFCB47ABD4F936CCBC /* Pods-Tripfinger.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEFINES_MODULE = YES;
@@ -728,7 +760,7 @@
 		};
 		25C9DFEC1B9CD84200C516C1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 356EFCE331E62CA7B8254017 /* Pods-Tripfinger.release.xcconfig */;
+			baseConfigurationReference = C07551D86C743CDF471C2520 /* Pods-Tripfinger.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEFINES_MODULE = YES;

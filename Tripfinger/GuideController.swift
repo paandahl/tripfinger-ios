@@ -45,10 +45,35 @@ class GuideController: UITableViewController, SubController {
             }
         }
         else {
-            ContentService.getRegions() {
-                regions in self.loadRegionWithID(regions[0].id)
-            }
+            loadRegionWithID("region-brussels")
         }
+        
+        let label = UILabel(frame: CGRectMake(10, 5, tableView.frame.size.width, 18))
+        label.font = UIFont.boldSystemFontOfSize(16)
+        label.text = "Brussels"
+        let button = UIButton.init(type: UIButtonType.System)
+        button.setTitle("Download", forState: UIControlState.Normal)
+        button.titleLabel?.text = "Download"
+        button.sizeToFit()
+        button.addTarget(self, action: "openDownloadCity:", forControlEvents: UIControlEvents.TouchUpInside)
+
+        let headerView = UIView()
+        headerView.addSubview(label)
+        headerView.addSubview(button)
+        headerView.addConstraints("V:|-10-[title(22)]", forViews: ["title": label])
+        headerView.addConstraints("V:|-10-[download(22)]", forViews: ["download": button])
+        headerView.addConstraints("H:|-15-[title]-[download]-15-|", forViews: ["title": label, "download": button])
+        var headerFrame = headerView.frame;
+        headerFrame.size.height = 44;
+        headerView.frame = headerFrame;
+        tableView.tableHeaderView = headerView
+    }
+    
+    func openDownloadCity(sender: UIButton) {
+        let nav = UINavigationController()
+        let vc = DownloadController()
+        nav.viewControllers = [vc]
+        presentViewController(nav, animated: true, completion: nil)
     }
     
     func loadRegionWithID(regionId: String) {
@@ -103,7 +128,7 @@ class GuideController: UITableViewController, SubController {
 
 // MARK: - Table data source
 extension GuideController {
-    
+
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 4;
     }
@@ -126,7 +151,7 @@ extension GuideController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if indexPath.section == 0 {
-            if currentItem?.description != nil {
+            if currentItem?.content != nil {
                 let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.guideItemCell, forIndexPath: indexPath) as! GuideItemCell
                 cell.delegate = self
                 cell.setContent(currentItem!)
@@ -181,8 +206,7 @@ extension GuideController: GuideItemContainerDelegate {
 
 // MARK: - Navigation
 extension GuideController {
-    
-    
+
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.section == 1 && guideItemExpanded {
             

@@ -103,7 +103,7 @@ class GuideItemCell: UITableViewCell {
         }
 
         
-        if let description = guideItem.description {
+        if let description = guideItem.content {
             let encodedData = description.dataUsingEncoding(NSUTF8StringEncoding)!
             let options : [String: AnyObject] = [
                 NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,

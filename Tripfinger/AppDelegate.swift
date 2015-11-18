@@ -32,7 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
         let navigationController = self.window!.rootViewController as! UINavigationController
         let rootController = navigationController.viewControllers[0] as! RootController
         rootController.session = session
-
         
 //        DataManager.getAttractionDateFromFileWithSuccess { (data) -> Void in
 //            

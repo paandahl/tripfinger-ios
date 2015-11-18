@@ -5,6 +5,8 @@ target 'Tripfinger' do
 use_frameworks!
 
 pod "MDCSwipeToChoose"
+pod 'Alamofire', '~> 3.0'
+pod 'RealmSwift'
 end
 
 target 'TripfingerTests' do

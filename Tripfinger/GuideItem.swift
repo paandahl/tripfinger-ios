@@ -1,8 +1,9 @@
 import Foundation
+import RealmSwift
 
-public class GuideItem {
+public class GuideItem: Object {
     
-    public init() {}
+    public required init() {}
     
     public var id: String!
     public var slug: String?
@@ -11,17 +12,12 @@ public class GuideItem {
     public var category: Int?
 
     public var parent: GuideItem?
-    public var description: String?
+    public var content: String?
     public var openingHours: String?
     
     var images = [GuideItemImage]()
     
     // temporary data to make things easier
     public var guideSections = [GuideText]()
-    public var categoryDescriptions = [GuideText]()
-    
-    class GuideItemImage {
-        var url: String!
-        var description: String!
-    }
+    public var categoryDescriptions = [GuideText]()    
 }

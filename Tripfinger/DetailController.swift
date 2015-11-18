@@ -19,7 +19,7 @@ class DetailController: UIViewController {
     override func viewDidLoad() {
         
         name.text = attraction.name
-        descriptionText.text = attraction.description
+        descriptionText.text = attraction.content
         mainImage.image = UIImage(named: "Placeholder")
         mainImage.loadImageWithUrl(attraction.images[0].url)
     }

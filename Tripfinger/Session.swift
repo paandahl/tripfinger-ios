@@ -18,11 +18,7 @@ import Foundation
     
     func loadBrusselsAsCurrentRegionIfEmpty(handler: () -> ()) {
         if currentRegion == nil {
-            ContentService.getRegions() {
-                regions in
-                
-                self.loadRegionWithID(regions[0].id, handler: handler)
-            }
+            loadRegionWithID("region-brussels", handler: handler)
         }
         else {
             handler()
