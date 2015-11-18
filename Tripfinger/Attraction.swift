@@ -1,6 +1,10 @@
 import Foundation
+import RealmSwift
 
-class Attraction: GuideListing {
+class Attraction: Object {
+  
+  // composition (instead of inheritance - for Realm-purposes)
+  var listing: GuideListing!
   
   enum Category: Int {
     case ALL = 200

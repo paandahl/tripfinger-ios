@@ -38,7 +38,7 @@ class DownloadService {
           
           let json = JSON(data: response.data!)
           let region = ContentService.parseRegionTreeFromJson(json)
-          let imageList = getImageList(region)
+          let imageList = getImageList(region.listing.item)
           downloadImages(imageList, cityPath: cityPath)
         }
         else {
@@ -53,7 +53,7 @@ class DownloadService {
       imageList.append(image)
     }
     for guideSection in guideItem.guideSections {
-      imageList.appendContentsOf(getImageList(guideSection))
+      imageList.appendContentsOf(getImageList(guideSection.item))
     }
     return imageList
   }

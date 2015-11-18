@@ -1,15 +1,11 @@
-//
-//  GuideText.swift
-//  Tripfinger
-//
-//  Created by Preben Ludviksen on 08/10/15.
-//  Copyright (c) 2015 Preben Ludviksen. All rights reserved.
-//
-
 import Foundation
+import RealmSwift
 
 /** Class describing a text-item. Referred to as a GuideSection when listed as a loose child of a GuideItem,
 *  and as a CategoryDescription when 'category' is set.
 */
-class GuideText: GuideItem {
+class GuideText: Object {
+  
+  // composition (instead of inheritance - for Realm-purposes)
+  var item: GuideItem!
 }

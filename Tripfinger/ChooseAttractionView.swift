@@ -48,7 +48,7 @@ class ChooseAttractionView: MDCSwipeToChooseView {
     self.delegate = delegate
     
     imageView.image = UIImage(named: "Placeholder")
-    let imageUrl = attraction.images[0].url + "-600x800"
+    let imageUrl = attraction.listing.item.images[0].url + "-600x800"
     imageView.loadImageWithUrl(imageUrl)
     imageView.tag = 2000
     
@@ -101,7 +101,7 @@ class ChooseAttractionView: MDCSwipeToChooseView {
       floor(CGRectGetWidth(self.informationView.frame)/2),
       CGRectGetHeight(self.informationView.frame) - topPadding)
     self.nameLabel = UILabel(frame:frame)
-    self.nameLabel.text = "\(attraction.name!)"
+    self.nameLabel.text = "\(attraction.listing.item.name!)"
     self.nameLabel.numberOfLines = 0
     self.nameLabel.lineBreakMode = .ByWordWrapping
     self.informationView .addSubview(self.nameLabel)

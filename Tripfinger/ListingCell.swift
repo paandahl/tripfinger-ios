@@ -30,7 +30,7 @@ class ListingCell: UITableViewCell {
   }
   
   func setContent(attraction: Attraction) {
-    name.text = attraction.name
+    name.text = attraction.listing.item.name
     mainImage.image = UIImage(named: "Placeholder")
     if attraction.swipedRight != nil && attraction.swipedRight! {
       heartImage.tintColor = UIColor.redColor()
@@ -38,7 +38,7 @@ class ListingCell: UITableViewCell {
     else {
       heartImage.tintColor = UIColor.darkGrayColor()
     }
-    let imageUrl = attraction.images[0].url + "-712x534"
+    let imageUrl = attraction.listing.item.images[0].url + "-712x534"
     mainImage.loadImageWithUrl(imageUrl)
     self.attraction = attraction
   }

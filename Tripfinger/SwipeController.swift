@@ -50,7 +50,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     loadAttractions()
   }
   func loadAttractions() {
-    filterBox.regionNameLabel.text = "\(self.session.currentRegion!.name!):"
+    filterBox.regionNameLabel.text = "\(self.session.currentRegion!.listing.item.name!):"
     filterBox.categoryLabel.text = self.category.entityName
     
     session.loadAttractions() {
@@ -118,7 +118,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
   // This is called when a user didn't fully swipe left or right.
   func viewDidCancelSwipe(view: UIView) -> Void{
     
-    print("You couldn't decide on \(currentAttraction.name)");
+    print("You couldn't decide on \(currentAttraction.listing.item.name)");
   }
   
   // This is called then a user swipes the view fully left or right.
@@ -128,11 +128,11 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     // and "LIKED" on swipes to the right.
     if(wasChosenWithDirection == MDCSwipeDirection.Left) {
       currentAttraction.swipedRight = false
-      print("You noped: \(currentAttraction.name)")
+      print("You noped: \(currentAttraction.listing.item.name)")
     }
     else{
       currentAttraction.swipedRight = true
-      print("You liked: \(currentAttraction.name)")
+      print("You liked: \(currentAttraction.listing.item.name)")
     }
     
     // MDCSwipeToChooseView removes the view from the view hierarchy

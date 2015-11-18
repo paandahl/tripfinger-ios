@@ -18,9 +18,9 @@ class DetailController: UIViewController {
   
   override func viewDidLoad() {
     
-    name.text = attraction.name
-    descriptionText.text = attraction.content
+    name.text = attraction.listing.item.name
+    descriptionText.text = attraction.listing.item.content
     mainImage.image = UIImage(named: "Placeholder")
-    mainImage.loadImageWithUrl(attraction.images[0].url)
+    mainImage.loadImageWithUrl(attraction.listing.item.images[0].url)
   }
 }

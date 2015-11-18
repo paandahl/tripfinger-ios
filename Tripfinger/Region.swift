@@ -1,6 +1,10 @@
 import Foundation
+import RealmSwift
 
-class Region: GuideListing {
+class Region: Object {
+  
+  // composition (instead of inheritance - for Realm-purposes)
+  var listing: GuideListing!
   
   // radius
   var radius: Int?
@@ -9,7 +13,7 @@ class Region: GuideListing {
 //  var polygonCoordinates: [Double]?
   
   func setCategory(category: Region.Category) {
-    self.category = category.rawValue
+    listing.item.category = category.rawValue
   }
   
   enum Category: Int {

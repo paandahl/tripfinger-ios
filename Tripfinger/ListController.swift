@@ -44,7 +44,7 @@ class ListController: UITableViewController, SubController {
   
   func loadAttractions() {
     category = session.currentCategory
-    filterBox.regionNameLabel.text = "\(session.currentRegion!.name!):"
+    filterBox.regionNameLabel.text = "\(session.currentRegion!.listing.item.name!):"
     filterBox.categoryLabel.text = session.currentCategory.entityName
     session.loadAttractions() {
       loaded in

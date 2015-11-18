@@ -82,7 +82,7 @@ class MapDisplayViewController: UIViewController, SubController, SKMapViewDelega
       else {
         annotation.annotationType = SKAnnotationType.Purple
       }
-      annotation.location = CLLocationCoordinate2DMake(attraction.latitude, attraction.longitude)
+      annotation.location = CLLocationCoordinate2DMake(attraction.listing.latitude, attraction.listing.longitude)
       let animationSettings = SKAnimationSettings()
       mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
       identifier += 1
@@ -91,7 +91,7 @@ class MapDisplayViewController: UIViewController, SubController, SKMapViewDelega
   
   func mapView(mapView: SKMapView!, didSelectAnnotation annotation: SKAnnotation!) {
     let attraction = attractions[Int(annotation.identifier)]
-    mapView.calloutView.titleLabel.text = attraction.name;
+    mapView.calloutView.titleLabel.text = attraction.listing.item.name;
     mapView.calloutView.titleLabel.tag = 2000 + Int(annotation.identifier)
     mapView.calloutView.delegate = self
     mapView.calloutView.minZoomLevel = 1
