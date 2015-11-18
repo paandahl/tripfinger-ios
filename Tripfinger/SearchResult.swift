@@ -9,15 +9,15 @@
 import Foundation
 
 class SearchResult {
-    
-    var name: String!
-    var city: String!
-    var latitude: Double!
-    var longitude: Double!
-    var resultType: ResultType!
-    
-    enum ResultType: Int {
-        case Street = 1
-    }
-
+  
+  var name: String!
+  var city: String!
+  var latitude: Double!
+  var longitude: Double!
+  var resultType: ResultType!
+  
+  enum ResultType: Int {
+    case Street = 1
+  }
+  
 }

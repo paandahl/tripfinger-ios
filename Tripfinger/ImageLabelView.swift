@@ -1,44 +1,44 @@
 import UIKit
 
 class ImagelabelView: UIView{
-    var imageView: UIImageView!
-    var label: UILabel!
+  var imageView: UIImageView!
+  var label: UILabel!
+  
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+    imageView = UIImageView()
+    label = UILabel()
+  }
+  
+  init(frame: CGRect, image: UIImage, text: String) {
     
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        imageView = UIImageView()
-        label = UILabel()
-    }
+    super.init(frame: frame)
+    constructImageView(image)
+    constructLabel(text)
+  }
+  
+  func constructImageView(image:UIImage) -> Void{
     
-    init(frame: CGRect, image: UIImage, text: String) {
-        
-        super.init(frame: frame)
-        constructImageView(image)
-        constructLabel(text)
-    }
+    let topPadding:CGFloat = 10.0
     
-    func constructImageView(image:UIImage) -> Void{
-        
-        let topPadding:CGFloat = 10.0
-        
-        let framex = CGRectMake(floor((CGRectGetWidth(self.bounds) - image.size.width)/2),
-            topPadding,
-            image.size.width,
-            image.size.height)
-        imageView = UIImageView(frame: framex)
-        imageView.image = image
-        addSubview(self.imageView)
-    }
+    let framex = CGRectMake(floor((CGRectGetWidth(self.bounds) - image.size.width)/2),
+      topPadding,
+      image.size.width,
+      image.size.height)
+    imageView = UIImageView(frame: framex)
+    imageView.image = image
+    addSubview(self.imageView)
+  }
+  
+  func constructLabel(text:String) -> Void{
+    let height:CGFloat = 18.0
+    let frame2 = CGRectMake(0,
+      CGRectGetMaxY(self.imageView.frame),
+      CGRectGetWidth(self.bounds),
+      height);
+    self.label = UILabel(frame: frame2)
+    label.text = text
+    addSubview(label)
     
-    func constructLabel(text:String) -> Void{
-        let height:CGFloat = 18.0
-        let frame2 = CGRectMake(0,
-            CGRectGetMaxY(self.imageView.frame),
-            CGRectGetWidth(self.bounds),
-            height);
-        self.label = UILabel(frame: frame2)
-        label.text = text
-        addSubview(label)
-        
-    }
+  }
 }

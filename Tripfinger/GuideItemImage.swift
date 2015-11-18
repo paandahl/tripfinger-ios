@@ -1,6 +1,7 @@
 import Foundation
+import RealmSwift
 
-class GuideItemImage {
-    var url: String!
-    var description: String!
+class GuideItemImage: Object {
+  var url: String!
+  var imageDescription: String!
 }

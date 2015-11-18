@@ -1,42 +1,42 @@
 import Foundation
 
-public class Attraction: GuideListing {
+class Attraction: GuideListing {
+  
+  enum Category: Int {
+    case ALL = 200
+    case EXPLORE_CITY = 210
+    case ACTIVITY_HIKE_DAYTRIP = 220
+    case TRANSPORTATION = 230
+    case ACCOMODATION = 240
+    case FOOD_OR_DRINK = 250
+    case SHOPPING = 260
+    case INFORMATION = 270
     
-    public enum Category: Int {
-        case ALL = 200
-        case EXPLORE_CITY = 210
-        case ACTIVITY_HIKE_DAYTRIP = 220
-        case TRANSPORTATION = 230
-        case ACCOMODATION = 240
-        case FOOD_OR_DRINK = 250
-        case SHOPPING = 260
-        case INFORMATION = 270
-
-        var entityName: String {
-            switch self {
-            case .ALL:
-                return "All listings"
-            case .EXPLORE_CITY:
-                return "Explore the city"
-            case .ACTIVITY_HIKE_DAYTRIP:
-                return "Activities"
-            case .TRANSPORTATION:
-                return "Transportation"
-            case .ACCOMODATION:
-                return "Accomodation"
-            case .FOOD_OR_DRINK:
-                return "Food and drinks"
-            case .SHOPPING:
-                return "Shopping"
-            case .INFORMATION:
-                return "Information"
-            }
-        }
-
-        static let allValues = [ALL, EXPLORE_CITY, ACTIVITY_HIKE_DAYTRIP, TRANSPORTATION, ACCOMODATION,
-            FOOD_OR_DRINK, SHOPPING, INFORMATION]
+    var entityName: String {
+      switch self {
+      case .ALL:
+        return "All listings"
+      case .EXPLORE_CITY:
+        return "Explore the city"
+      case .ACTIVITY_HIKE_DAYTRIP:
+        return "Activities"
+      case .TRANSPORTATION:
+        return "Transportation"
+      case .ACCOMODATION:
+        return "Accomodation"
+      case .FOOD_OR_DRINK:
+        return "Food and drinks"
+      case .SHOPPING:
+        return "Shopping"
+      case .INFORMATION:
+        return "Information"
+      }
     }
     
-    // Temprorary data for swiper
-    var swipedRight: Bool!
+    static let allValues = [ALL, EXPLORE_CITY, ACTIVITY_HIKE_DAYTRIP, TRANSPORTATION, ACCOMODATION,
+      FOOD_OR_DRINK, SHOPPING, INFORMATION]
+  }
+  
+  // Temprorary data for swiper
+  var swipedRight: Bool!
 }

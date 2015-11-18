@@ -9,9 +9,9 @@
 import Foundation
 
 extension UINib {
-    
-    class func registerNib(nibName: String, forTableView tableView: UITableView) {
-        let cellNib = UINib(nibName: nibName, bundle: nil)
-        tableView.registerNib(cellNib, forCellReuseIdentifier: nibName)
-    }
+  
+  class func registerNib(nibName: String, forTableView tableView: UITableView) {
+    let cellNib = UINib(nibName: nibName, bundle: nil)
+    tableView.registerNib(cellNib, forCellReuseIdentifier: nibName)
+  }
 }

@@ -9,32 +9,32 @@
 import Foundation
 
 protocol FilterBoxDelegate: class {
-    func filterClick()
+  func filterClick()
 }
 
 class FilterBox: UIView {
+  
+  @IBOutlet weak var filterControls: UIView!
+  @IBOutlet weak var regionNameLabel: UILabel!
+  @IBOutlet weak var categoryLabel: UILabel!
+  
+  var delegate: FilterBoxDelegate!
+  
+  override func awakeFromNib() {
+    filterControls.layer.borderColor = UIColor.darkGrayColor().CGColor
+    filterControls.layer.borderWidth = 0.5;
     
-    @IBOutlet weak var filterControls: UIView!
-    @IBOutlet weak var regionNameLabel: UILabel!
-    @IBOutlet weak var categoryLabel: UILabel!
+    let singleTap = UITapGestureRecognizer(target: self, action: "filterClick")
+    singleTap.numberOfTapsRequired = 1;
+    singleTap.numberOfTouchesRequired = 1;
+    filterControls.addGestureRecognizer(singleTap)
+    filterControls.userInteractionEnabled = true
     
-    var delegate: FilterBoxDelegate!
-
-    override func awakeFromNib() {
-        filterControls.layer.borderColor = UIColor.darkGrayColor().CGColor
-        filterControls.layer.borderWidth = 0.5;
-        
-        let singleTap = UITapGestureRecognizer(target: self, action: "filterClick")
-        singleTap.numberOfTapsRequired = 1;
-        singleTap.numberOfTouchesRequired = 1;
-        filterControls.addGestureRecognizer(singleTap)
-        filterControls.userInteractionEnabled = true
-
-        
-    }
     
-    func filterClick() {
-        delegate.filterClick()
-    }
-
+  }
+  
+  func filterClick() {
+    delegate.filterClick()
+  }
+  
 }

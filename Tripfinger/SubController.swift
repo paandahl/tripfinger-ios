@@ -9,6 +9,6 @@
 import Foundation
 
 protocol SubController {
- 
-    var session: Session! {get set}
+  
+  var session: Session! {get set}
 }

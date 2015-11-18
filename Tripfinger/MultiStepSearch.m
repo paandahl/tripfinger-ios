@@ -11,11 +11,11 @@
 
 -(void)fireSearch
 {
-    if (self.multiStepObject.parentIndex == 0) {
-        self.multiStepObject.parentIndex = -1;        
-    }
-    [[SKSearchService sharedInstance]startMultiStepSearchWithSettings:self.multiStepObject];
-
+  if (self.multiStepObject.parentIndex == 0) {
+    self.multiStepObject.parentIndex = -1;
+  }
+  [[SKSearchService sharedInstance]startMultiStepSearchWithSettings:self.multiStepObject];
+  
 }
 
 @end
