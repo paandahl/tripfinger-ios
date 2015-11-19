@@ -1,5 +1,6 @@
 import Foundation
 import Alamofire
+import RealmSwift
 
 class DownloadService {
   
@@ -9,8 +10,8 @@ class DownloadService {
   
   class func downloadCity(countryId: String, cityId: String, progressHandler: Float -> ()) {
     
-    let countryPath = getDirectory(.LibraryDirectory, withPath: countryId)
-    let cityPath = getDirectory(.LibraryDirectory, withPath: countryId + "/" + cityId)
+    let countryPath = NSURL.getDirectory(.LibraryDirectory, withPath: countryId)
+    let cityPath = NSURL.getDirectory(.LibraryDirectory, withPath: countryId + "/" + cityId)
     
     var url = gcsMapsUrl + "BE.skm"
     var fileName = countryId + ".skm"
@@ -38,13 +39,33 @@ class DownloadService {
           
           let json = JSON(data: response.data!)
           let region = ContentService.parseRegionTreeFromJson(json)
-          let imageList = getImageList(region.listing.item)
+          var imageList = getImageList(region.listing.item)
+          imageList.appendContentsOf(getImageList(region))
           downloadImages(imageList, cityPath: cityPath)
+          
+          // Get the default Realm
+          let realm = try! Realm()
+          // You only need to do this once (per thread)
+          
+          // Add to the Realm inside a transaction
+          try! realm.write {
+            realm.add(region)
+          }
         }
         else {
           print("ERROR: Downloading city JSON failed")
         }
     }
+  }
+  
+  class func getImageList(region: Region) -> [GuideItemImage] {
+    var imageList = [GuideItemImage]()
+    for attraction in region.attractions {
+      for image in attraction.listing.item.images {
+        imageList.append(image)
+      }
+    }
+    return imageList
   }
   
   class func getImageList(guideItem: GuideItem) -> [GuideItemImage] {
@@ -79,18 +100,7 @@ class DownloadService {
       
     }
   }
-  
-  class func getDirectory(baseDir: NSSearchPathDirectory, withPath path: String) -> NSURL {
-    let libraryPath = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(baseDir, .UserDomainMask, true)[0])
-    let folderPath = libraryPath.URLByAppendingPathComponent(path)
-    do {
-      try NSFileManager.defaultManager().createDirectoryAtPath(folderPath.path!, withIntermediateDirectories: true, attributes: nil)
-    } catch let error as NSError {
-      NSLog("Unable to create directory \(error.debugDescription)")
-    }
-    return folderPath
-  }
-  
+    
   class func downloadFile(url: String, destinationPath: NSURL, progressHandler: (Float -> ())?) {
     Alamofire.request(.GET, url)
       .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in

@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RealmSwift
+
 class Session {
   
   init() {}
@@ -14,7 +16,7 @@ class Session {
   var currentRegion: Region?
   var currentCategory = Attraction.Category.EXPLORE_CITY
   var attractionsFromCategory: Attraction.Category!
-  var currentAttractions = [Attraction]()
+  var currentAttractions = List<Attraction>()
   
   func loadBrusselsAsCurrentRegionIfEmpty(handler: () -> ()) {
     if currentRegion == nil {

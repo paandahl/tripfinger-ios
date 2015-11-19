@@ -29,7 +29,7 @@ class ListingCell: UITableViewCell {
     heartImage.image = heartImage.image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
   }
   
-  func setContent(attraction: Attraction) {
+  func setContent(attraction: Attraction, imagePath: NSURL? = nil) {
     name.text = attraction.listing.item.name
     mainImage.image = UIImage(named: "Placeholder")
     if attraction.swipedRight != nil && attraction.swipedRight! {
@@ -38,8 +38,16 @@ class ListingCell: UITableViewCell {
     else {
       heartImage.tintColor = UIColor.darkGrayColor()
     }
-    let imageUrl = attraction.listing.item.images[0].url + "-712x534"
-    mainImage.loadImageWithUrl(imageUrl)
+    
+    if let imagePath = imagePath {
+      mainImage.contentMode = UIViewContentMode.ScaleAspectFill
+      mainImage.image = UIImage(data: NSData(contentsOfURL: imagePath)!)
+    }
+    else {
+      let imageUrl = attraction.listing.item.images[0].url + "-712x534"
+      mainImage.loadImageWithUrl(imageUrl)
+    }
+    
     self.attraction = attraction
   }
   

@@ -41,15 +41,21 @@ class ChooseAttractionView: MDCSwipeToChooseView {
   var friendsImageLabelView: ImagelabelView!
   var delegate: AttractionCardContainer!
   
-  init(frame: CGRect, attraction: Attraction, delegate: AttractionCardContainer, options: MDCSwipeToChooseViewOptions) {
+  init(frame: CGRect, attraction: Attraction, delegate: AttractionCardContainer, options: MDCSwipeToChooseViewOptions, imagePath: NSURL? = nil) {
     
     super.init(frame: frame, options: options)
     self.attraction = attraction
     self.delegate = delegate
     
-    imageView.image = UIImage(named: "Placeholder")
-    let imageUrl = attraction.listing.item.images[0].url + "-600x800"
-    imageView.loadImageWithUrl(imageUrl)
+    if let imagePath = imagePath {
+      imageView.contentMode = UIViewContentMode.ScaleAspectFill
+      imageView.image = UIImage(data: NSData(contentsOfURL: imagePath)!)
+    }
+    else {
+      imageView.image = UIImage(named: "Placeholder")
+      let imageUrl = attraction.listing.item.images[0].url + "-600x800"
+      imageView.loadImageWithUrl(imageUrl)
+    }
     imageView.tag = 2000
     
     constructInformationView()
@@ -61,7 +67,7 @@ class ChooseAttractionView: MDCSwipeToChooseView {
     imageView.userInteractionEnabled = true
     
     let views = ["image": imageView!, "info": informationView!]
-    self.addConstraints("V:|-0-[image(400)]-[info(80)]-0-|", forViews: views)
+    self.addConstraints("V:|-0-[image(400)]-0-[info(80)]-0-|", forViews: views)
     self.addConstraints("H:|-0-[info]-0-|", forViews: views)
     self.addConstraints("H:|-0-[image]-0-|", forViews: views)
     

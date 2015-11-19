@@ -74,6 +74,10 @@ class ContentService {
   }
   
   class func getRegionWithId(regionId: String, handler: Region -> ()) {
+    if let region = OfflineService.getRegionWithId(regionId) {
+      handler(region)
+      return
+    }
     getJsonFromUrl(baseUrl + "/regions/\(regionId)", success: {
       json in
       
@@ -85,7 +89,11 @@ class ContentService {
       }}, failure: nil)
   }
   
-  class func getGuideTextWithId(guideTextId: String, handler: GuideText -> ()) {
+  class func getGuideTextWithId(region: Region, guideTextId: String, handler: GuideText -> ()) {
+    if region.offline {
+      handler(OfflineService.getGuideTextWithId(region, guideTextId: guideTextId))
+      return
+    }
     getJsonFromUrl(baseUrl + "/guideTexts/\(guideTextId)", success: {
       json in
       
@@ -97,7 +105,11 @@ class ContentService {
       }}, failure: nil)
   }
   
-  class func getAttractionsForRegion(region: Region, handler: [Attraction] -> ()) {
+  class func getAttractionsForRegion(region: Region, handler: List<Attraction> -> ()) {
+    if region.offline {
+      handler(region.attractions)
+      return
+    }
     getJsonFromUrl(baseUrl + "/regions/\(region.listing.item.id)/attractions", success: {
       json in
       
@@ -110,7 +122,11 @@ class ContentService {
     
   }
   
-  class func getAttractionsForRegion(region: Region, withCategory category: Attraction.Category, handler: [Attraction] -> ()) {
+  class func getAttractionsForRegion(region: Region, withCategory category: Attraction.Category, handler: List<Attraction> -> ()) {
+    if region.offline {
+      handler(region.attractions)
+      return
+    }
     getJsonFromUrl(baseUrl + "/regions/\(region.listing.item.id)/attractions/\(category.rawValue)", success: {
       json in
       
@@ -171,6 +187,9 @@ class ContentService {
     catch let error as NSError {
       print("JSON error: \(error)")
     }
+    catch {
+      print("Undefined error")
+    }
     return nil
   }
   
@@ -182,7 +201,8 @@ class ContentService {
     guideItem.name = json["name"].string
     guideItem.id = json["id"].string
     guideItem.content = json["description"].string
-    guideItem.category = json["category"].int
+    guideItem.category = json["category"].int!
+    guideItem.parent = json["parent"].string
     for imageJson in json["images"].array! {
       let image = GuideItemImage()
       image.url = imageJson["url"].string
@@ -199,8 +219,8 @@ class ContentService {
   
   class func parseGuideListing(listing: GuideListing, withJson json: JSON) -> GuideListing {
     listing.item = parseGuideItem(json)
-    listing.latitude = json["latitude"].double
-    listing.longitude = json["longitude"].double
+    listing.latitude = json["latitude"].double!
+    listing.longitude = json["longitude"].double!
     return listing
   }
   
@@ -239,11 +259,12 @@ class ContentService {
     region.listing = GuideListing()
     region.listing.item = parseGuideItem(json)
     region.listing.item.guideSections = parseSectionTreeFromJson(json["sectionTree"])
+    region.attractions.appendContentsOf(parseAttractions(json["attractions"]))
     return region
   }
   
-  class func parseAttractions(jsonArray: JSON) -> [Attraction] {
-    var attractions = [Attraction]()
+  class func parseAttractions(jsonArray: JSON) -> List<Attraction> {
+    let attractions = List<Attraction>()
     for json in jsonArray.array! {
       attractions.append(parseAttraction(json))
     }

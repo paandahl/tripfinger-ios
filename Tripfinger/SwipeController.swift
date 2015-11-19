@@ -1,5 +1,6 @@
 import UIKit
 import MDCSwipeToChoose
+import RealmSwift
 
 class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate {
   
@@ -7,7 +8,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
   var session: Session!
   var filterBox: FilterBox!
   
-  var attractions:[Attraction] = []
+  var attractions = [Attraction]()
   var category: Attraction.Category!
   let ChooseAttractionButtonHorizontalPadding: CGFloat = 80.0
   let ChooseAttractionButtonVerticalPadding: CGFloat = 20.0
@@ -56,7 +57,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     session.loadAttractions() {
       loaded in
       
-      self.attractions = self.session.currentAttractions
+      self.attractions.appendContentsOf(self.session.currentAttractions)
       print("loaded \(self.attractions.count) attractions")
       self.displayCards()
     }
@@ -192,21 +193,25 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     // Create a personView with the top person in the people array, then pop
     // that person off the stack.
     
-    let personView: ChooseAttractionView = ChooseAttractionView(frame: frame, attraction: self.attractions[0], delegate: self, options: options)
+    let imagePath = attractions[0].getImagePath(session.currentRegion!)
+    let personView: ChooseAttractionView = ChooseAttractionView(frame: frame, attraction: attractions[0], delegate: self, options: options, imagePath: imagePath)
     self.attractions.removeAtIndex(0)
     return personView
     
   }
+  
   func frontCardViewFrame() -> CGRect{
     let horizontalPadding:CGFloat = 20.0
     let topPadding:CGFloat = 60.0
     let bottomPadding:CGFloat = 130.0
     return CGRectMake(horizontalPadding,topPadding,CGRectGetWidth(self.view.frame) - (horizontalPadding * 2), CGRectGetHeight(self.view.frame) - bottomPadding)
   }
+  
   func backCardViewFrame() ->CGRect{
     let frontFrame:CGRect = frontCardViewFrame()
     return CGRectMake(frontFrame.origin.x, frontFrame.origin.y + 10.0, CGRectGetWidth(frontFrame), CGRectGetHeight(frontFrame))
   }
+  
   func constructNopeButton() -> Void{
     let button:UIButton =  UIButton(type: UIButtonType.System)
     let image:UIImage = UIImage(named:"nope")!
@@ -238,6 +243,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     if segue.identifier == "showDetail" {
       let detailController = segue.destinationViewController as! DetailController
       detailController.attraction = sender as! Attraction
+      detailController.imagePath = detailController.attraction.getImagePath(session.currentRegion!)
     }
     else if segue.identifier == "showFilter" {
       let navigationController = segue.destinationViewController as! UINavigationController

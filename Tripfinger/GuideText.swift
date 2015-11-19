@@ -7,5 +7,5 @@ import RealmSwift
 class GuideText: Object {
   
   // composition (instead of inheritance - for Realm-purposes)
-  var item: GuideItem!
+  dynamic var item: GuideItem!
 }

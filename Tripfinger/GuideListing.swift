@@ -4,8 +4,8 @@ import RealmSwift
 class GuideListing: Object {
   
   // composition (instead of inheritance - for Realm-purposes)
-  var item: GuideItem!
+  dynamic var item: GuideItem!
   
-  var longitude: Double!
-  var latitude: Double!
+  dynamic var longitude = 0.0
+  dynamic var latitude = 0.0
 }

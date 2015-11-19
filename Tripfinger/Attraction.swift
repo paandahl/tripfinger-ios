@@ -4,7 +4,18 @@ import RealmSwift
 class Attraction: Object {
   
   // composition (instead of inheritance - for Realm-purposes)
-  var listing: GuideListing!
+  dynamic var listing: GuideListing!
+  
+  func getImagePath(currentRegion: Region) -> NSURL? {
+    var imagePath: NSURL? = nil
+    if currentRegion.offline {
+      let countryId = currentRegion.listing.item.parent
+      let cityId = currentRegion.listing.item.id
+      let cityPath = NSURL.getDirectory(.LibraryDirectory, withPath: countryId + "/" + cityId)
+      imagePath = cityPath.URLByAppendingPathComponent(listing.item.id + "-1")
+    }
+    return imagePath
+  }
   
   enum Category: Int {
     case ALL = 200

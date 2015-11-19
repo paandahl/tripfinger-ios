@@ -7,10 +7,12 @@
 //
 
 import SKMaps
+import RealmSwift
+
 class MapDisplayViewController: UIViewController, SubController, SKMapViewDelegate {
   
   var session: Session!
-  var attractions = [Attraction]()
+  var attractions = List<Attraction>()
   var mapView: SKMapView!
   
   
@@ -110,6 +112,7 @@ class MapDisplayViewController: UIViewController, SubController, SKMapViewDelega
     if segue.identifier == "showDetail" {
       let detailController = segue.destinationViewController as! DetailController
       detailController.attraction = sender as! Attraction
+      detailController.imagePath = detailController.attraction.getImagePath(session.currentRegion!)
     }
   }
 }

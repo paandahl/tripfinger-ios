@@ -2,6 +2,6 @@ import Foundation
 import RealmSwift
 
 class GuideItemImage: Object {
-  var url: String!
-  var imageDescription: String!
+  dynamic var url: String!
+  dynamic var imageDescription: String!
 }

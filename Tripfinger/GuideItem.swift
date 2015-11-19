@@ -3,17 +3,17 @@ import RealmSwift
 
 class GuideItem: Object {
   
-  var id: String!
-  var slug: String?
-  var name: String?
-  var price: Double?
-  var category: Int?
+  dynamic var id: String!
+  dynamic var slug: String?
+  dynamic var name: String?
+  dynamic var price = 0.0
+  dynamic var category = 0
   
-  var parent: GuideItem?
-  var content: String?
-  var openingHours: String?
+  dynamic var parent: String!
+  dynamic var content: String?
+  dynamic var openingHours: String?
   
-  var images = List<GuideItemImage>()
+  let images = List<GuideItemImage>()
   
   // temporary data to make things easier
   var guideSections = List<GuideText>()

@@ -59,16 +59,18 @@ class GuideController: UITableViewController, SubController {
     button.sizeToFit()
     button.addTarget(self, action: "openDownloadCity:", forControlEvents: UIControlEvents.TouchUpInside)
     
-    let headerView = UIView()
-    headerView.addSubview(label)
-    headerView.addSubview(button)
-    headerView.addConstraints("V:|-10-[title(22)]", forViews: ["title": label])
-    headerView.addConstraints("V:|-10-[download(22)]", forViews: ["download": button])
-    headerView.addConstraints("H:|-15-[title]-[download]-15-|", forViews: ["title": label, "download": button])
-    var headerFrame = headerView.frame;
-    headerFrame.size.height = 44;
-    headerView.frame = headerFrame;
-    tableView.tableHeaderView = headerView
+    if currentSection == nil {
+      let headerView = UIView()
+      headerView.addSubview(label)
+      headerView.addSubview(button)
+      headerView.addConstraints("V:|-10-[title(22)]", forViews: ["title": label])
+      headerView.addConstraints("V:|-10-[download(22)]", forViews: ["download": button])
+      headerView.addConstraints("H:|-15-[title]-[download]-15-|", forViews: ["title": label, "download": button])
+      var headerFrame = headerView.frame;
+      headerFrame.size.height = 44;
+      headerView.frame = headerFrame;
+      tableView.tableHeaderView = headerView
+    }
   }
   
   func openDownloadCity(sender: UIButton) {
@@ -92,7 +94,7 @@ class GuideController: UITableViewController, SubController {
   }
   
   func loadGuideTextWithId(guideTextId: String) {
-    ContentService.getGuideTextWithId(guideTextId) {
+    ContentService.getGuideTextWithId(currentRegion!, guideTextId: guideTextId) {
       guideText in
       
       self.currentSection = guideText

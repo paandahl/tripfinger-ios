@@ -45,6 +45,9 @@
 		25D281C71BFB67760069BE86 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281C61BFB67760069BE86 /* DownloadService.swift */; settings = {ASSET_TAGS = (); }; };
 		25D281C91BFB69B80069BE86 /* DownloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281C81BFB69B80069BE86 /* DownloadController.swift */; settings = {ASSET_TAGS = (); }; };
 		25D281CD1BFBB6B30069BE86 /* GuideItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281CC1BFBB6B30069BE86 /* GuideItemImage.swift */; settings = {ASSET_TAGS = (); }; };
+		25D281CF1BFCB0E10069BE86 /* OfflineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281CE1BFCB0E10069BE86 /* OfflineService.swift */; settings = {ASSET_TAGS = (); }; };
+		25D281D11BFDC9190069BE86 /* NSURL+GetDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281D01BFDC9190069BE86 /* NSURL+GetDirectory.swift */; settings = {ASSET_TAGS = (); }; };
+		25D281D31BFDD7560069BE86 /* UIImage+CropAndResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281D21BFDD7560069BE86 /* UIImage+CropAndResize.swift */; settings = {ASSET_TAGS = (); }; };
 		25D436301BD538810016E362 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4362F1BD538810016E362 /* SearchViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		25D436321BD548400016E362 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D436311BD548400016E362 /* SearchService.swift */; settings = {ASSET_TAGS = (); }; };
 		25D436361BD5546A0016E362 /* SearchServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D436351BD5546A0016E362 /* SearchServiceTest.swift */; settings = {ASSET_TAGS = (); }; };
@@ -140,6 +143,9 @@
 		25D281C61BFB67760069BE86 /* DownloadService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
 		25D281C81BFB69B80069BE86 /* DownloadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadController.swift; sourceTree = "<group>"; };
 		25D281CC1BFBB6B30069BE86 /* GuideItemImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemImage.swift; sourceTree = "<group>"; };
+		25D281CE1BFCB0E10069BE86 /* OfflineService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineService.swift; sourceTree = "<group>"; };
+		25D281D01BFDC9190069BE86 /* NSURL+GetDirectory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURL+GetDirectory.swift"; sourceTree = "<group>"; };
+		25D281D21BFDD7560069BE86 /* UIImage+CropAndResize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+CropAndResize.swift"; sourceTree = "<group>"; };
 		25D4362F1BD538810016E362 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		25D436311BD548400016E362 /* SearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		25D436351BD5546A0016E362 /* SearchServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchServiceTest.swift; sourceTree = "<group>"; };
@@ -223,6 +229,8 @@
 				250651EA1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift */,
 				25D4363C1BD6F05E0016E362 /* SyncManager.swift */,
 				2503D3A61BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift */,
+				25D281D01BFDC9190069BE86 /* NSURL+GetDirectory.swift */,
+				25D281D21BFDD7560069BE86 /* UIImage+CropAndResize.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -273,6 +281,7 @@
 			isa = PBXGroup;
 			children = (
 				2503D3A41BDA5E2A0078C0F0 /* DetailController.swift */,
+				25D281C81BFB69B80069BE86 /* DownloadController.swift */,
 				2503D3AB1BE0DA430078C0F0 /* FilterController.swift */,
 				25D707B91BC6606E005A4BBA /* GuideController.swift */,
 				25D436441BDA4B000016E362 /* ListController.swift */,
@@ -281,7 +290,6 @@
 				25D4362F1BD538810016E362 /* SearchViewController.swift */,
 				2503D3A91BDF7CFB0078C0F0 /* SubController.swift */,
 				25D436421BDA3A680016E362 /* SwipeController.swift */,
-				25D281C81BFB69B80069BE86 /* DownloadController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -374,11 +382,12 @@
 		25D707C41BC6BC25005A4BBA /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				25D707C51BC6BC34005A4BBA /* ContentService.swift */,
+				25D281C61BFB67760069BE86 /* DownloadService.swift */,
 				25D436381BD57BAF0016E362 /* MultiStepSearch.h */,
 				25D436391BD57BAF0016E362 /* MultiStepSearch.m */,
-				25D707C51BC6BC34005A4BBA /* ContentService.swift */,
+				25D281CE1BFCB0E10069BE86 /* OfflineService.swift */,
 				25D436311BD548400016E362 /* SearchService.swift */,
-				25D281C61BFB67760069BE86 /* DownloadService.swift */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -572,6 +581,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25D281D11BFDC9190069BE86 /* NSURL+GetDirectory.swift in Sources */,
 				2503D3A51BDA5E2A0078C0F0 /* DetailController.swift in Sources */,
 				25C9DFD31B9CD84200C516C1 /* MapDisplayViewController.swift in Sources */,
 				2503D3A71BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift in Sources */,
@@ -581,6 +591,7 @@
 				250651EB1BD264B7002C3883 /* UIImageView+DonwnloadImage.swift in Sources */,
 				25D4363A1BD57BAF0016E362 /* MultiStepSearch.m in Sources */,
 				25D707D31BCA7620005A4BBA /* UINib+RegisterNib.swift in Sources */,
+				25D281CF1BFCB0E10069BE86 /* OfflineService.swift in Sources */,
 				257922D41BA488EB005EA785 /* DataManager.swift in Sources */,
 				25B5068B1BB3FD5800A36BA1 /* RootController.swift in Sources */,
 				2503D3AC1BE0DA430078C0F0 /* FilterController.swift in Sources */,
@@ -589,6 +600,7 @@
 				25D436431BDA3A680016E362 /* SwipeController.swift in Sources */,
 				2503D3AA1BDF7CFB0078C0F0 /* SubController.swift in Sources */,
 				25D707D01BC98B0D005A4BBA /* SwipeViewNavigationBar.swift in Sources */,
+				25D281D31BFDD7560069BE86 /* UIImage+CropAndResize.swift in Sources */,
 				25D281C71BFB67760069BE86 /* DownloadService.swift in Sources */,
 				25243E641BC410F400EF5F64 /* Region.swift in Sources */,
 				25D436491BDA50570016E362 /* ListingCell.swift in Sources */,
