@@ -9,8 +9,11 @@
 import Foundation
 
 extension UIImageView {
-  func loadImageWithUrl(url: String) -> NSURLSessionDataTask {
-    let nsUrl = NSURL(string: url)!
+  func loadImageWithUrl(url: String) throws -> NSURLSessionDataTask {
+    if url == "" {
+      throw Error.RuntimeError("URL was empty")
+    }
+    let nsUrl = NSURL(string: url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
     return loadImageWithNSUrl(nsUrl)
   }
   

@@ -5,9 +5,22 @@ typealias ContentLoaded = (guideItem: GuideItem) -> ()
 
 class ContentService {
   
-  static let baseUrl = "http://tripfinger-server.appspot.com"
+  static let baseUrl = "http://server.tripfinger.com"
   
   init() {}
+  
+  class func getCountries(handler: [Region] -> ()) {
+    getJsonFromUrl(baseUrl + "/countries", success: {
+      json in
+      
+      let regions = parseRegions(json!)
+      
+      dispatch_async(dispatch_get_main_queue()) {
+        handler(regions)
+      }
+      
+      }, failure: nil)
+  }
   
   class func getGuideTextsForGuideItem(guideItem: GuideItem, handler: (guideTexts: [GuideText]) -> ()) {
     let id = String(guideItem.id!)
@@ -243,6 +256,14 @@ class ContentService {
     return guideText
   }
   
+  class func parseRegions(jsonArray: JSON) -> [Region] {
+    var regions = [Region]()
+    for json in jsonArray.array! {
+      regions.append(parseRegion(json, fetchChildren: false))
+    }
+    return regions
+  }
+  
   class func parseRegion(json: JSON, fetchChildren: Bool = true) -> Region {
     let region = Region()
     region.listing = GuideListing()
@@ -290,6 +311,7 @@ class ContentService {
   class func parseChildren(guideItem: GuideItem, withJson json: JSON, forRegion: Bool = true) {
     
     let guideSections = List<GuideText>()
+    let subRegions = List<Region>()
     let categoryDescriptions = List<GuideText>()
     
     for guideSectionArr in json["guideSections"].array! {
@@ -323,7 +345,15 @@ class ContentService {
       }
       guideItem.categoryDescriptions = categoryDescriptions
       
+      for subRegionArr in json["subRegions"].array! {
+        let subRegion = Region.constructRegion()
+        subRegion.listing.item.id = subRegionArr[0].string
+        subRegion.listing.item.name = subRegionArr[1].string
+        subRegions.append(subRegion)
+      }
+      guideItem.subRegions = subRegions;
     }
     guideItem.guideSections = guideSections
+    
   }
 }

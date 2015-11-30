@@ -10,6 +10,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
   
   var attractions = [Attraction]()
   var category: Attraction.Category!
+  var currentRegion: Region!
   let ChooseAttractionButtonHorizontalPadding: CGFloat = 80.0
   let ChooseAttractionButtonVerticalPadding: CGFloat = 20.0
   var currentAttraction: Attraction!
@@ -27,15 +28,20 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     view.addConstraints("H:|-0-[filters]-0-|", forViews: ["filters": filterBox])
     
     category = session.currentCategory
+    currentRegion = session.currentRegion
     
-    session.loadBrusselsAsCurrentRegionIfEmpty() {
-      self.loadAttractions()
+    if self.session.currentRegion != nil {
+      loadAttractions()
+    }
+    else {
+      displayCards()
     }
   }
   
   override func viewWillAppear(animated: Bool) {
-    if category != session.currentCategory {
+    if category != session.currentCategory || currentRegion != session.currentRegion {
       category = session.currentCategory
+      currentRegion = session.currentRegion
       reloadCards()
     }
   }
@@ -50,10 +56,8 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     }
     loadAttractions()
   }
+  
   func loadAttractions() {
-    filterBox.regionNameLabel.text = "\(self.session.currentRegion!.listing.item.name!):"
-    filterBox.categoryLabel.text = self.category.entityName
-    
     session.loadAttractions() {
       loaded in
       
@@ -81,10 +85,26 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
         view.insertSubview(backCardView, belowSubview: frontCardView)
         addBackCardConstraints()
       }
+      
+      filterBox.regionNameLabel.text = "\(self.session.currentRegion!.listing.item.name!):"
     }
     else {
       noElementsLabel.hidden = false
+      if session.currentRegion == nil {
+        noElementsLabel.text = "Select a region to view attractions."
+      }
+      else {
+        noElementsLabel.text = "No attractions to swipe."
+      }
+      noElementsLabel.sizeToFit()
+      if let currentRegion = currentRegion {
+        filterBox.regionNameLabel.text = "\(currentRegion.listing.item.name!):"
+      }
+      else {
+        filterBox.regionNameLabel.text = "World:"
+      }
     }
+    filterBox.categoryLabel.text = self.category.entityName(session.currentRegion)
   }
   
   @IBAction func back() {

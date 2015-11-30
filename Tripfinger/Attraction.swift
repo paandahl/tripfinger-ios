@@ -17,6 +17,22 @@ class Attraction: Object {
     return imagePath
   }
   
+  func categoryName(currentRegion: Region?) -> String {
+    let name = Category(rawValue: listing.item.category)!.entityName
+    if name == "Explore the city" {
+      if currentRegion == nil {
+        return "Explore the world"
+      }
+      switch currentRegion!.listing.item.category {
+      case Region.Category.COUNTRY.rawValue:
+        return "Explore the country"
+      default:
+        return name
+      }
+    }
+    return name
+  }
+  
   enum Category: Int {
     case ALL = 200
     case EXPLORE_CITY = 210
@@ -46,6 +62,21 @@ class Attraction: Object {
       case .INFORMATION:
         return "Information"
       }
+    }
+    
+    func entityName(currentRegion: Region?) -> String {
+      if entityName == "Explore the city" {
+        if currentRegion == nil {
+          return "Explore the world"
+        }
+        switch currentRegion!.listing.item.category {
+        case Region.Category.COUNTRY.rawValue:
+          return "Explore the country"
+        default:
+          return entityName
+        }
+      }
+      return entityName
     }
     
     static let allValues = [ALL, EXPLORE_CITY, ACTIVITY_HIKE_DAYTRIP, TRANSPORTATION, ACCOMODATION,

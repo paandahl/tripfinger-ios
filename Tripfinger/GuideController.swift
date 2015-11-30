@@ -20,7 +20,10 @@ class GuideController: UITableViewController, SubController {
   
   var backButton: UIButton!
   var titleLabel: UILabel!
+  var downloadButton: UIButton!
+  var loading = false
   
+  var countryList = [Region]()
   var currentItem: GuideItem?
   var currentRegion: Region?
   var currentSection: GuideText?
@@ -30,14 +33,23 @@ class GuideController: UITableViewController, SubController {
   var guideITemCreatedAsExpanded = false
   var containerFrame: CGRect!
   
+  var tableSections = [TableSection]()
+  
+  class TableSection {
+    var title: String?
+    var cellIdentifier: String
+    var elements = [(String, String)]()
+    var handler: (NSIndexPath -> ())?
+    
+    init(title: String?, cellIdentifier: String, handler: (NSIndexPath -> ())?) {
+      self.title = title
+      self.cellIdentifier = cellIdentifier
+      self.handler = handler
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    let belgium = Region.constructRegion()
-    belgium.listing.item.id = "region-belgium"
-    belgium.listing.item.name = "Belgium"
-    itemStack.append(belgium)
     
     self.automaticallyAdjustsScrollViewInsets = false
     
@@ -57,10 +69,11 @@ class GuideController: UITableViewController, SubController {
     titleLabel = UILabel(frame: CGRectMake(10, 5, tableView.frame.size.width, 18))
     titleLabel.font = UIFont.boldSystemFontOfSize(16)
 
-    let downloadButton = UIButton(type: UIButtonType.System)
+    downloadButton = UIButton(type: UIButtonType.System)
     downloadButton.setTitle("Download", forState: UIControlState.Normal)
     downloadButton.sizeToFit()
     downloadButton.addTarget(self, action: "openDownloadCity:", forControlEvents: .TouchUpInside)
+    
     if currentSection == nil {
       let headerView = UIView()
       headerView.addSubview(titleLabel)
@@ -86,20 +99,34 @@ class GuideController: UITableViewController, SubController {
   
   func navigateBack(sender: UIButton) {
     let stackItem = itemStack.removeLast()
-    if (stackItem.getId().hasPrefix("region-")) {
+    if stackItem.getId().hasPrefix("region-") {
       print("Setting currentSection to nil")
       currentSection = nil
       session.currentSection = nil
+      let region = Region.constructRegion()
+      region.listing.item.id = stackItem.getId()
+      region.listing.item.name = stackItem.getName()
+      currentRegion = nil
+      session.currentRegion = region
     }
-    else {
+    else if stackItem.getId().hasPrefix("text-") {
       currentSection = nil
       session.currentSection = stackItem as? GuideText
+    }
+    else {
+      currentItem = nil
+      currentRegion = nil
+      session.currentRegion = nil
+      currentSection = nil
+      session.currentSection = nil
     }
     loadContent()
     delegate.navigateInternally()
   }
   
   func loadContent() {
+    loading = true
+    tableView.contentOffset = CGPoint(x: 0, y: 0)
     if let currentSection = session.currentSection {
       self.currentSection = currentSection
       self.currentItem = currentSection.item
@@ -115,20 +142,26 @@ class GuideController: UITableViewController, SubController {
       loadRegionWithID(currentRegion.listing.item.id)
     }
     else {
-      loadRegionWithID(session.currentItemId)
+      loadCountryList()
     }
     
     if let currentSection = currentSection {
-      print(currentSection.item.category)
       let category = Attraction.Category(rawValue: currentSection.item.category)
       titleLabel.text = category?.entityName
     }
-    print(itemStack.count)
-    let stackElement = itemStack.last!
-    print(stackElement.getName())
-    backButton.setTitle("< \(stackElement.getName())", forState: UIControlState.Normal)
-    backButton.sizeToFit()
-    
+    if itemStack.count == 0 {
+      backButton.hidden = true
+      downloadButton.hidden = true
+      titleLabel.text = "Countries"
+    }
+    else {
+      backButton.hidden = false
+      downloadButton.hidden = false
+      let stackElement = itemStack.last!
+      backButton.setTitle("< \(stackElement.getName())", forState: UIControlState.Normal)
+      backButton.sizeToFit()
+    }
+    populateTableSections()
   }
   
   func openDownloadCity(sender: UIButton) {
@@ -136,6 +169,16 @@ class GuideController: UITableViewController, SubController {
     let vc = DownloadController()
     nav.viewControllers = [vc]
     presentViewController(nav, animated: true, completion: nil)
+  }
+  
+  func loadCountryList() {
+    ContentService.getCountries() {
+      countries in
+      
+      self.countryList = countries
+      self.loading = false
+      self.populateTableSections()
+    }
   }
   
   func loadRegionWithID(regionId: String) {
@@ -146,11 +189,11 @@ class GuideController: UITableViewController, SubController {
       self.currentRegion = region
       self.guideSections = region.listing.item.guideSections
       self.currentCategoryDescriptions = region.listing.item.categoryDescriptions
-      print("CategoryDescriptions: \(self.currentCategoryDescriptions.count)")
       self.currentItem = region.listing.item
       self.titleLabel.text = self.currentItem!.name
       self.session.currentRegion = region
-      self.tableView.reloadData()
+      self.loading = false
+      self.populateTableSections()
     }
   }
   
@@ -162,26 +205,31 @@ class GuideController: UITableViewController, SubController {
       self.guideSections = guideText.item.guideSections
       self.currentItem = guideText.item
       self.title = guideText.item.name
-      self.tableView.reloadData()
+      self.loading = false
+      self.populateTableSections()
     }
   }
 
   override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    if section == 1 && !guideItemExpanded {
-      return 1
-    }
-    else {
-      return super.tableView(tableView, heightForHeaderInSection: section)
-    }
+//    if section == 1 && !guideItemExpanded {
+//      return 1
+//    }
+//    else {
+//      return super.tableView(tableView, heightForHeaderInSection: section)
+//    }
+    
+    return super.tableView(tableView, heightForHeaderInSection: section)
   }
   
   override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-    if section == 0 && !guideItemExpanded {
-      return 1
-    }
-    else {
-      return super.tableView(tableView, heightForHeaderInSection: section)
-    }
+//    if section == 0 && !guideItemExpanded {
+//      return 1
+//    }
+//    else {
+//      return super.tableView(tableView, heightForHeaderInSection: section)
+//    }
+    
+    return super.tableView(tableView, heightForHeaderInSection: section)
   }
 }
 
@@ -189,79 +237,126 @@ class GuideController: UITableViewController, SubController {
 extension GuideController {
   
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return 4;
+    return tableSections.count;
   }
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    switch section {
-    case 0:
-      return 1
-    case 1:
-      return guideItemExpanded ? guideSections.count : 0;
-    case 2:
-      if currentSection != nil {
-        if currentSection?.item.category == 0 {
-          return 0
-        }
-        else {
-          return 1
-        }
-      }
-      else {
-        return 2
-      }
-    case 3:
-      return (currentSection != nil) ? 0 : Attraction.Category.allValues.count - 3
-    default:
-      return 0
+    
+    return tableSections[section].elements.count;
+  }
+  
+  func populateTableSections() {
+    tableSections = [TableSection]()
+    
+    if loading {
+      let section = TableSection(title: nil, cellIdentifier: TableViewCellIdentifiers.loadingCell, handler: nil)
+      section.elements.append(("", ""))
+      tableSections.append(section)
     }
+    else if currentItem == nil {
+      let section = TableSection(title: nil, cellIdentifier: TableViewCellIdentifiers.categoryCell, handler: navigateToCountry)
+      for country in countryList {
+        section.elements.append((title: country.listing.item.name!, value: country.listing.item.id))
+      }
+      tableSections.append(section)
+    }
+    else {
+      let section = TableSection(title: nil, cellIdentifier: TableViewCellIdentifiers.guideItemCell, handler: nil)
+      section.elements.append(("", ""))
+      tableSections.append(section)
+    }
+
+    if guideItemExpanded {
+      let section = TableSection(title: nil, cellIdentifier: TableViewCellIdentifiers.categoryCell, handler: navigateToSection)
+      for guideSection in guideSections {
+        section.elements.append((title: guideSection.item.name!, value: guideSection.item.id))
+      }
+      tableSections.append(section)
+    }
+
+    if currentRegion != nil && currentSection == nil {
+      var section = TableSection(title: nil, cellIdentifier: TableViewCellIdentifiers.categoryCell, handler: navigateToCategory)
+      let section2 = TableSection(title: "Directory", cellIdentifier: TableViewCellIdentifiers.categoryCell, handler: navigateToCategoryDescription)
+      var i = 0
+      for category in Attraction.Category.allValues {
+        if i > 2 {
+          section2.elements.append((title: category.entityName, value: String(category.rawValue)))
+        }
+        else if i > 0 {
+          var name = category.entityName
+          if name == "Explore the city" && currentRegion?.listing.item.category == 130 {
+            name = "Explore the country"
+          }
+          section.elements.append((title: name, value: String(category.rawValue)))
+        }
+        i += 1
+      }
+      tableSections.append(section)
+      
+      if (currentItem!.subRegions.count > 0) {
+        switch currentItem!.category {
+        case Region.Category.COUNTRY.rawValue:
+          section = TableSection(title: "Cities:", cellIdentifier: TableViewCellIdentifiers.categoryCell, handler: navigateToCity)
+        default:
+          section = TableSection(title: "Neighbourhoods:", cellIdentifier: TableViewCellIdentifiers.categoryCell, handler: navigateToCity)
+        }
+        for subRegion in currentItem!.subRegions {
+          var itemName = subRegion.listing.item.name!
+          let range = itemName.rangeOfString("/")
+          if range != nil {
+            itemName = itemName.substringFromIndex(range!.endIndex)
+          }
+          section.elements.append((title: itemName, value: subRegion.listing.item.id))
+        }
+        tableSections.append(section)
+      }
+      tableSections.append(section2)
+      
+      
+    }
+    else if currentSection != nil && currentSection?.item.category != 0 {
+      let section = TableSection(title: nil, cellIdentifier: TableViewCellIdentifiers.categoryCell, handler: nil)
+      section.elements.append(("Browse", "browse"))
+      tableSections.append(section)
+    }
+    
+    tableView.reloadData()
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
-    if indexPath.section == 0 {
-      if currentItem?.content != nil || currentItem?.id == "null" {
-        let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.guideItemCell, forIndexPath: indexPath) as! GuideItemCell
-        cell.delegate = self
-        cell.setContentFromGuideItem(currentItem!)
-        if (guideItemExpanded) {
-          cell.expand()
-        }
-        cell.setNeedsUpdateConstraints()
-        return cell
+    let section = tableSections[indexPath.section]
+    let cell = tableView.dequeueReusableCellWithIdentifier(section.cellIdentifier, forIndexPath: indexPath)
+    
+    if let cell = cell as? GuideItemCell {
+      cell.delegate = self
+      cell.setContentFromGuideItem(currentItem!)
+      if (guideItemExpanded) {
+        cell.expand()
       }
-      else {
-        let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.loadingCell, forIndexPath: indexPath)
-        let indicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
-        indicator.startAnimating()
-        return cell
-      }
+      cell.setNeedsUpdateConstraints()
     }
-    else if indexPath.section == 1 && guideItemExpanded {
-      let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.categoryCell, forIndexPath: indexPath)
-      cell.textLabel?.text = guideSections[indexPath.row].item.name
-      return cell
+    else if cell.reuseIdentifier == TableViewCellIdentifiers.loadingCell {
+      let indicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
+      indicator.startAnimating()
     }
     else {
-      let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.categoryCell, forIndexPath: indexPath)
-      let index: Int
-      if indexPath.section == 2 {
-        index = indexPath.row + 1
-      }
-      else {
-        index = indexPath.row + 3
-      }
-      if indexPath.section == 2 && currentSection != nil && currentSection?.item.category != 0 {
-        cell.textLabel?.text = "Browse"
-      }
-      else {
-        cell.textLabel?.text = Attraction.Category.allValues[index].entityName
-      }
-      return cell
+      cell.textLabel?.text = section.elements[indexPath.row].0
     }
+    
+    return cell
   }
   
+  override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    if let title = tableSections[section].title {
+      return title
+    }
+    else {
+      return nil
+    }
+  }
 }
+
 
 extension GuideController: GuideItemContainerDelegate {
   
@@ -279,39 +374,63 @@ extension GuideController: GuideItemContainerDelegate {
 // MARK: - Navigation
 extension GuideController {
   
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    if indexPath.section == 1 && guideItemExpanded {
+  func navigateToCountry(indexPath: NSIndexPath) {
+    let allRegions = Region.constructRegion()
+    allRegions.listing.item.name = "Countries"
+    allRegions.listing.item.id = "top-level"
+    itemStack.append(allRegions)
+    session.currentRegion = countryList[indexPath.row]
+    loadContent()
+    delegate.navigateInternally()
+  }
+
+  func navigateToCity(indexPath: NSIndexPath) {
+    itemStack.append(currentRegion!)
+    session.currentRegion = currentRegion!.listing.item.subRegions[indexPath.row]
+    loadContent()
+    delegate.navigateInternally()
+  }
+
+  func navigateToSection(indexPath: NSIndexPath) {
+    var current: GuideItemHolder = currentRegion!
+    if let currentSection = currentSection {
+      current = currentSection
+    }
+    session.currentSection = guideSections[indexPath.row]
+    itemStack.append(current)
+    loadContent()
+    delegate.navigateInternally()
+  }
+  
+  func navigateToCategoryDescription(indexPath: NSIndexPath) {
+    var current: GuideItemHolder = currentRegion!
+    if let currentSection = currentSection {
+      current = currentSection
+    }
+    itemStack.append(current)
+    session.currentSection = currentCategoryDescriptions[indexPath.row + 2]
+    print(session.currentSection)
+    loadContent()
+    delegate.navigateInternally()
+  }
+  
+  func navigateToCategory(indexPath: NSIndexPath) {
+    if currentSection != nil {
+      let category = Attraction.Category(rawValue: currentSection!.item.category)!
+      delegate.categorySelected(category)
       
-      var current: GuideItemHolder = currentRegion!
-      if let currentSection = currentSection {
-        current = currentSection
-      }
-      session.currentSection = guideSections[indexPath.row]
-      itemStack.append(current)
-      loadContent()
-      delegate.navigateInternally()
     }
-    else if indexPath.section == 2 {
-      if currentSection != nil {
-        let category = Attraction.Category(rawValue: currentSection!.item.category)!
-        delegate.categorySelected(category)
-        
-      }
-      else {
-        delegate.categorySelected(Attraction.Category.allValues[indexPath.row + 1])
-      }
+    else {
+      delegate.categorySelected(Attraction.Category.allValues[indexPath.row + 1])
     }
-    else if indexPath.section == 3 {
-      var current: GuideItemHolder = currentRegion!
-      if let currentSection = currentSection {
-        current = currentSection
-      }
-      itemStack.append(current)
-      session.currentSection = currentCategoryDescriptions[indexPath.row + 2]
-      print(session.currentSection)
-      loadContent()
-      delegate.navigateInternally()
+  }
+  
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    
+    if let handler = tableSections[indexPath.section].handler {
+      handler(indexPath)
     }
+    
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
   }
 }

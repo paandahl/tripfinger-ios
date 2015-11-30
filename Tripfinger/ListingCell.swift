@@ -45,7 +45,7 @@ class ListingCell: UITableViewCell {
     }
     else {
       let imageUrl = attraction.listing.item.images[0].url + "-712x534"
-      mainImage.loadImageWithUrl(imageUrl)
+      try! mainImage.loadImageWithUrl(imageUrl)
     }
     
     self.attraction = attraction

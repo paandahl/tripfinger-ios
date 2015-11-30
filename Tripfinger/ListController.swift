@@ -1,11 +1,3 @@
-//
-//  ListController.swift
-//  Tripfinger
-//
-//  Created by Preben Ludviksen on 23/10/15.
-//  Copyright © 2015 Preben Ludviksen. All rights reserved.
-//
-
 import Foundation
 
 class ListController: UITableViewController, SubController {
@@ -16,6 +8,7 @@ class ListController: UITableViewController, SubController {
   var session: Session!
   var filterBox: FilterBox!
   var category: Attraction.Category!
+  var currentRegion: Region!
   
   override func viewDidLoad() {
     UINib.registerNib(TableViewCellIdentifiers.listingCell, forTableView: tableView)
@@ -26,25 +19,41 @@ class ListController: UITableViewController, SubController {
     headerView.addSubview(filterBox)
     headerView.addConstraints("V:|-10-[filters(44)]", forViews: ["filters": filterBox])
     headerView.addConstraints("H:|-0-[filters]-0-|", forViews: ["filters": filterBox])
+
+    category = session.currentCategory
+    currentRegion = session.currentRegion
+
     var headerFrame = headerView.frame;
     headerFrame.size.height = 44;
     headerView.frame = headerFrame;
     tableView.tableHeaderView = headerView
     
-    session.loadBrusselsAsCurrentRegionIfEmpty() {
-      self.loadAttractions()
-    }
-  }
-  
-  override func viewWillAppear(animated: Bool) {
-    if category != session.currentCategory {
+    if self.session.currentRegion != nil {
       loadAttractions()
     }
   }
   
+  override func viewWillAppear(animated: Bool) {
+    if session.currentRegion != nil && (category != session.currentCategory || currentRegion != session.currentRegion) {
+      category = session.currentCategory
+      currentRegion = session.currentRegion
+      loadAttractions()
+    }
+    updateLabels()
+  }
+  
+  func updateLabels() {
+    if let currentRegion = session.currentRegion {
+      filterBox.regionNameLabel.text = "\(currentRegion.listing.item.name!):"
+    }
+    else {
+      filterBox.regionNameLabel.text = "World:"
+    }
+    filterBox.categoryLabel.text = self.category.entityName(session.currentRegion)
+  }
+  
   func loadAttractions() {
     category = session.currentCategory
-    filterBox.regionNameLabel.text = "\(session.currentRegion!.listing.item.name!):"
     filterBox.categoryLabel.text = session.currentCategory.entityName
     session.loadAttractions() {
       loaded in

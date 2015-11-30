@@ -17,17 +17,10 @@ class Session {
   var currentRegion: Region?
   var currentSection: GuideText?
   var currentCategory = Attraction.Category.EXPLORE_CITY
-  var attractionsFromCategory: Attraction.Category!
+
   var currentAttractions = List<Attraction>()
-  
-  func loadBrusselsAsCurrentRegionIfEmpty(handler: () -> ()) {
-    if currentRegion == nil {
-      loadRegionWithID("region-brussels", handler: handler)
-    }
-    else {
-      handler()
-    }
-  }
+  var attractionsFromCategory: Attraction.Category!
+  var attractionsFromRegion: Region!
   
   func loadRegionWithID(regionId: String, handler: () -> ()) {
     
@@ -42,7 +35,13 @@ class Session {
   
   func loadAttractions(handler: (loaded: Bool) -> ()) {
     
-    if (attractionsFromCategory == nil || attractionsFromCategory != currentCategory) {
+    if currentRegion == nil {
+      currentAttractions = List<Attraction>()
+      handler(loaded: false)
+      return
+    }
+    
+    if (attractionsFromCategory == nil || attractionsFromCategory != currentCategory || attractionsFromRegion != currentRegion) {
       if currentCategory != Attraction.Category.ALL {
         ContentService.getAttractionsForRegion(self.currentRegion!, withCategory: currentCategory) {
           attractions in
@@ -60,6 +59,7 @@ class Session {
         }
       }
       attractionsFromCategory = currentCategory
+      attractionsFromRegion = currentRegion
     }
     else {
       handler(loaded: false)

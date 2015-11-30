@@ -78,41 +78,25 @@ class GuideItemCell: UITableViewCell {
       contentView.addConstraints("H:|-14-[readMore]", forViews: views)
       constraintsAdded = true
     }
-    else {
-      if contentImage.hidden {
-        print("image hidden")
-        contentImageHeightConstraint.constant = 0
-        contentImageMarginConstraint.constant = 0
-      }
-      else {
-        print("image to be displayed")
-        contentImageHeightConstraint.constant = 225
-        contentImageMarginConstraint.constant = 10
-      }
-      if readMoreButton.hidden {
-        readMoreButtonHeightConstraint.constant = 0
-        readMoreButtonMarginConstraint.constant = 0
-      }
-      else {
-        readMoreButtonHeightConstraint.constant = CGFloat(readMoreButtonHeight)
-        readMoreButtonMarginConstraint.constant = 10
-      }
+    
+    if contentImage.hidden {
+      print("image hidden")
+      contentImageHeightConstraint.constant = 0
+      contentImageMarginConstraint.constant = 0
     }
-    
-
-    
-//    if contentImage.isDescendantOfView(self.contentView) {
-//      print("Image is in the game")
-//      var const = contentView.addConstraints("V:|-10-[image]-10-[content]", forViews: ["image": contentImage,
-//        "content": content])
-//      myConstraints.appendContentsOf(const)
-//      const.append(contentView.addConstraint(.CenterX, forView: contentImage))
-//      myConstraints.appendContentsOf(const)
-//    }
-//    else {
-//      let const = contentView.addConstraints("V:|-10-[content]", forViews: ["content": content])
-//      myConstraints.appendContentsOf(const)
-//    }
+    else {
+      print("image to be displayed")
+      contentImageHeightConstraint.constant = 225
+      contentImageMarginConstraint.constant = 10
+    }
+    if readMoreButton.hidden {
+      readMoreButtonHeightConstraint.constant = 0
+      readMoreButtonMarginConstraint.constant = 0
+    }
+    else {
+      readMoreButtonHeightConstraint.constant = CGFloat(readMoreButtonHeight)
+      readMoreButtonMarginConstraint.constant = 10
+    }
   }
   
   override func prepareForReuse() {
@@ -154,9 +138,9 @@ class GuideItemCell: UITableViewCell {
     print("setContent: \(guideItem.name)")
     
     if guideItem.images.count > 0 {
-      print("Loading image")
       let imageUrl = guideItem.images[0].url + "-712x534"
-      contentImage.loadImageWithUrl(imageUrl)
+      print("Loading image with url: " + imageUrl)
+      try! contentImage.loadImageWithUrl(imageUrl)
       contentImage.hidden = false
     }
     else {

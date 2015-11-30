@@ -28,7 +28,7 @@ class DetailController: UIViewController {
     }
     else {
       mainImage.image = UIImage(named: "Placeholder")
-      mainImage.loadImageWithUrl(attraction.listing.item.images[0].url)
+      try! mainImage.loadImageWithUrl(attraction.listing.item.images[0].url)
     }
 
   }
