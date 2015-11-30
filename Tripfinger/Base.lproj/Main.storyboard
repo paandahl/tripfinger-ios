@@ -323,7 +323,7 @@
         <!--Root Controller-->
         <scene sceneID="rSz-g7-hFW">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="fNL-El-q7h" customClass="RootController" customModule="Tripfinger" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="rootController" automaticallyAdjustsScrollViewInsets="NO" id="fNL-El-q7h" customClass="RootController" customModule="Tripfinger" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5YC-sX-YMv"/>
                         <viewControllerLayoutGuide type="bottom" id="Hhu-pT-279"/>

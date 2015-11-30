@@ -2,6 +2,7 @@ import RealmSwift
 
 protocol GuideControllerDelegate: class {
   func categorySelected(category: Attraction.Category)
+  func navigateInternally()
 }
 
 class GuideController: UITableViewController, SubController {
@@ -14,6 +15,11 @@ class GuideController: UITableViewController, SubController {
   
   var session: Session!
   var delegate: GuideControllerDelegate!
+  
+  var itemStack = [GuideItemHolder]()
+  
+  var backButton: UIButton!
+  var titleLabel: UILabel!
   
   var currentItem: GuideItem?
   var currentRegion: Region?
@@ -28,6 +34,11 @@ class GuideController: UITableViewController, SubController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    let belgium = Region.constructRegion()
+    belgium.listing.item.id = "region-belgium"
+    belgium.listing.item.name = "Belgium"
+    itemStack.append(belgium)
+    
     self.automaticallyAdjustsScrollViewInsets = false
     
     tableView.rowHeight = UITableViewAutomaticDimension
@@ -35,42 +46,89 @@ class GuideController: UITableViewController, SubController {
     tableView.tableFooterView = UIView.init(frame: CGRectZero)
     
     
-    UINib.registerNib(TableViewCellIdentifiers.guideItemCell, forTableView: tableView)
+    UINib.registerClass(GuideItemCell.self, reuseIdentifier: TableViewCellIdentifiers.guideItemCell, forTableView: tableView)
     UINib.registerNib(TableViewCellIdentifiers.categoryCell, forTableView: tableView)
     UINib.registerNib(TableViewCellIdentifiers.textChildCell, forTableView: tableView)
     UINib.registerNib(TableViewCellIdentifiers.loadingCell, forTableView: tableView)
 
-    if let currentSection = currentSection {
-      loadGuideTextWithId(currentSection.item.id)
-    }
-    else if let currentRegion = currentRegion {
-      loadRegionWithID(currentRegion.listing.item.id)
-    }
-    else {
-      loadRegionWithID("region-brussels")
-    }
+    backButton = UIButton(type: UIButtonType.System)
+    backButton.addTarget(self, action: "navigateBack:", forControlEvents: .TouchUpInside)
     
-    let label = UILabel(frame: CGRectMake(10, 5, tableView.frame.size.width, 18))
-    label.font = UIFont.boldSystemFontOfSize(16)
-    label.text = "Brussels"
-    let button = UIButton.init(type: UIButtonType.System)
-    button.setTitle("Download", forState: UIControlState.Normal)
-    button.titleLabel?.text = "Download"
-    button.sizeToFit()
-    button.addTarget(self, action: "openDownloadCity:", forControlEvents: UIControlEvents.TouchUpInside)
-    
+    titleLabel = UILabel(frame: CGRectMake(10, 5, tableView.frame.size.width, 18))
+    titleLabel.font = UIFont.boldSystemFontOfSize(16)
+
+    let downloadButton = UIButton(type: UIButtonType.System)
+    downloadButton.setTitle("Download", forState: UIControlState.Normal)
+    downloadButton.sizeToFit()
+    downloadButton.addTarget(self, action: "openDownloadCity:", forControlEvents: .TouchUpInside)
     if currentSection == nil {
       let headerView = UIView()
-      headerView.addSubview(label)
-      headerView.addSubview(button)
-      headerView.addConstraints("V:|-10-[title(22)]", forViews: ["title": label])
-      headerView.addConstraints("V:|-10-[download(22)]", forViews: ["download": button])
-      headerView.addConstraints("H:|-15-[title]-[download]-15-|", forViews: ["title": label, "download": button])
+      headerView.addSubview(titleLabel)
+      headerView.addSubview(downloadButton)
+      headerView.addSubview(backButton)
+      headerView.addConstraints("V:|-10-[title(22)]", forViews: ["title": titleLabel])
+      headerView.addConstraints("V:|-10-[download(22)]", forViews: ["download": downloadButton])
+      headerView.addConstraints("V:|-10-[back(22)]", forViews: ["back": backButton])
+      headerView.addConstraints("H:|-15-[back]", forViews: ["back": backButton])
+      headerView.addConstraint(NSLayoutAttribute.CenterX, forView: titleLabel)
+      headerView.addConstraints("H:[download]-15-|", forViews: ["download": downloadButton])
       var headerFrame = headerView.frame;
       headerFrame.size.height = 44;
       headerView.frame = headerFrame;
       tableView.tableHeaderView = headerView
     }
+    
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    self.tableView.estimatedRowHeight = 44.0;
+
+    loadContent()
+  }
+  
+  func navigateBack(sender: UIButton) {
+    let stackItem = itemStack.removeLast()
+    if (stackItem.getId().hasPrefix("region-")) {
+      print("Setting currentSection to nil")
+      currentSection = nil
+      session.currentSection = nil
+    }
+    else {
+      currentSection = nil
+      session.currentSection = stackItem as? GuideText
+    }
+    loadContent()
+    delegate.navigateInternally()
+  }
+  
+  func loadContent() {
+    if let currentSection = session.currentSection {
+      self.currentSection = currentSection
+      self.currentItem = currentSection.item
+      if currentSection.item.id == "null" {
+        self.currentItem = currentSection.item
+        self.tableView.reloadData()
+      }
+      else {
+        loadGuideTextWithId(currentSection.item.id)
+      }
+    }
+    else if let currentRegion = session.currentRegion {
+      loadRegionWithID(currentRegion.listing.item.id)
+    }
+    else {
+      loadRegionWithID(session.currentItemId)
+    }
+    
+    if let currentSection = currentSection {
+      print(currentSection.item.category)
+      let category = Attraction.Category(rawValue: currentSection.item.category)
+      titleLabel.text = category?.entityName
+    }
+    print(itemStack.count)
+    let stackElement = itemStack.last!
+    print(stackElement.getName())
+    backButton.setTitle("< \(stackElement.getName())", forState: UIControlState.Normal)
+    backButton.sizeToFit()
+    
   }
   
   func openDownloadCity(sender: UIButton) {
@@ -87,7 +145,10 @@ class GuideController: UITableViewController, SubController {
       
       self.currentRegion = region
       self.guideSections = region.listing.item.guideSections
+      self.currentCategoryDescriptions = region.listing.item.categoryDescriptions
+      print("CategoryDescriptions: \(self.currentCategoryDescriptions.count)")
       self.currentItem = region.listing.item
+      self.titleLabel.text = self.currentItem!.name
       self.session.currentRegion = region
       self.tableView.reloadData()
     }
@@ -104,15 +165,7 @@ class GuideController: UITableViewController, SubController {
       self.tableView.reloadData()
     }
   }
-  
-  override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return UITableViewAutomaticDimension
-  }
-  
-  override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-    return UITableViewAutomaticDimension
-  }
-  
+
   override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
     if section == 1 && !guideItemExpanded {
       return 1
@@ -146,7 +199,17 @@ extension GuideController {
     case 1:
       return guideItemExpanded ? guideSections.count : 0;
     case 2:
-      return (currentSection != nil) ? 0 : 2
+      if currentSection != nil {
+        if currentSection?.item.category == 0 {
+          return 0
+        }
+        else {
+          return 1
+        }
+      }
+      else {
+        return 2
+      }
     case 3:
       return (currentSection != nil) ? 0 : Attraction.Category.allValues.count - 3
     default:
@@ -157,13 +220,14 @@ extension GuideController {
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
     if indexPath.section == 0 {
-      if currentItem?.content != nil {
+      if currentItem?.content != nil || currentItem?.id == "null" {
         let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.guideItemCell, forIndexPath: indexPath) as! GuideItemCell
         cell.delegate = self
         cell.setContentFromGuideItem(currentItem!)
         if (guideItemExpanded) {
           cell.expand()
         }
+        cell.setNeedsUpdateConstraints()
         return cell
       }
       else {
@@ -187,7 +251,12 @@ extension GuideController {
       else {
         index = indexPath.row + 3
       }
-      cell.textLabel?.text = Attraction.Category.allValues[index].entityName
+      if indexPath.section == 2 && currentSection != nil && currentSection?.item.category != 0 {
+        cell.textLabel?.text = "Browse"
+      }
+      else {
+        cell.textLabel?.text = Attraction.Category.allValues[index].entityName
+      }
       return cell
     }
   }
@@ -197,9 +266,6 @@ extension GuideController {
 extension GuideController: GuideItemContainerDelegate {
   
   func readMoreClicked() {
-    tableView.beginUpdates()
-    tableView.endUpdates()
-    
     guideItemExpanded = true
     tableView.reloadData()
   }
@@ -216,27 +282,35 @@ extension GuideController {
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     if indexPath.section == 1 && guideItemExpanded {
       
-      let storyboard = UIStoryboard(name: "Main", bundle: nil)
-      let vc = storyboard.instantiateViewControllerWithIdentifier("guideController") as! GuideController
-      vc.currentRegion = currentRegion
-      vc.currentSection = guideSections[indexPath.row]
-      vc.guideItemExpanded = true
-      self.navigationController?.pushViewController(vc, animated: true)
+      var current: GuideItemHolder = currentRegion!
+      if let currentSection = currentSection {
+        current = currentSection
+      }
+      session.currentSection = guideSections[indexPath.row]
+      itemStack.append(current)
+      loadContent()
+      delegate.navigateInternally()
     }
     else if indexPath.section == 2 {
-      delegate.categorySelected(Attraction.Category.allValues[indexPath.row + 1])
+      if currentSection != nil {
+        let category = Attraction.Category(rawValue: currentSection!.item.category)!
+        delegate.categorySelected(category)
+        
+      }
+      else {
+        delegate.categorySelected(Attraction.Category.allValues[indexPath.row + 1])
+      }
     }
     else if indexPath.section == 3 {
-      if indexPath.row == 0 { // Transportation
-        
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("guideController") as! GuideController
-        
-        vc.currentRegion = currentRegion
-        vc.currentSection = guideSections[indexPath.row]
-        vc.guideItemExpanded = true
-        self.navigationController?.pushViewController(vc, animated: true)
+      var current: GuideItemHolder = currentRegion!
+      if let currentSection = currentSection {
+        current = currentSection
       }
+      itemStack.append(current)
+      session.currentSection = currentCategoryDescriptions[indexPath.row + 2]
+      print(session.currentSection)
+      loadContent()
+      delegate.navigateInternally()
     }
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
   }

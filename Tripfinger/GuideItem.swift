@@ -1,6 +1,11 @@
 import Foundation
 import RealmSwift
 
+protocol GuideItemHolder: class {
+  func getId() -> String
+  func getName() -> String
+}
+
 class GuideItem: Object {
   
   dynamic var id: String!

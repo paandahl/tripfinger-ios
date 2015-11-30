@@ -14,4 +14,8 @@ extension UINib {
     let cellNib = UINib(nibName: nibName, bundle: nil)
     tableView.registerNib(cellNib, forCellReuseIdentifier: nibName)
   }
+  
+  class func registerClass(cellClass: AnyClass, reuseIdentifier: String, forTableView tableView: UITableView) {
+    tableView.registerClass(cellClass, forCellReuseIdentifier: reuseIdentifier)
+  }
 }

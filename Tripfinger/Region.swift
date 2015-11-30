@@ -33,5 +33,22 @@ class Region: Object {
   override static func ignoredProperties() -> [String] {
     return ["offline"]
   }
+  
+  class func constructRegion() -> Region {
+    let region = Region()
+    region.listing = GuideListing()
+    region.listing.item = GuideItem()
+    return region
+  }
 }
 
+extension Region: GuideItemHolder {
+  
+  func getId() -> String {
+    return listing.item.id
+  }
+  
+  func getName() -> String {
+    return listing.item.name!
+  }
+}

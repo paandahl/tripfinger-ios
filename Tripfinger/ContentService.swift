@@ -302,19 +302,24 @@ class ContentService {
     
     if forRegion {
       var categoryDescriptionsDict = Dictionary<Int, String>()
-      for categoryDescription in json["categoryDescriptions"].array! {
-        categoryDescriptionsDict[categoryDescription[0].int!] = categoryDescription[1].string!
+      for categoryDescriptionJson in json["categoryDescriptions"].array! {
+        categoryDescriptionsDict[categoryDescriptionJson[0].int!] = categoryDescriptionJson[1].string!
       }
       for category in Attraction.Category.allValues {
+        if category == Attraction.Category.ALL {
+          continue;
+        }
         let categoryDescription = GuideText()
         categoryDescription.item = GuideItem()
         let categoryDescriptionId = categoryDescriptionsDict[category.rawValue]
+        categoryDescription.item.category = category.rawValue
         if (categoryDescriptionId != nil) {
           categoryDescription.item.id = categoryDescriptionId!
         }
         else {
           categoryDescription.item.id = "null"
         }
+        categoryDescriptions.append(categoryDescription)
       }
       guideItem.categoryDescriptions = categoryDescriptions
       

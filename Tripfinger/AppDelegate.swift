@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     print("Path: \(path[0])")
     
     let session = Session()
+    session.currentItemId = "region-brussels"
     
     let apiKey = "0511a5e338b00db8b426fb8ec0a7fb2ebd6816bb9324425d4edd9b726e40a3d5"
     let initSettings: SKMapsInitSettings = SKMapsInitSettings()

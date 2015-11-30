@@ -12,8 +12,10 @@ import RealmSwift
 class Session {
   
   init() {}
-  
+
+  var currentItemId: String!
   var currentRegion: Region?
+  var currentSection: GuideText?
   var currentCategory = Attraction.Category.EXPLORE_CITY
   var attractionsFromCategory: Attraction.Category!
   var currentAttractions = List<Attraction>()

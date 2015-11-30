@@ -9,3 +9,14 @@ class GuideText: Object {
   // composition (instead of inheritance - for Realm-purposes)
   dynamic var item: GuideItem!
 }
+
+extension GuideText: GuideItemHolder {
+  
+  func getId() -> String {
+    return item.id
+  }
+  
+  func getName() -> String {
+    return item.name!
+  }
+}

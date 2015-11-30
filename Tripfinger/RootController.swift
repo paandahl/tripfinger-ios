@@ -25,10 +25,13 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
     
     segmentedControllerGuide.removeAllSegments()
     segmentedControllerGuide.insertSegmentWithTitle("Guide", atIndex: 0, animated: false)
-    let itemView = self.navigationItem.rightBarButtonItem?.valueForKey("view") as! UIView
-    var frameRect = itemView.frame;
-    frameRect.size.width = 55;
-    itemView.frame = frameRect
+    if let rightButton = self.navigationItem.rightBarButtonItem {
+      if let itemView = rightButton.valueForKey("view") as? UIView {
+        var frameRect = itemView.frame;
+        frameRect.size.width = 55;
+        itemView.frame = frameRect        
+      }
+    }
     
     navigateToSubview("guideController", controllerType: GuideController.self)
     
@@ -121,9 +124,27 @@ extension RootController: GuideControllerDelegate {
   
   func categorySelected(category: Attraction.Category) {
     
+    print("SWITCHING CAT")
     session.currentCategory = category
     segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
     secondSegmentedController.selectedSegmentIndex = 0
     navigateToSubview("swipeController", controllerType: SwipeController.self)
+  }
+  
+  func navigateInternally() {
+    
+    navigateToSubview("guideController", controllerType: GuideController.self)
+//    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//    let vc = storyboard.instantiateViewControllerWithIdentifier("rootController") as? RootController
+//    vc!.session = session
+    
+//    vc.currentRegion = currentRegion
+//    vc.currentSection = currentCategoryDescriptions[indexPath.row + 2]
+//    vc.guideItemExpanded = true
+//    vc.delegate = delegate
+//    navigationController?.pushViewController(vc!, animated: true)
+//
+//    
+//    navigationItem.leftBarButtonItem
   }
 }
