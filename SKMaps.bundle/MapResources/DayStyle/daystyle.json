@@ -377,7 +377,8 @@
                 },
                 "lineattributes" :
                 {
-                    "linejointype" : 1 // round joints
+                    "linejointype" : 1, // round joints
+                    "blendtype" : 1 // mask blend
                 }
 			}
 		},
@@ -2640,7 +2641,35 @@
 				"shadowoutline" : "00000040"
 			}
 		},
-		"ccp" : 
+        "routetraffic" :
+        {
+            "routetrafficblocked" :
+            {
+                "routetraffictype" : 0,
+                "routetrafficcolor" : "000000"
+            },
+            "routetrafficmajor" :
+            {
+                "routetraffictype" : 1,
+                "routetrafficcolor" : "C50000"
+            },
+            "routetrafficminor" :
+            {
+                "routetraffictype" : 3,
+                "routetrafficcolor" : "FA7600"
+            },
+            "routetrafficmoderate" :
+            {
+                "routetraffictype" : 2,
+                "routetrafficcolor" : "F03402"
+            },
+            "routetrafficnone" :
+            {
+                "routetraffictype" : 4,
+                "routetrafficcolor" : "009B00"
+            }
+        },
+		"ccp" :
 		{
             "accuracyinnercirclecolor" : "0E93FA33",
             "accuracyoutercirclecolor" : "FFFFFF33",
@@ -8314,6 +8343,47 @@
 			"id" : "1008.18",
 			"type" : "building"
 		},
+     
+        {
+			"id" : "1038.16",
+			"istemplate" : true,
+			"line" : 
+			{
+				"fill" : 
+				{
+					"color" : "92867380",
+					"width" : 1.0
+				},
+				"outline" : 
+				{
+					"color" : "ffffff66",
+					"width" : 1.0
+				}
+			}
+		},
+		
+		{
+			"id" : "1038.17",
+			"line" : 
+			{
+				"fill" : 
+				{
+					"width" : 1.2
+				}
+			}
+		},
+		
+		{
+			"id" : "1038.18",
+			"line" : 
+			{
+				"fill" : 
+				{
+					"width" : 1.4
+				}
+			},
+			"type" : "fence"
+		},
 		
 		{
 			"category" : "administrative",
@@ -8608,52 +8678,10 @@
 			},
 			"type" : "sea"
 		},
-
-		{
-			"id" : "198.4",
-			"name" : [ "subway_entrance" ],
-			"point" : 
-			{
-				"fill" : 
-				{
-					"color" : "AAAAAA",
-					"size" : 6.0
-				},
-				"icon" : 
-				{
-					"spacing" : 0.0,
-					"texture" : 1126
-				}
-			},
-			"text" : 
-			{
-				"popup" : 
-				{
-					"color" : "5c5c5c",
-					"fontid" : [ 4, 4, 4, 1 ],
-					"fontid3d" : [ 7, 7, 7, 6 ],
-					"outlinecolor" : "f4f1ece4",
-					"texture" : 62
-				},
-				"title" : 
-				{
-					"color" : "221c15",
-					"fontid" : [ 4, 4, 1, 1 ],
-					"fontid3d" : [ 7, 7, 7, 6 ],
-					"outlinecolor" : "f4f1ece4"
-				}
-			}
-		},
-		
-		{
-			"id" : "198.18",
-			"type" : "city"
-		},
-
 		
 		{
 			"id" : "69.4",
-			"name" : [ "city2" ],
+			"name" : [ "city" ],
 			"point" : 
 			{
 				"fill" : 
@@ -8694,6 +8722,40 @@
 			}
 		},
 		
+		{
+			"id" : "69.8",
+			"text" : 
+			{
+				"title" : 
+				{
+					"fontspacing" : 10.0
+				}
+			}
+		},
+		
+		{
+			"id" : "69.14",
+			"text" : 
+			{
+				"title" : 
+				{
+					"fontspacing" : 20.0,
+					"fontuppercase" : true
+				}
+			}
+		},
+		
+		{
+			"id" : "69.15",
+			"text" : 
+			{
+				"title" : 
+				{
+					"fontid" : [ 6, 4, 1, 1 ],
+					"fontspacing" : 30.0
+				}
+			}
+		},
 		
 		{
 			"id" : "69.18",
@@ -13917,6 +13979,7 @@
 					"texture" : 1090
 				}
 			},
+			"priority" : 198,
 			"text" : 
 			{
 				"title" : 
@@ -16250,7 +16313,41 @@
 		{
 			"id" : "196.18"
 		},
-				
+		
+		{
+			"category" : "transport",
+			"categoryid" : 9,
+			"id" : "198.17",
+			"name" : [ "subway_entrance", "subway_station" ],
+			"point" : 
+			{
+				"fill" : 
+				{
+					"color" : "AAAAAA",
+					"size" : 6.0
+				},
+				"icon" : 
+				{
+					"spacing" : 0.0,
+					"texture" : 1126
+				}
+			},
+			"priority" : 10,
+			"text" : 
+			{
+				"title" : 
+				{
+					"color" : "221c1590",
+					"fontid" : [ 3, 3, 3, 3 ],
+					"outlinecolor" : "f4f1ece4"
+				}
+			}
+		},
+		
+		{
+			"id" : "198.18"
+		},
+		
 		{
 			"category" : "shopping",
 			"categoryid" : 7,
@@ -21098,7 +21195,7 @@
 			"attribute" : [ 0, 1, 10, 11, 12, 40, 41, 42, 43, 44 ],
 			"level" : 5,
 			"maxFC" : [ 2, 1, 1, 1 ],
-			"poi" : [198, 69, 193, 418, 382, 383, 82 ],
+			"poi" : [ 69, 193, 418, 382, 383, 82 ],
 			"road" : [ 9 ],
 			"shape" : [ 1016, 1015, 1031 ],
 			"worldtexture" : [ true, true, true, true ]
@@ -21109,7 +21206,7 @@
 			"attribute" : [ 0, 1, 2, 10, 11, 12, 20, 40, 41, 42, 43, 44 ],
 			"level" : 6,
 			"maxFC" : [ 2, 2, 2, 2 ],
-			"poi" : [198, 69, 211, 193, 418, 382, 383, 82, 416 ],
+			"poi" : [ 69, 211, 193, 418, 382, 383, 82, 416 ],
 			"road" : [ 9, 24, 13 ],
 			"shape" : [ 1016, 1015, 1031 ],
 			"worldtexture" : [ true, true, true, true ]
@@ -21120,7 +21217,7 @@
 			"attribute" : [ 0, 1, 2, 10, 11, 12, 20, 40, 41, 42, 43, 44 ],
 			"level" : 7,
 			"maxFC" : [ 3, 2, 2, 2 ],
-			"poi" : [198, 69, 211, 193, 418, 382, 383, 82, 416 ],
+			"poi" : [ 69, 211, 193, 418, 382, 383, 82, 416 ],
 			"road" : [ 9, 24, 13 ],
 			"shape" : [ 1016, 1015, 1031 ],
 			"worldtexture" : [ true, true, true, true ]
@@ -21131,7 +21228,7 @@
 			"attribute" : [ 0, 1, 2, 10, 11, 12, 20, 40, 41, 42, 43, 44 ],
 			"level" : 8,
 			"maxFC" : [ 3, 3, 2, 2 ],
-			"poi" : [198, 69, 211, 193, 418, 382, 383, 82, 416, 417 ],
+			"poi" : [ 69, 211, 193, 418, 382, 383, 82, 416, 417 ],
 			"road" : [ 9, 24, 13 ],
 			"shape" : [ 1016, 1015, 1031, 1030, 1029, 1026, 1013, 1003, 1021, 1002, 1012 ],
 			"worldtexture" : [ false, true, true, true ]
@@ -21142,7 +21239,7 @@
 			"attribute" : [ 0, 1, 2, 10, 11, 12, 20, 40, 41, 42, 43, 44 ],
 			"level" : 9,
 			"maxFC" : [ 3, 3, 2, 2 ],
-			"poi" : [198, 69, 211, 193, 418, 382, 383, 82, 416, 417 ],
+			"poi" : [ 69, 211, 193, 418, 382, 383, 82, 416, 417 ],
 			"road" : [ 9, 24, 5, 13, 17 ],
 			"shape" : 
 			[
@@ -21167,7 +21264,7 @@
 			"attribute" : [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 20, 40, 41, 42, 43, 44 ],
 			"level" : 10,
 			"maxFC" : [ 3, 3, 3, 2 ],
-			"poi" : [198, 69, 211, 223, 197, 193, 418, 382, 383, 82, 32, 416, 417 ],
+			"poi" : [ 69, 211, 223, 197, 193, 418, 382, 383, 82, 32, 416, 417 ],
 			"road" : [ 9, 10, 24, 25, 5, 13, 17 ],
 			"shape" : 
 			[
@@ -21195,7 +21292,7 @@
 			"attribute" : [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 20, 40, 41, 42, 43, 44 ],
 			"level" : 11,
 			"maxFC" : [ 4, 4, 3, 3 ],
-			"poi" : [198, 69, 211, 223, 197, 193, 418, 382, 383, 82, 32, 416, 417 ],
+			"poi" : [ 69, 211, 223, 197, 193, 418, 382, 383, 82, 32, 416, 417 ],
 			"road" : [ 9, 10, 24, 25, 5, 13, 14, 17, 18 ],
 			"shape" : 
 			[
@@ -21238,7 +21335,7 @@
 			"attribute" : [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 20, 40, 41, 42, 43, 44 ],
 			"level" : 12,
 			"maxFC" : [ 4, 4, 4, 4 ],
-			"poi" : [198, 69, 211, 223, 197, 32, 348, 97, 370, 382, 383, 416, 417 ],
+			"poi" : [ 69, 211, 223, 197, 32, 348, 97, 370, 382, 383, 416, 417 ],
 			"road" : [ 9, 10, 24, 25, 5, 13, 14, 17, 18, 21, 26, 15 ],
 			"shape" : 
 			[
@@ -21292,7 +21389,6 @@
 			"maxFC" : [ 4, 4, 4, 4 ],
 			"poi" : 
 			[
-				198,
 				69,
 				211,
 				223,
@@ -21383,7 +21479,6 @@
 			"maxFC" : [ 5, 5, 5, 5 ],
 			"poi" : 
 			[
-				198,
 				69,
 				211,
 				223,
@@ -21488,7 +21583,6 @@
 			"maxFC" : [ 5, 5, 5, 5 ],
 			"poi" : 
 			[
-				198,
 				69,
 				223,
 				197,
@@ -21608,7 +21702,6 @@
 			"maxFC" : [ 5, 5, 5, 5 ],
 			"poi" : 
 			[
-				198,
 				69,
 				223,
 				197,
@@ -21768,7 +21861,6 @@
 			"maxFC" : [ 5, 5, 5, 5 ],
 			"poi" : 
 			[
-				198,
 				32,
 				348,
 				325,
@@ -21968,6 +22060,7 @@
 				190,
 				195,
 				196,
+				198,
 				200,
 				201,
 				202,
@@ -22078,7 +22171,6 @@
 			"maxFC" : [ 5, 5, 5, 5 ],
 			"poi" : 
 			[
-				198,
 				32,
 				348,
 				325,
@@ -22278,6 +22370,7 @@
 				190,
 				195,
 				196,
+				198,
 				200,
 				201,
 				202,

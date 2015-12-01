@@ -58,7 +58,7 @@
 
 /** The type of the street.
  */
-@property(nonatomic, assign) int streetType;
+@property(nonatomic, assign) SKStreetType streetType;
 
 /** The code of the country.
  */
@@ -75,5 +75,9 @@
 /** The functional classification of a road is the class, or group, of roads that the road belongs to. Roads with functional class FunctionalClassification1 are the most important, fastest roads.(e.g. highways)
  */
 @property(nonatomic, assign) SKRoadFunctionalClass roadFunctionalClass;
+
+/** Provides information about the direction of the turn.
+ */
+@property(nonatomic, assign) SKStreetDirection streetDirection;
 
 @end

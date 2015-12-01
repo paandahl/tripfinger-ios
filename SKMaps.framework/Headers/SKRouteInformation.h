@@ -16,6 +16,10 @@
  */
 @property(nonatomic, assign) SKRouteID routeID;
 
+/** The route calculation mode.
+ */
+@property(nonatomic, assign) SKRouteMode routeMode;
+
 /** The distance of the calculated route, in meters.
  */
 @property(nonatomic, assign) int distance;

@@ -17,8 +17,11 @@
 		25243E641BC410F400EF5F64 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E631BC410F400EF5F64 /* Region.swift */; };
 		25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E651BC4110E00EF5F64 /* GuideItem.swift */; };
 		254091021C0C684100A2002F /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254091011C0C684100A2002F /* ErrorHandler.swift */; settings = {ASSET_TAGS = (); }; };
+		254091051C0D478100A2002F /* SKMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254091041C0D478100A2002F /* SKMaps.framework */; settings = {ASSET_TAGS = (); }; };
+		254091061C0D479B00A2002F /* SKMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254091041C0D478100A2002F /* SKMaps.framework */; };
+		254091071C0D479B00A2002F /* SKMaps.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 254091041C0D478100A2002F /* SKMaps.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		254091091C0D47C200A2002F /* SKMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 254091081C0D47C200A2002F /* SKMaps.bundle */; settings = {ASSET_TAGS = (); }; };
 		257922C71BA308A9005EA785 /* Attraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922C61BA308A9005EA785 /* Attraction.swift */; };
-		257922CE1BA34444005EA785 /* SKMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFF51B9CD90E00C516C1 /* SKMaps.bundle */; };
 		257922D21BA48697005EA785 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D11BA48697005EA785 /* SwiftyJSON.swift */; };
 		257922D41BA488EB005EA785 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D31BA488EB005EA785 /* DataManager.swift */; };
 		25B506871BB3F33900A36BA1 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 25B506861BB3F33900A36BA1 /* Podfile */; };
@@ -31,9 +34,6 @@
 		25C9DFD81B9CD84200C516C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFD71B9CD84200C516C1 /* Images.xcassets */; };
 		25C9DFDB1B9CD84200C516C1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFD91B9CD84200C516C1 /* LaunchScreen.xib */; };
 		25C9DFE71B9CD84200C516C1 /* TripfingerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C9DFE61B9CD84200C516C1 /* TripfingerTests.swift */; };
-		25C9DFF11B9CD8B300C516C1 /* SKMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFF01B9CD8B300C516C1 /* SKMaps.framework */; };
-		25C9DFF31B9CD8DC00C516C1 /* SKMaps.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFF01B9CD8B300C516C1 /* SKMaps.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		25C9DFF61B9CD90E00C516C1 /* SKMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFF51B9CD90E00C516C1 /* SKMaps.bundle */; };
 		25C9DFF81B9CD97000C516C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFF71B9CD97000C516C1 /* UIKit.framework */; };
 		25C9DFFA1B9CD98000C516C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFF91B9CD98000C516C1 /* Foundation.framework */; };
 		25C9DFFC1B9CD98D00C516C1 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFFB1B9CD98D00C516C1 /* CoreLocation.framework */; };
@@ -72,7 +72,6 @@
 		25D707D31BCA7620005A4BBA /* UINib+RegisterNib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707D21BCA7620005A4BBA /* UINib+RegisterNib.swift */; };
 		25D707D51BCA7848005A4BBA /* UIView+AddConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */; };
 		25F048E21BCC365C002DE14E /* ContentServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F048E11BCC365C002DE14E /* ContentServiceTest.swift */; };
-		25F048E51BCC3B3B002DE14E /* SKMaps.framework in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFF01B9CD8B300C516C1 /* SKMaps.framework */; };
 		25F048E71BCC4B7E002DE14E /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F048E61BCC4B7E002DE14E /* LoadingCell.xib */; };
 		F15403DC29A8017C1BA97FA3 /* Pods_Tripfinger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D65EBCD3D5BCD8F85D4EA0F /* Pods_Tripfinger.framework */; };
 /* End PBXBuildFile section */
@@ -94,7 +93,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				25C9DFF31B9CD8DC00C516C1 /* SKMaps.framework in Embed Frameworks */,
+				254091071C0D479B00A2002F /* SKMaps.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -112,6 +111,8 @@
 		25243E631BC410F400EF5F64 /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		25243E651BC4110E00EF5F64 /* GuideItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItem.swift; sourceTree = "<group>"; };
 		254091011C0C684100A2002F /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
+		254091041C0D478100A2002F /* SKMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SKMaps.framework; sourceTree = "<group>"; };
+		254091081C0D47C200A2002F /* SKMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SKMaps.bundle; sourceTree = "<group>"; };
 		257922C61BA308A9005EA785 /* Attraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attraction.swift; sourceTree = "<group>"; };
 		257922D11BA48697005EA785 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Tripfinger/SwiftyJSON.swift; sourceTree = "<group>"; };
 		257922D31BA488EB005EA785 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -130,8 +131,6 @@
 		25C9DFE01B9CD84200C516C1 /* TripfingerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripfingerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C9DFE51B9CD84200C516C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25C9DFE61B9CD84200C516C1 /* TripfingerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripfingerTests.swift; sourceTree = "<group>"; };
-		25C9DFF01B9CD8B300C516C1 /* SKMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SKMaps.framework; sourceTree = "<group>"; };
-		25C9DFF51B9CD90E00C516C1 /* SKMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SKMaps.bundle; sourceTree = "<group>"; };
 		25C9DFF71B9CD97000C516C1 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		25C9DFF91B9CD98000C516C1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		25C9DFFB1B9CD98D00C516C1 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -187,14 +186,15 @@
 				25C9E0081B9CD9E000C516C1 /* libc++.dylib in Frameworks */,
 				25C9E0061B9CD9D100C516C1 /* libz.dylib in Frameworks */,
 				25C9E0041B9CD9BE00C516C1 /* CoreMotion.framework in Frameworks */,
+				254091051C0D478100A2002F /* SKMaps.framework in Frameworks */,
 				25C9E0021B9CD9B500C516C1 /* CoreGraphics.framework in Frameworks */,
 				25C9E0001B9CD9A800C516C1 /* QuartzCore.framework in Frameworks */,
 				25C9DFFE1B9CD99E00C516C1 /* OpenGLES.framework in Frameworks */,
 				25C9DFFC1B9CD98D00C516C1 /* CoreLocation.framework in Frameworks */,
 				25C9DFFA1B9CD98000C516C1 /* Foundation.framework in Frameworks */,
 				25C9DFF81B9CD97000C516C1 /* UIKit.framework in Frameworks */,
-				25C9DFF11B9CD8B300C516C1 /* SKMaps.framework in Frameworks */,
 				F15403DC29A8017C1BA97FA3 /* Pods_Tripfinger.framework in Frameworks */,
+				254091061C0D479B00A2002F /* SKMaps.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,7 +239,6 @@
 		257922CD1BA34429005EA785 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				25C9DFF51B9CD90E00C516C1 /* SKMaps.bundle */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -247,18 +246,19 @@
 		25A940AE1BA1AF7B0077C2E5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				257922D11BA48697005EA785 /* SwiftyJSON.swift */,
-				25C9DFF01B9CD8B300C516C1 /* SKMaps.framework */,
+				25C9E0011B9CD9B500C516C1 /* CoreGraphics.framework */,
+				25C9DFFB1B9CD98D00C516C1 /* CoreLocation.framework */,
+				25C9E0031B9CD9BE00C516C1 /* CoreMotion.framework */,
+				25C9DFF91B9CD98000C516C1 /* Foundation.framework */,
 				25C9E0071B9CD9E000C516C1 /* libc++.dylib */,
 				25C9E0051B9CD9D100C516C1 /* libz.dylib */,
-				25C9E0031B9CD9BE00C516C1 /* CoreMotion.framework */,
-				25C9E0011B9CD9B500C516C1 /* CoreGraphics.framework */,
-				25C9DFFF1B9CD9A800C516C1 /* QuartzCore.framework */,
 				25C9DFFD1B9CD99E00C516C1 /* OpenGLES.framework */,
-				25C9DFFB1B9CD98D00C516C1 /* CoreLocation.framework */,
-				25C9DFF91B9CD98000C516C1 /* Foundation.framework */,
-				25C9DFF71B9CD97000C516C1 /* UIKit.framework */,
 				6D65EBCD3D5BCD8F85D4EA0F /* Pods_Tripfinger.framework */,
+				25C9DFFF1B9CD9A800C516C1 /* QuartzCore.framework */,
+				254091081C0D47C200A2002F /* SKMaps.bundle */,
+				254091041C0D478100A2002F /* SKMaps.framework */,
+				257922D11BA48697005EA785 /* SwiftyJSON.swift */,
+				25C9DFF71B9CD97000C516C1 /* UIKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -503,8 +503,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				254091091C0D47C200A2002F /* SKMaps.bundle in Resources */,
 				25B506871BB3F33900A36BA1 /* Podfile in Resources */,
-				25C9DFF61B9CD90E00C516C1 /* SKMaps.bundle in Resources */,
 				25C9DFD61B9CD84200C516C1 /* Main.storyboard in Resources */,
 				2503D3AE1BE1330E0078C0F0 /* FilterBox.xib in Resources */,
 				25C9DFDB1B9CD84200C516C1 /* LaunchScreen.xib in Resources */,
@@ -520,8 +520,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				25F048E51BCC3B3B002DE14E /* SKMaps.framework in Resources */,
-				257922CE1BA34444005EA785 /* SKMaps.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -686,6 +684,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -731,6 +730,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -760,6 +760,23 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				INFOPLIST_FILE = Tripfinger/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-iquote",
+					"\"$CONFIGURATION_BUILD_DIR/Alamofire.framework/Headers\"",
+					"-iquote",
+					"\"$CONFIGURATION_BUILD_DIR/MDCSwipeToChoose.framework/Headers\"",
+					"-iquote",
+					"\"$CONFIGURATION_BUILD_DIR/Realm.framework/Headers\"",
+					"-iquote",
+					"\"$CONFIGURATION_BUILD_DIR/RealmSwift.framework/Headers\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"-iquote",
+					"\"$CONFIGURATION_BUILD_DIR/SKMaps.framework/Headers\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/ScoutMaps-iOS-SDK\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",
@@ -783,6 +800,23 @@
 				);
 				INFOPLIST_FILE = Tripfinger/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = (
+					"$(inherited)",
+					"-iquote",
+					"\"$CONFIGURATION_BUILD_DIR/Alamofire.framework/Headers\"",
+					"-iquote",
+					"\"$CONFIGURATION_BUILD_DIR/MDCSwipeToChoose.framework/Headers\"",
+					"-iquote",
+					"\"$CONFIGURATION_BUILD_DIR/Realm.framework/Headers\"",
+					"-iquote",
+					"\"$CONFIGURATION_BUILD_DIR/RealmSwift.framework/Headers\"",
+					"-iquote",
+					"\"$CONFIGURATION_BUILD_DIR/SKMaps.framework/Headers\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"-isystem",
+					"\"${PODS_ROOT}/Headers/Public/ScoutMaps-iOS-SDK\"",
+				);
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"$(inherited)",

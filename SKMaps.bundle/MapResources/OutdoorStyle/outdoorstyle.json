@@ -2645,22 +2645,22 @@
             "routetrafficmajor" :
             {
                 "routetraffictype" : 1,
-                "routetrafficcolor" : "AAAAAA"
+                "routetrafficcolor" : "C50000"
             },
             "routetrafficminor" :
             {
                 "routetraffictype" : 3,
-                "routetrafficcolor" : "BBBBBB"
+                "routetrafficcolor" : "f26d02"
             },
             "routetrafficmoderate" :
             {
                 "routetraffictype" : 2,
-                "routetrafficcolor" : "CCCCCC"
+                "routetrafficcolor" : "F03402"
             },
             "routetrafficnone" :
             {
                 "routetraffictype" : 4,
-                "routetrafficcolor" : "DDDDDD"
+                "routetrafficcolor" : "086357"
             }
         },
 		"ccp" : 

@@ -194,6 +194,7 @@ typedef NS_ENUM (NSInteger, SKRouteMode)
     SKRouteBicycleFastest = 4,
     SKRouteBicycleShortest = 5,
     SKRouteBicycleQuietest = 6,
+    SKRouteBusFastest = 7
 };
 
 typedef  NS_ENUM (NSInteger, SKStreetType)
@@ -339,7 +340,12 @@ typedef NS_ENUM (NSInteger, SKAdvisorLanguage)
     SKAdvisorLanguageRO,
     SKAdvisorLanguageRU,
     SKAdvisorLanguageSV,
-    SKAdvisorLanguageTR
+    SKAdvisorLanguageTR,
+    SKAdvisorLanguageCH_CAN, //Chinese Cantonese
+    SKAdvisorLanguageKOR, //Korean
+    SKAdvisorLanguageES_SA, //Spanish South America
+    SKAdvisorLanguageFR_CAN, //French Canadian
+    SKAdvisorLanguageJAP //Japanese
 };
 
 typedef NS_ENUM(NSInteger, SKRoadFunctionalClass) {
@@ -353,6 +359,22 @@ typedef NS_ENUM(NSInteger, SKDestinationSide) {
     SKDestinationSideUnknown = -1,
     SKDestinationSideLeft = 0,
     SKDestinationSideRight = 1,
+};
+
+typedef NS_ENUM(NSInteger, SKStreetDirection) {
+    SKStreetDirectionInvalid = -1,      // invalid direction
+    SKStreetDirectionStraightAhead = 0, // direction straight ahead
+    SKStreetDirectionSlightRight,       // slight right
+    SKStreetDirectionSlightLeft,        // slight left
+    SKStreetDirectionLeft,              // direction is left
+    SKStreetDirectionRight,             // direction is right
+    SKStreetDirectionHardRight,         // direction is sharp right
+    SKStreetDirectionHardLeft,          // direction is shart left
+    SKStreetDirectionUTurn,             //  u-turn
+    SKStreetDirectionTStreet,           // the street is close to T-street
+    SKStreetDirectionBifurcation,       // bifurcation interval
+    SKStreetDirectionIgnoreAngle,       // this contain the max angle that can be ignored in a junction and not to say the advice
+    SKStreetDirectionRoundabout,        // Roundabout
 };
 
 typedef struct {

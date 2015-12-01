@@ -22,10 +22,6 @@
  */
 @property(nonatomic, assign) float radius;
 
-/** The border color of the circle. Set to nil for no border.
- */
-@property(nonatomic, strong) UIColor *strokeColor;
-
 /** The width of the border. Should be a value in [ 1, 10 ] interval.
  */
 @property(nonatomic, assign) int borderWidth;

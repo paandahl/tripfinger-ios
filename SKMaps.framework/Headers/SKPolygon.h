@@ -18,10 +18,6 @@
  */
 @property(nonatomic, strong) NSArray *coordinates;
 
-/** The border color of the polygon. Set to nil for no border.
- */
-@property(nonatomic, strong) UIColor *strokeColor;
-
 /** The width of the border. Should be a value in [ 1, 10 ] interval.
  */
 @property(nonatomic, assign) int borderWidth;

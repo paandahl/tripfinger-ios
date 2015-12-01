@@ -23,7 +23,7 @@
 @property(nonatomic, assign) SKTransportMode transportMode;
 
 /** Used for changing the position of the car position icon on the vertical and horizontal axis. It is a scale which indicates the distance between the icon and the center of the screen (in [ -0.5, 0.5 ] interval).
- The default value is -0.25.
+ The default value is (0, -0.25).
  */
 @property(nonatomic, assign) SKPositionerAlignment positionerAlignment;
 
@@ -52,6 +52,12 @@
 /** The viapoint notification distance. The routingService:didEnterViaPointArea: and routingService:didExitViaPointArea: are called from the SKNavigationDelegate based in this given distance. The default value is 200 meters.
  */
 @property(nonatomic, assign) int viaPointNotificationDistance;
+
+/** Shows/hides the street name pop ups along the route.
+ */
+@property(nonatomic, assign) BOOL showStreetNamePopUpsOnRoute;
+
+
 #pragma mark - Factory method
 
 /** A newly initialized SKNavigationSettings.

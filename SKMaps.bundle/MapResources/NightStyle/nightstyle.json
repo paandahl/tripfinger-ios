@@ -2652,27 +2652,27 @@
             "routetrafficblocked" :
             {
                 "routetraffictype" : 0,
-                "routetrafficcolor" : "000000"
+                "routetrafficcolor" : "a50a01"
             },
             "routetrafficmajor" :
             {
                 "routetraffictype" : 1,
-                "routetrafficcolor" : "AAAAAA"
+                "routetrafficcolor" : "d53c18"
             },
             "routetrafficminor" :
             {
                 "routetraffictype" : 3,
-                "routetrafficcolor" : "BBBBBB"
+                "routetrafficcolor" : "fca033"
             },
             "routetrafficmoderate" :
             {
                 "routetraffictype" : 2,
-                "routetrafficcolor" : "CCCCCC"
+                "routetrafficcolor" : "fc5933"
             },
             "routetrafficnone" :
             {
                 "routetraffictype" : 4,
-                "routetrafficcolor" : "DDDDDD"
+                "routetrafficcolor" : "42933a"
             }
         },
 		"ccp" : 

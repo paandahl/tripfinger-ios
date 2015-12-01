@@ -149,6 +149,7 @@
  */
 @property(nonatomic, assign) BOOL showMapPoiIcons DEPRECATED_ATTRIBUTE;
 
+
 #pragma mark - Factory method
 
 /** A newly initialized SKMapSettings.

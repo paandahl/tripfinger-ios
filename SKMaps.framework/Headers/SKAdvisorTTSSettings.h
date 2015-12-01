@@ -11,7 +11,7 @@
  */
 @interface SKAdvisorTTSSettings : NSObject
 
-/** Speed rate of TTS.
+/** Speed rate of TTS. For iOS 9 (using Xcode 6.4), use lower values for the rate.
  */
 @property(nonatomic, assign) float rate;
 

@@ -55,8 +55,9 @@
 
 /** Zooms the map to the current calculated route.
  @param insets Contains information about the zooming insets for the route overview.
+ @param duration The duration of the animation in miliseconds. No animation will be performed if the value of this parameter is 0.
  */
-- (void)zoomToRouteWithInsets:(UIEdgeInsets)insets;
+- (void)zoomToRouteWithInsets:(UIEdgeInsets)insets duration:(int)duration;
 
 /** Clears the current routes, including alternatives.
  */
@@ -140,7 +141,7 @@
 
 #pragma mark - Route caching
 
-/** Saves the route with a given identifier to the cache. Later this route can be reused without the need to recalculate it.
+/** Saves the route with a given identifier to the cache. Later this route can be reused without the need to recalculate it. Closing the app will delete the route from the cache, so in the next app start it can't be reused.
  @param routeId The identifier of the route from the returned SKRouteInformation.
  @return Success/Failure of caching a route.
  */

@@ -20,6 +20,10 @@
  */
 @property(nonatomic, strong) UIColor *fillColor;
 
+/** The border color of the polygon. Set to nil for no border.
+ */
+@property(nonatomic, strong) UIColor *strokeColor;
+
 /** The number of pixels of a dotted line. Set to 0 for solid boder.
  */
 @property(nonatomic, assign) int borderDotsSize;
