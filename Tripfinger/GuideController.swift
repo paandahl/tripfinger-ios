@@ -25,6 +25,28 @@ class GuideController: UITableViewController, SubController {
   
   var countryList = [Region]()
   var currentItem: GuideItem?
+  var currentCountryId: String? {
+    if itemStack.count == 0 {
+      return nil
+    }
+    else if itemStack.count == 1 {
+      return session.currentRegion!.getId()
+    }
+    else {
+      return itemStack[1].getId()
+    }
+  }
+  var currentCountryName: String? {
+    if itemStack.count == 0 {
+      return nil
+    }
+    else if itemStack.count == 1 {
+      return session.currentRegion!.getName()
+    }
+    else {
+      return itemStack[1].getName()
+    }
+  }
   var currentRegion: Region?
   var currentSection: GuideText?
   var guideSections = List<GuideText>()
@@ -155,8 +177,14 @@ class GuideController: UITableViewController, SubController {
       titleLabel.text = "Countries"
     }
     else {
-      backButton.hidden = false
       downloadButton.hidden = false
+      backButton.hidden = false
+      if DownloadService.isRegionDownloaded(session.currentRegion!.getId(), countryId: currentCountryId!) {
+        downloadButton.setTitle("Downloaded", forState: .Normal)
+      }
+      else {
+        downloadButton.setTitle("Download", forState: .Normal)
+      }
       let stackElement = itemStack.last!
       backButton.setTitle("< \(stackElement.getName())", forState: UIControlState.Normal)
       backButton.sizeToFit()
@@ -167,8 +195,12 @@ class GuideController: UITableViewController, SubController {
   func openDownloadCity(sender: UIButton) {
     let nav = UINavigationController()
     let vc = DownloadController()
+    vc.countryName = currentCountryName
+    vc.countryId = currentCountryId
+    vc.regionName = session.currentRegion!.getName()
+    vc.regionId = session.currentRegion!.getId()
     nav.viewControllers = [vc]
-    presentViewController(nav, animated: true, completion: nil)
+    view.window!.rootViewController!.presentViewController(nav, animated: true, completion: nil)
   }
   
   func loadCountryList() {

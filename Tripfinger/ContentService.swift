@@ -274,13 +274,22 @@ class ContentService {
     }
     return region
   }
-  
+
+  class func parseRegionTreesFromJson(jsonArray: JSON) -> [Region] {
+    var regions = [Region]()
+    for json in jsonArray.array! {
+      regions.append(parseRegionTreeFromJson(json))
+    }
+    return regions
+  }
+
   class func parseRegionTreeFromJson(json: JSON) -> Region {
     let region = Region()
     region.listing = GuideListing()
     region.listing.item = parseGuideItem(json)
     region.listing.item.guideSections = parseSectionTreeFromJson(json["sectionTree"])
     region.attractions.appendContentsOf(parseAttractions(json["attractions"]))
+    region.listing.item.subRegions.appendContentsOf(parseRegionTreesFromJson(json["subRegionTree"]))
     return region
   }
   

@@ -19,4 +19,22 @@ extension NSURL {
     }
     return folderPath
   }
+  
+  class func appendToDirectory(baseDir: NSURL, pathElement: String) -> NSURL {
+    let folderPath = baseDir.URLByAppendingPathComponent(pathElement)
+    do {
+      try NSFileManager.defaultManager().createDirectoryAtPath(folderPath.path!, withIntermediateDirectories: true, attributes: nil)
+    } catch let error as NSError {
+      NSLog("Unable to create directory \(error.debugDescription)")
+    }
+    return folderPath
+  }
+  
+  class func deleteFolder(path: NSURL) {
+    do {
+      try NSFileManager.defaultManager().removeItemAtURL(path)
+    } catch let error as NSError {
+      NSLog("Unable to delete directory \(error.debugDescription)")
+    }
+  }
 }

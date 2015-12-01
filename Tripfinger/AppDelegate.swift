@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  Tripfinger
-//
-//  Created by Preben Ludviksen on 06/09/15.
-//  Copyright (c) 2015 Preben Ludviksen. All rights reserved.
-//
-
 import UIKit
 import SKMaps
 
@@ -26,49 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     
     let apiKey = "0511a5e338b00db8b426fb8ec0a7fb2ebd6816bb9324425d4edd9b726e40a3d5"
     let initSettings: SKMapsInitSettings = SKMapsInitSettings()
-    initSettings.connectivityMode = SKConnectivityMode.Offline
+    initSettings.connectivityMode = SKConnectivityMode.Online
     SKMapsService.sharedInstance().initializeSKMapsWithAPIKey(apiKey, settings: initSettings)
     SKMapsService.sharedInstance().mapsVersioningManager.delegate = self
     
     let navigationController = self.window!.rootViewController as! UINavigationController
     let rootController = navigationController.viewControllers[0] as! RootController
     rootController.session = session
-    
-    //        DataManager.getAttractionDateFromFileWithSuccess { (data) -> Void in
-    //
-    //            var attractions = [Attraction]()
-    //            let json = JSON(data: data)
-    //            if let attractionsJSON = json["attractions"].array {
-    //                for attractionJSON in attractionsJSON {
-    //                    if let title = attractionJSON["title"].string {
-    //                        if let coordinateX = attractionJSON["coordinateX"].double {
-    //                            if let coordinateY = attractionJSON["coordinateY"].double {
-    //                                var attraction = Attraction(title: title, coordinateX: coordinateX, coordinateY: coordinateY)
-    //                                if let image = attractionJSON["image"].string {
-    //                                    attraction.image = UIImage(named: image)
-    //                                }
-    //                                attractions.append(attraction)
-    //                            }
-    //                        }
-    //                    }
-    //                }
-    //            }
-    //
-    //            let tabBarController = self.window!.rootViewController as! UITabBarController
-    //
-    //            if let tabBarViewControllers = tabBarController.viewControllers {
-    //
-    //                var navigationController = tabBarViewControllers[2] as! UINavigationController
-    //                let mapController = navigationController.viewControllers[0] as! MapDisplayViewController
-    //                let forceTheViewToLoad = mapController.view
-    //                mapController.attractions = attractions
-    //                mapController.addAnnotations()
-    //
-    //                navigationController = tabBarViewControllers[1] as! UINavigationController
-    //                let swipeController = navigationController.viewControllers[0] as! SwipeController
-    //                swipeController.attractions = attractions
-    //            }
-    //        }
     
     return true
   }

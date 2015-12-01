@@ -4,57 +4,152 @@ import RealmSwift
 
 class DownloadService {
   
-  static let tripfingerUrl = "http://tripfinger-server.appspot.com"
+  static let tripfingerUrl = "http://server.tripfinger.com"
   static let gcsMapsUrl = "https://storage.googleapis.com/tripfinger-maps/"
   static let gcsImagesUrl = "https://storage.googleapis.com/tripfinger-maps/"
   
-  class func downloadCity(countryId: String, cityId: String, progressHandler: Float -> ()) {
+  class func isRegionDownloaded(regionId: String, countryId: String? = nil) -> Bool {
+    
+    if hasMapPackage(regionId) {
+      return true
+    }
+    else if let countryId = countryId {
+      return hasMapPackage(countryId)
+    }
+    else {
+      return false
+    }
+  }
+  
+  class func hasMapPackage(packageId: String) -> Bool {
+    let mapPackages = SKMapsService.sharedInstance().packagesManager.installedOfflineMapPackages as! [SKMapPackage]
+    for mapPackage in mapPackages {
+      if mapPackage.name == packageId {
+        return true
+      }
+    }
+    return false
+  }
+  
+  class func deleteRegion(regionId: String, countryId: String) {
+    deleteTripfingerDataForRegion(regionId, countryId: countryId)
+    deleteMapForRegion(regionId)
+    OfflineService.deleteRegionWithId(regionId)
+  }
+  
+  class func deleteTripfingerDataForRegion(regionId: String, countryId: String) {
+    let path = NSURL.getDirectory(.LibraryDirectory, withPath: countryId)
+    if regionId != countryId {
+      path.URLByAppendingPathComponent(regionId)
+    }
+    NSURL.deleteFolder(path)
+    
+  }
+  
+  class func deleteMapForRegion(regionId: String) {
+    SKMapsService.sharedInstance().packagesManager.deleteOfflineMapPackageNamed(regionId)
+  }
+  
+  class func downloadCountry(countryId: String, progressHandler: Float -> (), finishedHandler: () -> ()) {
     
     let countryPath = NSURL.getDirectory(.LibraryDirectory, withPath: countryId)
-    let cityPath = NSURL.getDirectory(.LibraryDirectory, withPath: countryId + "/" + cityId)
+    var finished = false
+    try! downloadMapForRegion(countryId, regionPath: countryPath, progressHandler: progressHandler) {
+      if finished {
+        finishedHandler()
+      }
+      else {
+        finished = true
+      }
+    }
+    downloadTripfingerData(tripfingerUrl + "/download_country/\(countryId)", path: countryPath) {
+      if finished {
+        finishedHandler()
+      }
+      else {
+        finished = true
+      }
+    }
+  }
+  
+  class func downloadCity(countryId: String, cityId: String, progressHandler: Float -> (), finishedHandler: () -> ()) {
     
-    var url = gcsMapsUrl + "BE.skm"
-    var fileName = countryId + ".skm"
-    var destinationPath = countryPath.URLByAppendingPathComponent(fileName)
-    downloadFile(url, destinationPath: destinationPath, progressHandler: progressHandler)
+    let countryPath = NSURL.getDirectory(.LibraryDirectory, withPath: countryId)
+    var finished = false
+    let cityPath = countryPath.URLByAppendingPathComponent(cityId)
+    try! downloadMapForRegion(cityId, regionPath: cityPath, progressHandler: progressHandler) {
+      if finished {
+        finishedHandler()
+      }
+      else {
+        finished = true
+      }
+    }
+    downloadTripfingerData(tripfingerUrl + "/download_city/\(cityId)", path: cityPath) {
+      if finished {
+        finishedHandler()
+      }
+      else {
+        finished = true
+      }
+    }
+  }
+  
+  class func downloadMapForRegion(regionId: String, regionPath: NSURL, progressHandler: Float -> (), finishedHandler: () -> ()) throws {
+    if hasMapPackage(regionId) {
+      throw Error.RuntimeError("Map for \(regionId) is already installed.")
+    }
+    var fileName = regionId + ".skm"
+    var url = gcsMapsUrl + fileName
+    var destinationPath = regionPath.URLByAppendingPathComponent(fileName)
+    downloadFile(url, destinationPath: destinationPath, progressHandler: progressHandler) {
+      SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed(regionId, inContainingFolderPath: regionPath.path!)
+      finishedHandler()
+    }
     
-    url = gcsMapsUrl + "BE.ngi"
-    fileName = countryId + ".ngi"
-    destinationPath = countryPath.URLByAppendingPathComponent(fileName)
-    downloadFile(url, destinationPath: destinationPath, progressHandler: nil)
+    fileName = regionId + ".ngi"
+    url = gcsMapsUrl + fileName
+    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
+    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
     
-    url = gcsMapsUrl + "BE.ngi.dat"
-    fileName = countryId + ".ngi.dat"
-    destinationPath = countryPath.URLByAppendingPathComponent(fileName)
-    downloadFile(url, destinationPath: destinationPath, progressHandler: nil)
+    fileName = regionId + ".ngi.dat"
+    url = gcsMapsUrl + fileName
+    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
+    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
     
-    url = gcsMapsUrl + "BE.txg"
-    fileName = countryId + ".txg"
-    destinationPath = countryPath.URLByAppendingPathComponent(fileName)
-    downloadFile(url, destinationPath: destinationPath, progressHandler: nil)
-    
-    Alamofire.request(.GET, tripfingerUrl + "/download_city/\(cityId)")
+    fileName = regionId + ".txg"
+    url = gcsMapsUrl + fileName
+    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
+    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
+  }
+  
+  class func downloadTripfingerData(url: String, path: NSURL, finishedHandler: () -> ()) {
+    Alamofire.request(.GET, url)
       .responseData { response in
         if response.result.isSuccess {
           
           let json = JSON(data: response.data!)
           let region = ContentService.parseRegionTreeFromJson(json)
-          var imageList = getImageList(region.listing.item)
-          imageList.appendContentsOf(getImageList(region))
-          downloadImages(imageList, cityPath: cityPath)
           
-          // Get the default Realm
-          let realm = try! Realm()
-          // You only need to do this once (per thread)
+          fetchImages(region, path: path)
+
+          try! OfflineService.saveRegion(region)
           
-          // Add to the Realm inside a transaction
-          try! realm.write {
-            realm.add(region)
-          }
+          finishedHandler()
         }
         else {
           print("ERROR: Downloading city JSON failed")
         }
+    }
+  }
+  
+  class func fetchImages(region: Region, path: NSURL) {
+    var imageList = getImageList(region.listing.item)
+    imageList.appendContentsOf(getImageList(region))
+    downloadImages(imageList, path: path)
+    for subRegion in region.listing.item.subRegions {
+      let subPath = NSURL.appendToDirectory(path, pathElement: region.getId())
+      fetchImages(subRegion, path: subPath)
     }
   }
   
@@ -79,14 +174,15 @@ class DownloadService {
     return imageList
   }
   
-  class func downloadImages(imageList: [GuideItemImage], cityPath: NSURL) {
+  class func downloadImages(imageList: [GuideItemImage], path: NSURL) {
     for image in imageList {
-      Alamofire.request(.GET, image.url)
+      let nsUrl = NSURL(string: image.url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
+      Alamofire.request(.GET, nsUrl)
         .responseData { response in
           let index: String.Index = gcsImagesUrl.startIndex.advancedBy(gcsImagesUrl.characters.count)
           let fileName = image.url.substringFromIndex(index)
+          let destinationPath = path.URLByAppendingPathComponent(fileName)
           print("Writing image to file: \(fileName)")
-          let destinationPath = cityPath.URLByAppendingPathComponent(fileName)
           if response.result.isSuccess {
             let result = response.data?.writeToURL(destinationPath, atomically: true)
             if !result! {
@@ -94,14 +190,15 @@ class DownloadService {
             }
           }
           else {
-            print("ERROR: Downloading image failed")
+            print("ERROR: Downloading image failed: \(fileName)")
+            print("response: \(response.response?.statusCode)")
           }
       }
       
     }
   }
     
-  class func downloadFile(url: String, destinationPath: NSURL, progressHandler: (Float -> ())?) {
+  class func downloadFile(url: String, destinationPath: NSURL, progressHandler: (Float -> ())?, finishedHandler: (() -> ())?) {
     Alamofire.request(.GET, url)
       .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
         
@@ -120,6 +217,9 @@ class DownloadService {
           let result = response.data?.writeToURL(destinationPath, atomically: true)
           if !result! {
             print("ERROR: Writing file failed")
+          }
+          if let finishedHandler = finishedHandler {
+            finishedHandler()            
           }
         }
         else {

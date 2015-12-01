@@ -134,17 +134,5 @@ extension RootController: GuideControllerDelegate {
   func navigateInternally() {
     
     navigateToSubview("guideController", controllerType: GuideController.self)
-//    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//    let vc = storyboard.instantiateViewControllerWithIdentifier("rootController") as? RootController
-//    vc!.session = session
-    
-//    vc.currentRegion = currentRegion
-//    vc.currentSection = currentCategoryDescriptions[indexPath.row + 2]
-//    vc.guideItemExpanded = true
-//    vc.delegate = delegate
-//    navigationController?.pushViewController(vc!, animated: true)
-//
-//    
-//    navigationItem.leftBarButtonItem
   }
 }
