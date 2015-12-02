@@ -4,6 +4,26 @@ import XCTest
 
 class SearchServiceTest: XCTestCase {
   
+  static let mapPackage = "test-belgium"
+  
+  override class func setUp() {
+    if DownloadService.hasMapPackage(mapPackage) {
+      SKMapsService.sharedInstance().packagesManager.deleteOfflineMapPackageNamed(mapPackage)
+    }
+    var mapPath: String!
+    for bundle in NSBundle.allBundles() {
+      if bundle.bundleIdentifier == "no.prebenludviksen.TripfingerTests" {
+        mapPath = bundle.bundlePath
+      }
+    }
+    
+    SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed(SearchServiceTest.mapPackage, inContainingFolderPath: mapPath)
+  }
+  
+  override class func tearDown() {
+    SKMapsService.sharedInstance().packagesManager.deleteOfflineMapPackageNamed(SearchServiceTest.mapPackage)
+  }
+  
   override func setUp() {
     super.setUp()
     continueAfterFailure = false
@@ -11,13 +31,13 @@ class SearchServiceTest: XCTestCase {
   
   override func tearDown() {
     super.tearDown()
-  }
+}
   
   func testGetCities() {
     let readyExpectation = expectationWithDescription("ready")
     
     let searchService = SearchService()
-    searchService.getCities() {
+    searchService.getCities(SearchServiceTest.mapPackage) {
       searchResults in
       
       print("Found \(searchResults.count) cities.")
@@ -35,7 +55,7 @@ class SearchServiceTest: XCTestCase {
     
     let searchService = SearchService()
     var fulfilled = false
-    searchService.search("altitude", gradual: true) {
+    searchService.search("altitude", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage, gradual: true) {
       searchResults in
       
       for searchResult in searchResults {
@@ -61,7 +81,7 @@ class SearchServiceTest: XCTestCase {
     var readyExpectation = expectationWithDescription("ready")
     
     let searchService = SearchService()
-    searchService.search("boulevard dixmude") {
+    searchService.search("boulevard dixmude", regionId: SearchServiceTest.mapPackage) {
       searchResults in
       
       XCTAssertEqual(1, searchResults.count)
@@ -79,7 +99,7 @@ class SearchServiceTest: XCTestCase {
     
     readyExpectation = expectationWithDescription("ready")
     
-    searchService.search("boulevard de dixmude") {
+    searchService.search("boulevard de dixmude", regionId: SearchServiceTest.mapPackage) {
       searchResults in
       
       XCTAssertEqual(1, searchResults.count)
@@ -97,7 +117,7 @@ class SearchServiceTest: XCTestCase {
     let readyExpectation = expectationWithDescription("ready")
     
     let searchService = SearchService()
-    searchService.search("di") {
+    searchService.search("di", regionId: SearchServiceTest.mapPackage) {
       searchResults in
       
       XCTAssert(searchResults.count <= searchService.maxResults, "Too many search results")

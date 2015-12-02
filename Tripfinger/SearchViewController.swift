@@ -6,6 +6,9 @@ protocol SearchViewControllerDelegate: class {
 
 class SearchViewController: UITableViewController {
   
+  var regionId: String!
+  var countryId: String!
+  
   var delegate: SearchViewControllerDelegate?
   var searchService: SearchService!
   var searchController: UISearchController!
@@ -49,7 +52,7 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
       searchText = newSearchText
       searchService.cancelSearch()
       
-      searchService.search(searchText, gradual: true) {
+      searchService.search(searchText, regionId: regionId, countryId: countryId, gradual: true) {
         searchResults in
         
         self.searchResults = searchResults

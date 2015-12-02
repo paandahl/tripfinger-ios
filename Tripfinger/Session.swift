@@ -6,6 +6,7 @@ class Session {
   init() {}
 
   var currentItemId: String!
+  var currentCountry: Region?
   var currentRegion: Region?
   var currentSection: GuideText?
   var currentCategory = Attraction.Category.EXPLORE_CITY
@@ -20,6 +21,9 @@ class Session {
       region in
       
       self.currentRegion = region
+      if region.listing.item.category == Region.Category.COUNTRY.rawValue {
+        self.currentCountry = region
+      }
       handler()
     }
   }

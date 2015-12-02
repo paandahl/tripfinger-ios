@@ -3,9 +3,11 @@ import SKMaps
 class SearchServiceDelegate: NSObject, SKSearchServiceDelegate {
   
   var handler: ([SKSearchResult] -> ())!
+  var packageCode: String
   
-  required init(handler: [SKSearchResult] -> ()) {
+  required init(handler: [SKSearchResult] -> (), packageCode: String) {
     self.handler = handler
+    self.packageCode = packageCode
   }
   
   func searchService(searchService: SKSearchService!, didRetrieveMultiStepSearchResults searchResults: [AnyObject]!) {
@@ -14,13 +16,18 @@ class SearchServiceDelegate: NSObject, SKSearchServiceDelegate {
   }
   
   func searchServiceDidFailToRetrieveMultiStepSearchResults(searchService: SKSearchService!) {
-    print("FAAAAIL")
+    if !DownloadService.hasMapPackage(packageCode) {
+      print("Tried to search in package not installed: " + packageCode)
+    }
+    else {
+      print("Unknown failure with search")
+    }
   }
 }
 
 class SearchService {
-  let packageCode = "BE"
   let maxResults = 20
+  var packageCode: String!
   var delegate: SearchServiceDelegate?
   var searchRunning = false
   var searchCancelled = false
@@ -30,16 +37,27 @@ class SearchService {
   }
   
   func setDelegate(handler: [SKSearchResult] -> ()) {
-    delegate = SearchServiceDelegate(handler: handler)
+    delegate = SearchServiceDelegate(handler: handler, packageCode: packageCode)
     SKSearchService.sharedInstance().searchServiceDelegate = delegate
   }
   
-  func getCities(handler: [SKSearchResult] -> ()) {
+  private func setPackageCode(regionId: String, countryId: String) {
+    if regionId != countryId && DownloadService.hasMapPackage(regionId) {
+      packageCode = regionId
+    }
+    else {
+      packageCode = countryId
+    }
+  }
+  
+  func getCities(countryId: String, handler: [SKSearchResult] -> ()) {
+    setPackageCode(countryId, countryId: countryId)
     setDelegate(handler)
     self.searchMapData(SKListLevel.CityList, searchString: "", parent: 0)
   }
   
-  func getStreetsForCity(identifier: UInt64, searchString: String, handler: [SKSearchResult] -> ()) {
+  func getStreetsForCity(cityId: String, countryId: String, identifier: UInt64, searchString: String, handler: [SKSearchResult] -> ()) {
+    setPackageCode(cityId, countryId: countryId)
     setDelegate(handler)
     self.searchMapData(SKListLevel.StreetList, searchString: searchString, parent: identifier)
   }
@@ -47,7 +65,7 @@ class SearchService {
   func cancelSearch() {
   }
   
-  func search(fullSearchString: String, gradual: Bool = false, handler: [SearchResult] -> ()) {
+  func search(fullSearchString: String, regionId: String, countryId: String? = nil, gradual: Bool = false, handler: [SearchResult] -> ()) {
     SyncManager.run_async() {
       
       var searchStrings = fullSearchString.characters.split{ $0 == " " }.map(String.init)
@@ -65,12 +83,14 @@ class SearchService {
       
       self.searchCancelled = false
       self.searchRunning = true
-      self.getCities() {
+      let countryId = countryId == nil ? regionId : countryId!
+      self.getCities(countryId) {
         cities in
         
         var counter = 0
         var searchList = [SearchResult]()
         
+        self.setPackageCode(regionId, countryId: countryId)
         self.setDelegate() {
           searchResults in
           
