@@ -8,7 +8,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
   var session: Session!
   var filterBox: FilterBox!
   
-  var attractions = [Attraction]()
+  var attractions = List<Attraction>()
   var category: Attraction.Category!
   var currentRegion: Region!
   let ChooseAttractionButtonHorizontalPadding: CGFloat = 80.0
@@ -61,7 +61,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     session.loadAttractions() {
       loaded in
       
-      self.attractions.appendContentsOf(self.session.currentAttractions)
+      self.attractions = self.session.currentAttractions
       print("loaded \(self.attractions.count) attractions")
       self.displayCards()
     }
