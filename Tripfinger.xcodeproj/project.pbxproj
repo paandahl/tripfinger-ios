@@ -48,6 +48,7 @@
 		25D0A3FD1C0EF27500E54C5E /* test-belgium.ngi.dat in Resources */ = {isa = PBXBuildFile; fileRef = 25D0A3F91C0EF27500E54C5E /* test-belgium.ngi.dat */; };
 		25D0A3FE1C0EF27500E54C5E /* test-belgium.skm in Resources */ = {isa = PBXBuildFile; fileRef = 25D0A3FA1C0EF27500E54C5E /* test-belgium.skm */; };
 		25D0A3FF1C0EF27500E54C5E /* test-belgium.txg in Resources */ = {isa = PBXBuildFile; fileRef = 25D0A3FB1C0EF27500E54C5E /* test-belgium.txg */; };
+		25D0A4011C0F066600E54C5E /* UIImage+Rotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D0A4001C0F066600E54C5E /* UIImage+Rotate.swift */; };
 		25D281C71BFB67760069BE86 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281C61BFB67760069BE86 /* DownloadService.swift */; };
 		25D281C91BFB69B80069BE86 /* DownloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281C81BFB69B80069BE86 /* DownloadController.swift */; };
 		25D281CD1BFBB6B30069BE86 /* GuideItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281CC1BFBB6B30069BE86 /* GuideItemImage.swift */; };
@@ -159,6 +160,7 @@
 		25D0A3F91C0EF27500E54C5E /* test-belgium.ngi.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test-belgium.ngi.dat"; sourceTree = "<group>"; };
 		25D0A3FA1C0EF27500E54C5E /* test-belgium.skm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test-belgium.skm"; sourceTree = "<group>"; };
 		25D0A3FB1C0EF27500E54C5E /* test-belgium.txg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test-belgium.txg"; sourceTree = "<group>"; };
+		25D0A4001C0F066600E54C5E /* UIImage+Rotate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Rotate.swift"; sourceTree = "<group>"; };
 		25D281C61BFB67760069BE86 /* DownloadService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
 		25D281C81BFB69B80069BE86 /* DownloadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadController.swift; sourceTree = "<group>"; };
 		25D281CC1BFBB6B30069BE86 /* GuideItemImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemImage.swift; sourceTree = "<group>"; };
@@ -258,6 +260,7 @@
 				25D707D21BCA7620005A4BBA /* UINib+RegisterNib.swift */,
 				25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */,
 				254091011C0C684100A2002F /* ErrorHandler.swift */,
+				25D0A4001C0F066600E54C5E /* UIImage+Rotate.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -661,6 +664,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25D0A4011C0F066600E54C5E /* UIImage+Rotate.swift in Sources */,
 				25D281D11BFDC9190069BE86 /* NSURL+GetDirectory.swift in Sources */,
 				2503D3A51BDA5E2A0078C0F0 /* DetailController.swift in Sources */,
 				25C9DFD31B9CD84200C516C1 /* MapDisplayViewController.swift in Sources */,

@@ -9,11 +9,15 @@
 import SKMaps
 import RealmSwift
 
-class MapDisplayViewController: UIViewController, SubController, SKMapViewDelegate {
+class MapDisplayViewController: UIViewController, SubController, SKMapViewDelegate, CLLocationManagerDelegate, SKPositionerServiceDelegate {
   
   var session: Session!
   var attractions = List<Attraction>()
   var mapView: SKMapView!
+  var locationManager: CLLocationManager!
+  var positionView: UIImageView!
+  var positionView2: UIImageView!
+  var previousHeading: CGFloat = 0.0
   
   
   override func viewDidLoad() {
@@ -24,7 +28,7 @@ class MapDisplayViewController: UIViewController, SubController, SKMapViewDelega
     mapView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
     mapView.delegate = self
     mapView.settings.rotationEnabled = false
-    mapView.settings.orientationIndicatorType = SKOrientationIndicatorType.CustomImage
+    mapView.settings.orientationIndicatorType = SKOrientationIndicatorType.None
     mapView.settings.headingMode = SKHeadingMode.RotatingHeading
     
     // second digit of first coordinate - higher means south, lower means north
@@ -39,7 +43,24 @@ class MapDisplayViewController: UIViewController, SubController, SKMapViewDelega
     let region = SKCoordinateRegion(center: coordinates, zoomLevel: 14)
     mapView.visibleRegion = region
     
-    self.view.addSubview(mapView)
+    view.addSubview(mapView)
+    
+    let positionButton = UIButton(type: .System)
+    positionButton.setTitle("LOC", forState: .Normal)
+    positionButton.addTarget(self, action: "goToPosition", forControlEvents: .TouchUpInside)
+    positionButton.sizeToFit()
+    view.addSubview(positionButton)
+    view.addConstraints("V:[pos]-10-|", forViews: ["pos": positionButton])
+    view.addConstraints("H:|-10-[pos]", forViews: ["pos": positionButton])
+    
+    
+    positionView = UIImageView(image: UIImage(named: "current-position-compas"))
+    mapView.currentPositionView = positionView
+    positionView2 = UIImageView(image: UIImage(named: "current-position-compas"))
+
+    locationManager = CLLocationManager()
+    locationManager.delegate = self
+    locationManager.startUpdatingHeading()
     
     if (session.currentAttractions.count > 0) {
       attractions = session.currentAttractions
@@ -48,6 +69,33 @@ class MapDisplayViewController: UIViewController, SubController, SKMapViewDelega
     else {
       loadAttractions()
     }
+  }
+  
+  func degreesToRadians(degrees: CGFloat) -> CGFloat {
+    return degrees / 180.0 * CGFloat(M_PI)
+  }
+
+  
+  func locationManager(manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+    let heading = CGFloat(newHeading.magneticHeading)
+    positionView.transform = CGAffineTransformMakeRotation(degreesToRadians(heading))
+    positionView2.transform = CGAffineTransformMakeRotation(degreesToRadians(heading))
+    let head: Int = Int(heading)
+    if head % 2 == 0 {
+      mapView.currentPositionView = positionView2
+    }
+    else {
+      mapView.currentPositionView = positionView
+      
+    }
+    
+    print(heading)
+//    positionView.image = positionView.image!.imageRotatedByDegrees(heading, flip: false)
+  }
+  
+  func goToPosition() {
+    let region = SKCoordinateRegion(center: SKPositionerService.sharedInstance().currentCoordinate, zoomLevel: mapView.visibleRegion.zoomLevel)
+    mapView.visibleRegion = region
   }
   
   func loadAttractions() {
