@@ -1352,14 +1352,19 @@ extension JSON {
     @available(*, unavailable, renamed="uInt")
     public var unsignedInteger: Int? {
         get {
-            return self.number?.unsignedIntegerValue
+          if let number = self.number {
+            return Int(number.unsignedIntegerValue)
+          }
+          else {
+            return nil
+          }
         }
     }
     
     @available(*, unavailable, renamed="uIntValue")
     public var unsignedIntegerValue: Int {
         get {
-            return self.numberValue.unsignedIntegerValue
+            return Int(self.numberValue.unsignedIntegerValue)
         }
     }
 }

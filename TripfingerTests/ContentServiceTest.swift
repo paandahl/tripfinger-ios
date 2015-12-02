@@ -28,13 +28,14 @@ class ContentServiceTest: XCTestCase {
       
       var foundUnderstand = false
       for guideText in guideTexts {
+        print(guideText.item.name)
         if guideText.item.name == "Understand" {
           XCTAssertNotNil(guideText.item.content)
           XCTAssertNotEqual("", guideText.item.content!)
           foundUnderstand = true
         }
       }
-      XCTAssertTrue(foundUnderstand)
+      XCTAssertTrue(foundUnderstand, "Did not find Understand-section")
       readyExpectation.fulfill()
     }
     
@@ -72,7 +73,7 @@ class ContentServiceTest: XCTestCase {
       readyExpectation.fulfill()
     }
     
-    waitForExpectationsWithTimeout(15, handler: { error in
+    waitForExpectationsWithTimeout(30, handler: { error in
       XCTAssertNil(error, "Error")
     })
   }
@@ -86,7 +87,7 @@ class ContentServiceTest: XCTestCase {
       readyExpectation.fulfill()
     }
     
-    waitForExpectationsWithTimeout(15, handler: { error in
+    waitForExpectationsWithTimeout(30, handler: { error in
       XCTAssertNil(error, "Error")
     })
   }

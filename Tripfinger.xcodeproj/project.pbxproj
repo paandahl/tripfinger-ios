@@ -21,6 +21,7 @@
 		254091061C0D479B00A2002F /* SKMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254091041C0D478100A2002F /* SKMaps.framework */; };
 		254091071C0D479B00A2002F /* SKMaps.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 254091041C0D478100A2002F /* SKMaps.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		254091091C0D47C200A2002F /* SKMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 254091081C0D47C200A2002F /* SKMaps.bundle */; settings = {ASSET_TAGS = (); }; };
+		254091121C0E83F000A2002F /* TripfingerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254091111C0E83F000A2002F /* TripfingerUITests.swift */; };
 		257922C71BA308A9005EA785 /* Attraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922C61BA308A9005EA785 /* Attraction.swift */; };
 		257922D21BA48697005EA785 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D11BA48697005EA785 /* SwiftyJSON.swift */; };
 		257922D41BA488EB005EA785 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D31BA488EB005EA785 /* DataManager.swift */; };
@@ -77,6 +78,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		254091141C0E83F000A2002F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25C9DFC31B9CD84200C516C1 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25C9DFCA1B9CD84200C516C1;
+			remoteInfo = Tripfinger;
+		};
 		25C9DFE11B9CD84200C516C1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 25C9DFC31B9CD84200C516C1 /* Project object */;
@@ -113,6 +121,9 @@
 		254091011C0C684100A2002F /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		254091041C0D478100A2002F /* SKMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SKMaps.framework; sourceTree = "<group>"; };
 		254091081C0D47C200A2002F /* SKMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SKMaps.bundle; sourceTree = "<group>"; };
+		2540910F1C0E83F000A2002F /* TripfingerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripfingerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		254091111C0E83F000A2002F /* TripfingerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripfingerUITests.swift; sourceTree = "<group>"; };
+		254091131C0E83F000A2002F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		257922C61BA308A9005EA785 /* Attraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attraction.swift; sourceTree = "<group>"; };
 		257922D11BA48697005EA785 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Tripfinger/SwiftyJSON.swift; sourceTree = "<group>"; };
 		257922D31BA488EB005EA785 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -179,6 +190,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2540910C1C0E83F000A2002F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		25C9DFC81B9CD84200C516C1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -234,6 +252,15 @@
 				254091011C0C684100A2002F /* ErrorHandler.swift */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		254091101C0E83F000A2002F /* TripfingerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				254091111C0E83F000A2002F /* TripfingerUITests.swift */,
+				254091131C0E83F000A2002F /* Info.plist */,
+			);
+			path = TripfingerUITests;
 			sourceTree = "<group>";
 		};
 		257922CD1BA34429005EA785 /* Resources */ = {
@@ -302,6 +329,7 @@
 				25C9DFCD1B9CD84200C516C1 /* Tripfinger */,
 				25C9DFE31B9CD84200C516C1 /* TripfingerTests */,
 				DC9F3E50233573A0D4A8AF6D /* Pods */,
+				254091101C0E83F000A2002F /* TripfingerUITests */,
 				F082A5E4983C2FEBAAE9AFA6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -311,6 +339,7 @@
 			children = (
 				25C9DFCB1B9CD84200C516C1 /* Tripfinger.app */,
 				25C9DFE01B9CD84200C516C1 /* TripfingerTests.xctest */,
+				2540910F1C0E83F000A2002F /* TripfingerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -420,6 +449,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		2540910E1C0E83F000A2002F /* TripfingerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 254091161C0E83F000A2002F /* Build configuration list for PBXNativeTarget "TripfingerUITests" */;
+			buildPhases = (
+				2540910B1C0E83F000A2002F /* Sources */,
+				2540910C1C0E83F000A2002F /* Frameworks */,
+				2540910D1C0E83F000A2002F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				254091151C0E83F000A2002F /* PBXTargetDependency */,
+			);
+			name = TripfingerUITests;
+			productName = TripfingerUITests;
+			productReference = 2540910F1C0E83F000A2002F /* TripfingerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		25C9DFCA1B9CD84200C516C1 /* Tripfinger */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 25C9DFEA1B9CD84200C516C1 /* Build configuration list for PBXNativeTarget "Tripfinger" */;
@@ -470,6 +517,10 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Preben Ludviksen";
 				TargetAttributes = {
+					2540910E1C0E83F000A2002F = {
+						CreatedOnToolsVersion = 7.0.1;
+						TestTargetID = 25C9DFCA1B9CD84200C516C1;
+					};
 					25C9DFCA1B9CD84200C516C1 = {
 						CreatedOnToolsVersion = 6.4;
 					};
@@ -494,11 +545,19 @@
 			targets = (
 				25C9DFCA1B9CD84200C516C1 /* Tripfinger */,
 				25C9DFDF1B9CD84200C516C1 /* TripfingerTests */,
+				2540910E1C0E83F000A2002F /* TripfingerUITests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2540910D1C0E83F000A2002F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		25C9DFC91B9CD84200C516C1 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -574,6 +633,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2540910B1C0E83F000A2002F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				254091121C0E83F000A2002F /* TripfingerUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		25C9DFC71B9CD84200C516C1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -635,6 +702,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		254091151C0E83F000A2002F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25C9DFCA1B9CD84200C516C1 /* Tripfinger */;
+			targetProxy = 254091141C0E83F000A2002F /* PBXContainerItemProxy */;
+		};
 		25C9DFE21B9CD84200C516C1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 25C9DFCA1B9CD84200C516C1 /* Tripfinger */;
@@ -662,6 +734,33 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		254091171C0E83F000A2002F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = no.prebenludviksen.TripfingerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Tripfinger;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		254091181C0E83F000A2002F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = no.prebenludviksen.TripfingerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Tripfinger;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
 		25C9DFE81B9CD84200C516C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -869,6 +968,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		254091161C0E83F000A2002F /* Build configuration list for PBXNativeTarget "TripfingerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				254091171C0E83F000A2002F /* Debug */,
+				254091181C0E83F000A2002F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		25C9DFC61B9CD84200C516C1 /* Build configuration list for PBXProject "Tripfinger" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

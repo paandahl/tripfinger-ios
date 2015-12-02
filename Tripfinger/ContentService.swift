@@ -288,8 +288,12 @@ class ContentService {
     region.listing = GuideListing()
     region.listing.item = parseGuideItem(json)
     region.listing.item.guideSections = parseSectionTreeFromJson(json["sectionTree"])
-    region.attractions.appendContentsOf(parseAttractions(json["attractions"]))
-    region.listing.item.subRegions.appendContentsOf(parseRegionTreesFromJson(json["subRegionTree"]))
+    if  json["attractions"].array != nil {
+      region.attractions.appendContentsOf(parseAttractions(json["attractions"]))
+    }
+    if json["subRegionTree"].array != nil {
+      region.listing.item.subRegions.appendContentsOf(parseRegionTreesFromJson(json["subRegionTree"]))      
+    }
     return region
   }
   

@@ -80,15 +80,18 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
   
   func switchSubview(newView: UIViewController) {
     
+    print("Switching subview")
+    
+    if let currentController = currentController {
+      currentController.view.removeFromSuperview()
+      currentController.removeFromParentViewController()
+    }
+    currentController = newView
     addChildViewController(newView)
     newView.didMoveToParentViewController(self)
     newView.view.frame = self.container.bounds
     
     container.addSubview(newView.view)
-    if let currentController = currentController {
-      currentController.removeFromParentViewController()
-    }
-    currentController = newView
   }
 }
 
