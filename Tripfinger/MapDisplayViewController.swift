@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  TripFinger
-//
-//  Created by Preben Ludviksen on 06/09/15.
-//  Copyright (c) 2015 Preben Ludviksen. All rights reserved.
-//
-
 import SKMaps
 import RealmSwift
 
@@ -46,12 +38,14 @@ class MapDisplayViewController: UIViewController, SubController, SKMapViewDelega
     view.addSubview(mapView)
     
     let positionButton = UIButton(type: .System)
-    positionButton.setTitle("LOC", forState: .Normal)
+    let positionButtonImage = UIImage(named: "ic_geoposition")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+    positionButton.setImage(positionButtonImage, forState: .Normal)
+//    positionButton.setTitle("LOC", forState: .Normal)
     positionButton.addTarget(self, action: "goToPosition", forControlEvents: .TouchUpInside)
     positionButton.sizeToFit()
     view.addSubview(positionButton)
-    view.addConstraints("V:[pos]-10-|", forViews: ["pos": positionButton])
-    view.addConstraints("H:|-10-[pos]", forViews: ["pos": positionButton])
+    view.addConstraints("V:[pos]-20-|", forViews: ["pos": positionButton])
+    view.addConstraints("H:|-20-[pos]", forViews: ["pos": positionButton])
     
     
     positionView = UIImageView(image: UIImage(named: "current-position-compas"))
@@ -88,9 +82,6 @@ class MapDisplayViewController: UIViewController, SubController, SKMapViewDelega
       mapView.currentPositionView = positionView
       
     }
-    
-    print(heading)
-//    positionView.image = positionView.image!.imageRotatedByDegrees(heading, flip: false)
   }
   
   func goToPosition() {
