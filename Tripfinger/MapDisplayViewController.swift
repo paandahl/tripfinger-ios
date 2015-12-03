@@ -16,7 +16,16 @@ class MapDisplayViewController: UIViewController, SubController, SKMapViewDelega
     
     super.viewDidLoad()
     
+    
     mapView = SKMapView(frame: CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame)))
+    let languageSettings = SKMapInternationalizationSettings.mapInternationalization()
+    languageSettings.backupToTransliterated = false
+    languageSettings.primaryInternationalLanguage = SKLanguage.MapLanguageEN
+    languageSettings.fallbackInternationalLanguage = SKLanguage.MapLanguageDE
+    languageSettings.primaryOption = SKMapInternationalizationOption.International
+    languageSettings.fallbackOption = SKMapInternationalizationOption.Transliterated
+    mapView.settings.mapInternationalization = languageSettings
+
     mapView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
     mapView.delegate = self
     mapView.settings.rotationEnabled = false
