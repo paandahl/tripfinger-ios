@@ -1,5 +1,6 @@
 import Foundation
 import RealmSwift
+import Alamofire
 
 typealias ContentLoaded = (guideItem: GuideItem) -> ()
 
@@ -118,12 +119,34 @@ class ContentService {
       }}, failure: nil)
   }
   
-  class func getAttractionsForRegion(region: Region, handler: List<Attraction> -> ()) {
-    if region.offline {
-      handler(region.attractions)
-      return
+  class func getAttractionsForRegion(region: Region?, handler: List<Attraction> -> ()) {
+    getAttractionsForRegion(region, withCategory: nil, handler: handler)
+  }
+  
+  class func getAttractionsForRegion(region: Region?, withCategory category: Attraction.Category?, handler: List<Attraction> -> ()) {
+    var regionId = "world"
+    var parameters = ["cascade": "world"]
+    var categoryPart = ""
+    
+    if let region = region {
+      if region.offline {
+        handler(region.attractions)
+        return
+      }
+      if region.listing.item.category == Region.Category.COUNTRY.rawValue {
+        parameters["cascade"] = "country"
+      }
+      else if region.listing.item.category == Region.Category.CITY.rawValue {
+        parameters["cascade"] = "city"
+      }
+      regionId = region.listing.item.id
     }
-    getJsonFromUrl(baseUrl + "/regions/\(region.listing.item.id)/attractions", success: {
+    
+    if let category = category {
+      categoryPart = "/\(category.rawValue)"
+    }
+    
+    getJsonFromUrl(baseUrl + "/regions/\(regionId)/attractions\(categoryPart)", parameters: parameters, success: {
       json in
       
       let attractions = self.parseAttractions(json!)
@@ -135,57 +158,22 @@ class ContentService {
     
   }
   
-  class func getAttractionsForRegion(region: Region, withCategory category: Attraction.Category, handler: List<Attraction> -> ()) {
-    if region.offline {
-      handler(region.attractions)
-      return
-    }
-    getJsonFromUrl(baseUrl + "/regions/\(region.listing.item.id)/attractions/\(category.rawValue)", success: {
-      json in
-      
-      let attractions = self.parseAttractions(json!)
-      
-      dispatch_async(dispatch_get_main_queue()) {
-        handler(attractions)
-        
-      }}, failure: nil)
-    
-  }
-  
-  class func getJsonFromUrl(url: String, success: (json: JSON?) -> (), failure: (() -> ())?) {
+  class func getJsonFromUrl(url: String, parameters: [String: String] = Dictionary<String, String>(), success: (json: JSON?) -> (), failure: (() -> ())?) {
     print("Fetching URL: \(url)")
-    let nsUrl = NSURL(string: url)
-    let session = NSURLSession.sharedSession()
-    let dataTask = session.dataTaskWithURL(nsUrl!) {
-      data, response, error in
+    Alamofire.request(.GET, url, parameters: parameters).responseJSON {
+      response in
       
-      if let error = error {
-        print("Failure! \(error)")
-        if error.code == -999 { return }
+      if response.result.isSuccess {
+        let json = JSON(data: response.data!)
+        success(json: json)
       }
-      else if let httpResponse = response as? NSHTTPURLResponse {
-        if httpResponse.statusCode == 200 {
-          
-          let json = JSON(data: data!)
-          success(json: json)
-          return
+      else {
+        print("Failure: \(response.result.error)")
+        if let failure = failure {
+          dispatch_async(dispatch_get_main_queue(), failure)
         }
-        else if httpResponse.statusCode == 404 {
-          print("Got 404 from url: \(url)")
-          success(json: nil)
-        }
-        else {
-          print("Faulire! \(response)")
-        }
-      }
-      
-      if let failure = failure {
-        dispatch_async(dispatch_get_main_queue(), failure)
       }
     }
-    
-    dataTask.resume()
-    
   }
   
   class func parseJSON(data: NSData) -> [String: AnyObject]? {
@@ -234,6 +222,8 @@ class ContentService {
     listing.item = parseGuideItem(json)
     listing.latitude = json["latitude"].double!
     listing.longitude = json["longitude"].double!
+    listing.country = json["country"].string!
+    listing.city = json["city"].string
     return listing
   }
   

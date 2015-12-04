@@ -24,7 +24,6 @@ class OfflineService {
     try! realm.write {
       realm.add(region)
     }
-
   }
   
   class func getRegionWithId(regionId: String) -> Region? {

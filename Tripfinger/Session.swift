@@ -31,15 +31,9 @@ class Session {
   
   func loadAttractions(handler: (loaded: Bool) -> ()) {
     
-    if currentRegion == nil {
-      currentAttractions = List<Attraction>()
-      handler(loaded: false)
-      return
-    }
-    
     if (attractionsFromCategory == nil || attractionsFromCategory != currentCategory || attractionsFromRegion != currentRegion) {
       if currentCategory != Attraction.Category.ALL {
-        ContentService.getAttractionsForRegion(self.currentRegion!, withCategory: currentCategory) {
+        ContentService.getAttractionsForRegion(self.currentRegion, withCategory: currentCategory) {
           attractions in
           
           self.currentAttractions = attractions
@@ -47,7 +41,7 @@ class Session {
         }
       }
       else {
-        ContentService.getAttractionsForRegion(self.currentRegion!) {
+        ContentService.getAttractionsForRegion(self.currentRegion) {
           attractions in
           
           self.currentAttractions = attractions

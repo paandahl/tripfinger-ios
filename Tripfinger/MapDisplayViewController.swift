@@ -160,7 +160,7 @@ class MapDisplayViewController: UIViewController, SubController, SKMapViewDelega
     if segue.identifier == "showDetail" {
       let detailController = segue.destinationViewController as! DetailController
       detailController.attraction = sender as! Attraction
-      detailController.imagePath = detailController.attraction.getImagePath(session.currentRegion!)
+      detailController.imagePath = detailController.attraction.getLocalImagePath()
     }
   }
 }

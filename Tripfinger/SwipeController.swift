@@ -29,13 +29,8 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     
     category = session.currentCategory
     currentRegion = session.currentRegion
-    
-    if self.session.currentRegion != nil {
-      loadAttractions()
-    }
-    else {
-      displayCards()
-    }
+
+    loadAttractions()
   }
   
   override func viewWillAppear(animated: Bool) {
@@ -85,8 +80,6 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
         view.insertSubview(backCardView, belowSubview: frontCardView)
         addBackCardConstraints()
       }
-      
-      filterBox.regionNameLabel.text = "\(self.session.currentRegion!.listing.item.name!):"
     }
     else {
       noElementsLabel.hidden = false
@@ -97,13 +90,16 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
         noElementsLabel.text = "No attractions to swipe."
       }
       noElementsLabel.sizeToFit()
-      if let currentRegion = currentRegion {
-        filterBox.regionNameLabel.text = "\(currentRegion.listing.item.name!):"
-      }
-      else {
-        filterBox.regionNameLabel.text = "World:"
-      }
     }
+    
+    if let currentRegion = session.currentRegion {
+      filterBox.regionNameLabel.text = "\(currentRegion.listing.item.name!):"
+    }
+    else {
+      filterBox.regionNameLabel.text = "World:"
+    }
+
+    
     filterBox.categoryLabel.text = self.category.entityName(session.currentRegion)
   }
   
@@ -213,7 +209,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     // Create a personView with the top person in the people array, then pop
     // that person off the stack.
     
-    let imagePath = attractions[0].getImagePath(session.currentRegion!)
+    let imagePath = attractions[0].getLocalImagePath()
     let personView: ChooseAttractionView = ChooseAttractionView(frame: frame, attraction: attractions[0], delegate: self, options: options, imagePath: imagePath)
     self.attractions.removeAtIndex(0)
     return personView
@@ -263,7 +259,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     if segue.identifier == "showDetail" {
       let detailController = segue.destinationViewController as! DetailController
       detailController.attraction = sender as! Attraction
-      detailController.imagePath = detailController.attraction.getImagePath(session.currentRegion!)
+      detailController.imagePath = detailController.attraction.getLocalImagePath()
     }
     else if segue.identifier == "showFilter" {
       let navigationController = segue.destinationViewController as! UINavigationController

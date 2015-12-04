@@ -6,13 +6,25 @@ class Attraction: Object {
   // composition (instead of inheritance - for Realm-purposes)
   dynamic var listing: GuideListing!
   
-  func getImagePath(currentRegion: Region) -> NSURL? {
+  func getLocalImagePath() -> NSURL? {
+    
     var imagePath: NSURL? = nil
-    if currentRegion.offline {
-      let countryId = currentRegion.listing.item.parent
-      let cityId = currentRegion.listing.item.id
-      let cityPath = NSURL.getDirectory(.LibraryDirectory, withPath: countryId + "/" + cityId)
-      imagePath = cityPath.URLByAppendingPathComponent(listing.item.id + "-1")
+
+    if let region = OfflineService.getRegionWithId(listing.country) {
+      var regionPath: NSURL!
+      if listing.city == nil {
+        regionPath = NSURL.getDirectory(.LibraryDirectory, withPath: region.getId())
+      }
+      else {
+        regionPath = NSURL.getDirectory(.LibraryDirectory, withPath: region.getId() + "/" + listing.city)
+      }
+      imagePath = regionPath.URLByAppendingPathComponent(listing.item.id + "-1")
+    }
+    else if let city = listing.city {
+      if let region = OfflineService.getRegionWithId(city) {
+        let regionPath = NSURL.getDirectory(.LibraryDirectory, withPath: region.listing.country + "/" + city)
+        imagePath = regionPath.URLByAppendingPathComponent(listing.item.id + "-1")
+      }
     }
     return imagePath
   }

@@ -76,7 +76,7 @@ class ListController: UITableViewController, SubController {
     if segue.identifier == "showDetail" {
       let detailController = segue.destinationViewController as! DetailController
       detailController.attraction = sender as! Attraction
-      detailController.imagePath = detailController.attraction.getImagePath(session.currentRegion!)
+      detailController.imagePath = detailController.attraction.getLocalImagePath()
     }
     else if segue.identifier == "showFilter" {
       let navigationController = segue.destinationViewController as! UINavigationController
@@ -97,7 +97,7 @@ extension ListController {
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.listingCell, forIndexPath: indexPath) as! ListingCell
     let attraction = session.currentAttractions[indexPath.row]
-    let imagePath = attraction.getImagePath(session.currentRegion!)
+    let imagePath = attraction.getLocalImagePath()
     cell.setContent(attraction, imagePath: imagePath)
     cell.delegate = self
     return cell
