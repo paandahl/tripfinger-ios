@@ -14,7 +14,7 @@ class ContentService {
     getJsonFromUrl(baseUrl + "/countries", success: {
       json in
       
-      let regions = parseRegions(json!)
+      let regions = parseRegions(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(regions)
@@ -28,7 +28,7 @@ class ContentService {
     getJsonFromUrl(baseUrl + "/regions/\(id)/guideTexts", success: {
       json in
       
-      let guideTexts = self.parseGuideTexts(json!)
+      let guideTexts = self.parseGuideTexts(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(guideTexts: guideTexts)
@@ -40,42 +40,20 @@ class ContentService {
     getJsonFromUrl(baseUrl + "/regions/\(regionId)/full", success: {
       json in
       
-      let region = self.parseRegionTreeFromJson(json!)
+      let region = self.parseRegionTreeFromJson(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(region: region)
       }
       }, failure: nil)
   }
-  
-  
-  class func getDescriptionForCategory(categoryId: Int, forRegion region: Region, handler: (categoryDescription: GuideText) -> ()) {
     
-    let regionId = String(region.listing.item.id!)
-    getJsonFromUrl(baseUrl + "/regions/\(regionId)/guideTextForCategory/\(categoryId)", success: {
-      json in
-      
-      var guideText: GuideText
-      if let json = json {
-        guideText = self.parseGuideText(json)
-      }
-      else {
-        guideText = GuideText()
-        guideText.item = GuideItem()
-      }
-      
-      dispatch_async(dispatch_get_main_queue()) {
-        handler(categoryDescription: guideText)
-      }
-      }, failure: nil)
-  }
-  
   class func getRegions(handler: [Region] -> ()) {
     getJsonFromUrl(baseUrl + "/regions", success: {
       json in
       
       var regions = [Region]()
-      for regionJson in json!.array! {
+      for regionJson in json.array! {
         regions.append(self.parseRegion(regionJson, fetchChildren: false))
       }
       
@@ -95,7 +73,7 @@ class ContentService {
     getJsonFromUrl(baseUrl + "/regions/\(regionId)", success: {
       json in
       
-      let region = self.parseRegion(json!)
+      let region = self.parseRegion(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(region)
@@ -111,7 +89,7 @@ class ContentService {
     getJsonFromUrl(baseUrl + "/guideTexts/\(guideTextId)", success: {
       json in
       
-      let guideText = self.parseGuideText(json!, fetchChildren: true)
+      let guideText = self.parseGuideText(json, fetchChildren: true)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(guideText)
@@ -149,7 +127,7 @@ class ContentService {
     getJsonFromUrl(baseUrl + "/regions/\(regionId)/attractions\(categoryPart)", parameters: parameters, success: {
       json in
       
-      let attractions = self.parseAttractions(json!)
+      let attractions = self.parseAttractions(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(attractions)
@@ -158,7 +136,7 @@ class ContentService {
     
   }
   
-  class func getJsonFromUrl(url: String, parameters: [String: String] = Dictionary<String, String>(), success: (json: JSON?) -> (), failure: (() -> ())?) {
+  class func getJsonFromUrl(url: String, parameters: [String: String] = Dictionary<String, String>(), success: (json: JSON) -> (), failure: (() -> ())?) {
     print("Fetching URL: \(url)")
     Alamofire.request(.GET, url, parameters: parameters).responseJSON {
       response in

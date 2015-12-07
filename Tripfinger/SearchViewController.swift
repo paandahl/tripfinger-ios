@@ -6,8 +6,8 @@ protocol SearchViewControllerDelegate: class {
 
 class SearchViewController: UITableViewController {
   
-  var regionId: String!
-  var countryId: String!
+  var regionId: String?
+  var countryId: String?
   
   var delegate: SearchViewControllerDelegate?
   var searchService: SearchService!
@@ -52,11 +52,21 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
       searchText = newSearchText
       searchService.cancelSearch()
       
-      searchService.search(searchText, regionId: regionId, countryId: countryId, gradual: true) {
-        searchResults in
-        
-        self.searchResults = searchResults
-        self.tableView.reloadData()
+      if connectedToNetwork() {
+        searchService.onlineSearch(searchText, regionId: regionId, countryId: countryId, gradual: true) {
+          searchResults in
+          
+          self.searchResults = searchResults
+          self.tableView.reloadData()
+        }
+      }
+      else {
+        searchService.offlineSearch(searchText, regionId: regionId, countryId: countryId, gradual: true) {
+          searchResults in
+          
+          self.searchResults = searchResults
+          self.tableView.reloadData()
+        }
       }
     }
   }
@@ -87,7 +97,7 @@ extension SearchViewController {
     let cell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell", forIndexPath: indexPath)
     let searchResult = searchResults[indexPath.row]
     cell.textLabel?.text = searchResult.name
-    cell.detailTextLabel?.text = searchResult.city
+    cell.detailTextLabel?.text = searchResult.location
     return cell
   }
 }

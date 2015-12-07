@@ -7,6 +7,7 @@ class SearchServiceTest: XCTestCase {
   static let mapPackage = "test-belgium"
   
   override class func setUp() {
+    
     if DownloadService.hasMapPackage(mapPackage) {
       SKMapsService.sharedInstance().packagesManager.deleteOfflineMapPackageNamed(mapPackage)
     }
@@ -37,8 +38,8 @@ class SearchServiceTest: XCTestCase {
     let readyExpectation = expectationWithDescription("ready")
     
     let searchService = SearchService()
-    searchService.getCities(SearchServiceTest.mapPackage) {
-      searchResults in
+    searchService.getCities(forCountry: SearchServiceTest.mapPackage) {
+      packageId, searchResults, nextCountryHandler in
       
       print("Found \(searchResults.count) cities.")
       XCTAssertEqual(3270, searchResults.count)
@@ -55,7 +56,7 @@ class SearchServiceTest: XCTestCase {
     
     let searchService = SearchService()
     var fulfilled = false
-    searchService.search("altitude", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage, gradual: true) {
+    searchService.offlineSearch("altitude", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage, gradual: true) {
       searchResults in
       
       for searchResult in searchResults {
@@ -81,11 +82,11 @@ class SearchServiceTest: XCTestCase {
     var readyExpectation = expectationWithDescription("ready")
     
     let searchService = SearchService()
-    searchService.search("boulevard dixmude", regionId: SearchServiceTest.mapPackage) {
+    searchService.offlineSearch("boulevard dixmude", regionId: SearchServiceTest.mapPackage) {
       searchResults in
       
       XCTAssertEqual(1, searchResults.count)
-      XCTAssertEqual("Brussels", searchResults[0].city)
+      XCTAssertEqual("Brussels", searchResults[0].location)
       readyExpectation.fulfill()
     }
     
@@ -99,11 +100,11 @@ class SearchServiceTest: XCTestCase {
     
     readyExpectation = expectationWithDescription("ready")
     
-    searchService.search("boulevard de dixmude", regionId: SearchServiceTest.mapPackage) {
+    searchService.offlineSearch("boulevard de dixmude", regionId: SearchServiceTest.mapPackage) {
       searchResults in
       
       XCTAssertEqual(1, searchResults.count)
-      XCTAssertEqual("Brussels", searchResults[0].city)
+      XCTAssertEqual("Brussels", searchResults[0].location)
       readyExpectation.fulfill()
     }
     
@@ -117,7 +118,7 @@ class SearchServiceTest: XCTestCase {
     let readyExpectation = expectationWithDescription("ready")
     
     let searchService = SearchService()
-    searchService.search("di", regionId: SearchServiceTest.mapPackage) {
+    searchService.offlineSearch("di", regionId: SearchServiceTest.mapPackage) {
       searchResults in
       
       XCTAssert(searchResults.count <= searchService.maxResults, "Too many search results")
@@ -128,6 +129,22 @@ class SearchServiceTest: XCTestCase {
       XCTAssertNil(error, "Error")
     })
   }
+  
+  func testOnlineSearch() {
+    let readyExpectation = expectationWithDescription("ready")
+
+    let searchService = SearchService()
+    searchService.onlineSearch("bel") {
+      searchResults in
+      
+      XCTAssertEqual(7, searchResults.count)
+      readyExpectation.fulfill()
+    }
+
+    waitForExpectationsWithTimeout(15, handler: { error in
+      XCTAssertNil(error, "Error")
+    })
+}
   
   //    func testLocking() {
   //        let readyExpectation = expectationWithDescription("ready")

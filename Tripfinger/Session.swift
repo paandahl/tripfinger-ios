@@ -14,6 +14,7 @@ class Session {
   var currentAttractions = List<Attraction>()
   var attractionsFromCategory: Attraction.Category!
   var attractionsFromRegion: Region!
+  var searchService = SearchService()
   
   func loadRegionWithID(regionId: String, handler: () -> ()) {
     
@@ -54,5 +55,5 @@ class Session {
     else {
       handler(loaded: false)
     }
-  }
+  }  
 }

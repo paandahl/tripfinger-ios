@@ -58,25 +58,7 @@ class ContentServiceTest: XCTestCase {
       XCTAssertNil(error, "Error")
     })
   }
-  
-  func testGetCategoryDescription() {
-    let region = Region()
-    region.listing = GuideListing()
-    region.listing.item = GuideItem()
-    region.listing.item.id = "region-brussels"
-    let readyExpectation = expectationWithDescription("ready")
-    
-    ContentService.getDescriptionForCategory(Attraction.Category.TRANSPORTATION.rawValue, forRegion: region) {
-      guideText in
-      
-      XCTAssertNil(guideText.item.content)
-      readyExpectation.fulfill()
-    }
-    
-    waitForExpectationsWithTimeout(30, handler: { error in
-      XCTAssertNil(error, "Error")
-    })
-  }
+
   
   func testGetFullRegion() {
     let readyExpectation = expectationWithDescription("ready")

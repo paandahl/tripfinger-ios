@@ -104,8 +104,8 @@ extension RootController {
       let navigationController = segue.destinationViewController as! UINavigationController
       let searchViewController = navigationController.viewControllers[0] as! SearchViewController
       searchViewController.delegate = self
-      searchViewController.regionId = session.currentRegion!.getId()
-      searchViewController.countryId = session.currentCountry!.getId()
+      searchViewController.regionId = session.currentRegion?.getId()
+      searchViewController.countryId = session.currentCountry?.getId()
     }
   }
 }

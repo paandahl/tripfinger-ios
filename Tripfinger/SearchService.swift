@@ -49,11 +49,29 @@ class SearchService {
       packageCode = countryId
     }
   }
+
+  func getCities(forCountry countryId: String? = nil, handler: (String, [SKSearchResult], (() -> ())?) -> ()) {
+    if let countryId = countryId {
+      setPackageCode(countryId, countryId: countryId)
+      setDelegate() { results in handler(countryId, results, nil) }
+      self.searchMapData(SKListLevel.CityList, searchString: "", parent: 0)
+    }
+    else {
+      let mapPackages = SKMapsService.sharedInstance().packagesManager.installedOfflineMapPackages as! [SKMapPackage]
+      iterateThroughMapPackages(mapPackages, index: 0, handler: handler)
+    }
+  }
   
-  func getCities(countryId: String, handler: [SKSearchResult] -> ()) {
-    setPackageCode(countryId, countryId: countryId)
-    setDelegate(handler)
-    self.searchMapData(SKListLevel.CityList, searchString: "", parent: 0)
+  func iterateThroughMapPackages(packages: [SKMapPackage], index: Int, handler: (String, [SKSearchResult], (() -> ())?) -> ())  {
+    if index < packages.count {
+      let mapPackage = packages[index]
+      packageCode = mapPackage.name
+      setDelegate() { results in
+        handler(mapPackage.name, results) {
+          self.iterateThroughMapPackages(packages, index: index + 1, handler: handler)
+        }
+      }
+    }
   }
   
   func getStreetsForCity(cityId: String, countryId: String, identifier: UInt64, searchString: String, handler: [SKSearchResult] -> ()) {
@@ -64,8 +82,32 @@ class SearchService {
   
   func cancelSearch() {
   }
+
+  func onlineSearch(fullSearchString: String, regionId: String? = nil, countryId: String? = nil, gradual: Bool = false, handler: [SearchResult] -> ()) {
+    ContentService.getJsonFromUrl(ContentService.baseUrl + "/search/\(fullSearchString)", success: {
+      json in
+      
+      let searchResults = self.parseSearchResults(json)
+      
+      dispatch_async(dispatch_get_main_queue()) {
+        handler(searchResults)
+      }
+      }, failure: nil)
+  }
   
-  func search(fullSearchString: String, regionId: String, countryId: String? = nil, gradual: Bool = false, handler: [SearchResult] -> ()) {
+  func parseSearchResults(json: JSON) -> [SearchResult] {
+    var searchResults = [SearchResult]()
+    for resultJson in json.array! {
+      let searchResult = SearchResult()
+      searchResult.name = resultJson["name"].string!
+      searchResult.longitude = resultJson["longitude"].double!
+      searchResult.latitude = resultJson["latitude"].double!
+      searchResults.append(searchResult)
+    }
+    return searchResults
+  }
+
+  func offlineSearch(fullSearchString: String, regionId: String?, countryId: String? = nil, gradual: Bool = false, handler: [SearchResult] -> ()) {
     SyncManager.run_async() {
       
       var searchStrings = fullSearchString.characters.split{ $0 == " " }.map(String.init)
@@ -84,13 +126,13 @@ class SearchService {
       self.searchCancelled = false
       self.searchRunning = true
       let countryId = countryId == nil ? regionId : countryId!
-      self.getCities(countryId) {
-        cities in
+      self.getCities(forCountry: countryId) {
+        packageId, cities, nextCountryHandler in
         
         var counter = 0
         var searchList = [SearchResult]()
         
-        self.setPackageCode(regionId, countryId: countryId)
+        self.packageCode = packageId
         self.setDelegate() {
           searchResults in
           
@@ -108,6 +150,7 @@ class SearchService {
             resultsToParse = Array(resultsToParse[0..<willTake])
             listIsFull = true
           }
+          print("cites: \(cities.count)")
           let city = cities[counter - 1]
           let parsedResults = self.parseSearchResults(resultsToParse, city: city.name)
           searchList.appendContentsOf(parsedResults)
@@ -123,6 +166,9 @@ class SearchService {
           else {
             self.searchRunning = false
             handler(searchList)
+            if let nextCountryHandler = nextCountryHandler {
+              nextCountryHandler()
+            }
           }
         }
         
@@ -167,7 +213,7 @@ class SearchService {
     searchResult.name = skobblerResult.name
     searchResult.latitude = skobblerResult.coordinate.latitude
     searchResult.longitude = skobblerResult.coordinate.longitude
-    searchResult.city = city
+    searchResult.location = city
     searchResult.resultType = .Street
     return searchResult
   }

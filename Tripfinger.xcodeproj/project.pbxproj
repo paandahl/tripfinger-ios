@@ -49,6 +49,7 @@
 		25D0A3FE1C0EF27500E54C5E /* test-belgium.skm in Resources */ = {isa = PBXBuildFile; fileRef = 25D0A3FA1C0EF27500E54C5E /* test-belgium.skm */; };
 		25D0A3FF1C0EF27500E54C5E /* test-belgium.txg in Resources */ = {isa = PBXBuildFile; fileRef = 25D0A3FB1C0EF27500E54C5E /* test-belgium.txg */; };
 		25D0A4011C0F066600E54C5E /* UIImage+Rotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D0A4001C0F066600E54C5E /* UIImage+Rotate.swift */; };
+		25D0A4031C153D4900E54C5E /* NetworkUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D0A4021C153D4900E54C5E /* NetworkUtil.swift */; };
 		25D281C71BFB67760069BE86 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281C61BFB67760069BE86 /* DownloadService.swift */; };
 		25D281C91BFB69B80069BE86 /* DownloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281C81BFB69B80069BE86 /* DownloadController.swift */; };
 		25D281CD1BFBB6B30069BE86 /* GuideItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281CC1BFBB6B30069BE86 /* GuideItemImage.swift */; };
@@ -161,6 +162,7 @@
 		25D0A3FA1C0EF27500E54C5E /* test-belgium.skm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test-belgium.skm"; sourceTree = "<group>"; };
 		25D0A3FB1C0EF27500E54C5E /* test-belgium.txg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test-belgium.txg"; sourceTree = "<group>"; };
 		25D0A4001C0F066600E54C5E /* UIImage+Rotate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Rotate.swift"; sourceTree = "<group>"; };
+		25D0A4021C153D4900E54C5E /* NetworkUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkUtil.swift; sourceTree = "<group>"; };
 		25D281C61BFB67760069BE86 /* DownloadService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
 		25D281C81BFB69B80069BE86 /* DownloadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadController.swift; sourceTree = "<group>"; };
 		25D281CC1BFBB6B30069BE86 /* GuideItemImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemImage.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */,
 				254091011C0C684100A2002F /* ErrorHandler.swift */,
 				25D0A4001C0F066600E54C5E /* UIImage+Rotate.swift */,
+				25D0A4021C153D4900E54C5E /* NetworkUtil.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -676,6 +679,7 @@
 				25D4363A1BD57BAF0016E362 /* MultiStepSearch.m in Sources */,
 				25D707D31BCA7620005A4BBA /* UINib+RegisterNib.swift in Sources */,
 				25D281CF1BFCB0E10069BE86 /* OfflineService.swift in Sources */,
+				25D0A4031C153D4900E54C5E /* NetworkUtil.swift in Sources */,
 				257922D41BA488EB005EA785 /* DataManager.swift in Sources */,
 				25B5068B1BB3FD5800A36BA1 /* RootController.swift in Sources */,
 				2503D3AC1BE0DA430078C0F0 /* FilterController.swift in Sources */,
