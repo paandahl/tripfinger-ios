@@ -65,7 +65,7 @@ class ContentService {
       }, failure: nil)
   }
   
-  class func getRegionWithId(regionId: String, handler: Region -> ()) {
+  class func getRegionWithId(regionId: String, failure: (() -> ())? = nil, handler: Region -> ()) {
     if let region = OfflineService.getRegionWithId(regionId) {
       handler(region)
       return
@@ -78,7 +78,11 @@ class ContentService {
       dispatch_async(dispatch_get_main_queue()) {
         handler(region)
         
-      }}, failure: nil)
+      }}, failure: {
+        if let failure = failure {
+          failure()
+        }
+    })
   }
   
   class func getGuideTextWithId(region: Region, guideTextId: String, handler: GuideText -> ()) {
@@ -111,7 +115,10 @@ class ContentService {
         handler(region.attractions)
         return
       }
-      if region.listing.item.category == Region.Category.COUNTRY.rawValue {
+      if region.listing.item.category == Region.Category.CONTINENT.rawValue {
+        parameters["cascade"] = "continent"
+      }
+      else if region.listing.item.category == Region.Category.COUNTRY.rawValue {
         parameters["cascade"] = "country"
       }
       else if region.listing.item.category == Region.Category.CITY.rawValue {
@@ -136,14 +143,58 @@ class ContentService {
     
   }
   
-  class func getJsonFromUrl(url: String, parameters: [String: String] = Dictionary<String, String>(), success: (json: JSON) -> (), failure: (() -> ())?) {
+  class func getJsonFromUrl(url: String, parameters: [String: String] = Dictionary<String, String>(), method: Alamofire.Method = .GET, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
     print("Fetching URL: \(url)")
-    Alamofire.request(.GET, url, parameters: parameters).responseJSON {
+    Alamofire.request(method, url, parameters: parameters)
+      .validate(statusCode: 200..<300).responseJSON {
       response in
       
       if response.result.isSuccess {
         let json = JSON(data: response.data!)
         success(json: json)
+      }
+      else {
+        print("Failure: \(response.result.error)")
+        if let failure = failure {
+          dispatch_async(dispatch_get_main_queue(), failure)
+        }
+      }
+    }
+  }
+
+  class func getJsonFromPost(url: String, body: String, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
+    print("Fetching URL: \(url)")
+    Alamofire.request(.POST, url, parameters: [:], encoding: .Custom({
+      (convertible, params) in
+      let mutableRequest = convertible.URLRequest.copy() as! NSMutableURLRequest
+      mutableRequest.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+      return (mutableRequest, nil)
+    }))
+      .validate(statusCode: 200..<300).responseJSON {
+      response in
+      
+      if response.result.isSuccess {
+        let json = JSON(data: response.data!)
+        success(json: json)
+      }
+      else {
+        print("Failure: \(response.result.error)")
+        if let failure = failure {
+          dispatch_async(dispatch_get_main_queue(), failure)
+        }
+      }
+    }
+  }
+
+  
+  class func getJsonStringFromUrl(url: String, parameters: [String: String] = Dictionary<String, String>(), success: (json: String) -> (), failure: (() -> ())? = nil) {
+    print("Fetching URL: \(url)")
+    Alamofire.request(.GET, url, parameters: parameters)
+      .validate(statusCode: 200..<300).responseString {
+      response in
+      
+      if response.result.isSuccess {
+        success(json: response.result.value!)
       }
       else {
         print("Failure: \(response.result.error)")

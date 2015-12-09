@@ -3,7 +3,10 @@
 
 
 #import <SKMaps/SKMaps.h>
-#import <UIKit/UIKit.h>
+#import <SDKTools/SKTMaps/SKTMapsObject.h>
+#import <SKTDownloadAPI.h>
+#import <SDKTools/SKTDownloadManager/Helper/SKTDownloadObjectHelper.h>
+
 #import <MDCSwipeToChoose/MDCSwipeToChoose.h>
 #import "MultiStepSearch.h"
 

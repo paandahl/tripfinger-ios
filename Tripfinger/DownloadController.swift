@@ -5,8 +5,11 @@ class DownloadController: UIViewController {
   
   var countryName: String!
   var countryId: String!
+  var countryPackage: SKTPackage!
   var regionName: String!
   var regionId: String!
+  var regionPackage: SKTPackage!
+  var onlyMap = false
   var dataHolderName: String!
   var dataHolderId: String!
   
@@ -93,7 +96,7 @@ class DownloadController: UIViewController {
         OfflineService.deleteRegionWithId(city.getId())
       }
       
-      DownloadService.downloadCountry(countryId, progressHandler: {
+      DownloadService.downloadCountry(countryId, package: countryPackage, onlyMap: onlyMap, progressHandler: {
         progress in
         
         self.progressView.progress = progress
@@ -104,7 +107,7 @@ class DownloadController: UIViewController {
       })
     }
     else {
-      DownloadService.downloadCity(countryId, cityId: regionId, progressHandler: {
+      DownloadService.downloadCity(countryId, cityId: regionId, package: regionPackage, onlyMap: onlyMap, progressHandler: {
         progress in
         
         self.progressView.progress = progress

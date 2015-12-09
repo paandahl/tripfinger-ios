@@ -82,6 +82,8 @@ class Attraction: Object {
           return "Explore the world"
         }
         switch currentRegion!.listing.item.category {
+        case Region.Category.CONTINENT.rawValue:
+          return "Explore the continent"
         case Region.Category.COUNTRY.rawValue:
           return "Explore the country"
         default:

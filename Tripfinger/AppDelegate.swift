@@ -1,10 +1,12 @@
 import UIKit
 import SKMaps
+import BrightFutures
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
   
   var window: UIWindow?
+  var mapVersionFilePromise = Promise<String, NoError>()
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     
@@ -21,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     
     let session = Session()
     session.currentItemId = "region-brussels"
+    session.mapVersionFileDownloaded = mapVersionFilePromise.future
 
     let navigationController = self.window!.rootViewController as! UINavigationController
     let rootController = navigationController.viewControllers[0] as! RootController
@@ -57,9 +60,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
   
   func mapsVersioningManager(versioningManager: SKMapsVersioningManager!, loadedWithOfflinePackages packages: [AnyObject]!, updatablePackages: [AnyObject]!) {
     
-    print(packages)
+    print("packages loaded: \(packages)")
   }
   
+  func mapsVersioningManager(versioningManager: SKMapsVersioningManager!, loadedWithMapVersion currentMapVersion: String!) {
+    mapVersionFilePromise.success("Downloaded")
+  }
+
   
 }
 

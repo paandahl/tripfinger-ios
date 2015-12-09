@@ -1,5 +1,6 @@
 import Foundation
 import RealmSwift
+import BrightFutures
 
 class Session {
   
@@ -7,7 +8,14 @@ class Session {
 
   var currentItemId: String!
   var currentCountry: Region?
-  var currentRegion: Region?
+
+  var currentRegion: Region? {
+    didSet {
+      if currentRegion?.listing.item.category == Region.Category.COUNTRY.rawValue {
+        currentCountry = currentRegion
+      }
+    }
+  }
   var currentSection: GuideText?
   var currentCategory = Attraction.Category.EXPLORE_CITY
 
@@ -16,19 +24,8 @@ class Session {
   var attractionsFromRegion: Region!
   var searchService = SearchService()
   
-  func loadRegionWithID(regionId: String, handler: () -> ()) {
+  var mapVersionFileDownloaded: Future<String, NoError>!
     
-    ContentService.getRegionWithId(regionId) {
-      region in
-      
-      self.currentRegion = region
-      if region.listing.item.category == Region.Category.COUNTRY.rawValue {
-        self.currentCountry = region
-      }
-      handler()
-    }
-  }
-  
   
   func loadAttractions(handler: (loaded: Bool) -> ()) {
     

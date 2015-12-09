@@ -28,10 +28,12 @@ class Region: Object {
     case NEIGHBOURHOOD = 170
   }
   
+  // temporary data to make life easier
+  var mapCountry = false
   var offline = false;
   
   override static func ignoredProperties() -> [String] {
-    return ["offline"]
+    return ["offline", "mapCountry"]
   }
   
   class func constructRegion() -> Region {
@@ -40,6 +42,7 @@ class Region: Object {
     region.listing.item = GuideItem()
     return region
   }
+  
 }
 
 extension Region: GuideItemHolder {

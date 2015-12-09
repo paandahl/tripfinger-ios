@@ -50,6 +50,8 @@
 		25D0A3FF1C0EF27500E54C5E /* test-belgium.txg in Resources */ = {isa = PBXBuildFile; fileRef = 25D0A3FB1C0EF27500E54C5E /* test-belgium.txg */; };
 		25D0A4011C0F066600E54C5E /* UIImage+Rotate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D0A4001C0F066600E54C5E /* UIImage+Rotate.swift */; };
 		25D0A4031C153D4900E54C5E /* NetworkUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D0A4021C153D4900E54C5E /* NetworkUtil.swift */; };
+		25D0A4061C15B8AE00E54C5E /* DownloadServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D0A4051C15B8AD00E54C5E /* DownloadServiceTest.swift */; };
+		25D0A4311C15C2D700E54C5E /* libSDKTools.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25D0A42E1C15C28800E54C5E /* libSDKTools.a */; };
 		25D281C71BFB67760069BE86 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281C61BFB67760069BE86 /* DownloadService.swift */; };
 		25D281C91BFB69B80069BE86 /* DownloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281C81BFB69B80069BE86 /* DownloadController.swift */; };
 		25D281CD1BFBB6B30069BE86 /* GuideItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281CC1BFBB6B30069BE86 /* GuideItemImage.swift */; };
@@ -97,6 +99,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 25C9DFCA1B9CD84200C516C1;
 			remoteInfo = AdventureSpotter;
+		};
+		25D0A42D1C15C28800E54C5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25D0A4291C15C28800E54C5E /* SDKTools.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 03639ABD1940999D00F54937;
+			remoteInfo = SDKTools;
+		};
+		25D0A42F1C15C2CE00E54C5E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25D0A4291C15C28800E54C5E /* SDKTools.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 03639ABC1940999D00F54937;
+			remoteInfo = SDKTools;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -163,6 +179,8 @@
 		25D0A3FB1C0EF27500E54C5E /* test-belgium.txg */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test-belgium.txg"; sourceTree = "<group>"; };
 		25D0A4001C0F066600E54C5E /* UIImage+Rotate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+Rotate.swift"; sourceTree = "<group>"; };
 		25D0A4021C153D4900E54C5E /* NetworkUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkUtil.swift; sourceTree = "<group>"; };
+		25D0A4051C15B8AD00E54C5E /* DownloadServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadServiceTest.swift; sourceTree = "<group>"; };
+		25D0A4291C15C28800E54C5E /* SDKTools.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SDKTools.xcodeproj; path = SDKTools/SDKTools.xcodeproj; sourceTree = "<group>"; };
 		25D281C61BFB67760069BE86 /* DownloadService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
 		25D281C81BFB69B80069BE86 /* DownloadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadController.swift; sourceTree = "<group>"; };
 		25D281CC1BFBB6B30069BE86 /* GuideItemImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemImage.swift; sourceTree = "<group>"; };
@@ -213,6 +231,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25D0A4311C15C2D700E54C5E /* libSDKTools.a in Frameworks */,
 				25C9E0081B9CD9E000C516C1 /* libc++.dylib in Frameworks */,
 				25C9E0061B9CD9D100C516C1 /* libz.dylib in Frameworks */,
 				25C9E0041B9CD9BE00C516C1 /* CoreMotion.framework in Frameworks */,
@@ -339,6 +358,7 @@
 		25C9DFC21B9CD84200C516C1 = {
 			isa = PBXGroup;
 			children = (
+				25D0A4291C15C28800E54C5E /* SDKTools.xcodeproj */,
 				250651EC1BD40F89002C3883 /* Libraries */,
 				25C9DFCD1B9CD84200C516C1 /* Tripfinger */,
 				25C9DFE31B9CD84200C516C1 /* TripfingerTests */,
@@ -387,14 +407,15 @@
 		25C9DFE31B9CD84200C516C1 /* TripfingerTests */ = {
 			isa = PBXGroup;
 			children = (
+				25F048E11BCC365C002DE14E /* ContentServiceTest.swift */,
+				25D436351BD5546A0016E362 /* SearchServiceTest.swift */,
+				25C9DFE41B9CD84200C516C1 /* Supporting Files */,
 				25D0A3F81C0EF27500E54C5E /* test-belgium.ngi */,
 				25D0A3F91C0EF27500E54C5E /* test-belgium.ngi.dat */,
 				25D0A3FA1C0EF27500E54C5E /* test-belgium.skm */,
 				25D0A3FB1C0EF27500E54C5E /* test-belgium.txg */,
-				25F048E11BCC365C002DE14E /* ContentServiceTest.swift */,
-				25C9DFE41B9CD84200C516C1 /* Supporting Files */,
 				25C9DFE61B9CD84200C516C1 /* TripfingerTests.swift */,
-				25D436351BD5546A0016E362 /* SearchServiceTest.swift */,
+				25D0A4051C15B8AD00E54C5E /* DownloadServiceTest.swift */,
 			);
 			path = TripfingerTests;
 			sourceTree = "<group>";
@@ -405,6 +426,14 @@
 				25C9DFE51B9CD84200C516C1 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		25D0A42A1C15C28800E54C5E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				25D0A42E1C15C28800E54C5E /* libSDKTools.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		25D707BB1BC66145005A4BBA /* UI Components */ = {
@@ -500,6 +529,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				25D0A4301C15C2CE00E54C5E /* PBXTargetDependency */,
 			);
 			name = Tripfinger;
 			productName = AdventureSpotter;
@@ -559,6 +589,12 @@
 			mainGroup = 25C9DFC21B9CD84200C516C1;
 			productRefGroup = 25C9DFCC1B9CD84200C516C1 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 25D0A42A1C15C28800E54C5E /* Products */;
+					ProjectRef = 25D0A4291C15C28800E54C5E /* SDKTools.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				25C9DFCA1B9CD84200C516C1 /* Tripfinger */,
@@ -567,6 +603,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		25D0A42E1C15C28800E54C5E /* libSDKTools.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSDKTools.a;
+			remoteRef = 25D0A42D1C15C28800E54C5E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		2540910D1C0E83F000A2002F /* Resources */ = {
@@ -718,6 +764,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25C9DFE71B9CD84200C516C1 /* TripfingerTests.swift in Sources */,
+				25D0A4061C15B8AE00E54C5E /* DownloadServiceTest.swift in Sources */,
 				25D436361BD5546A0016E362 /* SearchServiceTest.swift in Sources */,
 				25F048E21BCC365C002DE14E /* ContentServiceTest.swift in Sources */,
 			);
@@ -735,6 +782,11 @@
 			isa = PBXTargetDependency;
 			target = 25C9DFCA1B9CD84200C516C1 /* Tripfinger */;
 			targetProxy = 25C9DFE11B9CD84200C516C1 /* PBXContainerItemProxy */;
+		};
+		25D0A4301C15C2CE00E54C5E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SDKTools;
+			targetProxy = 25D0A42F1C15C2CE00E54C5E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -804,7 +856,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
@@ -881,6 +933,8 @@
 					"$(PROJECT_DIR)",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				HEADER_SEARCH_PATHS = "/Users/prebenl/tripfinger/tripfinger-ios/";
+				"HEADER_SEARCH_PATHS[arch=*]" = "/Users/prebenl/tripfinger/tripfinger-ios/SDKTools/**";
 				INFOPLIST_FILE = Tripfinger/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CFLAGS = (
@@ -921,6 +975,8 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 				);
+				HEADER_SEARCH_PATHS = "/Users/prebenl/tripfinger/tripfinger-ios/";
+				"HEADER_SEARCH_PATHS[arch=*]" = "/Users/prebenl/tripfinger/tripfinger-ios/SDKTools/**";
 				INFOPLIST_FILE = Tripfinger/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CFLAGS = (
@@ -964,6 +1020,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				"HEADER_SEARCH_PATHS[arch=*]" = "/Users/prebenl/tripfinger/tripfinger-ios/SDKTools/**";
 				INFOPLIST_FILE = TripfingerTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "no.prebenludviksen.$(PRODUCT_NAME:rfc1034identifier)";

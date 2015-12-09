@@ -7,10 +7,19 @@ use_frameworks!
 #pod 'ScoutMaps-iOS-SDK'
 pod "MDCSwipeToChoose"
 pod 'Alamofire', '~> 3.0'
-pod 'RealmSwift'
+pod 'RealmSwift', '0.96.3'
+pod 'BrightFutures'
+
 end
 
 target 'TripfingerTests' do
 
 end
 
+
+post_install do |installer|
+  puts("Update debug pod settings to speed up build time")
+  Dir.glob(File.join("Pods", "**", "Pods*{debug,Private}.xcconfig")).each do |file|
+    File.open(file, 'a') { |f| f.puts "\nDEBUG_INFORMATION_FORMAT = dwarf" }
+  end
+end

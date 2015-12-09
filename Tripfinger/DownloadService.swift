@@ -1,12 +1,16 @@
 import Foundation
 import Alamofire
 import RealmSwift
+import SKMaps
+import BrightFutures
 
 class DownloadService {
   
   static let tripfingerUrl = "http://server.tripfinger.com"
   static let gcsMapsUrl = "https://storage.googleapis.com/tripfinger-maps/"
   static let gcsImagesUrl = "https://storage.googleapis.com/tripfinger-maps/"
+  
+  static var mapDownloadManager = MapDownloadManager()
   
   class func isRegionDownloaded(regionId: String, countryId: String? = nil) -> Bool {
     
@@ -19,6 +23,49 @@ class DownloadService {
     else {
       return false
     }
+  }
+  
+  class func getMapsAvailable() -> Future<(SKTMapsObject, [String: String]), NoError> {
+    let promise = Promise<(SKTMapsObject, [String: String]), NoError>()
+    
+    Queue.global.async {
+      let jsonURLString = SKMapsService.sharedInstance().packagesManager.mapsJSONURLForVersion(nil)
+      ContentService.getJsonStringFromUrl(jsonURLString, success: {
+        json in
+        
+        let skMaps = SKTMapsObject.convertFromJSON(json)
+        let allContinents = skMaps.packagesForType(.Continent) as! [SKTPackage]
+        let countries = skMaps.packagesForType(.Country) as! [SKTPackage]
+        var names = getPackageNames(countries)
+        names.appendContentsOf(getPackageNames(allContinents))
+        let jsonNames = JSON(rawValue: names)!
+        
+        ContentService.getJsonFromPost(ContentService.baseUrl + "/region_ids", body: jsonNames.rawString()!, success: {
+          json in
+          
+          var mappings = [String: String]()
+          let jsonDict = json.dictionary!
+          for country in countries {
+            mappings[country.packageCode] = jsonDict[country.nameForLanguageCode("en")]!.string!
+          }
+          for continent in allContinents {
+            mappings[continent.packageCode] = jsonDict[continent.nameForLanguageCode("en")]!.string!
+          }
+
+          promise.success((skMaps, mappings))
+          }, failure: nil)
+      })
+    }
+
+    return promise.future
+  }
+  
+  internal class func getPackageNames(packages: [SKTPackage]) -> [String] {
+    var names = [String]()
+    for package in packages {
+      names.append(package.nameForLanguageCode("en"))
+    }
+    return names
   }
   
   class func hasMapPackage(packageId: String) -> Bool {
@@ -50,11 +97,11 @@ class DownloadService {
     SKMapsService.sharedInstance().packagesManager.deleteOfflineMapPackageNamed(regionId)
   }
   
-  class func downloadCountry(countryId: String, progressHandler: Float -> (), finishedHandler: () -> ()) {
+  class func downloadCountry(countryId: String, package: SKTPackage, onlyMap: Bool = false, progressHandler: Float -> (), finishedHandler: () -> ()) {
     
     let countryPath = NSURL.getDirectory(.LibraryDirectory, withPath: countryId)
     var finished = false
-    try! downloadMapForRegion(countryId, regionPath: countryPath, progressHandler: progressHandler) {
+    try! downloadMapForRegion(countryId, regionPath: countryPath, package: package, progressHandler: progressHandler) {
       if finished {
         finishedHandler()
       }
@@ -62,22 +109,25 @@ class DownloadService {
         finished = true
       }
     }
-    downloadTripfingerData(tripfingerUrl + "/download_country/\(countryId)", path: countryPath) {
-      if finished {
-        finishedHandler()
-      }
-      else {
-        finished = true
+    if !onlyMap {
+      downloadTripfingerData(tripfingerUrl + "/download_country/\(countryId)", path: countryPath) {
+        if finished {
+          finishedHandler()
+        }
+        else {
+          finished = true
+        }
       }
     }
   }
   
-  class func downloadCity(countryId: String, cityId: String, progressHandler: Float -> (), finishedHandler: () -> ()) {
+  class func downloadCity(countryId: String, cityId: String, package: SKTPackage, onlyMap: Bool = false, progressHandler: Float -> (), finishedHandler: () -> ()) {
     
     let countryPath = NSURL.getDirectory(.LibraryDirectory, withPath: countryId)
     var finished = false
     let cityPath = countryPath.URLByAppendingPathComponent(cityId)
-    try! downloadMapForRegion(cityId, regionPath: cityPath, progressHandler: progressHandler) {
+    
+    try! downloadMapForRegion(cityId, regionPath: cityPath, package: package, progressHandler: progressHandler) {
       if finished {
         finishedHandler()
       }
@@ -85,42 +135,53 @@ class DownloadService {
         finished = true
       }
     }
-    downloadTripfingerData(tripfingerUrl + "/download_city/\(cityId)", path: cityPath) {
-      if finished {
-        finishedHandler()
-      }
-      else {
-        finished = true
-      }
+    if !onlyMap {
+      downloadTripfingerData(tripfingerUrl + "/download_city/\(cityId)", path: cityPath) {
+        if finished {
+          finishedHandler()
+        }
+        else {
+          finished = true
+        }
+      }      
     }
   }
   
-  class func downloadMapForRegion(regionId: String, regionPath: NSURL, progressHandler: Float -> (), finishedHandler: () -> ()) throws {
+  class func downloadMapForRegion(regionId: String, regionPath: NSURL, package: SKTPackage, progressHandler: Float -> (), finishedHandler: () -> ()) throws {
     if hasMapPackage(regionId) {
       throw Error.RuntimeError("Map for \(regionId) is already installed.")
     }
-    var fileName = regionId + ".skm"
-    var url = gcsMapsUrl + fileName
-    var destinationPath = regionPath.URLByAppendingPathComponent(fileName)
-    downloadFile(url, destinationPath: destinationPath, progressHandler: progressHandler) {
-      SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed(regionId, inContainingFolderPath: regionPath.path!)
-      finishedHandler()
-    }
     
-    fileName = regionId + ".ngi"
-    url = gcsMapsUrl + fileName
-    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
-    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
+    print("path: \(regionPath.path)")
     
-    fileName = regionId + ".ngi.dat"
-    url = gcsMapsUrl + fileName
-    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
-    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
+    let region: SKTDownloadObjectHelper =  SKTDownloadObjectHelper.downloadObjectHelperWithSKTPackage(package) as! SKTDownloadObjectHelper
+    mapDownloadManager.progressHandler = progressHandler
+    mapDownloadManager.finishedHandler = finishedHandler
+    SKTDownloadManager.sharedInstance().requestDownloads([region], startAutomatically: true, withDelegate: mapDownloadManager, withDataSource: mapDownloadManager, withPath: regionPath.path!)
+
     
-    fileName = regionId + ".txg"
-    url = gcsMapsUrl + fileName
-    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
-    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
+//    var fileName = regionId + ".skm"
+//    var url = gcsMapsUrl + fileName
+//    var destinationPath = regionPath.URLByAppendingPathComponent(fileName)
+//    downloadFile(url, destinationPath: destinationPath, progressHandler: progressHandler) {
+//      SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed(regionId, inContainingFolderPath: regionPath.path!)
+//      finishedHandler()
+//    }
+//    
+//    fileName = regionId + ".ngi"
+//    url = gcsMapsUrl + fileName
+//    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
+//    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
+//    
+//    fileName = regionId + ".ngi.dat"
+//    url = gcsMapsUrl + fileName
+//    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
+//    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
+//    
+//    fileName = regionId + ".txg"
+//    url = gcsMapsUrl + fileName
+//    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
+//    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
   }
   
   class func downloadTripfingerData(url: String, path: NSURL, finishedHandler: () -> ()) {
@@ -226,5 +287,48 @@ class DownloadService {
           print("ERROR: Downloading file failed")
         }
     }
+  }
+}
+
+class MapDownloadManager: NSObject, SKTDownloadManagerDelegate, SKTDownloadManagerDataSource {
+  
+  var finishedHandler: (() -> ())?
+  var progressHandler: (Float -> ())?
+
+  func downloadManager(downloadManager: SKTDownloadManager, didUpdateCurrentDownloadProgress  currentPorgressString: String, currentDownloadPercentage currentPercentage: Float, overallDownloadProgress overallProgressString: String, overallDownloadPercentage overallPercentage: Float, forDownloadHelper downloadHelper: SKTDownloadObjectHelper) {
+    if let progressHandler = progressHandler {
+      progressHandler(currentPercentage / 100.0)
+    }
+  }
+  
+  func downloadManager(downloadManager: SKTDownloadManager, didDownloadDownloadHelper downloadHelper: SKTDownloadObjectHelper, withSuccess success: Bool) {
+    print("Finished downloading region.")
+    SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed("regionId", inContainingFolderPath: "regionPath.path!")
+
+    if let finishedHandler = finishedHandler {
+      finishedHandler()
+    }
+  }
+  
+  func downloadManager(downloadManager: SKTDownloadManager, saveDownloadHelperToDatabase downloadHelper: SKTDownloadObjectHelper) {
+    print("SAVE to DB")
+    let code: String = downloadHelper.getCode()
+    let path: String = SKTDownloadManager.libraryDirectory() + "/" + code
+    //        let path: NSURL = SKTDownloadManager.libraryDirectory().stringByAppendingPathComponent(downloadHelper.getCode())
+    print("Fetching from: \(path)")
+    
+    SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed(code, inContainingFolderPath: path)
+    
+    let fman: NSFileManager = NSFileManager()
+    do {
+      try fman.removeItemAtPath(path)
+    } catch {
+      
+    }
+  }
+
+
+  func isOnBoardMode() -> Bool {
+    return false
   }
 }
