@@ -53,7 +53,7 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
     case 1:
       navigateToSubview("listController", controllerType: ListController.self)
     case 2:
-      navigateToSubview("mapController", controllerType: MapDisplayViewController.self)
+      navigateToSubview("mapController", controllerType: MapController.self)
     default:
       break
     }
@@ -99,27 +99,27 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
 
 extension RootController {
   
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if segue.identifier == "ShowSearch" {
-      let navigationController = segue.destinationViewController as! UINavigationController
-      let searchViewController = navigationController.viewControllers[0] as! SearchViewController
-      searchViewController.delegate = self
-      searchViewController.regionId = session.currentRegion?.getId()
-      searchViewController.countryId = session.currentCountry?.getId()
-    }
-  }
+  @IBAction func navigateToSearch() {
+    let nav = UINavigationController()
+    let searchController = SearchController()
+    searchController.delegate = self
+    searchController.regionId = session.currentRegion?.getId()
+    searchController.countryId = session.currentCountry?.getId()
+    nav.viewControllers = [searchController]
+    view.window!.rootViewController!.presentViewController(nav, animated: true, completion: nil)
+  }  
 }
 
 extension RootController: SearchViewControllerDelegate {
   func selectedSearchResult(searchResult: SearchResult) {
     
     if searchResult.resultType == .Street {
-      if !(currentController is MapDisplayViewController) {
+      if !(currentController is MapController) {
         segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
         secondSegmentedController.selectedSegmentIndex = 2
-        navigateToSubview("mapController", controllerType: MapDisplayViewController.self)
+        navigateToSubview("mapController", controllerType: MapController.self)
       }
-      let mapController = currentController as! MapDisplayViewController
+      let mapController = currentController as! MapController
       mapController.selectedSearchResult(searchResult)
     }
   }

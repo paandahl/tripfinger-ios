@@ -1,7 +1,7 @@
 import SKMaps
 import RealmSwift
 
-class MapDisplayViewController: UIViewController, SubController, SKMapViewDelegate, CLLocationManagerDelegate, SKPositionerServiceDelegate {
+class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocationManagerDelegate, SKPositionerServiceDelegate {
   
   var session: Session!
   var attractions = List<Attraction>()
@@ -165,7 +165,7 @@ class MapDisplayViewController: UIViewController, SubController, SKMapViewDelega
   }
 }
 
-extension MapDisplayViewController: SKCalloutViewDelegate {
+extension MapController: SKCalloutViewDelegate {
   
   func calloutView(calloutView: SKCalloutView!, didTapRightButton rightButton: UIButton!) {
     let attraction = attractions[calloutView.titleLabel.tag - 2000]
@@ -173,7 +173,7 @@ extension MapDisplayViewController: SKCalloutViewDelegate {
   }
 }
 
-extension MapDisplayViewController: SearchViewControllerDelegate {
+extension MapController: SearchViewControllerDelegate {
   
   func selectedSearchResult(searchResult: SearchResult) {
     if !mapView.isLocationVisible(searchResult.latitude, long: searchResult.longitude) {

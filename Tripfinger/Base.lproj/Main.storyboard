@@ -209,10 +209,10 @@
             </objects>
             <point key="canvasLocation" x="3267" y="2108"/>
         </scene>
-        <!--Map Display View Controller-->
+        <!--Map Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController storyboardIdentifier="mapController" id="vXZ-lx-hvc" customClass="MapDisplayViewController" customModule="Tripfinger" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="mapController" id="vXZ-lx-hvc" customClass="MapController" customModule="Tripfinger" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -269,56 +269,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Tv-a2-eef" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2879" y="1217"/>
-        </scene>
-        <!--Search View Controller-->
-        <scene sceneID="Aku-Cv-LAE">
-            <objects>
-                <tableViewController id="xyV-dE-gNs" customClass="SearchViewController" customModule="Tripfinger" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="y2N-ck-0KT">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SearchResultCell" textLabel="aSd-kN-PZs" detailTextLabel="yZj-8C-Uco" style="IBUITableViewCellStyleSubtitle" id="jpW-a0-vw3">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jpW-a0-vw3" id="JA9-AX-Wt7">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aSd-kN-PZs">
-                                            <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <animations/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="yZj-8C-Uco">
-                                            <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <animations/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                    <animations/>
-                                </tableViewCellContentView>
-                                <animations/>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="xyV-dE-gNs" id="kUA-Ft-3ga"/>
-                            <outlet property="delegate" destination="xyV-dE-gNs" id="phs-Ul-lKk"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="vV3-D8-3zQ"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8ST-sV-04B" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3585" y="-203"/>
         </scene>
         <!--Root Controller-->
         <scene sceneID="rSz-g7-hFW">
@@ -401,7 +351,7 @@
                         <barButtonItem key="rightBarButtonItem" width="86" systemItem="search" id="J6h-42-VBx">
                             <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <connections>
-                                <segue destination="M4M-Nd-WT6" kind="presentation" identifier="ShowSearch" id="3fe-gE-9V0"/>
+                                <action selector="navigateToSearch" destination="fNL-El-q7h" id="Wg1-wc-6kf"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -435,25 +385,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uS3-SK-89k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1243" y="403"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="csn-6s-mPr">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="M4M-Nd-WT6" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vD4-LK-ewt">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="xyV-dE-gNs" kind="relationship" relationship="rootViewController" id="LPh-3a-jbk"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="cKB-4V-d9g" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2773" y="-203"/>
         </scene>
         <!--Guide Controller-->
         <scene sceneID="Y4i-O0-wVq">
@@ -499,7 +430,7 @@
         <image name="group" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="4g3-0X-Xrq"/>
         <segue reference="vbF-NY-WMH"/>
-        <segue reference="CUm-Ra-T5D"/>
     </inferredMetricsTieBreakers>
 </document>

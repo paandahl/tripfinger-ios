@@ -12,6 +12,8 @@ class SearchServiceDelegate: NSObject, SKSearchServiceDelegate {
   
   func searchService(searchService: SKSearchService!, didRetrieveMultiStepSearchResults searchResults: [AnyObject]!) {
     
+    print("search results received")
+    
     self.handler(searchResults as! [SKSearchResult])
   }
   
@@ -29,8 +31,10 @@ class SearchService {
   let maxResults = 20
   var packageCode: String!
   var delegate: SearchServiceDelegate?
+  let varLock = dispatch_queue_create("SearchService.VarLock", nil)
   var searchRunning = false
-  var searchCancelled = false
+  var threadCount = 0
+  
   
   init() {
     SKSearchService.sharedInstance().searchResultsNumber = 10000
@@ -49,11 +53,20 @@ class SearchService {
       packageCode = countryId
     }
   }
-
+  
   func getCities(forCountry countryId: String? = nil, handler: (String, [SKSearchResult], (() -> ())?) -> ()) {
     if let countryId = countryId {
       setPackageCode(countryId, countryId: countryId)
-      setDelegate() { results in handler(countryId, results, nil) }
+      setDelegate { results in
+        
+        if results.count == 0 { // error, repeat query
+          print("Got no cities fir country \(countryId). Retrying query.")
+          self.getCities(forCountry: countryId, handler: handler)
+        }
+        else {
+          handler(countryId, results, nil)
+        }
+      }
       self.searchMapData(SKListLevel.CityList, searchString: "", parent: 0)
     }
     else {
@@ -63,15 +76,26 @@ class SearchService {
   }
   
   func iterateThroughMapPackages(packages: [SKMapPackage], index: Int, handler: (String, [SKSearchResult], (() -> ())?) -> ())  {
-    if index < packages.count {
-      let mapPackage = packages[index]
-      packageCode = mapPackage.name
-      setDelegate() { results in
-        handler(mapPackage.name, results) {
-          self.iterateThroughMapPackages(packages, index: index + 1, handler: handler)
+    let mapPackage = packages[index]
+    packageCode = mapPackage.name
+    setDelegate() { results in
+      
+      if results.count == 0 { // error, repeat query
+        print("Got no cities for country \(self.packageCode). Retrying query.")
+        self.iterateThroughMapPackages(packages, index: index, handler: handler)
+      }
+      else {
+        var callback: (() -> ())? = nil
+        if index + 1 < packages.count {
+          callback = {
+            self.iterateThroughMapPackages(packages, index: index + 1, handler: handler)
+          }
         }
+        handler(mapPackage.name, results, callback)
       }
     }
+    self.searchMapData(SKListLevel.CityList, searchString: "", parent: 0)
+    
   }
   
   func getStreetsForCity(cityId: String, countryId: String, identifier: UInt64, searchString: String, handler: [SKSearchResult] -> ()) {
@@ -80,11 +104,10 @@ class SearchService {
     self.searchMapData(SKListLevel.StreetList, searchString: searchString, parent: identifier)
   }
   
-  func cancelSearch() {
-  }
-
   func onlineSearch(fullSearchString: String, regionId: String? = nil, countryId: String? = nil, gradual: Bool = false, handler: [SearchResult] -> ()) {
-    ContentService.getJsonFromUrl(ContentService.baseUrl + "/search/\(fullSearchString)", success: {
+    
+    let escapedString = fullSearchString.stringByAddingPercentEncodingWithAllowedCharacters(.URLPathAllowedCharacterSet())!
+    ContentService.getJsonFromUrl(ContentService.baseUrl + "/search/\(escapedString)", success: {
       json in
       
       let searchResults = self.parseSearchResults(json)
@@ -106,9 +129,42 @@ class SearchService {
     }
     return searchResults
   }
-
-  func offlineSearch(fullSearchString: String, regionId: String?, countryId: String? = nil, gradual: Bool = false, handler: [SearchResult] -> ()) {
-    SyncManager.run_async() {
+  
+  func offlineSearch(fullSearchString: String, regionId: String? = nil, countryId: String? = nil, gradual: Bool = false, handler: [SearchResult] -> ()) {
+    
+    var threadId = 0
+    SyncManager.synchronized(varLock) {
+      self.threadCount += 1
+      threadId = self.threadCount
+    }
+    let isCancelled: () -> Bool = {
+      var isCancelled = false
+      SyncManager.synchronized(self.varLock) {
+        if threadId != self.threadCount {
+          isCancelled = true
+        }
+      }
+      if isCancelled {
+        print("cancelling thread \(threadId), because there are \(self.threadCount)")
+      }
+      return isCancelled
+    }
+    
+    SyncManager.run_async {
+      
+      print("Waiting for thread to unlock \(threadId)")
+      SyncManager.block_until_condition(self, condition: {
+        return self.searchRunning == false
+        },
+        after: {
+          self.searchRunning = true
+      })
+      print("Got lock for thread \(threadId)")
+      
+      if isCancelled() {
+        self.searchRunning = false
+        return
+      }
       
       var searchStrings = fullSearchString.characters.split{ $0 == " " }.map(String.init)
       searchStrings = searchStrings.sort { $0.characters.count > $1.characters.count }
@@ -116,19 +172,14 @@ class SearchService {
       let primarySearchString = searchStrings[0]
       let secondarySearchStrings = Array(searchStrings[1..<searchStrings.count])
       
-      if self.searchRunning {
-        self.searchCancelled = true
-        while (self.searchRunning) {
-          usleep(10 * 1000)
-        }
-      }
-      
-      self.searchCancelled = false
-      self.searchRunning = true
       let countryId = countryId == nil ? regionId : countryId!
+      print("offline searching for country: \(countryId)")
+      
       self.getCities(forCountry: countryId) {
         packageId, cities, nextCountryHandler in
         
+        print("Citiy packageId \(packageId)")
+        print("Cities count \(cities.count)")
         var counter = 0
         var searchList = [SearchResult]()
         
@@ -136,9 +187,11 @@ class SearchService {
         self.setDelegate() {
           searchResults in
           
+          print("Entering delegate")
+          
           counter += 1
           
-          if self.searchCancelled {
+          if isCancelled() {
             self.searchRunning = false
             return
           }
@@ -161,13 +214,17 @@ class SearchService {
               handler(searchList)
             }
             let city = cities[counter]
+            print("iterating to next city: \(city.name)")
             self.searchMapData(SKListLevel.StreetList, searchString: primarySearchString, parent: city.identifier)
           }
           else {
-            self.searchRunning = false
             handler(searchList)
             if let nextCountryHandler = nextCountryHandler {
               nextCountryHandler()
+            }
+            else {
+              print("Finished thread: \(threadId)")
+              self.searchRunning = false
             }
           }
         }
@@ -211,6 +268,7 @@ class SearchService {
     
     let searchResult = SearchResult()
     searchResult.name = skobblerResult.name
+    
     searchResult.latitude = skobblerResult.coordinate.latitude
     searchResult.longitude = skobblerResult.coordinate.longitude
     searchResult.location = city

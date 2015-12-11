@@ -30,7 +30,7 @@
 		25B5068F1BB4009600A36BA1 /* ChooseAttractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B5068E1BB4009600A36BA1 /* ChooseAttractionView.swift */; };
 		25B506911BB401F400A36BA1 /* ImageLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B506901BB401F400A36BA1 /* ImageLabelView.swift */; };
 		25C9DFD11B9CD84200C516C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C9DFD01B9CD84200C516C1 /* AppDelegate.swift */; };
-		25C9DFD31B9CD84200C516C1 /* MapDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C9DFD21B9CD84200C516C1 /* MapDisplayViewController.swift */; };
+		25C9DFD31B9CD84200C516C1 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C9DFD21B9CD84200C516C1 /* MapController.swift */; };
 		25C9DFD61B9CD84200C516C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFD41B9CD84200C516C1 /* Main.storyboard */; };
 		25C9DFD81B9CD84200C516C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFD71B9CD84200C516C1 /* Images.xcassets */; };
 		25C9DFDB1B9CD84200C516C1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFD91B9CD84200C516C1 /* LaunchScreen.xib */; };
@@ -58,7 +58,7 @@
 		25D281CF1BFCB0E10069BE86 /* OfflineService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281CE1BFCB0E10069BE86 /* OfflineService.swift */; };
 		25D281D11BFDC9190069BE86 /* NSURL+GetDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281D01BFDC9190069BE86 /* NSURL+GetDirectory.swift */; };
 		25D281D31BFDD7560069BE86 /* UIImage+CropAndResize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D281D21BFDD7560069BE86 /* UIImage+CropAndResize.swift */; };
-		25D436301BD538810016E362 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4362F1BD538810016E362 /* SearchViewController.swift */; };
+		25D436301BD538810016E362 /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D4362F1BD538810016E362 /* SearchController.swift */; };
 		25D436321BD548400016E362 /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D436311BD548400016E362 /* SearchService.swift */; };
 		25D436361BD5546A0016E362 /* SearchServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D436351BD5546A0016E362 /* SearchServiceTest.swift */; };
 		25D4363A1BD57BAF0016E362 /* MultiStepSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = 25D436391BD57BAF0016E362 /* MultiStepSearch.m */; };
@@ -157,7 +157,7 @@
 		25C9DFCB1B9CD84200C516C1 /* Tripfinger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripfinger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C9DFCF1B9CD84200C516C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25C9DFD01B9CD84200C516C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		25C9DFD21B9CD84200C516C1 /* MapDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapDisplayViewController.swift; sourceTree = "<group>"; };
+		25C9DFD21B9CD84200C516C1 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		25C9DFD51B9CD84200C516C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		25C9DFD71B9CD84200C516C1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		25C9DFDA1B9CD84200C516C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -187,7 +187,7 @@
 		25D281CE1BFCB0E10069BE86 /* OfflineService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineService.swift; sourceTree = "<group>"; };
 		25D281D01BFDC9190069BE86 /* NSURL+GetDirectory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURL+GetDirectory.swift"; sourceTree = "<group>"; };
 		25D281D21BFDD7560069BE86 /* UIImage+CropAndResize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+CropAndResize.swift"; sourceTree = "<group>"; };
-		25D4362F1BD538810016E362 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		25D4362F1BD538810016E362 /* SearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		25D436311BD548400016E362 /* SearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
 		25D436351BD5546A0016E362 /* SearchServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchServiceTest.swift; sourceTree = "<group>"; };
 		25D436381BD57BAF0016E362 /* MultiStepSearch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiStepSearch.h; sourceTree = "<group>"; };
@@ -346,9 +346,9 @@
 				2503D3AB1BE0DA430078C0F0 /* FilterController.swift */,
 				25D707B91BC6606E005A4BBA /* GuideController.swift */,
 				25D436441BDA4B000016E362 /* ListController.swift */,
-				25C9DFD21B9CD84200C516C1 /* MapDisplayViewController.swift */,
+				25C9DFD21B9CD84200C516C1 /* MapController.swift */,
 				25B5068A1BB3FD5800A36BA1 /* RootController.swift */,
-				25D4362F1BD538810016E362 /* SearchViewController.swift */,
+				25D4362F1BD538810016E362 /* SearchController.swift */,
 				2503D3A91BDF7CFB0078C0F0 /* SubController.swift */,
 				25D436421BDA3A680016E362 /* SwipeController.swift */,
 			);
@@ -716,7 +716,7 @@
 				25D0A4011C0F066600E54C5E /* UIImage+Rotate.swift in Sources */,
 				25D281D11BFDC9190069BE86 /* NSURL+GetDirectory.swift in Sources */,
 				2503D3A51BDA5E2A0078C0F0 /* DetailController.swift in Sources */,
-				25C9DFD31B9CD84200C516C1 /* MapDisplayViewController.swift in Sources */,
+				25C9DFD31B9CD84200C516C1 /* MapController.swift in Sources */,
 				2503D3A71BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift in Sources */,
 				25D281C91BFB69B80069BE86 /* DownloadController.swift in Sources */,
 				25D281CD1BFBB6B30069BE86 /* GuideItemImage.swift in Sources */,
@@ -743,7 +743,7 @@
 				25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */,
 				25B5068F1BB4009600A36BA1 /* ChooseAttractionView.swift in Sources */,
 				25D4363D1BD6F05E0016E362 /* SyncManager.swift in Sources */,
-				25D436301BD538810016E362 /* SearchViewController.swift in Sources */,
+				25D436301BD538810016E362 /* SearchController.swift in Sources */,
 				25D707C31BC6BAA8005A4BBA /* Session.swift in Sources */,
 				25D707CC1BC6D05B005A4BBA /* GuideItemCell.swift in Sources */,
 				2503D3B01BE133290078C0F0 /* FilterBox.swift in Sources */,

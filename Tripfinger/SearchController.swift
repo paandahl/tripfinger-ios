@@ -4,7 +4,7 @@ protocol SearchViewControllerDelegate: class {
   func selectedSearchResult(searchResult: SearchResult)
 }
 
-class SearchViewController: UITableViewController {
+class SearchController: UITableViewController {
   
   var regionId: String?
   var countryId: String?
@@ -13,6 +13,9 @@ class SearchViewController: UITableViewController {
   var searchService: SearchService!
   var searchController: UISearchController!
   var searchBarItem: UIBarButtonItem!
+  
+  var offlineResults = [SearchResult]()
+  var onlineResults = [SearchResult]()
   var searchResults = [SearchResult]()
   var searchText = ""
   
@@ -43,30 +46,33 @@ class SearchViewController: UITableViewController {
 
 // MARK: - Search controller functionality
 
-extension SearchViewController: UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
+extension SearchController: UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
   
   func updateSearchResultsForSearchController(searchController: UISearchController) {
     let newSearchText = searchController.searchBar.text!
     if (newSearchText.characters.count > 1 && newSearchText != searchText) {
       
       searchText = newSearchText
-      searchService.cancelSearch()
       
       if connectedToNetwork() {
         searchService.onlineSearch(searchText, regionId: regionId, countryId: countryId, gradual: true) {
           searchResults in
           
-          self.searchResults = searchResults
+          self.onlineResults = searchResults
+          self.searchResults = [SearchResult]()
+          self.searchResults.appendContentsOf(self.onlineResults)
+          self.searchResults.appendContentsOf(self.offlineResults)
           self.tableView.reloadData()
         }
       }
-      else {
-        searchService.offlineSearch(searchText, regionId: regionId, countryId: countryId, gradual: true) {
-          searchResults in
-          
-          self.searchResults = searchResults
-          self.tableView.reloadData()
-        }
+      searchService.offlineSearch(searchText, regionId: regionId, countryId: countryId, gradual: true) {
+        searchResults in
+        
+        self.offlineResults = searchResults
+        self.searchResults = [SearchResult]()
+        self.searchResults.appendContentsOf(self.onlineResults)
+        self.searchResults.appendContentsOf(self.offlineResults)
+        self.tableView.reloadData()
       }
     }
   }
@@ -87,14 +93,18 @@ extension SearchViewController: UISearchResultsUpdating, UISearchControllerDeleg
 
 // MARK: - Talbeview Data Source
 
-extension SearchViewController {
+extension SearchController {
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return searchResults.count
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell", forIndexPath: indexPath)
+    
+    var cell: UITableViewCell! = tableView.dequeueReusableCellWithIdentifier("SearchResultCell")
+    if cell == nil {
+      cell = UITableViewCell(style: .Subtitle, reuseIdentifier: "SearchResultCell")
+    }
     let searchResult = searchResults[indexPath.row]
     cell.textLabel?.text = searchResult.name
     cell.detailTextLabel?.text = searchResult.location
@@ -104,7 +114,7 @@ extension SearchViewController {
 
 // MARK: Tableview selection
 
-extension SearchViewController {
+extension SearchController {
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
