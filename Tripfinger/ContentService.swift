@@ -98,7 +98,24 @@ class ContentService {
       dispatch_async(dispatch_get_main_queue()) {
         handler(guideText)
         
-      }}, failure: nil)
+      }})
+  }
+  
+  class func getAttractionWithId(attractionId: String, handler: Attraction -> ()) {
+    if let attraction = OfflineService.getAttractionWithId(attractionId) {
+      handler(attraction)
+      return
+    }
+    getJsonFromUrl(baseUrl + "/attractions/\(attractionId)", success: {
+      json in
+      
+      let attraction = self.parseAttraction(json)
+      
+      dispatch_async(dispatch_get_main_queue()) {
+        handler(attraction)
+      }
+    })
+
   }
   
   class func getAttractionsForRegion(region: Region?, handler: List<Attraction> -> ()) {
@@ -251,7 +268,7 @@ class ContentService {
     listing.item = parseGuideItem(json)
     listing.latitude = json["latitude"].double!
     listing.longitude = json["longitude"].double!
-    listing.country = json["country"].string!
+    listing.country = json["country"].string
     listing.city = json["city"].string
     return listing
   }
@@ -285,7 +302,7 @@ class ContentService {
   
   class func parseRegion(json: JSON, fetchChildren: Bool = true) -> Region {
     let region = Region()
-    region.listing = GuideListing()
+    region.listing = parseGuideListing(json)
     region.listing.item = parseGuideItem(json)
     
     if (fetchChildren) {

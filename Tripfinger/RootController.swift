@@ -111,16 +111,32 @@ extension RootController {
 }
 
 extension RootController: SearchViewControllerDelegate {
-  func selectedSearchResult(searchResult: SearchResult) {
+  func selectedSearchResult(searchResult: SearchResult, afterTransition: (() -> ())?) {
     
-    if searchResult.resultType == .Street {
+    if searchResult.resultType == 180 { // street
       if !(currentController is MapController) {
         segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
         secondSegmentedController.selectedSegmentIndex = 2
         navigateToSubview("mapController", controllerType: MapController.self)
       }
       let mapController = currentController as! MapController
-      mapController.selectedSearchResult(searchResult)
+      mapController.selectedSearchResult(searchResult, afterTransition: nil)
+    }
+    else if String(searchResult.resultType).hasPrefix("2") { // Attraction
+      if !(currentController is MapController) {
+        segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
+        secondSegmentedController.selectedSegmentIndex = 2
+        navigateToSubview("mapController", controllerType: MapController.self)
+      }
+      let mapController = currentController as! MapController
+      mapController.selectedSearchResult(searchResult) {
+        
+      }
+    }
+    else {
+      let subController = currentController as! SubController
+      subController.regionChanged(searchResult.listingId!)
+      
     }
   }
 }

@@ -1,9 +1,11 @@
 import SKMaps
 import RealmSwift
+import BrightFutures
 
 class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocationManagerDelegate, SKPositionerServiceDelegate {
   
   var session: Session!
+  var currentAttraction: Attraction!
   var attractions = List<Attraction>()
   var mapView: SKMapView!
   var locationManager: CLLocationManager!
@@ -219,6 +221,10 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
   
   func addAnnotations() {
     
+    if currentAttraction != nil {
+      return
+    }
+    
     var identifier: Int32 = 0
     for attraction in attractions {
       let annotation = SKAnnotation()
@@ -237,7 +243,13 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
   }
   
   func mapView(mapView: SKMapView!, didSelectAnnotation annotation: SKAnnotation!) {
-    let attraction = attractions[Int(annotation.identifier)]
+    
+    print("Tapped on annotation")
+    
+    var attraction = currentAttraction
+    if annotation.identifier != 5000 {
+      attraction = attractions[Int(annotation.identifier)]
+    }
     mapView.calloutView.titleLabel.text = attraction.listing.item.name;
     mapView.calloutView.titleLabel.tag = 2000 + Int(annotation.identifier)
     mapView.calloutView.delegate = self
@@ -250,7 +262,13 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
       // Manually check if an annotation was tapped.
     }
     
+    print("Tapped on map")
+    
     mapView.hideCallout()
+    if currentAttraction != nil {
+      currentAttraction = nil
+      addAnnotations()
+    }
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -259,6 +277,10 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
       detailController.attraction = sender as! Attraction
       detailController.imagePath = detailController.attraction.getLocalImagePath()
     }
+  }
+  
+  // from search
+  func regionChanged(regionId: String) {
   }
 }
 
@@ -272,17 +294,45 @@ extension MapController: SKCalloutViewDelegate {
 
 extension MapController: SearchViewControllerDelegate {
   
-  func selectedSearchResult(searchResult: SearchResult) {
+  func delay(delay:Double, closure:()->()) {
+    dispatch_after(
+      dispatch_time(
+        DISPATCH_TIME_NOW,
+        Int64(delay * Double(NSEC_PER_SEC))
+      ),
+      dispatch_get_main_queue(), closure)
+  }
+  
+  func selectedSearchResult(searchResult: SearchResult, afterTransition: (() -> ())?) {
+    
+    currentAttraction = Attraction()
+    let promise = Promise<String, NoError>()
+    if String(searchResult.resultType).hasPrefix("2") { // attraction
+      ContentService.getAttractionWithId(searchResult.listingId!) {
+        attraction in
+        
+        self.currentAttraction = attraction
+        
+        promise.future.onComplete() { _ in
+          self.performSegueWithIdentifier("showDetail", sender: attraction)
+        }
+      }
+    }
+    
+    var delayTime = 0.1
     if !mapView.isLocationVisible(searchResult.latitude, long: searchResult.longitude) {
       let location = CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude)
       mapView.animateToLocation(location, withDuration: 1.0)
+      delayTime = 1.1
     }
     if mapView.visibleRegion.zoomLevel < 14 {
       mapView.animateToZoomLevel(15)
       let location = CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude)
       mapView.animateToLocation(location, withDuration: 1.0)
+      delayTime = 1.1
     }
     //        addCircle(searchResult.latitude, longitude: searchResult.longitude)
+    mapView.clearAllAnnotations()
     let annotation = SKAnnotation()
     annotation.identifier = 5000
     annotation.annotationType = SKAnnotationType.Green
@@ -290,6 +340,8 @@ extension MapController: SearchViewControllerDelegate {
     let animationSettings = SKAnimationSettings()
     animationSettings.animationType = SKAnimationType.AnimationPinDrop
     mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
-    
+    delay(delayTime) {
+      promise.success("Waited")
+    }   
   }
 }

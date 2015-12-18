@@ -1,48 +1,18 @@
 import SKMaps
 
-class SearchServiceDelegate: NSObject, SKSearchServiceDelegate {
-  
-  var handler: ([SKSearchResult] -> ())!
-  var packageCode: String
-  
-  required init(handler: [SKSearchResult] -> (), packageCode: String) {
-    self.handler = handler
-    self.packageCode = packageCode
-  }
-  
-  func searchService(searchService: SKSearchService!, didRetrieveMultiStepSearchResults searchResults: [AnyObject]!) {
-    
-    print("search results received")
-    
-    self.handler(searchResults as! [SKSearchResult])
-  }
-  
-  func searchServiceDidFailToRetrieveMultiStepSearchResults(searchService: SKSearchService!) {
-    if !DownloadService.hasMapPackage(packageCode) {
-      print("Tried to search in package not installed: " + packageCode)
-    }
-    else {
-      print("Unknown failure with search")
-    }
-  }
-}
-
-class SearchService {
+class SearchService: NSObject {
+  var searchHandler: ([SKSearchResult] -> ())!
   let maxResults = 20
   var packageCode: String!
-  var delegate: SearchServiceDelegate?
   let varLock = dispatch_queue_create("SearchService.VarLock", nil)
   var searchRunning = false
   var threadCount = 0
   
   
-  init() {
+  override init() {
+    super.init()
     SKSearchService.sharedInstance().searchResultsNumber = 10000
-  }
-  
-  func setDelegate(handler: [SKSearchResult] -> ()) {
-    delegate = SearchServiceDelegate(handler: handler, packageCode: packageCode)
-    SKSearchService.sharedInstance().searchServiceDelegate = delegate
+    SKSearchService.sharedInstance().searchServiceDelegate = self
   }
   
   private func setPackageCode(regionId: String, countryId: String) {
@@ -57,7 +27,7 @@ class SearchService {
   func getCities(forCountry countryId: String? = nil, handler: (String, [SKSearchResult], (() -> ())?) -> ()) {
     if let countryId = countryId {
       setPackageCode(countryId, countryId: countryId)
-      setDelegate { results in
+      searchHandler = { results in
         
         if results.count == 0 { // error, repeat query
           print("Got no cities fir country \(countryId). Retrying query.")
@@ -78,7 +48,7 @@ class SearchService {
   func iterateThroughMapPackages(packages: [SKMapPackage], index: Int, handler: (String, [SKSearchResult], (() -> ())?) -> ())  {
     let mapPackage = packages[index]
     packageCode = mapPackage.name
-    setDelegate() { results in
+    searchHandler = { results in
       
       if results.count == 0 { // error, repeat query
         print("Got no cities for country \(self.packageCode). Retrying query.")
@@ -100,7 +70,7 @@ class SearchService {
   
   func getStreetsForCity(cityId: String, countryId: String, identifier: UInt64, searchString: String, handler: [SKSearchResult] -> ()) {
     setPackageCode(cityId, countryId: countryId)
-    setDelegate(handler)
+    searchHandler = handler
     self.searchMapData(SKListLevel.StreetList, searchString: searchString, parent: identifier)
   }
   
@@ -123,14 +93,33 @@ class SearchService {
     for resultJson in json.array! {
       let searchResult = SearchResult()
       searchResult.name = resultJson["name"].string!
+      searchResult.location = resultJson["location"].string!
       searchResult.longitude = resultJson["longitude"].double!
       searchResult.latitude = resultJson["latitude"].double!
+      searchResult.resultType = resultJson["category"].int!
+      searchResult.listingId = resultJson["id"].string!
       searchResults.append(searchResult)
     }
     return searchResults
   }
   
-  func offlineSearch(fullSearchString: String, regionId: String? = nil, countryId: String? = nil, gradual: Bool = false, handler: [SearchResult] -> ()) {
+  func bulkOfflineSearch(fullSearchString: String, regionId: String? = nil, countryId: String? = nil, handler: [SearchResult] -> ()) {
+    var allSearchResults = [SearchResult]()
+    offlineSearch(fullSearchString, regionId: regionId, countryId: countryId) {
+      city, searchResults, nextCityHandler in
+      
+      allSearchResults.appendContentsOf(searchResults)
+      
+      if let nextCityHandler = nextCityHandler {
+        nextCityHandler()
+      }
+      else {
+        handler(allSearchResults)
+      }
+    }
+  }
+  
+  func offlineSearch(fullSearchString: String, regionId: String? = nil, countryId: String? = nil, handler: (String, [SearchResult], (() -> ())?) -> ()) {
     
     var threadId = 0
     SyncManager.synchronized(varLock) {
@@ -181,13 +170,13 @@ class SearchService {
         print("Citiy packageId \(packageId)")
         print("Cities count \(cities.count)")
         var counter = 0
-        var searchList = [SearchResult]()
+        var numberOfResults = 0
         
         self.packageCode = packageId
-        self.setDelegate() {
+        self.searchHandler = {
           searchResults in
           
-          print("Entering delegate")
+          print("Entering searchHandler")
           
           counter += 1
           
@@ -198,34 +187,40 @@ class SearchService {
           
           var resultsToParse = self.filterSearchResults(searchResults, secondarySearchStrings: secondarySearchStrings)
           var listIsFull = false
-          if (searchList.count + resultsToParse.count) >= self.maxResults {
-            let willTake = self.maxResults - searchList.count
+          if (numberOfResults + resultsToParse.count) >= self.maxResults {
+            let willTake = self.maxResults - numberOfResults
             resultsToParse = Array(resultsToParse[0..<willTake])
             listIsFull = true
           }
           print("cites: \(cities.count)")
           let city = cities[counter - 1]
           let parsedResults = self.parseSearchResults(resultsToParse, city: city.name)
-          searchList.appendContentsOf(parsedResults)
+          numberOfResults += parsedResults.count
           
           if counter < cities.count && !listIsFull {
             
-            if gradual && parsedResults.count > 0 {
-              handler(searchList)
+            handler(city.name, parsedResults) {
+              let city = cities[counter]
+              print("iterating to next city: \(city.name)")
+              self.searchMapData(SKListLevel.StreetList, searchString: primarySearchString, parent: city.identifier)
             }
-            let city = cities[counter]
-            print("iterating to next city: \(city.name)")
-            self.searchMapData(SKListLevel.StreetList, searchString: primarySearchString, parent: city.identifier)
           }
-          else {
-            handler(searchList)
+          else if !listIsFull {
+
             if let nextCountryHandler = nextCountryHandler {
-              nextCountryHandler()
+              handler(city.name, parsedResults) {
+                nextCountryHandler()
+              }
             }
             else {
               print("Finished thread: \(threadId)")
               self.searchRunning = false
+              handler(city.name, parsedResults, nil)
             }
+          }
+          else {
+            self.searchRunning = false
+            handler(city.name, parsedResults, nil)
           }
         }
         
@@ -272,7 +267,7 @@ class SearchService {
     searchResult.latitude = skobblerResult.coordinate.latitude
     searchResult.longitude = skobblerResult.coordinate.longitude
     searchResult.location = city
-    searchResult.resultType = .Street
+    searchResult.resultType = 180
     return searchResult
   }
   
@@ -287,5 +282,25 @@ class SearchService {
     searcher.multiStepObject = multiStepSearchObject
     searcher.fireSearch()
   }
+}
+
+extension SearchService: SKSearchServiceDelegate {
   
+  func searchService(searchService: SKSearchService!, didRetrieveMultiStepSearchResults searchResults: [AnyObject]!) {
+    
+    print("search results received")
+    print(searchHandler)
+    searchHandler(searchResults as! [SKSearchResult])
+  }
+  
+  func searchServiceDidFailToRetrieveMultiStepSearchResults(searchService: SKSearchService!) {
+    if !DownloadService.hasMapPackage(packageCode) {
+      print("Tried to search in package not installed: " + packageCode)
+    }
+    else {
+      print("Unknown failure with search")
+    }
+    
+    searchRunning = false
+  }
 }

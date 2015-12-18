@@ -7,10 +7,6 @@ class SearchResult {
   var location: String!
   var latitude: Double!
   var longitude: Double!
-  var resultType: ResultType!
-  
-  enum ResultType: Int {
-    case Street = 1
-  }
-  
+  var resultType: Int!
+  var listingId: String?
 }

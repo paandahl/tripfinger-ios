@@ -20,7 +20,7 @@ class DownloadServiceTest: XCTestCase {
       mapsObject, mappings in
       
       XCTAssertEqual(7, mapsObject.packagesForType(.Continent).count)
-      XCTAssertEqual(247, mappings.count)
+      XCTAssertEqual(254, mappings.count)
       readyExpectation.fulfill()
     }
     

@@ -1,7 +1,7 @@
 import Foundation
 
 protocol SearchViewControllerDelegate: class {
-  func selectedSearchResult(searchResult: SearchResult)
+  func selectedSearchResult(searchResult: SearchResult, afterTransition: (() -> ())?)
 }
 
 class SearchController: UITableViewController {
@@ -52,6 +52,7 @@ extension SearchController: UISearchResultsUpdating, UISearchControllerDelegate,
     let newSearchText = searchController.searchBar.text!
     if (newSearchText.characters.count > 1 && newSearchText != searchText) {
       
+      self.offlineResults = [SearchResult]()
       searchText = newSearchText
       
       if connectedToNetwork() {
@@ -65,14 +66,17 @@ extension SearchController: UISearchResultsUpdating, UISearchControllerDelegate,
           self.tableView.reloadData()
         }
       }
-      searchService.offlineSearch(searchText, regionId: regionId, countryId: countryId, gradual: true) {
-        searchResults in
+      searchService.offlineSearch(searchText, regionId: regionId, countryId: countryId) {
+        city, searchResults, nextCityHandler in
         
-        self.offlineResults = searchResults
+        self.offlineResults.appendContentsOf(searchResults)
         self.searchResults = [SearchResult]()
         self.searchResults.appendContentsOf(self.onlineResults)
         self.searchResults.appendContentsOf(self.offlineResults)
         self.tableView.reloadData()
+        if let nextCityHandler = nextCityHandler {
+          nextCityHandler()
+        }
       }
     }
   }
@@ -120,7 +124,7 @@ extension SearchController {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
     if let delegate = delegate {
       let searchResult = searchResults[indexPath.row]
-      delegate.selectedSearchResult(searchResult)
+      delegate.selectedSearchResult(searchResult, afterTransition: nil)
     }
     searchController.active = false
   }

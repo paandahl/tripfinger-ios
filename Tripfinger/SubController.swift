@@ -11,4 +11,6 @@ import Foundation
 protocol SubController {
   
   var session: Session! {get set}
+  
+  func regionChanged(regionId: String)
 }

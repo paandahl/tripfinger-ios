@@ -7,7 +7,7 @@ use_frameworks!
 #pod 'ScoutMaps-iOS-SDK'
 pod "MDCSwipeToChoose"
 pod 'Alamofire', '~> 3.0'
-pod 'RealmSwift', '0.96.3'
+pod 'RealmSwift', '0.97.0'
 pod 'BrightFutures'
 
 end

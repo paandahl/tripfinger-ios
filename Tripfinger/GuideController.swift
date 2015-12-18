@@ -466,6 +466,46 @@ extension GuideController: GuideItemContainerDelegate {
 // MARK: - Navigation
 extension GuideController {
 
+  // from search
+  func regionChanged(regionId: String) {
+    
+    ContentService.getRegionWithId(regionId) {
+      region in
+
+      let doNav = {
+        self.session.currentRegion = region
+        self.loadContent()
+        self.delegate.navigateInternally()
+      }
+
+      self.itemStack = [GuideItemHolder]()
+      let allRegions = Region.constructRegion()
+      allRegions.listing.item.name = "Continents"
+      allRegions.listing.item.id = "top-level"
+      self.itemStack.append(allRegions)
+      if region.listing.item.category > Region.Category.COUNTRY.rawValue {
+        ContentService.getRegionWithId(region.listing.country) {
+          country in
+          
+          self.itemStack.append(country)
+          if region.listing.item.category > Region.Category.CITY.rawValue {
+            ContentService.getRegionWithId(region.listing.city) {
+              city in
+              
+              self.itemStack.append(city)
+              doNav()
+            }
+          }
+          else {
+            doNav()
+          }
+        }
+      }
+      else {
+        doNav()
+      }
+    }
+  }
   
   func navigateToContinent(indexPath: NSIndexPath) {
     let allRegions = Region.constructRegion()
@@ -477,7 +517,6 @@ extension GuideController {
     let continentName = continentPackage.nameForLanguageCode("en")
     self.currentContinent = getContinents()[indexPath.row]
     continent.listing.item.name = continentName
-    print("code: \(continentPackage.packageCode)")
     continent.listing.item.id = mapMappings[continentPackage.packageCode]
     session.currentRegion = continent
     loadContent()

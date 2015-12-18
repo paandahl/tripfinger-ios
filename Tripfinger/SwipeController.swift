@@ -268,6 +268,11 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
       filterController.delegate = self
     }
   }
+  
+  // from search
+  func regionChanged(regionId: String) {
+    
+  }
 }
 
 extension SwipeController: AttractionCardContainer {

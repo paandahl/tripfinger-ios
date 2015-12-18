@@ -38,6 +38,16 @@ class OfflineService {
     return nil
   }
   
+  class func getAttractionWithId(attractionId: String) -> Attraction? {
+    let attractions = realm.objects(Attraction).filter("listing.item.id = '\(attractionId)'")
+    if attractions.count == 1 {
+      return attractions[0]
+    }
+    else {
+      return nil
+    }
+  }
+  
   class func deleteRegionWithId(regionId: String) {
     try! realm.write {
       let region = getRegionWithId(regionId)

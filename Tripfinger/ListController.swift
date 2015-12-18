@@ -85,6 +85,10 @@ class ListController: UITableViewController, SubController {
       filterController.delegate = self
     }
   }
+
+  // from search
+  func regionChanged(regionId: String) {
+  }
 }
 
 // MARK: - Table View Data Source

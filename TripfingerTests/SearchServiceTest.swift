@@ -77,8 +77,8 @@ class SearchServiceTest: XCTestCase {
     
     let searchService = SearchService()
     var fulfilled = false
-    searchService.offlineSearch("altitude", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage, gradual: true) {
-      searchResults in
+    searchService.offlineSearch("altitude", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage) {
+      city, searchResults, nextCityHandler in
       
       for searchResult in searchResults {
         if searchResult.name.containsString("Altitude Cent") {
@@ -86,8 +86,12 @@ class SearchServiceTest: XCTestCase {
             fulfilled = true
             readyExpectation.fulfill()
           }
-          break
+          return
         }
+      }
+      
+      if let nextCityHandler = nextCityHandler {
+        nextCityHandler()
       }
     }
     
@@ -101,8 +105,8 @@ class SearchServiceTest: XCTestCase {
     let readyExpectation = expectationWithDescription("ready")
     let searchService = SearchService()
 
-    searchService.offlineSearch("jfdsfs", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage, gradual: true) {
-      searchResults in
+    searchService.offlineSearch("jfdsfs", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage) {
+      city, searchResults, nextCityHandler in
       
       print("got \(searchResults.count) search results.")
       readyExpectation.fulfill()
@@ -118,36 +122,36 @@ class SearchServiceTest: XCTestCase {
     let searchService = SearchService()
     
     
-    searchService.offlineSearch("jfdsfs", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage, gradual: true) {
-      searchResults in
+    searchService.offlineSearch("jfdsfs", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage) {
+      city, searchResults, nextCityHandler in
       
       print("got \(searchResults.count) search results.")
       readyExpectation.fulfill()
     }
 
-    searchService.offlineSearch("br", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage, gradual: true) {
-      searchResults in
+    searchService.offlineSearch("br", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage) {
+      city, searchResults, nextCityHandler in
       
       print("got \(searchResults.count) search results.")
       readyExpectation.fulfill()
     }
 
-    searchService.offlineSearch("bru", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage, gradual: true) {
-      searchResults in
+    searchService.offlineSearch("bru", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage) {
+      city, searchResults, nextCityHandler in
       
       print("got \(searchResults.count) search results.")
       readyExpectation.fulfill()
     }
 
-    searchService.offlineSearch("brussel", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage, gradual: true) {
-      searchResults in
+    searchService.offlineSearch("brussel", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage) {
+      city, searchResults, nextCityHandler in
       
       print("got \(searchResults.count) search results.")
       readyExpectation.fulfill()
     }
 
-    searchService.offlineSearch("br", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage, gradual: true) {
-      searchResults in
+    searchService.offlineSearch("br", regionId: SearchServiceTest.mapPackage, countryId: SearchServiceTest.mapPackage) {
+      city, searchResults, nextCityHandler in
       
       print("got \(searchResults.count) search results.")
       readyExpectation.fulfill()
@@ -165,11 +169,11 @@ class SearchServiceTest: XCTestCase {
     var readyExpectation = expectationWithDescription("ready")
     
     let searchService = SearchService()
-    searchService.offlineSearch("boulevard dixmude", regionId: SearchServiceTest.mapPackage) {
+    searchService.bulkOfflineSearch("boulevard dixmude", regionId: SearchServiceTest.mapPackage) {
       searchResults in
       
-      XCTAssertEqual(1, searchResults.count)
-      XCTAssertEqual("Brussels", searchResults[0].location)
+      XCTAssertEqual(1, searchResults.count, "Search result was not 1")
+      XCTAssertEqual("Brussels", searchResults[0].location, "Location was not set to brussels")
       readyExpectation.fulfill()
     }
     
@@ -183,7 +187,7 @@ class SearchServiceTest: XCTestCase {
     
     readyExpectation = expectationWithDescription("ready")
     
-    searchService.offlineSearch("boulevard de dixmude", regionId: SearchServiceTest.mapPackage) {
+    searchService.bulkOfflineSearch("boulevard de dixmude", regionId: SearchServiceTest.mapPackage) {
       searchResults in
       
       XCTAssertEqual(1, searchResults.count)
@@ -217,7 +221,7 @@ class SearchServiceTest: XCTestCase {
     
     let searchService = SearchService()
     searchService.offlineSearch("di", regionId: SearchServiceTest.mapPackage) {
-      searchResults in
+      city, searchResults, nextCityHandler in
       
       XCTAssert(searchResults.count <= searchService.maxResults, "Too many search results")
       readyExpectation.fulfill()
@@ -250,12 +254,12 @@ class SearchServiceTest: XCTestCase {
     let lockQueue = dispatch_queue_create("com.test.LockQueue", nil)
     SyncManager.synchronized_async(lockQueue) {
       print("Entered first block")
-      usleep(5 * 1000 * 1000)
+      usleep(2 * 1000 * 1000)
       print("Exiting first block")
     }
     SyncManager.synchronized_async(lockQueue) {
       print("Entered second block")
-      usleep(5 * 1000 * 1000)
+      usleep(2 * 1000 * 1000)
       print("Exiting second block")
       readyExpectation.fulfill()
     }
@@ -271,7 +275,7 @@ class SearchServiceTest: XCTestCase {
     SyncManager.run_async {
       SyncManager.get_lock(self)
       print("Entered first block")
-      usleep(5 * 1000 * 1000)
+      usleep(2 * 1000 * 1000)
       print("Exiting first block")
       try! SyncManager.release_lock(self)
     }
@@ -279,7 +283,7 @@ class SearchServiceTest: XCTestCase {
     SyncManager.run_async {
       SyncManager.get_lock(self)
       print("Entered second block")
-      usleep(5 * 1000 * 1000)
+      usleep(2 * 1000 * 1000)
       print("Exiting second block")
       try! SyncManager.release_lock(self)
       readyExpectation.fulfill()
