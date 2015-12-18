@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     let apiKey = "0511a5e338b00db8b426fb8ec0a7fb2ebd6816bb9324425d4edd9b726e40a3d5"
     let initSettings: SKMapsInitSettings = SKMapsInitSettings()
     initSettings.connectivityMode = SKConnectivityMode.Online
+    initSettings.mapDetailLevel = SKMapDetailLevel.Light;
     SKMapsService.sharedInstance().initializeSKMapsWithAPIKey(apiKey, settings: initSettings)
     SKMapsService.sharedInstance().mapsVersioningManager.delegate = self
     

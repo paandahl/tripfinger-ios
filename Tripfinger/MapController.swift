@@ -10,6 +10,7 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
   var positionView: UIImageView!
   var positionView2: UIImageView!
   var previousHeading: CGFloat = 0.0
+  var test: Int = 45
   
   
   override func viewDidLoad() {
@@ -19,16 +20,17 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     
     mapView = SKMapView(frame: CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame)))
     let languageSettings = SKMapInternationalizationSettings.mapInternationalization()
-    languageSettings.backupToTransliterated = false
-    languageSettings.primaryInternationalLanguage = SKLanguage.MapLanguageEN
-    languageSettings.fallbackInternationalLanguage = SKLanguage.MapLanguageDE
+    languageSettings.backupToTransliterated = true
+    languageSettings.primaryInternationalLanguage = SKLanguage.MapLanguageES
+    languageSettings.fallbackInternationalLanguage = SKLanguage.MapLanguageTR
     languageSettings.primaryOption = SKMapInternationalizationOption.International
     languageSettings.fallbackOption = SKMapInternationalizationOption.Transliterated
+    languageSettings.showBothOptions = true
     mapView.settings.mapInternationalization = languageSettings
 
     mapView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
     mapView.delegate = self
-    mapView.settings.rotationEnabled = false
+    mapView.settings.rotationEnabled = true
     mapView.settings.orientationIndicatorType = SKOrientationIndicatorType.None
     mapView.settings.headingMode = SKHeadingMode.RotatingHeading
     
@@ -72,6 +74,101 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     else {
       loadAttractions()
     }
+    
+//    print(view.subviews.count)
+//    for subview in view.subviews {
+//      print (subview)
+//      for subsub in subview.subviews {
+//        if subsub.tag == 100 {
+//          print("  \(subsub)")
+//          let aMirror = Mirror(reflecting: subsub)
+//          
+//          func methods(t: AnyObject, inout count : CUnsignedInt) -> UnsafeMutablePointer<Method> {
+//            return class_copyMethodList(object_getClass(t), &count)
+//          }
+//
+//          func methods_cls(t: AnyClass, inout count : CUnsignedInt) -> UnsafeMutablePointer<Method> {
+//            return class_copyMethodList(t, &count)
+//          }
+//
+//          var numClasses = objc_getClassList(nil, 0)
+//          
+//          var testClass: AnyClass! = nil
+//          let classes = AutoreleasingUnsafeMutablePointer<AnyClass?>(malloc(Int(sizeof(AnyClass) * Int(numClasses))))
+//          numClasses = objc_getClassList(classes, numClasses)
+//          
+//          var resultos = [AnyClass]()
+//          
+//          for i in 0..<numClasses {
+//            let superClass: AnyClass! = classes[Int(i)] as AnyClass!
+//            
+//            if (superClass != nil) {
+//              resultos.append(classes[Int(i)]!)
+//              print(String.fromCString(class_getName(superClass)))
+//              if String.fromCString(class_getName(superClass))! == "GEOPDLocalizedAddress" {
+//                testClass = superClass
+//              }
+//            }
+//          }
+//          
+//          let f: ()->() = {
+//            print("test")
+//          }
+//          let imp = imp_implementationWithBlock(
+//            unsafeBitCast(
+//              f as @convention(block) ()->(),
+//              AnyObject.self
+//            )
+//          )
+          
+//          class_replaceMethod(testClass, Selector("setAddress:"), imp, 
+          
+//          func arguments(m: Method) -> String? {
+//            let arg = method_copyArgumentType(m, 2)
+//            let data = NSData(bytes: arg, length: Int(strlen(arg)))
+//            let str = NSString(data: data, encoding: NSUTF8StringEncoding)
+//            return String(str)
+////            let pointer = UnsafeMutablePointer<Int8>()
+////            let length = 0
+////            method_getArgumentType(m, 0, pointer, length)
+////            return String.fromCString(pointer)
+//          }
+          
+//          var i=0
+//          var mc : CUnsignedInt = 0
+//          let mlist = methods(subsub, count: &mc)
+//          let n : Int = Int(mc)
+//          for (i=0; i<n;i++) {
+//            print(method_getName(mlist[i]))
+////            print(arguments(mlist[i]))
+//          }
+//          subsub.setValue(20.0, forKey: "compassOffset")
+//          subsub.setValue(false, forKey: "showCurrentPosition")
+//          subsub.setValue(true, forKey: "showCompass")
+//          subsub.setValue(true, forKey: "showStreetNamePopUps")
+//          subsub.setValue(true, forKey: "showStreetBadges")
+//          subsub.setValue(languageSettings, forKey: "mapInternationalization")
+//          let result = subsub.performSelector(Selector("setCompassOffset:"), withObject: 20.0)
+//          print("result: \(result)")
+//          print(subsub.valueForKey("mapInternationalization"))
+//          print(subsub.valueForKey("compassOffset"))
+//          
+//          self.setValue(89, forKey: "test")
+//          print("ANSWER: \(test)")
+//          
+//          let mlist2 = methods_cls(testClass, count: &mc)
+//          let m = Int(mc)
+//          for (i=0; i<m;i++) {
+//            print(method_getName(mlist2[i]))
+//            //            print(arguments(mlist[i]))
+//          }
+
+//        }
+//        for subsubsub in subsub.subviews {
+//          print("    \(subsubsub)")
+//        }
+//      }
+//    }
   }
   
   func degreesToRadians(degrees: CGFloat) -> CGFloat {
