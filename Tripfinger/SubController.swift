@@ -8,9 +8,7 @@
 
 import Foundation
 
-protocol SubController {
+protocol SubController: SearchViewControllerDelegate {
   
-  var session: Session! {get set}
-  
-  func regionChanged(regionId: String)
+  var session: Session! {get set}  
 }

@@ -111,7 +111,7 @@ extension RootController {
 }
 
 extension RootController: SearchViewControllerDelegate {
-  func selectedSearchResult(searchResult: SearchResult, afterTransition: (() -> ())?) {
+  func selectedSearchResult(searchResult: SearchResult) {
     
     if searchResult.resultType == 180 { // street
       if !(currentController is MapController) {
@@ -119,8 +119,6 @@ extension RootController: SearchViewControllerDelegate {
         secondSegmentedController.selectedSegmentIndex = 2
         navigateToSubview("mapController", controllerType: MapController.self)
       }
-      let mapController = currentController as! MapController
-      mapController.selectedSearchResult(searchResult, afterTransition: nil)
     }
     else if String(searchResult.resultType).hasPrefix("2") { // Attraction
       if !(currentController is MapController) {
@@ -128,16 +126,9 @@ extension RootController: SearchViewControllerDelegate {
         secondSegmentedController.selectedSegmentIndex = 2
         navigateToSubview("mapController", controllerType: MapController.self)
       }
-      let mapController = currentController as! MapController
-      mapController.selectedSearchResult(searchResult) {
-        
-      }
     }
-    else {
-      let subController = currentController as! SubController
-      subController.regionChanged(searchResult.listingId!)
-      
-    }
+    let subController = currentController as! SubController
+    subController.selectedSearchResult(searchResult)
   }
 }
 
@@ -145,7 +136,6 @@ extension RootController: GuideControllerDelegate {
   
   func categorySelected(category: Attraction.Category) {
     
-    print("SWITCHING CAT")
     session.currentCategory = category
     segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
     secondSegmentedController.selectedSegmentIndex = 0

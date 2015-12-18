@@ -466,10 +466,8 @@ extension GuideController: GuideItemContainerDelegate {
 // MARK: - Navigation
 extension GuideController {
 
-  // from search
-  func regionChanged(regionId: String) {
-    
-    ContentService.getRegionWithId(regionId) {
+  func selectedSearchResult(searchResult: SearchResult) {
+    ContentService.getRegionWithId(searchResult.listingId!) {
       region in
 
       let doNav = {

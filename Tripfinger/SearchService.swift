@@ -41,7 +41,12 @@ class SearchService: NSObject {
     }
     else {
       let mapPackages = SKMapsService.sharedInstance().packagesManager.installedOfflineMapPackages as! [SKMapPackage]
-      iterateThroughMapPackages(mapPackages, index: 0, handler: handler)
+      if mapPackages.count > 0 {
+        iterateThroughMapPackages(mapPackages, index: 0, handler: handler)
+      }
+      else {
+        handler("noresults", [SKSearchResult](), nil)
+      }
     }
   }
   
@@ -224,8 +229,14 @@ class SearchService: NSObject {
           }
         }
         
-        let city = cities[counter]
-        self.searchMapData(SKListLevel.StreetList, searchString: primarySearchString, parent: city.identifier)
+        if cities.count == 0 {
+          print("No cities offline")
+          self.searchRunning = false
+        }
+        else {
+          let city = cities[counter]
+          self.searchMapData(SKListLevel.StreetList, searchString: primarySearchString, parent: city.identifier)
+        }
       }
     }
   }

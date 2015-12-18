@@ -1,7 +1,7 @@
 import Foundation
 
 protocol SearchViewControllerDelegate: class {
-  func selectedSearchResult(searchResult: SearchResult, afterTransition: (() -> ())?)
+  func selectedSearchResult(searchResult: SearchResult)
 }
 
 class SearchController: UITableViewController {
@@ -124,7 +124,7 @@ extension SearchController {
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
     if let delegate = delegate {
       let searchResult = searchResults[indexPath.row]
-      delegate.selectedSearchResult(searchResult, afterTransition: nil)
+      delegate.selectedSearchResult(searchResult)
     }
     searchController.active = false
   }

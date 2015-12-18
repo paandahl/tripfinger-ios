@@ -269,9 +269,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     }
   }
   
-  // from search
-  func regionChanged(regionId: String) {
-    
+  func selectedSearchResult(searchResult: SearchResult) {
   }
 }
 

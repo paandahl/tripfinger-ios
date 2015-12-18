@@ -85,9 +85,8 @@ class ListController: UITableViewController, SubController {
       filterController.delegate = self
     }
   }
-
-  // from search
-  func regionChanged(regionId: String) {
+  
+  func selectedSearchResult(searchResult: SearchResult) {
   }
 }
 

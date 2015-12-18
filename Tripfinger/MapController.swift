@@ -225,6 +225,10 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
       return
     }
     
+    mapView.clearAllAnnotations()
+    
+    print("adding annotations for \(attractions.count) attractions")
+    
     var identifier: Int32 = 0
     for attraction in attractions {
       let annotation = SKAnnotation()
@@ -278,10 +282,6 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
       detailController.imagePath = detailController.attraction.getLocalImagePath()
     }
   }
-  
-  // from search
-  func regionChanged(regionId: String) {
-  }
 }
 
 extension MapController: SKCalloutViewDelegate {
@@ -303,7 +303,7 @@ extension MapController: SearchViewControllerDelegate {
       dispatch_get_main_queue(), closure)
   }
   
-  func selectedSearchResult(searchResult: SearchResult, afterTransition: (() -> ())?) {
+  func selectedSearchResult(searchResult: SearchResult) {
     
     currentAttraction = Attraction()
     let promise = Promise<String, NoError>()
@@ -319,6 +319,7 @@ extension MapController: SearchViewControllerDelegate {
       }
     }
     
+    print("Going to location of search result")
     var delayTime = 0.1
     if !mapView.isLocationVisible(searchResult.latitude, long: searchResult.longitude) {
       let location = CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude)
