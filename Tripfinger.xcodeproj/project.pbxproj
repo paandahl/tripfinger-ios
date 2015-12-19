@@ -525,6 +525,7 @@
 				25C9DFF41B9CD8DC00C516C1 /* Embed Frameworks */,
 				CD43A831BA801A1DFF106FBA /* Embed Pods Frameworks */,
 				15BA807E4B0E01A50837D279 /* Copy Pods Resources */,
+				25890FFE1C2500B8007CFFE3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -571,6 +572,7 @@
 					};
 					25C9DFCA1B9CD84200C516C1 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = BJFM9VPMT3;
 					};
 					25C9DFDF1B9CD84200C516C1 = {
 						CreatedOnToolsVersion = 6.4;
@@ -667,6 +669,19 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		25890FFE1C2500B8007CFFE3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "APP_PATH=\"${TARGET_BUILD_DIR}/${WRAPPER_NAME}\"\n\n# This script loops through the frameworks embedded in the application and\n# removes unused architectures.\nfind \"$APP_PATH\" -name '*.framework' -type d | while read -r FRAMEWORK\ndo\n    FRAMEWORK_EXECUTABLE_NAME=$(defaults read \"$FRAMEWORK/Info.plist\" CFBundleExecutable)\n    FRAMEWORK_EXECUTABLE_PATH=\"$FRAMEWORK/$FRAMEWORK_EXECUTABLE_NAME\"\n    echo \"Executable is $FRAMEWORK_EXECUTABLE_PATH\"\n\n    EXTRACTED_ARCHS=()\n\n    for ARCH in $ARCHS\n    do\n        echo \"Extracting $ARCH from $FRAMEWORK_EXECUTABLE_NAME\"\n        lipo -extract \"$ARCH\" \"$FRAMEWORK_EXECUTABLE_PATH\" -o \"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\"\n        EXTRACTED_ARCHS+=(\"$FRAMEWORK_EXECUTABLE_PATH-$ARCH\")\n    done\n\n    echo \"Merging extracted architectures: ${ARCHS}\"\n    lipo -o \"$FRAMEWORK_EXECUTABLE_PATH-merged\" -create \"${EXTRACTED_ARCHS[@]}\"\n    rm \"${EXTRACTED_ARCHS[@]}\"\n\n    echo \"Replacing original executable with thinned version\"\n    rm \"$FRAMEWORK_EXECUTABLE_PATH\"\n    mv \"$FRAMEWORK_EXECUTABLE_PATH-merged\" \"$FRAMEWORK_EXECUTABLE_PATH\"\n\ndone";
 		};
 		88DB0249FD790745C4ECDE4A /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -926,6 +941,7 @@
 			baseConfigurationReference = 2E67C6EFCB47ABD4F936CCBC /* Pods-Tripfinger.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -958,7 +974,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "no.prebenludviksen.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PRODUCT_NAME = Tripfinger;
 				SWIFT_OBJC_BRIDGING_HEADER = Tripfinger/BridgingHeader.h;
 			};
@@ -969,6 +985,7 @@
 			baseConfigurationReference = C07551D86C743CDF471C2520 /* Pods-Tripfinger.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1000,7 +1017,7 @@
 					"-ObjC",
 					"$(inherited)",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "no.prebenludviksen.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PRODUCT_NAME = Tripfinger;
 				SWIFT_OBJC_BRIDGING_HEADER = Tripfinger/BridgingHeader.h;
 				"SWIFT_OBJC_BRIDGING_HEADER[arch=*]" = Tripfinger/BridgingHeader.h;
