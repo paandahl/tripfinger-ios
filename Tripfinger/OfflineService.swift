@@ -1,11 +1,3 @@
-//
-//  OfflineService.swift
-//  Tripfinger
-//
-//  Created by Preben Ludviksen on 18/11/15.
-//  Copyright © 2015 Preben Ludviksen. All rights reserved.
-//
-
 import Foundation
 import RealmSwift
 

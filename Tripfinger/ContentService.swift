@@ -6,7 +6,7 @@ typealias ContentLoaded = (guideItem: GuideItem) -> ()
 
 class ContentService {
   
-  static let baseUrl = "http://server.tripfinger.com"
+  static let baseUrl = "https://server.tripfinger.com"
   
   init() {}
   
@@ -160,7 +160,10 @@ class ContentService {
     
   }
   
-  class func getJsonFromUrl(url: String, parameters: [String: String] = Dictionary<String, String>(), method: Alamofire.Method = .GET, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
+  class func getJsonFromUrl(url: String, var parameters: [String: String] = Dictionary<String, String>(), method: Alamofire.Method = .GET, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
+    if appendPass {
+      parameters["pass"] = "plJR86!!"
+    }
     print("Fetching URL: \(url)")
     Alamofire.request(method, url, parameters: parameters)
       .validate(statusCode: 200..<300).responseJSON {
@@ -171,7 +174,8 @@ class ContentService {
         success(json: json)
       }
       else {
-        print("Failure: \(response.result.error)")
+        print("Failure fetching url: \(url)")
+        print(response.result.error)
         if let failure = failure {
           dispatch_async(dispatch_get_main_queue(), failure)
         }
@@ -179,15 +183,18 @@ class ContentService {
     }
   }
 
-  class func getJsonFromPost(url: String, body: String, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
-    print("Fetching URL: \(url)")
-    Alamofire.request(.POST, url, parameters: [:], encoding: .Custom({
-      (convertible, params) in
-      let mutableRequest = convertible.URLRequest.copy() as! NSMutableURLRequest
-      mutableRequest.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-      return (mutableRequest, nil)
-    }))
-      .validate(statusCode: 200..<300).responseJSON {
+  class func getJsonFromPost(var url: String, body: String, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
+    
+    if appendPass {
+      url += "?pass=plJR86!!"
+    }
+    let nsUrl = NSURL(string: url)!
+    let request = NSMutableURLRequest(URL: nsUrl)
+    request.HTTPMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+    
+    Alamofire.request(request).validate(statusCode: 200..<300).responseJSON {
       response in
       
       if response.result.isSuccess {
@@ -195,7 +202,8 @@ class ContentService {
         success(json: json)
       }
       else {
-        print("Failure: \(response.result.error)")
+        print("Failure fetching url: \(url)")
+        print(response.result.error)
         if let failure = failure {
           dispatch_async(dispatch_get_main_queue(), failure)
         }
@@ -204,8 +212,11 @@ class ContentService {
   }
 
   
-  class func getJsonStringFromUrl(url: String, parameters: [String: String] = Dictionary<String, String>(), success: (json: String) -> (), failure: (() -> ())? = nil) {
+  class func getJsonStringFromUrl(url: String, var parameters: [String: String] = Dictionary<String, String>(), appendPass: Bool = true, success: (json: String) -> (), failure: (() -> ())? = nil) {
     print("Fetching URL: \(url)")
+    if appendPass {
+      parameters["pass"] = "plJR86!!"
+    }
     Alamofire.request(.GET, url, parameters: parameters)
       .validate(statusCode: 200..<300).responseString {
       response in

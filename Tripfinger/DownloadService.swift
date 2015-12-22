@@ -6,7 +6,7 @@ import BrightFutures
 
 class DownloadService {
   
-  static let tripfingerUrl = "http://server.tripfinger.com"
+  static let tripfingerUrl = "https://server.tripfinger.com"
   static let gcsMapsUrl = "https://storage.googleapis.com/tripfinger-maps/"
   static let gcsImagesUrl = "https://storage.googleapis.com/tripfinger-maps/"
   
