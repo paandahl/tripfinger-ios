@@ -112,6 +112,7 @@ extension RootController {
 
 extension RootController: SearchViewControllerDelegate {
   func selectedSearchResult(searchResult: SearchResult) {
+    dismissViewControllerAnimated(true, completion: nil)
     
     if searchResult.category == 180 { // street
       if !(currentController is MapController) {

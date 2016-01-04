@@ -12,49 +12,44 @@ class SearchController: UITableViewController {
   
   var delegate: SearchViewControllerDelegate?
   var searchService: SearchService!
-  var searchController: UISearchController!
-  var searchBarItem: UIBarButtonItem!
+  var searchBar: UISearchBar!
   
   var offlineResults = [SearchResult]()
   var onlineResults = List<SearchResult>()
   var searchResults = [SearchResult]()
-  var searchText = ""
+  var lastSearchText = ""
   
   override func viewDidLoad() {
     super.viewDidLoad()
     searchService = SearchService()
     
-    searchController = UISearchController(searchResultsController: nil)
-    searchController.searchResultsUpdater = self
-    searchController.delegate = self
-    searchController.dimsBackgroundDuringPresentation = false
-    searchController.hidesNavigationBarDuringPresentation = false
-    
-    // Make sure the that the search bar is visible within the navigation bar.
-    searchController.searchBar.delegate = self
-    searchController.searchBar.sizeToFit()
-    
     // Include the search controller's search bar within the table's header view.
-    searchBarItem = UIBarButtonItem(customView: searchController.searchBar)
-    self.navigationItem.titleView = searchController.searchBar
+    searchBar = UISearchBar()
+    searchBar.becomeFirstResponder()
+    searchBar.delegate = self
+    let backButton = UIButton(type: UIButtonType.System)
+    backButton.addTarget(self, action: "closeSearch", forControlEvents: .TouchUpInside)
+    backButton.setTitle("Cancel", forState: UIControlState.Normal)
+    backButton.sizeToFit()
+    self.navigationItem.titleView = searchBar
+    self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: backButton)
   }
   
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-    searchController.active = true
+  func closeSearch() {
+    searchBar.resignFirstResponder()
+    dismissViewControllerAnimated(true, completion: nil)
   }
 }
 
 // MARK: - Search controller functionality
 
-extension SearchController: UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
+extension SearchController: UISearchBarDelegate {
   
-  func updateSearchResultsForSearchController(searchController: UISearchController) {
-    let newSearchText = searchController.searchBar.text!
-    if (newSearchText.characters.count > 1 && newSearchText != searchText) {
+  func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    if (searchText.characters.count > 1 && searchText != lastSearchText) {
       
       self.offlineResults = [SearchResult]()
-      searchText = newSearchText
+      lastSearchText = searchText
       
       if connectedToNetwork() {
         searchService.onlineSearch(searchText, regionId: regionId, countryId: countryId, gradual: true) {
@@ -80,19 +75,6 @@ extension SearchController: UISearchResultsUpdating, UISearchControllerDelegate,
         }
       }
     }
-  }
-  
-  func didPresentSearchController(searchController: UISearchController) {
-    searchController.searchBar.becomeFirstResponder()
-  }
-  
-  func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-    dismissViewControllerAnimated(true, completion: nil)
-  }
-  
-  func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-    dismissViewControllerAnimated(true, completion: nil)
-    
   }
 }
 
@@ -122,11 +104,11 @@ extension SearchController {
 extension SearchController {
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    searchBar.resignFirstResponder()
     tableView.deselectRowAtIndexPath(indexPath, animated: true)
     if let delegate = delegate {
       let searchResult = searchResults[indexPath.row]
       delegate.selectedSearchResult(searchResult)
     }
-    searchController.active = false
   }
 }
