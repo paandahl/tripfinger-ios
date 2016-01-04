@@ -10,6 +10,21 @@ class ContentService {
   
   init() {}
   
+  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, handler: List<SearchResult> -> ()) {
+    
+    let bounds = "\(bottomLeft.latitude),\(bottomLeft.longitude),\(topRight.latitude),\(topRight.longitude)"
+    getJsonFromUrl(ContentService.baseUrl + "/search_by_bounds/\(bounds)", success: {
+      json in
+      
+      let searchResults = SearchService().parseSearchResults(json)
+      
+      dispatch_async(dispatch_get_main_queue()) {
+        handler(searchResults)
+      }
+      }, failure: nil)
+  }
+
+  
   class func getCountries(handler: [Region] -> ()) {
     getJsonFromUrl(baseUrl + "/countries", success: {
       json in

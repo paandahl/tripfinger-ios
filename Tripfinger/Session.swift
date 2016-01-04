@@ -52,5 +52,5 @@ class Session {
     else {
       handler(loaded: false)
     }
-  }  
+  }
 }

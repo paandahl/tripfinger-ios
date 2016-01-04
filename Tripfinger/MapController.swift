@@ -5,8 +5,8 @@ import BrightFutures
 class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocationManagerDelegate, SKPositionerServiceDelegate {
   
   var session: Session!
-  var currentAttraction: Attraction!
-  var attractions = List<Attraction>()
+  var currentPoi: SearchResult!
+  var pois = List<SearchResult>()
   var mapView: SKMapView!
   var locationManager: CLLocationManager!
   var positionView: UIImageView!
@@ -23,16 +23,17 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     mapView = SKMapView(frame: CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame)))
     let languageSettings = SKMapInternationalizationSettings.mapInternationalization()
     languageSettings.backupToTransliterated = true
-    languageSettings.primaryInternationalLanguage = SKLanguage.MapLanguageES
-    languageSettings.fallbackInternationalLanguage = SKLanguage.MapLanguageTR
+    languageSettings.primaryInternationalLanguage = SKLanguage.MapLanguageEN
+    languageSettings.fallbackInternationalLanguage = SKLanguage.MapLanguageFR
     languageSettings.primaryOption = SKMapInternationalizationOption.International
     languageSettings.fallbackOption = SKMapInternationalizationOption.Transliterated
-    languageSettings.showBothOptions = true
+    languageSettings.showBothOptions = false
     mapView.settings.mapInternationalization = languageSettings
 
     mapView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
     mapView.delegate = self
-    mapView.settings.rotationEnabled = true
+    mapView.settings.rotationEnabled = false
+    mapView.settings.inertiaEnabled = false
     mapView.settings.orientationIndicatorType = SKOrientationIndicatorType.None
     mapView.settings.headingMode = SKHeadingMode.RotatingHeading
     
@@ -69,108 +70,6 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     locationManager.delegate = self
     locationManager.startUpdatingHeading()
     
-    if (session.currentAttractions.count > 0) {
-      attractions = session.currentAttractions
-      addAnnotations()
-    }
-    else {
-      loadAttractions()
-    }
-    
-//    print(view.subviews.count)
-//    for subview in view.subviews {
-//      print (subview)
-//      for subsub in subview.subviews {
-//        if subsub.tag == 100 {
-//          print("  \(subsub)")
-//          let aMirror = Mirror(reflecting: subsub)
-//          
-//          func methods(t: AnyObject, inout count : CUnsignedInt) -> UnsafeMutablePointer<Method> {
-//            return class_copyMethodList(object_getClass(t), &count)
-//          }
-//
-//          func methods_cls(t: AnyClass, inout count : CUnsignedInt) -> UnsafeMutablePointer<Method> {
-//            return class_copyMethodList(t, &count)
-//          }
-//
-//          var numClasses = objc_getClassList(nil, 0)
-//          
-//          var testClass: AnyClass! = nil
-//          let classes = AutoreleasingUnsafeMutablePointer<AnyClass?>(malloc(Int(sizeof(AnyClass) * Int(numClasses))))
-//          numClasses = objc_getClassList(classes, numClasses)
-//          
-//          var resultos = [AnyClass]()
-//          
-//          for i in 0..<numClasses {
-//            let superClass: AnyClass! = classes[Int(i)] as AnyClass!
-//            
-//            if (superClass != nil) {
-//              resultos.append(classes[Int(i)]!)
-//              print(String.fromCString(class_getName(superClass)))
-//              if String.fromCString(class_getName(superClass))! == "GEOPDLocalizedAddress" {
-//                testClass = superClass
-//              }
-//            }
-//          }
-//          
-//          let f: ()->() = {
-//            print("test")
-//          }
-//          let imp = imp_implementationWithBlock(
-//            unsafeBitCast(
-//              f as @convention(block) ()->(),
-//              AnyObject.self
-//            )
-//          )
-          
-//          class_replaceMethod(testClass, Selector("setAddress:"), imp, 
-          
-//          func arguments(m: Method) -> String? {
-//            let arg = method_copyArgumentType(m, 2)
-//            let data = NSData(bytes: arg, length: Int(strlen(arg)))
-//            let str = NSString(data: data, encoding: NSUTF8StringEncoding)
-//            return String(str)
-////            let pointer = UnsafeMutablePointer<Int8>()
-////            let length = 0
-////            method_getArgumentType(m, 0, pointer, length)
-////            return String.fromCString(pointer)
-//          }
-          
-//          var i=0
-//          var mc : CUnsignedInt = 0
-//          let mlist = methods(subsub, count: &mc)
-//          let n : Int = Int(mc)
-//          for (i=0; i<n;i++) {
-//            print(method_getName(mlist[i]))
-////            print(arguments(mlist[i]))
-//          }
-//          subsub.setValue(20.0, forKey: "compassOffset")
-//          subsub.setValue(false, forKey: "showCurrentPosition")
-//          subsub.setValue(true, forKey: "showCompass")
-//          subsub.setValue(true, forKey: "showStreetNamePopUps")
-//          subsub.setValue(true, forKey: "showStreetBadges")
-//          subsub.setValue(languageSettings, forKey: "mapInternationalization")
-//          let result = subsub.performSelector(Selector("setCompassOffset:"), withObject: 20.0)
-//          print("result: \(result)")
-//          print(subsub.valueForKey("mapInternationalization"))
-//          print(subsub.valueForKey("compassOffset"))
-//          
-//          self.setValue(89, forKey: "test")
-//          print("ANSWER: \(test)")
-//          
-//          let mlist2 = methods_cls(testClass, count: &mc)
-//          let m = Int(mc)
-//          for (i=0; i<m;i++) {
-//            print(method_getName(mlist2[i]))
-//            //            print(arguments(mlist[i]))
-//          }
-
-//        }
-//        for subsubsub in subsub.subviews {
-//          print("    \(subsubsub)")
-//        }
-//      }
-//    }
   }
   
   func degreesToRadians(degrees: CGFloat) -> CGFloat {
@@ -197,16 +96,6 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     mapView.visibleRegion = region
   }
   
-  func loadAttractions() {
-    
-    session.loadAttractions() {
-      loaded in
-      
-      self.attractions = self.session.currentAttractions
-      self.addAnnotations()
-    }
-  }
-  
   func addCircle(latitude: Double, longitude: Double) {
     print("Adding circle at: \(latitude), \(longitude)")
     let circle: SKCircle = SKCircle()
@@ -221,25 +110,45 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
   
   func addAnnotations() {
     
-    if currentAttraction != nil {
+    if currentPoi != nil {
       return
     }
     
     mapView.clearAllAnnotations()
     
-    print("adding annotations for \(attractions.count) attractions")
+    print("adding annotations for \(pois.count) pois")
     
     var identifier: Int32 = 0
-    for attraction in attractions {
+    for poi in pois {
       let annotation = SKAnnotation()
       annotation.identifier = identifier
-      if attraction.swipedRight != nil && attraction.swipedRight! {
-        annotation.annotationType = SKAnnotationType.Blue
+//      if attraction.swipedRight != nil && attraction.swipedRight! {
+//        annotation.annotationType = SKAnnotationType.Blue
+//      }
+//      else {
+//        annotation.annotationType = SKAnnotationType.Purple
+//      }
+      if poi.category == 2392 {
+        if mapView.visibleRegion.zoomLevel < 12 {
+          identifier += 1
+          continue
+        }
+        let coloredView = UIImageView(frame: CGRectMake(0.0, 0.0, 12.0, 12.0))
+        coloredView.image = UIImage(named: "subway-m")
+        let view = SKAnnotationView(view: coloredView, reuseIdentifier: "viewID")
+        annotation.annotationView = view
       }
-      else {
-        annotation.annotationType = SKAnnotationType.Purple
+      else if poi.category == 2393 {
+        if mapView.visibleRegion.zoomLevel < 15 {
+          identifier += 1
+          continue
+        }
+        let coloredView = UIImageView(frame: CGRectMake(0.0, 0.0, 12.0, 12.0))
+        coloredView.image = UIImage(named: "subway-entrance-m")
+        let view = SKAnnotationView(view: coloredView, reuseIdentifier: "viewID2")
+        annotation.annotationView = view
       }
-      annotation.location = CLLocationCoordinate2DMake(attraction.listing.latitude, attraction.listing.longitude)
+      annotation.location = CLLocationCoordinate2DMake(poi.latitude, poi.longitude)
       let animationSettings = SKAnimationSettings()
       mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
       identifier += 1
@@ -250,11 +159,11 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     
     print("Tapped on annotation")
     
-    var attraction = currentAttraction
+    var poi = currentPoi
     if annotation.identifier != 5000 {
-      attraction = attractions[Int(annotation.identifier)]
+      poi = pois[Int(annotation.identifier)]
     }
-    mapView.calloutView.titleLabel.text = attraction.listing.item.name;
+    mapView.calloutView.titleLabel.text = poi.name;
     mapView.calloutView.titleLabel.tag = 2000 + Int(annotation.identifier)
     mapView.calloutView.delegate = self
     mapView.calloutView.minZoomLevel = 1
@@ -269,8 +178,8 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     print("Tapped on map")
     
     mapView.hideCallout()
-    if currentAttraction != nil {
-      currentAttraction = nil
+    if currentPoi != nil {
+      currentPoi = nil
       addAnnotations()
     }
   }
@@ -282,13 +191,30 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
       detailController.imagePath = detailController.attraction.getLocalImagePath()
     }
   }
+  
+  func mapView(mapView: SKMapView!, didEndRegionChangeToRegion region: SKCoordinateRegion) {
+    print("Region changed")
+    let bottomLeftCoord = mapView.coordinateForPoint(CGPoint(x: 0, y: mapView.frame.maxY))
+    let topRightCoord = mapView.coordinateForPoint(CGPoint(x: mapView.frame.maxX, y: 0))
+    print("zoomLevel: \(mapView.visibleRegion.zoomLevel)")
+    loadMapPOIs(bottomLeftCoord, topRight: topRightCoord)
+  }
+
+  func loadMapPOIs(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D) {
+    ContentService.getPois(bottomLeft, topRight: topRight) {
+      searchResults in
+      
+      self.pois = searchResults
+      self.addAnnotations()
+    }
+  }
 }
 
 extension MapController: SKCalloutViewDelegate {
   
   func calloutView(calloutView: SKCalloutView!, didTapRightButton rightButton: UIButton!) {
-    let attraction = attractions[calloutView.titleLabel.tag - 2000]
-    performSegueWithIdentifier("showDetail", sender: attraction)
+    let poi = pois[calloutView.titleLabel.tag - 2000]
+//    performSegueWithIdentifier("showDetail", sender: attraction)
   }
 }
 
@@ -305,19 +231,19 @@ extension MapController: SearchViewControllerDelegate {
   
   func selectedSearchResult(searchResult: SearchResult) {
     
-    currentAttraction = Attraction()
-    let promise = Promise<String, NoError>()
-    if String(searchResult.resultType).hasPrefix("2") { // attraction
-      ContentService.getAttractionWithId(searchResult.listingId!) {
-        attraction in
-        
-        self.currentAttraction = attraction
-        
-        promise.future.onComplete() { _ in
-          self.performSegueWithIdentifier("showDetail", sender: attraction)
-        }
-      }
-    }
+    currentPoi = searchResult
+//    let promise = Promise<String, NoError>()
+//    if String(searchResult.resultType).hasPrefix("2") { // attraction
+//      ContentService.getAttractionWithId(searchResult.listingId!) {
+//        attraction in
+//        
+//        self.currentAttraction = attraction
+//        
+//        promise.future.onComplete() { _ in
+//          self.performSegueWithIdentifier("showDetail", sender: attraction)
+//        }
+//      }
+//    }
     
     print("Going to location of search result")
     var delayTime = 0.1
@@ -341,8 +267,8 @@ extension MapController: SearchViewControllerDelegate {
     let animationSettings = SKAnimationSettings()
     animationSettings.animationType = SKAnimationType.AnimationPinDrop
     mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
-    delay(delayTime) {
-      promise.success("Waited")
-    }   
+//    delay(delayTime) {
+//      promise.success("Waited")
+//    }   
   }
 }

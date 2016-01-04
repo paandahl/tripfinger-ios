@@ -51,12 +51,12 @@ class DownloadService {
           for continent in allContinents {
             mappings[continent.packageCode] = jsonDict[continent.nameForLanguageCode("en")]!.string!
           }
-
+          
           promise.success((skMaps, mappings))
           }, failure: nil)
       })
     }
-
+    
     return promise.future
   }
   
@@ -143,7 +143,7 @@ class DownloadService {
         else {
           finished = true
         }
-      }      
+      }
     }
   }
   
@@ -158,50 +158,46 @@ class DownloadService {
     mapDownloadManager.progressHandler = progressHandler
     mapDownloadManager.finishedHandler = finishedHandler
     SKTDownloadManager.sharedInstance().requestDownloads([region], startAutomatically: true, withDelegate: mapDownloadManager, withDataSource: mapDownloadManager, withPath: regionPath.path!)
-
     
-//    var fileName = regionId + ".skm"
-//    var url = gcsMapsUrl + fileName
-//    var destinationPath = regionPath.URLByAppendingPathComponent(fileName)
-//    downloadFile(url, destinationPath: destinationPath, progressHandler: progressHandler) {
-//      SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed(regionId, inContainingFolderPath: regionPath.path!)
-//      finishedHandler()
-//    }
-//    
-//    fileName = regionId + ".ngi"
-//    url = gcsMapsUrl + fileName
-//    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
-//    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
-//    
-//    fileName = regionId + ".ngi.dat"
-//    url = gcsMapsUrl + fileName
-//    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
-//    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
-//    
-//    fileName = regionId + ".txg"
-//    url = gcsMapsUrl + fileName
-//    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
-//    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
+    
+    //    var fileName = regionId + ".skm"
+    //    var url = gcsMapsUrl + fileName
+    //    var destinationPath = regionPath.URLByAppendingPathComponent(fileName)
+    //    downloadFile(url, destinationPath: destinationPath, progressHandler: progressHandler) {
+    //      SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed(regionId, inContainingFolderPath: regionPath.path!)
+    //      finishedHandler()
+    //    }
+    //
+    //    fileName = regionId + ".ngi"
+    //    url = gcsMapsUrl + fileName
+    //    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
+    //    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
+    //
+    //    fileName = regionId + ".ngi.dat"
+    //    url = gcsMapsUrl + fileName
+    //    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
+    //    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
+    //
+    //    fileName = regionId + ".txg"
+    //    url = gcsMapsUrl + fileName
+    //    destinationPath = regionPath.URLByAppendingPathComponent(fileName)
+    //    downloadFile(url, destinationPath: destinationPath, progressHandler: nil, finishedHandler: nil)
   }
   
   class func downloadTripfingerData(url: String, path: NSURL, finishedHandler: () -> ()) {
-    Alamofire.request(.GET, url)
-      .responseData { response in
-        if response.result.isSuccess {
-          
-          let json = JSON(data: response.data!)
-          let region = ContentService.parseRegionTreeFromJson(json)
-          
-          fetchImages(region, path: path)
-
-          try! OfflineService.saveRegion(region)
-          
-          finishedHandler()
-        }
-        else {
-          print("ERROR: Downloading city JSON failed")
-        }
-    }
+    
+    ContentService.getJsonFromUrl(url, success: {
+      json in
+      
+      let region = ContentService.parseRegionTreeFromJson(json)
+      
+      fetchImages(region, path: path)
+      
+      try! OfflineService.saveRegion(region)
+      
+      finishedHandler()
+    })
+    
   }
   
   class func fetchImages(region: Region, path: NSURL) {
@@ -258,7 +254,7 @@ class DownloadService {
       
     }
   }
-    
+  
   class func downloadFile(url: String, destinationPath: NSURL, progressHandler: (Float -> ())?, finishedHandler: (() -> ())?) {
     Alamofire.request(.GET, url)
       .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
@@ -280,7 +276,7 @@ class DownloadService {
             print("ERROR: Writing file failed")
           }
           if let finishedHandler = finishedHandler {
-            finishedHandler()            
+            finishedHandler()
           }
         }
         else {
@@ -294,7 +290,7 @@ class MapDownloadManager: NSObject, SKTDownloadManagerDelegate, SKTDownloadManag
   
   var finishedHandler: (() -> ())?
   var progressHandler: (Float -> ())?
-
+  
   func downloadManager(downloadManager: SKTDownloadManager, didUpdateCurrentDownloadProgress  currentPorgressString: String, currentDownloadPercentage currentPercentage: Float, overallDownloadProgress overallProgressString: String, overallDownloadPercentage overallPercentage: Float, forDownloadHelper downloadHelper: SKTDownloadObjectHelper) {
     if let progressHandler = progressHandler {
       progressHandler(currentPercentage / 100.0)
@@ -304,7 +300,7 @@ class MapDownloadManager: NSObject, SKTDownloadManagerDelegate, SKTDownloadManag
   func downloadManager(downloadManager: SKTDownloadManager, didDownloadDownloadHelper downloadHelper: SKTDownloadObjectHelper, withSuccess success: Bool) {
     print("Finished downloading region.")
     SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed("regionId", inContainingFolderPath: "regionPath.path!")
-
+    
     if let finishedHandler = finishedHandler {
       finishedHandler()
     }
@@ -326,8 +322,8 @@ class MapDownloadManager: NSObject, SKTDownloadManagerDelegate, SKTDownloadManag
       
     }
   }
-
-
+  
+  
   func isOnBoardMode() -> Bool {
     return false
   }

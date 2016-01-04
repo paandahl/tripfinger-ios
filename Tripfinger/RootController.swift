@@ -113,14 +113,14 @@ extension RootController {
 extension RootController: SearchViewControllerDelegate {
   func selectedSearchResult(searchResult: SearchResult) {
     
-    if searchResult.resultType == 180 { // street
+    if searchResult.category == 180 { // street
       if !(currentController is MapController) {
         segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
         secondSegmentedController.selectedSegmentIndex = 2
         navigateToSubview("mapController", controllerType: MapController.self)
       }
     }
-    else if String(searchResult.resultType).hasPrefix("2") { // Attraction
+    else if String(searchResult.category).hasPrefix("2") { // Attraction
       if !(currentController is MapController) {
         segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
         secondSegmentedController.selectedSegmentIndex = 2

@@ -1,4 +1,5 @@
 import Foundation
+import RealmSwift
 
 protocol SearchViewControllerDelegate: class {
   func selectedSearchResult(searchResult: SearchResult)
@@ -15,7 +16,7 @@ class SearchController: UITableViewController {
   var searchBarItem: UIBarButtonItem!
   
   var offlineResults = [SearchResult]()
-  var onlineResults = [SearchResult]()
+  var onlineResults = List<SearchResult>()
   var searchResults = [SearchResult]()
   var searchText = ""
   

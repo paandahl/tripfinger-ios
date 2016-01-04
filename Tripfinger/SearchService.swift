@@ -1,4 +1,5 @@
 import SKMaps
+import RealmSwift
 
 class SearchService: NSObject {
   var searchHandler: ([SKSearchResult] -> ())!
@@ -79,7 +80,7 @@ class SearchService: NSObject {
     self.searchMapData(SKListLevel.StreetList, searchString: searchString, parent: identifier)
   }
   
-  func onlineSearch(fullSearchString: String, regionId: String? = nil, countryId: String? = nil, gradual: Bool = false, handler: [SearchResult] -> ()) {
+  func onlineSearch(fullSearchString: String, regionId: String? = nil, countryId: String? = nil, gradual: Bool = false, handler: List<SearchResult> -> ()) {
     
     let escapedString = fullSearchString.stringByAddingPercentEncodingWithAllowedCharacters(.URLPathAllowedCharacterSet())!
     ContentService.getJsonFromUrl(ContentService.baseUrl + "/search/\(escapedString)", success: {
@@ -93,15 +94,15 @@ class SearchService: NSObject {
       }, failure: nil)
   }
   
-  func parseSearchResults(json: JSON) -> [SearchResult] {
-    var searchResults = [SearchResult]()
+  func parseSearchResults(json: JSON) -> List<SearchResult> {
+    let searchResults = List<SearchResult>()
     for resultJson in json.array! {
       let searchResult = SearchResult()
       searchResult.name = resultJson["name"].string!
       searchResult.location = resultJson["location"].string!
       searchResult.longitude = resultJson["longitude"].double!
       searchResult.latitude = resultJson["latitude"].double!
-      searchResult.resultType = resultJson["category"].int!
+      searchResult.category = resultJson["category"].int!
       searchResult.listingId = resultJson["id"].string!
       searchResults.append(searchResult)
     }
@@ -278,7 +279,7 @@ class SearchService: NSObject {
     searchResult.latitude = skobblerResult.coordinate.latitude
     searchResult.longitude = skobblerResult.coordinate.longitude
     searchResult.location = city
-    searchResult.resultType = 180
+    searchResult.category = 180
     return searchResult
   }
   

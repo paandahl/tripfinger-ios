@@ -1,12 +1,12 @@
 import Foundation
+import RealmSwift
 
-class SearchResult {
+class SearchResult: Object {
   
   var name: String!
-  var category: String!
+  var category: Int!
   var location: String!
   var latitude: Double!
   var longitude: Double!
-  var resultType: Int!
   var listingId: String?
 }
