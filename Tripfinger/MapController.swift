@@ -231,7 +231,6 @@ extension MapController: SearchViewControllerDelegate {
   
   func selectedSearchResult(searchResult: SearchResult) {
     
-    currentPoi = searchResult
 //    let promise = Promise<String, NoError>()
 //    if String(searchResult.resultType).hasPrefix("2") { // attraction
 //      ContentService.getAttractionWithId(searchResult.listingId!) {
@@ -252,21 +251,32 @@ extension MapController: SearchViewControllerDelegate {
       mapView.animateToLocation(location, withDuration: 1.0)
       delayTime = 1.1
     }
-    if mapView.visibleRegion.zoomLevel < 14 {
-      mapView.animateToZoomLevel(15)
+    
+    let oldZoomLevel = mapView.visibleRegion.zoomLevel
+    var newZoomLevel = 15
+    var putAnnotation = true
+    print("select a search result with category: \(searchResult.category)")
+    if searchResult.category == Region.Category.COUNTRY.rawValue {
+      newZoomLevel = 6
+      putAnnotation = false
+    }
+    if (newZoomLevel == 15 && oldZoomLevel < 14) || (newZoomLevel == 6 && oldZoomLevel > 7) {
+      mapView.animateToZoomLevel(Float(newZoomLevel))
       let location = CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude)
       mapView.animateToLocation(location, withDuration: 1.0)
       delayTime = 1.1
     }
-    //        addCircle(searchResult.latitude, longitude: searchResult.longitude)
-    mapView.clearAllAnnotations()
-    let annotation = SKAnnotation()
-    annotation.identifier = 5000
-    annotation.annotationType = SKAnnotationType.Green
-    annotation.location = CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude)
-    let animationSettings = SKAnimationSettings()
-    animationSettings.animationType = SKAnimationType.AnimationPinDrop
-    mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
+    if putAnnotation {
+      currentPoi = searchResult
+      mapView.clearAllAnnotations()
+      let annotation = SKAnnotation()
+      annotation.identifier = 5000
+      annotation.annotationType = SKAnnotationType.Green
+      annotation.location = CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude)
+      let animationSettings = SKAnimationSettings()
+      animationSettings.animationType = SKAnimationType.AnimationPinDrop
+      mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
+    }
 //    delay(delayTime) {
 //      promise.success("Waited")
 //    }   
