@@ -19,11 +19,13 @@ class DetailController: UIViewController {
   
   override func viewDidLoad() {
     
+    print("attraction: \(attraction)")
     name.text = attraction.listing.item.name
     descriptionText.text = attraction.listing.item.content
     
     if let imagePath = imagePath {
       mainImage.contentMode = UIViewContentMode.ScaleAspectFill
+      print("fetching image from \(imagePath)")
       mainImage.image = UIImage(data: NSData(contentsOfURL: imagePath)!)
     }
     else {

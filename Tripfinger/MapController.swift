@@ -6,6 +6,8 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
   
   var session: Session!
   var currentPoi: SearchResult!
+  var calloutView: AnnotationCalloutView!
+  var positionButtonMargin: NSLayoutConstraint!
   var pois = List<SearchResult>()
   var mapView: SKMapView!
   var locationManager: CLLocationManager!
@@ -39,15 +41,10 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     
     // second digit of first coordinate - higher means south, lower means north
     // second digit of second coordinate - higher means west, lower means east
-    
-    let lat = 50.847031 // Brussels
-    let long = 4.353559
-    //        let lat = 41.39479 // Barcelona
-    //        let long = 2.1487679
-    let coordinates = CLLocationCoordinate2DMake(lat, long)
-    
-    let region = SKCoordinateRegion(center: coordinates, zoomLevel: 14)
-    mapView.visibleRegion = region
+    //    let coordinates = CLLocationCoordinate2DMake(lat, long)
+//    
+//    let region = SKCoordinateRegion(center: coordinates, zoomLevel: 14)
+//    mapView.visibleRegion = region
     
     view.addSubview(mapView)
     
@@ -58,9 +55,8 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     positionButton.addTarget(self, action: "goToPosition", forControlEvents: .TouchUpInside)
     positionButton.sizeToFit()
     view.addSubview(positionButton)
-    view.addConstraints("V:[pos]-20-|", forViews: ["pos": positionButton])
-    view.addConstraints("H:|-20-[pos]", forViews: ["pos": positionButton])
-    
+    positionButtonMargin = try! view.addConstraint("V:[pos]-10-|", forViews: ["pos": positionButton])
+    view.addConstraints("H:|-10-[pos]", forViews: ["pos": positionButton])
     
     positionView = UIImageView(image: UIImage(named: "current-position-compas"))
     mapView.currentPositionView = positionView
@@ -120,6 +116,10 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     
     var identifier: Int32 = 0
     for poi in pois {
+      if isPoiHidden(poi) {
+        identifier += 1
+        continue
+      }
       let annotation = SKAnnotation()
       annotation.identifier = identifier
 //      if attraction.swipedRight != nil && attraction.swipedRight! {
@@ -129,55 +129,96 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
 //        annotation.annotationType = SKAnnotationType.Purple
 //      }
       if poi.category == 2392 {
-        if mapView.visibleRegion.zoomLevel < 12 {
-          identifier += 1
-          continue
-        }
         let coloredView = UIImageView(frame: CGRectMake(0.0, 0.0, 12.0, 12.0))
         coloredView.image = UIImage(named: "subway-m")
         let view = SKAnnotationView(view: coloredView, reuseIdentifier: "viewID")
         annotation.annotationView = view
       }
       else if poi.category == 2393 {
-        if mapView.visibleRegion.zoomLevel < 15 {
-          identifier += 1
-          continue
-        }
         let coloredView = UIImageView(frame: CGRectMake(0.0, 0.0, 12.0, 12.0))
         coloredView.image = UIImage(named: "subway-entrance-m")
         let view = SKAnnotationView(view: coloredView, reuseIdentifier: "viewID2")
         annotation.annotationView = view
       }
-      annotation.location = CLLocationCoordinate2DMake(poi.latitude, poi.longitude)
+      annotation.location = poi.coordinates
       let animationSettings = SKAnimationSettings()
       mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
       identifier += 1
     }
   }
   
+  func isPoiHidden(poi: SearchResult) -> Bool {
+    let zoomLevel = mapView.visibleRegion.zoomLevel
+    return (poi.category == 2392 && zoomLevel < 12) || (poi.category == 2393 && zoomLevel < 15) || String(poi.category).hasPrefix("1")
+  }
+  
   func mapView(mapView: SKMapView!, didSelectAnnotation annotation: SKAnnotation!) {
-    
+    hideCalloutView()
+
     print("Tapped on annotation")
     
     var poi = currentPoi
     if annotation.identifier != 5000 {
       poi = pois[Int(annotation.identifier)]
     }
-    mapView.calloutView.titleLabel.text = poi.name;
-    mapView.calloutView.titleLabel.tag = 2000 + Int(annotation.identifier)
-    mapView.calloutView.delegate = self
-    mapView.calloutView.minZoomLevel = 1
-    mapView.showCalloutForAnnotation(annotation, withOffset: CGPointMake(0, 42), animated: true);
+    poiSelected(poi)
+  }
+  
+  func poiSelected(poi: SearchResult) {
+    calloutView = AnnotationCalloutView(poi: poi) {
+      ContentService.getAttractionWithId(poi.listingId) {
+        attraction in
+        
+        self.performSegueWithIdentifier("showDetail", sender: attraction)
+      }
+
+
+    }
+    view.addSubview(calloutView)
+    let views = ["callout": calloutView!]
+    view.addConstraints("H:|-10-[callout]-10-|", forViews: views)
+    view.addConstraints("V:[callout]-10-|", forViews: views)
+    print("Added callout view")
+    positionButtonMargin.constant = 60
+//    mapView.calloutView.titleLabel.text = poi.name;
+//    mapView.calloutView.titleLabel.tag = 2000 + Int(annotation.identifier)
+//    mapView.calloutView.delegate = self
+//    mapView.calloutView.minZoomLevel = 1
+//    mapView.showCalloutForAnnotation(annotation, withOffset: CGPointMake(0, 42), animated: true);
+  }
+  
+  func hideCalloutView() {
+    if calloutView != nil {
+      calloutView.removeFromSuperview()
+      calloutView = nil
+      positionButtonMargin.constant = 10
+    }
   }
   
   func mapView(mapView: SKMapView!, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
+    hideCalloutView()
+    print("Tapped on map at \(coordinate)")
+    let clickedPoint = mapView.pointForCoordinate(coordinate)
     if mapView.visibleRegion.zoomLevel < 12 {
+      for poi in pois {
+        
+        if isPoiHidden(poi) {
+          continue
+        }
+        let poiPoint = mapView.pointForCoordinate(poi.coordinates)
+//        let label = UILabel(frame: CGRectMake(poiPoint.x - 18, poiPoint.y - 36, 36, 36))
+//        label.backgroundColor = UIColor.greenColor()
+//        view.addSubview(label)
+        let xDiff = abs(Int32(clickedPoint.x - poiPoint.x))
+        let yDiff = abs(Int32(clickedPoint.y - (poiPoint.y - 18)))
+        if xDiff < 18 && yDiff < 18 {
+          poiSelected(poi)
+          return
+        }
+      }
       // Manually check if an annotation was tapped.
     }
     
-    print("Tapped on map")
-    
-    mapView.hideCallout()
     if currentPoi != nil {
       currentPoi = nil
       addAnnotations()
@@ -201,6 +242,7 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
   }
 
   func loadMapPOIs(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D) {
+    
     ContentService.getPois(bottomLeft, topRight: topRight) {
       searchResults in
       
@@ -210,13 +252,6 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
   }
 }
 
-extension MapController: SKCalloutViewDelegate {
-  
-  func calloutView(calloutView: SKCalloutView!, didTapRightButton rightButton: UIButton!) {
-    let poi = pois[calloutView.titleLabel.tag - 2000]
-//    performSegueWithIdentifier("showDetail", sender: attraction)
-  }
-}
 
 extension MapController: SearchViewControllerDelegate {
   
@@ -246,9 +281,8 @@ extension MapController: SearchViewControllerDelegate {
     
     print("Going to location of search result")
     var delayTime = 0.1
-    if !mapView.isLocationVisible(searchResult.latitude, long: searchResult.longitude) {
-      let location = CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude)
-      mapView.animateToLocation(location, withDuration: 1.0)
+    if !mapView.isLocationVisible(searchResult.coordinates.latitude, long: searchResult.coordinates.longitude) {
+      mapView.animateToLocation(searchResult.coordinates, withDuration: 1.0)
       delayTime = 1.1
     }
     
@@ -262,8 +296,7 @@ extension MapController: SearchViewControllerDelegate {
     }
     if (newZoomLevel == 15 && oldZoomLevel < 14) || (newZoomLevel == 6 && oldZoomLevel > 7) {
       mapView.animateToZoomLevel(Float(newZoomLevel))
-      let location = CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude)
-      mapView.animateToLocation(location, withDuration: 1.0)
+      mapView.animateToLocation(searchResult.coordinates, withDuration: 1.0)
       delayTime = 1.1
     }
     if putAnnotation {
@@ -272,7 +305,7 @@ extension MapController: SearchViewControllerDelegate {
       let annotation = SKAnnotation()
       annotation.identifier = 5000
       annotation.annotationType = SKAnnotationType.Green
-      annotation.location = CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude)
+      annotation.location = searchResult.coordinates
       let animationSettings = SKAnimationSettings()
       animationSettings.animationType = SKAnimationType.AnimationPinDrop
       mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)

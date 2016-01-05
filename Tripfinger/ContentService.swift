@@ -180,8 +180,14 @@ class ContentService {
       parameters["pass"] = "plJR86!!"
     }
     print("Fetching URL: \(url)")
-    Alamofire.request(method, url, parameters: parameters)
-      .validate(statusCode: 200..<300).responseJSON {
+    
+    let request = Alamofire.request(method, url, parameters: parameters).validate(statusCode: 200..<300)
+    let backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+
+    request.response(
+      queue: backgroundQueue,
+      responseSerializer: Request.JSONResponseSerializer(options: .AllowFragments),
+      completionHandler: {
       response in
       
       if response.result.isSuccess {
@@ -195,7 +201,7 @@ class ContentService {
           dispatch_async(dispatch_get_main_queue(), failure)
         }
       }
-    }
+    })
   }
 
   class func getJsonFromPost(var url: String, body: String, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) {

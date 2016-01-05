@@ -52,7 +52,7 @@ class SyncManager {
   }
   
   class func run_async(closure: () -> ()) {
-    let qualityOfServiceClass = QOS_CLASS_BACKGROUND
+    let qualityOfServiceClass = DISPATCH_QUEUE_PRIORITY_DEFAULT
     let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
     dispatch_async(backgroundQueue, {
       closure()

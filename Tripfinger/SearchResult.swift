@@ -6,7 +6,6 @@ class SearchResult: Object {
   var name: String!
   var category: Int!
   var location: String!
-  var latitude: Double!
-  var longitude: Double!
-  var listingId: String?
+  var coordinates: CLLocationCoordinate2D!
+  var listingId: String!
 }

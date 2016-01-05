@@ -9,7 +9,6 @@ class GuideController: UITableViewController, SubController {
   struct TableCellIdentifiers {
     static let guideItemCell = "GuideItemCell"
     static let categoryCell = "CategoryCell"
-    static let textChildCell = "TextChild"
     static let loadingCell = "LoadingCell"
   }
   
@@ -70,7 +69,6 @@ class GuideController: UITableViewController, SubController {
     
     UINib.registerClass(GuideItemCell.self, reuseIdentifier: TableCellIdentifiers.guideItemCell, forTableView: tableView)
     UINib.registerNib(TableCellIdentifiers.categoryCell, forTableView: tableView)
-    UINib.registerNib(TableCellIdentifiers.textChildCell, forTableView: tableView)
     UINib.registerNib(TableCellIdentifiers.loadingCell, forTableView: tableView)
 
     backButton = UIButton(type: UIButtonType.System)
@@ -467,7 +465,7 @@ extension GuideController: GuideItemContainerDelegate {
 extension GuideController {
 
   func selectedSearchResult(searchResult: SearchResult) {
-    ContentService.getRegionWithId(searchResult.listingId!) {
+    ContentService.getRegionWithId(searchResult.listingId) {
       region in
 
       let doNav = {

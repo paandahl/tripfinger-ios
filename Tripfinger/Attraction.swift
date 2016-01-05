@@ -11,6 +11,7 @@ class Attraction: Object {
     var imagePath: NSURL? = nil
 
     if let region = OfflineService.getRegionWithId(listing.country) {
+      print("found country offline")
       var regionPath: NSURL!
       if listing.city == nil {
         regionPath = NSURL.getDirectory(.LibraryDirectory, withPath: region.getId())
@@ -22,6 +23,7 @@ class Attraction: Object {
     }
     else if let city = listing.city {
       if let region = OfflineService.getRegionWithId(city) {
+        print("found city offline")
         let regionPath = NSURL.getDirectory(.LibraryDirectory, withPath: region.listing.country + "/" + city)
         imagePath = regionPath.URLByAppendingPathComponent(listing.item.id + "-1")
       }

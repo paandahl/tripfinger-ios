@@ -26,6 +26,16 @@ extension UIView {
     self.addConstraints(constraints)
     return constraints
   }
+  
+  func addConstraint(constraints: String, forViews views: [String : UIView]) throws -> NSLayoutConstraint {
+    
+    let consts = addConstraints(constraints, forViews: views)
+    if consts.count != 1 {
+      throw Error.RuntimeError("Added more than one constraint.")
+    }
+    return consts[0]
+  }
+
 
   func addConstraintsArray(constraintsArray: [String], forViews views: [String : UIView]) -> [NSLayoutConstraint] {
     
