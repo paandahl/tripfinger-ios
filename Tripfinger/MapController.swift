@@ -1,6 +1,7 @@
 import SKMaps
 import RealmSwift
 import BrightFutures
+import Alamofire
 
 class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocationManagerDelegate, SKPositionerServiceDelegate {
   
@@ -15,7 +16,7 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
   var positionView: UIImageView!
   var positionView2: UIImageView!
   var previousHeading: CGFloat = 0.0
-  var test: Int = 45
+  var mapPoisRequest: Request!
   
   
   override func viewDidLoad() {
@@ -128,6 +129,9 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
       }
       else if poi.category == 2393 {
         annotation.annotationView = getAnnotationViewWithIcon("subway-entrance-m", selected: selected)
+      }
+      else if String(poi.category).hasPrefix("26") {
+        annotation.annotationView = getAnnotationViewWithIcon("shop-m", selected: selected)        
       }
       else {
         annotation.annotationType = selected ? SKAnnotationType.Green : SKAnnotationType.Blue
@@ -258,12 +262,16 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     let bottomLeftCoord = mapView.coordinateForPoint(CGPoint(x: 0, y: mapView.frame.maxY))
     let topRightCoord = mapView.coordinateForPoint(CGPoint(x: mapView.frame.maxX, y: 0))
     print("zoomLevel: \(mapView.visibleRegion.zoomLevel)")
-    loadMapPOIs(bottomLeftCoord, topRight: topRightCoord)
+    loadMapPOIs(bottomLeftCoord, topRight: topRightCoord, zoomLevel: Int(mapView.visibleRegion.zoomLevel))
   }
 
-  func loadMapPOIs(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D) {
+  func loadMapPOIs(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int) {
     
-    ContentService.getPois(bottomLeft, topRight: topRight) {
+    if mapPoisRequest != nil {
+      mapPoisRequest.cancel()
+    }
+    
+    mapPoisRequest = ContentService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel) {
       searchResults in
       
       self.pois = searchResults

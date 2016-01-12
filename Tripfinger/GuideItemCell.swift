@@ -38,6 +38,7 @@ class GuideItemCell: UITableViewCell {
     contentImage = UIImageView()
     contentView.addSubview(contentImage)
     content = UITextView()
+    content.editable = false
     contentView.addSubview(content)
     readMoreButton = UIButton(type: .System)
     readMoreButton.setTitle("Read more", forState: .Normal)
@@ -49,7 +50,6 @@ class GuideItemCell: UITableViewCell {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-//    delegate.updateTableSize()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -59,7 +59,6 @@ class GuideItemCell: UITableViewCell {
   override func updateConstraints() {
     super.updateConstraints()
     
-    print("updateContraints")
     if (!constraintsAdded) {
       let views = ["image": contentImage, "text": content, "readMore": readMoreButton]
       contentImageHeightConstraint = contentView.addConstraints("V:[image(225)]", forViews: views)[0]
@@ -80,12 +79,10 @@ class GuideItemCell: UITableViewCell {
     }
     
     if contentImage.hidden {
-      print("image hidden")
       contentImageHeightConstraint.constant = 0
       contentImageMarginConstraint.constant = 0
     }
     else {
-      print("image to be displayed")
       contentImageHeightConstraint.constant = 225
       contentImageMarginConstraint.constant = 10
     }
@@ -100,27 +97,15 @@ class GuideItemCell: UITableViewCell {
   }
   
   override func prepareForReuse() {
-    print("prepareForReuse")
     if (!contentImage.isDescendantOfView(contentView)) {
       contentView.addSubview(contentImage)
     }
     if (!readMoreButton.isDescendantOfView(contentView)) {
       contentView.addSubview(readMoreButton)
     }
-    
-    
-    //        if !readMoreButton.isDescendantOfView(contentView) {
-    //            contentView.addSubview(readMoreButton)
-    //        }
-    //        if !contentImage.isDescendantOfView(contentView) {
-    //            print("Adding contentview back to tree")
-    //            contentView.addSubview(contentImage)
-    //        }
-    //        setNeedsUpdateConstraints()
   }
   
   func expand() {
-    print("EXPANDING")
     let fixedWidth = content.frame.size.width
     let newSize = content.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
     contentHeightConstraint.constant = newSize.height - 20 // last paragraphs margin
@@ -134,9 +119,8 @@ class GuideItemCell: UITableViewCell {
     delegate.readMoreClicked()
   }
   
-  func setContentFromGuideItem(guideItem: GuideItem) {
-    print("setContent: \(guideItem.name)")
-    
+  func setContentFromGuideItem(guideItem: GuideItem) {    
+    contentImage.image = UIImage(named: "placeholder-712")
     if guideItem.images.count > 0 {
       let imageUrl = guideItem.images[0].url + "-712x534"
       print("Loading image with url: " + imageUrl)

@@ -22,8 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     SKMapsService.sharedInstance().initializeSKMapsWithAPIKey(apiKey, settings: initSettings)
     SKMapsService.sharedInstance().mapsVersioningManager.delegate = self
     
-    let session = Session()
-    session.currentItemId = "region-brussels"
+    let session = Session()    
     session.mapVersionFileDownloaded = mapVersionFilePromise.future
 
     let navigationController = self.window!.rootViewController as! UINavigationController

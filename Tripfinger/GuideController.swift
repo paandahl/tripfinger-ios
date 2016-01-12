@@ -1,8 +1,8 @@
 import RealmSwift
 
 protocol GuideControllerDelegate: class {
-  func categorySelected(category: Attraction.Category)
-  func navigateInternally()
+  func categorySelected(category: Attraction.Category, view: String)
+  func navigateInternally(callback: () -> ())
 }
 
 class GuideController: UITableViewController, SubController {
@@ -15,48 +15,21 @@ class GuideController: UITableViewController, SubController {
   var session: Session!
   var delegate: GuideControllerDelegate!
   
-  var itemStack = [GuideItemHolder]()
-  
   var backButton: UIButton!
   var titleLabel: UILabel!
   var downloadButton: UIButton!
-  var loading = false
   
   var countryList = [Region]()
   var mapsObject: SKTMapsObject!
   var mapCountryList: [SKTPackage]!
-  var currentContinent: SKTPackage!
   var mapMappings: [String: String]!
-  var currentItem: GuideItem?
-  var currentCountryId: String? {
-    return session.currentCountry?.getId()
-  }
-  var currentCountryName: String? {
-    return session.currentCountry?.getName()
-  }
-  var currentRegion: Region?
-  var currentSection: GuideText?
-  var guideSections = List<GuideText>()
-  var currentCategoryDescriptions = List<GuideText>()
+  
   var guideItemExpanded = false
   var guideITemCreatedAsExpanded = false
   var containerFrame: CGRect!
   
   var tableSections = [TableSection]()
-  
-  class TableSection {
-    var title: String?
-    var cellIdentifier: String
-    var elements = [(String, String)]()
-    var handler: (NSIndexPath -> ())?
     
-    init(title: String? = nil, cellIdentifier: String, handler: (NSIndexPath -> ())?) {
-      self.title = title
-      self.cellIdentifier = cellIdentifier
-      self.handler = handler
-    }
-  }
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -70,122 +43,102 @@ class GuideController: UITableViewController, SubController {
     UINib.registerClass(GuideItemCell.self, reuseIdentifier: TableCellIdentifiers.guideItemCell, forTableView: tableView)
     UINib.registerNib(TableCellIdentifiers.categoryCell, forTableView: tableView)
     UINib.registerNib(TableCellIdentifiers.loadingCell, forTableView: tableView)
-
+    
     backButton = UIButton(type: UIButtonType.System)
     backButton.addTarget(self, action: "navigateBack:", forControlEvents: .TouchUpInside)
     
     titleLabel = UILabel(frame: CGRectMake(10, 5, tableView.frame.size.width, 18))
     titleLabel.font = UIFont.boldSystemFontOfSize(16)
-
-    downloadButton = UIButton(type: UIButtonType.System)
-    downloadButton.setTitle("Download", forState: UIControlState.Normal)
-    downloadButton.sizeToFit()
+    
+    downloadButton = UIButton(type: .System)
     downloadButton.addTarget(self, action: "openDownloadCity:", forControlEvents: .TouchUpInside)
     
-    if currentSection == nil {
-      let headerView = UIView()
-      headerView.addSubview(titleLabel)
-      headerView.addSubview(downloadButton)
-      headerView.addSubview(backButton)
-      headerView.addConstraints("V:|-10-[title(22)]", forViews: ["title": titleLabel])
-      headerView.addConstraints("V:|-10-[download(22)]", forViews: ["download": downloadButton])
-      headerView.addConstraints("V:|-10-[back(22)]", forViews: ["back": backButton])
-      headerView.addConstraints("H:|-15-[back]", forViews: ["back": backButton])
-      headerView.addConstraint(NSLayoutAttribute.CenterX, forView: titleLabel)
-      headerView.addConstraints("H:[download]-15-|", forViews: ["download": downloadButton])
-      var headerFrame = headerView.frame;
-      headerFrame.size.height = 44;
-      headerView.frame = headerFrame;
-      tableView.tableHeaderView = headerView
+    let headerView = UIView()
+    headerView.addSubview(titleLabel)
+    headerView.addSubview(downloadButton)
+    headerView.addSubview(backButton)
+    headerView.addConstraints("V:|-10-[title(22)]", forViews: ["title": titleLabel])
+    headerView.addConstraints("V:|-10-[download(22)]", forViews: ["download": downloadButton])
+    headerView.addConstraints("V:|-10-[back(22)]", forViews: ["back": backButton])
+    headerView.addConstraints("H:|-15-[back]", forViews: ["back": backButton])
+    headerView.addConstraint(NSLayoutAttribute.CenterX, forView: titleLabel)
+    headerView.addConstraints("H:[download]-15-|", forViews: ["download": downloadButton])
+    var headerFrame = headerView.frame;
+    headerFrame.size.height = 44;
+    headerView.frame = headerFrame;
+    tableView.tableHeaderView = headerView
+    
+    loadCountryList()
+    updateUI()
+  }
+  
+  func updateUI() {
+    
+    // title label
+    if session.currentItem != nil {
+      titleLabel.text = session.currentItem.name
+    }
+    else {
+      titleLabel.text = "Countries"
     }
     
-    loadContent()
+    // back button
+    var backElementName = ""
+    if session.currentSection != nil {
+      backElementName = session.previousSection != nil ? session.previousSection.getName() : session.currentRegion.getName()
+      backButton.hidden = false
+    }
+    else if session.currentRegion != nil && session.currentRegion.item().category != 0 {
+      backElementName = session.currentRegion.listing.getParentName()
+      backButton.hidden = false
+    }
+    else {
+      backButton.hidden = true
+    }
+    backButton.setTitle("< \(backElementName)", forState: .Normal)
+    backButton.sizeToFit()
+    
+    // download button
+    if session.currentSection == nil && session.currentRegion != nil {
+      switch session.currentItem.category {
+      case Region.Category.CITY.rawValue:
+        fallthrough
+      case Region.Category.COUNTRY.rawValue:
+        let downloaded = DownloadService.isRegionDownloaded(mapsObject, region: session.currentRegion, country: session.currentCountry)
+        let title = downloaded ? "Downloaded" : "Download"
+        downloadButton.setTitle(title, forState: .Normal)
+        downloadButton.hidden = false
+      default:
+        downloadButton.hidden = true
+      }
+    }
+    else {
+      downloadButton.hidden = true
+    }
+    
+    populateTableSections()
+    tableView.reloadData {
+      self.tableView.contentOffset = CGPointZero
+    }
   }
   
   func navigateBack(sender: UIButton) {
-    let stackItem = itemStack.removeLast()
-    if stackItem.getId().hasPrefix("region-") {
-      currentSection = nil
-      session.currentSection = nil
-      let region = Region.constructRegion()
-      region.listing.item.id = stackItem.getId()
-      region.listing.item.name = stackItem.getName()
-      currentRegion = nil
-      session.currentRegion = region
+    session.moveBackInHierarchy {
+      self.updateUI()
     }
-    else if stackItem.getId().hasPrefix("text-") {
-      currentSection = nil
-      session.currentSection = stackItem as? GuideText
+    delegate.navigateInternally {
+      self.updateUI()
     }
-    else {
-      currentItem = nil
-      currentRegion = nil
-      session.currentRegion = nil
-      currentSection = nil
-      session.currentSection = nil
-    }
-    loadContent()
-    delegate.navigateInternally()
-  }
-  
-  func loadContent() {
-    loading = true
-    tableView.contentOffset = CGPoint(x: 0, y: 0)
-    if let currentSection = session.currentSection {
-      self.currentSection = currentSection
-      currentItem = currentSection.item
-      if currentSection.item.id == "null" {
-        currentItem = currentSection.item
-        tableView.reloadData()
-      }
-      else {
-        loadGuideTextWithId(currentSection.item.id)
-      }
-    }
-    else if let currentRegion = session.currentRegion {
-      loadRegionWithID(currentRegion.listing.item.id)
-    }
-    else {
-      loadCountryList()
-    }
-    
-    if let currentSection = currentSection {
-      let category = Attraction.Category(rawValue: currentSection.item.category)
-      titleLabel.text = category?.entityName
-    }
-    if itemStack.count == 0 {
-      backButton.hidden = true
-      downloadButton.hidden = true
-      titleLabel.text = "Countries"
-    }
-    else {
-      backButton.hidden = false
-      if let currentCountryId = currentCountryId {
-        downloadButton.hidden = false
-        if DownloadService.isRegionDownloaded(session.currentRegion!.getId(), countryId: currentCountryId) {
-          downloadButton.setTitle("Downloaded", forState: .Normal)
-        }
-        else {
-          downloadButton.setTitle("Download", forState: .Normal)
-        }
-      }
-      let stackElement = itemStack.last!
-      backButton.setTitle("< \(stackElement.getName())", forState: UIControlState.Normal)
-      backButton.sizeToFit()
-    }
-    populateTableSections()
   }
   
   func openDownloadCity(sender: UIButton) {
     let nav = UINavigationController()
     let vc = DownloadController()
-    vc.countryName = currentCountryName
-    vc.countryId = currentCountryId
-    vc.countryPackage = try! getMapPackageFromId(currentCountryId!)
-    vc.regionName = session.currentRegion!.getName()
-    vc.regionId = session.currentRegion!.getId()
-    vc.regionPackage = try! getMapPackageFromId(session.currentRegion!.getId())
-    if session.currentRegion!.mapCountry {
+    vc.country = session.currentCountry
+    vc.countryPackage = try! getMapPackageFromId(session.currentCountry.getId())
+    vc.region = session.currentRegion
+    vc.regionPackage = try! getMapPackageFromId(session.currentRegion.getId())
+    if session.currentRegion.mapCountry {
       vc.onlyMap = true
     }
     nav.viewControllers = [vc]
@@ -213,8 +166,10 @@ class GuideController: UITableViewController, SubController {
     ContentService.getCountries() {
       countries in
       
+      for country in countries {
+        country.item().contentLoaded = false
+      }
       self.countryList = countries
-      self.loading = false
       populateTable()
       
     }
@@ -224,10 +179,9 @@ class GuideController: UITableViewController, SubController {
         DownloadService.getMapsAvailable().onSuccess {
           (mapsObject, mappings) in
           
-          
           self.mapMappings = mappings
           self.mapsObject = mapsObject
-          populateTable()
+          self.updateUI()
         }
       }
     }
@@ -248,44 +202,14 @@ class GuideController: UITableViewController, SubController {
     return continents
   }
   
-  func loadRegionWithID(regionId: String) {
-    
-    ContentService.getRegionWithId(regionId, failure: {
-      
-      print("Preparing for map country")
-      self.currentRegion = self.session.currentRegion
-      self.currentRegion!.listing.item.content = "This country has only map data."
-      self.currentRegion!.mapCountry = true
-      self.currentItem = self.currentRegion!.listing.item
-      self.titleLabel.text = self.currentItem!.name
-      self.loading = false
-      self.populateTableSections()
-
-      }) {
-      region in
-      
-      self.currentRegion = region
-      self.guideSections = region.listing.item.guideSections
-      self.currentCategoryDescriptions = region.listing.item.categoryDescriptions
-      self.currentItem = region.listing.item
-      self.titleLabel.text = self.currentItem!.name
-      self.session.currentRegion = region
-      self.loading = false
-      self.populateTableSections()
+  func getContinent(name: String) throws -> SKTPackage {
+    let allContinents = mapsObject.packagesForType(.Continent) as! [SKTPackage]
+    for continent in allContinents {
+      if continent.nameForLanguageCode("en") == name {
+        return continent
+      }
     }
-  }
-  
-  func loadGuideTextWithId(guideTextId: String) {
-    ContentService.getGuideTextWithId(currentRegion!, guideTextId: guideTextId) {
-      guideText in
-      
-      self.currentSection = guideText
-      self.guideSections = guideText.item.guideSections
-      self.currentItem = guideText.item
-      self.title = guideText.item.name
-      self.loading = false
-      self.populateTableSections()
-    }
+    throw Error.RuntimeError("Did not find continent with name: " + name)
   }
 }
 
@@ -304,113 +228,117 @@ extension GuideController {
   func populateTableSections() {
     tableSections = [TableSection]()
     
-    if loading {
-      let section = TableSection(cellIdentifier: TableCellIdentifiers.loadingCell, handler: nil)
-      section.elements.append(("", ""))
-      tableSections.append(section)
+    if self.mapsObject == nil ||
+      (session.currentRegion != nil && !session.currentRegion.item().contentLoaded && session.currentSection == nil) {
+        let section = TableSection(cellIdentifier: TableCellIdentifiers.loadingCell, handler: nil)
+        section.elements.append(("", ""))
+        tableSections.append(section)
     }
-    else if currentItem == nil {
-      let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCountry)
-      for country in countryList {
-        section.elements.append((title: country.listing.item.name!, value: country.listing.item.id))
-      }
-      tableSections.append(section)
-      
-      let continents = TableSection(title: "Continents", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToContinent)
-      for continent in getContinents() {
-        continents.elements.append((title: continent.nameForLanguageCode("en"), value: ""))
-      }
-      tableSections.append(continents)
-      
-    }
-    else if currentItem!.category > Region.Category.CONTINENT.rawValue {
-      let section = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell, handler: nil)
-      section.elements.append(("", ""))
-      tableSections.append(section)
-    }
-
-    if guideItemExpanded {
-      let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToSection)
-      for guideSection in guideSections {
-        section.elements.append((title: guideSection.item.name!, value: guideSection.item.id))
-      }
-      tableSections.append(section)
-    }
-
-    if currentRegion != nil && !currentRegion!.mapCountry && currentSection == nil {
-      var section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCategory)
-      let section2 = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCategoryDescription)
-      var i = 0
-      for category in Attraction.Category.allValues {
-        if i > 2 {
-          section2.elements.append((title: category.entityName, value: String(category.rawValue)))
-        }
-        else if i > 0 {
-          var name = category.entityName
-          if name == "Explore the city" && currentRegion!.listing.item.category == Region.Category.COUNTRY.rawValue {
-            name = "Explore the country"
+    else {
+      if session.currentItem == nil {
+        if mapsObject != nil {
+          let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+          for country in countryList {
+            section.elements.append((title: country.listing.item.name!, value: country))
           }
-          else if name == "Explore the city" && currentRegion!.listing.item.category == Region.Category.CONTINENT.rawValue {
-            name = "Explore the continent"
+          tableSections.append(section)
+          
+          let continents = TableSection(title: "Continents", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+          for continent in getContinents() {
+            let continentName = continent.nameForLanguageCode("en")
+            let continentRegion = Region.constructRegion(continentName)
+            continents.elements.append((title: continentName, value: continentRegion))
           }
-          section.elements.append((title: name, value: String(category.rawValue)))
+          tableSections.append(continents)
         }
-        i += 1
       }
-      tableSections.append(section)
+      else if (session.currentSection == nil && session.currentItem.category > Region.Category.CONTINENT.rawValue) || (session.currentSection != nil && session.currentSection.item.content != nil) {
+        let section = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell, handler: nil)
+        section.elements.append(("", ""))
+        tableSections.append(section)
+      }
       
-      if (currentItem!.subRegions.count > 0) {
-        switch currentItem!.category {
-        case Region.Category.CONTINENT.rawValue:
-          section = TableSection(title: "Countries:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCity)
-        case Region.Category.COUNTRY.rawValue:
-          section = TableSection(title: "Cities:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCity)
-        default:
-          section = TableSection(title: "Neighbourhoods:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCity)
-        }
-        for subRegion in currentItem!.subRegions {
-          var itemName = subRegion.listing.item.name!
-          let range = itemName.rangeOfString("/")
-          if range != nil {
-            itemName = itemName.substringFromIndex(range!.endIndex)
-          }
-          section.elements.append((title: itemName, value: subRegion.listing.item.id))
+      if guideItemExpanded {
+        let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToSection)
+        
+        for guideSection in session.currentItem.guideSections {
+          section.elements.append((title: guideSection.item.name, value: guideSection))
         }
         tableSections.append(section)
       }
-      if currentRegion!.listing.item.category > Region.Category.CONTINENT.rawValue {
-        tableSections.append(section2)        
-      }
-      else {
-        let mapSection = TableSection(title: "Countries with only maps", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToMapCountry)
-        print(currentContinent.mapsObject)
-        let countryCandidates = currentContinent.childObjects() as! [SKTPackage]
-        mapCountryList = [SKTPackage]()
-        for countryCandidate in countryCandidates {
-          let candidateName = countryCandidate.nameForLanguageCode("en")
-          let candidateId = mapMappings[countryCandidate.packageCode]!
-          var alreadyListed = false
-          for country in countryList {
-            if candidateId == country.getId() {
-              alreadyListed = true
-              break
+      
+      if session.currentRegion != nil && !session.currentRegion.mapCountry && session.currentSection == nil {
+        var section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToSection)
+        let section2 = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToSection)
+        var i = 0
+        for categoryDesc in session.currentRegion.item().categoryDescriptions {
+          if i > 1 {
+            section2.elements.append((title: categoryDesc.getName(), value: categoryDesc))
+          }
+          else {
+            section.elements.append((title: categoryDesc.getName(), value: categoryDesc))
+          }
+          i += 1
+        }
+        tableSections.append(section)
+        
+        if session.currentRegion.item().subRegions.count > 0 {
+          switch session.currentRegion.item().category {
+          case Region.Category.CONTINENT.rawValue:
+            section = TableSection(title: "Countries:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+          case Region.Category.COUNTRY.rawValue:
+            section = TableSection(title: "Cities:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+          default:
+            section = TableSection(title: "Neighbourhoods:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+          }
+          
+          for subRegion in session.currentRegion.item().subRegions {
+            var itemName = subRegion.listing.item.name
+            let range = itemName.rangeOfString("/")
+            if range != nil {
+              itemName = itemName.substringFromIndex(range!.endIndex)
+            }
+            section.elements.append((title: itemName, value: subRegion))
+          }
+          tableSections.append(section)
+        }
+        if session.currentRegion.listing.item.category > Region.Category.CONTINENT.rawValue {
+          tableSections.append(section2)
+        }
+        else {
+          let mapSection = TableSection(title: "Countries with only maps", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+          let continentName = session.currentContinent.getName()
+          let countryCandidates = try! getContinent(continentName).childObjects() as! [SKTPackage]
+          mapCountryList = [SKTPackage]()
+          for countryCandidate in countryCandidates {
+            let candidateName = countryCandidate.nameForLanguageCode("en")
+            var alreadyListed = false
+            for country in countryList {
+              if candidateName == country.getName() {
+                alreadyListed = true
+                break
+              }
+            }
+            if !alreadyListed {
+              let countryRegion = Region.constructRegion(candidateName, continent: session.currentContinent.getName())
+              countryRegion.mapCountry = true
+              countryRegion.item().contentLoaded = true
+              countryRegion.item().content = "This country has only map data."
+              mapSection.elements.append((title: candidateName, value: countryRegion))
+              mapCountryList.append(countryCandidate)
             }
           }
-          if !alreadyListed {
-            mapSection.elements.append((title: candidateName, value: candidateId))
-            mapCountryList.append(countryCandidate)
-          }
+          tableSections.append(mapSection)
         }
-        tableSections.append(mapSection)
+      }
+      else if session.currentSection != nil && session.currentSection.item.category != 0 {
+        let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCategory)
+        section.elements.append(("Swipe", "swipe"))
+        section.elements.append(("List", "list"))
+        section.elements.append(("Map", "map"))
+        tableSections.append(section)
       }
     }
-    else if currentSection != nil && currentSection?.item.category != 0 {
-      let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: nil)
-      section.elements.append(("Browse", "browse"))
-      tableSections.append(section)
-    }
-    
-    tableView.reloadData()
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -420,7 +348,7 @@ extension GuideController {
     
     if let cell = cell as? GuideItemCell {
       cell.delegate = self
-      cell.setContentFromGuideItem(currentItem!)
+      cell.setContentFromGuideItem(session.currentItem)
       if (guideItemExpanded) {
         cell.expand()
       }
@@ -452,6 +380,7 @@ extension GuideController: GuideItemContainerDelegate {
   
   func readMoreClicked() {
     guideItemExpanded = true
+    populateTableSections()
     tableView.reloadData()
   }
   
@@ -463,133 +392,48 @@ extension GuideController: GuideItemContainerDelegate {
 
 // MARK: - Navigation
 extension GuideController {
-
+  
   func selectedSearchResult(searchResult: SearchResult) {
-    ContentService.getRegionWithId(searchResult.listingId) {
-      region in
-
-      let doNav = {
-        self.session.currentRegion = region
-        self.loadContent()
-        self.delegate.navigateInternally()
-      }
-
-      self.itemStack = [GuideItemHolder]()
-      let allRegions = Region.constructRegion()
-      allRegions.listing.item.name = "Continents"
-      allRegions.listing.item.id = "top-level"
-      self.itemStack.append(allRegions)
-      if region.listing.item.category > Region.Category.COUNTRY.rawValue {
-        ContentService.getRegionWithId(region.listing.country) {
-          country in
-          
-          self.itemStack.append(country)
-          if region.listing.item.category > Region.Category.CITY.rawValue {
-            ContentService.getRegionWithId(region.listing.city) {
-              city in
-              
-              self.itemStack.append(city)
-              doNav()
-            }
-          }
-          else {
-            doNav()
-          }
-        }
-      }
-      else {
-        doNav()
-      }
+    session.loadRegionFromSearchResult(searchResult) {
+      self.updateUI()
     }
+    self.updateUI()
   }
   
-  func navigateToContinent(indexPath: NSIndexPath) {
-    let allRegions = Region.constructRegion()
-    allRegions.listing.item.name = "Continents"
-    allRegions.listing.item.id = "top-level"
-    itemStack.append(allRegions)
-    let continent = Region.constructRegion()
-    let continentPackage = getContinents()[indexPath.row]
-    let continentName = continentPackage.nameForLanguageCode("en")
-    self.currentContinent = getContinents()[indexPath.row]
-    continent.listing.item.name = continentName
-    continent.listing.item.id = mapMappings[continentPackage.packageCode]
-    session.currentRegion = continent
-    loadContent()
-    delegate.navigateInternally()
+  func navigateToRegion(object: AnyObject) {
+    let region = object as! Region
     
-  }
-
-  func navigateToCountry(indexPath: NSIndexPath) {
-    let allRegions = Region.constructRegion()
-    allRegions.listing.item.name = "Continents"
-    allRegions.listing.item.id = "top-level"
-    itemStack.append(allRegions)
-    session.currentRegion = countryList[indexPath.row]
-    loadContent()
-    delegate.navigateInternally()
+    session.changeRegion(region) {
+      self.updateUI()
+    }
+    
+    delegate.navigateInternally {
+      self.updateUI()
+    }
   }
   
-  func navigateToMapCountry(indexPath: NSIndexPath) {
-    itemStack.append(currentRegion!)
-    let region = Region.constructRegion()
-    let countryPackage = mapCountryList[indexPath.row]
-    let countryName = countryPackage.nameForLanguageCode("en")
-    let countryId = mapMappings[countryPackage.packageCode]
-    region.listing.item.id = countryId
-    region.listing.item.name = countryName
-    region.listing.item.category = Region.Category.COUNTRY.rawValue
-    session.currentRegion = region
-    loadContent()
-    delegate.navigateInternally()
-  }
-
-
-  func navigateToCity(indexPath: NSIndexPath) {
-    itemStack.append(currentRegion!)
-    session.currentRegion = currentRegion!.listing.item.subRegions[indexPath.row]
-    loadContent()
-    delegate.navigateInternally()
-  }
-
-  func navigateToSection(indexPath: NSIndexPath) {
-    var current: GuideItemHolder = currentRegion!
-    if let currentSection = currentSection {
-      current = currentSection
+  func navigateToSection(object: AnyObject) {
+    let section = object as! GuideText
+    
+    session.changeSection(section) {
+      self.updateUI()
     }
-    session.currentSection = guideSections[indexPath.row]
-    itemStack.append(current)
-    loadContent()
-    delegate.navigateInternally()
+    
+    delegate.navigateInternally {
+      self.updateUI()
+    }    
   }
   
-  func navigateToCategoryDescription(indexPath: NSIndexPath) {
-    var current: GuideItemHolder = currentRegion!
-    if let currentSection = currentSection {
-      current = currentSection
-    }
-    itemStack.append(current)
-    session.currentSection = currentCategoryDescriptions[indexPath.row + 2]
-    print(session.currentSection)
-    loadContent()
-    delegate.navigateInternally()
-  }
-  
-  func navigateToCategory(indexPath: NSIndexPath) {
-    if currentSection != nil {
-      let category = Attraction.Category(rawValue: currentSection!.item.category)!
-      delegate.categorySelected(category)
-      
-    }
-    else {
-      delegate.categorySelected(Attraction.Category.allValues[indexPath.row + 1])
-    }
+  func navigateToCategory(object: AnyObject) {
+    let view = object as! String
+    delegate.categorySelected(Attraction.Category(rawValue: session.currentItem.category)!, view: view)
   }
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     
-    if let handler = tableSections[indexPath.section].handler {
-      handler(indexPath)
+    let section = tableSections[indexPath.section];
+    if let handler = section.handler {
+      handler(section.elements[indexPath.row].1)
     }
     
     tableView.deselectRowAtIndexPath(indexPath, animated: true)

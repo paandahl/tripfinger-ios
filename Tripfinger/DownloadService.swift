@@ -12,13 +12,13 @@ class DownloadService {
   
   static var mapDownloadManager = MapDownloadManager()
   
-  class func isRegionDownloaded(regionId: String, countryId: String? = nil) -> Bool {
+  class func isRegionDownloaded(mapsObject: SKTMapsObject, region: Region, country: Region? = nil) -> Bool {
     
-    if hasMapPackage(regionId) {
+    if hasMapPackageForRegion(region, mapsObject: mapsObject) {
       return true
     }
-    else if let countryId = countryId {
-      return hasMapPackage(countryId)
+    else if let country = country {
+      return hasMapPackageForRegion(country, mapsObject: mapsObject)
     }
     else {
       return false
@@ -34,22 +34,27 @@ class DownloadService {
         json in
         
         let skMaps = SKTMapsObject.convertFromJSON(json)
-        let allContinents = skMaps.packagesForType(.Continent) as! [SKTPackage]
+        let continents = skMaps.packagesForType(.Continent) as! [SKTPackage]
         let countries = skMaps.packagesForType(.Country) as! [SKTPackage]
-        var names = getPackageNames(countries)
-        names.appendContentsOf(getPackageNames(allContinents))
-        let jsonNames = JSON(rawValue: names)!
+        let cities = skMaps.packagesForType(.City) as! [SKTPackage]
+        var mappingNames = getPackageNames(continents)
+        mappingNames.appendContentsOf(getPackageNames(countries))
+        mappingNames.appendContentsOf(getPackageNames(cities))
+        let mappingNamesJson = JSON(rawValue: mappingNames)!
         
-        ContentService.getJsonFromPost(ContentService.baseUrl + "/region_ids", body: jsonNames.rawString()!, success: {
+        ContentService.getJsonFromPost(ContentService.baseUrl + "/region_ids", body: mappingNamesJson.rawString()!, success: {
           json in
           
           var mappings = [String: String]()
           let jsonDict = json.dictionary!
+          for continent in continents {
+            mappings[continent.packageCode] = jsonDict[continent.nameForLanguageCode("en")]!.string!
+          }
           for country in countries {
             mappings[country.packageCode] = jsonDict[country.nameForLanguageCode("en")]!.string!
           }
-          for continent in allContinents {
-            mappings[continent.packageCode] = jsonDict[continent.nameForLanguageCode("en")]!.string!
+          for city in cities {
+            mappings[city.packageCode] = jsonDict[city.nameForLanguageCode("en")]!.string!
           }
           
           promise.success((skMaps, mappings))
@@ -77,7 +82,44 @@ class DownloadService {
     }
     return false
   }
-  
+
+  class func hasMapPackageForRegion(region: Region, mapsObject: SKTMapsObject!) -> Bool {
+    
+    var sktPackage: SKTPackage! = nil
+    if region.item().category == Region.Category.COUNTRY.rawValue {
+      let countries = mapsObject.packagesForType(.Country) as! [SKTPackage]
+      for country in countries {
+        if country.nameForLanguageCode("en") == region.getName() {
+          sktPackage = country
+        }
+      }
+    }
+    else if region.item().category == Region.Category.CITY.rawValue {
+      let cities = mapsObject.packagesForType(.City) as! [SKTPackage]
+      for city in cities {
+        if city.nameForLanguageCode("en") == region.getName() {
+          sktPackage = city
+        }
+      }
+    }
+    else {
+      return false
+    }
+    
+    if sktPackage == nil {
+      return false
+    }
+    else {
+      let mapPackages = SKMapsService.sharedInstance().packagesManager.installedOfflineMapPackages as! [SKMapPackage]
+      for mapPackage in mapPackages {
+        if mapPackage.name == sktPackage.packageCode {
+          return true
+        }
+      }
+      return false
+    }
+  }
+
   class func deleteRegion(regionId: String, countryId: String) {
     deleteTripfingerDataForRegion(regionId, countryId: countryId)
     deleteMapForRegion(regionId)

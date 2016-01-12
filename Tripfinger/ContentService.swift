@@ -10,10 +10,10 @@ class ContentService {
   
   init() {}
   
-  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, handler: List<SearchResult> -> ()) {
+  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int, handler: List<SearchResult> -> ()) -> Request {
     
     let bounds = "\(bottomLeft.latitude),\(bottomLeft.longitude),\(topRight.latitude),\(topRight.longitude)"
-    getJsonFromUrl(ContentService.baseUrl + "/search_by_bounds/\(bounds)", success: {
+    return getJsonFromUrl(ContentService.baseUrl + "/search_by_bounds/\(bounds)/\(zoomLevel)", success: {
       json in
       
       let searchResults = SearchService().parseSearchResults(json)
@@ -78,6 +78,32 @@ class ContentService {
       }
       
       }, failure: nil)
+  }
+  
+  class func getRegionFromListing(listing: GuideListing, handler: (Region) -> ()) {
+    var url: String!
+    if listing.city != nil {
+      url = baseUrl + "/neighbourhoods/\(listing.country)/\(listing.city)/\(listing.item.name)"
+    }
+    else if listing.country != nil {
+      url = baseUrl + "/cities/\(listing.country)/\(listing.item.name)"
+    }
+    else if listing.continent != nil {
+      url = baseUrl + "/countries/\(listing.item.name)"
+    }
+    else {
+      url = baseUrl + "/continents/\(listing.item.name)"
+    }
+        
+    getJsonFromUrl(url, success: {
+      json in
+      
+      let region = self.parseRegion(json)
+      
+      dispatch_async(dispatch_get_main_queue()) {
+        handler(region)
+        
+      }})
   }
   
   class func getRegionWithId(regionId: String, failure: (() -> ())? = nil, handler: Region -> ()) {
@@ -175,10 +201,13 @@ class ContentService {
     
   }
   
-  class func getJsonFromUrl(url: String, var parameters: [String: String] = Dictionary<String, String>(), method: Alamofire.Method = .GET, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
+  class func getJsonFromUrl(var url: String, var parameters: [String: String] = Dictionary<String, String>(), method: Alamofire.Method = .GET, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) -> Request {
     if appendPass {
       parameters["pass"] = "plJR86!!"
     }
+    
+    url = url.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!
+
     print("Fetching URL: \(url)")
     
     let request = Alamofire.request(method, url, parameters: parameters).validate(statusCode: 200..<300)
@@ -202,9 +231,13 @@ class ContentService {
         }
       }
     })
+    
+    return request
   }
 
   class func getJsonFromPost(var url: String, body: String, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
+    
+    print("Fetching POST URL: \(url)")
     
     if appendPass {
       url += "?pass=plJR86!!"
@@ -300,6 +333,7 @@ class ContentService {
     listing.item = parseGuideItem(json)
     listing.latitude = json["latitude"].double!
     listing.longitude = json["longitude"].double!
+    listing.continent = json["continent"].string
     listing.country = json["country"].string
     listing.city = json["city"].string
     return listing
@@ -318,7 +352,7 @@ class ContentService {
     guideText.item = parseGuideItem(json)
     
     if guideText.item.category == 0 && fetchChildren { // GuideSection
-      parseChildren(guideText.item, withJson: json, forRegion: false)
+      parseChildren(guideText, withJson: json)
     }
     
     return guideText
@@ -338,7 +372,7 @@ class ContentService {
     region.listing.item = parseGuideItem(json)
     
     if (fetchChildren) {
-      parseChildren(region.listing.item, withJson: json)
+      parseChildren(region, withJson: json)
     }
     return region
   }
@@ -388,53 +422,68 @@ class ContentService {
     }
     return guideSections
   }
+
+  class func parseChildren(guideText: GuideText, withJson json: JSON) {
+    guideText.item.guideSections = parseGuideSections(json)
+  }
+
+  class func parseChildren(region: Region, withJson json: JSON) {
+    region.item().guideSections = parseGuideSections(json)
+    region.item().categoryDescriptions = parseCategoryDescriptions(region, guideItemJson: json)
+    region.item().subRegions = parseSubRegions(region, json: json)
+  }
   
-  class func parseChildren(guideItem: GuideItem, withJson json: JSON, forRegion: Bool = true) {
-    
-    let guideSections = List<GuideText>()
-    let subRegions = List<Region>()
+  internal class func parseCategoryDescriptions(region: Region, guideItemJson: JSON) -> List<GuideText> {
     let categoryDescriptions = List<GuideText>()
-    
-    for guideSectionArr in json["guideSections"].array! {
-      let guideSection = GuideText()
-      guideSection.item = GuideItem()
-      guideSection.item.id = guideSectionArr[0].string
-      guideSection.item.name = guideSectionArr[1].string
-      guideSections.append(guideSection)
+    var categoryDescriptionsDict = Dictionary<Int, String>()
+    for categoryDescriptionJson in guideItemJson["categoryDescriptions"].array! {
+      categoryDescriptionsDict[categoryDescriptionJson[0].int!] = categoryDescriptionJson[1].string!
+    }
+    for category in Attraction.Category.allValues {
+      if category == Attraction.Category.ALL {
+        continue;
+      }
+      let categoryDescription = GuideText()
+      categoryDescription.item = GuideItem()
+      categoryDescription.item.category = category.rawValue
+      categoryDescription.item.name = category.entityName(region)
+      let categoryDescriptionId = categoryDescriptionsDict[category.rawValue]
+      if (categoryDescriptionId != nil) {
+        categoryDescription.item.contentLoaded = false
+        categoryDescription.item.id = categoryDescriptionId
+      }
+      else {
+        categoryDescription.item.content = nil
+        categoryDescription.item.contentLoaded = true
+      }
+      categoryDescriptions.append(categoryDescription)
     }
     
-    if forRegion {
-      var categoryDescriptionsDict = Dictionary<Int, String>()
-      for categoryDescriptionJson in json["categoryDescriptions"].array! {
-        categoryDescriptionsDict[categoryDescriptionJson[0].int!] = categoryDescriptionJson[1].string!
+    return categoryDescriptions
+  }
+  
+  internal class func parseGuideSections(guideItemJson: JSON) -> List<GuideText> {
+    let guideSections = List<GuideText>()
+    if let guideSectionsJson = guideItemJson["guideSections"].array {
+      for guideSectionArr in guideSectionsJson {
+        let guideSection = GuideText()
+        guideSection.item = GuideItem()
+        guideSection.item.contentLoaded = false
+        guideSection.item.id = guideSectionArr[0].string
+        guideSection.item.name = guideSectionArr[1].string
+        guideSections.append(guideSection)
       }
-      for category in Attraction.Category.allValues {
-        if category == Attraction.Category.ALL {
-          continue;
-        }
-        let categoryDescription = GuideText()
-        categoryDescription.item = GuideItem()
-        let categoryDescriptionId = categoryDescriptionsDict[category.rawValue]
-        categoryDescription.item.category = category.rawValue
-        if (categoryDescriptionId != nil) {
-          categoryDescription.item.id = categoryDescriptionId!
-        }
-        else {
-          categoryDescription.item.id = "null"
-        }
-        categoryDescriptions.append(categoryDescription)
-      }
-      guideItem.categoryDescriptions = categoryDescriptions
-      
-      for subRegionArr in json["subRegions"].array! {
-        let subRegion = Region.constructRegion()
-        subRegion.listing.item.id = subRegionArr[0].string
-        subRegion.listing.item.name = subRegionArr[1].string
-        subRegions.append(subRegion)
-      }
-      guideItem.subRegions = subRegions;
     }
-    guideItem.guideSections = guideSections
+    return guideSections
+  }
+  
+  internal class func parseSubRegions(parent: Region, json: JSON) -> List<Region> {
+    let subRegions = List<Region>()
     
+    for subRegion in json["subRegions"].array! {
+      let subRegion = Region.constructRegion(subRegion.string!, parent: parent)
+      subRegions.append(subRegion)
+    }
+    return subRegions
   }
 }

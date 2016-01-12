@@ -3,15 +3,13 @@ import RealmSwift
 
 class DownloadController: UIViewController {
   
-  var countryName: String!
-  var countryId: String!
+  var mapsObject: SKTMapsObject!
+  var country: Region!
   var countryPackage: SKTPackage!
-  var regionName: String!
-  var regionId: String!
+  var region: Region!
   var regionPackage: SKTPackage!
   var onlyMap = false
-  var dataHolderName: String!
-  var dataHolderId: String!
+  var dataHolder: Region!
   
   var nameLabel: UILabel!
   var deleteButton: UIButton!
@@ -24,8 +22,8 @@ class DownloadController: UIViewController {
     let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "close")
     navigationItem.leftBarButtonItem = cancelButton
     
-    let countryDownloaded = DownloadService.isRegionDownloaded(countryId)
-    let cityDownloaded = DownloadService.isRegionDownloaded(regionId)
+    let countryDownloaded = DownloadService.isRegionDownloaded(mapsObject, region: country)
+    let cityDownloaded = DownloadService.isRegionDownloaded(mapsObject, region: region)
 
     nameLabel = UILabel()
     view.addSubview(nameLabel)
@@ -52,21 +50,19 @@ class DownloadController: UIViewController {
     if cityDownloaded || countryDownloaded {
 
       if countryDownloaded {
-        nameLabel.text = "Country \(countryName) is downloaded."
+        nameLabel.text = "Country \(country.getName()) is downloaded."
         nameLabel.sizeToFit()
-        dataHolderId = countryId
-        dataHolderName = countryName
+        dataHolder = country
         
-        if regionId != countryId {
+        if region.getId() != country.getId() {
           downloadButton.enabled = false
           deleteButton.enabled = false
         }
       }
       else {
-        nameLabel.text = "City \(regionName) is downloaded."
+        nameLabel.text = "City \(region.getName()) is downloaded."
         nameLabel.sizeToFit()
-        dataHolderId = regionId
-        dataHolderName = regionName
+        dataHolder = region
       }
       downloadButton.addTarget(self, action: "redownloadRegion", forControlEvents: UIControlEvents.TouchUpInside)
       downloadButton.setTitle("Re-download", forState: UIControlState.Normal)
@@ -74,7 +70,7 @@ class DownloadController: UIViewController {
     }
     else {
       
-      nameLabel.text = "Download \(regionName):"
+      nameLabel.text = "Download \(region.getName()):"
       
       deleteButton.hidden = true
       downloadButton.setTitle("Download", forState: UIControlState.Normal)
@@ -89,14 +85,14 @@ class DownloadController: UIViewController {
   }
   
   func downloadRegion() {
-    if regionId == countryId {
-      let downloadedCities = OfflineService.getRegionsWithParent(regionId)
+    if region.getId() == country.getId() {
+      let downloadedCities = OfflineService.getRegionsWithParent(region.getId())
       for city in downloadedCities {
         DownloadService.deleteMapForRegion(city.getId())
         OfflineService.deleteRegionWithId(city.getId())
       }
       
-      DownloadService.downloadCountry(countryId, package: countryPackage, onlyMap: onlyMap, progressHandler: {
+      DownloadService.downloadCountry(country.getId(), package: countryPackage, onlyMap: onlyMap, progressHandler: {
         progress in
         
         self.progressView.progress = progress
@@ -107,7 +103,7 @@ class DownloadController: UIViewController {
       })
     }
     else {
-      DownloadService.downloadCity(countryId, cityId: regionId, package: regionPackage, onlyMap: onlyMap, progressHandler: {
+      DownloadService.downloadCity(country.getId(), cityId: region.getId(), package: regionPackage, onlyMap: onlyMap, progressHandler: {
         progress in
         
         self.progressView.progress = progress
@@ -122,8 +118,8 @@ class DownloadController: UIViewController {
   }
   
   func deleteRegion() {
-    DownloadService.deleteRegion(dataHolderId, countryId: countryId)
-    nameLabel.text = "Deleted \(dataHolderName)."
+    DownloadService.deleteRegion(dataHolder.getId(), countryId: country.getId())
+    nameLabel.text = "Deleted \(dataHolder.getName())."
     deleteButton.hidden = true
   }
   

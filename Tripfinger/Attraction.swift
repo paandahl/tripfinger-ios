@@ -32,19 +32,7 @@ class Attraction: Object {
   }
   
   func categoryName(currentRegion: Region?) -> String {
-    let name = Category(rawValue: listing.item.category)!.entityName
-    if name == "Explore the city" {
-      if currentRegion == nil {
-        return "Explore the world"
-      }
-      switch currentRegion!.listing.item.category {
-      case Region.Category.COUNTRY.rawValue:
-        return "Explore the country"
-      default:
-        return name
-      }
-    }
-    return name
+    return Category(rawValue: listing.item.category)!.entityName(currentRegion)
   }
   
   enum Category: Int {

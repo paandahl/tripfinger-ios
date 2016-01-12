@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (3.1.2)
+  - Alamofire (3.1.4)
   - BrightFutures (3.2.0):
     - Result (= 1.0.0)
   - MDCSwipeToChoose (0.2.3)
@@ -11,13 +11,13 @@ PODS:
   - Result (1.0.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 3.0)
+  - Alamofire (= 3.1.4)
   - BrightFutures
   - MDCSwipeToChoose
   - RealmSwift (= 0.97.0)
 
 SPEC CHECKSUMS:
-  Alamofire: 7c16ca65f3c7e681fd925fd7f2dec7747ff96855
+  Alamofire: fbc829692f351fa1d8a31dd75fd7f7f56fea31fb
   BrightFutures: 894dcfc04059093b5477c2197ed4c0fb4ad07180
   MDCSwipeToChoose: 56239d98b4558c66e7c3c9069482befd26092270
   Realm: b498a6fb9d288b171ff98d0e2d4384c295be8990

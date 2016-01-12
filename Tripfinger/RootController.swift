@@ -135,16 +135,26 @@ extension RootController: SearchViewControllerDelegate {
 
 extension RootController: GuideControllerDelegate {
   
-  func categorySelected(category: Attraction.Category) {
+  func categorySelected(category: Attraction.Category, view: String) {
     
     session.currentCategory = category
     segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
-    secondSegmentedController.selectedSegmentIndex = 0
-    navigateToSubview("swipeController", controllerType: SwipeController.self)
+    switch view {
+    case "swipe":
+      secondSegmentedController.selectedSegmentIndex = 0
+      navigateToSubview("swipeController", controllerType: SwipeController.self)
+    case "list":
+      secondSegmentedController.selectedSegmentIndex = 1
+      navigateToSubview("listController", controllerType: ListController.self)
+    default:
+      secondSegmentedController.selectedSegmentIndex = 2
+      navigateToSubview("mapController", controllerType: MapController.self)
+    }
   }
   
-  func navigateInternally() {
+  func navigateInternally(callback: () -> ()) {
     
     navigateToSubview("guideController", controllerType: GuideController.self)
+    callback()
   }
 }
