@@ -5,14 +5,14 @@ class AnnotationCalloutView : UIView {
   var titleLabel: UILabel!
   var detailButton: UIButton!
 
-  var poi: SearchResult!
+  var poi: SimplePOI!
   var detailAction: (() -> ())!
   
   required init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
   }
 
-  init(poi: SearchResult, detailAction: () -> ()) {
+  init(poi: SimplePOI, detailAction: () -> ()) {
     super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
     self.poi = poi
     self.detailAction = detailAction

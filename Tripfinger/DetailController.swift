@@ -14,23 +14,21 @@ class DetailController: UIViewController {
   @IBOutlet weak var name: UILabel!
   @IBOutlet weak var descriptionText: UITextView!
   
-  var imagePath: NSURL?
   var attraction: Attraction!
   
   override func viewDidLoad() {
     
-    print("attraction: \(attraction)")
     name.text = attraction.listing.item.name
     descriptionText.text = attraction.listing.item.content
     
-    if let imagePath = imagePath {
+    if attraction.item().offline {
       mainImage.contentMode = UIViewContentMode.ScaleAspectFill
-      print("fetching image from \(imagePath)")
-      mainImage.image = UIImage(data: NSData(contentsOfURL: imagePath)!)
+      print("fetching image from \(attraction.item().images[0].getFileUrl())")
+      mainImage.image = UIImage(data: NSData(contentsOfURL: attraction.item().images[0].getFileUrl())!)
     }
     else {
       mainImage.image = UIImage(named: "Placeholder")
-      try! mainImage.loadImageWithUrl(attraction.listing.item.images[0].url)
+      try! mainImage.loadImageWithUrl(attraction.item().images[0].url)
     }
 
   }

@@ -10,10 +10,10 @@ class ContentService {
   
   init() {}
   
-  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int, handler: List<SearchResult> -> ()) -> Request {
+  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int, handler: List<SimplePOI> -> ()) -> Request {
     
     let bounds = "\(bottomLeft.latitude),\(bottomLeft.longitude),\(topRight.latitude),\(topRight.longitude)"
-    return getJsonFromUrl(ContentService.baseUrl + "/search_by_bounds/\(bounds)/\(zoomLevel)", success: {
+    return NetworkUtil.getJsonFromUrl(ContentService.baseUrl + "/search_by_bounds/\(bounds)/\(zoomLevel)", success: {
       json in
       
       let searchResults = SearchService().parseSearchResults(json)
@@ -26,7 +26,7 @@ class ContentService {
 
   
   class func getCountries(handler: [Region] -> ()) {
-    getJsonFromUrl(baseUrl + "/countries", success: {
+    NetworkUtil.getJsonFromUrl(baseUrl + "/countries", success: {
       json in
       
       let regions = parseRegions(json)
@@ -40,7 +40,7 @@ class ContentService {
   
   class func getGuideTextsForGuideItem(guideItem: GuideItem, handler: (guideTexts: [GuideText]) -> ()) {
     let id = String(guideItem.id!)
-    getJsonFromUrl(baseUrl + "/regions/\(id)/guideTexts", success: {
+    NetworkUtil.getJsonFromUrl(baseUrl + "/regions/\(id)/guideTexts", success: {
       json in
       
       let guideTexts = self.parseGuideTexts(json)
@@ -52,7 +52,7 @@ class ContentService {
   }
   
   class func getFullRegionTree(regionId: String, handler: (region: Region) -> ()) {
-    getJsonFromUrl(baseUrl + "/regions/\(regionId)/full", success: {
+    NetworkUtil.getJsonFromUrl(baseUrl + "/regions/\(regionId)/full", success: {
       json in
       
       let region = self.parseRegionTreeFromJson(json)
@@ -64,7 +64,7 @@ class ContentService {
   }
     
   class func getRegions(handler: [Region] -> ()) {
-    getJsonFromUrl(baseUrl + "/regions", success: {
+    NetworkUtil.getJsonFromUrl(baseUrl + "/regions", success: {
       json in
       
       var regions = [Region]()
@@ -83,19 +83,31 @@ class ContentService {
   class func getRegionFromListing(listing: GuideListing, handler: (Region) -> ()) {
     var url: String!
     if listing.city != nil {
+      if let region = OfflineService.getNeighbourhood(listing.country, cityName: listing.city, hoodName: listing.item.name) {
+        handler(region)
+        return
+      }
       url = baseUrl + "/neighbourhoods/\(listing.country)/\(listing.city)/\(listing.item.name)"
     }
     else if listing.country != nil {
+      if let region = OfflineService.getCity(listing.country, cityName: listing.item.name) {
+        handler(region)
+        return
+      }
       url = baseUrl + "/cities/\(listing.country)/\(listing.item.name)"
     }
     else if listing.continent != nil {
+      if let region = OfflineService.getCountry(listing.item.name) {
+        handler(region)
+        return
+      }
       url = baseUrl + "/countries/\(listing.item.name)"
     }
     else {
       url = baseUrl + "/continents/\(listing.item.name)"
     }
         
-    getJsonFromUrl(url, success: {
+    NetworkUtil.getJsonFromUrl(url, success: {
       json in
       
       let region = self.parseRegion(json)
@@ -111,7 +123,7 @@ class ContentService {
       handler(region)
       return
     }
-    getJsonFromUrl(baseUrl + "/regions/\(regionId)", success: {
+    NetworkUtil.getJsonFromUrl(baseUrl + "/regions/\(regionId)", success: {
       json in
       
       let region = self.parseRegion(json)
@@ -131,7 +143,7 @@ class ContentService {
       handler(OfflineService.getGuideTextWithId(region, guideTextId: guideTextId))
       return
     }
-    getJsonFromUrl(baseUrl + "/guideTexts/\(guideTextId)", success: {
+    NetworkUtil.getJsonFromUrl(baseUrl + "/guideTexts/\(guideTextId)", success: {
       json in
       
       let guideText = self.parseGuideText(json, fetchChildren: true)
@@ -147,7 +159,7 @@ class ContentService {
       handler(attraction)
       return
     }
-    getJsonFromUrl(baseUrl + "/attractions/\(attractionId)", success: {
+    NetworkUtil.getJsonFromUrl(baseUrl + "/attractions/\(attractionId)", success: {
       json in
       
       let attraction = self.parseAttraction(json)
@@ -189,7 +201,7 @@ class ContentService {
       categoryPart = "/\(category.rawValue)"
     }
     
-    getJsonFromUrl(baseUrl + "/regions/\(regionId)/attractions\(categoryPart)", parameters: parameters, success: {
+    NetworkUtil.getJsonFromUrl(baseUrl + "/regions/\(regionId)/attractions\(categoryPart)", parameters: parameters, success: {
       json in
       
       let attractions = self.parseAttractions(json)
@@ -199,40 +211,6 @@ class ContentService {
         
       }}, failure: nil)
     
-  }
-  
-  class func getJsonFromUrl(var url: String, var parameters: [String: String] = Dictionary<String, String>(), method: Alamofire.Method = .GET, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) -> Request {
-    if appendPass {
-      parameters["pass"] = "plJR86!!"
-    }
-    
-    url = url.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!
-
-    print("Fetching URL: \(url)")
-    
-    let request = Alamofire.request(method, url, parameters: parameters).validate(statusCode: 200..<300)
-    let backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
-
-    request.response(
-      queue: backgroundQueue,
-      responseSerializer: Request.JSONResponseSerializer(options: .AllowFragments),
-      completionHandler: {
-      response in
-      
-      if response.result.isSuccess {
-        let json = JSON(data: response.data!)
-        success(json: json)
-      }
-      else {
-        print("Failure fetching url: \(url)")
-        print(response.result.error)
-        if let failure = failure {
-          dispatch_async(dispatch_get_main_queue(), failure)
-        }
-      }
-    })
-    
-    return request
   }
 
   class func getJsonFromPost(var url: String, body: String, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
@@ -315,6 +293,7 @@ class ContentService {
     guideItem.content = json["description"].string
     guideItem.category = json["category"].int!
     guideItem.parent = json["parent"].string
+    guideItem.offline = false
     for imageJson in json["images"].array! {
       let image = GuideItemImage()
       image.url = imageJson["url"].string
@@ -387,8 +366,7 @@ class ContentService {
 
   class func parseRegionTreeFromJson(json: JSON) -> Region {
     let region = Region()
-    region.listing = GuideListing()
-    region.listing.item = parseGuideItem(json)
+    region.listing = parseGuideListing(json)
     region.listing.item.guideSections = parseSectionTreeFromJson(json["sectionTree"])
     if  json["attractions"].array != nil {
       region.attractions.appendContentsOf(parseAttractions(json["attractions"]))

@@ -80,10 +80,10 @@ class SearchService: NSObject {
     self.searchMapData(SKListLevel.StreetList, searchString: searchString, parent: identifier)
   }
   
-  func onlineSearch(fullSearchString: String, regionId: String? = nil, countryId: String? = nil, gradual: Bool = false, handler: List<SearchResult> -> ()) {
+  func onlineSearch(fullSearchString: String, regionId: String? = nil, countryId: String? = nil, gradual: Bool = false, handler: List<SimplePOI> -> ()) {
     
     let escapedString = fullSearchString.stringByAddingPercentEncodingWithAllowedCharacters(.URLPathAllowedCharacterSet())!
-    ContentService.getJsonFromUrl(ContentService.baseUrl + "/search/\(escapedString)", success: {
+    NetworkUtil.getJsonFromUrl(ContentService.baseUrl + "/search/\(escapedString)", success: {
       json in
       
       let searchResults = self.parseSearchResults(json)
@@ -94,10 +94,10 @@ class SearchService: NSObject {
       }, failure: nil)
   }
   
-  func parseSearchResults(json: JSON) -> List<SearchResult> {
-    let searchResults = List<SearchResult>()
+  func parseSearchResults(json: JSON) -> List<SimplePOI> {
+    let searchResults = List<SimplePOI>()
     for resultJson in json.array! {
-      let searchResult = SearchResult()
+      let searchResult = SimplePOI()
       searchResult.name = resultJson["name"].string!
       searchResult.location = resultJson["location"].string!
       let latitude = resultJson["latitude"].double!
@@ -110,8 +110,8 @@ class SearchService: NSObject {
     return searchResults
   }
   
-  func bulkOfflineSearch(fullSearchString: String, regionId: String? = nil, countryId: String? = nil, handler: [SearchResult] -> ()) {
-    var allSearchResults = [SearchResult]()
+  func bulkOfflineSearch(fullSearchString: String, regionId: String? = nil, countryId: String? = nil, handler: [SimplePOI] -> ()) {
+    var allSearchResults = [SimplePOI]()
     offlineSearch(fullSearchString, regionId: regionId, countryId: countryId) {
       city, searchResults, nextCityHandler in
       
@@ -126,7 +126,7 @@ class SearchService: NSObject {
     }
   }
   
-  func offlineSearch(fullSearchString: String, regionId: String? = nil, countryId: String? = nil, handler: (String, [SearchResult], (() -> ())?) -> ()) {
+  func offlineSearch(fullSearchString: String, regionId: String? = nil, countryId: String? = nil, handler: (String, [SimplePOI], (() -> ())?) -> ()) {
     
     var threadId = 0
     SyncManager.synchronized(varLock) {
@@ -263,18 +263,18 @@ class SearchService: NSObject {
     return filteredResults
   }
   
-  private func parseSearchResults(skobblerResults: [SKSearchResult], city: String) -> [SearchResult] {
+  private func parseSearchResults(skobblerResults: [SKSearchResult], city: String) -> [SimplePOI] {
     
-    var searchResults = [SearchResult]()
+    var searchResults = [SimplePOI]()
     for skobblerResult in skobblerResults {
       searchResults.append(parseSearchResult(skobblerResult, city: city))
     }
     return searchResults
   }
   
-  private func parseSearchResult(skobblerResult: SKSearchResult, city: String) -> SearchResult {
+  private func parseSearchResult(skobblerResult: SKSearchResult, city: String) -> SimplePOI {
     
-    let searchResult = SearchResult()
+    let searchResult = SimplePOI()
     searchResult.name = skobblerResult.name
     
     searchResult.coordinates = skobblerResult.coordinate

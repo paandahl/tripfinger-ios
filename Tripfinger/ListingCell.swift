@@ -29,7 +29,7 @@ class ListingCell: UITableViewCell {
     heartImage.image = heartImage.image?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
   }
   
-  func setContent(attraction: Attraction, imagePath: NSURL? = nil) {
+  func setContent(attraction: Attraction) {
     name.text = attraction.listing.item.name
     mainImage.image = UIImage(named: "Placeholder")
     if attraction.swipedRight != nil && attraction.swipedRight! {
@@ -39,12 +39,12 @@ class ListingCell: UITableViewCell {
       heartImage.tintColor = UIColor.darkGrayColor()
     }
     
-    if let imagePath = imagePath {
+    if attraction.item().offline {
       mainImage.contentMode = UIViewContentMode.ScaleAspectFill
-      mainImage.image = UIImage(data: NSData(contentsOfURL: imagePath)!)
+      mainImage.image = UIImage(data: NSData(contentsOfURL: attraction.item().images[0].getFileUrl())!)
     }
     else {
-      let imageUrl = attraction.listing.item.images[0].url + "-712x534"
+      let imageUrl = attraction.item().images[0].url + "-712x534"
       try! mainImage.loadImageWithUrl(imageUrl)
     }
     

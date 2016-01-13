@@ -22,7 +22,6 @@ class GuideController: UITableViewController, SubController {
   var countryList = [Region]()
   var mapsObject: SKTMapsObject!
   var mapCountryList: [SKTPackage]!
-  var mapMappings: [String: String]!
   
   var guideItemExpanded = false
   var guideITemCreatedAsExpanded = false
@@ -73,7 +72,6 @@ class GuideController: UITableViewController, SubController {
   }
   
   func updateUI() {
-    
     // title label
     if session.currentItem != nil {
       titleLabel.text = session.currentItem.name
@@ -104,7 +102,7 @@ class GuideController: UITableViewController, SubController {
       case Region.Category.CITY.rawValue:
         fallthrough
       case Region.Category.COUNTRY.rawValue:
-        let downloaded = DownloadService.isRegionDownloaded(mapsObject, region: session.currentRegion, country: session.currentCountry)
+        let downloaded = DownloadService.isRegionDownloaded(mapsObject, country: session.currentCountry, city: session.currentCity)
         let title = downloaded ? "Downloaded" : "Download"
         downloadButton.setTitle(title, forState: .Normal)
         downloadButton.hidden = false
@@ -134,25 +132,14 @@ class GuideController: UITableViewController, SubController {
   func openDownloadCity(sender: UIButton) {
     let nav = UINavigationController()
     let vc = DownloadController()
+    vc.mapsObject = mapsObject
     vc.country = session.currentCountry
-    vc.countryPackage = try! getMapPackageFromId(session.currentCountry.getId())
-    vc.region = session.currentRegion
-    vc.regionPackage = try! getMapPackageFromId(session.currentRegion.getId())
+    vc.city = session.currentCity
     if session.currentRegion.mapCountry {
       vc.onlyMap = true
     }
     nav.viewControllers = [vc]
     view.window!.rootViewController!.presentViewController(nav, animated: true, completion: nil)
-  }
-  
-  func getMapPackageFromId(regionId: String) throws -> SKTPackage {
-    for (code, id) in mapMappings {
-      if id == regionId {
-        print("fetching package for code: \(code)")
-        return mapsObject.packageForCode(code);
-      }
-    }
-    throw Error.RuntimeError("No code found mapped to id: \(regionId)")
   }
   
   func loadCountryList() {
@@ -161,6 +148,7 @@ class GuideController: UITableViewController, SubController {
       i += 1
       if i == 2 {
         self.populateTableSections()
+        self.updateUI()
       }
     }
     ContentService.getCountries() {
@@ -177,11 +165,10 @@ class GuideController: UITableViewController, SubController {
       session.mapVersionFileDownloaded.onComplete { _ in
         
         DownloadService.getMapsAvailable().onSuccess {
-          (mapsObject, mappings) in
+          mapsObject in
           
-          self.mapMappings = mappings
           self.mapsObject = mapsObject
-          self.updateUI()
+          populateTable()
         }
       }
     }
@@ -190,7 +177,7 @@ class GuideController: UITableViewController, SubController {
     }
   }
   
-  func getContinents() -> [SKTPackage] {
+  func getContinentMapPackages() -> [SKTPackage] {
     var continents = [SKTPackage]()
     let allContinents = mapsObject.packagesForType(.Continent) as! [SKTPackage]
     for continent in allContinents {
@@ -202,15 +189,6 @@ class GuideController: UITableViewController, SubController {
     return continents
   }
   
-  func getContinent(name: String) throws -> SKTPackage {
-    let allContinents = mapsObject.packagesForType(.Continent) as! [SKTPackage]
-    for continent in allContinents {
-      if continent.nameForLanguageCode("en") == name {
-        return continent
-      }
-    }
-    throw Error.RuntimeError("Did not find continent with name: " + name)
-  }
 }
 
 // MARK: - Table data source
@@ -244,7 +222,7 @@ extension GuideController {
           tableSections.append(section)
           
           let continents = TableSection(title: "Continents", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
-          for continent in getContinents() {
+          for continent in getContinentMapPackages() {
             let continentName = continent.nameForLanguageCode("en")
             let continentRegion = Region.constructRegion(continentName)
             continents.elements.append((title: continentName, value: continentRegion))
@@ -308,7 +286,7 @@ extension GuideController {
         else {
           let mapSection = TableSection(title: "Countries with only maps", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
           let continentName = session.currentContinent.getName()
-          let countryCandidates = try! getContinent(continentName).childObjects() as! [SKTPackage]
+          let countryCandidates = try! mapsObject.getMapPackage(continentName, type: .Continent).childObjects() as! [SKTPackage]
           mapCountryList = [SKTPackage]()
           for countryCandidate in countryCandidates {
             let candidateName = countryCandidate.nameForLanguageCode("en")
@@ -393,7 +371,7 @@ extension GuideController: GuideItemContainerDelegate {
 // MARK: - Navigation
 extension GuideController {
   
-  func selectedSearchResult(searchResult: SearchResult) {
+  func selectedSearchResult(searchResult: SimplePOI) {
     session.loadRegionFromSearchResult(searchResult) {
       self.updateUI()
     }

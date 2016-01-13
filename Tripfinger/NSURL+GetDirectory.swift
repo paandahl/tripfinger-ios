@@ -11,7 +11,11 @@ import Foundation
 extension NSURL {
   class func getDirectory(baseDir: NSSearchPathDirectory, withPath path: String) -> NSURL {
     let libraryPath = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(baseDir, .UserDomainMask, true)[0])
-    let folderPath = libraryPath.URLByAppendingPathComponent(path)
+    return libraryPath.URLByAppendingPathComponent(path)
+  }
+
+  class func createDirectory(baseDir: NSSearchPathDirectory, withPath path: String) -> NSURL {
+    let folderPath = getDirectory(baseDir, withPath: path)
     do {
       try NSFileManager.defaultManager().createDirectoryAtPath(folderPath.path!, withIntermediateDirectories: true, attributes: nil)
     } catch let error as NSError {

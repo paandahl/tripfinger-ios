@@ -5,34 +5,13 @@ class Attraction: Object {
   
   // composition (instead of inheritance - for Realm-purposes)
   dynamic var listing: GuideListing!
-  
-  func getLocalImagePath() -> NSURL? {
     
-    var imagePath: NSURL? = nil
-
-    if let region = OfflineService.getRegionWithId(listing.country) {
-      print("found country offline")
-      var regionPath: NSURL!
-      if listing.city == nil {
-        regionPath = NSURL.getDirectory(.LibraryDirectory, withPath: region.getId())
-      }
-      else {
-        regionPath = NSURL.getDirectory(.LibraryDirectory, withPath: region.getId() + "/" + listing.city)
-      }
-      imagePath = regionPath.URLByAppendingPathComponent(listing.item.id + "-1")
-    }
-    else if let city = listing.city {
-      if let region = OfflineService.getRegionWithId(city) {
-        print("found city offline")
-        let regionPath = NSURL.getDirectory(.LibraryDirectory, withPath: region.listing.country + "/" + city)
-        imagePath = regionPath.URLByAppendingPathComponent(listing.item.id + "-1")
-      }
-    }
-    return imagePath
-  }
-  
   func categoryName(currentRegion: Region?) -> String {
     return Category(rawValue: listing.item.category)!.entityName(currentRegion)
+  }
+  
+  func item() -> GuideItem {
+    return listing.item
   }
   
   enum Category: Int {

@@ -209,8 +209,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     // Create a personView with the top person in the people array, then pop
     // that person off the stack.
     
-    let imagePath = attractions[0].getLocalImagePath()
-    let personView: ChooseAttractionView = ChooseAttractionView(frame: frame, attraction: attractions[0], delegate: self, options: options, imagePath: imagePath)
+    let personView: ChooseAttractionView = ChooseAttractionView(frame: frame, attraction: attractions[0], delegate: self, options: options)
     self.attractions.removeAtIndex(0)
     return personView
     
@@ -259,7 +258,6 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     if segue.identifier == "showDetail" {
       let detailController = segue.destinationViewController as! DetailController
       detailController.attraction = sender as! Attraction
-      detailController.imagePath = detailController.attraction.getLocalImagePath()
     }
     else if segue.identifier == "showFilter" {
       let navigationController = segue.destinationViewController as! UINavigationController
@@ -269,7 +267,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     }
   }
   
-  func selectedSearchResult(searchResult: SearchResult) {
+  func selectedSearchResult(searchResult: SimplePOI) {
   }
 }
 

@@ -17,7 +17,7 @@ class Session {
   var previousSection: GuideText!
   var currentSection: GuideText!
 
-  func loadRegionFromSearchResult(searchResult: SearchResult, handler: () -> ()) {
+  func loadRegionFromSearchResult(searchResult: SimplePOI, handler: () -> ()) {
     currentRegion = Region.constructRegion(searchResult.name, fromSearchResult: true)
     currentItem = currentRegion.item()
     ContentService.getRegionWithId(searchResult.listingId) {

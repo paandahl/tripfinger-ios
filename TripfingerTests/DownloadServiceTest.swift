@@ -17,10 +17,9 @@ class DownloadServiceTest: XCTestCase {
     let readyExpectation = expectationWithDescription("ready")
 
     DownloadService.getMapsAvailable().onSuccess {
-      mapsObject, mappings in
+      mapsObject in
       
       XCTAssertEqual(7, mapsObject.packagesForType(.Continent).count)
-      XCTAssertEqual(254, mappings.count)
       readyExpectation.fulfill()
     }
     

@@ -122,9 +122,17 @@ class GuideItemCell: UITableViewCell {
   func setContentFromGuideItem(guideItem: GuideItem) {    
     contentImage.image = UIImage(named: "placeholder-712")
     if guideItem.images.count > 0 {
-      let imageUrl = guideItem.images[0].url + "-712x534"
-      print("Loading image with url: " + imageUrl)
-      try! contentImage.loadImageWithUrl(imageUrl)
+      
+      if guideItem.offline {
+        contentImage.contentMode = UIViewContentMode.ScaleAspectFill
+        print("offline url: \(guideItem.images[0].getFileUrl())")
+        contentImage.image = UIImage(data: NSData(contentsOfURL: guideItem.images[0].getFileUrl())!)
+      }
+      else {
+        let imageUrl = guideItem.images[0].url + "-712x534"
+        print("Loading image with url: " + imageUrl)
+        try! contentImage.loadImageWithUrl(imageUrl)
+      }
       contentImage.hidden = false
     }
     else {

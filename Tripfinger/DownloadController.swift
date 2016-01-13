@@ -5,9 +5,7 @@ class DownloadController: UIViewController {
   
   var mapsObject: SKTMapsObject!
   var country: Region!
-  var countryPackage: SKTPackage!
-  var region: Region!
-  var regionPackage: SKTPackage!
+  var city: Region!
   var onlyMap = false
   var dataHolder: Region!
   
@@ -22,8 +20,8 @@ class DownloadController: UIViewController {
     let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "close")
     navigationItem.leftBarButtonItem = cancelButton
     
-    let countryDownloaded = DownloadService.isRegionDownloaded(mapsObject, region: country)
-    let cityDownloaded = DownloadService.isRegionDownloaded(mapsObject, region: region)
+    let countryDownloaded = DownloadService.isRegionDownloaded(mapsObject, country: country)
+    let cityDownloaded = city == nil ? false : DownloadService.isRegionDownloaded(mapsObject, country: city)
 
     nameLabel = UILabel()
     view.addSubview(nameLabel)
@@ -54,15 +52,15 @@ class DownloadController: UIViewController {
         nameLabel.sizeToFit()
         dataHolder = country
         
-        if region.getId() != country.getId() {
+        if city != nil {
           downloadButton.enabled = false
           deleteButton.enabled = false
         }
       }
       else {
-        nameLabel.text = "City \(region.getName()) is downloaded."
+        nameLabel.text = "City \(city.getName()) is downloaded."
         nameLabel.sizeToFit()
-        dataHolder = region
+        dataHolder = city
       }
       downloadButton.addTarget(self, action: "redownloadRegion", forControlEvents: UIControlEvents.TouchUpInside)
       downloadButton.setTitle("Re-download", forState: UIControlState.Normal)
@@ -70,7 +68,8 @@ class DownloadController: UIViewController {
     }
     else {
       
-      nameLabel.text = "Download \(region.getName()):"
+      let downloadRegion = city != nil ? city : country
+      nameLabel.text = "Download \(downloadRegion.getName()):"
       
       deleteButton.hidden = true
       downloadButton.setTitle("Download", forState: UIControlState.Normal)
@@ -85,14 +84,15 @@ class DownloadController: UIViewController {
   }
   
   func downloadRegion() {
-    if region.getId() == country.getId() {
-      let downloadedCities = OfflineService.getRegionsWithParent(region.getId())
+    if city == nil {
+      let downloadedCities = OfflineService.getCitiesInCountry(country.getName())
       for city in downloadedCities {
         DownloadService.deleteMapForRegion(city.getId())
-        OfflineService.deleteRegionWithId(city.getId())
+        OfflineService.deleteRegion(country.getName(), cityName: city.getName())
       }
       
-      DownloadService.downloadCountry(country.getId(), package: countryPackage, onlyMap: onlyMap, progressHandler: {
+      let countryPackage = mapsObject.getMapPackage(country.getName(), type: .Country)
+      DownloadService.downloadCountry(mapsObject, countryName: country.getName(), package: countryPackage, onlyMap: onlyMap, progressHandler: {
         progress in
         
         self.progressView.progress = progress
@@ -103,7 +103,8 @@ class DownloadController: UIViewController {
       })
     }
     else {
-      DownloadService.downloadCity(country.getId(), cityId: region.getId(), package: regionPackage, onlyMap: onlyMap, progressHandler: {
+      let cityPackage = mapsObject.getMapPackage(city.getName(), type: .City)
+      DownloadService.downloadCity(country.getName(), cityName: city.getName(), package: cityPackage, onlyMap: onlyMap, progressHandler: {
         progress in
         
         self.progressView.progress = progress
@@ -118,7 +119,14 @@ class DownloadController: UIViewController {
   }
   
   func deleteRegion() {
-    DownloadService.deleteRegion(dataHolder.getId(), countryId: country.getId())
+    if city != nil {
+      let cityPackage = mapsObject.getMapPackage(city.getName(), type: .City)
+      DownloadService.deleteRegion(cityPackage.packageCode, countryName: country.getName(), cityName: city.getName())
+    }
+    else {
+      let countryPackage = mapsObject.getMapPackage(country.getName(), type: .Country)
+      DownloadService.deleteRegion(countryPackage.packageCode, countryName: country.getName())
+    }
     nameLabel.text = "Deleted \(dataHolder.getName())."
     deleteButton.hidden = true
   }

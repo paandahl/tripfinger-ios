@@ -41,21 +41,22 @@ class ChooseAttractionView: MDCSwipeToChooseView {
   var friendsImageLabelView: ImagelabelView!
   var delegate: AttractionCardContainer!
   
-  init(frame: CGRect, attraction: Attraction, delegate: AttractionCardContainer, options: MDCSwipeToChooseViewOptions, imagePath: NSURL? = nil) {
+  init(frame: CGRect, attraction: Attraction, delegate: AttractionCardContainer, options: MDCSwipeToChooseViewOptions) {
     
     super.init(frame: frame, options: options)
     self.attraction = attraction
     self.delegate = delegate
     
-    if let imagePath = imagePath {
+    if attraction.listing.item.offline {
       imageView.contentMode = UIViewContentMode.ScaleAspectFill
-      imageView.image = UIImage(data: NSData(contentsOfURL: imagePath)!)
+      imageView.image = UIImage(data: NSData(contentsOfURL: attraction.item().images[0].getFileUrl())!)
     }
     else {
       imageView.image = UIImage(named: "Placeholder")
       let imageUrl = attraction.listing.item.images[0].url + "-600x800"
       try! imageView.loadImageWithUrl(imageUrl)
     }
+    
     imageView.tag = 2000
     
     constructInformationView()

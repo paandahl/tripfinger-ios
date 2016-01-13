@@ -2,7 +2,7 @@ import Foundation
 import RealmSwift
 
 protocol SearchViewControllerDelegate: class {
-  func selectedSearchResult(searchResult: SearchResult)
+  func selectedSearchResult(searchResult: SimplePOI)
 }
 
 class SearchController: UITableViewController {
@@ -14,9 +14,9 @@ class SearchController: UITableViewController {
   var searchService: SearchService!
   var searchBar: UISearchBar!
   
-  var offlineResults = [SearchResult]()
-  var onlineResults = List<SearchResult>()
-  var searchResults = [SearchResult]()
+  var offlineResults = [SimplePOI]()
+  var onlineResults = List<SimplePOI>()
+  var searchResults = [SimplePOI]()
   var lastSearchText = ""
   
   override func viewDidLoad() {
@@ -48,15 +48,15 @@ extension SearchController: UISearchBarDelegate {
   func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
     if (searchText.characters.count > 1 && searchText != lastSearchText) {
       
-      self.offlineResults = [SearchResult]()
+      self.offlineResults = [SimplePOI]()
       lastSearchText = searchText
       
-      if connectedToNetwork() {
+      if NetworkUtil.connectedToNetwork() {
         searchService.onlineSearch(searchText, regionId: regionId, countryId: countryId, gradual: true) {
           searchResults in
           
           self.onlineResults = searchResults
-          self.searchResults = [SearchResult]()
+          self.searchResults = [SimplePOI]()
           self.searchResults.appendContentsOf(self.onlineResults)
           self.searchResults.appendContentsOf(self.offlineResults)
           self.tableView.reloadData()
@@ -66,7 +66,7 @@ extension SearchController: UISearchBarDelegate {
         city, searchResults, nextCityHandler in
         
         self.offlineResults.appendContentsOf(searchResults)
-        self.searchResults = [SearchResult]()
+        self.searchResults = [SimplePOI]()
         self.searchResults.appendContentsOf(self.onlineResults)
         self.searchResults.appendContentsOf(self.offlineResults)
         self.tableView.reloadData()

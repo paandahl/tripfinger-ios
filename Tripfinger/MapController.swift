@@ -6,11 +6,11 @@ import Alamofire
 class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocationManagerDelegate, SKPositionerServiceDelegate {
   
   var session: Session!
-  var selectedPoi: SearchResult!
+  var selectedPoi: SimplePOI!
   var selectedAnnotation: SKAnnotation!
   var calloutView: AnnotationCalloutView!
   var positionButtonMargin: NSLayoutConstraint!
-  var pois = List<SearchResult>()
+  var pois = List<SimplePOI>()
   var mapView: SKMapView!
   var locationManager: CLLocationManager!
   var positionView: UIImageView!
@@ -158,7 +158,7 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
   }
 
   
-  func isPoiHidden(poi: SearchResult) -> Bool {
+  func isPoiHidden(poi: SimplePOI) -> Bool {
     let zoomLevel = mapView.visibleRegion.zoomLevel
     return (poi.category == 2392 && zoomLevel < 12) || (poi.category == 2393 && zoomLevel < 15) || String(poi.category).hasPrefix("1")
   }
@@ -172,8 +172,8 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     poiSelected(annotation, poi: poi)
   }
   
-  func poiSelected(annotation: SKAnnotation, poi: SearchResult) {
-    if poi.listingId == "simple" {
+  func poiSelected(annotation: SKAnnotation, poi: SimplePOI) {
+    if annotation.annotationView != nil {
       annotation.annotationView = getAnnotationViewWithIcon(annotation.annotationView.reuseIdentifier, selected: true)
     }
     else {
@@ -201,7 +201,7 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
   
   func poiUnselected() {
     if calloutView != nil {
-      if selectedPoi.listingId == "simple" {
+      if selectedAnnotation.annotationView != nil {
         let reuseIdentifier = selectedAnnotation.annotationView.reuseIdentifier
         let index = reuseIdentifier.endIndex.advancedBy(-9)
         let iconName = reuseIdentifier.substringToIndex(index)
@@ -253,29 +253,35 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     if segue.identifier == "showDetail" {
       let detailController = segue.destinationViewController as! DetailController
       detailController.attraction = sender as! Attraction
-      detailController.imagePath = detailController.attraction.getLocalImagePath()
     }
   }
   
   func mapView(mapView: SKMapView!, didEndRegionChangeToRegion region: SKCoordinateRegion) {
     print("Region changed")
-    let bottomLeftCoord = mapView.coordinateForPoint(CGPoint(x: 0, y: mapView.frame.maxY))
-    let topRightCoord = mapView.coordinateForPoint(CGPoint(x: mapView.frame.maxX, y: 0))
-    print("zoomLevel: \(mapView.visibleRegion.zoomLevel)")
-    loadMapPOIs(bottomLeftCoord, topRight: topRightCoord, zoomLevel: Int(mapView.visibleRegion.zoomLevel))
+    loadMapPOIs()
   }
 
-  func loadMapPOIs(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int) {
+  func loadMapPOIs() {
+    let bottomLeft = mapView.coordinateForPoint(CGPoint(x: 0, y: mapView.frame.maxY))
+    let topRight = mapView.coordinateForPoint(CGPoint(x: mapView.frame.maxX, y: 0))
+    let zoomLevel = Int(mapView.visibleRegion.zoomLevel)
+    print("zoomLevel: \(mapView.visibleRegion.zoomLevel)")
     
     if mapPoisRequest != nil {
       mapPoisRequest.cancel()
     }
-    
-    mapPoisRequest = ContentService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel) {
-      searchResults in
-      
-      self.pois = searchResults
-      self.addAnnotations()
+
+    if NetworkUtil.connectedToNetwork() {
+      mapPoisRequest = ContentService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel) {
+        searchResults in
+        
+        self.pois = searchResults
+        self.addAnnotations()
+      }
+    }
+    else {
+      pois = OfflineService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel)
+      addAnnotations()
     }
   }
 }
@@ -292,7 +298,7 @@ extension MapController: SearchViewControllerDelegate {
       dispatch_get_main_queue(), closure)
   }
   
-  func selectedSearchResult(searchResult: SearchResult) {
+  func selectedSearchResult(searchResult: SimplePOI) {
     
 //    let promise = Promise<String, NoError>()
 //    if String(searchResult.resultType).hasPrefix("2") { // attraction

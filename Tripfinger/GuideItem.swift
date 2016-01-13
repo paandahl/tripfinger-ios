@@ -17,17 +17,18 @@ class GuideItem: Object {
   dynamic var parent: String!
   dynamic var content: String?
   dynamic var openingHours: String?
-  var contentLoaded = true
-    
+  
   let images = List<GuideItemImage>()
   
-  // temporary data to make things easier
   var guideSections = List<GuideText>()
   var subRegions = List<Region>()
   var categoryDescriptions = List<GuideText>()
-  
-  override static func ignoredProperties() -> [String] {
-    return ["contentLoaded"]
-  }
 
+  // temporary data to make things easier
+  var contentLoaded = true
+  var offline = true
+
+  override static func ignoredProperties() -> [String] {
+    return ["contentLoaded", "offline"]
+  }
 }

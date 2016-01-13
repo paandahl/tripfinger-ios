@@ -76,7 +76,6 @@ class ListController: UITableViewController, SubController {
     if segue.identifier == "showDetail" {
       let detailController = segue.destinationViewController as! DetailController
       detailController.attraction = sender as! Attraction
-      detailController.imagePath = detailController.attraction.getLocalImagePath()
     }
     else if segue.identifier == "showFilter" {
       let navigationController = segue.destinationViewController as! UINavigationController
@@ -86,7 +85,7 @@ class ListController: UITableViewController, SubController {
     }
   }
   
-  func selectedSearchResult(searchResult: SearchResult) {
+  func selectedSearchResult(searchResult: SimplePOI) {
   }
 }
 
@@ -100,8 +99,7 @@ extension ListController {
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.listingCell, forIndexPath: indexPath) as! ListingCell
     let attraction = session.currentAttractions[indexPath.row]
-    let imagePath = attraction.getLocalImagePath()
-    cell.setContent(attraction, imagePath: imagePath)
+    cell.setContent(attraction)
     cell.delegate = self
     return cell
   }
