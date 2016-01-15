@@ -24,6 +24,11 @@ extension NSURL {
     return folderPath
   }
   
+  class func fileExists(baseDir: NSSearchPathDirectory, withPath path: String) -> Bool {
+    let folderPath = getDirectory(baseDir, withPath: path)
+    return NSFileManager.defaultManager().fileExistsAtPath(folderPath.path!)
+  }  
+  
   class func appendToDirectory(baseDir: NSURL, pathElement: String) -> NSURL {
     let folderPath = baseDir.URLByAppendingPathComponent(pathElement)
     do {

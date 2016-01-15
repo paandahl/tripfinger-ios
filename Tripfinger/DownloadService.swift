@@ -16,27 +16,38 @@ class DownloadService {
     
     if hasMapPackageForRegion(country, mapsObject: mapsObject) {
       return true
-    }
-    else if city != nil {
+    } else if city != nil {
       return hasMapPackageForRegion(city, mapsObject: mapsObject)
-    }
-    else {
+    } else {
       return false
     }
   }
   
-  class func getMapsAvailable() -> Future<SKTMapsObject, NoError> {
+  class func getSKTMapsObject() -> Future<SKTMapsObject, NoError> {
     let promise = Promise<SKTMapsObject, NoError>()
     
-    Queue.global.async {
-      let jsonURLString = SKMapsService.sharedInstance().packagesManager.mapsJSONURLForVersion(nil)
-      ContentService.getJsonStringFromUrl(jsonURLString, success: {
-        json in
-        
-        let skMaps = SKTMapsObject.convertFromJSON(json)
-        promise.success(skMaps)
-      })
+    let mapsFileUrl = NSURL.getDirectory(.LibraryDirectory, withPath: "mapsObject.json")
+    if NSURL.fileExists(.LibraryDirectory, withPath: "mapsObject.json") {
+      let json = JSON(data: NSData(contentsOfURL: mapsFileUrl)!).rawString()!
+      let skMaps = SKTMapsObject.convertFromJSON(json)
+      print("loaded mapsObject from file")
+      promise.success(skMaps)
+      
+    } else {
+      Queue.global.async {
+        let jsonURLString = SKMapsService.sharedInstance().packagesManager.mapsJSONURLForVersion(nil)
+        ContentService.getJsonStringFromUrl(jsonURLString, success: {
+          json in
+          
+          try! json.writeToURL(mapsFileUrl, atomically: true, encoding: NSUTF8StringEncoding)
+          
+          let skMaps = SKTMapsObject.convertFromJSON(json)
+          print("loaded mapsObject from url")
+          promise.success(skMaps)
+        })
+      }
     }
+    
     
     return promise.future
   }

@@ -6,7 +6,7 @@ import BrightFutures
 class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
   
   var window: UIWindow?
-  var mapVersionFilePromise = Promise<String, NoError>()
+  var mapVersionPromise = Promise<String, NoError>()
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     
@@ -22,13 +22,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     SKMapsService.sharedInstance().initializeSKMapsWithAPIKey(apiKey, settings: initSettings)
     SKMapsService.sharedInstance().mapsVersioningManager.delegate = self
     
-    let session = Session()    
-    session.mapVersionFileDownloaded = mapVersionFilePromise.future
+    let session = Session(mapVersionPromise: mapVersionPromise.future)
 
     let navigationController = self.window!.rootViewController as! UINavigationController
     let rootController = navigationController.viewControllers[0] as! RootController
     rootController.session = session
     
+    mapVersionPromise.success("20150413")
     return true
   }
   
@@ -64,9 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
   }
   
   func mapsVersioningManager(versioningManager: SKMapsVersioningManager!, loadedWithMapVersion currentMapVersion: String!) {
-    mapVersionFilePromise.success("Downloaded")
+//    print("Detected map version: \(currentMapVersion)")
+//    mapVersionPromise.success("Downloaded")
   }
-
-  
 }
 

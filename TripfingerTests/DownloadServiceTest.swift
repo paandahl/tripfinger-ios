@@ -16,7 +16,7 @@ class DownloadServiceTest: XCTestCase {
   func testGetAvailableMaps() {
     let readyExpectation = expectationWithDescription("ready")
 
-    DownloadService.getMapsAvailable().onSuccess {
+    DownloadService.getSKTMapsObject().onSuccess {
       mapsObject in
       
       XCTAssertEqual(7, mapsObject.packagesForType(.Continent).count)

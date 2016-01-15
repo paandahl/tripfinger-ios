@@ -4,7 +4,23 @@ import BrightFutures
 
 class Session {
   
-  init() {}
+  var mapsObjectFuture = Future<Void, NoError>()
+  var mapsObject: SKTMapsObject!
+  var availableCountries: List<Region>!
+  
+  init(mapVersionPromise: Future<String, NoError>) {
+    let promise = Promise<Void, NoError>()
+    mapVersionPromise.onComplete { _ in
+      
+      DownloadService.getSKTMapsObject().onSuccess {
+        mapsObject in
+        
+        self.mapsObject = mapsObject
+        promise.success()
+      }
+    }
+    mapsObjectFuture = promise.future
+  }
   
   // guide hierarchy
   var currentItem: GuideItem!
@@ -151,9 +167,6 @@ class Session {
   var attractionsFromCategory: Attraction.Category!
   var attractionsFromRegion: Region!
   var searchService = SearchService()
-  
-  var mapVersionFileDownloaded: Future<String, NoError>!
-  
   
   func loadAttractions(handler: (loaded: Bool) -> ()) {
     

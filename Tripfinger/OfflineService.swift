@@ -35,6 +35,10 @@ class OfflineService {
     return nil
   }
   
+  class func getCountries() -> Results<Region> {
+    return realm.objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue)")
+  }
+  
   class func getCountry(countryName: String) -> Region! {
     return realm.objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue) and listing.item.name = '\(countryName)'").first
   }

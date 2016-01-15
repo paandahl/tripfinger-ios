@@ -20,7 +20,6 @@ class GuideController: UITableViewController, SubController {
   var downloadButton: UIButton!
   
   var countryList = [Region]()
-  var mapsObject: SKTMapsObject!
   var mapCountryList: [SKTPackage]!
   
   var guideItemExpanded = false
@@ -102,7 +101,7 @@ class GuideController: UITableViewController, SubController {
       case Region.Category.CITY.rawValue:
         fallthrough
       case Region.Category.COUNTRY.rawValue:
-        let downloaded = DownloadService.isRegionDownloaded(mapsObject, country: session.currentCountry, city: session.currentCity)
+        let downloaded = DownloadService.isRegionDownloaded(session.mapsObject, country: session.currentCountry, city: session.currentCity)
         let title = downloaded ? "Downloaded" : "Download"
         downloadButton.setTitle(title, forState: .Normal)
         downloadButton.hidden = false
@@ -114,6 +113,7 @@ class GuideController: UITableViewController, SubController {
       downloadButton.hidden = true
     }
     
+    print("updating UI")
     populateTableSections()
     tableView.reloadData {
       self.tableView.contentOffset = CGPointZero
@@ -132,7 +132,7 @@ class GuideController: UITableViewController, SubController {
   func openDownloadCity(sender: UIButton) {
     let nav = UINavigationController()
     let vc = DownloadController()
-    vc.mapsObject = mapsObject
+    vc.mapsObject = session.mapsObject
     vc.country = session.currentCountry
     vc.city = session.currentCity
     if session.currentRegion.mapCountry {
@@ -143,46 +143,35 @@ class GuideController: UITableViewController, SubController {
   }
   
   func loadCountryList() {
-    var i = 0
-    let populateTable = {
-      i += 1
-      if i == 2 {
-        self.populateTableSections()
-        self.updateUI()
-      }
-    }
-    ContentService.getCountries() {
-      countries in
-      
-      for country in countries {
-        country.item().contentLoaded = false
-      }
-      self.countryList = countries
-      populateTable()
-      
-    }
-    if mapsObject == nil {
-      session.mapVersionFileDownloaded.onComplete { _ in
+    if NetworkUtil.connectedToNetwork() {
+      ContentService.getCountries() {
+        countries in
         
-        DownloadService.getMapsAvailable().onSuccess {
-          mapsObject in
-          
-          self.mapsObject = mapsObject
-          populateTable()
+        for country in countries {
+          country.item().contentLoaded = false
+        }
+        self.countryList = countries
+        self.session.mapsObjectFuture.onComplete { _ in
+          self.updateUI()
         }
       }
-    }
-    else {
-      populateTable()
+    } else {
+      self.session.mapsObjectFuture.onSuccess { _ in
+        self.countryList = Array<Region>(OfflineService.getCountries())
+        self.updateUI()
+      }
+      self.session.mapsObjectFuture.onFailure { _ in
+        // TODO: show some kind of failure message
+      }
     }
   }
   
   func getContinentMapPackages() -> [SKTPackage] {
     var continents = [SKTPackage]()
-    let allContinents = mapsObject.packagesForType(.Continent) as! [SKTPackage]
+    let allContinents = session.mapsObject.packagesForType(.Continent) as! [SKTPackage]
     for continent in allContinents {
       if continent.nameForLanguageCode("en") != "Antarctica" {
-        continent.mapsObject = mapsObject
+        continent.mapsObject = session.mapsObject
         continents.append(continent)
       }
     }
@@ -206,7 +195,7 @@ extension GuideController {
   func populateTableSections() {
     tableSections = [TableSection]()
     
-    if self.mapsObject == nil ||
+    if session.mapsObject == nil ||
       (session.currentRegion != nil && !session.currentRegion.item().contentLoaded && session.currentSection == nil) {
         let section = TableSection(cellIdentifier: TableCellIdentifiers.loadingCell, handler: nil)
         section.elements.append(("", ""))
@@ -214,7 +203,7 @@ extension GuideController {
     }
     else {
       if session.currentItem == nil {
-        if mapsObject != nil {
+        if session.mapsObject != nil {
           let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
           for country in countryList {
             section.elements.append((title: country.listing.item.name!, value: country))
@@ -286,7 +275,7 @@ extension GuideController {
         else {
           let mapSection = TableSection(title: "Countries with only maps", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
           let continentName = session.currentContinent.getName()
-          let countryCandidates = try! mapsObject.getMapPackage(continentName, type: .Continent).childObjects() as! [SKTPackage]
+          let countryCandidates = try! session.mapsObject.getMapPackage(continentName, type: .Continent).childObjects() as! [SKTPackage]
           mapCountryList = [SKTPackage]()
           for countryCandidate in countryCandidates {
             let candidateName = countryCandidate.nameForLanguageCode("en")
