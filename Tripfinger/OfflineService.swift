@@ -80,8 +80,9 @@ class OfflineService {
         realm.delete(region!)
       }
       else {
-        let region = getCountry(countryName)
-        realm.delete(region!)
+        if let region = getCountry(countryName) {
+          realm.delete(region)
+        }
       }
     }
   }

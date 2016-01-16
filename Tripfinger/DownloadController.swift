@@ -91,6 +91,7 @@ class DownloadController: UIViewController {
         OfflineService.deleteRegion(country.getName(), cityName: city.getName())
       }
       
+      nameLabel.text = "Downloading \(country.getName())."
       let countryPackage = mapsObject.getMapPackage(country.getName(), type: .Country)
       DownloadService.downloadCountry(mapsObject, countryName: country.getName(), package: countryPackage, onlyMap: onlyMap, progressHandler: {
         progress in
@@ -103,6 +104,7 @@ class DownloadController: UIViewController {
       })
     }
     else {
+      nameLabel.text = "Downloading \(city.getName())."
       let cityPackage = mapsObject.getMapPackage(city.getName(), type: .City)
       DownloadService.downloadCity(country.getName(), cityName: city.getName(), package: cityPackage, onlyMap: onlyMap, progressHandler: {
         progress in

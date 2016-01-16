@@ -6,6 +6,6 @@ class GuideItemImage: Object {
   dynamic var imageDescription: String!
   
   func getFileUrl() -> NSURL {
-    return NSURL.getDirectory(.LibraryDirectory, withPath: url)
+    return NSURL(string: url, relativeToURL: NSURL.getDirectory(.LibraryDirectory, withPath: "/"))!
   }
 }
