@@ -52,7 +52,7 @@ class OfflineService {
   }
 
   class func getAttractionWithId(attractionId: String) -> Attraction? {
-    let attractions = realm.objects(Attraction).filter("listing.item.id = '\(attractionId)'")
+    let attractions = realm.objects(Attraction).filter("listing.item.id = \"\(attractionId)\"")
     print("got \(attractions.count) attractions with id \(attractionId)")
     if attractions.count == 1 {
       return attractions[0]
