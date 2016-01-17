@@ -156,10 +156,16 @@ class GuideController: UITableViewController, SubController {
         }
       }
     } else {
-      self.session.mapsObjectFuture.onSuccess { _ in
+      session.mapsObjectFuture.onSuccess { _ in
         self.countryList = Array<Region>(OfflineService.getCountries())
         self.updateUI()
       }
+      session.mapsObjectFuture.onFailure { _ in
+        if NetworkUtil.connectedToNetwork() {
+          self.loadCountryList()
+        }
+      }
+      
       self.session.mapsObjectFuture.onFailure { _ in
         // TODO: show some kind of failure message
       }
@@ -195,7 +201,15 @@ extension GuideController {
   func populateTableSections() {
     tableSections = [TableSection]()
     
-    if session.mapsObject == nil ||
+    if session.mapsObject == nil && !NetworkUtil.connectedToNetwork() {
+      var section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: nil)
+      section.elements.append(("Need to be online to download country list.", ""))
+      tableSections.append(section)
+      section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: retryLoadCountries)
+      section.elements.append(("Retry.", ""))
+      tableSections.append(section)
+    }
+    else if session.mapsObject == nil ||
       (session.currentRegion != nil && !session.currentRegion.item().contentLoaded && session.currentSection == nil) {
         let section = TableSection(cellIdentifier: TableCellIdentifiers.loadingCell, handler: nil)
         section.elements.append(("", ""))
@@ -365,6 +379,11 @@ extension GuideController {
       self.updateUI()
     }
     self.updateUI()
+  }
+
+  func retryLoadCountries(object: AnyObject) {
+    session.loadMapsObject()
+    loadCountryList()
   }
   
   func navigateToRegion(object: AnyObject) {

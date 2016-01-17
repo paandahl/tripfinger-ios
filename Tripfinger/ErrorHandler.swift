@@ -9,4 +9,5 @@ class ErrorHandler {
 
 enum Error : ErrorType {
   case RuntimeError(String)
+  case DownloadError(String)
 }

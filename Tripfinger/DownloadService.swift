@@ -23,8 +23,8 @@ class DownloadService {
     }
   }
   
-  class func getSKTMapsObject() -> Future<SKTMapsObject, NoError> {
-    let promise = Promise<SKTMapsObject, NoError>()
+  class func getSKTMapsObject() -> Future<SKTMapsObject, Error> {
+    let promise = Promise<SKTMapsObject, Error>()
     
     let mapsFileUrl = NSURL.getDirectory(.LibraryDirectory, withPath: "mapsObject.json")
     if NSURL.fileExists(.LibraryDirectory, withPath: "mapsObject.json") {
@@ -44,6 +44,8 @@ class DownloadService {
           let skMaps = SKTMapsObject.convertFromJSON(json)
           print("loaded mapsObject from url")
           promise.success(skMaps)
+          }, failure: {
+            promise.failure(Error.DownloadError("Could not download file."))
         })
       }
     }

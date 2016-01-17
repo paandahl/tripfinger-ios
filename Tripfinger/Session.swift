@@ -4,20 +4,25 @@ import BrightFutures
 
 class Session {
   
-  var mapsObjectFuture = Future<Void, NoError>()
+  var mapsObjectFuture = Future<Void, Error>()
   var mapsObject: SKTMapsObject!
   var availableCountries: List<Region>!
   
   init(mapVersionPromise: Future<String, NoError>) {
-    let promise = Promise<Void, NoError>()
-    mapVersionPromise.onComplete { _ in
+    loadMapsObject()
+  }
+  
+  func loadMapsObject() {
+    let promise = Promise<Void, Error>()
+    
+    DownloadService.getSKTMapsObject().onSuccess {
+      mapsObject in
       
-      DownloadService.getSKTMapsObject().onSuccess {
-        mapsObject in
-        
-        self.mapsObject = mapsObject
-        promise.success()
-      }
+      self.mapsObject = mapsObject
+      promise.success()
+    }
+    DownloadService.getSKTMapsObject().onFailure { _ in
+      promise.failure(Error.DownloadError("Could not be downloaded."))
     }
     mapsObjectFuture = promise.future
   }
