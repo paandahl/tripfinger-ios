@@ -42,6 +42,11 @@ class OfflineService {
   class func getCountry(countryName: String) -> Region! {
     return realm.objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue) and listing.item.name = '\(countryName)'").first
   }
+  
+  class func getSubRegionOrCity(countryName: String, itemName: String) -> Region! {
+    return realm.objects(Region).filter("(listing.item.category = \(Region.Category.CITY.rawValue) or listing.item.category = \(Region.Category.SUB_REGION.rawValue)) and listing.country = '\(countryName)' and listing.item.name = '\(itemName)'").first
+  }
+
 
   class func getCity(countryName: String, cityName: String) -> Region! {
     return realm.objects(Region).filter("listing.item.category = \(Region.Category.CITY.rawValue) and listing.country = '\(countryName)' and listing.item.name = '\(cityName)'").first

@@ -33,6 +33,7 @@ class Session {
   
   var currentContinent: Region!
   var currentCountry: Region!
+  var currentSubRegion: Region!
   var currentCity: Region!
 
   var previousSection: GuideText!
@@ -61,21 +62,27 @@ class Session {
       var newRegion: Region!
       if currentSection != nil {
         newRegion = currentRegion
-        changeRegion(currentRegion, handler: handler)
-      }
-      else {
+        
+      } else {
         switch currentItem.category {
         case Region.Category.NEIGHBOURHOOD.rawValue:
           newRegion = currentCity
         case Region.Category.CITY.rawValue:
+          if currentSubRegion != nil {
+            newRegion = currentSubRegion
+          }
+          else {
+            newRegion = currentCountry
+          }
+        case Region.Category.SUB_REGION.rawValue:
           newRegion = currentCountry
         case Region.Category.COUNTRY.rawValue:
           newRegion = currentContinent
         default:
           newRegion = nil
         }
-        changeRegion(newRegion, handler: handler)
       }
+      changeRegion(newRegion, handler: handler)
     }
   }
   
@@ -89,6 +96,8 @@ class Session {
       currentContinent = region
     case Region.Category.COUNTRY.rawValue:
       currentCountry = region
+    case Region.Category.SUB_REGION.rawValue:
+      currentSubRegion = region
     case Region.Category.CITY.rawValue:
       currentCity = region
     default:
@@ -97,6 +106,9 @@ class Session {
     
     if category < Region.Category.CITY.rawValue {
       currentCity = nil
+    }
+    if category < Region.Category.SUB_REGION.rawValue {
+      currentRegion = nil
     }
     if category < Region.Category.COUNTRY.rawValue {
       currentCountry = nil
@@ -113,9 +125,20 @@ class Session {
     if category > Region.Category.COUNTRY.rawValue && currentCountryName != region.listing.country {
       currentCountry = Region.constructRegion(region.listing.country, continent: currentContinent.getName())
     }
+    let currentSubRegionName = currentSubRegion != nil ? currentSubRegion.getName() : ""
+    if category > Region.Category.SUB_REGION.rawValue && currentSubRegionName != region.listing.subRegion {
+      if region.listing.subRegion == nil {
+        currentSubRegion = nil
+      }
+      else {
+        currentSubRegion = Region.constructRegion(region.listing.subRegion, country: currentCountry.getName(),
+          continent: currentContinent.getName())
+      }
+    }
     let currentCityName = currentCity != nil ? currentCity.getName() : ""
     if category > Region.Category.CITY.rawValue && currentCityName != region.listing.city {
-      currentCity = Region.constructRegion(region.listing.city, country: currentCountry.getName(),
+      let subRegion = currentSubRegion == nil ? "city" : currentSubRegion.getName()
+      currentCity = Region.constructRegion(region.listing.city, subRegion: subRegion, country: currentCountry.getName(),
         continent: currentContinent.getName())
     }
     
@@ -130,6 +153,7 @@ class Session {
         
         self.currentRegion = region
         self.currentItem = region.listing.item
+        print("Setting region \(region.getName()) with category: \(region.item().category)")
         handler()
       }
     }

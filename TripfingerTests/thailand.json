@@ -1,0 +1,117 @@
+{
+  "radius": null,
+  "polygonCoordinates": null,
+  "guideSections": [
+                    [
+                     "text-thailand--get-around",
+                     " Get around "
+                     ],
+                    [
+                     "text-thailand-understand",
+                     "Understand"
+                     ],
+                    [
+                     "text-thailand-get-in",
+                     "Get in"
+                     ],
+                    [
+                     "text-thailand-see",
+                     "See"
+                     ],
+                    [
+                     "text-thailand-do",
+                     "Do"
+                     ],
+                    [
+                     "text-thailand-talk",
+                     "Talk"
+                     ],
+                    [
+                     "text-thailand-buy",
+                     "Buy"
+                     ],
+                    [
+                     "text-thailand-learn",
+                     "Learn"
+                     ],
+                    [
+                     "text-thailand-work",
+                     "Work"
+                     ],
+                    [
+                     "text-thailand-eat",
+                     "Eat"
+                     ],
+                    [
+                     "text-thailand-drink",
+                     "Drink"
+                     ],
+                    [
+                     "text-thailand-sleep",
+                     "Sleep"
+                     ],
+                    [
+                     "text-thailand-stay-safe",
+                     "Stay safe"
+                     ],
+                    [
+                     "text-thailand-stay-healthy",
+                     "Stay healthy"
+                     ],
+                    [
+                     "text-thailand-respect",
+                     "Respect"
+                     ],
+                    [
+                     "text-thailand-cope",
+                     "Cope"
+                     ],
+                    [
+                     "text-thailand-connect",
+                     "Connect"
+                     ],
+                    [
+                     "text-thailand-films",
+                     "Films"
+                     ]
+                    ],
+  "sectionTree": null,
+  "categoryDescriptions": [],
+  "categoryDescriptionTree": null,
+  "attractions": null,
+  "subRegions": [
+                 "Bangkok",
+                 "Ko Samui"
+                 ],
+  "subRegionTree": null,
+  "longitude": 100.991966,
+  "latitude": 15.470278,
+  "continent": "Asia",
+  "worldArea": null,
+  "country": null,
+  "region": null,
+  "subRegion": null,
+  "city": null,
+  "id": "region-thailand",
+  "uuid": "ba3d3193-db11-4171-90f2-b633bb811051",
+  "name": "Thailand",
+  "alternativeName": null,
+  "category": 130,
+  "subCategory": 0,
+  "status": 1,
+  "description": "<p>Thailand (officially the Kingdom of Thailand)  is a country in Southeast Asia with coasts on the Andaman Sea and the Gulf of Thailand. It borders Myanmar (Burma) to the northwest, Laos to the northeast, Cambodia to the southeast, and Malaysia to the south.</p><p>With great food, a tropical climate, fascinating culture and superb beaches, Thailand is a magnet for travellers the world over.</p>",
+  "images": [
+             {
+             "url": "http://storage.googleapis.com/tripfinger-images/region-thailand-1",
+             "description": null,
+             "creationDate": "Dec 19, 2015 10:18:19 AM",
+             "license": "All rights reserved",
+             "artist": "Anastasia Makarova",
+             "originalUrl": null
+             }
+             ],
+  "imagesNotFoundOnImport": [],
+  "parentAsString": null,
+  "entityType": "region",
+  "parent": "region-asia"
+}

@@ -113,7 +113,6 @@ class GuideController: UITableViewController, SubController {
       downloadButton.hidden = true
     }
     
-    print("updating UI")
     populateTableSections()
     tableView.reloadData {
       self.tableView.contentOffset = CGPointZero
@@ -268,6 +267,8 @@ extension GuideController {
           case Region.Category.CONTINENT.rawValue:
             section = TableSection(title: "Countries:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
           case Region.Category.COUNTRY.rawValue:
+            section = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+          case Region.Category.SUB_REGION.rawValue:
             section = TableSection(title: "Cities:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
           default:
             section = TableSection(title: "Neighbourhoods:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)

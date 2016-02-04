@@ -33,6 +33,9 @@ class NetworkUtil {
     
     url = url.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!
     
+    let thrower = {
+      throw Error.DownloadError("Failure fetching url: \(url)")
+    }
     print("Fetching URL: \(url)")
     
     let request = Alamofire.request(method, url, parameters: parameters).validate(statusCode: 200..<300)
@@ -49,10 +52,12 @@ class NetworkUtil {
           success(json: json)
         }
         else {
-          print("Failure fetching url: \(url)")
           print(response.result.error)
           if let failure = failure {
             dispatch_async(dispatch_get_main_queue(), failure)
+          }
+          else {
+            try! thrower()
           }
         }
     })

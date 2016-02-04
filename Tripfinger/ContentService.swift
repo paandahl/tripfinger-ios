@@ -23,7 +23,7 @@ class ContentService {
       }
       }, failure: nil)
   }
-
+  
   
   class func getCountries(handler: [Region] -> ()) {
     NetworkUtil.getJsonFromUrl(baseUrl + "/countries", success: {
@@ -62,7 +62,7 @@ class ContentService {
       }
       }, failure: nil)
   }
-    
+  
   class func getRegions(handler: [Region] -> ()) {
     NetworkUtil.getJsonFromUrl(baseUrl + "/regions", success: {
       json in
@@ -82,31 +82,31 @@ class ContentService {
   
   class func getRegionFromListing(listing: GuideListing, handler: (Region) -> ()) {
     var url: String!
-    if listing.city != nil {
+    switch listing.item.category {
+    case Region.Category.NEIGHBOURHOOD.rawValue:
       if let region = OfflineService.getNeighbourhood(listing.country, cityName: listing.city, hoodName: listing.item.name) {
         handler(region)
         return
       }
       url = baseUrl + "/neighbourhoods/\(listing.country)/\(listing.city)/\(listing.item.name)"
-    }
-    else if listing.country != nil {
-      if let region = OfflineService.getCity(listing.country, cityName: listing.item.name) {
+    case Region.Category.CITY.rawValue:
+      fallthrough
+    case Region.Category.SUB_REGION.rawValue:
+      if let region = OfflineService.getSubRegionOrCity(listing.country, itemName: listing.item.name) {
         handler(region)
         return
       }
-      url = baseUrl + "/cities/\(listing.country)/\(listing.item.name)"
-    }
-    else if listing.continent != nil {
+      url = baseUrl + "/subRegionOrCity/\(listing.country)/\(listing.item.name)"
+    case Region.Category.COUNTRY.rawValue:
       if let region = OfflineService.getCountry(listing.item.name) {
         handler(region)
         return
       }
       url = baseUrl + "/countries/\(listing.item.name)"
-    }
-    else {
+    default:
       url = baseUrl + "/continents/\(listing.item.name)"
     }
-        
+    
     NetworkUtil.getJsonFromUrl(url, success: {
       json in
       
@@ -168,7 +168,7 @@ class ContentService {
         handler(attraction)
       }
     })
-
+    
   }
   
   class func getAttractionsForRegion(region: Region?, handler: List<Attraction> -> ()) {
@@ -212,7 +212,7 @@ class ContentService {
       }}, failure: nil)
     
   }
-
+  
   class func getJsonFromPost(var url: String, body: String, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
     
     print("Fetching POST URL: \(url)")
@@ -242,7 +242,7 @@ class ContentService {
       }
     }
   }
-
+  
   
   class func getJsonStringFromUrl(url: String, var parameters: [String: String] = Dictionary<String, String>(), appendPass: Bool = true, success: (json: String) -> (), failure: (() -> ())? = nil) {
     print("Fetching URL: \(url)")
@@ -251,17 +251,17 @@ class ContentService {
     }
     Alamofire.request(.GET, url, parameters: parameters)
       .validate(statusCode: 200..<300).responseString {
-      response in
-      
-      if response.result.isSuccess {
-        success(json: response.result.value!)
-      }
-      else {
-        print("Failure: \(response.result.error)")
-        if let failure = failure {
-          dispatch_async(dispatch_get_main_queue(), failure)
+        response in
+        
+        if response.result.isSuccess {
+          success(json: response.result.value!)
         }
-      }
+        else {
+          print("Failure: \(response.result.error)")
+          if let failure = failure {
+            dispatch_async(dispatch_get_main_queue(), failure)
+          }
+        }
     }
   }
   
@@ -314,6 +314,7 @@ class ContentService {
     listing.longitude = json["longitude"].double!
     listing.continent = json["continent"].string
     listing.country = json["country"].string
+    listing.subRegion = json["subRegion"].string
     listing.city = json["city"].string
     return listing
   }
@@ -355,7 +356,7 @@ class ContentService {
     }
     return region
   }
-
+  
   class func parseRegionTreesFromJson(jsonArray: JSON) -> [Region] {
     var regions = [Region]()
     for json in jsonArray.array! {
@@ -363,7 +364,7 @@ class ContentService {
     }
     return regions
   }
-
+  
   class func parseRegionTreeFromJson(json: JSON) -> Region {
     let region = Region()
     region.listing = parseGuideListing(json)
@@ -372,7 +373,7 @@ class ContentService {
       region.attractions.appendContentsOf(parseAttractions(json["attractions"]))
     }
     if json["subRegionTree"].array != nil {
-      region.listing.item.subRegions.appendContentsOf(parseRegionTreesFromJson(json["subRegionTree"]))      
+      region.listing.item.subRegions.appendContentsOf(parseRegionTreesFromJson(json["subRegionTree"]))
     }
     return region
   }
@@ -400,11 +401,11 @@ class ContentService {
     }
     return guideSections
   }
-
+  
   class func parseChildren(guideText: GuideText, withJson json: JSON) {
     guideText.item.guideSections = parseGuideSections(json)
   }
-
+  
   class func parseChildren(region: Region, withJson json: JSON) {
     region.item().guideSections = parseGuideSections(json)
     region.item().categoryDescriptions = parseCategoryDescriptions(region, guideItemJson: json)
