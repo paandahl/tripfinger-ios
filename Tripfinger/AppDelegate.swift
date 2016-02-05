@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     let rootController = navigationController.viewControllers[0] as! RootController
     rootController.session = session
     
-    mapVersionPromise.success("20150413")
+//    mapVersionPromise.success("20150413")
     return true
   }
   
@@ -64,8 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
   }
   
   func mapsVersioningManager(versioningManager: SKMapsVersioningManager!, loadedWithMapVersion currentMapVersion: String!) {
-//    print("Detected map version: \(currentMapVersion)")
-//    mapVersionPromise.success("Downloaded")
+    print("Detected map version: \(currentMapVersion)")
+    mapVersionPromise.success("Downloaded")
   }
 }
 

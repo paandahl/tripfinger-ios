@@ -25,6 +25,7 @@
 		257922C71BA308A9005EA785 /* Attraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922C61BA308A9005EA785 /* Attraction.swift */; };
 		257922D21BA48697005EA785 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D11BA48697005EA785 /* SwiftyJSON.swift */; };
 		257922D41BA488EB005EA785 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D31BA488EB005EA785 /* DataManager.swift */; };
+		25A14DE61C6453B500074F87 /* GuideViewOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A14DE51C6453B500074F87 /* GuideViewOnlineTest.swift */; };
 		25B506871BB3F33900A36BA1 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 25B506861BB3F33900A36BA1 /* Podfile */; };
 		25B5068B1BB3FD5800A36BA1 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B5068A1BB3FD5800A36BA1 /* RootController.swift */; };
 		25B5068F1BB4009600A36BA1 /* ChooseAttractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B5068E1BB4009600A36BA1 /* ChooseAttractionView.swift */; };
@@ -150,6 +151,7 @@
 		257922C61BA308A9005EA785 /* Attraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attraction.swift; sourceTree = "<group>"; };
 		257922D11BA48697005EA785 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Tripfinger/SwiftyJSON.swift; sourceTree = "<group>"; };
 		257922D31BA488EB005EA785 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		25A14DE51C6453B500074F87 /* GuideViewOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideViewOnlineTest.swift; sourceTree = "<group>"; };
 		25B506861BB3F33900A36BA1 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		25B5068A1BB3FD5800A36BA1 /* RootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
 		25B5068C1BB3FDC300A36BA1 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
@@ -302,6 +304,7 @@
 			children = (
 				254091111C0E83F000A2002F /* TripfingerUITests.swift */,
 				254091131C0E83F000A2002F /* Info.plist */,
+				25A14DE51C6453B500074F87 /* GuideViewOnlineTest.swift */,
 			);
 			path = TripfingerUITests;
 			sourceTree = "<group>";
@@ -723,6 +726,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25A14DE61C6453B500074F87 /* GuideViewOnlineTest.swift in Sources */,
 				254091121C0E83F000A2002F /* TripfingerUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

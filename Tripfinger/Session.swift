@@ -4,27 +4,31 @@ import BrightFutures
 
 class Session {
   
+  var mapVersionPromise: Future<String, NoError>
   var mapsObjectFuture = Future<Void, Error>()
   var mapsObject: SKTMapsObject!
   var availableCountries: List<Region>!
   
   init(mapVersionPromise: Future<String, NoError>) {
+    self.mapVersionPromise = mapVersionPromise
     loadMapsObject()
   }
   
   func loadMapsObject() {
-    let promise = Promise<Void, Error>()
-    
-    DownloadService.getSKTMapsObject().onSuccess {
-      mapsObject in
+    mapVersionPromise.onSuccess { version in
       
-      self.mapsObject = mapsObject
-      promise.success()
+      let promise = Promise<Void, Error>()
+      
+      DownloadService.getSKTMapsObject(version).onSuccess {
+        mapsObject in
+        
+        self.mapsObject = mapsObject
+        promise.success()
+        }.onFailure { _ in
+          promise.failure(Error.DownloadError("Could not be downloaded."))
+      }
+      self.mapsObjectFuture = promise.future
     }
-    DownloadService.getSKTMapsObject().onFailure { _ in
-      promise.failure(Error.DownloadError("Could not be downloaded."))
-    }
-    mapsObjectFuture = promise.future
   }
   
   // guide hierarchy

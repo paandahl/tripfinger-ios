@@ -23,7 +23,7 @@ class DownloadService {
     }
   }
   
-  class func getSKTMapsObject() -> Future<SKTMapsObject, Error> {
+  class func getSKTMapsObject(version: String) -> Future<SKTMapsObject, Error> {
     let promise = Promise<SKTMapsObject, Error>()
     
     let mapsFileUrl = NSURL.getDirectory(.LibraryDirectory, withPath: "mapsObject.json")

@@ -1,11 +1,3 @@
-//
-//  TripfingerUITests.swift
-//  TripfingerUITests
-//
-//  Created by Preben Ludviksen on 02/12/15.
-//  Copyright © 2015 Preben Ludviksen. All rights reserved.
-//
-
 import XCTest
 
 class TripfingerUITests: XCTestCase {
@@ -29,13 +21,11 @@ class TripfingerUITests: XCTestCase {
   }
   
   func testOpenScreens() {
-    // Use recording to get started writing UI tests.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-    
     let app = XCUIApplication()
-    let belgiumRow = app.tables.staticTexts["Belgium"]
     let exists = NSPredicate(format: "exists == 1")
     let hittable = NSPredicate(format: "hittable == 1")
+    
+    let belgiumRow = app.tables.staticTexts["Belgium"]
     expectationForPredicate(exists, evaluatedWithObject: belgiumRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     belgiumRow.tap()
