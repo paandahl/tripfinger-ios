@@ -100,9 +100,8 @@ class SearchService: NSObject {
       let searchResult = SimplePOI()
       searchResult.name = resultJson["name"].string!
       searchResult.location = resultJson["location"].string!
-      let latitude = resultJson["latitude"].double!
-      let longitude = resultJson["longitude"].double!
-      searchResult.coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+      searchResult.latitude = resultJson["latitude"].double!
+      searchResult.longitude = resultJson["longitude"].double!
       searchResult.category = resultJson["category"].int!
       searchResult.listingId = resultJson["id"].string!
       searchResults.append(searchResult)
@@ -277,7 +276,8 @@ class SearchService: NSObject {
     let searchResult = SimplePOI()
     searchResult.name = skobblerResult.name
     
-    searchResult.coordinates = skobblerResult.coordinate
+    searchResult.latitude = skobblerResult.coordinate.latitude
+    searchResult.longitude = skobblerResult.coordinate.longitude
     searchResult.location = city
     searchResult.category = 180
     return searchResult

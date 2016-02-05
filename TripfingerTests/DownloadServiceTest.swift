@@ -16,12 +16,14 @@ class DownloadServiceTest: XCTestCase {
   func testGetAvailableMaps() {
     let readyExpectation = expectationWithDescription("ready")
 
-    DownloadService.getSKTMapsObject("20150413").onSuccess {
+    let mapVersionPromise = Promise<String, NoError>()
+    DownloadService.getSKTMapsObject(mapVersionPromise.future).onSuccess {
       mapsObject in
       
       XCTAssertEqual(7, mapsObject.packagesForType(.Continent).count)
       readyExpectation.fulfill()
     }
+    mapVersionPromise.success("")
     
     waitForExpectationsWithTimeout(15, handler: { error in
       XCTAssertNil(error, "Error")

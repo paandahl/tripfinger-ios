@@ -15,20 +15,19 @@ class Session {
   }
   
   func loadMapsObject() {
-    mapVersionPromise.onSuccess { version in
+    
+    let promise = Promise<Void, Error>()
+    
+    DownloadService.getSKTMapsObject(mapVersionPromise).onSuccess {
+      mapsObject in
       
-      let promise = Promise<Void, Error>()
+      self.mapsObject = mapsObject
+      promise.success()
       
-      DownloadService.getSKTMapsObject(version).onSuccess {
-        mapsObject in
-        
-        self.mapsObject = mapsObject
-        promise.success()
-        }.onFailure { _ in
-          promise.failure(Error.DownloadError("Could not be downloaded."))
-      }
-      self.mapsObjectFuture = promise.future
+      }.onFailure { _ in
+        promise.failure(Error.DownloadError("Could not be downloaded."))
     }
+    self.mapsObjectFuture = promise.future
   }
   
   // guide hierarchy
@@ -39,10 +38,10 @@ class Session {
   var currentCountry: Region!
   var currentSubRegion: Region!
   var currentCity: Region!
-
+  
   var previousSection: GuideText!
   var currentSection: GuideText!
-
+  
   func loadRegionFromSearchResult(searchResult: SimplePOI, handler: () -> ()) {
     currentRegion = Region.constructRegion(searchResult.name, fromSearchResult: true)
     currentItem = currentRegion.item()
@@ -91,9 +90,9 @@ class Session {
   }
   
   /* The handler is only necessary if you pass a region that might need unwrapping.
-   */
+  */
   func changeRegion(region: Region!, handler: (() -> ())! = nil) {
-
+    
     let category = region != nil ? region.listing.item.category : 0
     switch category {
     case Region.Category.CONTINENT.rawValue:
@@ -150,7 +149,7 @@ class Session {
     currentSection = nil
     currentRegion = region
     currentItem = region != nil ? region.listing.item : nil
-
+    
     if region != nil && !region.listing.item.contentLoaded {
       ContentService.getRegionFromListing(region.listing) {
         region in
@@ -164,7 +163,7 @@ class Session {
     else {
       if handler != nil {
         handler()
-      }      
+      }
     }
   }
   
@@ -186,7 +185,7 @@ class Session {
     else {
       handler()
     }
-
+    
   }
   
   // filters

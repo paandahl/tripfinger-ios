@@ -1,0 +1,71 @@
+{
+  "radius":null,
+  "polygonCoordinates":null,
+  "guideSections":[
+  
+  ],
+  "sectionTree":[
+  
+  ],
+  "categoryDescriptions":[
+  
+  ],
+  "categoryDescriptionTree":[
+  
+  ],
+  "attractions":[
+  
+  ],
+  "subRegions":[
+  
+  ],
+  "subRegionTree":[
+  
+  ],
+  "simplePOIs":[
+                {
+                "id":"simple",
+                "name":"Nyonya Restaurant",
+                "latitude":4.909687,
+                "longitude":114.913737,
+                "category":2510,
+                "country":"Brunei",
+                "location":"Brunei"
+                },
+                {
+                "id":"simple",
+                "name":"KFC",
+                "latitude":4.893803,
+                "longitude":114.848742,
+                "category":2510,
+                "country":"Brunei",
+                "location":"Brunei"
+                }
+                ],
+  "longitude":114.620571,
+  "latitude":4.502128,
+  "continent":"Asia",
+  "worldArea":null,
+  "country":null,
+  "region":null,
+  "subRegion":null,
+  "city":null,
+  "id":"region-brunei",
+  "uuid":"2e9d4170-d963-4e1e-90c5-9601376f1565",
+  "name":"Brunei",
+  "alternativeName":null,
+  "category":130,
+  "subCategory":0,
+  "status":1,
+  "description":"\u003cp\u003eThis is a simple placeholder article for testing purposes. Don\u0027t edit.\u003c/p\u003e",
+  "images":[
+  
+  ],
+  "imagesNotFoundOnImport":[
+  
+  ],
+  "parentAsString":null,
+  "entityType":"region",
+  "parent":"region-asia"
+  
+}

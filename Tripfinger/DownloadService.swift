@@ -23,7 +23,7 @@ class DownloadService {
     }
   }
   
-  class func getSKTMapsObject(version: String) -> Future<SKTMapsObject, Error> {
+  class func getSKTMapsObject(mapVersionPromise: Future<String, NoError>) -> Future<SKTMapsObject, Error> {
     let promise = Promise<SKTMapsObject, Error>()
     
     let mapsFileUrl = NSURL.getDirectory(.LibraryDirectory, withPath: "mapsObject.json")
@@ -34,22 +34,24 @@ class DownloadService {
       promise.success(skMaps)
       
     } else {
-      Queue.global.async {
-        let jsonURLString = SKMapsService.sharedInstance().packagesManager.mapsJSONURLForVersion(nil)
-        ContentService.getJsonStringFromUrl(jsonURLString, success: {
-          json in
-          
-          try! json.writeToURL(mapsFileUrl, atomically: true, encoding: NSUTF8StringEncoding)
-          
-          let skMaps = SKTMapsObject.convertFromJSON(json)
-          print("loaded mapsObject from url")
-          promise.success(skMaps)
-          }, failure: {
-            promise.failure(Error.DownloadError("Could not download file."))
-        })
+      mapVersionPromise.onSuccess { version in
+        Queue.global.async {
+          let jsonURLString = SKMapsService.sharedInstance().packagesManager.mapsJSONURLForVersion(nil)
+          ContentService.getJsonStringFromUrl(jsonURLString, success: {
+            json in
+            
+            try! json.writeToURL(mapsFileUrl, atomically: true, encoding: NSUTF8StringEncoding)
+            
+            let skMaps = SKTMapsObject.convertFromJSON(json)
+            print("loaded mapsObject from url")
+            promise.success(skMaps)
+            }, failure: {
+              promise.failure(Error.DownloadError("Could not download file."))
+          })
+        }
+        
       }
     }
-    
     
     return promise.future
   }
@@ -61,7 +63,7 @@ class DownloadService {
     }
     return names
   }
-
+  
   class func hasMapPackage(type: SKTPackageType, name: String, mapsObject: SKTMapsObject) -> Bool {
     let mapPackages = mapsObject.packagesForType(type) as! [SKTPackage]
     for mapPackage in mapPackages {
@@ -71,7 +73,7 @@ class DownloadService {
     }
     return false
   }
-
+  
   class func hasMapPackage(packageId: String) -> Bool {
     let mapPackages = SKMapsService.sharedInstance().packagesManager.installedOfflineMapPackages as! [SKMapPackage]
     for mapPackage in mapPackages {
@@ -82,7 +84,7 @@ class DownloadService {
     return false
   }
   
-
+  
   class func hasMapPackageForRegion(region: Region, mapsObject: SKTMapsObject!) -> Bool {
     
     var packageType: SKTPackageType
@@ -94,18 +96,18 @@ class DownloadService {
     default:
       return false
     }
-
+    
     return hasMapPackage(packageType, name: region.getName(), mapsObject: mapsObject)
   }
   
-
-
+  
+  
   class func deleteRegion(mapPackageCode: String, countryName: String, cityName: String! = nil) {
     deleteTripfingerDataForRegion(countryName, cityName: cityName)
-//    deleteMapForRegion(mapPackageCode)
+    //    deleteMapForRegion(mapPackageCode)
     OfflineService.deleteRegion(countryName, cityName: cityName)
   }
-
+  
   class func deleteTripfingerDataForRegion(countryName: String, cityName: String! = nil) {
     let path = NSURL.getDirectory(.LibraryDirectory, withPath: countryName)
     if cityName != nil {
@@ -214,7 +216,7 @@ class DownloadService {
     NetworkUtil.getJsonFromUrl(url, success: {
       json in
       
-      let region = ContentService.parseRegionTreeFromJson(json)
+      let region = JsonParserService.parseRegionTreeFromJson(json)
       
       fetchImages(region, path: path)
       
@@ -314,11 +316,7 @@ class MapDownloadManager: NSObject, SKTDownloadManagerDelegate, SKTDownloadManag
     SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed(code, inContainingFolderPath: path)
     
     let fman: NSFileManager = NSFileManager()
-    do {
-      try fman.removeItemAtPath(path)
-    } catch {
-      
-    }
+    try! fman.removeItemAtPath(path)
   }
   
   

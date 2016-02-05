@@ -115,8 +115,8 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     var identifier: Int32 = 0
     for poi in pois {
       let selected = selectedPoi != nil &&
-        (poi.coordinates.latitude == selectedPoi.coordinates.latitude &&
-          poi.coordinates.longitude == selectedPoi.coordinates.longitude)
+        (poi.latitude == selectedPoi.latitude &&
+          poi.longitude == selectedPoi.longitude)
       if !selected && isPoiHidden(poi) {
         identifier += 1
         continue
@@ -136,7 +136,7 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
       else {
         annotation.annotationType = selected ? SKAnnotationType.Green : SKAnnotationType.Blue
       }
-      annotation.location = poi.coordinates
+      annotation.location = CLLocationCoordinate2DMake(poi.latitude, poi.longitude)
       let animationSettings = SKAnimationSettings()
       mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
       if selected {
@@ -232,7 +232,7 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
           i += 1
           continue
         }
-        let poiPoint = mapView.pointForCoordinate(poi.coordinates)
+        let poiPoint = mapView.pointForCoordinate(CLLocationCoordinate2DMake(poi.latitude, poi.longitude))
 //        let label = UILabel(frame: CGRectMake(poiPoint.x - 18, poiPoint.y - 36, 36, 36))
 //        label.backgroundColor = UIColor.greenColor()
 //        view.addSubview(label)
@@ -315,8 +315,8 @@ extension MapController: SearchViewControllerDelegate {
     
     print("Going to location of search result")
     var delayTime = 0.1
-    if !mapView.isLocationVisible(searchResult.coordinates.latitude, long: searchResult.coordinates.longitude) {
-      mapView.animateToLocation(searchResult.coordinates, withDuration: 1.0)
+    if !mapView.isLocationVisible(searchResult.latitude, long: searchResult.longitude) {
+      mapView.animateToLocation(CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude), withDuration: 1.0)
       delayTime = 1.1
     }
     
@@ -330,7 +330,7 @@ extension MapController: SearchViewControllerDelegate {
     }
     if (newZoomLevel == 15 && oldZoomLevel < 14) || (newZoomLevel == 6 && oldZoomLevel > 7) {
       mapView.animateToZoomLevel(Float(newZoomLevel))
-      mapView.animateToLocation(searchResult.coordinates, withDuration: 1.0)
+      mapView.animateToLocation(CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude), withDuration: 1.0)
       delayTime = 1.1
     }
     if putAnnotation {

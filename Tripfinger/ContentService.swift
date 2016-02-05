@@ -29,7 +29,7 @@ class ContentService {
     NetworkUtil.getJsonFromUrl(baseUrl + "/countries", success: {
       json in
       
-      let regions = parseRegions(json)
+      let regions = JsonParserService.parseRegions(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(regions)
@@ -43,7 +43,7 @@ class ContentService {
     NetworkUtil.getJsonFromUrl(baseUrl + "/regions/\(id)/guideTexts", success: {
       json in
       
-      let guideTexts = self.parseGuideTexts(json)
+      let guideTexts = JsonParserService.parseGuideTexts(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(guideTexts: guideTexts)
@@ -55,7 +55,7 @@ class ContentService {
     NetworkUtil.getJsonFromUrl(baseUrl + "/regions/\(regionId)/full", success: {
       json in
       
-      let region = self.parseRegionTreeFromJson(json)
+      let region = JsonParserService.parseRegionTreeFromJson(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(region: region)
@@ -69,7 +69,7 @@ class ContentService {
       
       var regions = [Region]()
       for regionJson in json.array! {
-        regions.append(self.parseRegion(regionJson, fetchChildren: false))
+        regions.append(JsonParserService.parseRegion(regionJson, fetchChildren: false))
       }
       
       dispatch_async(dispatch_get_main_queue()) {
@@ -110,7 +110,7 @@ class ContentService {
     NetworkUtil.getJsonFromUrl(url, success: {
       json in
       
-      let region = self.parseRegion(json)
+      let region = JsonParserService.parseRegion(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(region)
@@ -126,7 +126,7 @@ class ContentService {
     NetworkUtil.getJsonFromUrl(baseUrl + "/regions/\(regionId)", success: {
       json in
       
-      let region = self.parseRegion(json)
+      let region = JsonParserService.parseRegion(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(region)
@@ -146,7 +146,7 @@ class ContentService {
     NetworkUtil.getJsonFromUrl(baseUrl + "/guideTexts/\(guideTextId)", success: {
       json in
       
-      let guideText = self.parseGuideText(json, fetchChildren: true)
+      let guideText = JsonParserService.parseGuideText(json, fetchChildren: true)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(guideText)
@@ -162,7 +162,7 @@ class ContentService {
     NetworkUtil.getJsonFromUrl(baseUrl + "/attractions/\(attractionId)", success: {
       json in
       
-      let attraction = self.parseAttraction(json)
+      let attraction = JsonParserService.parseAttraction(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(attraction)
@@ -204,7 +204,7 @@ class ContentService {
     NetworkUtil.getJsonFromUrl(baseUrl + "/regions/\(regionId)/attractions\(categoryPart)", parameters: parameters, success: {
       json in
       
-      let attractions = self.parseAttractions(json)
+      let attractions = JsonParserService.parseAttractions(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(attractions)
@@ -281,188 +281,5 @@ class ContentService {
       print("Undefined error")
     }
     return nil
-  }
-  
-  class func parseGuideItem(json: JSON) -> GuideItem {
-    return parseGuideItem(GuideItem(), withJson: json)
-  }
-  
-  class func parseGuideItem(guideItem: GuideItem, withJson json: JSON) -> GuideItem {
-    guideItem.name = json["name"].string
-    guideItem.id = json["id"].string
-    guideItem.content = json["description"].string
-    guideItem.category = json["category"].int!
-    guideItem.parent = json["parent"].string
-    guideItem.offline = false
-    for imageJson in json["images"].array! {
-      let image = GuideItemImage()
-      image.url = imageJson["url"].string
-      image.imageDescription = imageJson["description"].string
-      guideItem.images.append(image)
-    }
-    return guideItem
-  }
-  
-  
-  class func parseGuideListing(json: JSON) -> GuideListing {
-    return parseGuideListing(GuideListing(), withJson: json)
-  }
-  
-  class func parseGuideListing(listing: GuideListing, withJson json: JSON) -> GuideListing {
-    listing.item = parseGuideItem(json)
-    listing.latitude = json["latitude"].double!
-    listing.longitude = json["longitude"].double!
-    listing.continent = json["continent"].string
-    listing.country = json["country"].string
-    listing.subRegion = json["subRegion"].string
-    listing.city = json["city"].string
-    return listing
-  }
-  
-  class func parseGuideTexts(jsonArray: JSON) -> [GuideText] {
-    var guideTexts = [GuideText]()
-    for json in jsonArray.array! {
-      guideTexts.append(parseGuideText(json))
-    }
-    return guideTexts
-  }
-  
-  class func parseGuideText(json: JSON, fetchChildren: Bool = false) -> GuideText {
-    let guideText = GuideText()
-    guideText.item = parseGuideItem(json)
-    
-    if guideText.item.category == 0 && fetchChildren { // GuideSection
-      parseChildren(guideText, withJson: json)
-    }
-    
-    return guideText
-  }
-  
-  class func parseRegions(jsonArray: JSON) -> [Region] {
-    var regions = [Region]()
-    for json in jsonArray.array! {
-      regions.append(parseRegion(json, fetchChildren: false))
-    }
-    return regions
-  }
-  
-  class func parseRegion(json: JSON, fetchChildren: Bool = true) -> Region {
-    let region = Region()
-    region.listing = parseGuideListing(json)
-    region.listing.item = parseGuideItem(json)
-    
-    if (fetchChildren) {
-      parseChildren(region, withJson: json)
-    }
-    return region
-  }
-  
-  class func parseRegionTreesFromJson(jsonArray: JSON) -> [Region] {
-    var regions = [Region]()
-    for json in jsonArray.array! {
-      regions.append(parseRegionTreeFromJson(json))
-    }
-    return regions
-  }
-  
-  class func parseRegionTreeFromJson(json: JSON) -> Region {
-    let region = Region()
-    region.listing = parseGuideListing(json)
-    region.listing.item.guideSections = parseSectionTreeFromJson(json["sectionTree"])
-    if  json["attractions"].array != nil {
-      region.attractions.appendContentsOf(parseAttractions(json["attractions"]))
-    }
-    if json["subRegionTree"].array != nil {
-      region.listing.item.subRegions.appendContentsOf(parseRegionTreesFromJson(json["subRegionTree"]))
-    }
-    return region
-  }
-  
-  class func parseAttractions(jsonArray: JSON) -> List<Attraction> {
-    let attractions = List<Attraction>()
-    for json in jsonArray.array! {
-      attractions.append(parseAttraction(json))
-    }
-    return attractions
-  }
-  
-  class func parseAttraction(json: JSON) -> Attraction {
-    let attraction = Attraction()
-    attraction.listing = parseGuideListing(json)
-    return attraction
-  }
-  
-  class func parseSectionTreeFromJson(json: JSON) -> List<GuideText> {
-    let guideSections = List<GuideText>()
-    for guideSectionObj in json.array! {
-      let guideSection = parseGuideText(guideSectionObj)
-      guideSection.item.guideSections = parseSectionTreeFromJson(guideSectionObj["sectionTree"])
-      guideSections.append(guideSection)
-    }
-    return guideSections
-  }
-  
-  class func parseChildren(guideText: GuideText, withJson json: JSON) {
-    guideText.item.guideSections = parseGuideSections(json)
-  }
-  
-  class func parseChildren(region: Region, withJson json: JSON) {
-    region.item().guideSections = parseGuideSections(json)
-    region.item().categoryDescriptions = parseCategoryDescriptions(region, guideItemJson: json)
-    region.item().subRegions = parseSubRegions(region, json: json)
-  }
-  
-  internal class func parseCategoryDescriptions(region: Region, guideItemJson: JSON) -> List<GuideText> {
-    let categoryDescriptions = List<GuideText>()
-    var categoryDescriptionsDict = Dictionary<Int, String>()
-    for categoryDescriptionJson in guideItemJson["categoryDescriptions"].array! {
-      categoryDescriptionsDict[categoryDescriptionJson[0].int!] = categoryDescriptionJson[1].string!
-    }
-    for category in Attraction.Category.allValues {
-      if category == Attraction.Category.ALL {
-        continue;
-      }
-      let categoryDescription = GuideText()
-      categoryDescription.item = GuideItem()
-      categoryDescription.item.category = category.rawValue
-      categoryDescription.item.name = category.entityName(region)
-      let categoryDescriptionId = categoryDescriptionsDict[category.rawValue]
-      if (categoryDescriptionId != nil) {
-        categoryDescription.item.contentLoaded = false
-        categoryDescription.item.id = categoryDescriptionId
-      }
-      else {
-        categoryDescription.item.content = nil
-        categoryDescription.item.contentLoaded = true
-      }
-      categoryDescriptions.append(categoryDescription)
-    }
-    
-    return categoryDescriptions
-  }
-  
-  internal class func parseGuideSections(guideItemJson: JSON) -> List<GuideText> {
-    let guideSections = List<GuideText>()
-    if let guideSectionsJson = guideItemJson["guideSections"].array {
-      for guideSectionArr in guideSectionsJson {
-        let guideSection = GuideText()
-        guideSection.item = GuideItem()
-        guideSection.item.contentLoaded = false
-        guideSection.item.id = guideSectionArr[0].string
-        guideSection.item.name = guideSectionArr[1].string
-        guideSections.append(guideSection)
-      }
-    }
-    return guideSections
-  }
-  
-  internal class func parseSubRegions(parent: Region, json: JSON) -> List<Region> {
-    let subRegions = List<Region>()
-    
-    for subRegion in json["subRegions"].array! {
-      let subRegion = Region.constructRegion(subRegion.string!, parent: parent)
-      subRegions.append(subRegion)
-    }
-    return subRegions
-  }
+  }  
 }

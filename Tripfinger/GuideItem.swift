@@ -22,6 +22,7 @@ class GuideItem: Object {
   
   var guideSections = List<GuideText>()
   var subRegions = List<Region>()
+  var simplePois = List<SimplePOI>()
   var categoryDescriptions = List<GuideText>()
 
   // temporary data to make things easier

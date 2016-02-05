@@ -74,24 +74,4 @@ class ContentServiceTest: XCTestCase {
       XCTAssertNil(error, "Error")
     })
   }
-  
-  func testParseRegion() {
-    
-    var jsonPath: String!
-    for bundle in NSBundle.allBundles() {
-      if bundle.bundleIdentifier == "no.prebenludviksen.TripfingerTests" {
-        jsonPath = bundle.bundlePath + "/thailand.json"
-      }
-    }
-    let jsonData = NSData(contentsOfFile: jsonPath)!
-    let json = JSON(data: jsonData)
-    let thailand = ContentService.parseRegion(json)
-    
-    XCTAssertEqual(2, thailand.item().subRegions.count)
-    XCTAssertEqual("Bangkok", thailand.item().subRegions[0].getName())
-    XCTAssertEqual(Region.Category.CITY.rawValue, thailand.item().subRegions[0].item().category)
-    XCTAssertEqual("Ko Samui", thailand.item().subRegions[1].getName())
-    // the category will be set to city until the real object is fetched, since we cannot know for sure 
-    XCTAssertEqual(Region.Category.CITY.rawValue, thailand.item().subRegions[1].item().category)
-  }
 }

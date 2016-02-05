@@ -31,7 +31,7 @@ class AnnotationCalloutView : UIView {
     detailButton.setTitle("Details", forState: .Normal)
     detailButton.addTarget(self, action: "detailButtonClicked", forControlEvents: .TouchUpInside)
     detailButton.sizeToFit()
-    detailButton.hidden = (poi.listingId == "simple")
+    detailButton.hidden = (poi.listingId == nil || poi.listingId == "simple")
     addSubview(detailButton)
     
     let views = ["title": titleLabel, "detail": detailButton]

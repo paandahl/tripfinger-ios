@@ -26,6 +26,10 @@
 		257922D21BA48697005EA785 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D11BA48697005EA785 /* SwiftyJSON.swift */; };
 		257922D41BA488EB005EA785 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D31BA488EB005EA785 /* DataManager.swift */; };
 		25A14DE61C6453B500074F87 /* GuideViewOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A14DE51C6453B500074F87 /* GuideViewOnlineTest.swift */; };
+		25A14DE81C64D19100074F87 /* brunei-download.json in Resources */ = {isa = PBXBuildFile; fileRef = 25A14DE71C64D19100074F87 /* brunei-download.json */; };
+		25A14DEA1C64D23000074F87 /* JsonParserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A14DE91C64D23000074F87 /* JsonParserService.swift */; };
+		25A14DEC1C64D2E500074F87 /* JsonParserServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A14DEB1C64D2E500074F87 /* JsonParserServiceTest.swift */; };
+		25A14DEE1C64D3F400074F87 /* NSBundle+BundlePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25A14DED1C64D3F400074F87 /* NSBundle+BundlePath.swift */; };
 		25B506871BB3F33900A36BA1 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 25B506861BB3F33900A36BA1 /* Podfile */; };
 		25B5068B1BB3FD5800A36BA1 /* RootController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B5068A1BB3FD5800A36BA1 /* RootController.swift */; };
 		25B5068F1BB4009600A36BA1 /* ChooseAttractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B5068E1BB4009600A36BA1 /* ChooseAttractionView.swift */; };
@@ -152,6 +156,10 @@
 		257922D11BA48697005EA785 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Tripfinger/SwiftyJSON.swift; sourceTree = "<group>"; };
 		257922D31BA488EB005EA785 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		25A14DE51C6453B500074F87 /* GuideViewOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideViewOnlineTest.swift; sourceTree = "<group>"; };
+		25A14DE71C64D19100074F87 /* brunei-download.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "brunei-download.json"; sourceTree = "<group>"; };
+		25A14DE91C64D23000074F87 /* JsonParserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonParserService.swift; sourceTree = "<group>"; };
+		25A14DEB1C64D2E500074F87 /* JsonParserServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonParserServiceTest.swift; sourceTree = "<group>"; };
+		25A14DED1C64D3F400074F87 /* NSBundle+BundlePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBundle+BundlePath.swift"; sourceTree = "<group>"; };
 		25B506861BB3F33900A36BA1 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		25B5068A1BB3FD5800A36BA1 /* RootController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootController.swift; sourceTree = "<group>"; };
 		25B5068C1BB3FDC300A36BA1 /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
@@ -284,17 +292,18 @@
 			children = (
 				25B5068C1BB3FDC300A36BA1 /* BridgingHeader.h */,
 				257922D31BA488EB005EA785 /* DataManager.swift */,
+				254091011C0C684100A2002F /* ErrorHandler.swift */,
+				25D0A4021C153D4900E54C5E /* NetworkUtil.swift */,
+				25A14DED1C64D3F400074F87 /* NSBundle+BundlePath.swift */,
 				25D281D01BFDC9190069BE86 /* NSURL+GetDirectory.swift */,
 				2503D3A61BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift */,
+				25C8F3DD1C451FB6007BD932 /* SKTMapsObject+Utils.swift */,
 				25D4363C1BD6F05E0016E362 /* SyncManager.swift */,
 				25D281D21BFDD7560069BE86 /* UIImage+CropAndResize.swift */,
 				250651EA1BD264B7002C3883 /* UIImageView+DownloadImage.swift */,
 				25D707D21BCA7620005A4BBA /* UINib+RegisterNib.swift */,
-				25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */,
-				254091011C0C684100A2002F /* ErrorHandler.swift */,
-				25D0A4021C153D4900E54C5E /* NetworkUtil.swift */,
 				25C8F3DB1C44FD3C007BD932 /* UITableView+ReloadData.swift */,
-				25C8F3DD1C451FB6007BD932 /* SKTMapsObject+Utils.swift */,
+				25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -421,9 +430,10 @@
 			isa = PBXGroup;
 			children = (
 				25F048E11BCC365C002DE14E /* ContentServiceTest.swift */,
+				25D0A4051C15B8AD00E54C5E /* DownloadServiceTest.swift */,
+				25A14DEB1C64D2E500074F87 /* JsonParserServiceTest.swift */,
 				25D436351BD5546A0016E362 /* SearchServiceTest.swift */,
 				25C9DFE41B9CD84200C516C1 /* Supporting Files */,
-				25D0A4051C15B8AD00E54C5E /* DownloadServiceTest.swift */,
 			);
 			path = TripfingerTests;
 			sourceTree = "<group>";
@@ -437,6 +447,7 @@
 				25D0A3FB1C0EF27500E54C5E /* test-belgium.txg */,
 				25C9DFE51B9CD84200C516C1 /* Info.plist */,
 				25F644D81C63180200C696A0 /* thailand.json */,
+				25A14DE71C64D19100074F87 /* brunei-download.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -473,6 +484,7 @@
 			children = (
 				25D707C51BC6BC34005A4BBA /* ContentService.swift */,
 				25D281C61BFB67760069BE86 /* DownloadService.swift */,
+				25A14DE91C64D23000074F87 /* JsonParserService.swift */,
 				25D436381BD57BAF0016E362 /* MultiStepSearch.h */,
 				25D436391BD57BAF0016E362 /* MultiStepSearch.m */,
 				25D281CE1BFCB0E10069BE86 /* OfflineService.swift */,
@@ -654,6 +666,7 @@
 				25D0A3FD1C0EF27500E54C5E /* test-belgium.ngi.dat in Resources */,
 				25D0A3FE1C0EF27500E54C5E /* test-belgium.skm in Resources */,
 				25D0A3FF1C0EF27500E54C5E /* test-belgium.txg in Resources */,
+				25A14DE81C64D19100074F87 /* brunei-download.json in Resources */,
 				25F644D91C63180200C696A0 /* thailand.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -764,6 +777,7 @@
 				25D436411BD7B5F90016E362 /* SimplePOI.swift in Sources */,
 				25D707CA1BC6CD31005A4BBA /* GuideListing.swift in Sources */,
 				25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */,
+				25A14DEE1C64D3F400074F87 /* NSBundle+BundlePath.swift in Sources */,
 				25B5068F1BB4009600A36BA1 /* ChooseAttractionView.swift in Sources */,
 				25D4363D1BD6F05E0016E362 /* SyncManager.swift in Sources */,
 				25D436301BD538810016E362 /* SearchController.swift in Sources */,
@@ -771,6 +785,7 @@
 				25D707CC1BC6D05B005A4BBA /* GuideItemCell.swift in Sources */,
 				2503D3B01BE133290078C0F0 /* FilterBox.swift in Sources */,
 				257922C71BA308A9005EA785 /* Attraction.swift in Sources */,
+				25A14DEA1C64D23000074F87 /* JsonParserService.swift in Sources */,
 				25D707C61BC6BC34005A4BBA /* ContentService.swift in Sources */,
 				25C8F3D51C3B85C4007BD932 /* AnnotationCalloutView.swift in Sources */,
 				254091021C0C684100A2002F /* ErrorHandler.swift in Sources */,
@@ -789,6 +804,7 @@
 			files = (
 				25D0A4061C15B8AE00E54C5E /* DownloadServiceTest.swift in Sources */,
 				25D436361BD5546A0016E362 /* SearchServiceTest.swift in Sources */,
+				25A14DEC1C64D2E500074F87 /* JsonParserServiceTest.swift in Sources */,
 				25F048E21BCC365C002DE14E /* ContentServiceTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
