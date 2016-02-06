@@ -12,6 +12,6 @@
 
 @property(nonatomic,strong) SKMultiStepSearchSettings *multiStepObject;
 
--(void)fireSearch;
+-(SKMapSearchStatus)fireSearch;
 
 @end

@@ -16,7 +16,7 @@ class ContentService {
     return NetworkUtil.getJsonFromUrl(ContentService.baseUrl + "/search_by_bounds/\(bounds)/\(zoomLevel)", success: {
       json in
       
-      let searchResults = SearchService().parseSearchResults(json)
+      let searchResults = JsonParserService.parseSearchResults(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(searchResults)
@@ -84,7 +84,7 @@ class ContentService {
     var url: String!
     switch listing.item.category {
     case Region.Category.NEIGHBOURHOOD.rawValue:
-      if let region = OfflineService.getNeighbourhood(listing.country, cityName: listing.city, hoodName: listing.item.name) {
+      if let region = DatabaseService.getNeighbourhood(listing.country, cityName: listing.city, hoodName: listing.item.name) {
         handler(region)
         return
       }
@@ -92,13 +92,13 @@ class ContentService {
     case Region.Category.CITY.rawValue:
       fallthrough
     case Region.Category.SUB_REGION.rawValue:
-      if let region = OfflineService.getSubRegionOrCity(listing.country, itemName: listing.item.name) {
+      if let region = DatabaseService.getSubRegionOrCity(listing.country, itemName: listing.item.name) {
         handler(region)
         return
       }
       url = baseUrl + "/subRegionOrCity/\(listing.country)/\(listing.item.name)"
     case Region.Category.COUNTRY.rawValue:
-      if let region = OfflineService.getCountry(listing.item.name) {
+      if let region = DatabaseService.getCountry(listing.item.name) {
         handler(region)
         return
       }
@@ -119,7 +119,7 @@ class ContentService {
   }
   
   class func getRegionWithId(regionId: String, failure: (() -> ())? = nil, handler: Region -> ()) {
-    if let region = OfflineService.getRegionWithId(regionId) {
+    if let region = DatabaseService.getRegionWithId(regionId) {
       handler(region)
       return
     }
@@ -140,7 +140,7 @@ class ContentService {
   
   class func getGuideTextWithId(region: Region, guideTextId: String, handler: GuideText -> ()) {
     if region.offline {
-      handler(OfflineService.getGuideTextWithId(region, guideTextId: guideTextId))
+      handler(DatabaseService.getGuideTextWithId(region, guideTextId: guideTextId))
       return
     }
     NetworkUtil.getJsonFromUrl(baseUrl + "/guideTexts/\(guideTextId)", success: {
@@ -155,7 +155,7 @@ class ContentService {
   }
   
   class func getAttractionWithId(attractionId: String, handler: Attraction -> ()) {
-    if let attraction = OfflineService.getAttractionWithId(attractionId) {
+    if let attraction = DatabaseService.getAttractionWithId(attractionId) {
       handler(attraction)
       return
     }

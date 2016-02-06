@@ -1,7 +1,7 @@
 import Foundation
 import RealmSwift
 
-class OfflineService {
+class DatabaseService {
   
   static let realm = try! Realm()
   static var writeRealm: Realm!

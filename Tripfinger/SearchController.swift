@@ -14,8 +14,6 @@ class SearchController: UITableViewController {
   var searchService: SearchService!
   var searchBar: UISearchBar!
   
-  var offlineResults = [SimplePOI]()
-  var onlineResults = List<SimplePOI>()
   var searchResults = [SimplePOI]()
   var lastSearchText = ""
   
@@ -48,32 +46,12 @@ extension SearchController: UISearchBarDelegate {
   func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
     if (searchText.characters.count > 1 && searchText != lastSearchText) {
       
-      self.offlineResults = [SimplePOI]()
       lastSearchText = searchText
-      
-      if NetworkUtil.connectedToNetwork() {
-        searchService.onlineSearch(searchText, regionId: regionId, countryId: countryId, gradual: true) {
-          searchResults in
-          
-          self.onlineResults = searchResults
-          self.searchResults = [SimplePOI]()
-          self.searchResults.appendContentsOf(self.onlineResults)
-          self.searchResults.appendContentsOf(self.offlineResults)
-          self.tableView.reloadData()
-        }
-      }
-      searchService.offlineSearch(searchText, regionId: regionId, countryId: countryId) {
-        city, searchResults, nextCityHandler in
-        
-        self.offlineResults.appendContentsOf(searchResults)
-        self.searchResults = [SimplePOI]()
-        self.searchResults.appendContentsOf(self.onlineResults)
-        self.searchResults.appendContentsOf(self.offlineResults)
+      searchService.search(searchText) { results in
+        self.searchResults = results
         self.tableView.reloadData()
-        if let nextCityHandler = nextCityHandler {
-          nextCityHandler()
-        }
       }
+      
     }
   }
 }

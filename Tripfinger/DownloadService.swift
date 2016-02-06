@@ -105,7 +105,7 @@ class DownloadService {
   class func deleteRegion(mapPackageCode: String, countryName: String, cityName: String! = nil) {
     deleteTripfingerDataForRegion(countryName, cityName: cityName)
     //    deleteMapForRegion(mapPackageCode)
-    OfflineService.deleteRegion(countryName, cityName: cityName)
+    DatabaseService.deleteRegion(countryName, cityName: cityName)
   }
   
   class func deleteTripfingerDataForRegion(countryName: String, cityName: String! = nil) {
@@ -220,7 +220,7 @@ class DownloadService {
       
       fetchImages(region, path: path)
       
-      try! OfflineService.saveRegion(region)
+      try! DatabaseService.saveRegion(region)
       
       finishedHandler()
     })

@@ -14,13 +14,15 @@ class SyncManager {
     }
   }
   
-  class func block_until_condition(lock: AnyObject, condition: () -> Bool, after: () -> ()) {
+  class func block_until_condition(lock: AnyObject, condition: () -> Bool, after: (() -> ())? = nil) {
     var conditionMet = false
     while true {
       synchronized(lock) {
         conditionMet = condition()
         if conditionMet {
-          after()
+          if let after = after {
+            after()            
+          }
         }
       }      
       if conditionMet {
@@ -52,7 +54,7 @@ class SyncManager {
   }
   
   class func run_async(closure: () -> ()) {
-    let qualityOfServiceClass = DISPATCH_QUEUE_PRIORITY_DEFAULT
+    let qualityOfServiceClass = DISPATCH_QUEUE_PRIORITY_BACKGROUND
     let backgroundQueue = dispatch_get_global_queue(qualityOfServiceClass, 0)
     dispatch_async(backgroundQueue, {
       closure()

@@ -9,12 +9,12 @@
 
 @implementation MultiStepSearchViewController
 
--(void)fireSearch
+-(SKMapSearchStatus)fireSearch
 {
   if (self.multiStepObject.parentIndex == 0) {
     self.multiStepObject.parentIndex = -1;
   }
-  [[SKSearchService sharedInstance]startMultiStepSearchWithSettings:self.multiStepObject];
+  return [[SKSearchService sharedInstance]startMultiStepSearchWithSettings:self.multiStepObject];
   
 }
 

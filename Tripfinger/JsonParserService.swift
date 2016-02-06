@@ -93,7 +93,7 @@ class JsonParserService {
     return simplePois
   }
   
-  class func parseSimplePoi(json: JSON) -> SimplePOI {
+  class func parseSimplePoi(json: JSON) -> SimplePOI { // TODO: Merge these two functions
     let simplePoi = SimplePOI()
     simplePoi.name = json["name"].string
     simplePoi.category = json["category"].int!
@@ -104,6 +104,22 @@ class JsonParserService {
     simplePoi.longitude = longitude
     return simplePoi
   }
+  
+  class func parseSearchResults(json: JSON) -> List<SimplePOI> {
+    let searchResults = List<SimplePOI>()
+    for resultJson in json.array! {
+      let searchResult = SimplePOI()
+      searchResult.name = resultJson["name"].string!
+      searchResult.location = resultJson["location"].string!
+      searchResult.latitude = resultJson["latitude"].double!
+      searchResult.longitude = resultJson["longitude"].double!
+      searchResult.category = resultJson["category"].int!
+      searchResult.listingId = resultJson["id"].string!
+      searchResults.append(searchResult)
+    }
+    return searchResults
+  }
+
 
   class func parseRegionTreeFromJson(json: JSON) -> Region {
     let region = Region()

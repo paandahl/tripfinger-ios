@@ -280,7 +280,7 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
       }
     }
     else {
-      pois = OfflineService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel)
+      pois = DatabaseService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel)
       addAnnotations()
     }
   }

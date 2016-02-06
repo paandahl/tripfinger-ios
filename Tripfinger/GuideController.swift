@@ -156,7 +156,7 @@ class GuideController: UITableViewController, SubController {
       }
     } else {
       session.mapsObjectFuture.onSuccess { _ in
-        self.countryList = Array<Region>(OfflineService.getCountries())
+        self.countryList = Array<Region>(DatabaseService.getCountries())
         self.updateUI()
       }
       session.mapsObjectFuture.onFailure { _ in
