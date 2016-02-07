@@ -13,6 +13,16 @@ class DownloadServiceTest: XCTestCase {
     super.tearDown()
   }
   
+  class func downloadBrunei(callback: (Region -> ())? = nil) {
+    SkobblerSearchTest.installMap("test-brunei")
+    DatabaseServiceTest.insertBrunei(callback)
+  }
+  
+  class func removeBrunei() {
+    DatabaseService.deleteRegion("Brunei")
+    SkobblerSearchTest.removeMap("test-brunei")
+  }
+  
   func testGetAvailableMaps() {
     let readyExpectation = expectationWithDescription("ready")
 
@@ -25,10 +35,7 @@ class DownloadServiceTest: XCTestCase {
     }
     mapVersionPromise.success("")
     
-    waitForExpectationsWithTimeout(15, handler: { error in
-      XCTAssertNil(error, "Error")
-    })
-
+    waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
   }
 }
  

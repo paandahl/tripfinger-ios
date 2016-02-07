@@ -1,71 +1,97 @@
 {
-  "radius":null,
-  "polygonCoordinates":null,
-  "guideSections":[
-  
-  ],
-  "sectionTree":[
-  
-  ],
-  "categoryDescriptions":[
-  
-  ],
-  "categoryDescriptionTree":[
-  
-  ],
-  "attractions":[
-  
-  ],
-  "subRegions":[
-  
-  ],
-  "subRegionTree":[
-  
-  ],
-  "simplePOIs":[
-                {
-                "id":"simple",
-                "name":"Nyonya Restaurant",
-                "latitude":4.909687,
-                "longitude":114.913737,
-                "category":2510,
-                "country":"Brunei",
-                "location":"Brunei"
-                },
-                {
-                "id":"simple",
-                "name":"KFC",
-                "latitude":4.893803,
-                "longitude":114.848742,
-                "category":2510,
-                "country":"Brunei",
-                "location":"Brunei"
-                }
-                ],
-  "longitude":114.620571,
-  "latitude":4.502128,
-  "continent":"Asia",
-  "worldArea":null,
-  "country":null,
-  "region":null,
-  "subRegion":null,
-  "city":null,
-  "id":"region-brunei",
-  "uuid":"2e9d4170-d963-4e1e-90c5-9601376f1565",
-  "name":"Brunei",
-  "alternativeName":null,
-  "category":130,
-  "subCategory":0,
-  "status":1,
-  "description":"\u003cp\u003eThis is a simple placeholder article for testing purposes. Don\u0027t edit.\u003c/p\u003e",
-  "images":[
-  
-  ],
-  "imagesNotFoundOnImport":[
-  
-  ],
-  "parentAsString":null,
-  "entityType":"region",
-  "parent":"region-asia"
-  
+  "radius": null,
+  "polygonCoordinates": null,
+  "guideSections": [],
+  "sectionTree": [],
+  "categoryDescriptions": [],
+  "categoryDescriptionTree": [],
+  "attractions": [
+                  {
+                  "url": null,
+                  "email": null,
+                  "address": null,
+                  "directions": null,
+                  "phone": null,
+                  "phoneextra": null,
+                  "tollfree": null,
+                  "price": null,
+                  "checkin": null,
+                  "checkout": null,
+                  "openingHours": null,
+                  "tags": [],
+                  "longitude": 115.212501,
+                  "latitude": 4.448076,
+                  "continent": "Asia",
+                  "worldArea": null,
+                  "country": "Brunei",
+                  "region": null,
+                  "subRegion": null,
+                  "city": null,
+                  "id": "attraction-ulu-temburong-national-park",
+                  "uuid": "4e74c551-30d9-4f0b-be08-ee88ee50d692",
+                  "name": "Ulu Temburong National Park",
+                  "alternativeName": null,
+                  "category": 220,
+                  "subCategory": 2200,
+                  "status": 1,
+                  "description": "<p>Have alook at the Bruneian rainforest.</p>",
+                  "images": [
+                             {
+                             "url": "http://storage.googleapis.com/tripfinger-images/attraction-ulu-temburong-national-park-1",
+                             "description": null,
+                             "creationDate": "Feb 7, 2016 2:59:01 AM",
+                             "license": null,
+                             "artist": null,
+                             "originalUrl": null
+                             }
+                             ],
+                  "imagesNotFoundOnImport": [],
+                  "parentAsString": null,
+                  "entityType": "attraction",
+                  "parent": "region-brunei"
+                  }
+                  ],
+  "subRegions": [],
+  "subRegionTree": [],
+  "simplePOIs": [
+                 {
+                 "id": "simple",
+                 "name": "Nyonya Restaurant",
+                 "latitude": 4.909687,
+                 "longitude": 114.913737,
+                 "category": 2510,
+                 "country": "Brunei",
+                 "location": "Brunei"
+                 },
+                 {
+                 "id": "simple",
+                 "name": "KFC",
+                 "latitude": 4.893803,
+                 "longitude": 114.848742,
+                 "category": 2510,
+                 "country": "Brunei",
+                 "location": "Brunei"
+                 }
+                 ],
+  "longitude": 114.620571,
+  "latitude": 4.502128,
+  "continent": "Asia",
+  "worldArea": null,
+  "country": null,
+  "region": null,
+  "subRegion": null,
+  "city": null,
+  "id": "region-brunei",
+  "uuid": "2e9d4170-d963-4e1e-90c5-9601376f1565",
+  "name": "Brunei",
+  "alternativeName": null,
+  "category": 130,
+  "subCategory": 0,
+  "status": 1,
+  "description": "<p>This is a simple placeholder article for testing purposes. Don't edit.</p>",
+  "images": [],
+  "imagesNotFoundOnImport": [],
+  "parentAsString": null,
+  "entityType": "region",
+  "parent": "region-asia"
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-class OfflineSearch: NSObject {
+class SkobblerSearch: NSObject {
   
   static let searchQueue = dispatch_queue_create("searchQueue", DISPATCH_QUEUE_SERIAL)
   let maxResults = 20
@@ -136,14 +136,15 @@ class OfflineSearch: NSObject {
           
           index += 1
           if index < cities.count && numberOfResults < maxResultsTotal {
-            handler(streets, false)
+            if streets.count > 0 {
+              handler(streets, false)              
+            }
             
             inner_loop()
             
             print("iterating to next city: \(cities[index].name)")
           }
           else {
-            SearchTask.setRunningTask(nil)
             SearchTask.setRunningTask(nil)
             handler(streets, true)
           }
@@ -295,7 +296,7 @@ class OfflineSearch: NSObject {
     
     if task == nil {
       task = SearchTask()
-      dispatch_async(OfflineSearch.searchQueue) {
+      dispatch_async(SkobblerSearch.searchQueue) {
         runTask()
         self.waitUntilSearchFinished(task)
         SearchTask.setRunningTask(nil)
@@ -318,7 +319,7 @@ class OfflineSearch: NSObject {
   
 }
 
-extension OfflineSearch: SKSearchServiceDelegate {
+extension SkobblerSearch: SKSearchServiceDelegate {
   
   func searchService(searchService: SKSearchService!, didRetrieveMultiStepSearchResults searchResults: [AnyObject]!) {
     

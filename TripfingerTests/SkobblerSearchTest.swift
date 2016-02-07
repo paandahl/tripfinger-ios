@@ -2,22 +2,29 @@ import Foundation
 import XCTest
 @testable import Tripfinger
 
-class OfflineSearchTest: XCTestCase {
+class SkobblerSearchTest: XCTestCase {
   
   static let mapPackage = "test-belgium"
   
   override class func setUp() {
-    
+    installMap(mapPackage)
+  }
+  
+  override class func tearDown() {
+    removeMap(mapPackage)
+  }
+  
+  class func installMap(mapPackage: String) {
     if DownloadService.hasMapPackage(mapPackage) {
       SKMapsService.sharedInstance().packagesManager.deleteOfflineMapPackageNamed(mapPackage)
     }
     let mapPath = NSBundle.bundlePathForIdentifier("no.prebenludviksen.TripfingerTests")
     
-    SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed(OfflineSearchTest.mapPackage, inContainingFolderPath: mapPath)
+    SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed(mapPackage, inContainingFolderPath: mapPath)
   }
   
-  override class func tearDown() {
-    SKMapsService.sharedInstance().packagesManager.deleteOfflineMapPackageNamed(OfflineSearchTest.mapPackage)
+  class func removeMap(mapPackage: String) {
+    SKMapsService.sharedInstance().packagesManager.deleteOfflineMapPackageNamed(mapPackage)
   }
   
   override func setUp() {
@@ -31,12 +38,12 @@ class OfflineSearchTest: XCTestCase {
   
   func testGetCitiesInProximity() {    
     let expectation = expectationWithDescription("ready")
-    let offlineSearch = OfflineSearch()
+    let skobblerSearch = SkobblerSearch()
     let location = CLLocation(latitude: 50.847031, longitude: 4.353559)
-    offlineSearch.getCitiesInProximityOf(location, proximityInKm: 50.0) {
+    skobblerSearch.getCitiesInProximityOf(location, proximityInKm: 30) {
       cities in
       
-      XCTAssertEqual(952, cities.count)
+      XCTAssertEqual(365, cities.count)
       expectation.fulfill()
     }
     waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
@@ -45,8 +52,8 @@ class OfflineSearchTest: XCTestCase {
   func testGetCities() {
     var readyExpectation = expectationWithDescription("ready")
     
-    let offlineSearch = OfflineSearch()
-    offlineSearch.getCities(OfflineSearchTest.mapPackage) {
+    let skobblerSearch = SkobblerSearch()
+    skobblerSearch.getCities(SkobblerSearchTest.mapPackage) {
       cityResults in
       
       print("Found \(cityResults.count) cities.")
@@ -61,7 +68,7 @@ class OfflineSearchTest: XCTestCase {
     readyExpectation = expectationWithDescription("ready")
     
     
-    offlineSearch.getCities() {
+    skobblerSearch.getCities() {
       searchResults in
       
       readyExpectation.fulfill()
@@ -76,9 +83,9 @@ class OfflineSearchTest: XCTestCase {
   func testSearchForAltitudeCent() {
     let readyExpectation = expectationWithDescription("ready")
     
-    let offlineSearch = OfflineSearch()
+    let skobblerSearch = SkobblerSearch()
     var fulfilled = false
-    offlineSearch.getStreets("altitude") {
+    skobblerSearch.getStreets("altitude") {
       streets, finished in
     
       for street in streets {
@@ -88,7 +95,7 @@ class OfflineSearchTest: XCTestCase {
             fulfilled = true
             readyExpectation.fulfill()
           }
-          offlineSearch.cancelSearch()
+          skobblerSearch.cancelSearch()
           break
         }
       }
@@ -100,11 +107,11 @@ class OfflineSearchTest: XCTestCase {
     
   }
   
-  func testOfflineSearchWithNoResults() {
+  func testSkobblerSearchWithNoResults() {
     let readyExpectation = expectationWithDescription("ready")
-    let offlineSearch = OfflineSearch()
+    let skobblerSearch = SkobblerSearch()
     
-    offlineSearch.getStreets("jfdsfs") {
+    skobblerSearch.getStreets("jfdsfs") {
       streets, finished in
       
       print("got \(streets.count) search results.")
@@ -118,36 +125,36 @@ class OfflineSearchTest: XCTestCase {
   
   func testFireMultipleSearches() {
     let readyExpectation = expectationWithDescription("ready")
-    let offlineSearch = OfflineSearch()
+    let skobblerSearch = SkobblerSearch()
     
     
-    offlineSearch.getStreets("jfdsfs") { streets, finished in
+    skobblerSearch.getStreets("jfdsfs") { streets, finished in
       print("got \(streets.count) search results.")
-      offlineSearch.cancelSearch()
+      skobblerSearch.cancelSearch()
       readyExpectation.fulfill()
     }
     
-    offlineSearch.getStreets("br") { streets, finished in
+    skobblerSearch.getStreets("br") { streets, finished in
       print("got \(streets.count) search results.")
-      offlineSearch.cancelSearch()
+      skobblerSearch.cancelSearch()
       readyExpectation.fulfill()
     }
     
-    offlineSearch.getStreets("bru") { streets, finished in
+    skobblerSearch.getStreets("bru") { streets, finished in
       print("got \(streets.count) search results.")
-      offlineSearch.cancelSearch()
+      skobblerSearch.cancelSearch()
       readyExpectation.fulfill()
     }
     
-    offlineSearch.getStreets("brussel") { streets, finished in
+    skobblerSearch.getStreets("brussel") { streets, finished in
       print("got \(streets.count) search results.")
-      offlineSearch.cancelSearch()
+      skobblerSearch.cancelSearch()
       readyExpectation.fulfill()
     }
     
-    offlineSearch.getStreets("br") { streets, finished in
+    skobblerSearch.getStreets("br") { streets, finished in
       print("got \(streets.count) search results.")
-      offlineSearch.cancelSearch()
+      skobblerSearch.cancelSearch()
       readyExpectation.fulfill()
     }
     
@@ -156,13 +163,13 @@ class OfflineSearchTest: XCTestCase {
     })    
   }
   
-  func testOfflineSearchForUniqueStreet() {
+  func testSkobblerSearchForUniqueStreet() {
     let startTime = NSDate()
     
     var readyExpectation = expectationWithDescription("ready")
     
-    let offlineSearch = OfflineSearch()
-    offlineSearch.getStreetsBulk("boulevard dixmude") {
+    let skobblerSearch = SkobblerSearch()
+    skobblerSearch.getStreetsBulk("boulevard dixmude") {
       streets in
       
       XCTAssertEqual(1, streets.count, "Search result was not 1")
@@ -180,7 +187,7 @@ class OfflineSearchTest: XCTestCase {
     
     readyExpectation = expectationWithDescription("ready")
     
-    offlineSearch.getStreetsBulk("boulevard de dixmude") {
+    skobblerSearch.getStreetsBulk("boulevard de dixmude") {
       streets in
       
       XCTAssertEqual(1, streets.count)
@@ -193,4 +200,20 @@ class OfflineSearchTest: XCTestCase {
     })
   }
 
+  func testUnspecificSearch() {
+    let readyExpectation = expectationWithDescription("ready")
+    
+    let skobblerSearch = SkobblerSearch()
+    skobblerSearch.getStreets("di") {
+      streets, finished in
+      
+      XCTAssert(streets.count <= skobblerSearch.maxResults, "Too many search results")
+      skobblerSearch.cancelSearch()
+      readyExpectation.fulfill()
+    }
+    
+    waitForExpectationsWithTimeout(15, handler: { error in
+      XCTAssertNil(error, "Error")
+    })
+  }
 }

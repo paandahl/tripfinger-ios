@@ -3,7 +3,13 @@ import Alamofire
 
 class NetworkUtil {
   
+  static var simulateOffline = false
+  
   class func connectedToNetwork() -> Bool {
+    
+    if simulateOffline {
+      return false
+    }
     
     var zeroAddress = sockaddr_in()
     zeroAddress.sin_len = UInt8(sizeofValue(zeroAddress))
