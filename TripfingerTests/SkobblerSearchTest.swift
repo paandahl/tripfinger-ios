@@ -4,21 +4,29 @@ import XCTest
 
 class SkobblerSearchTest: XCTestCase {
   
-  static let mapPackage = "test-belgium"
+  static let belgiumMapPackage = "BE"
   
   override class func setUp() {
-    installMap(mapPackage)
+    installMap(belgiumMapPackage)
   }
   
   override class func tearDown() {
-    removeMap(mapPackage)
+    removeMap(belgiumMapPackage)
   }
   
   class func installMap(mapPackage: String) {
+    
     if DownloadService.hasMapPackage(mapPackage) {
       SKMapsService.sharedInstance().packagesManager.deleteOfflineMapPackageNamed(mapPackage)
     }
     let mapPath = NSBundle.bundlePathForIdentifier("no.prebenludviksen.TripfingerTests")
+    print(mapPath)
+
+    // first make copies, since we might need to install from several tests, and Skobbler automatically deletes the added files
+    NSData(contentsOfFile: "\(mapPath)/\(mapPackage)-test.ngi")?.writeToFile("\(mapPath)/\(mapPackage).ngi", atomically: true)
+    NSData(contentsOfFile: "\(mapPath)/\(mapPackage)-test.ngi.dat")?.writeToFile("\(mapPath)/\(mapPackage).ngi.dat", atomically: true)
+    NSData(contentsOfFile: "\(mapPath)/\(mapPackage)-test.skm")?.writeToFile("\(mapPath)/\(mapPackage).skm", atomically: true)
+    NSData(contentsOfFile: "\(mapPath)/\(mapPackage)-test.txg")?.writeToFile("\(mapPath)/\(mapPackage).txg", atomically: true)
     
     SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed(mapPackage, inContainingFolderPath: mapPath)
   }
@@ -36,9 +44,9 @@ class SkobblerSearchTest: XCTestCase {
     super.tearDown()
   }
   
-  func testGetCitiesInProximity() {    
+  func testGetCitiesInProximity() {
     let expectation = expectationWithDescription("ready")
-    let skobblerSearch = SkobblerSearch()
+    let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
     let location = CLLocation(latitude: 50.847031, longitude: 4.353559)
     skobblerSearch.getCitiesInProximityOf(location, proximityInKm: 30) {
       cities in
@@ -52,8 +60,8 @@ class SkobblerSearchTest: XCTestCase {
   func testGetCities() {
     var readyExpectation = expectationWithDescription("ready")
     
-    let skobblerSearch = SkobblerSearch()
-    skobblerSearch.getCities(SkobblerSearchTest.mapPackage) {
+    let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
+    skobblerSearch.getCities(packageCode: SkobblerSearchTest.belgiumMapPackage) {
       cityResults in
       
       print("Found \(cityResults.count) cities.")
@@ -61,9 +69,8 @@ class SkobblerSearchTest: XCTestCase {
       readyExpectation.fulfill()
     }
     
-    waitForExpectationsWithTimeout(15, handler: { error in
-      XCTAssertNil(error, "Error")
-    })
+    waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
+    XCTAssertFalse(skobblerSearch.isRunning())
     
     readyExpectation = expectationWithDescription("ready")
     
@@ -74,16 +81,13 @@ class SkobblerSearchTest: XCTestCase {
       readyExpectation.fulfill()
     }
     
-    waitForExpectationsWithTimeout(15, handler: { error in
-      XCTAssertNil(error, "Error")
-    })
-    
+    waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
   }
   
   func testSearchForAltitudeCent() {
     let readyExpectation = expectationWithDescription("ready")
     
-    let skobblerSearch = SkobblerSearch()
+    let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
     var fulfilled = false
     skobblerSearch.getStreets("altitude") {
       streets, finished in
@@ -101,31 +105,31 @@ class SkobblerSearchTest: XCTestCase {
       }
     }
     
-    waitForExpectationsWithTimeout(15, handler: { error in
-      XCTAssertNil(error, "Error")
-    })
-    
+    waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
   }
   
   func testSkobblerSearchWithNoResults() {
     let readyExpectation = expectationWithDescription("ready")
-    let skobblerSearch = SkobblerSearch()
-    
+    let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
+
+    var resultsCounter = 0
     skobblerSearch.getStreets("jfdsfs") {
       streets, finished in
       
-      print("got \(streets.count) search results.")
-      readyExpectation.fulfill()
+      resultsCounter += streets.count
+      if finished {
+        print("got \(resultsCounter) search results.")
+        readyExpectation.fulfill()
+      }
     }
     
-    waitForExpectationsWithTimeout(15, handler: { error in
-      XCTAssertNil(error, "Error")
-    })
+    waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
+    XCTAssertFalse(skobblerSearch.isRunning())
   }
   
   func testFireMultipleSearches() {
     let readyExpectation = expectationWithDescription("ready")
-    let skobblerSearch = SkobblerSearch()
+    let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
     
     
     skobblerSearch.getStreets("jfdsfs") { streets, finished in
@@ -168,7 +172,7 @@ class SkobblerSearchTest: XCTestCase {
     
     var readyExpectation = expectationWithDescription("ready")
     
-    let skobblerSearch = SkobblerSearch()
+    let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
     skobblerSearch.getStreetsBulk("boulevard dixmude") {
       streets in
       
@@ -203,11 +207,11 @@ class SkobblerSearchTest: XCTestCase {
   func testUnspecificSearch() {
     let readyExpectation = expectationWithDescription("ready")
     
-    let skobblerSearch = SkobblerSearch()
+    let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
     skobblerSearch.getStreets("di") {
       streets, finished in
       
-      XCTAssert(streets.count <= skobblerSearch.maxResults, "Too many search results")
+      XCTAssert(streets.count <= skobblerSearch.maxResults, "Too many search results: \(streets.count)")
       skobblerSearch.cancelSearch()
       readyExpectation.fulfill()
     }

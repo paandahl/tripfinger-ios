@@ -4,30 +4,16 @@ import BrightFutures
 
 class Session {
   
-  var mapVersionPromise: Future<String, NoError>
-  var mapsObjectFuture = Future<Void, Error>()
-  var mapsObject: SKTMapsObject!
+  var mapsObject: SKTMapsObject
+  var searchService: SearchService
   var availableCountries: List<Region>!
   
-  init(mapVersionPromise: Future<String, NoError>) {
-    self.mapVersionPromise = mapVersionPromise
-    loadMapsObject()
-  }
-  
-  func loadMapsObject() {
+  init() {
     
-    let promise = Promise<Void, Error>()
-    
-    DownloadService.getSKTMapsObject(mapVersionPromise).onSuccess {
-      mapsObject in
-      
-      self.mapsObject = mapsObject
-      promise.success()
-      
-      }.onFailure { _ in
-        promise.failure(Error.DownloadError("Could not be downloaded."))
-    }
-    self.mapsObjectFuture = promise.future
+    let mapsFileUrl = NSBundle.mainBundle().URLForResource("mapsObject", withExtension: "json")!
+    let json = JSON(data: NSData(contentsOfURL: mapsFileUrl)!).rawString()!
+    mapsObject = SKTMapsObject.convertFromJSON(json)
+    searchService = SearchService(mapsObject: mapsObject)
   }
   
   // guide hierarchy
@@ -198,7 +184,6 @@ class Session {
   var currentAttractions = List<Attraction>()
   var attractionsFromCategory: Attraction.Category!
   var attractionsFromRegion: Region!
-  var searchService = SearchService()
   
   func loadAttractions(handler: (loaded: Bool) -> ()) {
     

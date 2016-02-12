@@ -6,9 +6,10 @@ class SkobblerSearch: NSObject {
   let maxResults = 20
   var searchHandler: ([SKSearchResult] -> ())!
   var packageCode: String!
+  var mapsObject: SKTMapsObject
   
-  override init() {
-    super.init()
+  init(mapsObject: SKTMapsObject) {
+    self.mapsObject = mapsObject
     SKSearchService.sharedInstance().searchResultsNumber = 10000
   }
   
@@ -16,77 +17,90 @@ class SkobblerSearch: NSObject {
     SearchTask.cancel()
   }
   
-  func getCitiesInProximityOf(location: CLLocation, proximityInKm: Double, task: SearchTask! = nil, handler: [SKSearchResult] -> ()) {
+  func isRunning() -> Bool {
+    return SearchTask.runningTask != nil
+  }
+  
+  func getCitiesInProximityOf(location: CLLocation, proximityInKm: Double, task: SearchTask! = nil, handler: [SimplePOI] -> ()) {
     runSearchTask(task) { task in
 
-      var results = [SKSearchResult]()
+      var results = [SimplePOI]()
       self.getCities(task: task) { cities in
         
         for city in cities {
-          let cityLocation = CLLocation(latitude: city.coordinate.latitude, longitude: city.coordinate.longitude)
+          let cityLocation = CLLocation(latitude: city.latitude, longitude: city.longitude)
           let distanceinKm = location.distanceFromLocation(cityLocation) / 1000
           if distanceinKm <= proximityInKm {
             results.append(city)
           }
         }
+        task.decrementNestedCounter()
         handler(results)
       }
     }
   }
   
-  func getCities(packageCode: String? = nil, task: SearchTask! = nil, handler: ([SKSearchResult]) -> ()) {
+  func getCities(query: String = "", packageCode: String? = nil, task: SearchTask! = nil, handler: ([SimplePOI]) -> ()) {
     
     runSearchTask(task) { task in
       if let packageCode = packageCode {
         self.searchHandler = { results in
           
-          if results.count == 0 { // error, repeat query
-            print("Got no cities for package \(packageCode). Retrying query.")
-            self.getCities(packageCode, handler: handler)
+          if query == "" && results.count == 0 { // error, repeat query
+            print("Got no cities for package '\(packageCode)'. Retrying query.")
+            self.getCities(packageCode: packageCode, task: task, handler: handler)
           }
           else {
-            handler(results)
+            task.decrementNestedCounter()
+            let location = self.mapsObject.packageForCode(packageCode).nameForLanguageCode("en")
+            handler(self.parseSearchResults(results, location: location))
           }
         }
-        self.searchMapData(packageCode, listLevel: SKListLevel.CityList, searchString: "", parent: 0)
+        self.searchMapData(packageCode, listLevel: SKListLevel.CityList, searchString: query, parent: 0)
       }
       else {
         let mapPackages = SKMapsService.sharedInstance().packagesManager.installedOfflineMapPackages as! [SKMapPackage]
         if mapPackages.count > 0 {
-          var allCities = [SKSearchResult]()
-          self.iterateThroughMapPackages(mapPackages, index: 0) { cities, finished in
-            allCities.appendContentsOf(cities)
+          var allCities = [SimplePOI]()
+          self.iterateThroughMapPackages(query, packages: mapPackages, index: 0) { cities, countryName, finished in
+            allCities.appendContentsOf(self.parseSearchResults(cities, location: countryName))
             if finished {
+              task.decrementNestedCounter()
               handler(allCities)
             }
           }
         }
         else {
-          handler([SKSearchResult]())
+          task.decrementNestedCounter()
+          handler([SimplePOI]())
         }
       }
     }
   }
   
-  func iterateThroughMapPackages(packages: [SKMapPackage], index: Int, handler: ([SKSearchResult], Bool) -> ())  {
+  internal func iterateThroughMapPackages(query: String, packages: [SKMapPackage], index: Int, handler: ([SKSearchResult], String, Bool) -> ())  {
     let mapPackage = packages[index]
     searchHandler = { results in
       
-      if results.count == 0 { // error, repeat query
-        print("Got no cities for country \(packages[index].name). Retrying query.")
-        self.iterateThroughMapPackages(packages, index: index, handler: handler)
+      if query == "" && results.count == 0 { // error, repeat query
+        print("Got no cities for package '\(mapPackage.name)'. Retrying query.")
+        self.iterateThroughMapPackages(query, packages: packages, index: index, handler: handler)
       }
       else {
+        print("mapsObject: \(self.mapsObject)")
+        print("mapPackage: \(mapPackage)")
+        print("name: \(mapPackage.name)")
+        let location = self.mapsObject.packageForCode(mapPackage.name).nameForLanguageCode("en")
         if index + 1 < packages.count {
-          handler(results, false)
-          self.iterateThroughMapPackages(packages, index: index + 1, handler: handler)
+          handler(results, location, false)
+          self.iterateThroughMapPackages(query, packages: packages, index: index + 1, handler: handler)
         }
         else {
-          handler(results, true)
+          handler(results, location, true)
         }
       }
     }
-    self.searchMapData(mapPackage.name, listLevel: SKListLevel.CityList, searchString: "", parent: 0)
+    self.searchMapData(mapPackage.name, listLevel: SKListLevel.CityList, searchString: query, parent: 0)
     
   }
   
@@ -99,6 +113,7 @@ class SkobblerSearch: NSObject {
         allSearchResults.appendContentsOf(streets)
         
         if finished {
+          task.decrementNestedCounter()
           handler(allSearchResults)
         }
       }
@@ -108,12 +123,17 @@ class SkobblerSearch: NSObject {
   func getStreets(fullSearchString: String, task: SearchTask! = nil, handler: ([SimplePOI], Bool) -> ()) {
     runSearchTask(task) { task in
       self.getCities(task: task) { cities in
-        self.getStreetsForCities(fullSearchString, cities: cities, task: task, handler: handler)
+        self.getStreetsForCities(fullSearchString, cities: cities, task: task, maxResultsTotal: self.maxResults) { streets, finished in
+          if finished {
+            task.decrementNestedCounter()
+          }
+          handler(streets, finished)
+        }
       }
     }
   }
   
-  func getStreetsForCities(query: String, cities: [SKSearchResult], task: SearchTask! = nil, maxResultsTotal: Int? = Int.max, handler: ([SimplePOI], Bool) -> ()) {
+  func getStreetsForCities(query: String, cities: [SimplePOI], task: SearchTask! = nil, maxResultsTotal: Int = Int.max, handler: ([SimplePOI], Bool) -> ()) {
 
     runSearchTask(task) { task in
       print("Cities count \(cities.count)")
@@ -122,7 +142,9 @@ class SkobblerSearch: NSObject {
       
       if cities.count == 0 {
         print("No cities offline")
-        SearchTask.setRunningTask(nil)
+        let thrower = {throw Error.RuntimeError("Hoi")}
+        try! thrower()
+        task.decrementNestedCounter()
         return
       }
       
@@ -131,7 +153,6 @@ class SkobblerSearch: NSObject {
         
         let city = cities[index]
         self.getStreetsForCity(query, city: city, task: task, maxResults: maxResultsTotal) { streets in
-          
           numberOfResults += streets.count
           
           index += 1
@@ -145,7 +166,7 @@ class SkobblerSearch: NSObject {
             print("iterating to next city: \(cities[index].name)")
           }
           else {
-            SearchTask.setRunningTask(nil)
+            task.decrementNestedCounter()
             handler(streets, true)
           }
           
@@ -155,13 +176,7 @@ class SkobblerSearch: NSObject {
     }
   }
   
-  //  func getStreetsForCity(cityId: String, countryId: String, identifier: UInt64, searchString: String, handler: [SKSearchResult] -> ()) {
-  //    setPackageCode(cityId, countryId: countryId)
-  //    searchHandler = handler
-  //    self.searchMapData(SKListLevel.StreetList, searchString: searchString, parent: identifier)
-  //  }
-  
-  func getStreetsForCity(query: String, city: SKSearchResult, task: SearchTask! = nil, maxResults: Int? = Int.max, handler: [SimplePOI] -> ()) {
+  func getStreetsForCity(query: String, city: SimplePOI, task: SearchTask! = nil, maxResults: Int = Int.max, handler: [SimplePOI] -> ()) {
     
     runSearchTask(task) { task in
       var searchStrings = query.characters.split{ $0 == " " }.map(String.init)
@@ -174,10 +189,11 @@ class SkobblerSearch: NSObject {
         streets in
         
         var streetsToParse = self.filterSearchResults(streets, secondarySearchStrings: secondarySearchStrings)
-        if let maxResults = maxResults where streets.count > maxResults {
+        if streetsToParse.count > maxResults {
           streetsToParse = Array(streetsToParse[0..<maxResults])
         }
-        let parsedStreets = self.parseSearchResults(streetsToParse, city: city.name)
+        let parsedStreets = self.parseSearchResults(streetsToParse, location: city.name)
+        task.decrementNestedCounter()
         handler(parsedStreets)
       }
       
@@ -205,24 +221,26 @@ class SkobblerSearch: NSObject {
     return filteredResults
   }
   
-  private func parseSearchResults(skobblerResults: [SKSearchResult], city: String) -> [SimplePOI] {
+  func parseSearchResults(skobblerResults: [SKSearchResult], location: String) -> [SimplePOI] {
     
     var searchResults = [SimplePOI]()
     for skobblerResult in skobblerResults {
-      searchResults.append(parseSearchResult(skobblerResult, city: city))
+      searchResults.append(parseSearchResult(skobblerResult, location: location))
     }
     return searchResults
   }
   
-  private func parseSearchResult(skobblerResult: SKSearchResult, city: String) -> SimplePOI {
+  private func parseSearchResult(skobblerResult: SKSearchResult, location: String) -> SimplePOI {
     
     let searchResult = SimplePOI()
     searchResult.name = skobblerResult.name
     
     searchResult.latitude = skobblerResult.coordinate.latitude
     searchResult.longitude = skobblerResult.coordinate.longitude
-    searchResult.location = city
+    searchResult.location = location
     searchResult.category = 180
+    searchResult.identifier = skobblerResult.identifier
+    searchResult.offlinePackageCode = skobblerResult.offlinePackageCode
     return searchResult
   }
   
@@ -245,6 +263,7 @@ class SkobblerSearch: NSObject {
     static let varLock = dispatch_queue_create("SearchService.VarLock", nil)
     static var taskCounter = 0
     var taskId = 0
+    var nestedCounter = 0
     
     required init() {
       SyncManager.synchronized(SearchTask.varLock) {
@@ -262,6 +281,17 @@ class SkobblerSearch: NSObject {
     class func setRunningTask(task: SearchTask?) {
       SyncManager.synchronized(SearchTask.varLock) {
         SearchTask.runningTask = task
+      }
+    }
+    
+    func incrementNestedCounter() {
+      nestedCounter = nestedCounter + 1
+    }
+    
+    func decrementNestedCounter() {
+      nestedCounter = nestedCounter - 1
+      if nestedCounter == 0 {
+        SearchTask.setRunningTask(nil)
       }
     }
     
@@ -284,12 +314,13 @@ class SkobblerSearch: NSObject {
   }
   
   internal func runSearchTask(var task: SearchTask! = nil, closure: SearchTask -> ()) {
-
+    
     let runTask = {
       if task.isCancelled() {
         SearchTask.setRunningTask(nil)
         return
       }
+      task.incrementNestedCounter()
       SKSearchService.sharedInstance().searchServiceDelegate = self
       closure(task)
     }
@@ -298,8 +329,7 @@ class SkobblerSearch: NSObject {
       task = SearchTask()
       dispatch_async(SkobblerSearch.searchQueue) {
         runTask()
-        self.waitUntilSearchFinished(task)
-        SearchTask.setRunningTask(nil)
+        self.waitUntilSearchFinished()
         print("Finished task: \(task.taskId)")
       }
     }
@@ -308,13 +338,10 @@ class SkobblerSearch: NSObject {
     }
   }
   
-  internal func waitUntilSearchFinished(task: SearchTask) {
+  internal func waitUntilSearchFinished() {
     SyncManager.block_until_condition(SKSearchService.sharedInstance(), condition: {
       return SearchTask.runningTask == nil
-      },
-      after: {
-        SearchTask.setRunningTask(task)
-    })
+      })
   }
   
 }
@@ -323,8 +350,8 @@ extension SkobblerSearch: SKSearchServiceDelegate {
   
   func searchService(searchService: SKSearchService!, didRetrieveMultiStepSearchResults searchResults: [AnyObject]!) {
     
-    print("search results received")
-    self.searchHandler(searchResults as! [SKSearchResult])
+    print("search results received: \(searchResults.count)")
+    searchHandler(searchResults as! [SKSearchResult])
   }
   
   func searchServiceDidFailToRetrieveMultiStepSearchResults(searchService: SKSearchService!) {

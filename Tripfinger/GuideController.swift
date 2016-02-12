@@ -150,24 +150,11 @@ class GuideController: UITableViewController, SubController {
           country.item().contentLoaded = false
         }
         self.countryList = countries
-        self.session.mapsObjectFuture.onComplete { _ in
-          self.updateUI()
-        }
-      }
-    } else {
-      session.mapsObjectFuture.onSuccess { _ in
-        self.countryList = Array<Region>(DatabaseService.getCountries())
         self.updateUI()
       }
-      session.mapsObjectFuture.onFailure { _ in
-        if NetworkUtil.connectedToNetwork() {
-          self.loadCountryList()
-        }
-      }
-      
-      self.session.mapsObjectFuture.onFailure { _ in
-        // TODO: show some kind of failure message
-      }
+    } else {
+      self.countryList = Array<Region>(DatabaseService.getCountries())
+      self.updateUI()
     }
   }
   
@@ -200,127 +187,108 @@ extension GuideController {
   func populateTableSections() {
     tableSections = [TableSection]()
     
-    if session.mapsObject == nil && !NetworkUtil.connectedToNetwork() {
-      var section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: nil)
-      section.elements.append(("Need to be online to download country list.", ""))
+    if session.currentItem == nil {
+      let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+      for country in countryList {
+        section.elements.append((title: country.listing.item.name!, value: country))
+      }
       tableSections.append(section)
-      section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: retryLoadCountries)
-      section.elements.append(("Retry.", ""))
+      
+      let continents = TableSection(title: "Continents", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+      for continent in getContinentMapPackages() {
+        let continentName = continent.nameForLanguageCode("en")
+        let continentRegion = Region.constructRegion(continentName)
+        continents.elements.append((title: continentName, value: continentRegion))
+      }
+      tableSections.append(continents)
+    } else if (session.currentSection == nil && session.currentItem.category > Region.Category.CONTINENT.rawValue) || (session.currentSection != nil && session.currentSection.item.content != nil) {
+      let section = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell, handler: nil)
+      section.elements.append(("", ""))
       tableSections.append(section)
     }
-    else if session.mapsObject == nil ||
-      (session.currentRegion != nil && !session.currentRegion.item().contentLoaded && session.currentSection == nil) {
-        let section = TableSection(cellIdentifier: TableCellIdentifiers.loadingCell, handler: nil)
-        section.elements.append(("", ""))
+    
+    if guideItemExpanded {
+      let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToSection)
+      
+      for guideSection in session.currentItem.guideSections {
+        section.elements.append((title: guideSection.item.name, value: guideSection))
+      }
+      tableSections.append(section)
+    }
+    
+    if session.currentRegion != nil && !session.currentRegion.mapCountry && session.currentSection == nil {
+      var section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToSection)
+      let section2 = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToSection)
+      var i = 0
+      for categoryDesc in session.currentRegion.item().categoryDescriptions {
+        if i > 1 {
+          section2.elements.append((title: categoryDesc.getName(), value: categoryDesc))
+        } else {
+          section.elements.append((title: categoryDesc.getName(), value: categoryDesc))
+        }
+        i += 1
+      }
+      tableSections.append(section)
+      
+      if session.currentRegion.item().subRegions.count > 0 {
+        switch session.currentRegion.item().category {
+        case Region.Category.CONTINENT.rawValue:
+          section = TableSection(title: "Countries:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+        case Region.Category.COUNTRY.rawValue:
+          section = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+        case Region.Category.SUB_REGION.rawValue:
+          section = TableSection(title: "Cities:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+        default:
+          section = TableSection(title: "Neighbourhoods:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+        }
+        
+        for subRegion in session.currentRegion.item().subRegions {
+          var itemName = subRegion.listing.item.name
+          let range = itemName.rangeOfString("/")
+          if range != nil {
+            itemName = itemName.substringFromIndex(range!.endIndex)
+          }
+          section.elements.append((title: itemName, value: subRegion))
+        }
         tableSections.append(section)
-    }
-    else {
-      if session.currentItem == nil {
-        if session.mapsObject != nil {
-          let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+      }
+      if session.currentRegion.listing.item.category > Region.Category.CONTINENT.rawValue {
+        tableSections.append(section2)
+      }
+      else {
+        let mapSection = TableSection(title: "Countries with only maps", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+        let continentName = session.currentContinent.getName()
+        let countryCandidates = try! session.mapsObject.getMapPackage(continentName, type: .Continent).childObjects() as! [SKTPackage]
+        mapCountryList = [SKTPackage]()
+        for countryCandidate in countryCandidates {
+          let candidateName = countryCandidate.nameForLanguageCode("en")
+          var alreadyListed = false
           for country in countryList {
-            section.elements.append((title: country.listing.item.name!, value: country))
-          }
-          tableSections.append(section)
-          
-          let continents = TableSection(title: "Continents", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
-          for continent in getContinentMapPackages() {
-            let continentName = continent.nameForLanguageCode("en")
-            let continentRegion = Region.constructRegion(continentName)
-            continents.elements.append((title: continentName, value: continentRegion))
-          }
-          tableSections.append(continents)
-        }
-      }
-      else if (session.currentSection == nil && session.currentItem.category > Region.Category.CONTINENT.rawValue) || (session.currentSection != nil && session.currentSection.item.content != nil) {
-        let section = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell, handler: nil)
-        section.elements.append(("", ""))
-        tableSections.append(section)
-      }
-      
-      if guideItemExpanded {
-        let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToSection)
-        
-        for guideSection in session.currentItem.guideSections {
-          section.elements.append((title: guideSection.item.name, value: guideSection))
-        }
-        tableSections.append(section)
-      }
-      
-      if session.currentRegion != nil && !session.currentRegion.mapCountry && session.currentSection == nil {
-        var section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToSection)
-        let section2 = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToSection)
-        var i = 0
-        for categoryDesc in session.currentRegion.item().categoryDescriptions {
-          if i > 1 {
-            section2.elements.append((title: categoryDesc.getName(), value: categoryDesc))
-          }
-          else {
-            section.elements.append((title: categoryDesc.getName(), value: categoryDesc))
-          }
-          i += 1
-        }
-        tableSections.append(section)
-        
-        if session.currentRegion.item().subRegions.count > 0 {
-          switch session.currentRegion.item().category {
-          case Region.Category.CONTINENT.rawValue:
-            section = TableSection(title: "Countries:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
-          case Region.Category.COUNTRY.rawValue:
-            section = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
-          case Region.Category.SUB_REGION.rawValue:
-            section = TableSection(title: "Cities:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
-          default:
-            section = TableSection(title: "Neighbourhoods:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
-          }
-          
-          for subRegion in session.currentRegion.item().subRegions {
-            var itemName = subRegion.listing.item.name
-            let range = itemName.rangeOfString("/")
-            if range != nil {
-              itemName = itemName.substringFromIndex(range!.endIndex)
-            }
-            section.elements.append((title: itemName, value: subRegion))
-          }
-          tableSections.append(section)
-        }
-        if session.currentRegion.listing.item.category > Region.Category.CONTINENT.rawValue {
-          tableSections.append(section2)
-        }
-        else {
-          let mapSection = TableSection(title: "Countries with only maps", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
-          let continentName = session.currentContinent.getName()
-          let countryCandidates = try! session.mapsObject.getMapPackage(continentName, type: .Continent).childObjects() as! [SKTPackage]
-          mapCountryList = [SKTPackage]()
-          for countryCandidate in countryCandidates {
-            let candidateName = countryCandidate.nameForLanguageCode("en")
-            var alreadyListed = false
-            for country in countryList {
-              if candidateName == country.getName() {
-                alreadyListed = true
-                break
-              }
-            }
-            if !alreadyListed {
-              let countryRegion = Region.constructRegion(candidateName, continent: session.currentContinent.getName())
-              countryRegion.mapCountry = true
-              countryRegion.item().contentLoaded = true
-              countryRegion.item().content = "This country has only map data."
-              mapSection.elements.append((title: candidateName, value: countryRegion))
-              mapCountryList.append(countryCandidate)
+            if candidateName == country.getName() {
+              alreadyListed = true
+              break
             }
           }
-          tableSections.append(mapSection)
+          if !alreadyListed {
+            let countryRegion = Region.constructRegion(candidateName, continent: session.currentContinent.getName())
+            countryRegion.mapCountry = true
+            countryRegion.item().contentLoaded = true
+            countryRegion.item().content = "This country has only map data."
+            mapSection.elements.append((title: candidateName, value: countryRegion))
+            mapCountryList.append(countryCandidate)
+          }
         }
-      }
-      else if session.currentSection != nil && session.currentSection.item.category != 0 {
-        let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCategory)
-        section.elements.append(("Swipe", "swipe"))
-        section.elements.append(("List", "list"))
-        section.elements.append(("Map", "map"))
-        tableSections.append(section)
+        tableSections.append(mapSection)
       }
     }
+    else if session.currentSection != nil && session.currentSection.item.category != 0 {
+      let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCategory)
+      section.elements.append(("Swipe", "swipe"))
+      section.elements.append(("List", "list"))
+      section.elements.append(("Map", "map"))
+      tableSections.append(section)
+    }
+    
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -380,11 +348,6 @@ extension GuideController {
       self.updateUI()
     }
     self.updateUI()
-  }
-
-  func retryLoadCountries(object: AnyObject) {
-    session.loadMapsObject()
-    loadCountryList()
   }
   
   func navigateToRegion(object: AnyObject) {

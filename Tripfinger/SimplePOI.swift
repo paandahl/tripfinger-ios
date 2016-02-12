@@ -23,4 +23,13 @@ class SimplePOI: Object {
   dynamic var latitude = 0.0
   dynamic var longitude = 0.0
   var listingId: String!
+  
+  // temporary variables for skobbler search code
+  var offlinePackageCode: String!
+  var identifier: UInt64!
+  
+  override static func ignoredProperties() -> [String] {
+    return ["offlinePackageCode", "identifier"]
+  }
+
 }

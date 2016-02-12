@@ -3,14 +3,18 @@ import RealmSwift
 
 class SearchService: NSObject {
   
-  let skobblerSearch = SkobblerSearch()
+  let skobblerSearch: SkobblerSearch
   var skobblerResults = [SimplePOI]()
   var databaseResults = List<SimplePOI>()
   var onlineResults = List<SimplePOI>()
   
-  var citiesForStreetNames: [SKSearchResult]?
+  var citiesForStreetNames: [SimplePOI]?
   var location: CLLocation?
   var proximityInKm: Double!
+  
+  required init(mapsObject: SKTMapsObject) {
+    self.skobblerSearch = SkobblerSearch(mapsObject: mapsObject)
+  }
   
   /*
   * Location and proximity is used in offline street search, to limit workload
@@ -33,11 +37,13 @@ class SearchService: NSObject {
     skobblerResults = [SimplePOI]()
     
     let handleSearchResults = {
-      var searchResults = [SimplePOI]()
-      searchResults.appendContentsOf(self.onlineResults)
-      searchResults.appendContentsOf(self.databaseResults)
-      searchResults.appendContentsOf(self.skobblerResults)
-      handler(searchResults)
+      dispatch_async(dispatch_get_main_queue()) {
+        var searchResults = [SimplePOI]()
+        searchResults.appendContentsOf(self.onlineResults)
+        searchResults.appendContentsOf(self.databaseResults)
+        searchResults.appendContentsOf(self.skobblerResults)
+        handler(searchResults)        
+      }
     }
 
     // Online search (regions and attractions)
@@ -55,26 +61,31 @@ class SearchService: NSObject {
     }
     
     // Skobbler search (cities and street names)
-    if let location = location {
-      if let citiesForStreetNames = citiesForStreetNames {
-        self.skobblerSearch.getStreetsForCities(query, cities: citiesForStreetNames) { streets, finished in
-          self.skobblerResults.appendContentsOf(streets)
-          handleSearchResults()
-        }
-      }
-      else {
-        skobblerSearch.getCitiesInProximityOf(location, proximityInKm: proximityInKm) { cities in
-          self.citiesForStreetNames = cities
-          self.skobblerSearch.getStreetsForCities(query, cities: cities) { streets, finished in
+    skobblerSearch.getCities(query) { cities in
+      self.skobblerResults = cities
+      handleSearchResults()
+      
+      if let location = self.location {
+        if let citiesForStreetNames = self.citiesForStreetNames {
+          self.skobblerSearch.getStreetsForCities(query, cities: citiesForStreetNames) { streets, finished in
             self.skobblerResults.appendContentsOf(streets)
             handleSearchResults()
           }
         }
-      }
-    } else {
-      skobblerSearch.getStreets(query) { streets, finished in
-        self.skobblerResults.appendContentsOf(streets)
-        handleSearchResults()
+        else {
+          self.skobblerSearch.getCitiesInProximityOf(location, proximityInKm: self.proximityInKm) { cities in
+            self.citiesForStreetNames = cities
+            self.skobblerSearch.getStreetsForCities(query, cities: cities) { streets, finished in
+              self.skobblerResults.appendContentsOf(streets)
+              handleSearchResults()
+            }
+          }
+        }
+      } else {
+        self.skobblerSearch.getStreets(query) { streets, finished in
+          self.skobblerResults.appendContentsOf(streets)
+          handleSearchResults()
+        }
       }
     }
   }

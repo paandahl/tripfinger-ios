@@ -14,13 +14,13 @@ class DownloadServiceTest: XCTestCase {
   }
   
   class func downloadBrunei(callback: (Region -> ())? = nil) {
-    SkobblerSearchTest.installMap("test-brunei")
+    SkobblerSearchTest.installMap("BN")
     DatabaseServiceTest.insertBrunei(callback)
   }
   
   class func removeBrunei() {
     DatabaseService.deleteRegion("Brunei")
-    SkobblerSearchTest.removeMap("test-brunei")
+    SkobblerSearchTest.removeMap("BN")
   }
   
   func testGetAvailableMaps() {

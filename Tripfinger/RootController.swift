@@ -101,6 +101,7 @@ extension RootController {
     let nav = UINavigationController()
     let searchController = SearchController()
     searchController.delegate = self
+    searchController.mapsObject = session.mapsObject
     searchController.regionId = session.currentRegion?.getId()
     searchController.countryId = session.currentCountry?.getId()
     nav.viewControllers = [searchController]
