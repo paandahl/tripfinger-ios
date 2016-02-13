@@ -116,14 +116,23 @@ class DatabaseService {
   
   
   class func search(query: String, callback: List<SimplePOI> -> ()) {
-    SyncManager.run_async {
-      let realm = getRealm()
-      let listings = realm.objects(GuideListing).filter("item.name contains[c] '\(query)'")
+    dispatch_async(dispatch_get_main_queue()) {
       let results = List<SimplePOI>()
+      let realm = getRealm()
+
+      let listings = realm.objects(GuideListing).filter("item.name contains[c] '\(query)'")
+      print("got \(listings.count) listings")
       for listing in listings {
         let poi = SimplePOI(listing: listing)
         results.append(poi)
       }
+      
+      let pois = realm.objects(SimplePOI).filter("name contains[c] '\(query)'")
+      print("got \(pois.count) pois")
+      for poi in pois {
+        results.append(poi)
+      }
+
       callback(results)
     }
   }

@@ -54,7 +54,7 @@ class SearchService: NSObject {
       }
     }
     
-    // Database search (regions and attractions)
+    // Database search (regions, attractions and simplePois)
     DatabaseService.search(query) { results in
       self.databaseResults = results
       handleSearchResults()

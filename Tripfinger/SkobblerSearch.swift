@@ -123,6 +123,7 @@ class SkobblerSearch: NSObject {
   func getStreets(fullSearchString: String, task: SearchTask! = nil, handler: ([SimplePOI], Bool) -> ()) {
     runSearchTask(task) { task in
       self.getCities(task: task) { cities in
+        print("GOTZ \(cities.count) cities...")
         self.getStreetsForCities(fullSearchString, cities: cities, task: task, maxResultsTotal: self.maxResults) { streets, finished in
           if finished {
             task.decrementNestedCounter()
