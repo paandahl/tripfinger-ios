@@ -12,6 +12,7 @@ class JsonParserService {
     guideItem.id = json["id"].string
     guideItem.content = json["description"].string
     guideItem.category = json["category"].int!
+    guideItem.status = json["status"].int!
     guideItem.parent = json["parent"].string
     guideItem.offline = false
     for imageJson in json["images"].array! {
@@ -33,6 +34,7 @@ class JsonParserService {
     listing.latitude = json["latitude"].double!
     listing.longitude = json["longitude"].double!
     listing.continent = json["continent"].string
+    listing.worldArea = json["worldArea"].string
     listing.country = json["country"].string
     listing.subRegion = json["subRegion"].string
     listing.city = json["city"].string

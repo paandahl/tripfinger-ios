@@ -13,6 +13,7 @@ class GuideItem: Object {
   dynamic var name: String!
   dynamic var price = 0.0
   dynamic var category = 0
+  dynamic var status = 0
   
   dynamic var parent: String!
   dynamic var content: String?

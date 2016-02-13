@@ -57,7 +57,7 @@ class NetworkUtil {
           let json = JSON(data: response.data!)
           success(json: json)
         }
-        else {
+        else if response.result.error?.code != -999 {
           print(response.result.error)
           if let failure = failure {
             dispatch_async(dispatch_get_main_queue(), failure)

@@ -18,9 +18,8 @@ class GuideController: UITableViewController, SubController {
   var backButton: UIButton!
   var titleLabel: UILabel!
   var downloadButton: UIButton!
-  
-  var countryList = [Region]()
-  var mapCountryList: [SKTPackage]!
+
+  var countryLists = [String: [Region]]()
   
   var guideItemExpanded = false
   var guideITemCreatedAsExpanded = false
@@ -66,7 +65,7 @@ class GuideController: UITableViewController, SubController {
     headerView.frame = headerFrame;
     tableView.tableHeaderView = headerView
     
-    loadCountryList()
+    loadCountryLists()
     updateUI()
   }
   
@@ -141,7 +140,7 @@ class GuideController: UITableViewController, SubController {
     view.window!.rootViewController!.presentViewController(nav, animated: true, completion: nil)
   }
   
-  func loadCountryList() {
+  func loadCountryLists() {
     if NetworkUtil.connectedToNetwork() {
       ContentService.getCountries() {
         countries in
@@ -149,14 +148,35 @@ class GuideController: UITableViewController, SubController {
         for country in countries {
           country.item().contentLoaded = false
         }
-        self.countryList = countries
+        self.countryLists = GuideController.makeCountryMap(countries)
         self.updateUI()
       }
     } else {
-      self.countryList = Array<Region>(DatabaseService.getCountries())
+      self.countryLists = GuideController.makeCountryMap(Array<Region>(DatabaseService.getCountries()))
       self.updateUI()
     }
   }
+  
+  class func makeCountryMap(countries: [Region]) -> [String: [Region]] {
+    var countryMap = [String: [Region]]()
+    var betaList = [Region]()
+    for country in countries {
+      if country.item().status == 0 {
+        betaList.append(country)
+      }
+      else {
+        var countryList = countryMap[country.listing.worldArea]
+        if countryList == nil {
+          countryList = [Region]()
+        }
+        countryList!.append(country)
+        countryMap[country.listing.worldArea] = countryList        
+      }
+    }
+    countryMap["Beta"] = betaList
+    return countryMap
+  }
+
   
   func getContinentMapPackages() -> [SKTPackage] {
     var continents = [SKTPackage]()
@@ -188,19 +208,13 @@ extension GuideController {
     tableSections = [TableSection]()
     
     if session.currentItem == nil {
-      let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
-      for country in countryList {
-        section.elements.append((title: country.listing.item.name!, value: country))
+      for (regionName, countryList) in countryLists {
+        let section = TableSection(title: regionName, cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+        for country in countryList {
+          section.elements.append((title: country.listing.item.name!, value: country))
+        }
+        tableSections.append(section)
       }
-      tableSections.append(section)
-      
-      let continents = TableSection(title: "Continents", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
-      for continent in getContinentMapPackages() {
-        let continentName = continent.nameForLanguageCode("en")
-        let continentRegion = Region.constructRegion(continentName)
-        continents.elements.append((title: continentName, value: continentRegion))
-      }
-      tableSections.append(continents)
     } else if (session.currentSection == nil && session.currentItem.category > Region.Category.CONTINENT.rawValue) || (session.currentSection != nil && session.currentSection.item.content != nil) {
       let section = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell, handler: nil)
       section.elements.append(("", ""))
@@ -252,34 +266,7 @@ extension GuideController {
         }
         tableSections.append(section)
       }
-      if session.currentRegion.listing.item.category > Region.Category.CONTINENT.rawValue {
-        tableSections.append(section2)
-      }
-      else {
-        let mapSection = TableSection(title: "Countries with only maps", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
-        let continentName = session.currentContinent.getName()
-        let countryCandidates = try! session.mapsObject.getMapPackage(continentName, type: .Continent).childObjects() as! [SKTPackage]
-        mapCountryList = [SKTPackage]()
-        for countryCandidate in countryCandidates {
-          let candidateName = countryCandidate.nameForLanguageCode("en")
-          var alreadyListed = false
-          for country in countryList {
-            if candidateName == country.getName() {
-              alreadyListed = true
-              break
-            }
-          }
-          if !alreadyListed {
-            let countryRegion = Region.constructRegion(candidateName, continent: session.currentContinent.getName())
-            countryRegion.mapCountry = true
-            countryRegion.item().contentLoaded = true
-            countryRegion.item().content = "This country has only map data."
-            mapSection.elements.append((title: candidateName, value: countryRegion))
-            mapCountryList.append(countryCandidate)
-          }
-        }
-        tableSections.append(mapSection)
-      }
+      tableSections.append(section2)
     }
     else if session.currentSection != nil && session.currentSection.item.category != 0 {
       let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCategory)

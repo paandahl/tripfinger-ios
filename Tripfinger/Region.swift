@@ -42,7 +42,6 @@ class Region: Object {
   }
   
   class func constructRegion(name: String, parent: Region) -> Region {
-    let continent = parent.listing.continent != nil ? parent.listing.continent : parent.item().name
     var country: String! = nil
     if parent.item().category > Category.CONTINENT.rawValue {
       country = parent.listing.country != nil ? parent.listing.country : parent.item().name
@@ -58,20 +57,16 @@ class Region: Object {
     if parent.item().category > Category.SUB_REGION.rawValue {
       city = parent.listing.city != nil ? parent.listing.city : parent.item().name
     }
-    return constructRegion(name, continent: continent, country: country, subRegion: subRegion, city: city)
+    return constructRegion(name, country: country, subRegion: subRegion, city: city)
   }
   
-  class func constructRegion(name: String! = nil, continent: String! = nil, country: String! = nil, subRegion: String! = nil, city: String! = nil, fromSearchResult: Bool = false) -> Region {
+  class func constructRegion(name: String! = nil, country: String! = nil, subRegion: String! = nil, city: String! = nil, fromSearchResult: Bool = false) -> Region {
     let region = Region()
     region.listing = GuideListing()
     region.listing.item = GuideItem()
     region.listing.item.name = name
     region.listing.item.contentLoaded = false
-    region.item().category = fromSearchResult ? 0 : Category.CONTINENT.rawValue
-    if continent != nil {
-      region.listing.continent = continent
-      region.item().category = Category.COUNTRY.rawValue
-    }
+    region.item().category = fromSearchResult ? 0 : Category.COUNTRY.rawValue
     if country != nil {
       region.listing.country = country
       region.item().category = Category.SUB_REGION.rawValue

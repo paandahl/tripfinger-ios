@@ -63,7 +63,7 @@ class DatabaseService {
     }
     return nil
   }
-  
+    
   class func getCountries() -> Results<Region> {
     return getRealm().objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue)")
   }

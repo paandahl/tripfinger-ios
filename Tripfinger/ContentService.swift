@@ -26,7 +26,8 @@ class ContentService {
   
   
   class func getCountries(handler: [Region] -> ()) {
-    NetworkUtil.getJsonFromUrl(baseUrl + "/countries", success: {
+    let parameters = ["onlyPublished": "false"]
+    NetworkUtil.getJsonFromUrl(baseUrl + "/countries", parameters: parameters, success: {
       json in
       
       let regions = JsonParserService.parseRegions(json)

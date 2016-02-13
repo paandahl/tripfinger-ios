@@ -26,11 +26,8 @@ class GuideListing: Object {
     else if country != nil {
       return country
     }
-    else if continent != nil {
-      return continent
-    }
     else {
-      return "Continents"
+      return "Overview"
     }
   }
 }
