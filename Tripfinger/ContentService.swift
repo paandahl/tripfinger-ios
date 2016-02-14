@@ -178,7 +178,6 @@ class ContentService {
   
   class func getAttractionsForRegion(region: Region?, withCategory category: Attraction.Category?, handler: List<Attraction> -> ()) {
     var parameters = [String: String]()
-    var categoryPart = ""
     
     var url: String
     if let region = region {
@@ -201,14 +200,14 @@ class ContentService {
       default:
         try! { throw Error.RuntimeError("Region category not recognized: \(region.item().category)") }()
       }
-      url = baseUrl + "/regions/\(region.listing.item.id)/attractions\(categoryPart)"
+      url = baseUrl + "/regions/\(region.listing.item.id)/attractions"
       
     } else {
       url = baseUrl + "/attractions"
     }
     
     if let category = category {
-      categoryPart = "/\(category.rawValue)"
+      parameters["category"] = String(category.rawValue)
     }
     
     NetworkUtil.getJsonFromUrl(url, parameters: parameters, success: {
