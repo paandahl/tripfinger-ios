@@ -12,15 +12,9 @@ class DownloadService {
   
   static var mapDownloadManager = MapDownloadManager()
   
-  class func isRegionDownloaded(mapsObject: SKTMapsObject, country: Region, city: Region! = nil) -> Bool {
+  class func isCountryDownloaded(country: Region, mapsObject: SKTMapsObject) -> Bool {
     
-    if hasMapPackageForRegion(country, mapsObject: mapsObject) {
-      return true
-    } else if city != nil {
-      return hasMapPackageForRegion(city, mapsObject: mapsObject)
-    } else {
-      return false
-    }
+    return hasMapPackageForRegion(country, mapsObject: mapsObject)
   }
   
   class func getSKTMapsObject(mapVersionPromise: Future<String, NoError>) -> Future<SKTMapsObject, Error> {

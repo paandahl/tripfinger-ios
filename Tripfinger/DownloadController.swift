@@ -20,8 +20,9 @@ class DownloadController: UIViewController {
     let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "close")
     navigationItem.leftBarButtonItem = cancelButton
     
-    let countryDownloaded = DownloadService.isRegionDownloaded(mapsObject, country: country)
-    let cityDownloaded = city == nil ? false : DownloadService.isRegionDownloaded(mapsObject, country: city)
+    let countryDownloaded = DownloadService.isCountryDownloaded(country, mapsObject: mapsObject)
+    let cityDownloaded = false
+//    let cityDownloaded = city == nil ? false : DownloadService.isRegionDownloaded(mapsObject, country: city)
 
     nameLabel = UILabel()
     view.addSubview(nameLabel)

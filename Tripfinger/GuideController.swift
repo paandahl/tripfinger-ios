@@ -95,20 +95,12 @@ class GuideController: UITableViewController, SubController {
     backButton.sizeToFit()
     
     // download button
-    if session.currentSection == nil && session.currentRegion != nil {
-      switch session.currentItem.category {
-      case Region.Category.CITY.rawValue:
-        fallthrough
-      case Region.Category.COUNTRY.rawValue:
-        let downloaded = DownloadService.isRegionDownloaded(session.mapsObject, country: session.currentCountry, city: session.currentCity)
-        let title = downloaded ? "Downloaded" : "Download"
-        downloadButton.setTitle(title, forState: .Normal)
-        downloadButton.hidden = false
-      default:
-        downloadButton.hidden = true
-      }
-    }
-    else {
+    if session.currentSection == nil && session.currentRegion != nil && session.currentItem.category == Region.Category.COUNTRY.rawValue {
+      let downloaded = DownloadService.isCountryDownloaded(session.currentRegion, mapsObject: session.mapsObject)
+      let title = downloaded ? "Downloaded" : "Download"
+      downloadButton.setTitle(title, forState: .Normal)
+      downloadButton.hidden = false
+    } else {
       downloadButton.hidden = true
     }
     
