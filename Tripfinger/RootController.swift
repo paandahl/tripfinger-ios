@@ -64,7 +64,7 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
     if controller == nil {
       let storyboard = UIStoryboard(name: "Main", bundle: nil)
       controller = storyboard.instantiateViewControllerWithIdentifier(name) as? T
-      var subController = controller as! SubController
+      let subController = controller as! SubController
       subController.session = session
       subControllers[name] = controller
       if controllerType == GuideController.self {

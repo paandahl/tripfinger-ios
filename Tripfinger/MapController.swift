@@ -6,6 +6,8 @@ import Alamofire
 class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocationManagerDelegate, SKPositionerServiceDelegate {
   
   var session: Session!
+  var positionInitiatedFromRegion: Region?
+  
   var selectedPoi: SimplePOI!
   var selectedAnnotation: SKAnnotation!
   var calloutView: AnnotationCalloutView!
@@ -23,7 +25,6 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     
     super.viewDidLoad()
     
-    
     mapView = SKMapView(frame: CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame)))
     let languageSettings = SKMapInternationalizationSettings.mapInternationalization()
     languageSettings.backupToTransliterated = true
@@ -40,13 +41,6 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     mapView.settings.inertiaEnabled = false
     mapView.settings.orientationIndicatorType = SKOrientationIndicatorType.None
     mapView.settings.headingMode = SKHeadingMode.RotatingHeading
-    
-    // second digit of first coordinate - higher means south, lower means north
-    // second digit of second coordinate - higher means west, lower means east
-    //    let coordinates = CLLocationCoordinate2DMake(lat, long)
-//    
-//    let region = SKCoordinateRegion(center: coordinates, zoomLevel: 14)
-//    mapView.visibleRegion = region
     
     view.addSubview(mapView)
     
@@ -69,6 +63,29 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     locationManager.startUpdatingHeading()
     
   }
+  
+  override func viewWillAppear(animated: Bool) {
+    if let region = session.currentRegion {
+      if region.item().name != positionInitiatedFromRegion?.item().name {
+        positionInitiatedFromRegion = region
+        let coordinates = CLLocationCoordinate2DMake(region.listing.latitude, region.listing.longitude)
+
+        switch region.item().category {
+        case Region.Category.COUNTRY.rawValue:
+          mapView.visibleRegion = SKCoordinateRegion(center: coordinates, zoomLevel: 5)
+        case Region.Category.SUB_REGION.rawValue:
+          mapView.visibleRegion = SKCoordinateRegion(center: coordinates, zoomLevel: 11)
+        case Region.Category.CITY.rawValue:
+          mapView.visibleRegion = SKCoordinateRegion(center: coordinates, zoomLevel: 12)
+        case Region.Category.NEIGHBOURHOOD.rawValue:
+          mapView.visibleRegion = SKCoordinateRegion(center: coordinates, zoomLevel: 13)
+        default:
+          try! { throw Error.RuntimeError("Category not supported: \(region.item().category)") }()
+        }
+      }
+    }
+  }
+
   
   func degreesToRadians(degrees: CGFloat) -> CGFloat {
     return degrees / 180.0 * CGFloat(M_PI)

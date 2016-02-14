@@ -6,8 +6,7 @@ class Session {
   
   var mapsObject: SKTMapsObject
   var searchService: SearchService
-  var availableCountries: List<Region>!
-  
+    
   init() {
     
     let mapsFileUrl = NSBundle.mainBundle().URLForResource("mapsObject", withExtension: "json")!
