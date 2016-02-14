@@ -43,6 +43,9 @@ class NetworkUtil {
       throw Error.DownloadError("Failure fetching url: \(url)")
     }
     print("Fetching URL: \(url)")
+    if parameters.count > 1 {
+      print("Params: \(parameters)")
+    }
     
     let request = Alamofire.request(method, url, parameters: parameters).validate(statusCode: 200..<300)
     let backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)

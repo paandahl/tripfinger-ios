@@ -177,32 +177,41 @@ class ContentService {
   }
   
   class func getAttractionsForRegion(region: Region?, withCategory category: Attraction.Category?, handler: List<Attraction> -> ()) {
-    var regionId = "world"
-    var parameters = ["cascade": "world"]
+    var parameters = [String: String]()
     var categoryPart = ""
     
+    var url: String
     if let region = region {
       if region.offline {
         handler(region.attractions)
         return
       }
-      if region.listing.item.category == Region.Category.CONTINENT.rawValue {
-        parameters["cascade"] = "continent"
+      
+      switch region.item().category {
+      case Region.Category.CONTINENT.rawValue:
+        fallthrough
+      case Region.Category.COUNTRY.rawValue:
+        fallthrough
+      case Region.Category.SUB_REGION.rawValue:
+        fallthrough
+      case Region.Category.CITY.rawValue:
+        parameters["cascade"] = "true"
+      case Region.Category.NEIGHBOURHOOD.rawValue:
+        parameters["cascade"] = "false"
+      default:
+        try! { throw Error.RuntimeError("Region category not recognized: \(region.item().category)") }()
       }
-      else if region.listing.item.category == Region.Category.COUNTRY.rawValue {
-        parameters["cascade"] = "country"
-      }
-      else if region.listing.item.category == Region.Category.CITY.rawValue {
-        parameters["cascade"] = "city"
-      }
-      regionId = region.listing.item.id
+      url = baseUrl + "/regions/\(region.listing.item.id)/attractions\(categoryPart)"
+      
+    } else {
+      url = baseUrl + "/attractions"
     }
     
     if let category = category {
       categoryPart = "/\(category.rawValue)"
     }
     
-    NetworkUtil.getJsonFromUrl(baseUrl + "/regions/\(regionId)/attractions\(categoryPart)", parameters: parameters, success: {
+    NetworkUtil.getJsonFromUrl(url, parameters: parameters, success: {
       json in
       
       let attractions = JsonParserService.parseAttractions(json)

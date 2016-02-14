@@ -5,15 +5,12 @@ import RealmSwift
 class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate {
   
   @IBOutlet weak var noElementsLabel: UILabel!
+  var attractionStack: [Attraction]?
   var session: Session!
   var filterBox: FilterBox!
   
-  var attractions = List<Attraction>()
-  var category: Attraction.Category!
-  var currentRegion: Region!
   let ChooseAttractionButtonHorizontalPadding: CGFloat = 80.0
   let ChooseAttractionButtonVerticalPadding: CGFloat = 20.0
-  var currentAttraction: Attraction!
   var frontCardView: ChooseAttractionView!
   var orignalFrontCardFrame: CGRect!
   var backCardView: ChooseAttractionView!
@@ -26,81 +23,75 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     view.addSubview(filterBox)
     view.addConstraints("V:|-10-[filters(44)]", forViews: ["filters": filterBox])
     view.addConstraints("H:|-0-[filters]-0-|", forViews: ["filters": filterBox])
-    
-    category = session.currentCategory
-    currentRegion = session.currentRegion
-
-    loadAttractions()
   }
   
   override func viewWillAppear(animated: Bool) {
-    if category != session.currentCategory || currentRegion != session.currentRegion {
-      category = session.currentCategory
-      currentRegion = session.currentRegion
-      reloadCards()
-    }
-  }
-  
-  func reloadCards() {
-    if (frontCardView != nil) {
-      frontCardView.removeFromSuperview()
-    }
-    if (backCardView != nil) {
-      backCardView.removeFromSuperview()
-      backCardView = nil
-    }
     loadAttractions()
   }
   
   func loadAttractions() {
-    session.loadAttractions() {
-      loaded in
-      
-      self.attractions = self.session.currentAttractions
-      print("loaded \(self.attractions.count) attractions")
+    attractionStack = nil
+    self.displayCards()
+    session.loadAttractions {
+      var newStack = [Attraction]()
+      for attraction in self.session.currentAttractions {
+        if attraction.swipeState == Attraction.SwipeState.NOT_SWIPED {
+          newStack.append(attraction)
+        }
+      }
+      self.attractionStack = newStack
       self.displayCards()
     }
   }
   
   func displayCards() {
-    
-    if attractions.count > 0 {
-      noElementsLabel.hidden = true
-      // Display the first ChoosePersonView in front. Users can swipe to indicate
-      // whether they like or dislike the item displayed.
-      setFrontCardViewFunc(popAttractionViewWithFrame(frontCardViewFrame())!)
-      view.insertSubview(frontCardView, belowSubview: filterBox)
-      addFrontCardConstraints()
+    if let attractionStack = attractionStack {
+      if attractionStack.count > 0 {
+        noElementsLabel.hidden = true
+        // Display the first ChoosePersonView in front. Users can swipe to indicate
+        // whether they like or dislike the item displayed.
+        setFrontCardViewFunc(popAttractionViewWithFrame(frontCardViewFrame())!)
+        view.insertSubview(frontCardView, belowSubview: filterBox)
+        addFrontCardConstraints()
+        
+        // Display the second ChoosePersonView in back. This view controller uses
+        // the MDCSwipeToChooseDelegate protocol methods to update the front and
+        // back views after each user swipe.
+        if attractionStack.count > 1 {
+          backCardView = popAttractionViewWithFrame(backCardViewFrame())!
+          view.insertSubview(backCardView, belowSubview: frontCardView)
+          addBackCardConstraints()
+        }
+      } else {
+        noElementsLabel.hidden = false
+        if session.currentRegion == nil {
+          noElementsLabel.text = "Select a region to view attractions."
+        } else {
+          noElementsLabel.text = "No attractions to swipe."
+        }
+        noElementsLabel.sizeToFit()
+      }
+    } else {
       
-      // Display the second ChoosePersonView in back. This view controller uses
-      // the MDCSwipeToChooseDelegate protocol methods to update the front and
-      // back views after each user swipe.
-      if attractions.count > 1 {
-        backCardView = popAttractionViewWithFrame(backCardViewFrame())!
-        view.insertSubview(backCardView, belowSubview: frontCardView)
-        addBackCardConstraints()
+      if (frontCardView != nil) {
+        frontCardView.removeFromSuperview()
       }
-    }
-    else {
+      if (backCardView != nil) {
+        backCardView.removeFromSuperview()
+        backCardView = nil
+      }
+
       noElementsLabel.hidden = false
-      if session.currentRegion == nil {
-        noElementsLabel.text = "Select a region to view attractions."
-      }
-      else {
-        noElementsLabel.text = "No attractions to swipe."
-      }
+      noElementsLabel.text = "Loading..."
       noElementsLabel.sizeToFit()
     }
-    
     if let currentRegion = session.currentRegion {
       filterBox.regionNameLabel.text = "\(currentRegion.listing.item.name!):"
-    }
-    else {
+    } else {
       filterBox.regionNameLabel.text = "World:"
     }
-
     
-    filterBox.categoryLabel.text = self.category.entityName(session.currentRegion)
+    filterBox.categoryLabel.text = session.currentCategory.entityName(session.currentRegion)
   }
   
   @IBAction func back() {
@@ -134,22 +125,20 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
   
   // This is called when a user didn't fully swipe left or right.
   func viewDidCancelSwipe(view: UIView) -> Void{
-    
-    print("You couldn't decide on \(currentAttraction.listing.item.name)");
+    print("You couldn't decide on \(frontCardView.attraction.listing.item.name)");
   }
   
   // This is called then a user swipes the view fully left or right.
-  func view(view: UIView, wasChosenWithDirection: MDCSwipeDirection) -> Void{
-    
+  func view(view: UIView, wasChosenWithDirection: MDCSwipeDirection) -> Void {
     // MDCSwipeToChooseView shows "NOPE" on swipes to the left,
     // and "LIKED" on swipes to the right.
     if(wasChosenWithDirection == MDCSwipeDirection.Left) {
-      currentAttraction.swipedRight = false
-      print("You noped: \(currentAttraction.listing.item.name)")
+      frontCardView.attraction.swipeState = Attraction.SwipeState.SWIPED_LEFT
+      print("You noped: \(frontCardView.attraction.listing.item.name)")
     }
     else{
-      currentAttraction.swipedRight = true
-      print("You liked: \(currentAttraction.listing.item.name)")
+      frontCardView.attraction.swipeState = Attraction.SwipeState.SWIPED_RIGHT
+      print("You liked: \(frontCardView.attraction.listing.item.name)")
     }
     
     // MDCSwipeToChooseView removes the view from the view hierarchy
@@ -181,12 +170,11 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     // Keep track of the person currently being chosen.
     // Quick and dirty, just for the purposes of this sample app.
     self.frontCardView = frontCardView
-    currentAttraction = frontCardView.attraction
   }
   
   
   func popAttractionViewWithFrame(frame:CGRect) -> ChooseAttractionView? {
-    if(self.attractions.count == 0){
+    if(attractionStack!.count == 0){
       return nil;
     }
     
@@ -209,8 +197,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     // Create a personView with the top person in the people array, then pop
     // that person off the stack.
     
-    let personView: ChooseAttractionView = ChooseAttractionView(frame: frame, attraction: attractions[0], delegate: self, options: options)
-    self.attractions.removeAtIndex(0)
+    let personView: ChooseAttractionView = ChooseAttractionView(frame: frame, attraction: attractionStack!.removeLast(), delegate: self, options: options)
     return personView
     
   }

@@ -55,12 +55,8 @@ class ListController: UITableViewController, SubController {
   func loadAttractions() {
     category = session.currentCategory
     filterBox.categoryLabel.text = session.currentCategory.entityName
-    session.loadAttractions() {
-      loaded in
-      
-      if loaded {
-        self.tableView.reloadData()
-      }
+    session.loadAttractions {      
+      self.tableView.reloadData()
     }
   }
   

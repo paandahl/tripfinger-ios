@@ -52,7 +52,7 @@ class ChooseAttractionView: MDCSwipeToChooseView {
       imageView.image = UIImage(data: NSData(contentsOfURL: attraction.item().images[0].getFileUrl())!)
     }
     else {
-      imageView.image = UIImage(named: "Placeholder")
+      imageView.image = UIImage(color: UIColor.whiteColor())
       let imageUrl = attraction.listing.item.images[0].url + "-600x800"
       try! imageView.loadImageWithUrl(imageUrl)
     }

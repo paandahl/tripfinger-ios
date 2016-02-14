@@ -73,7 +73,6 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
       }
     }
     else {
-      controller?.viewWillAppear(true)
     }
     switchSubview(controller!)
   }

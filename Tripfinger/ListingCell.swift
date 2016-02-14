@@ -1,11 +1,3 @@
-//
-//  ListingCell.swift
-//  Tripfinger
-//
-//  Created by Preben Ludviksen on 23/10/15.
-//  Copyright © 2015 Preben Ludviksen. All rights reserved.
-//
-
 import Foundation
 
 protocol ListingCellContainer: class {
@@ -32,7 +24,7 @@ class ListingCell: UITableViewCell {
   func setContent(attraction: Attraction) {
     name.text = attraction.listing.item.name
     mainImage.image = UIImage(named: "Placeholder")
-    if attraction.swipedRight != nil && attraction.swipedRight! {
+    if attraction.swipeState == Attraction.SwipeState.SWIPED_RIGHT {
       heartImage.tintColor = UIColor.redColor()
     }
     else {

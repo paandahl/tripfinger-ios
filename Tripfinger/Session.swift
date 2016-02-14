@@ -156,44 +156,42 @@ class Session {
     else {
       handler()
     }
-    
   }
   
-  // filters
+  // attractions (swipe and list view)
+  var attractionsFromRegion: String?
+  var attractionsFromCategory: Attraction.Category?
   var currentCategory = Attraction.Category.EXPLORE_CITY
-  
-  
-  var currentGuideSections = List<GuideText>()
-  var currentCategoryDescriptions = List<GuideText>()
-  
   var currentAttractions = List<Attraction>()
-  var attractionsFromCategory: Attraction.Category!
-  var attractionsFromRegion: Region!
   
-  func loadAttractions(handler: (loaded: Bool) -> ()) {
-    
-    if (attractionsFromCategory == nil || attractionsFromCategory != currentCategory || attractionsFromRegion != currentRegion) {
+  func loadAttractions(handler: () -> ()) {
+
+    if attractionsFromRegion != currentRegion?.item().name || attractionsFromCategory != currentCategory {
+      print("Reloading attractions")
       if currentCategory != Attraction.Category.ALL {
         ContentService.getAttractionsForRegion(self.currentRegion, withCategory: currentCategory) {
           attractions in
           
+          print("Loaded \(attractions.count) attractions.")
           self.currentAttractions = attractions
-          handler(loaded: true)
+          handler()
         }
       }
       else {
         ContentService.getAttractionsForRegion(self.currentRegion) {
           attractions in
           
+          print("Loaded \(attractions.count) attractions.")
           self.currentAttractions = attractions
-          handler(loaded: true)
+          handler()
         }
       }
       attractionsFromCategory = currentCategory
-      attractionsFromRegion = currentRegion
+      attractionsFromRegion = currentRegion?.item().name
     }
     else {
-      handler(loaded: false)
-    }
+      print("No need to reload attractions")
+      handler()
+    }    
   }
 }
