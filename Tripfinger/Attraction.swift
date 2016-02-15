@@ -67,11 +67,5 @@ class Attraction: Object {
   }
   
   // Temprorary data for swiper
-  var swipeState = SwipeState.NOT_SWIPED
-  
-  enum SwipeState {
-    case NOT_SWIPED
-    case SWIPED_LEFT
-    case SWIPED_RIGHT
-  }
+  dynamic var swipe: AttractionSwipe?  
 }

@@ -24,7 +24,7 @@ class ListingCell: UITableViewCell {
   func setContent(attraction: Attraction) {
     name.text = attraction.listing.item.name
     mainImage.image = UIImage(named: "Placeholder")
-    if attraction.swipeState == Attraction.SwipeState.SWIPED_RIGHT {
+    if let swipe = attraction.swipe where swipe.swipeState == AttractionSwipe.SwipeState.SWIPED_RIGHT.rawValue {
       heartImage.tintColor = UIColor.redColor()
     }
     else {

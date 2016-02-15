@@ -33,6 +33,23 @@ class DatabaseService {
     }
   }
   
+  class func saveSwipe(swipeState: AttractionSwipe.SwipeState, attraction: Attraction) {
+    let swipe = AttractionSwipe()
+    swipe.swipeState = swipeState.rawValue
+    swipe.attractionId = attraction.item().id
+    let realm = getRealm()
+    try! realm.write {
+      realm.add(swipe)
+      if attraction.item().offline {
+        attraction.swipe = swipe
+      }
+    }
+  }
+  
+  class func getSwipe(attractionId: String) -> AttractionSwipe? {
+    return getRealm().objects(AttractionSwipe).filter("attractionId = \"\(attractionId)\"").first
+  }
+  
   class func saveRegion(region: Region, callback: (Region -> ())? = nil) throws {
 
     SyncManager.run_async_throws {
@@ -86,11 +103,11 @@ class DatabaseService {
   }
   
   class func getAttractionsForRegion(region: Region) -> Results<Attraction> {
-    return getRealm().objects(Attraction).filter("listing.item.parent = '\(region.getId())'")
+    return getRealm().objects(Attraction).filter("listing.item.parent = \"\(region.getId())\"")
   }
 
   class func getAttractionWithId(attractionId: String) -> Attraction? {
-    let attractions = getRealm().objects(Attraction).filter("listing.item.id = '\(attractionId)'")
+    let attractions = getRealm().objects(Attraction).filter("listing.item.id = \"\(attractionId)\"")
     print("got \(attractions.count) attractions with id \(attractionId)")
     if attractions.count == 1 {
       return attractions[0]
@@ -157,11 +174,11 @@ class DatabaseService {
   }
 
   class func getRegionsWithParent(parentId: String) -> Results<Region> {
-    return getRealm().objects(Region).filter("listing.item.parent = '\(parentId)'")
+    return getRealm().objects(Region).filter("listing.item.parent = \"\(parentId)\"")
   }
   
   class func getGuideTextWithId(region: Region, guideTextId: String) -> GuideText {
-    let guideTexts = getRealm().objects(GuideText).filter("item.id = '\(guideTextId)'")
+    let guideTexts = getRealm().objects(GuideText).filter("item.id = \"\(guideTextId)\"")
     return guideTexts[0]
   }
 }

@@ -214,12 +214,16 @@ class ContentService {
       json in
       
       let attractions = JsonParserService.parseAttractions(json)
+      for attraction in attractions {
+        if let swipe = DatabaseService.getSwipe(attraction.item().id) {
+          attraction.swipe = swipe
+        }
+      }
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(attractions)
         
-      }}, failure: nil)
-    
+      }}, failure: nil)    
   }
   
   class func getJsonFromPost(var url: String, body: String, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
