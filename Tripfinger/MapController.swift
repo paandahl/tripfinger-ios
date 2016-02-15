@@ -26,6 +26,8 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     super.viewDidLoad()
     
     mapView = SKMapView(frame: CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame)))
+    mapView.accessibilityIdentifier = "mapView"
+    mapView.accessibilityValue = String(0) // acts as a counter for liked items, used in UI tests
     let languageSettings = SKMapInternationalizationSettings.mapInternationalization()
     languageSettings.backupToTransliterated = true
     languageSettings.primaryInternationalLanguage = SKLanguage.MapLanguageEN
@@ -61,7 +63,6 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     locationManager = CLLocationManager()
     locationManager.delegate = self
     locationManager.startUpdatingHeading()
-    
   }
   
   override func viewWillAppear(animated: Bool) {
@@ -82,6 +83,7 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
         default:
           try! { throw Error.RuntimeError("Category not supported: \(region.item().category)") }()
         }
+        loadMapPOIs()
       }
     }
   }
@@ -130,6 +132,7 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
     print("adding annotations for \(pois.count) pois")
     
     var identifier: Int32 = 0
+    var likedAttractions = 0
     for poi in pois {
       let selected = selectedPoi != nil &&
         (poi.latitude == selectedPoi.latitude &&
@@ -151,7 +154,17 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
         annotation.annotationView = getAnnotationViewWithIcon("shop-m", selected: selected)        
       }
       else {
-        annotation.annotationType = selected ? SKAnnotationType.Green : SKAnnotationType.Blue
+        if selected {
+          annotation.annotationType = SKAnnotationType.Green
+        }
+        else if let notes = poi.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
+          annotation.annotationType = SKAnnotationType.Red
+          print("was liked: \(poi.name)")
+          likedAttractions += 1
+        }
+        else {
+          annotation.annotationType = SKAnnotationType.Blue          
+        }
       }
       annotation.location = CLLocationCoordinate2DMake(poi.latitude, poi.longitude)
       let animationSettings = SKAnimationSettings()
@@ -161,6 +174,8 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
       }
       identifier += 1
     }
+    print("There were \(likedAttractions) liked attractions.")
+    mapView.accessibilityValue = String(likedAttractions)
   }
   
   func getAnnotationViewWithIcon(named: String, selected: Bool) -> SKAnnotationView {
@@ -279,26 +294,37 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
   }
 
   func loadMapPOIs() {
+    print("mapView.frame:")
+    print(mapView.frame)
     let bottomLeft = mapView.coordinateForPoint(CGPoint(x: 0, y: mapView.frame.maxY))
-    let topRight = mapView.coordinateForPoint(CGPoint(x: mapView.frame.maxX, y: 0))
-    let zoomLevel = Int(mapView.visibleRegion.zoomLevel)
-    print("zoomLevel: \(mapView.visibleRegion.zoomLevel)")
+    print("bottomLeft: \(bottomLeft)")
+    print(bottomLeft.latitude)
+    print(bottomLeft.latitude.isNaN)
     
-    if mapPoisRequest != nil {
-      mapPoisRequest.cancel()
-    }
-
-    if NetworkUtil.connectedToNetwork() {
-      mapPoisRequest = ContentService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel) {
-        searchResults in
-        
-        self.pois = searchResults
-        self.addAnnotations()
-      }
+    if bottomLeft.latitude.isNaN {
+      NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(2), target: self, selector: "loadMapPOIs", userInfo: nil, repeats: false)
     }
     else {
-      pois = DatabaseService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel)
-      addAnnotations()
+      let topRight = mapView.coordinateForPoint(CGPoint(x: mapView.frame.maxX, y: 0))
+      let zoomLevel = Int(mapView.visibleRegion.zoomLevel)
+      print("zoomLevel: \(mapView.visibleRegion.zoomLevel)")
+      
+      if mapPoisRequest != nil {
+        mapPoisRequest.cancel()
+      }
+      
+      if NetworkUtil.connectedToNetwork() {
+        mapPoisRequest = ContentService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel) {
+          searchResults in
+          
+          self.pois = searchResults
+          self.addAnnotations()
+        }
+      }
+      else {
+        pois = DatabaseService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel)
+        addAnnotations()
+      }
     }
   }
 }

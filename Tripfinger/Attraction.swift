@@ -64,8 +64,5 @@ class Attraction: Object {
     
     static let allValues = [ALL, EXPLORE_CITY, ACTIVITY_HIKE_DAYTRIP, TRANSPORTATION, ACCOMODATION,
       FOOD_OR_DRINK, SHOPPING, INFORMATION]
-  }
-  
-  // Temprorary data for swiper
-  dynamic var swipe: AttractionSwipe?  
+  }  
 }

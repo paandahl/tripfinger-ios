@@ -15,6 +15,7 @@ class SimplePOI: Object {
     latitude = listing.latitude
     longitude = listing.longitude
     listingId = listing.item.id
+    notes = listing.notes
   }
 
   dynamic var name: String!
@@ -24,12 +25,19 @@ class SimplePOI: Object {
   dynamic var longitude = 0.0
   var listingId: String!
   
+  func isRealAttraction() -> Bool {
+    return listingId != nil && listingId != "simple"
+  }
+  
+  // temporary variable connecting SimplePOI-representations of real Attractions to AttractionSwipe
+  var notes: GuideListingNotes!
+  
   // temporary variables for skobbler search code
   var offlinePackageCode: String!
   var identifier: UInt64!
   
   override static func ignoredProperties() -> [String] {
-    return ["offlinePackageCode", "identifier"]
+    return ["swipe", "offlinePackageCode", "identifier"]
   }
 
 }

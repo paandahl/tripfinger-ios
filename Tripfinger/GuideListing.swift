@@ -16,6 +16,8 @@ class GuideListing: Object {
   dynamic var subRegion: String!
   dynamic var city: String!
   
+  dynamic var notes: GuideListingNotes?
+
   func getParentName() -> String {
     if city != nil {
       return city

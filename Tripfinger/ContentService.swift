@@ -19,6 +19,13 @@ class ContentService {
       let searchResults = JsonParserService.parseSearchResults(json)
       
       dispatch_async(dispatch_get_main_queue()) {
+        for searchResult in searchResults {
+          if searchResult.isRealAttraction() {
+            if let guideListingNotes = DatabaseService.getAttractionNotes(searchResult.listingId) {
+              searchResult.notes = guideListingNotes
+            }
+          }
+        }
         handler(searchResults)
       }
       }, failure: nil)
@@ -213,14 +220,14 @@ class ContentService {
     NetworkUtil.getJsonFromUrl(url, parameters: parameters, success: {
       json in
       
-      let attractions = JsonParserService.parseAttractions(json)
-      for attraction in attractions {
-        if let swipe = DatabaseService.getSwipe(attraction.item().id) {
-          attraction.swipe = swipe
-        }
-      }
-      
       dispatch_async(dispatch_get_main_queue()) {
+        let attractions = JsonParserService.parseAttractions(json)
+        for attraction in attractions {
+          if let notes = DatabaseService.getAttractionNotes(attraction.item().id) {
+            attraction.listing.notes = notes
+          }
+        }
+        
         handler(attractions)
         
       }}, failure: nil)    

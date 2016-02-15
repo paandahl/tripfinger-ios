@@ -8,46 +8,49 @@ class DatabaseService {
   
   class func startTestMode() {
     testMode = true
-    getRealm()
   }
-  
+
   static func getRealm() -> Realm {
     if NSThread.currentThread().isMainThread {
       if mainThreadRealm == nil {
-        if testMode {          
+        if testMode || NSProcessInfo.processInfo().arguments.contains("TEST") {
+          print("got in-memory realm")
           mainThreadRealm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "MyInMemoryRealm"))
         }
         else {
+          print("got disk realm")
           mainThreadRealm = try! Realm()
         }
       }
       return mainThreadRealm
     }
     else {
-      if testMode {
+      if testMode || NSProcessInfo.processInfo().arguments.contains("TEST") {
+        print("got in-memory realm")
         return try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "MyInMemoryRealm"))
       }
       else {
-        return try! Realm()        
+        print("got disk realm")
+        return try! Realm()
       }
     }
   }
   
-  class func saveSwipe(swipeState: AttractionSwipe.SwipeState, attraction: Attraction) {
-    let swipe = AttractionSwipe()
-    swipe.swipeState = swipeState.rawValue
-    swipe.attractionId = attraction.item().id
+  class func saveLike(likedState: GuideListingNotes.LikedState, attraction: Attraction) {
+    let guideListingNotes = GuideListingNotes()
+    guideListingNotes.likedState = likedState
+    guideListingNotes.attractionId = attraction.item().id
     let realm = getRealm()
     try! realm.write {
-      realm.add(swipe)
+      realm.add(guideListingNotes)
       if attraction.item().offline {
-        attraction.swipe = swipe
+        attraction.listing.notes = guideListingNotes
       }
     }
   }
   
-  class func getSwipe(attractionId: String) -> AttractionSwipe? {
-    return getRealm().objects(AttractionSwipe).filter("attractionId = \"\(attractionId)\"").first
+  class func getAttractionNotes(attractionId: String) -> GuideListingNotes? {
+    return getRealm().objects(GuideListingNotes).filter("attractionId = \"\(attractionId)\"").first
   }
   
   class func saveRegion(region: Region, callback: (Region -> ())? = nil) throws {

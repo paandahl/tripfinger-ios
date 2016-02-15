@@ -35,7 +35,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     session.loadAttractions {
       var newStack = [Attraction]()
       for attraction in self.session.currentAttractions {
-        if attraction.swipe == nil {
+        if attraction.listing.notes == nil || attraction.listing.notes!.likedState == GuideListingNotes.LikedState.NOT_YET_LIKED_OR_SWIPED {
           newStack.append(attraction)
         }
       }
@@ -133,11 +133,11 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     // MDCSwipeToChooseView shows "NOPE" on swipes to the left,
     // and "LIKED" on swipes to the right.
     if(wasChosenWithDirection == MDCSwipeDirection.Left) {
-      DatabaseService.saveSwipe(AttractionSwipe.SwipeState.SWIPED_LEFT, attraction: frontCardView.attraction)
+      DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, attraction: frontCardView.attraction)
       print("You noped: \(frontCardView.attraction.listing.item.name)")
     }
     else{
-      DatabaseService.saveSwipe(AttractionSwipe.SwipeState.SWIPED_RIGHT, attraction: frontCardView.attraction)
+      DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, attraction: frontCardView.attraction)
       print("You liked: \(frontCardView.attraction.listing.item.name)")
     }
     
@@ -170,6 +170,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     // Keep track of the person currently being chosen.
     // Quick and dirty, just for the purposes of this sample app.
     self.frontCardView = frontCardView
+    self.frontCardView.accessibilityIdentifier = "frontCard"
   }
   
   
