@@ -1,6 +1,7 @@
 import UIKit
 import SKMaps
 import BrightFutures
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
@@ -14,6 +15,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     NSURLCache.setSharedURLCache(URLCache)
     let path = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
     print("Path: \(path[0])")
+    
+    let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+    configuration.timeoutIntervalForRequest = 300 // seconds
+    configuration.timeoutIntervalForResource = 300
+    NetworkUtil.alamoFireManager = Alamofire.Manager(configuration: configuration)
     
     let apiKey = "0511a5e338b00db8b426fb8ec0a7fb2ebd6816bb9324425d4edd9b726e40a3d5"
     let initSettings: SKMapsInitSettings = SKMapsInitSettings()

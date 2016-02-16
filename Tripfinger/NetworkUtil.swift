@@ -2,7 +2,8 @@ import SystemConfiguration
 import Alamofire
 
 class NetworkUtil {
-  
+
+  static var alamoFireManager: Alamofire.Manager!
   static var simulateOffline = false
   
   class func connectedToNetwork() -> Bool {
@@ -74,9 +75,10 @@ class NetworkUtil {
     return request
   }
   
-  class func saveDataFromUrl(url: String, destinationPath: NSURL, retryTimes: Int = 3) {
+  class func saveDataFromUrl(url: String, destinationPath: NSURL, retryTimes: Int = 100) {
     let nsUrl = NSURL(string: url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
-    let request = Alamofire.request(.GET, nsUrl)
+
+    let request = alamoFireManager.request(.GET, nsUrl)
     let backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
     
     let exceptionHandler = {

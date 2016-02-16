@@ -168,7 +168,28 @@ class DownloadService {
     }
   }
   
+  class func downloadBruneiMap(progressHandler: Float -> (), finishedHandler: () -> ()) {
+    SyncManager.run_async {
+      let libPath = NSURL.getDirectory(.LibraryDirectory, withPath: "")
+      NSData(contentsOfURL: NSURL(string: "https://storage.googleapis.com/tripfinger-maps/BN-test.ngi")!)?.writeToFile("\(libPath.absoluteString)/BN.ngi", atomically: true)
+      progressHandler(0.25)
+      NSData(contentsOfURL: NSURL(string: "https://storage.googleapis.com/tripfinger-maps/BN-test.ngi.dat")!)?.writeToFile("\(libPath.absoluteString)/BN.ngi.dat", atomically: true)
+      progressHandler(0.5)
+      NSData(contentsOfURL: NSURL(string: "https://storage.googleapis.com/tripfinger-maps/BN-test.skm")!)?.writeToFile("\(libPath.absoluteString)/BN.skm", atomically: true)
+      SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed("BN", inContainingFolderPath: libPath.absoluteString)
+      progressHandler(1.0)
+      finishedHandler()
+    }
+  }
+  
   class func downloadMapForRegion(regionName: String, regionPath: NSURL, package: SKTPackage, progressHandler: Float -> (), finishedHandler: () -> ()) throws {
+    
+    if regionName == "Brunei" {
+      print("Overriding map download for Brunei for testing purposes.")
+      downloadBruneiMap(progressHandler, finishedHandler: finishedHandler)
+      return
+    }
+    
     if hasMapPackage(package.packageCode) {
       throw Error.RuntimeError("Map for \(regionName) is already installed.")
     }

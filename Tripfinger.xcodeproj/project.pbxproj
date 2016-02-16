@@ -47,6 +47,7 @@
 		25B5068F1BB4009600A36BA1 /* ChooseAttractionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B5068E1BB4009600A36BA1 /* ChooseAttractionView.swift */; };
 		25B506911BB401F400A36BA1 /* ImageLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B506901BB401F400A36BA1 /* ImageLabelView.swift */; };
 		25C48EA31C71CCE600BCAABB /* SwipeViewOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C48EA21C71CCE600BCAABB /* SwipeViewOnlineTest.swift */; };
+		25C48EA71C72E7DC00BCAABB /* DownloadCountryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C48EA61C72E7DC00BCAABB /* DownloadCountryTest.swift */; };
 		25C8F3D51C3B85C4007BD932 /* AnnotationCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C8F3D41C3B85C4007BD932 /* AnnotationCalloutView.swift */; };
 		25C8F3DA1C44CB7C007BD932 /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C8F3D91C44CB7C007BD932 /* TableSection.swift */; };
 		25C8F3DC1C44FD3C007BD932 /* UITableView+ReloadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C8F3DB1C44FD3C007BD932 /* UITableView+ReloadData.swift */; };
@@ -190,6 +191,7 @@
 		25B5068E1BB4009600A36BA1 /* ChooseAttractionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseAttractionView.swift; sourceTree = "<group>"; };
 		25B506901BB401F400A36BA1 /* ImageLabelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLabelView.swift; sourceTree = "<group>"; };
 		25C48EA21C71CCE600BCAABB /* SwipeViewOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeViewOnlineTest.swift; sourceTree = "<group>"; };
+		25C48EA61C72E7DC00BCAABB /* DownloadCountryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadCountryTest.swift; sourceTree = "<group>"; };
 		25C8F3D41C3B85C4007BD932 /* AnnotationCalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationCalloutView.swift; sourceTree = "<group>"; };
 		25C8F3D91C44CB7C007BD932 /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
 		25C8F3DB1C44FD3C007BD932 /* UITableView+ReloadData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+ReloadData.swift"; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 		254091101C0E83F000A2002F /* TripfingerUITests */ = {
 			isa = PBXGroup;
 			children = (
+				25C48EA61C72E7DC00BCAABB /* DownloadCountryTest.swift */,
 				25A14DE51C6453B500074F87 /* GuideViewOnlineTest.swift */,
 				25C48EA51C71F19F00BCAABB /* Supporting Files */,
 				25C48EA21C71CCE600BCAABB /* SwipeViewOnlineTest.swift */,
@@ -803,6 +806,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25C48EA71C72E7DC00BCAABB /* DownloadCountryTest.swift in Sources */,
 				25A14DE61C6453B500074F87 /* GuideViewOnlineTest.swift in Sources */,
 				254091121C0E83F000A2002F /* TripfingerUITests.swift in Sources */,
 				25C48EA31C71CCE600BCAABB /* SwipeViewOnlineTest.swift in Sources */,
