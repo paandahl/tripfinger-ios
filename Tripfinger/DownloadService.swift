@@ -99,7 +99,7 @@ class DownloadService {
   class func deleteRegion(mapPackageCode: String, countryName: String, cityName: String! = nil) {
     deleteTripfingerImagesForRegion(countryName, cityName: cityName)
     //    deleteMapForRegion(mapPackageCode)
-    DatabaseService.deleteRegion(countryName, cityName: cityName)
+    DatabaseService.deleteCountry(countryName)
   }
   
   class func deleteTripfingerImagesForRegion(countryName: String, cityName: String! = nil) {

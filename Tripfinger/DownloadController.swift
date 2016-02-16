@@ -86,11 +86,11 @@ class DownloadController: UIViewController {
   
   func downloadRegion() {
     if city == nil {
-      let downloadedCities = DatabaseService.getCitiesInCountry(country.getName())
-      for city in downloadedCities {
-        DownloadService.deleteMapForRegion(city.getId())
-        DatabaseService.deleteRegion(country.getName(), cityName: city.getName())
-      }
+//      let downloadedCities = DatabaseService.getCitiesInCountry(country.getName())
+//      for city in downloadedCities {
+//        DownloadService.deleteMapForRegion(city.getId())
+//        DatabaseService.deleteRegion(country.getName(), cityName: city.getName())
+//      }
       
       nameLabel.text = "Downloading \(country.getName())."
       let countryPackage = mapsObject.getMapPackage(country.getName(), type: .Country)

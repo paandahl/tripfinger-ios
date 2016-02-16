@@ -303,6 +303,8 @@
 		250651EC1BD40F89002C3883 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				ABE91137916A9382619F1019 /* Pods */,
+				1215D44DF97A4313792200CF /* Frameworks */,
 				257922CD1BA34429005EA785 /* Resources */,
 				25A940AE1BA1AF7B0077C2E5 /* Frameworks */,
 				25C9DFCC1B9CD84200C516C1 /* Products */,
@@ -439,8 +441,6 @@
 				25C9DFCD1B9CD84200C516C1 /* Tripfinger */,
 				25C9DFE31B9CD84200C516C1 /* TripfingerTests */,
 				254091101C0E83F000A2002F /* TripfingerUITests */,
-				ABE91137916A9382619F1019 /* Pods */,
-				1215D44DF97A4313792200CF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};

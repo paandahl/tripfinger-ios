@@ -19,7 +19,7 @@ class DownloadServiceTest: XCTestCase {
   }
   
   class func removeBrunei() {
-    DatabaseService.deleteRegion("Brunei")
+    DatabaseService.deleteCountry("Brunei")
     SkobblerSearchTest.removeMap("BN")
   }
   

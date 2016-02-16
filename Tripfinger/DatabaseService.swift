@@ -8,6 +8,7 @@ class DatabaseService {
   
   class func startTestMode() {
     testMode = true
+    mainThreadRealm = nil // loose the reference, so that data is cleared from previous test runs
   }
 
   static func getRealm() -> Realm {
@@ -157,19 +158,52 @@ class DatabaseService {
     }
   }
   
-  class func deleteRegion(countryName: String, cityName: String! = nil) {
+  class func deleteGuideText(guideText: GuideText) {
+    for section in guideText.item.guideSections {
+      deleteGuideText(section)
+    }
+    
     let realm = getRealm()
     try! realm.write {
-      if cityName != nil {
-        let region = getCity(countryName, cityName: cityName)
-        realm.delete(region!)
-      }
-      else {
-        if let region = getCountry(countryName) {
-          realm.delete(region)
-        }
-      }
+      realm.delete(guideText)
     }
+  }
+  
+  class func deleteAttraction(attraction: Attraction) {
+    let realm = getRealm()
+    try! realm.write {
+      realm.delete(attraction)
+    }
+  }
+  
+  class func deleteRegion(region: Region) {
+    
+    for subRegion in region.item().subRegions {
+      deleteRegion(subRegion)
+    }
+    
+    for section in region.item().guideSections {
+      deleteGuideText(section)
+    }
+
+    for categoryDescription in region.item().categoryDescriptions {
+      deleteGuideText(categoryDescription)
+    }
+    
+    let attractions = getAttractionsForRegion(region)
+    for attraction in attractions {
+      deleteAttraction(attraction)
+    }
+
+    let realm = getRealm()
+    try! realm.write {
+      realm.delete(region)
+    }
+  }
+  
+  class func deleteCountry(name: String) {
+    let country = getCountry(name)
+    deleteRegion(country)
   }
 
   class func getCitiesInCountry(country: String) -> Results<Region> {
