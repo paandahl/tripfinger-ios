@@ -54,7 +54,8 @@ class DatabaseService {
   }
   
   class func getAttractionNotes(attractionId: String) -> GuideListingNotes? {
-    return getRealm().objects(GuideListingNotes).filter("attractionId = \"\(attractionId)\"").first
+    let predicate = NSPredicate(format: "attractionId = %@", attractionId)
+    return getRealm().objects(GuideListingNotes).filter(predicate).first
   }
   
   class func saveRegion(region: Region, callback: (Region -> ())? = nil) throws {
@@ -114,7 +115,8 @@ class DatabaseService {
   }
 
   class func getAttractionWithId(attractionId: String) -> Attraction? {
-    let attractions = getRealm().objects(Attraction).filter("listing.item.id = \"\(attractionId)\"")
+    let predicate = NSPredicate(format: "listing.item.id = %@", attractionId)
+    let attractions = getRealm().objects(Attraction).filter(predicate)
     print("got \(attractions.count) attractions with id \(attractionId)")
     if attractions.count == 1 {
       return attractions[0]
@@ -218,7 +220,8 @@ class DatabaseService {
   }
   
   class func getGuideTextWithId(region: Region, guideTextId: String) -> GuideText {
-    let guideTexts = getRealm().objects(GuideText).filter("item.id = \"\(guideTextId)\"")
+    let predicate = NSPredicate(format: "item.id = %@", guideTextId)
+    let guideTexts = getRealm().objects(GuideText).filter(predicate)
     return guideTexts[0]
   }
 }

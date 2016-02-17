@@ -61,4 +61,10 @@ class DatabaseServiceTest: XCTestCase {
     
     waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
   }
+  
+  func testGetAttractionNotes() {
+    
+    // make sure it can handle quotes in id's
+    DatabaseService.getAttractionNotes("attraction-tapgol-(\"pagoda\")-park-탑골공원")
+  }
 }
