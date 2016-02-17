@@ -228,7 +228,12 @@ class DownloadService {
   
   class func downloadTripfingerData(url: String, path: NSURL, finishedHandler: () -> ()) {
     
-    NetworkUtil.getJsonFromUrl(url, success: {
+    var parameters = [String: String]()
+    if AppDelegate.mode != AppDelegate.AppMode.RELEASE {
+      parameters["onlyPublished"] = "false"
+    }
+    
+    NetworkUtil.getJsonFromUrl(url, parameters: parameters, success: {
       json in
       
       let region = JsonParserService.parseRegionTreeFromJson(json)

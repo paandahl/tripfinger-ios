@@ -4,11 +4,13 @@ import RealmSwift
 class DatabaseService {
   
   static var testMode = false
+  static var testCounter = 0
   static var mainThreadRealm: Realm!
   
   class func startTestMode() {
     testMode = true
     mainThreadRealm = nil // loose the reference, so that data is cleared from previous test runs
+    testCounter += 1
   }
 
   static func getRealm() -> Realm {
@@ -16,7 +18,7 @@ class DatabaseService {
       if mainThreadRealm == nil {
         if testMode || NSProcessInfo.processInfo().arguments.contains("TEST") {
           print("got in-memory realm")
-          mainThreadRealm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "MyInMemoryRealm"))
+          mainThreadRealm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "MemoryRealm\(testCounter)"))
         }
         else {
           print("got disk realm")
@@ -29,7 +31,7 @@ class DatabaseService {
     else {
       if testMode || NSProcessInfo.processInfo().arguments.contains("TEST") {
         print("got in-memory realm")
-        return try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "MyInMemoryRealm"))
+        return try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "MemoryRealm\(testCounter)"))
       }
       else {
         print("got disk realm")

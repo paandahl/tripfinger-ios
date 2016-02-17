@@ -6,18 +6,24 @@ import Alamofire
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
   
-  static var beta = true
+  static var metadataCallback: (() -> ())? // hack to know when maps are indexed in tests
+  static var mode = AppMode.BETA
   var window: UIWindow?
   static var session: Session!
   
   func initUITestMaps() -> String {
-    var mapsPath = NSURL.createDirectory(.LibraryDirectory, withPath: "testMaps")
+    var mapsPath = NSURL.createDirectory(.LibraryDirectory, withPath: "Caches/testMaps")
     NSURL.deleteFolder(mapsPath)
-    mapsPath = NSURL.createDirectory(.LibraryDirectory, withPath: "testMaps")
-    return mapsPath.absoluteString
+    mapsPath = NSURL.createDirectory(.LibraryDirectory, withPath: "Caches/testMaps")
+    print("initUItestMaps")
+    return mapsPath.path!
   }
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    if NSProcessInfo.processInfo().arguments.contains("TEST") {
+      print("Switching to test mode")
+      AppDelegate.mode = AppMode.TEST
+    }
     
     let URLCache = NSURLCache(memoryCapacity: 20 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
     NSURLCache.setSharedURLCache(URLCache)
@@ -31,7 +37,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     
     let apiKey = "0511a5e338b00db8b426fb8ec0a7fb2ebd6816bb9324425d4edd9b726e40a3d5"
     let initSettings: SKMapsInitSettings = SKMapsInitSettings()
-    if NSProcessInfo.processInfo().arguments.contains("TEST") {
+    if AppDelegate.mode == AppMode.TEST {
+      print("cachesPath: \(initSettings.cachesPath)")
       initSettings.cachesPath = initUITestMaps()
     }
     initSettings.connectivityMode = SKConnectivityMode.Online
@@ -74,6 +81,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
   
   
   func mapsVersioningManagerLoadedMetadata(versioningManager: SKMapsVersioningManager!) {
+    print("METADATA LOADED")
+    if let callback = AppDelegate.metadataCallback {
+      callback()
+    }
   }
   
   func mapsVersioningManager(versioningManager: SKMapsVersioningManager!, loadedWithOfflinePackages packages: [AnyObject]!, updatablePackages: [AnyObject]!) {
@@ -83,6 +94,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
   
   func mapsVersioningManager(versioningManager: SKMapsVersioningManager!, loadedWithMapVersion currentMapVersion: String!) {
     print("Detected map version: \(currentMapVersion)")
+  }
+  
+  enum AppMode {
+    case TEST
+    case BETA
+    case RELEASE
   }
 }
 

@@ -48,6 +48,7 @@
 		25B506911BB401F400A36BA1 /* ImageLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B506901BB401F400A36BA1 /* ImageLabelView.swift */; };
 		25C48EA31C71CCE600BCAABB /* SwipeViewOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C48EA21C71CCE600BCAABB /* SwipeViewOnlineTest.swift */; };
 		25C48EA71C72E7DC00BCAABB /* DownloadCountryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C48EA61C72E7DC00BCAABB /* DownloadCountryTest.swift */; };
+		25C48EA91C7455DD00BCAABB /* ListViewOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C48EA81C7455DD00BCAABB /* ListViewOnlineTest.swift */; };
 		25C8F3D51C3B85C4007BD932 /* AnnotationCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C8F3D41C3B85C4007BD932 /* AnnotationCalloutView.swift */; };
 		25C8F3DA1C44CB7C007BD932 /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C8F3D91C44CB7C007BD932 /* TableSection.swift */; };
 		25C8F3DC1C44FD3C007BD932 /* UITableView+ReloadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C8F3DB1C44FD3C007BD932 /* UITableView+ReloadData.swift */; };
@@ -192,6 +193,7 @@
 		25B506901BB401F400A36BA1 /* ImageLabelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLabelView.swift; sourceTree = "<group>"; };
 		25C48EA21C71CCE600BCAABB /* SwipeViewOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeViewOnlineTest.swift; sourceTree = "<group>"; };
 		25C48EA61C72E7DC00BCAABB /* DownloadCountryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadCountryTest.swift; sourceTree = "<group>"; };
+		25C48EA81C7455DD00BCAABB /* ListViewOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewOnlineTest.swift; sourceTree = "<group>"; };
 		25C8F3D41C3B85C4007BD932 /* AnnotationCalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationCalloutView.swift; sourceTree = "<group>"; };
 		25C8F3D91C44CB7C007BD932 /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
 		25C8F3DB1C44FD3C007BD932 /* UITableView+ReloadData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+ReloadData.swift"; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				25C48EA51C71F19F00BCAABB /* Supporting Files */,
 				25C48EA21C71CCE600BCAABB /* SwipeViewOnlineTest.swift */,
 				254091111C0E83F000A2002F /* TripfingerUITests.swift */,
+				25C48EA81C7455DD00BCAABB /* ListViewOnlineTest.swift */,
 			);
 			path = TripfingerUITests;
 			sourceTree = "<group>";
@@ -806,6 +809,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25C48EA91C7455DD00BCAABB /* ListViewOnlineTest.swift in Sources */,
 				25C48EA71C72E7DC00BCAABB /* DownloadCountryTest.swift in Sources */,
 				25A14DE61C6453B500074F87 /* GuideViewOnlineTest.swift in Sources */,
 				254091121C0E83F000A2002F /* TripfingerUITests.swift in Sources */,

@@ -8,12 +8,23 @@ class SkobblerSearch: NSObject {
   var packageCode: String!
   var mapsObject: SKTMapsObject
   
+  var location: CLLocation?
+  var proximityInKm: Double!
+  var citiesForStreetNames: [SimplePOI]? // cache when searching in same location several times
+  
   init(mapsObject: SKTMapsObject) {
     self.mapsObject = mapsObject
     super.init()
     print("inutz: \(unsafeAddressOf(self))")
     SKSearchService.sharedInstance().searchResultsNumber = 10000
   }
+  
+  func setLocation(location: CLLocation, proximityInKm: Double) {
+    citiesForStreetNames = nil // reset to make sure it's loaded again
+    self.location = location
+    self.proximityInKm = proximityInKm
+  }
+
   
   func cancelSearch(callback: () -> ()) {
     SearchTask.cancel()
@@ -44,6 +55,45 @@ class SkobblerSearch: NSObject {
         }
         task.decrementNestedCounter()
         handler(results)
+      }
+    }
+  }
+  
+  // searches for cities and street names
+  func search(query: String, resultsHandler: [SimplePOI] -> ()) {
+    runSearchTask { task in
+      self.getCities(query, task: task) { cities in
+        print("passing on \(cities.count) city results")
+        resultsHandler(cities)
+        
+        if let location = self.location {
+          if let citiesForStreetNames = self.citiesForStreetNames {
+            self.getStreetsForCities(query, cities: citiesForStreetNames, task: task) { streets, finished in
+              resultsHandler(streets)
+              if finished {
+                task.decrementNestedCounter()
+              }
+            }
+          }
+          else {
+            self.getCitiesInProximityOf(location, proximityInKm: self.proximityInKm, task: task) { cities in
+              self.citiesForStreetNames = cities
+              self.getStreetsForCities(query, cities: cities, task: task) { streets, finished in
+                resultsHandler(streets)
+                if finished {
+                  task.decrementNestedCounter()
+                }
+              }
+            }
+          }
+        } else {
+          self.getStreets(query, task: task) { streets, finished in
+            resultsHandler(streets)
+            if finished {
+              task.decrementNestedCounter()
+            }
+          }
+        }
       }
     }
   }
@@ -164,6 +214,7 @@ class SkobblerSearch: NSObject {
         
         let city = cities[index]
         self.getStreetsForCity(query, city: city, task: task, maxResults: maxResultsTotal) { streets in
+          print("got \(streets.count) streets in \(city.name)")
           numberOfResults += streets.count
           
           index += 1
@@ -199,6 +250,8 @@ class SkobblerSearch: NSObject {
       self.searchHandler = {
         streets in
         
+        print("received \(streets.count) candidate streets in \(city.name)")
+        
         var streetsToParse = self.filterSearchResults(streets, secondarySearchStrings: secondarySearchStrings)
         if streetsToParse.count > maxResults {
           streetsToParse = Array(streetsToParse[0..<maxResults])
@@ -219,6 +272,7 @@ class SkobblerSearch: NSObject {
     }
     var filteredResults = [SKSearchResult]()
     for result in results {
+      print("filtering result: \(result.name)")
       let nameParts = result.name.lowercaseString.characters.split{ $0 == " " }.map(String.init)
       
       if (secondarySearchStrings.reduce(true) {

@@ -5,17 +5,15 @@ import XCTest
 class SkobblerSearchTest: XCTestCase {
   
   static let belgiumMapPackage = "BE"
-  
-  override class func setUp() {
-    installMap(belgiumMapPackage)
-  }
+  static var mapExpectation: XCTestExpectation!
+  static var mapDownloaded = false
   
   override class func tearDown() {
     print("removing belgium map")
     removeMap(belgiumMapPackage)
   }
   
-  class func installMap(mapPackage: String) {
+  class func installMap(mapPackage: String, exp: XCTestExpectation? = nil) {
     
     if DownloadService.hasMapPackage(mapPackage) {
       SKMapsService.sharedInstance().packagesManager.deleteOfflineMapPackageNamed(mapPackage)
@@ -24,12 +22,24 @@ class SkobblerSearchTest: XCTestCase {
     print(mapPath)
 
     // first make copies, since we might need to install from several tests, and Skobbler automatically deletes the added files
-    NSData(contentsOfFile: "\(mapPath)/\(mapPackage)-test.ngi")?.writeToFile("\(mapPath)/\(mapPackage).ngi", atomically: true)
+    let res = NSData(contentsOfFile: "\(mapPath)/\(mapPackage)-test.ngi")?.writeToFile("\(mapPath)/\(mapPackage).ngi", atomically: true)
     NSData(contentsOfFile: "\(mapPath)/\(mapPackage)-test.ngi.dat")?.writeToFile("\(mapPath)/\(mapPackage).ngi.dat", atomically: true)
     NSData(contentsOfFile: "\(mapPath)/\(mapPackage)-test.skm")?.writeToFile("\(mapPath)/\(mapPackage).skm", atomically: true)
     NSData(contentsOfFile: "\(mapPath)/\(mapPackage)-test.txg")?.writeToFile("\(mapPath)/\(mapPackage).txg", atomically: true)
+    print(res)
     
-    SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed(mapPackage, inContainingFolderPath: mapPath)
+    AppDelegate.metadataCallback = {
+      exp?.fulfill()
+    }
+
+    let result = SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed(mapPackage, inContainingFolderPath: mapPath)
+    print("added package \(mapPackage) with result \(result)")
+    print("\(SKAddPackageResult.Success)")
+    print("\(SKAddPackageResult.CannotEraseFile)")
+    print("\(SKAddPackageResult.MissingNgiDatFile)")
+    print("\(SKAddPackageResult.MissingNgiFile)")
+    print("\(SKAddPackageResult.MissingTxgFile)")
+    print("\(SKAddPackageResult.MissingSkmFile)")
   }
   
   class func removeMap(mapPackage: String) {
@@ -47,6 +57,12 @@ class SkobblerSearchTest: XCTestCase {
   override func setUp() {
     super.setUp()
     continueAfterFailure = false
+    if !SkobblerSearchTest.mapDownloaded {
+      SkobblerSearchTest.mapDownloaded = true
+      let exp = expectationWithDescription("mapDownload")
+      SkobblerSearchTest.installMap(SkobblerSearchTest.belgiumMapPackage, exp: exp)
+      waitForExpectationsWithTimeout(240) { error in XCTAssertNil(error, "Error") }
+    }
   }
   
   override func tearDown() {

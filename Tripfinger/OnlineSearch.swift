@@ -5,7 +5,7 @@ class OnlineSearch {
   class func search(fullSearchString: String, gradual: Bool = false, handler: List<SimplePOI> -> ()) {
     
     var parameters = [String: String]()
-    if AppDelegate.beta {
+    if AppDelegate.mode != AppDelegate.AppMode.RELEASE {
       parameters["onlyPublished"] = "false"
     }
     

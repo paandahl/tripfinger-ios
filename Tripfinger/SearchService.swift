@@ -8,10 +8,6 @@ class SearchService: NSObject {
   var databaseResults = List<SimplePOI>()
   var onlineResults = List<SimplePOI>()
   
-  var citiesForStreetNames: [SimplePOI]?
-  var location: CLLocation?
-  var proximityInKm: Double!
-  
   required init(mapsObject: SKTMapsObject) {
     print("initz")
     self.skobblerSearch = SkobblerSearch(mapsObject: mapsObject)
@@ -21,9 +17,7 @@ class SearchService: NSObject {
   * Location and proximity is used in offline street search, to limit workload
   */
   func setLocation(location: CLLocation, proximityInKm: Double) {
-    citiesForStreetNames = nil // reset to make sure it's loaded again
-    self.location = location
-    self.proximityInKm = proximityInKm
+    skobblerSearch.setLocation(location, proximityInKm: proximityInKm)
   }
   
   func cancelSearch(callback: () -> ()) {
@@ -62,33 +56,10 @@ class SearchService: NSObject {
     }
     
     // Skobbler search (cities and street names)
-    skobblerSearch.getCities(query) { cities in
-      self.skobblerResults = cities
-      print("passing on \(cities.count) city results")
+    skobblerSearch.search(query) { results in
+      self.skobblerResults.appendContentsOf(results)
       handleSearchResults()
       
-      if let location = self.location {
-        if let citiesForStreetNames = self.citiesForStreetNames {
-          self.skobblerSearch.getStreetsForCities(query, cities: citiesForStreetNames) { streets, finished in
-            self.skobblerResults.appendContentsOf(streets)
-            handleSearchResults()
-          }
-        }
-        else {
-          self.skobblerSearch.getCitiesInProximityOf(location, proximityInKm: self.proximityInKm) { cities in
-            self.citiesForStreetNames = cities
-            self.skobblerSearch.getStreetsForCities(query, cities: cities) { streets, finished in
-              self.skobblerResults.appendContentsOf(streets)
-              handleSearchResults()
-            }
-          }
-        }
-      } else {
-        self.skobblerSearch.getStreets(query) { streets, finished in
-          self.skobblerResults.appendContentsOf(streets)
-          handleSearchResults()
-        }
-      }
     }
   }
 }
