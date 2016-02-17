@@ -1,19 +1,16 @@
-//
-//  OnlineSearch.swift
-//  Tripfinger
-//
-//  Created by Preben Ludviksen on 06/02/16.
-//  Copyright © 2016 Preben Ludviksen. All rights reserved.
-//
-
 import Foundation
 import RealmSwift
 
 class OnlineSearch {
   class func search(fullSearchString: String, gradual: Bool = false, handler: List<SimplePOI> -> ()) {
     
+    var parameters = [String: String]()
+    if AppDelegate.beta {
+      parameters["onlyPublished"] = "false"
+    }
+    
     let escapedString = fullSearchString.stringByAddingPercentEncodingWithAllowedCharacters(.URLPathAllowedCharacterSet())!
-    NetworkUtil.getJsonFromUrl(ContentService.baseUrl + "/search/\(escapedString)", success: {
+    NetworkUtil.getJsonFromUrl(ContentService.baseUrl + "/search/\(escapedString)", parameters: parameters, success: {
       json in
       
       let searchResults = JsonParserService.parseSearchResults(json)

@@ -6,7 +6,9 @@ class GuideViewOnlineTest: XCTestCase {
   override func setUp() {
     super.setUp()
     continueAfterFailure = false
-    XCUIApplication().launch()
+    let app = XCUIApplication()
+    app.launchArguments.append("TEST")
+    app.launch()
   }
   
   override func tearDown() {

@@ -116,7 +116,7 @@ class JsonParserService {
       searchResult.latitude = resultJson["latitude"].double!
       searchResult.longitude = resultJson["longitude"].double!
       searchResult.category = resultJson["category"].int!
-      searchResult.listingId = resultJson["id"].string!
+      searchResult.listingId = resultJson["listingId"].string!
       searchResults.append(searchResult)
     }
     return searchResults

@@ -19,6 +19,7 @@ class DatabaseServiceTest: XCTestCase {
     let json = JSON(data: NSData(contentsOfFile: jsonPath)!)
     let region = JsonParserService.parseRegionTreeFromJson(json)
     if let brunei = DatabaseService.getCountry("Brunei") {
+      print("deletingBrunei")
       DatabaseService.deleteCountry(brunei.item().name)
     }
     try! DatabaseService.saveRegion(region, callback: callback)
@@ -28,6 +29,9 @@ class DatabaseServiceTest: XCTestCase {
     let exp = expectationWithDescription("ready")
     DatabaseServiceTest.insertBrunei { brunei in
       DatabaseService.search("ulu") { searchResults in
+        for searchResult in searchResults {
+          print("src: \(searchResult.name) \(searchResult.listingId)")
+        }
         XCTAssertEqual(1, searchResults.count)
         exp.fulfill()
       }

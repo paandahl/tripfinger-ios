@@ -23,6 +23,7 @@ class DatabaseService {
           mainThreadRealm = try! Realm()
         }
       }
+      mainThreadRealm.refresh()
       return mainThreadRealm
     }
     else {

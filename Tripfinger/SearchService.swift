@@ -13,6 +13,7 @@ class SearchService: NSObject {
   var proximityInKm: Double!
   
   required init(mapsObject: SKTMapsObject) {
+    print("initz")
     self.skobblerSearch = SkobblerSearch(mapsObject: mapsObject)
   }
   
@@ -25,8 +26,8 @@ class SearchService: NSObject {
     self.proximityInKm = proximityInKm
   }
   
-  func cancelSearch() {
-    skobblerSearch.cancelSearch()
+  func cancelSearch(callback: () -> ()) {
+    skobblerSearch.cancelSearch(callback)
   }
   
   //TODO: Need to handle duplicates from online, database and skobbler search
@@ -63,6 +64,7 @@ class SearchService: NSObject {
     // Skobbler search (cities and street names)
     skobblerSearch.getCities(query) { cities in
       self.skobblerResults = cities
+      print("passing on \(cities.count) city results")
       handleSearchResults()
       
       if let location = self.location {

@@ -16,10 +16,10 @@ class OnlineSearchTest: XCTestCase {
   func testOnlineSearch() {
     let readyExpectation = expectationWithDescription("ready")
     
-    OnlineSearch.search("bel") {
+    OnlineSearch.search("temburong") {
       searchResults in
       
-      XCTAssertEqual(7, searchResults.count)
+      XCTAssertEqual(1, searchResults.count)
       readyExpectation.fulfill()
     }
     

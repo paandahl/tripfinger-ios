@@ -10,11 +10,19 @@ class SkobblerSearch: NSObject {
   
   init(mapsObject: SKTMapsObject) {
     self.mapsObject = mapsObject
+    super.init()
+    print("inutz: \(unsafeAddressOf(self))")
     SKSearchService.sharedInstance().searchResultsNumber = 10000
   }
   
-  func cancelSearch() {
+  func cancelSearch(callback: () -> ()) {
     SearchTask.cancel()
+    SyncManager.run_async {
+      self.waitUntilSearchFinished()
+      dispatch_async(dispatch_get_main_queue()) {
+        callback()        
+      }
+    }
   }
   
   func isRunning() -> Bool {
@@ -100,15 +108,16 @@ class SkobblerSearch: NSObject {
         }
       }
     }
+    print("firing search for map package \(mapPackage.name)")
     self.searchMapData(mapPackage.name, listLevel: SKListLevel.CityList, searchString: query, parent: 0)
     
   }
   
   
-  func getStreetsBulk(fullSearchString: String, handler: [SimplePOI] -> ()) {
+  func getStreetsBulk(fullSearchString: String, packageCode: String? = nil, handler: [SimplePOI] -> ()) {
     runSearchTask { task in
       var allSearchResults = [SimplePOI]()
-      self.getStreets(fullSearchString, task: task) { streets, finished in
+      self.getStreets(fullSearchString, packageCode: packageCode, task: task) { streets, finished in
         
         allSearchResults.appendContentsOf(streets)
         
@@ -120,9 +129,9 @@ class SkobblerSearch: NSObject {
     }
   }
   
-  func getStreets(fullSearchString: String, task: SearchTask! = nil, handler: ([SimplePOI], Bool) -> ()) {
+  func getStreets(fullSearchString: String, packageCode: String? = nil, task: SearchTask! = nil, handler: ([SimplePOI], Bool) -> ()) {
     runSearchTask(task) { task in
-      self.getCities(task: task) { cities in
+      self.getCities(packageCode: packageCode, task: task) { cities in
         print("GOTZ \(cities.count) cities...")
         self.getStreetsForCities(fullSearchString, cities: cities, task: task, maxResultsTotal: self.maxResults) { streets, finished in
           if finished {
@@ -136,6 +145,7 @@ class SkobblerSearch: NSObject {
   
   func getStreetsForCities(query: String, cities: [SimplePOI], task: SearchTask! = nil, maxResultsTotal: Int = Int.max, handler: ([SimplePOI], Bool) -> ()) {
 
+    print("getStreetsForCities")
     runSearchTask(task) { task in
       print("Cities count \(cities.count)")
       var index = 0
@@ -198,6 +208,7 @@ class SkobblerSearch: NSObject {
         handler(parsedStreets)
       }
       
+      print("getting them streets")
       self.searchMapData(city.offlinePackageCode, listLevel: SKListLevel.StreetList, searchString: primaryQuery, parent: city.identifier)
     }
   }
@@ -321,6 +332,9 @@ class SkobblerSearch: NSObject {
         SearchTask.setRunningTask(nil)
         return
       }
+      else {
+        SearchTask.setRunningTask(task)
+      }
       task.incrementNestedCounter()
       SKSearchService.sharedInstance().searchServiceDelegate = self
       closure(task)
@@ -329,6 +343,7 @@ class SkobblerSearch: NSObject {
     if task == nil {
       task = SearchTask()
       dispatch_async(SkobblerSearch.searchQueue) {
+        print("Starting task: \(task.taskId)")
         runTask()
         self.waitUntilSearchFinished()
         print("Finished task: \(task.taskId)")

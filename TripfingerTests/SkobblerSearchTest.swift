@@ -11,6 +11,7 @@ class SkobblerSearchTest: XCTestCase {
   }
   
   override class func tearDown() {
+    print("removing belgium map")
     removeMap(belgiumMapPackage)
   }
   
@@ -32,7 +33,15 @@ class SkobblerSearchTest: XCTestCase {
   }
   
   class func removeMap(mapPackage: String) {
-    SKMapsService.sharedInstance().packagesManager.deleteOfflineMapPackageNamed(mapPackage)
+    let result = SKMapsService.sharedInstance().packagesManager.deleteOfflineMapPackageNamed(mapPackage)
+    print("deletemap: \(mapPackage) - \(result)")
+    let packs = SKMapsService.sharedInstance().packagesManager.installedOfflineMapPackages as! [SKMapPackage]
+    for pack in packs {
+      print("present: \(pack.name)")
+      if pack.name == mapPackage {
+        print("FUCK, it's still there: \(mapPackage)")
+      }
+    }
   }
   
   override func setUp() {
@@ -97,9 +106,10 @@ class SkobblerSearchTest: XCTestCase {
           print("Found the bitch")
           if !fulfilled {
             fulfilled = true
-            readyExpectation.fulfill()
+            skobblerSearch.cancelSearch {
+              readyExpectation.fulfill()
+            }
           }
-          skobblerSearch.cancelSearch()
           break
         }
       }
@@ -113,7 +123,7 @@ class SkobblerSearchTest: XCTestCase {
     let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
 
     var resultsCounter = 0
-    skobblerSearch.getStreets("jfdsfs") {
+    skobblerSearch.getStreets("jfdsfs", packageCode: "BE") {
       streets, finished in
       
       resultsCounter += streets.count
@@ -123,46 +133,67 @@ class SkobblerSearchTest: XCTestCase {
       }
     }
     
-    waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
+    waitForExpectationsWithTimeout(120) { error in XCTAssertNil(error, "Error") }
     XCTAssertFalse(skobblerSearch.isRunning())
   }
   
   func testFireMultipleSearches() {
-    let readyExpectation = expectationWithDescription("ready")
+    let readyExpectation = expectationWithDescription("multipleSearches")
     let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
     
+    var fulfilled = false
     
     skobblerSearch.getStreets("jfdsfs") { streets, finished in
       print("got \(streets.count) search results.")
-      skobblerSearch.cancelSearch()
-      readyExpectation.fulfill()
+      if !fulfilled {
+        fulfilled = true
+        skobblerSearch.cancelSearch {
+          readyExpectation.fulfill()
+        }
+      }
     }
     
     skobblerSearch.getStreets("br") { streets, finished in
       print("got \(streets.count) search results.")
-      skobblerSearch.cancelSearch()
-      readyExpectation.fulfill()
+      if !fulfilled {
+        fulfilled = true
+        skobblerSearch.cancelSearch {
+          readyExpectation.fulfill()
+        }
+      }
     }
     
     skobblerSearch.getStreets("bru") { streets, finished in
       print("got \(streets.count) search results.")
-      skobblerSearch.cancelSearch()
-      readyExpectation.fulfill()
+      if !fulfilled {
+        fulfilled = true
+        skobblerSearch.cancelSearch {
+          readyExpectation.fulfill()
+        }
+      }
     }
     
     skobblerSearch.getStreets("brussel") { streets, finished in
       print("got \(streets.count) search results.")
-      skobblerSearch.cancelSearch()
-      readyExpectation.fulfill()
+      if !fulfilled {
+        fulfilled = true
+        skobblerSearch.cancelSearch {
+          readyExpectation.fulfill()
+        }
+      }
     }
     
     skobblerSearch.getStreets("br") { streets, finished in
       print("got \(streets.count) search results.")
-      skobblerSearch.cancelSearch()
-      readyExpectation.fulfill()
+      if !fulfilled {
+        fulfilled = true
+        skobblerSearch.cancelSearch {
+          readyExpectation.fulfill()
+        }
+      }
     }
     
-    waitForExpectationsWithTimeout(15, handler: { error in
+    waitForExpectationsWithTimeout(120, handler: { error in
       XCTAssertNil(error, "Expectation timed out.")
     })    
   }
@@ -173,7 +204,7 @@ class SkobblerSearchTest: XCTestCase {
     var readyExpectation = expectationWithDescription("ready")
     
     let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
-    skobblerSearch.getStreetsBulk("boulevard dixmude") {
+    skobblerSearch.getStreetsBulk("boulevard dixmude", packageCode: "BE") {
       streets in
       
       XCTAssertEqual(1, streets.count, "Search result was not 1")
@@ -191,7 +222,7 @@ class SkobblerSearchTest: XCTestCase {
     
     readyExpectation = expectationWithDescription("ready")
     
-    skobblerSearch.getStreetsBulk("boulevard de dixmude") {
+    skobblerSearch.getStreetsBulk("boulevard de dixmude", packageCode: "BE") {
       streets in
       
       XCTAssertEqual(1, streets.count)
@@ -212,8 +243,9 @@ class SkobblerSearchTest: XCTestCase {
       streets, finished in
       
       XCTAssert(streets.count <= skobblerSearch.maxResults, "Too many search results: \(streets.count)")
-      skobblerSearch.cancelSearch()
-      readyExpectation.fulfill()
+      skobblerSearch.cancelSearch {
+        readyExpectation.fulfill()        
+      }
     }
     
     waitForExpectationsWithTimeout(15, handler: { error in

@@ -6,8 +6,16 @@ import Alamofire
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
   
+  static var beta = true
   var window: UIWindow?
   static var session: Session!
+  
+  func initUITestMaps() -> String {
+    var mapsPath = NSURL.createDirectory(.LibraryDirectory, withPath: "testMaps")
+    NSURL.deleteFolder(mapsPath)
+    mapsPath = NSURL.createDirectory(.LibraryDirectory, withPath: "testMaps")
+    return mapsPath.absoluteString
+  }
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     
@@ -23,6 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     
     let apiKey = "0511a5e338b00db8b426fb8ec0a7fb2ebd6816bb9324425d4edd9b726e40a3d5"
     let initSettings: SKMapsInitSettings = SKMapsInitSettings()
+    if NSProcessInfo.processInfo().arguments.contains("TEST") {
+      initSettings.cachesPath = initUITestMaps()
+    }
     initSettings.connectivityMode = SKConnectivityMode.Online
     initSettings.mapDetailLevel = SKMapDetailLevel.Light;
     initSettings.showConsoleLogs = false
