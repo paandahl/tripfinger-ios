@@ -36,8 +36,7 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
     navigateToSubview("guideController", controllerType: GuideController.self)
     
     segmentedControllerGuide.selectedSegmentIndex = 0
-    secondSegmentedController.selectedSegmentIndex = UISegmentedControlNoSegment
-    
+    secondSegmentedController.selectedSegmentIndex = UISegmentedControlNoSegment    
   }
   
   @IBAction func firstSegmentChanged(sender: UISegmentedControl) {

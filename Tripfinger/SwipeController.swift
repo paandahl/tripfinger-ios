@@ -239,11 +239,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
   }
   
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if segue.identifier == "showDetail" {
-      let detailController = segue.destinationViewController as! DetailController
-      detailController.attraction = sender as! Attraction
-    }
-    else if segue.identifier == "showFilter" {
+    if segue.identifier == "showFilter" {
       let navigationController = segue.destinationViewController as! UINavigationController
       let filterController = navigationController.viewControllers[0] as! FilterController
       filterController.session = session
@@ -258,7 +254,9 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
 extension SwipeController: AttractionCardContainer {
   
   func showDetail(attraction: Attraction) {
-    performSegueWithIdentifier("showDetail", sender: attraction)
+    let vc = DetailController()
+    vc.attraction = attraction
+    self.navigationController!.pushViewController(vc, animated: true)
   }
 }
 

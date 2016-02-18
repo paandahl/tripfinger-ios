@@ -1,11 +1,3 @@
-//
-//  FilterController.swift
-//  Tripfinger
-//
-//  Created by Preben Ludviksen on 28/10/15.
-//  Copyright © 2015 Preben Ludviksen. All rights reserved.
-//
-
 import Foundation
 
 protocol FilterControllerDelegate: class {

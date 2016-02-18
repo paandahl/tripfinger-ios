@@ -153,6 +153,9 @@ class JsonParserService {
   class func parseAttraction(json: JSON) -> Attraction {
     let attraction = Attraction()
     attraction.listing = parseGuideListing(json)
+    attraction.price = json["price"].string
+    attraction.openingHours = json["openingHours"].string
+    attraction.directions = json["directions"].string
     return attraction
   }
   

@@ -140,6 +140,7 @@ class GuideItemCell: UITableViewCell {
       description = content
       
     }
+    
     let encodedData = description.dataUsingEncoding(NSUTF8StringEncoding)!
     let options : [String: AnyObject] = [
       NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,

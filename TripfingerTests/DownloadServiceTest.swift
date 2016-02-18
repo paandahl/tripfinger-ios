@@ -18,21 +18,6 @@ class DownloadServiceTest: XCTestCase {
     SkobblerSearchTest.removeMap("BN")
   }
   
-  func testGetAvailableMaps() {
-    let readyExpectation = expectationWithDescription("ready")
-
-    let mapVersionPromise = Promise<String, NoError>()
-    DownloadService.getSKTMapsObject(mapVersionPromise.future).onSuccess {
-      mapsObject in
-      
-      XCTAssertEqual(7, mapsObject.packagesForType(.Continent).count)
-      readyExpectation.fulfill()
-    }
-    mapVersionPromise.success("")
-    
-    waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
-  }
-  
   func testGetLocalPartOfFileUrl() {
     let url = NSURL(string: "file:///Users/prebenl/Library/Developer/CoreSimulator/Devices/6733284E-D5B9-4B76-A78B-F4239E5EC973/data/Containers/Data/Application/563A3160-559C-49BC-8868-E3B3DC53E595/Library/Thailand/attraction-wat-tham-ta-pan-bureau-of-monks-1")!
     let localPart = DownloadService.getLocalPartOfFileUrl(url)

@@ -5,7 +5,11 @@ class Attraction: Object {
   
   // composition (instead of inheritance - for Realm-purposes)
   dynamic var listing: GuideListing!
-    
+  
+  dynamic var price: String?
+  dynamic var openingHours: String?
+  dynamic var directions: String?
+  
   func categoryName(currentRegion: Region?) -> String {
     return Category(rawValue: listing.item.category)!.entityName(currentRegion)
   }

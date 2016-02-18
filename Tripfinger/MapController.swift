@@ -218,7 +218,9 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
       ContentService.getAttractionWithId(poi.listingId) {
         attraction in
         
-        self.performSegueWithIdentifier("showDetail", sender: attraction)
+        let vc = DetailController()
+        vc.attraction = attraction
+        self.navigationController!.pushViewController(vc, animated: true)
       }
 
 
@@ -280,14 +282,7 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
       // Manually check if an annotation was tapped.
     }
   }
-  
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if segue.identifier == "showDetail" {
-      let detailController = segue.destinationViewController as! DetailController
-      detailController.attraction = sender as! Attraction
-    }
-  }
-  
+    
   func mapView(mapView: SKMapView!, didEndRegionChangeToRegion region: SKCoordinateRegion) {
     print("Region changed")
     loadMapPOIs()

@@ -11,7 +11,6 @@ class GuideItem: Object {
   dynamic var id: String!
   dynamic var slug: String?
   dynamic var name: String!
-  dynamic var price = 0.0
   dynamic var category = 0
   dynamic var status = 0
   
