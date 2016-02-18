@@ -142,7 +142,10 @@ class JsonParserService {
   class func parseAttractions(jsonArray: JSON) -> List<Attraction> {
     let attractions = List<Attraction>()
     for json in jsonArray.array! {
-      attractions.append(parseAttraction(json))
+      let attraction = parseAttraction(json)
+      if attraction.listing.latitude != 0.0 && attraction.listing.longitude != 0.0 && attraction.item().images.count > 0 {
+        attractions.append(attraction)
+      }
     }
     return attractions
   }
