@@ -12,12 +12,7 @@ class DownloadServiceTest: XCTestCase {
   override func tearDown() {
     super.tearDown()
   }
-  
-  class func downloadBrunei(callback: (Region -> ())? = nil) {
-    SkobblerSearchTest.installMap("BN")
-    DatabaseServiceTest.insertBrunei(callback)
-  }
-  
+    
   class func removeBrunei() {
     DatabaseService.deleteCountry("Brunei")
     SkobblerSearchTest.removeMap("BN")

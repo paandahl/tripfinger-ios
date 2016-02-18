@@ -28,10 +28,6 @@ class SkobblerSearchTest: XCTestCase {
     NSData(contentsOfFile: "\(mapPath)/\(mapPackage)-test.txg")?.writeToFile("\(mapPath)/\(mapPackage).txg", atomically: true)
     print(res)
     
-    AppDelegate.metadataCallback = {
-      exp?.fulfill()
-    }
-
     let result = SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed(mapPackage, inContainingFolderPath: mapPath)
     print("added package \(mapPackage) with result \(result)")
     print("\(SKAddPackageResult.Success)")
@@ -40,6 +36,22 @@ class SkobblerSearchTest: XCTestCase {
     print("\(SKAddPackageResult.MissingNgiFile)")
     print("\(SKAddPackageResult.MissingTxgFile)")
     print("\(SKAddPackageResult.MissingSkmFile)")
+    
+    if mapPackage == "BE" {
+      sleep(20)
+    }
+    else {
+      sleep(5)
+    }
+    
+    if SKMapsService.sharedInstance().mapsVersioningManager.metaDataDownloadedStatus == SKMetaDataDownloadStatus.Downloaded {
+      exp?.fulfill()
+    }
+    else {
+      AppDelegate.metadataCallback = {
+        exp?.fulfill()
+      }
+    }
   }
   
   class func removeMap(mapPackage: String) {

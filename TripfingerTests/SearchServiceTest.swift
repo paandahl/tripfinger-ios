@@ -4,7 +4,13 @@ import XCTest
 
 class SearchServiceTest: XCTestCase {
   
+  static var mapDownloaded = false
   static var searchService: SearchService! // need to keep reference, in case delegate is called after we leave function scope
+ 
+  override class func tearDown() {
+    print("removing brunei")
+    DownloadServiceTest.removeBrunei()
+  }
   
   override func setUp() {
     super.setUp()
@@ -17,6 +23,13 @@ class SearchServiceTest: XCTestCase {
     
     DatabaseService.startTestMode()
     continueAfterFailure = false
+    
+    if !SearchServiceTest.mapDownloaded {
+      SearchServiceTest.mapDownloaded = true
+      let exp = expectationWithDescription("mapDownload")
+      SkobblerSearchTest.installMap("BN", exp: exp)
+      waitForExpectationsWithTimeout(240) { error in XCTAssertNil(error, "Error") }
+    }
   }
   
   override func tearDown() {
@@ -27,7 +40,7 @@ class SearchServiceTest: XCTestCase {
     NetworkUtil.simulateOffline = true
     let exp = expectationWithDescription("offlineSearchForAttraction")
     var fulfilled = false
-    DownloadServiceTest.downloadBrunei { _ in
+    DatabaseServiceTest.insertBrunei { _ in
       print(SKMapsService.sharedInstance().packagesManager.installedOfflineMapPackages)
       SearchServiceTest.searchService.search("ulu") { searchResults in
         for searchResult in searchResults {
@@ -35,14 +48,14 @@ class SearchServiceTest: XCTestCase {
             fulfilled = true
             print("Ulu Temburong was found.")
             SearchServiceTest.searchService.cancelSearch {
-              exp.fulfill()              
+              exp.fulfill()
             }
           }
         }
       }
     }
+    
     waitForExpectationsWithTimeout(120) { error in XCTAssertNil(error, "Error") }
-    DownloadServiceTest.removeBrunei()
     NetworkUtil.simulateOffline = false
     print(SKMapsService.sharedInstance().packagesManager.installedOfflineMapPackages)
   }
@@ -51,7 +64,7 @@ class SearchServiceTest: XCTestCase {
     NetworkUtil.simulateOffline = true
     let exp = expectationWithDescription("offlineSearchForCity")
     var fulfilled = false
-    DownloadServiceTest.downloadBrunei { _ in
+    DatabaseServiceTest.insertBrunei { _ in
       print(SKMapsService.sharedInstance().packagesManager.installedOfflineMapPackages)
       SearchServiceTest.searchService.search("bandar") { searchResults in
         print("offlineSearch got \(searchResults.count) results")
@@ -67,7 +80,6 @@ class SearchServiceTest: XCTestCase {
       }
     }
     waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
-    DownloadServiceTest.removeBrunei()
     NetworkUtil.simulateOffline = false
   }
   
@@ -75,7 +87,7 @@ class SearchServiceTest: XCTestCase {
     NetworkUtil.simulateOffline = true
     let exp = expectationWithDescription("offlineSearchForPoi")
     var fulfilled = false
-    DownloadServiceTest.downloadBrunei { _ in
+    DatabaseServiceTest.insertBrunei { _ in
       print(SKMapsService.sharedInstance().packagesManager.installedOfflineMapPackages)
       SearchServiceTest.searchService.search("nyonya") { searchResults in
         for searchResult in searchResults {
@@ -99,8 +111,6 @@ class SearchServiceTest: XCTestCase {
       }
     }
     waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
-    print("removing brunei")
-    DownloadServiceTest.removeBrunei()
     NetworkUtil.simulateOffline = false
   }
 }

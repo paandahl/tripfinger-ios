@@ -24,7 +24,6 @@
 		254091061C0D479B00A2002F /* SKMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254091041C0D478100A2002F /* SKMaps.framework */; };
 		254091071C0D479B00A2002F /* SKMaps.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 254091041C0D478100A2002F /* SKMaps.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		254091091C0D47C200A2002F /* SKMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 254091081C0D47C200A2002F /* SKMaps.bundle */; };
-		254091121C0E83F000A2002F /* TripfingerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 254091111C0E83F000A2002F /* TripfingerUITests.swift */; };
 		257922C71BA308A9005EA785 /* Attraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922C61BA308A9005EA785 /* Attraction.swift */; };
 		257922D21BA48697005EA785 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D11BA48697005EA785 /* SwiftyJSON.swift */; };
 		257922D41BA488EB005EA785 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D31BA488EB005EA785 /* DataManager.swift */; };
@@ -169,7 +168,6 @@
 		254091041C0D478100A2002F /* SKMaps.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SKMaps.framework; sourceTree = "<group>"; };
 		254091081C0D47C200A2002F /* SKMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SKMaps.bundle; sourceTree = "<group>"; };
 		2540910F1C0E83F000A2002F /* TripfingerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripfingerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		254091111C0E83F000A2002F /* TripfingerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripfingerUITests.swift; sourceTree = "<group>"; };
 		254091131C0E83F000A2002F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		257922C61BA308A9005EA785 /* Attraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attraction.swift; sourceTree = "<group>"; };
 		257922D11BA48697005EA785 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Tripfinger/SwiftyJSON.swift; sourceTree = "<group>"; };
@@ -349,7 +347,6 @@
 				25A14DE51C6453B500074F87 /* GuideViewOnlineTest.swift */,
 				25C48EA51C71F19F00BCAABB /* Supporting Files */,
 				25C48EA21C71CCE600BCAABB /* SwipeViewOnlineTest.swift */,
-				254091111C0E83F000A2002F /* TripfingerUITests.swift */,
 				25C48EA81C7455DD00BCAABB /* ListViewOnlineTest.swift */,
 				258B3A701C75A29300106EB2 /* SearchOnlineTest.swift */,
 			);
@@ -819,7 +816,6 @@
 				25C48EA71C72E7DC00BCAABB /* DownloadCountryTest.swift in Sources */,
 				258B3A711C75A29300106EB2 /* SearchOnlineTest.swift in Sources */,
 				25A14DE61C6453B500074F87 /* GuideViewOnlineTest.swift in Sources */,
-				254091121C0E83F000A2002F /* TripfingerUITests.swift in Sources */,
 				25C48EA31C71CCE600BCAABB /* SwipeViewOnlineTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
