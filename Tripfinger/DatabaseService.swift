@@ -111,7 +111,38 @@ class DatabaseService {
   }
   
   class func getAttractionsForRegion(region: Region) -> Results<Attraction> {
-    return getRealm().objects(Attraction).filter("listing.item.parent = \"\(region.getId())\"")
+    let predicate = NSPredicate(format: "listing.item.parent = %@", region.getId())
+    return getRealm().objects(Attraction).filter(predicate)
+  }
+  
+  class func getCascadingAttractionsForRegion(region: Region?) -> List<Attraction> {
+    var predicate: NSPredicate!
+    var attractions: Results<Attraction>!
+    if let region = region {
+      switch region.item().category {
+      case Region.Category.COUNTRY.rawValue:
+        predicate = NSPredicate(format: "listing.country = %@", region.item().name)
+      case Region.Category.SUB_REGION.rawValue:
+        predicate = NSPredicate(format: "listing.country = %@ and listing.subRegion = %@", region.listing.country, region.item().name)
+      case Region.Category.CITY.rawValue:
+        predicate = NSPredicate(format: "listing.country = %@ and city = %@", region.listing.country, region.item().name)
+      case Region.Category.NEIGHBOURHOOD.rawValue:
+        predicate = NSPredicate(format: "listing.parent = %@", region.item().id)
+      default:
+        try! { throw Error.RuntimeError("Cascade not supported for type: \(region.item().category)") }()
+      }
+      attractions = getRealm().objects(Attraction).filter(predicate)
+    }
+    else {
+      attractions = getRealm().objects(Attraction)
+    }
+    let list = List<Attraction>()
+    for attraction in attractions {
+      if attraction.item().images.count > 0 && attraction.listing.latitude != 0 && attraction.listing.longitude != 0 {
+        list.append(attraction)
+      }
+    }
+    return list
   }
 
   class func getAttractionWithId(attractionId: String) -> Attraction? {

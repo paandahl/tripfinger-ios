@@ -169,7 +169,7 @@ class Session {
     if attractionsFromRegion != currentRegion?.item().name || attractionsFromCategory != currentCategory {
       print("Reloading attractions")
       if currentCategory != Attraction.Category.ALL {
-        ContentService.getAttractionsForRegion(self.currentRegion, withCategory: currentCategory) {
+        ContentService.getCascadingAttractionsForRegion(self.currentRegion, withCategory: currentCategory) {
           attractions in
           
           print("Loaded \(attractions.count) attractions.")
@@ -178,7 +178,7 @@ class Session {
         }
       }
       else {
-        ContentService.getAttractionsForRegion(self.currentRegion) {
+        ContentService.getCascadingAttractionsForRegion(self.currentRegion) {
           attractions in
           
           print("Loaded \(attractions.count) attractions.")

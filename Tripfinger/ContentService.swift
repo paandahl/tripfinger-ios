@@ -184,62 +184,70 @@ class ContentService {
     
   }
   
-  class func getAttractionsForRegion(region: Region?, handler: List<Attraction> -> ()) {
-    getAttractionsForRegion(region, withCategory: nil, handler: handler)
+  class func getCascadingAttractionsForRegion(region: Region?, handler: List<Attraction> -> ()) {
+    getCascadingAttractionsForRegion(region, withCategory: nil, handler: handler)
   }
-  
-  class func getAttractionsForRegion(region: Region?, withCategory category: Attraction.Category?, handler: List<Attraction> -> ()) {
-    var parameters = [String: String]()
     
-    var url: String
-    if let region = region {
-      if region.offline {
-        handler(region.attractions)
-        return
-      }
-      
-      switch region.item().category {
-      case Region.Category.CONTINENT.rawValue:
-        fallthrough
-      case Region.Category.COUNTRY.rawValue:
-        fallthrough
-      case Region.Category.SUB_REGION.rawValue:
-        fallthrough
-      case Region.Category.CITY.rawValue:
-        parameters["cascade"] = "true"
-      case Region.Category.NEIGHBOURHOOD.rawValue:
-        parameters["cascade"] = "false"
-      default:
-        try! { throw Error.RuntimeError("Region category not recognized: \(region.item().category)") }()
-      }
-      url = baseUrl + "/regions/\(region.listing.item.id)/attractions"
+  class func getCascadingAttractionsForRegion(region: Region?, withCategory category: Attraction.Category?, handler: List<Attraction> -> ()) {
+    
+    if !NetworkUtil.connectedToNetwork() {
+      print("fetching offline attractions")
+      let attractions = DatabaseService.getCascadingAttractionsForRegion(region)
+      handler(attractions)
       
     } else {
-      url = baseUrl + "/attractions"
-    }
-    
-    if let category = category {
-      parameters["category"] = String(category.rawValue)
-    }
-    
-    if AppDelegate.mode != AppDelegate.AppMode.RELEASE {
-      parameters["onlyPublished"] = "false"
-    }
-    
-    NetworkUtil.getJsonFromUrl(url, parameters: parameters, success: {
-      json in
       
-      dispatch_async(dispatch_get_main_queue()) {
-        let attractions = JsonParserService.parseAttractions(json)
-        for attraction in attractions {
-          if let notes = DatabaseService.getAttractionNotes(attraction.item().id) {
-            attraction.listing.notes = notes
-          }
+      var url: String
+      var parameters = [String: String]()
+      if let region = region {
+        if region.offline {
+          handler(region.attractions)
+          return
         }
         
-        handler(attractions)
+        switch region.item().category {
+        case Region.Category.CONTINENT.rawValue:
+          fallthrough
+        case Region.Category.COUNTRY.rawValue:
+          fallthrough
+        case Region.Category.SUB_REGION.rawValue:
+          fallthrough
+        case Region.Category.CITY.rawValue:
+          parameters["cascade"] = "true"
+        case Region.Category.NEIGHBOURHOOD.rawValue:
+          parameters["cascade"] = "false"
+        default:
+          try! { throw Error.RuntimeError("Region category not recognized: \(region.item().category)") }()
+        }
+        url = baseUrl + "/regions/\(region.listing.item.id)/attractions"
         
-      }}, failure: nil)    
+      } else {
+        url = baseUrl + "/attractions"
+      }
+      
+      if let category = category {
+        parameters["category"] = String(category.rawValue)
+      }
+      
+      if AppDelegate.mode != AppDelegate.AppMode.RELEASE {
+        parameters["onlyPublished"] = "false"
+      }
+      
+      NetworkUtil.getJsonFromUrl(url, parameters: parameters, success: {
+        json in
+        
+        dispatch_async(dispatch_get_main_queue()) {
+          let attractions = JsonParserService.parseAttractions(json)
+          for attraction in attractions {
+            if let notes = DatabaseService.getAttractionNotes(attraction.item().id) {
+              attraction.listing.notes = notes
+            }
+          }
+          
+          handler(attractions)
+          
+        }}, failure: nil)
+    }
   }
   
   class func getJsonFromPost(var url: String, body: String, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) {

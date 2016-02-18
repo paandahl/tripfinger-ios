@@ -49,6 +49,7 @@ class ChooseAttractionView: MDCSwipeToChooseView {
     
     if attraction.listing.item.offline {
       imageView.contentMode = UIViewContentMode.ScaleAspectFill
+      print("loading attraction image \(attraction.item().images[0].getFileUrl())")
       imageView.image = UIImage(data: NSData(contentsOfURL: attraction.item().images[0].getFileUrl())!)
     }
     else {

@@ -24,6 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
       print("Switching to test mode")
       AppDelegate.mode = AppMode.TEST
     }
+    if NSProcessInfo.processInfo().arguments.contains("OFFLINE") {
+      print("Simulating offline mode")
+      NetworkUtil.simulateOffline = true
+    }
+    
+    
     
     let URLCache = NSURLCache(memoryCapacity: 20 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
     NSURLCache.setSharedURLCache(URLCache)

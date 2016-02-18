@@ -254,14 +254,18 @@ class DownloadService {
     }
   }
   
-  class func fetchImages(guideItem: GuideItem, path: NSURL) { //TODO: fix so that image urls are replaced by offline urls
+  class func getLocalPartOfFileUrl(fileUrl: NSURL) -> String {
+    let pathIndex = fileUrl.absoluteString.rangeOfString("/Library/", options: NSStringCompareOptions.BackwardsSearch)
+    return fileUrl.absoluteString.substringFromIndex(pathIndex!.endIndex)
+  }
+  
+  class func fetchImages(guideItem: GuideItem, path: NSURL) {
     for image in guideItem.images {
       let index = gcsImagesUrl.startIndex.advancedBy(gcsImagesUrl.characters.count)
       let fileName = image.url.substringFromIndex(index)
       let destinationPath = path.URLByAppendingPathComponent(fileName)
       NetworkUtil.saveDataFromUrl(image.url, destinationPath: destinationPath)
-      let pathIndex = destinationPath.absoluteString.rangeOfString("/Library/")
-      image.url = destinationPath.absoluteString.substringFromIndex(pathIndex!.endIndex)
+      image.url = getLocalPartOfFileUrl(destinationPath)
     }
     for guideSection in guideItem.guideSections {
       fetchImages(guideSection.item, path: path)

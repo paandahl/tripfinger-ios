@@ -64,11 +64,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
         }
       } else {
         noElementsLabel.hidden = false
-        if session.currentRegion == nil {
-          noElementsLabel.text = "Select a region to view attractions."
-        } else {
-          noElementsLabel.text = "No attractions to swipe."
-        }
+        noElementsLabel.text = "No attractions to swipe."
         noElementsLabel.sizeToFit()
       }
     } else {
