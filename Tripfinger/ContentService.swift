@@ -222,6 +222,10 @@ class ContentService {
       parameters["category"] = String(category.rawValue)
     }
     
+    if AppDelegate.mode != AppDelegate.AppMode.RELEASE {
+      parameters["onlyPublished"] = "false"
+    }
+    
     NetworkUtil.getJsonFromUrl(url, parameters: parameters, success: {
       json in
       
