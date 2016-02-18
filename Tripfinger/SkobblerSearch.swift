@@ -203,8 +203,6 @@ class SkobblerSearch: NSObject {
       
       if cities.count == 0 {
         print("No cities offline")
-        let thrower = {throw Error.RuntimeError("Hoi")}
-        try! thrower()
         task.decrementNestedCounter()
         return
       }

@@ -28,6 +28,8 @@
 		257922C71BA308A9005EA785 /* Attraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922C61BA308A9005EA785 /* Attraction.swift */; };
 		257922D21BA48697005EA785 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D11BA48697005EA785 /* SwiftyJSON.swift */; };
 		257922D41BA488EB005EA785 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D31BA488EB005EA785 /* DataManager.swift */; };
+		258B3A6F1C758B9000106EB2 /* TextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258B3A6E1C758B9000106EB2 /* TextMessageCell.swift */; };
+		258B3A711C75A29300106EB2 /* SearchOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 258B3A701C75A29300106EB2 /* SearchOnlineTest.swift */; };
 		2598E91F1C65B4D200B693A4 /* SkobblerSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2598E91E1C65B4D200B693A4 /* SkobblerSearch.swift */; };
 		2598E9211C65B4DC00B693A4 /* OnlineSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2598E9201C65B4DC00B693A4 /* OnlineSearch.swift */; };
 		2598E9251C65E27600B693A4 /* SkobblerSearchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2598E9241C65E27600B693A4 /* SkobblerSearchTest.swift */; };
@@ -172,6 +174,8 @@
 		257922C61BA308A9005EA785 /* Attraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attraction.swift; sourceTree = "<group>"; };
 		257922D11BA48697005EA785 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Tripfinger/SwiftyJSON.swift; sourceTree = "<group>"; };
 		257922D31BA488EB005EA785 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		258B3A6E1C758B9000106EB2 /* TextMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageCell.swift; sourceTree = "<group>"; };
+		258B3A701C75A29300106EB2 /* SearchOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOnlineTest.swift; sourceTree = "<group>"; };
 		2598E91E1C65B4D200B693A4 /* SkobblerSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkobblerSearch.swift; sourceTree = "<group>"; };
 		2598E9201C65B4DC00B693A4 /* OnlineSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineSearch.swift; sourceTree = "<group>"; };
 		2598E9241C65E27600B693A4 /* SkobblerSearchTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkobblerSearchTest.swift; sourceTree = "<group>"; };
@@ -347,6 +351,7 @@
 				25C48EA21C71CCE600BCAABB /* SwipeViewOnlineTest.swift */,
 				254091111C0E83F000A2002F /* TripfingerUITests.swift */,
 				25C48EA81C7455DD00BCAABB /* ListViewOnlineTest.swift */,
+				258B3A701C75A29300106EB2 /* SearchOnlineTest.swift */,
 			);
 			path = TripfingerUITests;
 			sourceTree = "<group>";
@@ -533,14 +538,15 @@
 				25D707CD1BC82231005A4BBA /* CategoryCell.swift */,
 				25D707BE1BC669E6005A4BBA /* CategoryCell.xib */,
 				25B5068E1BB4009600A36BA1 /* ChooseAttractionView.swift */,
-				25D707CB1BC6D05B005A4BBA /* GuideItemCell.swift */,
 				2503D3AF1BE133290078C0F0 /* FilterBox.swift */,
 				2503D3AD1BE1330E0078C0F0 /* FilterBox.xib */,
+				25D707CB1BC6D05B005A4BBA /* GuideItemCell.swift */,
 				25B506901BB401F400A36BA1 /* ImageLabelView.swift */,
 				25D436481BDA50570016E362 /* ListingCell.swift */,
 				25D436461BDA4C560016E362 /* ListingCell.xib */,
 				25F048E61BCC4B7E002DE14E /* LoadingCell.xib */,
 				25C8F3D91C44CB7C007BD932 /* TableSection.swift */,
+				258B3A6E1C758B9000106EB2 /* TextMessageCell.swift */,
 			);
 			name = "UI Components";
 			sourceTree = "<group>";
@@ -811,6 +817,7 @@
 			files = (
 				25C48EA91C7455DD00BCAABB /* ListViewOnlineTest.swift in Sources */,
 				25C48EA71C72E7DC00BCAABB /* DownloadCountryTest.swift in Sources */,
+				258B3A711C75A29300106EB2 /* SearchOnlineTest.swift in Sources */,
 				25A14DE61C6453B500074F87 /* GuideViewOnlineTest.swift in Sources */,
 				254091121C0E83F000A2002F /* TripfingerUITests.swift in Sources */,
 				25C48EA31C71CCE600BCAABB /* SwipeViewOnlineTest.swift in Sources */,
@@ -830,6 +837,7 @@
 				25D281CD1BFBB6B30069BE86 /* GuideItemImage.swift in Sources */,
 				25D707CE1BC82232005A4BBA /* CategoryCell.swift in Sources */,
 				25C8F3DC1C44FD3C007BD932 /* UITableView+ReloadData.swift in Sources */,
+				258B3A6F1C758B9000106EB2 /* TextMessageCell.swift in Sources */,
 				250651EB1BD264B7002C3883 /* UIImageView+DownloadImage.swift in Sources */,
 				25D4363A1BD57BAF0016E362 /* MultiStepSearch.m in Sources */,
 				25D707D31BCA7620005A4BBA /* UINib+RegisterNib.swift in Sources */,

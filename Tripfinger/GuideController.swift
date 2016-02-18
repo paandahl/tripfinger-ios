@@ -8,6 +8,7 @@ protocol GuideControllerDelegate: class {
 class GuideController: UITableViewController, SubController {
   struct TableCellIdentifiers {
     static let guideItemCell = "GuideItemCell"
+    static let textMessageCell = "TextMessageCell"
     static let categoryCell = "CategoryCell"
     static let loadingCell = "LoadingCell"
   }
@@ -38,6 +39,7 @@ class GuideController: UITableViewController, SubController {
     tableView.tableFooterView = UIView.init(frame: CGRectZero)
     
     UINib.registerClass(GuideItemCell.self, reuseIdentifier: TableCellIdentifiers.guideItemCell, forTableView: tableView)
+    UINib.registerClass(TextMessageCell.self, reuseIdentifier: TableCellIdentifiers.textMessageCell, forTableView: tableView)
     UINib.registerNib(TableCellIdentifiers.categoryCell, forTableView: tableView)
     UINib.registerNib(TableCellIdentifiers.loadingCell, forTableView: tableView)
     
@@ -165,7 +167,9 @@ class GuideController: UITableViewController, SubController {
         countryMap[country.listing.worldArea] = countryList        
       }
     }
-    countryMap["Beta"] = betaList
+    if betaList.count > 0 {
+      countryMap["Beta"] = betaList
+    }
     return countryMap
   }
 
@@ -200,12 +204,19 @@ extension GuideController {
     tableSections = [TableSection]()
     
     if session.currentItem == nil {
-      for (regionName, countryList) in countryLists {
-        let section = TableSection(title: regionName, cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
-        for country in countryList {
-          section.elements.append((title: country.listing.item.name!, value: country))
-        }
+      if !NetworkUtil.connectedToNetwork() && countryLists.count == 0 {
+        let section = TableSection(cellIdentifier: TableCellIdentifiers.textMessageCell, handler: nil)
+        section.elements.append((title: "", value: ""))
         tableSections.append(section)
+      }
+      else {
+        for (regionName, countryList) in countryLists {
+          let section = TableSection(title: regionName, cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+          for country in countryList {
+            section.elements.append((title: country.listing.item.name!, value: country))
+          }
+          tableSections.append(section)
+        }
       }
     } else if (session.currentSection == nil && session.currentItem.category > Region.Category.CONTINENT.rawValue) || (session.currentSection != nil && session.currentSection.item.content != nil) {
       let section = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell, handler: nil)
@@ -282,6 +293,10 @@ extension GuideController {
         cell.expand()
       }
       cell.setNeedsUpdateConstraints()
+    }
+    else if let cell = cell as? TextMessageCell {
+      print("setting textmessagecell")
+      cell.setTextMessage("You are offline. Go online to view and download countries.")
     }
     else if cell.reuseIdentifier == TableCellIdentifiers.loadingCell {
       let indicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
