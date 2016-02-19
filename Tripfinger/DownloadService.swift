@@ -6,11 +6,13 @@ import BrightFutures
 
 class DownloadService {
   
+  static var mapDownloadManager = MapDownloadManager()
+  static var downloadHelper: SKTDownloadObjectHelper?
+  static var downloadPath: String!
   static let tripfingerUrl = "https://server.tripfinger.com"
   static let gcsMapsUrl = "https://storage.googleapis.com/tripfinger-maps/"
   static let gcsImagesUrl = "https://storage.googleapis.com/tripfinger-maps/"
   
-  static var mapDownloadManager = MapDownloadManager()
   
   class func isCountryDownloaded(country: Region, mapsObject: SKTMapsObject) -> Bool {
     
@@ -117,12 +119,15 @@ class DownloadService {
   
   class func downloadCountry(mapsObject: SKTMapsObject, countryName: String, package: SKTPackage, onlyMap: Bool = false, progressHandler: Float -> (), finishedHandler: () -> ()) {
     
+    UIApplication.sharedApplication().idleTimerDisabled = true
+
     let countryPath = NSURL.createDirectory(.LibraryDirectory, withPath: countryName)
     var finished = true
     if !hasMapPackage(.Country, name: countryName, mapsObject: mapsObject) {
       finished = false
       try! downloadMapForRegion(countryName, regionPath: countryPath, package: package, progressHandler: progressHandler) {
         if finished {
+          UIApplication.sharedApplication().idleTimerDisabled = false
           finishedHandler()
         }
         else {
@@ -182,6 +187,19 @@ class DownloadService {
     }
   }
   
+  class func resumeDownloadsIfNecessary() {
+    let unfinishedDownloadsCount = SKTDownloadManager.sharedInstance().countDownloadHelpersNotFullyDownloaded()
+    print("Will try to resume unfinished downloads: \(unfinishedDownloadsCount)")
+    print("is paused: \(SKTDownloadManager.sharedInstance().isDownloadPaused())")
+    print("canRestartDownload: \(SKTDownloadManager.canRestartDownload())")
+    if let downloadHelper = downloadHelper where SKTDownloadManager.canRestartDownload() {
+      SKTDownloadManager.sharedInstance().requestDownloads([downloadHelper], startAutomatically: true, withDelegate: mapDownloadManager, withDataSource: mapDownloadManager, withPath: downloadPath)
+    }
+    SKTDownloadManager.sharedInstance().resumeDownload()
+    if unfinishedDownloadsCount > 0 || SKTDownloadManager.sharedInstance().isDownloadPaused() {
+    }
+  }
+  
   class func downloadMapForRegion(regionName: String, regionPath: NSURL, package: SKTPackage, progressHandler: Float -> (), finishedHandler: () -> ()) throws {
     
     if regionName == "Brunei" {
@@ -196,10 +214,11 @@ class DownloadService {
     
     print("path: \(regionPath.path)")
     
-    let region: SKTDownloadObjectHelper =  SKTDownloadObjectHelper.downloadObjectHelperWithSKTPackage(package) as! SKTDownloadObjectHelper
+    downloadHelper =  SKTDownloadObjectHelper.downloadObjectHelperWithSKTPackage(package) as? SKTDownloadObjectHelper
+    downloadPath = regionPath.path!
     mapDownloadManager.progressHandler = progressHandler
     mapDownloadManager.finishedHandler = finishedHandler
-    SKTDownloadManager.sharedInstance().requestDownloads([region], startAutomatically: true, withDelegate: mapDownloadManager, withDataSource: mapDownloadManager, withPath: regionPath.path!)
+    SKTDownloadManager.sharedInstance().requestDownloads([downloadHelper!], startAutomatically: true, withDelegate: mapDownloadManager, withDataSource: mapDownloadManager, withPath: downloadPath)
     
     
     //    var fileName = regionId + ".skm"
@@ -238,19 +257,23 @@ class DownloadService {
       
       let region = JsonParserService.parseRegionTreeFromJson(json)
       
-      fetchImages(region, path: path)
+      let dispatchGroup = dispatch_group_create()
+      fetchImages(region, path: path, dispatchGroup: dispatchGroup)
       
       try! DatabaseService.saveRegion(region)
       
-      finishedHandler()
+      dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) {
+        print("Finished image downloads")
+        finishedHandler()
+      }
     })
     
   }
   
-  class func fetchImages(region: Region, path: NSURL) {
-    fetchImages(region.item(), path: path)
+  class func fetchImages(region: Region, path: NSURL, dispatchGroup: dispatch_group_t) {
+    fetchImages(region.item(), path: path, dispatchGroup: dispatchGroup)
     for attraction in region.attractions {
-      fetchImages(attraction.listing.item, path: path)
+      fetchImages(attraction.listing.item, path: path, dispatchGroup: dispatchGroup)
     }
   }
   
@@ -259,23 +282,23 @@ class DownloadService {
     return fileUrl.absoluteString.substringFromIndex(pathIndex!.endIndex)
   }
   
-  class func fetchImages(guideItem: GuideItem, path: NSURL) {
+  class func fetchImages(guideItem: GuideItem, path: NSURL, dispatchGroup: dispatch_group_t) {
     for image in guideItem.images {
       let index = gcsImagesUrl.startIndex.advancedBy(gcsImagesUrl.characters.count)
       let fileName = image.url.substringFromIndex(index)
       let destinationPath = path.URLByAppendingPathComponent(fileName)
-      NetworkUtil.saveDataFromUrl(image.url, destinationPath: destinationPath)
+      NetworkUtil.saveDataFromUrl(image.url, destinationPath: destinationPath, dispatchGroup: dispatchGroup)
       image.url = getLocalPartOfFileUrl(destinationPath)
     }
     for guideSection in guideItem.guideSections {
-      fetchImages(guideSection.item, path: path)
+      fetchImages(guideSection.item, path: path, dispatchGroup: dispatchGroup)
     }
     for categoryDescription in guideItem.categoryDescriptions {
-      fetchImages(categoryDescription.item, path: path)
+      fetchImages(categoryDescription.item, path: path, dispatchGroup: dispatchGroup)
     }
     for subRegion in guideItem.subRegions {
       let subPath = NSURL.appendToDirectory(path, pathElement: subRegion.getName())
-      fetchImages(subRegion, path: subPath)
+      fetchImages(subRegion, path: subPath, dispatchGroup: dispatchGroup)
     }
   }
   
@@ -322,7 +345,7 @@ class MapDownloadManager: NSObject, SKTDownloadManagerDelegate, SKTDownloadManag
   }
   
   func downloadManager(downloadManager: SKTDownloadManager, didDownloadDownloadHelper downloadHelper: SKTDownloadObjectHelper, withSuccess success: Bool) {
-    print("Finished downloading region.")
+    print("Finished downloading map.")
     SKMapsService.sharedInstance().packagesManager.addOfflineMapPackageNamed("regionId", inContainingFolderPath: "regionPath.path!")
     
     if let finishedHandler = finishedHandler {
@@ -343,6 +366,25 @@ class MapDownloadManager: NSObject, SKTDownloadManagerDelegate, SKTDownloadManag
     try! fman.removeItemAtPath(path)
   }
   
+  func operationsCancelledByOSDownloadManager(downloadManager: SKTDownloadManager!) {
+    print("OP_CANCELLED_BY_OS")
+  }
+  
+  func didPauseDownload() {
+    print("DIDPAUSEDOWNLOAD")
+  }
+  
+  func downloadManager(downloadManager: SKTDownloadManager!, didPauseDownloadForDownloadHelper downloadHelper: SKTDownloadObjectHelper!) {
+    print("DWN_MNG_DIDPAUSEDOWNLOAD")
+  }
+  
+  func didCancelDownload() {
+    print("DIDCANCELDOWNLOAD")
+  }
+  
+  func downloadManager(downloadManager: SKTDownloadManager!, didCancelDownloadForDownloadHelper downloadHelper: SKTDownloadObjectHelper!) {
+    print("DWN_MNG_DIDCANCELDOWNLOAD")
+  }
   
   func isOnBoardMode() -> Bool {
     return false

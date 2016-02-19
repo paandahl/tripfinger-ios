@@ -1,9 +1,12 @@
 import SKMaps
 import RealmSwift
+import Alamofire
 
 class SearchService: NSObject {
   
   let skobblerSearch: SkobblerSearch
+  var onlineSearchRequest: Request?
+  
   var skobblerResults = [SimplePOI]()
   var databaseResults = List<SimplePOI>()
   var onlineResults = List<SimplePOI>()
@@ -20,8 +23,11 @@ class SearchService: NSObject {
     skobblerSearch.setLocation(location, proximityInKm: proximityInKm)
   }
   
-  func cancelSearch(callback: () -> ()) {
+  func cancelSearch(callback: (() -> ())? = nil) {
     skobblerSearch.cancelSearch(callback)
+    if let onlineSearchRequest = onlineSearchRequest {
+      onlineSearchRequest.cancel()
+    }
   }
   
   //TODO: Need to handle duplicates from online, database and skobbler search
@@ -43,7 +49,7 @@ class SearchService: NSObject {
 
     // Online search (regions and attractions)
     if NetworkUtil.connectedToNetwork() {
-      OnlineSearch.search(query, gradual: true) { searchResults in
+      onlineSearchRequest = OnlineSearch.search(query) { searchResults in
         self.onlineResults = searchResults
         handleSearchResults()
       }

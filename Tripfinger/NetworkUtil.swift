@@ -51,7 +51,7 @@ class NetworkUtil {
     let request = Alamofire.request(method, url, parameters: parameters).validate(statusCode: 200..<300)
     let backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
     
-    request.response(
+    request.validate(statusCode: 200..<300).response(
       queue: backgroundQueue,
       responseSerializer: Request.JSONResponseSerializer(options: .AllowFragments),
       completionHandler: {
@@ -75,17 +75,17 @@ class NetworkUtil {
     return request
   }
   
-  class func saveDataFromUrl(url: String, destinationPath: NSURL, retryTimes: Int = 100) {
-    let nsUrl = NSURL(string: url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
-
+  class func saveDataFromUrl(url: String, destinationPath: NSURL, dispatchGroup: dispatch_group_t? = nil, retryTimes: Int = 100) {
+    let nsUrl = encodeTripfingerImageUrl(url)
     let request = alamoFireManager.request(.GET, nsUrl)
     let backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
     
-    let exceptionHandler = {
-      throw Error.RuntimeError("ERROR: Downloading file failed: \(url)")
+    if let dispatchGroup = dispatchGroup {
+      dispatch_group_enter(dispatchGroup)
+      print("dispatch_group_enter: \(url)")
     }
 
-    request.response(
+    request.validate(statusCode: 200..<300).response(
       queue: backgroundQueue,
       responseSerializer: Request.dataResponseSerializer(),
       completionHandler: {
@@ -96,21 +96,43 @@ class NetworkUtil {
           print("Writing image to file: \(destinationPath)")
           let result = response.data?.writeToURL(destinationPath, atomically: true)
           if !result! {
-            print("ERROR: Writing file failed")
+            try! { throw Error.RuntimeError("ERROR: Writing file failed: \(destinationPath)") }()
+          }
+          else {
+            if let dispatchGroup = dispatchGroup {
+              dispatch_group_leave(dispatchGroup)
+              print("dispatch_group_leave: \(url)")
+            }
           }
         }
         else {
-          if retryTimes > 0 {
-            print("retrying downlaod of: \(url)")
-            NetworkUtil.saveDataFromUrl(url, destinationPath: destinationPath, retryTimes: retryTimes - 1)
+          if retryTimes > 0 && response.response?.statusCode < 400 {
+            print("retrying download of: \(url)")
+            saveDataFromUrl(url, destinationPath: destinationPath, dispatchGroup: dispatchGroup, retryTimes: retryTimes - 1)
+            if let dispatchGroup = dispatchGroup {
+              dispatch_group_leave(dispatchGroup)
+              print("dispatch_group_leave: \(url)")
+            }
           }
           else {
             print(response.description)
             print(response)
             print("response: \(response.response?.statusCode)")
-            try! exceptionHandler()
+            try! { throw Error.RuntimeError("ERROR: Downloading file failed: \(url)") }()
           }
         }
     })
+  }
+  
+  /*
+   * Necessary because on server, some image urls are encoded properly, some are not
+   */
+  class func encodeTripfingerImageUrl(url: String) -> NSURL {
+    let index = url.rangeOfString("/tripfinger-images/")!
+    let decodedUrl = url.stringByRemovingPercentEncoding!
+    let firstPart = decodedUrl.substringToIndex(index.endIndex)
+    let lastPart = decodedUrl.substringFromIndex(index.endIndex)
+    let encodedUrl = firstPart + lastPart.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLPathAllowedCharacterSet())!
+    return NSURL(string: encodedUrl)!
   }
 }

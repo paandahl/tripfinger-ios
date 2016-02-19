@@ -24,6 +24,7 @@
 		254091061C0D479B00A2002F /* SKMaps.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 254091041C0D478100A2002F /* SKMaps.framework */; };
 		254091071C0D479B00A2002F /* SKMaps.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 254091041C0D478100A2002F /* SKMaps.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		254091091C0D47C200A2002F /* SKMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 254091081C0D47C200A2002F /* SKMaps.bundle */; };
+		256E30E41C77303E00B6CB3A /* NetworkUtilTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256E30E31C77303E00B6CB3A /* NetworkUtilTest.swift */; };
 		257922C71BA308A9005EA785 /* Attraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922C61BA308A9005EA785 /* Attraction.swift */; };
 		257922D21BA48697005EA785 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D11BA48697005EA785 /* SwiftyJSON.swift */; };
 		257922D41BA488EB005EA785 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 257922D31BA488EB005EA785 /* DataManager.swift */; };
@@ -170,6 +171,7 @@
 		254091081C0D47C200A2002F /* SKMaps.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = SKMaps.bundle; sourceTree = "<group>"; };
 		2540910F1C0E83F000A2002F /* TripfingerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripfingerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		254091131C0E83F000A2002F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		256E30E31C77303E00B6CB3A /* NetworkUtilTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkUtilTest.swift; sourceTree = "<group>"; };
 		257922C61BA308A9005EA785 /* Attraction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Attraction.swift; sourceTree = "<group>"; };
 		257922D11BA48697005EA785 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SwiftyJSON.swift; path = Tripfinger/SwiftyJSON.swift; sourceTree = "<group>"; };
 		257922D31BA488EB005EA785 /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
@@ -499,6 +501,7 @@
 				2598E9301C66FC0400B693A4 /* DatabaseServiceTest.swift */,
 				25D0A4051C15B8AD00E54C5E /* DownloadServiceTest.swift */,
 				25A14DEB1C64D2E500074F87 /* JsonParserServiceTest.swift */,
+				256E30E31C77303E00B6CB3A /* NetworkUtilTest.swift */,
 				2598E9231C65E26700B693A4 /* Search */,
 				25C9DFE41B9CD84200C516C1 /* Supporting Files */,
 				2598E9281C66E18D00B693A4 /* SyncManagerTest.swift */,
@@ -886,6 +889,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				256E30E41C77303E00B6CB3A /* NetworkUtilTest.swift in Sources */,
 				2598E9271C66E12B00B693A4 /* OnlineSearchTest.swift in Sources */,
 				2598E9291C66E18D00B693A4 /* SyncManagerTest.swift in Sources */,
 				2598E9311C66FC0400B693A4 /* DatabaseServiceTest.swift in Sources */,

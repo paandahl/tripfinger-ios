@@ -5,11 +5,13 @@ extension UIImageView {
     if url == "" {
       throw Error.RuntimeError("URL was empty")
     }
-    let nsUrl = NSURL(string: url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)!
+    let nsUrl = NetworkUtil.encodeTripfingerImageUrl(url)
     return loadImageWithNSUrl(nsUrl)
   }
   
   func loadImageWithNSUrl(url: NSURL) -> NSURLSessionDataTask {
+    print("Loading image from url: \(url.absoluteString)")
+
     let session = NSURLSession.sharedSession()
     let downloadTask = session.dataTaskWithURL(url) {
       [weak self] data, response, error in
@@ -21,6 +23,9 @@ extension UIImageView {
               strongSelf.image = image
             }
           }
+      }
+      else {
+         try! { throw Error.RuntimeError("Could not load url: \(url.absoluteString)") }()
       }
     }
     

@@ -26,12 +26,14 @@ class SkobblerSearch: NSObject {
   }
 
   
-  func cancelSearch(callback: () -> ()) {
+  func cancelSearch(callback: (() -> ())? = nil) {
     SearchTask.cancel()
     SyncManager.run_async {
       self.waitUntilSearchFinished()
-      dispatch_async(dispatch_get_main_queue()) {
-        callback()        
+      if let callback = callback {
+        dispatch_async(dispatch_get_main_queue()) {
+          callback()
+        }        
       }
     }
   }

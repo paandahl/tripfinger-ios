@@ -113,6 +113,7 @@ class GuideController: UITableViewController, SubController {
   }
   
   func navigateBack(sender: UIButton) {
+    guideItemExpanded = false
     session.moveBackInHierarchy {
       self.updateUI()
     }
@@ -345,6 +346,7 @@ extension GuideController {
   }
   
   func navigateToRegion(object: AnyObject) {
+    guideItemExpanded = false
     let region = object as! Region
     
     session.changeRegion(region) {

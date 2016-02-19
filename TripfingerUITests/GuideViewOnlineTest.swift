@@ -3,6 +3,10 @@ import XCTest
 
 class GuideViewOnlineTest: XCTestCase {
   
+  let app = XCUIApplication()
+  let exists = NSPredicate(format: "exists == 1")
+  let hittable = NSPredicate(format: "hittable == 1")
+
   override func setUp() {
     super.setUp()
     continueAfterFailure = false
@@ -16,26 +20,43 @@ class GuideViewOnlineTest: XCTestCase {
   }
   
   func testNavigateThroughHierarchy() {
-    let app = XCUIApplication()
-    let exists = NSPredicate(format: "exists == 1")
     
     let thailandRow = app.tables.staticTexts["Thailand"]
     expectationForPredicate(exists, evaluatedWithObject: thailandRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     thailandRow.tap()
     
+    sleep(2)
+    let readMoreButton = app.buttons["Read more"]
+    expectationForPredicate(hittable, evaluatedWithObject: readMoreButton, handler: nil)
+    waitForExpectationsWithTimeout(60, handler: nil)
+    readMoreButton.tap()
+    
+    let understandRow = app.tables.staticTexts["Understand"]
+    expectationForPredicate(exists, evaluatedWithObject: understandRow, handler: nil)
+    waitForExpectationsWithTimeout(60, handler: nil)
+    understandRow.tap()
+    
+    let historyRow = app.tables.staticTexts["History"]
+    expectationForPredicate(exists, evaluatedWithObject: historyRow, handler: nil)
+    waitForExpectationsWithTimeout(60, handler: nil)
+    
+    var backButton = app.buttons["< Thailand"]
+    backButton.tap()
+
     let exploreCountryRow = app.tables.staticTexts["Explore the country"]
     expectationForPredicate(exists, evaluatedWithObject: exploreCountryRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
+
     let bangkokRow = app.tables.staticTexts["Bangkok"]
     bangkokRow.tap()
-
+    
     let silomRow = app.tables.staticTexts["Silom"]
     expectationForPredicate(exists, evaluatedWithObject: silomRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     silomRow.tap()
 
-    var backButton = app.buttons["< Bangkok"]
+    backButton = app.buttons["< Bangkok"]
     expectationForPredicate(exists, evaluatedWithObject: backButton, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     backButton.tap()

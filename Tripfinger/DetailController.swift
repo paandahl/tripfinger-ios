@@ -107,9 +107,9 @@ class DetailController: UIViewController {
     }
     else {
       if attraction.item().images.count > 0 {
-        print("Loading image")
+        let imageUrl = attraction.item().images[0].url + "-712x534"
         mainImage.image = UIImage(named: "Placeholder")
-        try! mainImage.loadImageWithUrl(attraction.item().images[0].url + "-712x534")
+        try! mainImage.loadImageWithUrl(imageUrl)
       }
       else {
         print("No image")

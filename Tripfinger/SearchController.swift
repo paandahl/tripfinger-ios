@@ -48,6 +48,7 @@ extension SearchController: UISearchBarDelegate {
     if (searchText.characters.count > 1 && searchText != lastSearchText) {
       
       lastSearchText = searchText
+      searchService.cancelSearch()
       searchService.search(searchText) { results in
         print("searchResults received in controller: \(results.count)")
         self.searchResults = results
