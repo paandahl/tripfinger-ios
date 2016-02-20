@@ -75,8 +75,45 @@ class NetworkUtil {
     return request
   }
   
-  class func saveDataFromUrl(url: String, destinationPath: NSURL, dispatchGroup: dispatch_group_t? = nil, retryTimes: Int = 100) {
-    let nsUrl = encodeTripfingerImageUrl(url)
+//  class func downloadFile(url: String, destinationPath: NSURL, progressHandler: (Float -> ())?, finishedHandler: (() -> ())?) {
+//    Alamofire.request(.GET, url)
+//      .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
+//        
+//        if let progressHandler = progressHandler {
+//          let progress = Float(totalBytesRead) / Float(totalBytesExpectedToRead)
+//          
+//          dispatch_async(dispatch_get_main_queue()) {
+//            progressHandler(progress)
+//          }
+//        }
+//      }
+//      .responseData { response in
+//        
+//        print("Writing file to disk: \(destinationPath.absoluteString)")
+//        if response.result.isSuccess {
+//          let result = response.data?.writeToURL(destinationPath, atomically: true)
+//          if !result! {
+//            print("ERROR: Writing file failed")
+//          }
+//          if let finishedHandler = finishedHandler {
+//            finishedHandler()
+//          }
+//        }
+//        else {
+//          print("ERROR: Downloading file failed")
+//        }
+//    }
+//  }
+
+  
+  class func saveDataFromUrl(url: String, destinationPath: NSURL, dispatchGroup: dispatch_group_t? = nil, retryTimes: Int = 100, progressHandler: (Float -> ())? = nil) {
+    var nsUrl: NSURL!
+    if url.containsString("tripfinger-images") {
+      nsUrl = encodeTripfingerImageUrl(url)
+    }
+    else {
+      nsUrl = NSURL(string: url)!
+    }
     let request = alamoFireManager.request(.GET, nsUrl)
     let backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
     
@@ -85,7 +122,18 @@ class NetworkUtil {
       print("dispatch_group_enter: \(url)")
     }
 
-    request.validate(statusCode: 200..<300).response(
+    request.validate(statusCode: 200..<300)
+      .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
+        
+        if let progressHandler = progressHandler {
+          let progress = Float(totalBytesRead) / Float(totalBytesExpectedToRead)
+          
+          dispatch_async(dispatch_get_main_queue()) {
+            progressHandler(progress)
+          }
+        }
+      }
+      .response(
       queue: backgroundQueue,
       responseSerializer: Request.dataResponseSerializer(),
       completionHandler: {

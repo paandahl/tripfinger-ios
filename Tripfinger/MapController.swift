@@ -308,7 +308,7 @@ class MapController: UIViewController, SubController, SKMapViewDelegate, CLLocat
         mapPoisRequest.cancel()
       }
       
-      if NetworkUtil.connectedToNetwork() {
+      if NetworkUtil.connectedToNetwork() { // TODO: This test can fail right after went offline, should retry
         mapPoisRequest = ContentService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel) {
           searchResults in
           

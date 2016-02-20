@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
   }
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    
+    print("UIDevice id \(UIDevice.currentDevice().identifierForVendor)")
 
     if NSProcessInfo.processInfo().arguments.contains("TEST") {
       print("Switching to test mode")

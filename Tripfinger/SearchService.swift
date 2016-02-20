@@ -11,9 +11,9 @@ class SearchService: NSObject {
   var databaseResults = List<SimplePOI>()
   var onlineResults = List<SimplePOI>()
   
-  required init(mapsObject: SKTMapsObject) {
+  required override init() {
     print("initz")
-    self.skobblerSearch = SkobblerSearch(mapsObject: mapsObject)
+    self.skobblerSearch = SkobblerSearch()
   }
   
   /*

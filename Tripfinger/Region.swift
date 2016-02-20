@@ -30,7 +30,6 @@ class Region: Object {
   
   // temporary data to make life easier
   var mapCountry = false
-  var mapPackage: SKTPackage!
   var offline = false;
   
   override static func ignoredProperties() -> [String] {

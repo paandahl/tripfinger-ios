@@ -6,16 +6,13 @@ class SkobblerSearch: NSObject {
   let maxResults = 20
   var searchHandler: ([SKSearchResult] -> ())!
   var packageCode: String!
-  var mapsObject: SKTMapsObject
   
   var location: CLLocation?
   var proximityInKm: Double!
   var citiesForStreetNames: [SimplePOI]? // cache when searching in same location several times
   
-  init(mapsObject: SKTMapsObject) {
-    self.mapsObject = mapsObject
+  override init() {
     super.init()
-    print("inutz: \(unsafeAddressOf(self))")
     SKSearchService.sharedInstance().searchResultsNumber = 10000
   }
   
@@ -100,23 +97,15 @@ class SkobblerSearch: NSObject {
     }
   }
   
-  func getCities(query: String = "", packageCode: String? = nil, task: SearchTask! = nil, handler: ([SimplePOI]) -> ()) {
+  func getCities(query: String = "", countryName: String? = nil, task: SearchTask! = nil, handler: ([SimplePOI]) -> ()) {
     
     runSearchTask(task) { task in
-      if let packageCode = packageCode {
+      if let countryName = countryName {
         self.searchHandler = { results in
-          
-          if query == "" && results.count == 0 { // error, repeat query
-            print("Got no cities for package '\(packageCode)'. Retrying query.")
-            self.getCities(packageCode: packageCode, task: task, handler: handler)
-          }
-          else {
-            task.decrementNestedCounter()
-            let location = self.mapsObject.packageForCode(packageCode).nameForLanguageCode("en")
-            handler(self.parseSearchResults(results, location: location))
-          }
+          task.decrementNestedCounter()
+          handler(self.parseSearchResults(results, location: countryName))
         }
-        self.searchMapData(packageCode, listLevel: SKListLevel.CityList, searchString: query, parent: 0)
+        self.searchMapData(countryName, listLevel: SKListLevel.CityList, searchString: query, parent: 0)
       }
       else {
         let mapPackages = SKMapsService.sharedInstance().packagesManager.installedOfflineMapPackages as! [SKMapPackage]
@@ -147,16 +136,14 @@ class SkobblerSearch: NSObject {
         self.iterateThroughMapPackages(query, packages: packages, index: index, handler: handler)
       }
       else {
-        print("mapsObject: \(self.mapsObject)")
         print("mapPackage: \(mapPackage)")
         print("name: \(mapPackage.name)")
-        let location = self.mapsObject.packageForCode(mapPackage.name).nameForLanguageCode("en")
         if index + 1 < packages.count {
-          handler(results, location, false)
+          handler(results, mapPackage.name, false)
           self.iterateThroughMapPackages(query, packages: packages, index: index + 1, handler: handler)
         }
         else {
-          handler(results, location, true)
+          handler(results, mapPackage.name, true)
         }
       }
     }
@@ -166,10 +153,10 @@ class SkobblerSearch: NSObject {
   }
   
   
-  func getStreetsBulk(fullSearchString: String, packageCode: String? = nil, handler: [SimplePOI] -> ()) {
+  func getStreetsBulk(fullSearchString: String, countryName: String? = nil, handler: [SimplePOI] -> ()) {
     runSearchTask { task in
       var allSearchResults = [SimplePOI]()
-      self.getStreets(fullSearchString, packageCode: packageCode, task: task) { streets, finished in
+      self.getStreets(fullSearchString, countryName: countryName, task: task) { streets, finished in
         
         allSearchResults.appendContentsOf(streets)
         
@@ -181,9 +168,9 @@ class SkobblerSearch: NSObject {
     }
   }
   
-  func getStreets(fullSearchString: String, packageCode: String? = nil, task: SearchTask! = nil, handler: ([SimplePOI], Bool) -> ()) {
+  func getStreets(fullSearchString: String, countryName: String? = nil, task: SearchTask! = nil, handler: ([SimplePOI], Bool) -> ()) {
     runSearchTask(task) { task in
-      self.getCities(packageCode: packageCode, task: task) { cities in
+      self.getCities(countryName: countryName, task: task) { cities in
         print("GOTZ \(cities.count) cities...")
         self.getStreetsForCities(fullSearchString, cities: cities, task: task, maxResultsTotal: self.maxResults) { streets, finished in
           if finished {

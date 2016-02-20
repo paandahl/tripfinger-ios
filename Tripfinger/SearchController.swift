@@ -7,7 +7,6 @@ protocol SearchViewControllerDelegate: class {
 
 class SearchController: UITableViewController {
   
-  var mapsObject: SKTMapsObject!
   var regionId: String?
   var countryId: String?
   
@@ -20,7 +19,7 @@ class SearchController: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    searchService = SearchService(mapsObject: mapsObject)
+    searchService = SearchService()
     
     // Include the search controller's search bar within the table's header view.
     searchBar = UISearchBar()

@@ -83,7 +83,7 @@ class SkobblerSearchTest: XCTestCase {
   
   func testGetCitiesInProximity() {
     let expectation = expectationWithDescription("ready")
-    let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
+    let skobblerSearch = SkobblerSearch()
     let location = CLLocation(latitude: 50.847031, longitude: 4.353559)
     skobblerSearch.getCitiesInProximityOf(location, proximityInKm: 30) {
       cities in
@@ -97,8 +97,8 @@ class SkobblerSearchTest: XCTestCase {
   func testGetCities() {
     var readyExpectation = expectationWithDescription("ready")
     
-    let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
-    skobblerSearch.getCities(packageCode: SkobblerSearchTest.belgiumMapPackage) {
+    let skobblerSearch = SkobblerSearch()
+    skobblerSearch.getCities(countryName: SkobblerSearchTest.belgiumMapPackage) {
       cityResults in
       
       print("Found \(cityResults.count) cities.")
@@ -124,7 +124,7 @@ class SkobblerSearchTest: XCTestCase {
   func testSearchForAltitudeCent() {
     let readyExpectation = expectationWithDescription("ready")
     
-    let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
+    let skobblerSearch = SkobblerSearch()
     var fulfilled = false
     skobblerSearch.getStreets("altitude") {
       streets, finished in
@@ -148,10 +148,10 @@ class SkobblerSearchTest: XCTestCase {
   
   func testSkobblerSearchWithNoResults() {
     let readyExpectation = expectationWithDescription("ready")
-    let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
+    let skobblerSearch = SkobblerSearch()
 
     var resultsCounter = 0
-    skobblerSearch.getStreets("jfdsfs", packageCode: "BE") {
+    skobblerSearch.getStreets("jfdsfs", countryName: "BE") {
       streets, finished in
       
       resultsCounter += streets.count
@@ -167,7 +167,7 @@ class SkobblerSearchTest: XCTestCase {
   
   func testFireMultipleSearches() {
     let readyExpectation = expectationWithDescription("multipleSearches")
-    let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
+    let skobblerSearch = SkobblerSearch()
     
     var fulfilled = false
     
@@ -231,8 +231,8 @@ class SkobblerSearchTest: XCTestCase {
     
     var readyExpectation = expectationWithDescription("ready")
     
-    let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
-    skobblerSearch.getStreetsBulk("boulevard dixmude", packageCode: "BE") {
+    let skobblerSearch = SkobblerSearch()
+    skobblerSearch.getStreetsBulk("boulevard dixmude", countryName: "BE") {
       streets in
       
       XCTAssertEqual(1, streets.count, "Search result was not 1")
@@ -250,7 +250,7 @@ class SkobblerSearchTest: XCTestCase {
     
     readyExpectation = expectationWithDescription("ready")
     
-    skobblerSearch.getStreetsBulk("boulevard de dixmude", packageCode: "BE") {
+    skobblerSearch.getStreetsBulk("boulevard de dixmude", countryName: "BE") {
       streets in
       
       XCTAssertEqual(1, streets.count)
@@ -266,7 +266,7 @@ class SkobblerSearchTest: XCTestCase {
   func testUnspecificSearch() {
     let readyExpectation = expectationWithDescription("ready")
     
-    let skobblerSearch = SkobblerSearch(mapsObject: AppDelegate.session.mapsObject)
+    let skobblerSearch = SkobblerSearch()
     skobblerSearch.getStreets("di") {
       streets, finished in
       

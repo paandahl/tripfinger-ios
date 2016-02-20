@@ -3,7 +3,6 @@ import RealmSwift
 
 class DownloadController: UIViewController {
   
-  var mapsObject: SKTMapsObject!
   var country: Region!
   var city: Region!
   var onlyMap = false
@@ -20,7 +19,7 @@ class DownloadController: UIViewController {
     let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "close")
     navigationItem.leftBarButtonItem = cancelButton
     
-    let countryDownloaded = DownloadService.isCountryDownloaded(country, mapsObject: mapsObject)
+    let countryDownloaded = DownloadService.isCountryDownloaded(country)
     let cityDownloaded = false
 //    let cityDownloaded = city == nil ? false : DownloadService.isRegionDownloaded(mapsObject, country: city)
 
@@ -93,8 +92,7 @@ class DownloadController: UIViewController {
 //      }
       
       nameLabel.text = "Downloading \(country.getName())."
-      let countryPackage = mapsObject.getMapPackage(country.getName(), type: .Country)
-      DownloadService.downloadCountry(mapsObject, countryName: country.getName(), package: countryPackage, onlyMap: onlyMap, progressHandler: {
+      DownloadService.downloadCountry(country.getName(), onlyMap: onlyMap, progressHandler: {
         progress in
         
         self.progressView.progress = progress
@@ -105,17 +103,16 @@ class DownloadController: UIViewController {
       })
     }
     else {
-      nameLabel.text = "Downloading \(city.getName())."
-      let cityPackage = mapsObject.getMapPackage(city.getName(), type: .City)
-      DownloadService.downloadCity(country.getName(), cityName: city.getName(), package: cityPackage, onlyMap: onlyMap, progressHandler: {
-        progress in
-        
-        self.progressView.progress = progress
-        
-        }, finishedHandler: {
-          
-          self.deleteButton.hidden = false
-      })
+//      nameLabel.text = "Downloading \(city.getName())."
+//      DownloadService.downloadCity(country.getName(), cityName: city.getName(), onlyMap: onlyMap, progressHandler: {
+//        progress in
+//        
+//        self.progressView.progress = progress
+//        
+//        }, finishedHandler: {
+//          
+//          self.deleteButton.hidden = false
+//      })
       
     }
     downloadButton.enabled = false
@@ -123,12 +120,10 @@ class DownloadController: UIViewController {
   
   func deleteRegion() {
     if city != nil {
-      let cityPackage = mapsObject.getMapPackage(city.getName(), type: .City)
-      DownloadService.deleteRegion(cityPackage.packageCode, countryName: country.getName(), cityName: city.getName())
+//      DownloadService.deleteRegion(cityName, countryName: country.getName(), cityName: city.getName())
     }
     else {
-      let countryPackage = mapsObject.getMapPackage(country.getName(), type: .Country)
-      DownloadService.deleteRegion(countryPackage.packageCode, countryName: country.getName())
+      DownloadService.deleteCountry(country.getName())
     }
     nameLabel.text = "Deleted \(dataHolder.getName())."
     deleteButton.hidden = true

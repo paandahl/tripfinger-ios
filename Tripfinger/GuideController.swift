@@ -98,7 +98,7 @@ class GuideController: UITableViewController, SubController {
     
     // download button
     if session.currentSection == nil && session.currentRegion != nil && session.currentItem.category == Region.Category.COUNTRY.rawValue {
-      let downloaded = DownloadService.isCountryDownloaded(session.currentRegion, mapsObject: session.mapsObject)
+      let downloaded = DownloadService.isCountryDownloaded(session.currentRegion)
       let title = downloaded ? "Downloaded" : "Download"
       downloadButton.setTitle(title, forState: .Normal)
       downloadButton.hidden = false
@@ -125,7 +125,6 @@ class GuideController: UITableViewController, SubController {
   func openDownloadCity(sender: UIButton) {
     let nav = UINavigationController()
     let vc = DownloadController()
-    vc.mapsObject = session.mapsObject
     vc.country = session.currentCountry
     vc.city = session.currentCity
     if session.currentRegion.mapCountry {
@@ -172,21 +171,7 @@ class GuideController: UITableViewController, SubController {
       countryMap["Beta"] = betaList
     }
     return countryMap
-  }
-
-  
-  func getContinentMapPackages() -> [SKTPackage] {
-    var continents = [SKTPackage]()
-    let allContinents = session.mapsObject.packagesForType(.Continent) as! [SKTPackage]
-    for continent in allContinents {
-      if continent.nameForLanguageCode("en") != "Antarctica" {
-        continent.mapsObject = session.mapsObject
-        continents.append(continent)
-      }
-    }
-    return continents
-  }
-  
+  }  
 }
 
 // MARK: - Table data source

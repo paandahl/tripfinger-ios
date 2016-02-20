@@ -4,15 +4,13 @@ import BrightFutures
 
 class Session {
   
-  var mapsObject: SKTMapsObject
   var searchService: SearchService
     
   init() {
     
     let mapsFileUrl = NSBundle.mainBundle().URLForResource("mapsObject", withExtension: "json")!
     let json = JSON(data: NSData(contentsOfURL: mapsFileUrl)!).rawString()!
-    mapsObject = SKTMapsObject.convertFromJSON(json)
-    searchService = SearchService(mapsObject: mapsObject)
+    searchService = SearchService()
   }
   
   // guide hierarchy
