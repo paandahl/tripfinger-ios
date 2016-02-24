@@ -13,6 +13,7 @@ class GuideController: UITableViewController, SubController {
     static let loadingCell = "LoadingCell"
   }
   
+  var contextSwitched = false
   var session: Session!
   var delegate: GuideControllerDelegate!
   
@@ -30,7 +31,7 @@ class GuideController: UITableViewController, SubController {
 
     automaticallyAdjustsScrollViewInsets = false
     let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: nil)
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: nil)
+    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "search")
     navigationItem.rightBarButtonItems = [searchButton, mapButton]
         
     tableView.rowHeight = UITableViewAutomaticDimension
@@ -80,13 +81,21 @@ class GuideController: UITableViewController, SubController {
     }
   }
   
-  func navigateBack(sender: UIButton) {
-    guideItemExpanded = false
-    session.moveBackInHierarchy {
-      self.updateUI()
-    }
-    delegate.navigateInternally {
-      self.updateUI()
+  override func viewWillAppear(animated: Bool) {
+    print("VIEW WILL APPEAR!")
+  }
+  
+  override func viewWillDisappear(animated: Bool) {
+    print("view will dissappear")
+    if let navigationController = navigationController where
+      navigationController.viewControllers.indexOf(self) == nil && !contextSwitched {
+      print("moving back in hierarchy")
+      guideItemExpanded = false
+      let parentGuideController = navigationController.viewControllers.last as! GuideController
+      session.moveBackInHierarchy {
+        print("new currentREgion: \(self.session.currentRegion?.getName())")
+        parentGuideController.updateUI()
+      }
     }
   }
   
@@ -108,7 +117,7 @@ class GuideController: UITableViewController, SubController {
         countries in
         
         for country in countries {
-          country.item().childrenLoaded = false
+          country.item().loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED
         }
         self.countryLists = GuideController.makeCountryMap(countries)
         self.updateUI()
@@ -290,14 +299,7 @@ extension GuideController: GuideItemContainerDelegate {
 }
 
 // MARK: - Navigation
-extension GuideController {
-  
-  func selectedSearchResult(searchResult: SimplePOI) {
-    session.loadRegionFromSearchResult(searchResult) {
-      self.updateUI()
-    }
-    self.updateUI()
-  }
+extension GuideController: SearchViewControllerDelegate {
   
   func navigateToRegion(object: AnyObject) {
     guideItemExpanded = false
@@ -330,6 +332,61 @@ extension GuideController {
   func navigateToCategory(object: AnyObject) {
     let view = object as! String
     delegate.categorySelected(Attraction.Category(rawValue: session.currentItem.category)!, view: view)
+  }
+  
+  func search() {
+    let nav = UINavigationController()
+    let searchController = SearchController()
+    searchController.delegate = self
+    searchController.regionId = session.currentRegion?.getId()
+    searchController.countryId = session.currentCountry?.getId()
+    nav.viewControllers = [searchController]
+    presentViewController(nav, animated: true, completion: nil)
+  }
+  
+  func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ()) {
+    session.loadRegionFromSearchResult(searchResult) {
+      stopSpinner()
+      print("before: \(self.navigationController!.viewControllers)")
+      self.dismissViewControllerAnimated(true) {
+        let nav = self.navigationController!
+        for viewController in nav.viewControllers {
+          if let guideController = viewController as? GuideController {
+            guideController.contextSwitched = true
+          }
+        }
+        nav.popToRootViewControllerAnimated(false)
+        var viewControllers = [nav.viewControllers.first!]
+        if self.session.currentRegion.item().category > Region.Category.COUNTRY.rawValue {
+          let guideController = GuideController(style: .Grouped)
+          guideController.session = self.session
+          guideController.edgesForExtendedLayout = .None // offset from navigation bar
+          guideController.navigationItem.title = self.session.currentRegion.listing.country
+          viewControllers.append(guideController)
+        }
+        if self.session.currentRegion.item().category > Region.Category.SUB_REGION.rawValue {
+          if self.session.currentRegion.listing.subRegion != nil {
+            let guideController = GuideController(style: .Grouped)
+            guideController.session = self.session
+            guideController.edgesForExtendedLayout = .None // offset from navigation bar
+            guideController.navigationItem.title = self.session.currentRegion.listing.subRegion
+            viewControllers.append(guideController)
+          }
+        }
+        if self.session.currentRegion.item().category > Region.Category.CITY.rawValue {
+          let guideController = GuideController(style: .Grouped)
+          guideController.session = self.session
+          guideController.edgesForExtendedLayout = .None // offset from navigation bar
+          guideController.navigationItem.title = self.session.currentRegion.listing.city
+          viewControllers.append(guideController)
+        }
+        let guideController = GuideController(style: .Grouped)
+        guideController.session = self.session
+        guideController.edgesForExtendedLayout = .None // offset from navigation bar
+        viewControllers.append(guideController)
+        nav.setViewControllers(viewControllers, animated: true)
+      }
+    }
   }
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

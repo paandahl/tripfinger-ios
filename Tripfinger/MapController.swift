@@ -336,7 +336,7 @@ extension MapController: SearchViewControllerDelegate {
       dispatch_get_main_queue(), closure)
   }
   
-  func selectedSearchResult(searchResult: SimplePOI) {
+  func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ()) {
     
 //    let promise = Promise<String, NoError>()
 //    if String(searchResult.resultType).hasPrefix("2") { // attraction

@@ -178,7 +178,7 @@ class JsonParserService {
     region.item().categoryDescriptions = parseCategoryDescriptions(region, guideItemJson: json)
     let subRegions = List<Region>()
     for subRegion in parseRegions(json["subRegions"]) {
-      subRegion.item().childrenLoaded = false
+      subRegion.item().loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED
       subRegions.append(subRegion)
     }
     region.item().subRegions = subRegions
@@ -200,12 +200,12 @@ class JsonParserService {
       categoryDescription.item.name = category.entityName(region)
       let categoryDescriptionId = categoryDescriptionsDict[category.rawValue]
       if (categoryDescriptionId != nil) {
-        categoryDescription.item.childrenLoaded = false
+        categoryDescription.item.loadStatus = GuideItem.LoadStatus.CONTENT_NOT_LOADED
         categoryDescription.item.id = categoryDescriptionId
       }
       else {
         categoryDescription.item.content = nil
-        categoryDescription.item.childrenLoaded = true
+        categoryDescription.item.loadStatus = GuideItem.LoadStatus.FULLY_LOADED
       }
       categoryDescriptions.append(categoryDescription)
     }
@@ -219,7 +219,7 @@ class JsonParserService {
       for guideSectionArr in guideSectionsJson {
         let guideSection = GuideText()
         guideSection.item = GuideItem()
-        guideSection.item.childrenLoaded = false
+        guideSection.item.loadStatus = GuideItem.LoadStatus.CONTENT_NOT_LOADED
         guideSection.item.id = guideSectionArr[0].string
         guideSection.item.name = guideSectionArr[1].string
         guideSections.append(guideSection)

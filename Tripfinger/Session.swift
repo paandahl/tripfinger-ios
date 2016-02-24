@@ -30,8 +30,9 @@ class Session {
     ContentService.getRegionWithId(searchResult.listingId) {
       region in
       
-      self.changeRegion(region)
-      handler()
+      self.changeRegion(region) {
+        handler()        
+      }
     }
   }
   
@@ -119,7 +120,7 @@ class Session {
     currentRegion = region
     currentItem = region != nil ? region.listing.item : nil
     
-    if region != nil && !region.listing.item.childrenLoaded {
+    if region != nil && region.listing.item.loadStatus != GuideItem.LoadStatus.FULLY_LOADED {
       ContentService.getRegionFromListing(region.listing) {
         region in
         
@@ -142,7 +143,7 @@ class Session {
     }
     currentSection = section
     currentItem = section.item
-    if !section.item.childrenLoaded {
+    if section.item.loadStatus != GuideItem.LoadStatus.FULLY_LOADED  {
       ContentService.getGuideTextWithId(currentRegion, guideTextId: section.getId()) {
         section in
         

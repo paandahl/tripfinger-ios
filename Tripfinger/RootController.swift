@@ -79,37 +79,25 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
 
 // MARK: - Navigation
 
-extension RootController {
-  
-  @IBAction func navigateToSearch() {
-    let nav = UINavigationController()
-    let searchController = SearchController()
-    searchController.delegate = self
-    searchController.regionId = session.currentRegion?.getId()
-    searchController.countryId = session.currentCountry?.getId()
-    nav.viewControllers = [searchController]
-    view.window!.rootViewController!.presentViewController(nav, animated: true, completion: nil)
-  }  
-}
 
-extension RootController: SearchViewControllerDelegate {
-  func selectedSearchResult(searchResult: SimplePOI) {
-    dismissViewControllerAnimated(true, completion: nil)
-    
-    if searchResult.category == 180 { // street
-      if !(currentController is MapController) {
-        navigateToSubview("mapController", controllerType: MapController.self)
-      }
-    }
-    else if String(searchResult.category).hasPrefix("2") { // Attraction
-      if !(currentController is MapController) {
-        navigateToSubview("mapController", controllerType: MapController.self)
-      }
-    }
-    let subController = currentController as! SubController
-    subController.selectedSearchResult(searchResult)
-  }
-}
+//extension RootController: SearchViewControllerDelegate {
+//  func selectedSearchResult(searchResult: SimplePOI) {
+//    dismissViewControllerAnimated(true, completion: nil)
+//    
+//    if searchResult.category == 180 { // street
+//      if !(currentController is MapController) {
+//        navigateToSubview("mapController", controllerType: MapController.self)
+//      }
+//    }
+//    else if String(searchResult.category).hasPrefix("2") { // Attraction
+//      if !(currentController is MapController) {
+//        navigateToSubview("mapController", controllerType: MapController.self)
+//      }
+//    }
+//    let subController = currentController as! SubController
+//    subController.selectedSearchResult(searchResult)
+//  }
+//}
 
 extension RootController: GuideControllerDelegate {
   

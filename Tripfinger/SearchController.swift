@@ -1,8 +1,9 @@
 import Foundation
 import RealmSwift
+import MBProgressHUD
 
 protocol SearchViewControllerDelegate: class {
-  func selectedSearchResult(searchResult: SimplePOI)
+  func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ())
 }
 
 class SearchController: UITableViewController {
@@ -10,7 +11,7 @@ class SearchController: UITableViewController {
   var regionId: String?
   var countryId: String?
   
-  var delegate: SearchViewControllerDelegate?
+  var delegate: SearchViewControllerDelegate!
   var searchService: SearchService!
   var searchBar: UISearchBar!
   
@@ -74,7 +75,12 @@ extension SearchController {
     }
     let searchResult = searchResults[indexPath.row]
     cell.textLabel?.text = searchResult.name
-    cell.detailTextLabel?.text = searchResult.location
+    if searchResult.category == Region.Category.COUNTRY.rawValue {
+      cell.detailTextLabel!.text = "Country"
+    }
+    else {
+      cell.detailTextLabel?.text = searchResult.location      
+    }
     return cell
   }
 }
@@ -84,11 +90,15 @@ extension SearchController {
 extension SearchController {
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    searchBar.resignFirstResponder()
-    tableView.deselectRowAtIndexPath(indexPath, animated: true)
-    if let delegate = delegate {
-      let searchResult = searchResults[indexPath.row]
-      delegate.selectedSearchResult(searchResult)
+    let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+    loadingNotification.mode = MBProgressHUDMode.Indeterminate
+    loadingNotification.labelText = "Loading"
+    
+    let searchResult = searchResults[indexPath.row]
+    delegate.selectedSearchResult(searchResult) {
+      self.searchBar.resignFirstResponder()
+      tableView.deselectRowAtIndexPath(indexPath, animated: true)
+      MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
     }
   }
 }

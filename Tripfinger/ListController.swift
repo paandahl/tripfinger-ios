@@ -77,7 +77,7 @@ class ListController: UITableViewController, SubController {
     }
   }
   
-  func selectedSearchResult(searchResult: SimplePOI) {
+  func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ()) {
   }
 }
 

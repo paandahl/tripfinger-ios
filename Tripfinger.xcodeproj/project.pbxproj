@@ -299,7 +299,6 @@
 				257922CD1BA34429005EA785 /* Resources */,
 				25A940AE1BA1AF7B0077C2E5 /* Frameworks */,
 				25C9DFCC1B9CD84200C516C1 /* Products */,
-				AC2F5AA79EC14D61943B87DD /* Pods */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -429,6 +428,7 @@
 		25C9DFC21B9CD84200C516C1 = {
 			isa = PBXGroup;
 			children = (
+				AC2F5AA79EC14D61943B87DD /* Pods */,
 				250651EC1BD40F89002C3883 /* Libraries */,
 				25C9DFCD1B9CD84200C516C1 /* Tripfinger */,
 				25C9DFE31B9CD84200C516C1 /* TripfingerTests */,

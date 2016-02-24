@@ -8,6 +8,7 @@ use_frameworks!
 pod "MDCSwipeToChoose"
 pod 'Alamofire', '3.1.4'
 pod 'RealmSwift', '0.97.0'
+pod 'MBProgressHUD', '0.9.2'
 pod 'BrightFutures'
 
 end

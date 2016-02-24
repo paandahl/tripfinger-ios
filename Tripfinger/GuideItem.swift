@@ -26,10 +26,16 @@ class GuideItem: Object {
   var categoryDescriptions = List<GuideText>()
 
   // temporary data to make things easier
-  var childrenLoaded = true
+  var loadStatus = LoadStatus.CONTENT_NOT_LOADED
   var offline = true
+  
+  enum LoadStatus {
+    case CONTENT_NOT_LOADED // only name and category is set
+    case CHILDREN_NOT_LOADED
+    case FULLY_LOADED
+  }
 
   override static func ignoredProperties() -> [String] {
-    return ["childrenLoaded", "offline"]
+    return ["loadStatus", "offline"]
   }
 }

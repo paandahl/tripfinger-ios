@@ -23,13 +23,13 @@ class SearchOnlineTest: XCTestCase {
   func testSearchForBrunei() {
     
     let app = XCUIApplication()
-    app.navigationBars["Tripfinger.Root"].buttons["Search"].tap()
+    app.navigationBars["Countries"].buttons["Search"].tap()
     
     let tripfingerSearchNavigationBar = app.navigationBars["Tripfinger.Search"]
     let searchField = tripfingerSearchNavigationBar.searchFields.element
     searchField.typeText("Brunei")
-    
-    let bruneiRow = app.tables.staticTexts["Brunei"]
+
+    let bruneiRow = app.tables.cells.containingType(.StaticText, identifier:"Country").staticTexts["Brunei"]
     expectationForPredicate(hittable, evaluatedWithObject: bruneiRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     bruneiRow.tap()

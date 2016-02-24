@@ -247,7 +247,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
     }
   }
   
-  func selectedSearchResult(searchResult: SimplePOI) {
+  func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ()) {
   }
 }
 

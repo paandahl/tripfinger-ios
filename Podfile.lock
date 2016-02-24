@@ -2,6 +2,7 @@ PODS:
   - Alamofire (3.1.4)
   - BrightFutures (3.2.0):
     - Result (= 1.0.0)
+  - MBProgressHUD (0.9.2)
   - MDCSwipeToChoose (0.2.3)
   - Realm (0.97.0):
     - Realm/Headers (= 0.97.0)
@@ -13,12 +14,14 @@ PODS:
 DEPENDENCIES:
   - Alamofire (= 3.1.4)
   - BrightFutures
+  - MBProgressHUD (= 0.9.2)
   - MDCSwipeToChoose
   - RealmSwift (= 0.97.0)
 
 SPEC CHECKSUMS:
   Alamofire: fbc829692f351fa1d8a31dd75fd7f7f56fea31fb
   BrightFutures: 894dcfc04059093b5477c2197ed4c0fb4ad07180
+  MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MDCSwipeToChoose: 56239d98b4558c66e7c3c9069482befd26092270
   Realm: b498a6fb9d288b171ff98d0e2d4384c295be8990
   RealmSwift: d014810dec75c9a3f1a33926d2dabfed855c582c
