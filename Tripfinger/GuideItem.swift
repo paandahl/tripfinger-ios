@@ -26,10 +26,10 @@ class GuideItem: Object {
   var categoryDescriptions = List<GuideText>()
 
   // temporary data to make things easier
-  var contentLoaded = true
+  var childrenLoaded = true
   var offline = true
 
   override static func ignoredProperties() -> [String] {
-    return ["contentLoaded", "offline"]
+    return ["childrenLoaded", "offline"]
   }
 }

@@ -7,7 +7,6 @@ import BrightFutures
 class DownloadService {
   
   static var downloadPath: String!
-  static let tripfingerUrl = "https://server.tripfinger.com"
   static let gcsMapsUrl = "https://storage.googleapis.com/tripfinger-maps/"
   static let gcsImagesUrl = "https://storage.googleapis.com/tripfinger-images/"
   
@@ -64,7 +63,7 @@ class DownloadService {
       }
     }
     if !onlyMap {
-      downloadTripfingerData(tripfingerUrl + "/download_country/\(countryName)", path: countryPath) {
+      downloadTripfingerData(AppDelegate.serverUrl + "/download_country/\(countryName)", path: countryPath) {
         if finished {
           finishedHandler()
         }

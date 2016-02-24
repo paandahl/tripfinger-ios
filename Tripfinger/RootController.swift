@@ -5,8 +5,6 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
   
   @IBOutlet weak var toolbar: UIToolbar!
   @IBOutlet weak var container: UIView!
-  @IBOutlet weak var segmentedControllerGuide: UISegmentedControl!
-  @IBOutlet weak var secondSegmentedController: UISegmentedControl!
   var session: Session!
   
   var currentController: UIViewController!
@@ -23,29 +21,17 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
   override func viewDidLoad(){
     super.viewDidLoad()
     
-    segmentedControllerGuide.removeAllSegments()
-    segmentedControllerGuide.insertSegmentWithTitle("Guide", atIndex: 0, animated: false)
-    if let rightButton = self.navigationItem.rightBarButtonItem {
-      if let itemView = rightButton.valueForKey("view") as? UIView {
-        var frameRect = itemView.frame;
-        frameRect.size.width = 55;
-        itemView.frame = frameRect        
-      }
-    }
+    print("session: \(session)")
     
     navigateToSubview("guideController", controllerType: GuideController.self)
-    
-    segmentedControllerGuide.selectedSegmentIndex = 0
-    secondSegmentedController.selectedSegmentIndex = UISegmentedControlNoSegment    
+  
   }
   
-  @IBAction func firstSegmentChanged(sender: UISegmentedControl) {
-    secondSegmentedController.selectedSegmentIndex = UISegmentedControlNoSegment
+  func firstSegmentChanged(sender: UISegmentedControl) {
     navigateToSubview("guideController", controllerType: GuideController.self)
   }
   
-  @IBAction func secondSegmentChanged(sender: UISegmentedControl) {
-    segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
+  func secondSegmentChanged(sender: UISegmentedControl) {
     switch (sender.selectedSegmentIndex) {
     case 0:
       navigateToSubview("swipeController", controllerType: SwipeController.self)
@@ -112,15 +98,11 @@ extension RootController: SearchViewControllerDelegate {
     
     if searchResult.category == 180 { // street
       if !(currentController is MapController) {
-        segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
-        secondSegmentedController.selectedSegmentIndex = 2
         navigateToSubview("mapController", controllerType: MapController.self)
       }
     }
     else if String(searchResult.category).hasPrefix("2") { // Attraction
       if !(currentController is MapController) {
-        segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
-        secondSegmentedController.selectedSegmentIndex = 2
         navigateToSubview("mapController", controllerType: MapController.self)
       }
     }
@@ -134,16 +116,12 @@ extension RootController: GuideControllerDelegate {
   func categorySelected(category: Attraction.Category, view: String) {
     
     session.currentCategory = category
-    segmentedControllerGuide.selectedSegmentIndex = UISegmentedControlNoSegment
     switch view {
     case "swipe":
-      secondSegmentedController.selectedSegmentIndex = 0
       navigateToSubview("swipeController", controllerType: SwipeController.self)
     case "list":
-      secondSegmentedController.selectedSegmentIndex = 1
       navigateToSubview("listController", controllerType: ListController.self)
     default:
-      secondSegmentedController.selectedSegmentIndex = 2
       navigateToSubview("mapController", controllerType: MapController.self)
     }
   }

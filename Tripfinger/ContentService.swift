@@ -6,14 +6,12 @@ typealias ContentLoaded = (guideItem: GuideItem) -> ()
 
 class ContentService {
   
-  static let baseUrl = "https://server.tripfinger.com"
-  
   init() {}
   
   class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int, handler: List<SimplePOI> -> ()) -> Request {
     
     let bounds = "\(bottomLeft.latitude),\(bottomLeft.longitude),\(topRight.latitude),\(topRight.longitude)"
-    return NetworkUtil.getJsonFromUrl(ContentService.baseUrl + "/search_by_bounds/\(bounds)/\(zoomLevel)", success: {
+    return NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/search_by_bounds/\(bounds)/\(zoomLevel)", success: {
       json in
       
       let searchResults = JsonParserService.parseSearchResults(json)
@@ -34,7 +32,7 @@ class ContentService {
   
   class func getCountries(handler: [Region] -> ()) {
     let parameters = ["onlyPublished": "false"]
-    NetworkUtil.getJsonFromUrl(baseUrl + "/countries", parameters: parameters, success: {
+    NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/countries", parameters: parameters, success: {
       json in
       
       let regions = JsonParserService.parseRegions(json)
@@ -48,7 +46,7 @@ class ContentService {
   
   class func getGuideTextsForGuideItem(guideItem: GuideItem, handler: (guideTexts: [GuideText]) -> ()) {
     let id = String(guideItem.id!)
-    NetworkUtil.getJsonFromUrl(baseUrl + "/regions/\(id)/guideTexts", success: {
+    NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/regions/\(id)/guideTexts", success: {
       json in
       
       let guideTexts = JsonParserService.parseGuideTexts(json)
@@ -60,7 +58,7 @@ class ContentService {
   }
   
   class func getFullRegionTree(regionId: String, handler: (region: Region) -> ()) {
-    NetworkUtil.getJsonFromUrl(baseUrl + "/regions/\(regionId)/full", success: {
+    NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/regions/\(regionId)/full", success: {
       json in
       
       let region = JsonParserService.parseRegionTreeFromJson(json)
@@ -72,7 +70,7 @@ class ContentService {
   }
   
   class func getRegions(handler: [Region] -> ()) {
-    NetworkUtil.getJsonFromUrl(baseUrl + "/regions", success: {
+    NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/regions", success: {
       json in
       
       var regions = [Region]()
@@ -96,7 +94,7 @@ class ContentService {
         handler(region)
         return
       }
-      url = baseUrl + "/neighbourhoods/\(listing.country)/\(listing.city)/\(listing.item.name)"
+      url = AppDelegate.serverUrl + "/neighbourhoods/\(listing.country)/\(listing.city)/\(listing.item.name)"
     case Region.Category.CITY.rawValue:
       fallthrough
     case Region.Category.SUB_REGION.rawValue:
@@ -104,15 +102,15 @@ class ContentService {
         handler(region)
         return
       }
-      url = baseUrl + "/subRegionOrCity/\(listing.country)/\(listing.item.name)"
+      url = AppDelegate.serverUrl + "/subRegionOrCity/\(listing.country)/\(listing.item.name)"
     case Region.Category.COUNTRY.rawValue:
       if let region = DatabaseService.getCountry(listing.item.name) {
         handler(region)
         return
       }
-      url = baseUrl + "/countries/\(listing.item.name)"
+      url = AppDelegate.serverUrl + "/countries/\(listing.item.name)"
     default:
-      url = baseUrl + "/continents/\(listing.item.name)"
+      url = AppDelegate.serverUrl + "/continents/\(listing.item.name)"
     }
     
     var parameters = [String: String]()
@@ -136,7 +134,7 @@ class ContentService {
       handler(region)
       return
     }
-    NetworkUtil.getJsonFromUrl(baseUrl + "/regions/\(regionId)", success: {
+    NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/regions/\(regionId)", success: {
       json in
       
       let region = JsonParserService.parseRegion(json)
@@ -156,7 +154,7 @@ class ContentService {
       handler(DatabaseService.getGuideTextWithId(region, guideTextId: guideTextId))
       return
     }
-    NetworkUtil.getJsonFromUrl(baseUrl + "/guideTexts/\(guideTextId)", success: {
+    NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/guideTexts/\(guideTextId)", success: {
       json in
       
       let guideText = JsonParserService.parseGuideText(json, fetchChildren: true)
@@ -172,7 +170,7 @@ class ContentService {
       handler(attraction)
       return
     }
-    NetworkUtil.getJsonFromUrl(baseUrl + "/attractions/\(attractionId)", success: {
+    NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/attractions/\(attractionId)", success: {
       json in
       
       let attraction = JsonParserService.parseAttraction(json)
@@ -219,10 +217,10 @@ class ContentService {
         default:
           try! { throw Error.RuntimeError("Region category not recognized: \(region.item().category)") }()
         }
-        url = baseUrl + "/regions/\(region.listing.item.id)/attractions"
+        url = AppDelegate.serverUrl + "/regions/\(region.listing.item.id)/attractions"
         
       } else {
-        url = baseUrl + "/attractions"
+        url = AppDelegate.serverUrl + "/attractions"
       }
       
       if let category = category {

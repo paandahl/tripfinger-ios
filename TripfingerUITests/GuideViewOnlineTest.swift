@@ -41,7 +41,7 @@ class GuideViewOnlineTest: XCTestCase {
     expectationForPredicate(exists, evaluatedWithObject: historyRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     
-    var backButton = app.buttons["< Thailand"]
+    var backButton = app.navigationBars["Understand"].buttons["Thailand"]
     backButton.tap()
 
     let exploreCountryRow = app.tables.staticTexts["Explore the country"]
@@ -56,17 +56,17 @@ class GuideViewOnlineTest: XCTestCase {
     waitForExpectationsWithTimeout(60, handler: nil)
     silomRow.tap()
 
-    backButton = app.buttons["< Bangkok"]
+    backButton = app.navigationBars["Silom"].buttons["Bangkok"]
     expectationForPredicate(exists, evaluatedWithObject: backButton, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     backButton.tap()
 
-    backButton = app.buttons["< Thailand"]
+    backButton = app.navigationBars["Bangkok"].buttons["Thailand"]
     expectationForPredicate(exists, evaluatedWithObject: backButton, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     backButton.tap()
 
-    backButton = app.buttons["< Overview"]
+    backButton = app.navigationBars["Thailand"].buttons["Countries"]
     expectationForPredicate(exists, evaluatedWithObject: backButton, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     backButton.tap()
@@ -85,17 +85,17 @@ class GuideViewOnlineTest: XCTestCase {
     waitForExpectationsWithTimeout(60, handler: nil)
     chawengRow.tap()
     
-    backButton = app.buttons["< Ko Samui"]
+    backButton = app.navigationBars["Chaweng"].buttons["Ko Samui"]
     expectationForPredicate(exists, evaluatedWithObject: backButton, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     backButton.tap()
 
-    backButton = app.buttons["< Thailand"]
+    backButton = app.navigationBars["Ko Samui"].buttons["Thailand"]
     expectationForPredicate(exists, evaluatedWithObject: backButton, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     backButton.tap()
     
-    backButton = app.buttons["< Overview"]
+    backButton = app.navigationBars["Thailand"].buttons["Countries"]
     expectationForPredicate(exists, evaluatedWithObject: backButton, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     backButton.tap()

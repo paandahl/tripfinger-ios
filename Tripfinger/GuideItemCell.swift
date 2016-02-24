@@ -38,6 +38,22 @@ class GuideItemCell: UITableViewCell {
     readMoreButton.addTarget(self, action: "readMore:", forControlEvents: .TouchUpInside)
 
     contentView.addSubview(readMoreButton)
+    
+    let views = ["image": contentImage, "text": content, "readMore": readMoreButton]
+    contentImageHeightConstraint = contentView.addConstraints("V:[image(225)]", forViews: views)[0]
+    contentView.addConstraints("V:|-0-[image]", forViews: views)
+    contentImageMarginConstraint = contentView.addConstraints("V:[image]-10-[text]", forViews: views)[0]
+    contentHeightConstraint = contentView.addConstraints("V:[text(100)]", forViews: views)[0]
+    contentView.addConstraints("H:|-0-[image]-0-|", forViews: views)
+    contentView.addConstraint(.CenterX, forView: contentImage)
+    
+    contentView.addConstraints("H:|-10-[text]-10-|", forViews: views)
+    readMoreButtonHeight = Int(readMoreButton.frame.size.height)
+    readMoreButtonHeightConstraint = contentView.addConstraints("V:[readMore(\(readMoreButtonHeight))]", forViews: views)[0]
+    
+    contentView.addConstraints("V:[text]-10-[readMore]", forViews: views)
+    readMoreButtonMarginConstraint = contentView.addConstraints("V:[readMore]-10-|", forViews: views)[0]
+    contentView.addConstraints("H:|-14-[readMore]", forViews: views)
   }
   
   override func layoutSubviews() {
@@ -50,25 +66,6 @@ class GuideItemCell: UITableViewCell {
   
   override func updateConstraints() {
     super.updateConstraints()
-    
-    if (!constraintsAdded) {
-      let views = ["image": contentImage, "text": content, "readMore": readMoreButton]
-      contentImageHeightConstraint = contentView.addConstraints("V:[image(225)]", forViews: views)[0]
-      contentView.addConstraints("V:|-10-[image]", forViews: views)
-      contentImageMarginConstraint = contentView.addConstraints("V:[image]-10-[text]", forViews: views)[0]
-      contentHeightConstraint = contentView.addConstraints("V:[text(100)]", forViews: views)[0]
-      contentView.addConstraints("H:[image(300)]", forViews: views)
-      contentView.addConstraint(.CenterX, forView: contentImage)
-      
-      contentView.addConstraints("H:|-10-[text]-10-|", forViews: views)
-      readMoreButtonHeight = Int(readMoreButton.frame.size.height)
-      readMoreButtonHeightConstraint = contentView.addConstraints("V:[readMore(\(readMoreButtonHeight))]", forViews: views)[0]
-      
-      contentView.addConstraints("V:[text]-10-[readMore]", forViews: views)
-      readMoreButtonMarginConstraint = contentView.addConstraints("V:[readMore]-10-|", forViews: views)[0]
-      contentView.addConstraints("H:|-14-[readMore]", forViews: views)
-      constraintsAdded = true
-    }
     
     if contentImage.hidden {
       contentImageHeightConstraint.constant = 0
@@ -98,7 +95,7 @@ class GuideItemCell: UITableViewCell {
   }
   
   func expand() {
-    let fixedWidth = content.frame.size.width
+    let fixedWidth = UIScreen.mainScreen().bounds.width - 20
     let newSize = content.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
     contentHeightConstraint.constant = newSize.height - 20 // last paragraphs margin
     readMoreButton.hidden = true
@@ -122,7 +119,6 @@ class GuideItemCell: UITableViewCell {
       }
       else {
         let imageUrl = guideItem.images[0].url + "-712x534"
-        print("Loading image with url: " + imageUrl)
         try! contentImage.loadImageWithUrl(imageUrl)
       }
       contentImage.hidden = false
@@ -137,8 +133,7 @@ class GuideItemCell: UITableViewCell {
 
     var description = ""
     if let content = guideItem.content {
-      description = content
-      
+      description = content      
     }
     
     let encodedData = description.dataUsingEncoding(NSUTF8StringEncoding)!
@@ -153,7 +148,7 @@ class GuideItemCell: UITableViewCell {
     style.paragraphSpacing = 20
     attributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, attributedString.length))
     content.attributedText = attributedString
-    
+    content.sizeToFit()
     content.scrollEnabled = false
     content.setContentOffset(CGPointZero, animated: true)
   }

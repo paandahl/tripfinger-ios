@@ -64,7 +64,7 @@ class Region: Object {
     region.listing = GuideListing()
     region.listing.item = GuideItem()
     region.listing.item.name = name
-    region.listing.item.contentLoaded = false
+    region.listing.item.childrenLoaded = false
     region.item().category = fromSearchResult ? 0 : Category.COUNTRY.rawValue
     if country != nil {
       region.listing.country = country

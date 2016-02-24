@@ -6,9 +6,10 @@ import Alamofire
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
   
+  static var serverUrl = "https://1-1-dot-tripfinger-server.appspot.com"
   static var metadataCallback: (() -> ())? // hack to know when maps are indexed in tests
   static var mode = AppMode.BETA
-  var window: UIWindow?
+  var window: UIWindow!
   static var session: Session!
   
   func initUITestMaps() -> String {
@@ -56,11 +57,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     
     AppDelegate.session = Session()
 
-    let navigationController = self.window!.rootViewController as! UINavigationController
-    let rootController = navigationController.viewControllers[0] as! RootController
-    rootController.session = AppDelegate.session
+    window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    window.backgroundColor = UIColor.whiteColor()
+    window.makeKeyAndVisible()
+    let nav = UINavigationController()
+    nav.automaticallyAdjustsScrollViewInsets = false
+    let guideController = GuideController(style: .Grouped)
+    guideController.session = AppDelegate.session
+    guideController.edgesForExtendedLayout = .None // offset from navigation bar
+    nav.viewControllers = [guideController]
+    window.rootViewController = nav
     
-//    mapVersionPromise.success("20150413")
     return true
   }
   

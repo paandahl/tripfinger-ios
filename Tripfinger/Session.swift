@@ -119,7 +119,7 @@ class Session {
     currentRegion = region
     currentItem = region != nil ? region.listing.item : nil
     
-    if region != nil && !region.listing.item.contentLoaded {
+    if region != nil && !region.listing.item.childrenLoaded {
       ContentService.getRegionFromListing(region.listing) {
         region in
         
@@ -142,7 +142,7 @@ class Session {
     }
     currentSection = section
     currentItem = section.item
-    if !section.item.contentLoaded {
+    if !section.item.childrenLoaded {
       ContentService.getGuideTextWithId(currentRegion, guideTextId: section.getId()) {
         section in
         

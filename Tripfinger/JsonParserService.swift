@@ -176,7 +176,12 @@ class JsonParserService {
   class func parseChildren(region: Region, withJson json: JSON) {
     region.item().guideSections = parseGuideSections(json)
     region.item().categoryDescriptions = parseCategoryDescriptions(region, guideItemJson: json)
-    region.item().subRegions = parseSubRegions(region, json: json)
+    let subRegions = List<Region>()
+    for subRegion in parseRegions(json["subRegions"]) {
+      subRegion.item().childrenLoaded = false
+      subRegions.append(subRegion)
+    }
+    region.item().subRegions = subRegions
   }
   
   internal class func parseCategoryDescriptions(region: Region, guideItemJson: JSON) -> List<GuideText> {
@@ -195,12 +200,12 @@ class JsonParserService {
       categoryDescription.item.name = category.entityName(region)
       let categoryDescriptionId = categoryDescriptionsDict[category.rawValue]
       if (categoryDescriptionId != nil) {
-        categoryDescription.item.contentLoaded = false
+        categoryDescription.item.childrenLoaded = false
         categoryDescription.item.id = categoryDescriptionId
       }
       else {
         categoryDescription.item.content = nil
-        categoryDescription.item.contentLoaded = true
+        categoryDescription.item.childrenLoaded = true
       }
       categoryDescriptions.append(categoryDescription)
     }
@@ -214,7 +219,7 @@ class JsonParserService {
       for guideSectionArr in guideSectionsJson {
         let guideSection = GuideText()
         guideSection.item = GuideItem()
-        guideSection.item.contentLoaded = false
+        guideSection.item.childrenLoaded = false
         guideSection.item.id = guideSectionArr[0].string
         guideSection.item.name = guideSectionArr[1].string
         guideSections.append(guideSection)
@@ -222,15 +227,4 @@ class JsonParserService {
     }
     return guideSections
   }
-  
-  internal class func parseSubRegions(parent: Region, json: JSON) -> List<Region> {
-    let subRegions = List<Region>()
-    
-    for subRegion in json["subRegions"].array! {
-      let subRegion = Region.constructRegion(subRegion.string!, parent: parent)
-      subRegions.append(subRegion)
-    }
-    return subRegions
-  }
-
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="UV3-sZ-Agr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -190,122 +190,6 @@
             </objects>
             <point key="canvasLocation" x="2879" y="1217"/>
         </scene>
-        <!--Root Controller-->
-        <scene sceneID="rSz-g7-hFW">
-            <objects>
-                <viewController storyboardIdentifier="rootController" automaticallyAdjustsScrollViewInsets="NO" id="fNL-El-q7h" customClass="RootController" customModule="Tripfinger" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="5YC-sX-YMv"/>
-                        <viewControllerLayoutGuide type="bottom" id="Hhu-pT-279"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="MbH-Ux-aIa">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XXj-lS-U39" userLabel="Container">
-                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
-                                <animations/>
-                            </containerView>
-                        </subviews>
-                        <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="XXj-lS-U39" secondAttribute="trailing" id="VLK-I3-sJW"/>
-                            <constraint firstItem="Hhu-pT-279" firstAttribute="top" secondItem="XXj-lS-U39" secondAttribute="bottom" id="Yd1-kO-CTE"/>
-                            <constraint firstItem="XXj-lS-U39" firstAttribute="top" secondItem="5YC-sX-YMv" secondAttribute="bottom" id="gUD-WU-ybL"/>
-                            <constraint firstItem="XXj-lS-U39" firstAttribute="leading" secondItem="MbH-Ux-aIa" secondAttribute="leading" id="oZl-Ea-7sJ"/>
-                        </constraints>
-                    </view>
-                    <toolbarItems/>
-                    <navigationItem key="navigationItem" id="ZRW-Mh-fwO">
-                        <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="33b-Oy-IAe">
-                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="1AA-wX-kPp">
-                                <rect key="frame" x="20" y="6" width="70" height="32"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="31" id="B7V-9r-LhG"/>
-                                    <constraint firstAttribute="width" constant="70" id="VUQ-vm-7mP"/>
-                                </constraints>
-                                <segments>
-                                    <segment title="First"/>
-                                    <segment title="Second"/>
-                                </segments>
-                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <action selector="firstSegmentChanged:" destination="fNL-El-q7h" eventType="valueChanged" id="8oR-eP-nYQ"/>
-                                </connections>
-                            </segmentedControl>
-                        </barButtonItem>
-                        <view key="titleView" contentMode="scaleToFill" id="m5l-Hx-CJa">
-                            <rect key="frame" x="96" y="6.5" width="449" height="31"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="zFc-73-8bZ">
-                                    <rect key="frame" x="0.0" y="0.0" width="449" height="32"/>
-                                    <animations/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="31" id="Dik-V2-uvw"/>
-                                    </constraints>
-                                    <segments>
-                                        <segment title="Swipe"/>
-                                        <segment title="List"/>
-                                        <segment title="Map"/>
-                                    </segments>
-                                    <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                    <connections>
-                                        <action selector="secondSegmentChanged:" destination="fNL-El-q7h" eventType="valueChanged" id="Vvs-88-AHK"/>
-                                    </connections>
-                                </segmentedControl>
-                            </subviews>
-                            <animations/>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstItem="zFc-73-8bZ" firstAttribute="leading" secondItem="m5l-Hx-CJa" secondAttribute="leading" id="5mu-Vt-Iq8"/>
-                                <constraint firstItem="zFc-73-8bZ" firstAttribute="top" secondItem="m5l-Hx-CJa" secondAttribute="top" id="aa0-cn-aoJ"/>
-                                <constraint firstAttribute="trailing" secondItem="zFc-73-8bZ" secondAttribute="trailing" id="jde-aV-gu6"/>
-                                <constraint firstAttribute="bottom" secondItem="zFc-73-8bZ" secondAttribute="bottom" id="oFz-3X-CRk"/>
-                            </constraints>
-                        </view>
-                        <barButtonItem key="rightBarButtonItem" width="86" systemItem="search" id="J6h-42-VBx">
-                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            <connections>
-                                <action selector="navigateToSearch" destination="fNL-El-q7h" id="Wg1-wc-6kf"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
-                    <connections>
-                        <outlet property="container" destination="XXj-lS-U39" id="OlF-j5-GE3"/>
-                        <outlet property="secondSegmentedController" destination="zFc-73-8bZ" id="eUK-Nt-yDI"/>
-                        <outlet property="segmentedControllerGuide" destination="1AA-wX-kPp" id="3sO-TN-Ulo"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jfr-UI-3ak" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2055" y="403"/>
-        </scene>
-        <!--Select-->
-        <scene sceneID="C5K-vQ-pCo">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UV3-sZ-Agr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Select" image="group" id="FoS-T1-MX7"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2vd-Dh-Ns0">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <animations/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="fNL-El-q7h" kind="relationship" relationship="rootViewController" id="8JI-jy-JYj"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="uS3-SK-89k" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1243" y="403"/>
-        </scene>
         <!--Guide Controller-->
         <scene sceneID="Y4i-O0-wVq">
             <objects>
@@ -346,9 +230,6 @@
             <point key="canvasLocation" x="1675" y="2108"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="group" width="25" height="25"/>
-    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="vbF-NY-WMH"/>
     </inferredMetricsTieBreakers>
