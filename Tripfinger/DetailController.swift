@@ -2,16 +2,16 @@ import Foundation
 
 class DetailController: UIViewController {
   
-  var scrollView = UIScrollView()
-  var mainImage = UIImageView()
-  var name = UILabel()
-  var descriptionText = UITextView()
-  var priceLabel = UILabel()
-  var priceText = UITextView()
-  var openingHoursLabel = UILabel()
-  var openingHoursText = UITextView()
-  var directionsLabel = UILabel()
-  var directionsText = UITextView()
+  let scrollView = UIScrollView()
+  let mainImage = UIImageView()
+  let name = UILabel()
+  let descriptionText = UITextView()
+  let priceLabel = UILabel()
+  let priceText = UITextView()
+  let openingHoursLabel = UILabel()
+  let openingHoursText = UITextView()
+  let directionsLabel = UILabel()
+  let directionsText = UITextView()
   
   var attraction: Attraction!
   

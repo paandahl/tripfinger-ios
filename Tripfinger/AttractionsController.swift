@@ -2,7 +2,7 @@ import Foundation
 
 class AttractionsController: UIViewController {
   
-  var session: Session
+  let session: Session
   var displayMode: DisplayMode
   var searchDelegate: SearchViewControllerDelegate
   let container = UIView()

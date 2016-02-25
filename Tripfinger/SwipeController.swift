@@ -58,15 +58,11 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     if let attractionStack = attractionStack {
       if attractionStack.count > 0 {
         noElementsLabel.hidden = true
-        // Display the first ChoosePersonView in front. Users can swipe to indicate
-        // whether they like or dislike the item displayed.
+
         setFrontCardViewFunc(popAttractionViewWithFrame(frontCardViewFrame())!)
         view.addSubview(frontCardView)
         addFrontCardConstraints()
         
-        // Display the second ChoosePersonView in back. This view controller uses
-        // the MDCSwipeToChooseDelegate protocol methods to update the front and
-        // back views after each user swipe.
         if attractionStack.count > 1 {
           backCardView = popAttractionViewWithFrame(backCardViewFrame())!
           view.insertSubview(backCardView, belowSubview: frontCardView)
@@ -91,13 +87,6 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
       noElementsLabel.text = "Loading..."
       noElementsLabel.sizeToFit()
     }
-//    if let currentRegion = session.currentRegion {
-//      filterBox.regionNameLabel.text = "\(currentRegion.listing.item.name!):"
-//    } else {
-//      filterBox.regionNameLabel.text = "World:"
-//    }
-//    
-//    filterBox.categoryLabel.text = session.currentCategory.entityName(session.currentRegion)
   }
   
   @IBAction func back() {
@@ -141,10 +130,6 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
       print("You liked: \(frontCardView.attraction.listing.item.name)")
     }
     
-    // MDCSwipeToChooseView removes the view from the view hierarchy
-    // after it is swiped (this behavior can be customized via the
-    // MDCSwipeOptions class). Since the front card view is gone, we
-    // move the back card to the front, and create a new back card.
     if(backCardView != nil){
       setFrontCardViewFunc(backCardView)
       frontCardView.removeFromSuperview()
@@ -167,8 +152,6 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   }
   func setFrontCardViewFunc(frontCardView: AttractionCardView) -> Void{
     
-    // Keep track of the person currently being chosen.
-    // Quick and dirty, just for the purposes of this sample app.
     self.frontCardView = frontCardView
     self.frontCardView.accessibilityIdentifier = "frontCard"
   }
@@ -179,10 +162,6 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
       return nil;
     }
     
-    // UIView+MDCSwipeToChoose and MDCSwipeToChooseView are heavily customizable.
-    // Each take an "options" argument. Here, we specify the view controller as
-    // a delegate, and provide a custom callback that moves the back card view
-    // based on how far the user has panned the front card view.
     let options:MDCSwipeToChooseViewOptions = MDCSwipeToChooseViewOptions()
     options.delegate = self
     //options.threshold = 160.0
@@ -195,11 +174,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     }
     options.likedText = "Liked"
     
-    // Create a personView with the top person in the people array, then pop
-    // that person off the stack.
-    
-    let personView: AttractionCardView = AttractionCardView(frame: frame, attraction: attractionStack!.removeLast(), delegate: self, options: options)
-    return personView
+    return AttractionCardView(frame: frame, attraction: attractionStack!.removeLast(), delegate: self, options: options)
     
   }
   

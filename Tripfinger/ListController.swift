@@ -5,7 +5,7 @@ class ListController: UITableViewController {
     static let listingCell = "ListingCell"
   }
   
-  var session: Session
+  let session: Session
   var displayGrouped: Bool
   var category: Attraction.Category!
   var currentRegion: Region!

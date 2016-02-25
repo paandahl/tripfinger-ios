@@ -62,8 +62,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     window.makeKeyAndVisible()
     let nav = UINavigationController()
     nav.automaticallyAdjustsScrollViewInsets = false
-    let guideController = GuideController(style: .Grouped)
-    guideController.session = AppDelegate.session
+    let guideController = GuideController(session: AppDelegate.session)
     guideController.edgesForExtendedLayout = .None // offset from navigation bar
     nav.viewControllers = [guideController]
     window.rootViewController = nav
