@@ -9,7 +9,7 @@ class GuideController: UITableViewController {
   struct TableCellIdentifiers {
     static let guideItemCell = "GuideItemCell"
     static let textMessageCell = "TextMessageCell"
-    static let categoryCell = "CategoryCell"
+    static let rightDetailCell = "RightDetailCell"
     static let loadingCell = "LoadingCell"
   }
   
@@ -39,10 +39,10 @@ class GuideController: UITableViewController {
     tableView.estimatedRowHeight = 44.0;
     tableView.tableHeaderView = UIView.init(frame: CGRectMake(0.0, 0.0, tableView.bounds.size.width, 0.01))
     tableView.tableFooterView = UIView.init(frame: CGRectZero)
-    
+
+    UINib.registerClass(RightDetailCell.self, reuseIdentifier: TableCellIdentifiers.rightDetailCell, forTableView: tableView)
     UINib.registerClass(GuideItemCell.self, reuseIdentifier: TableCellIdentifiers.guideItemCell, forTableView: tableView)
     UINib.registerClass(TextMessageCell.self, reuseIdentifier: TableCellIdentifiers.textMessageCell, forTableView: tableView)
-    UINib.registerNib(TableCellIdentifiers.categoryCell, forTableView: tableView)
     UINib.registerNib(TableCellIdentifiers.loadingCell, forTableView: tableView)
     
     downloadButton.addTarget(self, action: "openDownloadCity:", forControlEvents: .TouchUpInside)
@@ -164,11 +164,11 @@ extension GuideController {
         section.elements.append((title: "", value: ""))
         tableSections.append(section)
       } else {
-        let attractionsSection = TableSection(title: "Wordwide", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCategory)
+        let attractionsSection = TableSection(title: "Wordwide", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
         attractionsSection.elements.append((title: "Attractions", value: Attraction.Category.ATTRACTIONS.rawValue))
         tableSections.append(attractionsSection)
         for (regionName, countryList) in countryLists {
-          let section = TableSection(title: regionName, cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+          let section = TableSection(title: regionName, cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
           for country in countryList {
             section.elements.append((title: country.listing.item.name!, value: country))
           }
@@ -182,7 +182,7 @@ extension GuideController {
     }
     
     if guideItemExpanded {
-      let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToSection)
+      let section = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToSection)
       
       for guideSection in session.currentItem.guideSections {
         section.elements.append((title: guideSection.item.name, value: guideSection))
@@ -191,8 +191,8 @@ extension GuideController {
     }
     
     if session.currentRegion != nil && !session.currentRegion.mapCountry && session.currentSection == nil {
-      var section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCategory)
-      let section2 = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCategory)
+      var section = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
+      let section2 = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
       var i = 0
       for categoryDesc in session.currentRegion.item().categoryDescriptions {
         if i > 0 {
@@ -207,13 +207,13 @@ extension GuideController {
       if session.currentRegion.item().subRegions.count > 0 {
         switch session.currentRegion.item().category {
         case Region.Category.CONTINENT.rawValue:
-          section = TableSection(title: "Countries:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+          section = TableSection(title: "Countries:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
         case Region.Category.COUNTRY.rawValue:
-          section = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+          section = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
         case Region.Category.SUB_REGION.rawValue:
-          section = TableSection(title: "Cities:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+          section = TableSection(title: "Cities:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
         default:
-          section = TableSection(title: "Neighbourhoods:", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
+          section = TableSection(title: "Neighbourhoods:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
         }
         
         for subRegion in session.currentRegion.item().subRegions {
@@ -254,6 +254,7 @@ extension GuideController {
       print("Constructing guideItemCell")
     }
     let cell = tableView.dequeueReusableCellWithIdentifier(section.cellIdentifier, forIndexPath: indexPath)
+    
     
     if let cell = cell as? GuideItemCell {
       cell.delegate = self
