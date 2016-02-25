@@ -5,13 +5,7 @@ protocol GuideControllerDelegate: class {
   func navigateInternally(callback: () -> ())
 }
 
-class GuideController: UITableViewController {
-  struct TableCellIdentifiers {
-    static let guideItemCell = "GuideItemCell"
-    static let textMessageCell = "TextMessageCell"
-    static let rightDetailCell = "RightDetailCell"
-    static let loadingCell = "LoadingCell"
-  }
+class GuideController: TableController {
   
   var contextSwitched = false
   var session: Session!
@@ -23,9 +17,7 @@ class GuideController: UITableViewController {
   
   var guideItemExpanded = false
   var containerFrame: CGRect!
-  
-  var tableSections = [TableSection]()
-    
+      
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -39,11 +31,6 @@ class GuideController: UITableViewController {
     tableView.estimatedRowHeight = 44.0;
     tableView.tableHeaderView = UIView.init(frame: CGRectMake(0.0, 0.0, tableView.bounds.size.width, 0.01))
     tableView.tableFooterView = UIView.init(frame: CGRectZero)
-
-    UINib.registerClass(RightDetailCell.self, reuseIdentifier: TableCellIdentifiers.rightDetailCell, forTableView: tableView)
-    UINib.registerClass(GuideItemCell.self, reuseIdentifier: TableCellIdentifiers.guideItemCell, forTableView: tableView)
-    UINib.registerClass(TextMessageCell.self, reuseIdentifier: TableCellIdentifiers.textMessageCell, forTableView: tableView)
-    UINib.registerNib(TableCellIdentifiers.loadingCell, forTableView: tableView)
     
     downloadButton.addTarget(self, action: "openDownloadCity:", forControlEvents: .TouchUpInside)
     
@@ -51,10 +38,6 @@ class GuideController: UITableViewController {
       loadCountryLists()      
     }
     updateUI()
-  }
-  
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
   }
   
   func updateUI() {
@@ -80,10 +63,6 @@ class GuideController: UITableViewController {
     tableView.reloadData {
       self.tableView.contentOffset = CGPointZero
     }
-  }
-  
-  override func viewWillAppear(animated: Bool) {
-    print("VIEW WILL APPEAR!")
   }
   
   override func viewWillDisappear(animated: Bool) {
@@ -120,35 +99,35 @@ class GuideController: UITableViewController {
         for country in countries {
           country.item().loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED
         }
-        self.countryLists = GuideController.makeCountryMap(countries)
+        self.countryLists = GuideController.makeCountryDict(countries)
         self.updateUI()
       }
     } else {
-      self.countryLists = GuideController.makeCountryMap(Array<Region>(DatabaseService.getCountries()))
+      self.countryLists = GuideController.makeCountryDict(Array<Region>(DatabaseService.getCountries()))
       self.updateUI()
     }
   }
   
-  class func makeCountryMap(countries: [Region]) -> [String: [Region]] {
-    var countryMap = [String: [Region]]()
+  class func makeCountryDict(countries: [Region]) -> [String: [Region]] {
+    var countryDict = [String: [Region]]()
     var betaList = [Region]()
     for country in countries {
       if country.item().status == 0 {
         betaList.append(country)
       }
       else {
-        var countryList = countryMap[country.listing.worldArea]
+        var countryList = countryDict[country.listing.worldArea]
         if countryList == nil {
           countryList = [Region]()
         }
         countryList!.append(country)
-        countryMap[country.listing.worldArea] = countryList        
+        countryDict[country.listing.worldArea] = countryList        
       }
     }
     if betaList.count > 0 {
-      countryMap["Beta"] = betaList
+      countryDict["Beta"] = betaList
     }
-    return countryMap
+    return countryDict
   }  
 }
 
@@ -229,32 +208,11 @@ extension GuideController {
       tableSections.append(section2)
     }
   }
-  
-  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    return tableSections.count;
-  }
-  
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return tableSections[section].elements.count;
-  }
-  
-  override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    if let title = tableSections[section].title {
-      return title
-    }
-    else {
-      return nil
-    }
-  }
-  
+    
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
     let section = tableSections[indexPath.section]
-    if section.cellIdentifier == TableCellIdentifiers.guideItemCell {
-      print("Constructing guideItemCell")
-    }
     let cell = tableView.dequeueReusableCellWithIdentifier(section.cellIdentifier, forIndexPath: indexPath)
-    
     
     if let cell = cell as? GuideItemCell {
       cell.delegate = self
@@ -265,7 +223,6 @@ extension GuideController {
       cell.setNeedsUpdateConstraints()
     }
     else if let cell = cell as? TextMessageCell {
-      print("setting textmessagecell")
       cell.setTextMessage("You are offline. Go online to view and download countries.")
     }
     else if cell.reuseIdentifier == TableCellIdentifiers.loadingCell {
@@ -273,7 +230,7 @@ extension GuideController {
       indicator.startAnimating()
     }
     else {
-      cell.textLabel?.text = section.elements[indexPath.row].0
+      cell.textLabel!.text = section.elements[indexPath.row].0
     }
     
     return cell
@@ -302,9 +259,7 @@ extension GuideController: SearchViewControllerDelegate {
     guideItemExpanded = false
     let region = object as! Region
     
-    let guideController = GuideController(style: .Grouped)
-    guideController.session = session
-    guideController.edgesForExtendedLayout = .None // offset from navigation bar
+    let guideController = constructGuideController()
     navigationController!.pushViewController(guideController, animated: true)
     
     session.changeRegion(region) {
@@ -315,9 +270,7 @@ extension GuideController: SearchViewControllerDelegate {
   func navigateToSection(object: AnyObject) {
     let section = object as! GuideText
     
-    let guideController = GuideController(style: .Grouped)
-    guideController.session = session
-    guideController.edgesForExtendedLayout = .None // offset from navigation bar
+    let guideController = constructGuideController()
     guideController.guideItemExpanded = true
     navigationController!.pushViewController(guideController, animated: true)
     
@@ -351,7 +304,6 @@ extension GuideController: SearchViewControllerDelegate {
   func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ()) {
     session.loadRegionFromSearchResult(searchResult) {
       stopSpinner()
-      print("before: \(self.navigationController!.viewControllers)")
       self.dismissViewControllerAnimated(true) {
         let nav = self.navigationController!
         for viewController in nav.viewControllers {
@@ -360,46 +312,49 @@ extension GuideController: SearchViewControllerDelegate {
           }
         }
         nav.popToRootViewControllerAnimated(false)
+        let currentListing = self.session.currentRegion.listing
         var viewControllers = [nav.viewControllers.first!]
         if self.session.currentRegion.item().category > Region.Category.COUNTRY.rawValue {
-          let guideController = GuideController(style: .Grouped)
-          guideController.session = self.session
-          guideController.edgesForExtendedLayout = .None // offset from navigation bar
-          guideController.navigationItem.title = self.session.currentRegion.listing.country
-          viewControllers.append(guideController)
+          viewControllers.append(self.constructGuideController(currentListing.country))
         }
         if self.session.currentRegion.item().category > Region.Category.SUB_REGION.rawValue {
           if self.session.currentRegion.listing.subRegion != nil {
-            let guideController = GuideController(style: .Grouped)
-            guideController.session = self.session
-            guideController.edgesForExtendedLayout = .None // offset from navigation bar
-            guideController.navigationItem.title = self.session.currentRegion.listing.subRegion
-            viewControllers.append(guideController)
+            viewControllers.append(self.constructGuideController(currentListing.subRegion))
           }
         }
         if self.session.currentRegion.item().category > Region.Category.CITY.rawValue {
-          let guideController = GuideController(style: .Grouped)
-          guideController.session = self.session
-          guideController.edgesForExtendedLayout = .None // offset from navigation bar
-          guideController.navigationItem.title = self.session.currentRegion.listing.city
-          viewControllers.append(guideController)
+          viewControllers.append(self.constructGuideController(currentListing.city))
         }
-        let guideController = GuideController(style: .Grouped)
-        guideController.session = self.session
-        guideController.edgesForExtendedLayout = .None // offset from navigation bar
-        viewControllers.append(guideController)
+        viewControllers.append(self.constructGuideController())
         nav.setViewControllers(viewControllers, animated: true)
       }
     }
   }
   
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    
-    let section = tableSections[indexPath.section];
-    if let handler = section.handler {
-      handler(section.elements[indexPath.row].1)
-    }
-    
-    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+  private func constructGuideController(title: String? = nil) -> GuideController {
+    let guideController = GuideController(style: .Grouped)
+    guideController.session = self.session
+    guideController.edgesForExtendedLayout = .None // offset from navigation bar
+    guideController.navigationItem.title = title
+    return guideController
   }
+  
+  //extension RootController: SearchViewControllerDelegate {
+  //  func selectedSearchResult(searchResult: SimplePOI) {
+  //    dismissViewControllerAnimated(true, completion: nil)
+  //
+  //    if searchResult.category == 180 { // street
+  //      if !(currentController is MapController) {
+  //        navigateToSubview("mapController", controllerType: MapController.self)
+  //      }
+  //    }
+  //    else if String(searchResult.category).hasPrefix("2") { // Attraction
+  //      if !(currentController is MapController) {
+  //        navigateToSubview("mapController", controllerType: MapController.self)
+  //      }
+  //    }
+  //    let subController = currentController as! SubController
+  //    subController.selectedSearchResult(searchResult)
+  //  }
+  //}  
 }

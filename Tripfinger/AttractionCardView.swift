@@ -5,7 +5,7 @@ protocol AttractionCardContainer: class {
   func showDetail(attraction: Attraction)
 }
 
-class ChooseAttractionView: MDCSwipeToChooseView {
+class AttractionCardView: MDCSwipeToChooseView {
   
   let ChoosePersonViewImageLabelWidth:CGFloat = 42.0;
   var attraction: Attraction!

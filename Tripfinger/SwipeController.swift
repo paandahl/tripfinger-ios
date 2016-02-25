@@ -11,9 +11,9 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   
   let ChooseAttractionButtonHorizontalPadding: CGFloat = 80.0
   let ChooseAttractionButtonVerticalPadding: CGFloat = 20.0
-  var frontCardView: ChooseAttractionView!
+  var frontCardView: AttractionCardView!
   var orignalFrontCardFrame: CGRect!
-  var backCardView: ChooseAttractionView!
+  var backCardView: AttractionCardView!
     
   override func viewDidLoad(){
 //    filterBox = UINib(nibName: "FilterBox", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! FilterBox
@@ -165,7 +165,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
       addBackCardConstraints()
     }
   }
-  func setFrontCardViewFunc(frontCardView: ChooseAttractionView) -> Void{
+  func setFrontCardViewFunc(frontCardView: AttractionCardView) -> Void{
     
     // Keep track of the person currently being chosen.
     // Quick and dirty, just for the purposes of this sample app.
@@ -174,7 +174,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   }
   
   
-  func popAttractionViewWithFrame(frame:CGRect) -> ChooseAttractionView? {
+  func popAttractionViewWithFrame(frame:CGRect) -> AttractionCardView? {
     if(attractionStack!.count == 0){
       return nil;
     }
@@ -198,7 +198,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     // Create a personView with the top person in the people array, then pop
     // that person off the stack.
     
-    let personView: ChooseAttractionView = ChooseAttractionView(frame: frame, attraction: attractionStack!.removeLast(), delegate: self, options: options)
+    let personView: AttractionCardView = AttractionCardView(frame: frame, attraction: attractionStack!.removeLast(), delegate: self, options: options)
     return personView
     
   }
