@@ -3,8 +3,6 @@ import MDCSwipeToChoose
 
 class RootController: UIViewController, MDCSwipeToChooseDelegate {
   
-  @IBOutlet weak var toolbar: UIToolbar!
-  @IBOutlet weak var container: UIView!
   var session: Session!
   
   var currentController: UIViewController!
@@ -18,63 +16,7 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
     // Here you can init your properties
   }
   
-  override func viewDidLoad(){
-    super.viewDidLoad()
-    
-    print("session: \(session)")
-    
-    navigateToSubview("guideController", controllerType: GuideController.self)
   
-  }
-  
-  func firstSegmentChanged(sender: UISegmentedControl) {
-    navigateToSubview("guideController", controllerType: GuideController.self)
-  }
-  
-  func secondSegmentChanged(sender: UISegmentedControl) {
-    switch (sender.selectedSegmentIndex) {
-    case 0:
-      navigateToSubview("swipeController", controllerType: SwipeController.self)
-    case 1:
-      navigateToSubview("listController", controllerType: ListController.self)
-    case 2:
-      navigateToSubview("mapController", controllerType: MapController.self)
-    default:
-      break
-    }
-  }
-  
-  func navigateToSubview<T: UIViewController>(name: String, controllerType: T.Type) {
-    var controller = subControllers[name]
-    if controller == nil {
-      let storyboard = UIStoryboard(name: "Main", bundle: nil)
-      controller = storyboard.instantiateViewControllerWithIdentifier(name) as? T
-      let subController = controller as! SubController
-      subController.session = session
-      subControllers[name] = controller
-      if controllerType == GuideController.self {
-        let guideController = controller as! GuideController
-        guideController.delegate = self
-      }
-    }
-    else {
-    }
-    switchSubview(controller!)
-  }
-  
-  func switchSubview(newView: UIViewController) {
-        
-    if let currentController = currentController {
-      currentController.view.removeFromSuperview()
-      currentController.removeFromParentViewController()
-    }
-    currentController = newView
-    addChildViewController(newView)
-    newView.didMoveToParentViewController(self)
-    newView.view.frame = self.container.bounds
-    
-    container.addSubview(newView.view)
-  }
 }
 
 // MARK: - Navigation
@@ -98,25 +40,3 @@ class RootController: UIViewController, MDCSwipeToChooseDelegate {
 //    subController.selectedSearchResult(searchResult)
 //  }
 //}
-
-extension RootController: GuideControllerDelegate {
-  
-  func categorySelected(category: Attraction.Category, view: String) {
-    
-    session.currentCategory = category
-    switch view {
-    case "swipe":
-      navigateToSubview("swipeController", controllerType: SwipeController.self)
-    case "list":
-      navigateToSubview("listController", controllerType: ListController.self)
-    default:
-      navigateToSubview("mapController", controllerType: MapController.self)
-    }
-  }
-  
-  func navigateInternally(callback: () -> ()) {
-    
-    navigateToSubview("guideController", controllerType: GuideController.self)
-    callback()
-  }
-}

@@ -19,9 +19,9 @@ class Attraction: Object {
   }
   
   enum Category: Int {
-    case ALL = 200
-    case EXPLORE_CITY = 210
-    case ACTIVITY_HIKE_DAYTRIP = 220
+    case ATTRACTIONS = 200
+//    case EXPLORE_CITY = 210
+//    case ACTIVITY_HIKE_DAYTRIP = 220
     case TRANSPORTATION = 230
     case ACCOMODATION = 240
     case FOOD_OR_DRINK = 250
@@ -30,12 +30,8 @@ class Attraction: Object {
     
     var entityName: String {
       switch self {
-      case .ALL:
-        return "All listings"
-      case .EXPLORE_CITY:
-        return "Explore the city"
-      case .ACTIVITY_HIKE_DAYTRIP:
-        return "Activities"
+      case .ATTRACTIONS:
+        return "Attractions"
       case .TRANSPORTATION:
         return "Transportation"
       case .ACCOMODATION:
@@ -66,7 +62,7 @@ class Attraction: Object {
       return entityName
     }
     
-    static let allValues = [ALL, EXPLORE_CITY, ACTIVITY_HIKE_DAYTRIP, TRANSPORTATION, ACCOMODATION,
+    static let allValues = [ATTRACTIONS, TRANSPORTATION, ACCOMODATION,
       FOOD_OR_DRINK, SHOPPING, INFORMATION]
   }  
 }

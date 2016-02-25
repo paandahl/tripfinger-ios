@@ -9,11 +9,11 @@
 /* Begin PBXBuildFile section */
 		2503D3A51BDA5E2A0078C0F0 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3A41BDA5E2A0078C0F0 /* DetailController.swift */; };
 		2503D3A71BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3A61BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift */; };
-		2503D3AA1BDF7CFB0078C0F0 /* SubController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3A91BDF7CFB0078C0F0 /* SubController.swift */; };
 		2503D3AC1BE0DA430078C0F0 /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3AB1BE0DA430078C0F0 /* FilterController.swift */; };
 		2503D3AE1BE1330E0078C0F0 /* FilterBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2503D3AD1BE1330E0078C0F0 /* FilterBox.xib */; };
 		2503D3B01BE133290078C0F0 /* FilterBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2503D3AF1BE133290078C0F0 /* FilterBox.swift */; };
 		250651EB1BD264B7002C3883 /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 250651EA1BD264B7002C3883 /* UIImageView+DownloadImage.swift */; };
+		251F70441C7DE1550069EB6D /* AttractionsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F70431C7DE1550069EB6D /* AttractionsController.swift */; };
 		25243E641BC410F400EF5F64 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E631BC410F400EF5F64 /* Region.swift */; };
 		25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E651BC4110E00EF5F64 /* GuideItem.swift */; };
 		253E60F61C6DB68A0069068B /* mapsObject.json in Resources */ = {isa = PBXBuildFile; fileRef = 253E60F51C6DB68A0069068B /* mapsObject.json */; };
@@ -57,7 +57,6 @@
 		25C8F3DC1C44FD3C007BD932 /* UITableView+ReloadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C8F3DB1C44FD3C007BD932 /* UITableView+ReloadData.swift */; };
 		25C9DFD11B9CD84200C516C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C9DFD01B9CD84200C516C1 /* AppDelegate.swift */; };
 		25C9DFD31B9CD84200C516C1 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C9DFD21B9CD84200C516C1 /* MapController.swift */; };
-		25C9DFD61B9CD84200C516C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFD41B9CD84200C516C1 /* Main.storyboard */; };
 		25C9DFD81B9CD84200C516C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFD71B9CD84200C516C1 /* Images.xcassets */; };
 		25C9DFDB1B9CD84200C516C1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFD91B9CD84200C516C1 /* LaunchScreen.xib */; };
 		25C9DFF81B9CD97000C516C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFF71B9CD97000C516C1 /* UIKit.framework */; };
@@ -140,11 +139,11 @@
 /* Begin PBXFileReference section */
 		2503D3A41BDA5E2A0078C0F0 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		2503D3A61BDEA6A50078C0F0 /* SKMapView+IsCoordinateVisible.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKMapView+IsCoordinateVisible.swift"; sourceTree = "<group>"; };
-		2503D3A91BDF7CFB0078C0F0 /* SubController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubController.swift; sourceTree = "<group>"; };
 		2503D3AB1BE0DA430078C0F0 /* FilterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
 		2503D3AD1BE1330E0078C0F0 /* FilterBox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterBox.xib; sourceTree = "<group>"; };
 		2503D3AF1BE133290078C0F0 /* FilterBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterBox.swift; sourceTree = "<group>"; };
 		250651EA1BD264B7002C3883 /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
+		251F70431C7DE1550069EB6D /* AttractionsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttractionsController.swift; sourceTree = "<group>"; };
 		25243E631BC410F400EF5F64 /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		25243E651BC4110E00EF5F64 /* GuideItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItem.swift; sourceTree = "<group>"; };
 		253E60F51C6DB68A0069068B /* mapsObject.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mapsObject.json; sourceTree = "<group>"; };
@@ -191,7 +190,6 @@
 		25C9DFCF1B9CD84200C516C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25C9DFD01B9CD84200C516C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25C9DFD21B9CD84200C516C1 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
-		25C9DFD51B9CD84200C516C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		25C9DFD71B9CD84200C516C1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		25C9DFDA1B9CD84200C516C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		25C9DFE01B9CD84200C516C1 /* TripfingerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripfingerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -403,6 +401,7 @@
 		25B506891BB3FD4800A36BA1 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				251F70431C7DE1550069EB6D /* AttractionsController.swift */,
 				2503D3A41BDA5E2A0078C0F0 /* DetailController.swift */,
 				25D281C81BFB69B80069BE86 /* DownloadController.swift */,
 				2503D3AB1BE0DA430078C0F0 /* FilterController.swift */,
@@ -411,7 +410,6 @@
 				25C9DFD21B9CD84200C516C1 /* MapController.swift */,
 				25B5068A1BB3FD5800A36BA1 /* RootController.swift */,
 				25D4362F1BD538810016E362 /* SearchController.swift */,
-				2503D3A91BDF7CFB0078C0F0 /* SubController.swift */,
 				25D436421BDA3A680016E362 /* SwipeController.swift */,
 			);
 			name = Controllers;
@@ -452,7 +450,6 @@
 				25C9DFD01B9CD84200C516C1 /* AppDelegate.swift */,
 				25B506891BB3FD4800A36BA1 /* Controllers */,
 				25C9DFD71B9CD84200C516C1 /* Images.xcassets */,
-				25C9DFD41B9CD84200C516C1 /* Main.storyboard */,
 				25B506881BB3FD1C00A36BA1 /* Model */,
 				25D707C41BC6BC25005A4BBA /* Service */,
 				25C9DFCE1B9CD84200C516C1 /* Supporting Files */,
@@ -677,7 +674,6 @@
 			files = (
 				254091091C0D47C200A2002F /* SKMaps.bundle in Resources */,
 				25B506871BB3F33900A36BA1 /* Podfile in Resources */,
-				25C9DFD61B9CD84200C516C1 /* Main.storyboard in Resources */,
 				2503D3AE1BE1330E0078C0F0 /* FilterBox.xib in Resources */,
 				25C9DFDB1B9CD84200C516C1 /* LaunchScreen.xib in Resources */,
 				25D436471BDA4C560016E362 /* ListingCell.xib in Resources */,
@@ -786,6 +782,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				25C8F3DA1C44CB7C007BD932 /* TableSection.swift in Sources */,
+				251F70441C7DE1550069EB6D /* AttractionsController.swift in Sources */,
 				25D281D11BFDC9190069BE86 /* NSURL+GetDirectory.swift in Sources */,
 				2503D3A51BDA5E2A0078C0F0 /* DetailController.swift in Sources */,
 				25C9DFD31B9CD84200C516C1 /* MapController.swift in Sources */,
@@ -808,7 +805,6 @@
 				25D707D51BCA7848005A4BBA /* UIView+AddConstraints.swift in Sources */,
 				25D436451BDA4B010016E362 /* ListController.swift in Sources */,
 				25D436431BDA3A680016E362 /* SwipeController.swift in Sources */,
-				2503D3AA1BDF7CFB0078C0F0 /* SubController.swift in Sources */,
 				253E60F81C7084BB0069068B /* UIImage+ColourInit.swift in Sources */,
 				25D281C71BFB67760069BE86 /* DownloadService.swift in Sources */,
 				25243E641BC410F400EF5F64 /* Region.swift in Sources */,
@@ -870,14 +866,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		25C9DFD41B9CD84200C516C1 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				25C9DFD51B9CD84200C516C1 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		25C9DFD91B9CD84200C516C1 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (

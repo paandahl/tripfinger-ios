@@ -181,12 +181,8 @@ class ContentService {
     })
     
   }
-  
-  class func getCascadingAttractionsForRegion(region: Region?, handler: List<Attraction> -> ()) {
-    getCascadingAttractionsForRegion(region, withCategory: nil, handler: handler)
-  }
     
-  class func getCascadingAttractionsForRegion(region: Region?, withCategory category: Attraction.Category?, handler: List<Attraction> -> ()) {
+  class func getCascadingAttractionsForRegion(region: Region?, withCategory category: Attraction.Category? = nil, handler: List<Attraction> -> ()) {
     
     if !NetworkUtil.connectedToNetwork() {
       print("fetching offline attractions")
@@ -224,7 +220,7 @@ class ContentService {
       }
       
       if let category = category {
-        parameters["category"] = String(category.rawValue)
+        parameters["categoryId"] = String(category.rawValue)
       }
       
       if AppDelegate.mode != AppDelegate.AppMode.RELEASE {

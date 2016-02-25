@@ -2,31 +2,37 @@ import UIKit
 import MDCSwipeToChoose
 import RealmSwift
 
-class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate {
+class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   
-  @IBOutlet weak var noElementsLabel: UILabel!
+  var noElementsLabel = UILabel()
   var attractionStack: [Attraction]?
   var session: Session!
-  var filterBox: FilterBox!
+//  var filterBox: FilterBox!
   
   let ChooseAttractionButtonHorizontalPadding: CGFloat = 80.0
   let ChooseAttractionButtonVerticalPadding: CGFloat = 20.0
   var frontCardView: ChooseAttractionView!
   var orignalFrontCardFrame: CGRect!
   var backCardView: ChooseAttractionView!
-  
-  override func viewDidLoad(){
-    super.viewDidLoad()
     
-    filterBox = UINib(nibName: "FilterBox", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! FilterBox
-    filterBox.delegate = self
-    view.addSubview(filterBox)
-    view.addConstraints("V:|-10-[filters(44)]", forViews: ["filters": filterBox])
-    view.addConstraints("H:|-0-[filters]-0-|", forViews: ["filters": filterBox])
+  override func viewDidLoad(){
+//    filterBox = UINib(nibName: "FilterBox", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! FilterBox
+//    filterBox.delegate = self
+//    view.addSubview(filterBox)
+//    view.addConstraints("V:|-10-[filters(44)]", forViews: ["filters": filterBox])
+    view.addSubview(noElementsLabel)
+    view.addConstraint(.CenterX, forView: noElementsLabel)
+    view.addConstraint(.CenterY, forView: noElementsLabel)
   }
   
   override func viewWillAppear(animated: Bool) {
     loadAttractions()
+  }
+  
+  override func viewDidLayoutSubviews() {
+    if let frontCardView = frontCardView {
+      orignalFrontCardFrame = frontCardView.frame
+    }
   }
   
   func loadAttractions() {
@@ -40,7 +46,11 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
         }
       }
       self.attractionStack = newStack
-      self.displayCards()
+      SyncManager.run_async {
+        dispatch_async(dispatch_get_main_queue()) {
+          self.displayCards()
+        }
+      }
     }
   }
   
@@ -51,7 +61,7 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
         // Display the first ChoosePersonView in front. Users can swipe to indicate
         // whether they like or dislike the item displayed.
         setFrontCardViewFunc(popAttractionViewWithFrame(frontCardViewFrame())!)
-        view.insertSubview(frontCardView, belowSubview: filterBox)
+        view.addSubview(frontCardView)
         addFrontCardConstraints()
         
         // Display the second ChoosePersonView in back. This view controller uses
@@ -81,13 +91,13 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
       noElementsLabel.text = "Loading..."
       noElementsLabel.sizeToFit()
     }
-    if let currentRegion = session.currentRegion {
-      filterBox.regionNameLabel.text = "\(currentRegion.listing.item.name!):"
-    } else {
-      filterBox.regionNameLabel.text = "World:"
-    }
-    
-    filterBox.categoryLabel.text = session.currentCategory.entityName(session.currentRegion)
+//    if let currentRegion = session.currentRegion {
+//      filterBox.regionNameLabel.text = "\(currentRegion.listing.item.name!):"
+//    } else {
+//      filterBox.regionNameLabel.text = "World:"
+//    }
+//    
+//    filterBox.categoryLabel.text = session.currentCategory.entityName(session.currentRegion)
   }
   
   @IBAction func back() {
@@ -95,23 +105,17 @@ class SwipeController: UIViewController, SubController, MDCSwipeToChooseDelegate
   }
   
   func addFrontCardConstraints() {
-    let views = ["card": frontCardView, "filter": filterBox!]
+    let views: [String: UIView] = ["card": frontCardView]
     view.addConstraints("H:[card(300)]", forViews: views)
-    view.addConstraints("V:[filter]-10-[card]", forViews: views)
+    view.addConstraints("V:|-20-[card]", forViews: views)
     view.addConstraint(NSLayoutAttribute.CenterX, forView: frontCardView)
   }
   
   func addBackCardConstraints() {
-    let views = ["card": backCardView, "filter": filterBox!]
+    let views: [String: UIView] = ["card": backCardView]
     view.addConstraints("H:[card(300)]", forViews: views)
-    view.addConstraints("V:[filter]-20-[card]", forViews: views)
+    view.addConstraints("V:|-30-[card]", forViews: views)
     view.addConstraint(NSLayoutAttribute.CenterX, forView: backCardView)
-  }
-  
-  override func viewDidLayoutSubviews() {
-    if let frontCardView = frontCardView {
-      orignalFrontCardFrame = frontCardView.frame
-    }
   }
   
   func suportedInterfaceOrientations() -> UIInterfaceOrientationMask{

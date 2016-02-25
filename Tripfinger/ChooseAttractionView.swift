@@ -1,28 +1,3 @@
-//
-//  ChoosePersonView.swift
-//  SwiftLikedOrNope
-//
-// Copyright (c) 2014 to present, Richard Burdish @rjburdish
-//
-// Permission is hereby granted, free of charge, to any person obtaining a copy
-// of this software and associated documentation files (the "Software"), to deal
-// in the Software without restriction, including without limitation the rights
-// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-// copies of the Software, and to permit persons to whom the Software is
-// furnished to do so, subject to the following conditions:
-//
-// The above copyright notice and this permission notice shall be included in
-// all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-// THE SOFTWARE.
-//
-
 import UIKit
 import MDCSwipeToChoose
 
@@ -69,10 +44,9 @@ class ChooseAttractionView: MDCSwipeToChooseView {
     imageView.userInteractionEnabled = true
     
     let views = ["image": imageView!, "info": informationView!]
-    self.addConstraints("V:|-0-[image(400)]-0-[info(80)]-0-|", forViews: views)
-    self.addConstraints("H:|-0-[info]-0-|", forViews: views)
-    self.addConstraints("H:|-0-[image]-0-|", forViews: views)
-    
+    addConstraints("V:|-0-[image(400)]-0-[info(80)]-0-|", forViews: views)
+    addConstraints("H:|-0-[info]-0-|", forViews: views)
+    addConstraints("H:|-0-[image]-0-|", forViews: views)
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -84,61 +58,22 @@ class ChooseAttractionView: MDCSwipeToChooseView {
   }
   
   func constructInformationView() -> Void{
-    let bottomHeight:CGFloat = 60.0
-    let bottomFrame:CGRect = CGRectMake(0,
-      CGRectGetHeight(self.bounds) - bottomHeight,
-      CGRectGetWidth(self.bounds),
-      bottomHeight);
-    self.informationView = UIView(frame:bottomFrame)
-    self.informationView.backgroundColor = UIColor.whiteColor()
-    self.informationView.clipsToBounds = true
-    self.informationView.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleTopMargin]
-    self.addSubview(self.informationView)
+    informationView = UIView()
+    informationView.backgroundColor = UIColor.whiteColor()
+    addSubview(informationView)
     constructNameLabel()
-    constructCameraImageLabelView()
-    constructInterestsImageLabelView()
-    constructFriendsImageLabelView()
     informationView.tag = 3000
+    let views: [String: UIView] = ["name": nameLabel]
+    informationView.addConstraints("V:|-20-[name(60)]-0-|", forViews: views)
+    informationView.addConstraints("H:|-12-[name]-0-|", forViews: views)
   }
   
   func constructNameLabel() -> Void{
-    let leftPadding:CGFloat = 12.0
-    let topPadding:CGFloat = 17.0
-    let frame:CGRect = CGRectMake(leftPadding,
-      topPadding,
-      floor(CGRectGetWidth(self.informationView.frame)/2),
-      CGRectGetHeight(self.informationView.frame) - topPadding)
-    self.nameLabel = UILabel(frame:frame)
-    self.nameLabel.text = "\(attraction.listing.item.name!)"
-    self.nameLabel.numberOfLines = 0
-    self.nameLabel.lineBreakMode = .ByWordWrapping
-    self.informationView .addSubview(self.nameLabel)
+    nameLabel = UILabel()
+    nameLabel.text = attraction.listing.item.name!
+    nameLabel.numberOfLines = 0
+    nameLabel.lineBreakMode = .ByWordWrapping
+    informationView .addSubview(nameLabel)
     
-  }
-  func constructCameraImageLabelView() -> Void{
-    //        var rightPadding:CGFloat = 10.0
-    //        var image:UIImage = UIImage(named:"camera")!
-    //        self.carmeraImageLabelView = buildImageLabelViewLeftOf(CGRectGetWidth(self.informationView.bounds), image:image, text: "5")
-    //        self.informationView.addSubview(self.carmeraImageLabelView)
-  }
-  func constructInterestsImageLabelView() -> Void{
-    //        var image: UIImage = UIImage(named: "book")!
-    //        self.interestsImageLabelView = self.buildImageLabelViewLeftOf(CGRectGetMinX(self.carmeraImageLabelView.frame), image: image, text: "6")
-    //        self.informationView.addSubview(self.interestsImageLabelView)
-  }
-  
-  func constructFriendsImageLabelView() -> Void{
-    //        var image:UIImage = UIImage(named:"group")!
-    //        self.friendsImageLabelView = buildImageLabelViewLeftOf(CGRectGetMinX(self.interestsImageLabelView.frame), image:image, text:"No Friends")
-    //        self.informationView.addSubview(self.friendsImageLabelView)
-  }
-  
-  func buildImageLabelViewLeftOf(x:CGFloat, image:UIImage, text:String) -> ImagelabelView{
-    let frame:CGRect = CGRect(x:x-ChoosePersonViewImageLabelWidth, y: 0,
-      width: ChoosePersonViewImageLabelWidth,
-      height: CGRectGetHeight(self.informationView.bounds))
-    let view:ImagelabelView = ImagelabelView(frame:frame, image:image, text:text)
-    view.autoresizingMask = UIViewAutoresizing.FlexibleLeftMargin
-    return view
   }
 }

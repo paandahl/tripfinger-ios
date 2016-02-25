@@ -11,12 +11,24 @@ class SearchController: UITableViewController {
   var regionId: String?
   var countryId: String?
   
-  var delegate: SearchViewControllerDelegate!
+  var delegate: SearchViewControllerDelegate
   var searchService: SearchService!
   var searchBar: UISearchBar!
   
   var searchResults = [SimplePOI]()
   var lastSearchText = ""
+
+  init(delegate: SearchViewControllerDelegate, regionId: String?, countryId: String?) {
+    self.delegate = delegate
+    self.regionId = regionId
+    self.countryId = countryId
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
   
   override func viewDidLoad() {
     super.viewDidLoad()

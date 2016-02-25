@@ -34,7 +34,7 @@ class SwipeViewOnlineTest: XCTestCase {
     let silomRow = app.tables.staticTexts["Silom"]
     expectationForPredicate(exists, evaluatedWithObject: silomRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
-    app.navigationBars["Tripfinger.Root"].buttons["Swipe"].tap()
+    app.tables.staticTexts["Attractions"].tap()
     
     let loadingLabel = app.staticTexts["Loading..."]
     expectationForPredicate(notHittable, evaluatedWithObject: loadingLabel, handler: nil)
@@ -43,7 +43,7 @@ class SwipeViewOnlineTest: XCTestCase {
     frontCard.swipeRight()
     print("Accessibilityvalue: \(frontCard.value)")
 
-    app.navigationBars["Tripfinger.Root"].buttons["Map"].tap()
+    app.navigationBars["Attractions"].buttons["Map"].tap()
     
     let mapView = app.otherElements.elementMatchingType(.Other, identifier: "mapView")
     expectationForPredicate(hittable, evaluatedWithObject: mapView, handler: nil)
@@ -60,10 +60,10 @@ class SwipeViewOnlineTest: XCTestCase {
     waitForExpectationsWithTimeout(60, handler: nil)
     bruneiRow.tap()
 
-    let exploreCountryRow = app.tables.staticTexts["Explore the country"]
-    expectationForPredicate(exists, evaluatedWithObject: exploreCountryRow, handler: nil)
+    let attractionsRow = app.tables.staticTexts["Attractions"]
+    expectationForPredicate(exists, evaluatedWithObject: attractionsRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
-    app.navigationBars["Tripfinger.Root"].buttons["Swipe"].tap()
+    attractionsRow.tap()
 
     let loadingLabel = app.staticTexts["Loading..."]
     expectationForPredicate(notHittable, evaluatedWithObject: loadingLabel, handler: nil)

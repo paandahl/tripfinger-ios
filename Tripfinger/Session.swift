@@ -160,30 +160,19 @@ class Session {
   // attractions (swipe and list view)
   var attractionsFromRegion: String?
   var attractionsFromCategory: Attraction.Category?
-  var currentCategory = Attraction.Category.EXPLORE_CITY
+  var currentCategory = Attraction.Category.ATTRACTIONS
   var currentAttractions = List<Attraction>()
   
   func loadAttractions(handler: () -> ()) {
 
     if attractionsFromRegion != currentRegion?.item().name || attractionsFromCategory != currentCategory {
       print("Reloading attractions")
-      if currentCategory != Attraction.Category.ALL {
-        ContentService.getCascadingAttractionsForRegion(self.currentRegion, withCategory: currentCategory) {
-          attractions in
-          
-          print("Loaded \(attractions.count) attractions.")
-          self.currentAttractions = attractions
-          handler()
-        }
-      }
-      else {
-        ContentService.getCascadingAttractionsForRegion(self.currentRegion) {
-          attractions in
-          
-          print("Loaded \(attractions.count) attractions.")
-          self.currentAttractions = attractions
-          handler()
-        }
+      ContentService.getCascadingAttractionsForRegion(self.currentRegion, withCategory: currentCategory) {
+        attractions in
+        
+        print("Loaded \(attractions.count) attractions.")
+        self.currentAttractions = attractions
+        handler()
       }
       attractionsFromCategory = currentCategory
       attractionsFromRegion = currentRegion?.item().name

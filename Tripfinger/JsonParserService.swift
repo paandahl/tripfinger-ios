@@ -191,9 +191,6 @@ class JsonParserService {
       categoryDescriptionsDict[categoryDescriptionJson[0].int!] = categoryDescriptionJson[1].string!
     }
     for category in Attraction.Category.allValues {
-      if category == Attraction.Category.ALL {
-        continue;
-      }
       let categoryDescription = GuideText()
       categoryDescription.item = GuideItem()
       categoryDescription.item.category = category.rawValue
@@ -210,6 +207,7 @@ class JsonParserService {
       categoryDescriptions.append(categoryDescription)
     }
     
+    print("Returning \(categoryDescriptions.count) category descriptions")
     return categoryDescriptions
   }
   

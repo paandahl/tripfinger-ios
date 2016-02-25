@@ -5,7 +5,7 @@ protocol GuideControllerDelegate: class {
   func navigateInternally(callback: () -> ())
 }
 
-class GuideController: UITableViewController, SubController {
+class GuideController: UITableViewController {
   struct TableCellIdentifiers {
     static let guideItemCell = "GuideItemCell"
     static let textMessageCell = "TextMessageCell"
@@ -30,8 +30,9 @@ class GuideController: UITableViewController, SubController {
     super.viewDidLoad()
 
     automaticallyAdjustsScrollViewInsets = false
-    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: nil)
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "search")
+    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
+    mapButton.accessibilityLabel = "Map"
+    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
     navigationItem.rightBarButtonItems = [searchButton, mapButton]
         
     tableView.rowHeight = UITableViewAutomaticDimension
@@ -162,8 +163,10 @@ extension GuideController {
         let section = TableSection(cellIdentifier: TableCellIdentifiers.textMessageCell, handler: nil)
         section.elements.append((title: "", value: ""))
         tableSections.append(section)
-      }
-      else {
+      } else {
+        let attractionsSection = TableSection(title: "Wordwide", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCategory)
+        attractionsSection.elements.append((title: "Attractions", value: Attraction.Category.ATTRACTIONS.rawValue))
+        tableSections.append(attractionsSection)
         for (regionName, countryList) in countryLists {
           let section = TableSection(title: regionName, cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToRegion)
           for country in countryList {
@@ -188,14 +191,14 @@ extension GuideController {
     }
     
     if session.currentRegion != nil && !session.currentRegion.mapCountry && session.currentSection == nil {
-      var section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToSection)
-      let section2 = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToSection)
+      var section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCategory)
+      let section2 = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCategory)
       var i = 0
       for categoryDesc in session.currentRegion.item().categoryDescriptions {
-        if i > 1 {
-          section2.elements.append((title: categoryDesc.getName(), value: categoryDesc))
+        if i > 0 {
+          section2.elements.append((title: categoryDesc.getName(), value: categoryDesc.item.category))
         } else {
-          section.elements.append((title: categoryDesc.getName(), value: categoryDesc))
+          section.elements.append((title: categoryDesc.getName(), value: categoryDesc.item.category))
         }
         i += 1
       }
@@ -224,13 +227,6 @@ extension GuideController {
         tableSections.append(section)
       }
       tableSections.append(section2)
-    }
-    else if session.currentSection != nil && session.currentSection.item.category != 0 {
-      let section = TableSection(cellIdentifier: TableCellIdentifiers.categoryCell, handler: navigateToCategory)
-      section.elements.append(("Swipe", "swipe"))
-      section.elements.append(("List", "list"))
-      section.elements.append(("Map", "map"))
-      tableSections.append(section)
     }
   }
   
@@ -330,18 +326,25 @@ extension GuideController: SearchViewControllerDelegate {
   }
   
   func navigateToCategory(object: AnyObject) {
-    let view = object as! String
-    delegate.categorySelected(Attraction.Category(rawValue: session.currentItem.category)!, view: view)
+    session.currentCategory = Attraction.Category(rawValue: object as! Int)!
+    
+    let attractionsController = AttractionsController(session: session, searchDelegate: self)
+    attractionsController.edgesForExtendedLayout = .None // offset from navigation bar
+    navigationController!.pushViewController(attractionsController, animated: true)
   }
   
-  func search() {
+  func navigateToSearch() {
     let nav = UINavigationController()
-    let searchController = SearchController()
-    searchController.delegate = self
-    searchController.regionId = session.currentRegion?.getId()
-    searchController.countryId = session.currentCountry?.getId()
+    let regionId = session.currentRegion?.getId()
+    let countryId = session.currentCountry?.getId()
+    let searchController = SearchController(delegate: self, regionId: regionId, countryId: countryId)
     nav.viewControllers = [searchController]
     presentViewController(nav, animated: true, completion: nil)
+  }
+  
+  func navigateToMap() {
+    let mapController = MapController(session: session)
+    navigationController!.pushViewController(mapController, animated: true)
   }
   
   func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ()) {

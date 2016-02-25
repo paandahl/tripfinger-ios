@@ -1,32 +1,32 @@
 import Foundation
 
-class ListController: UITableViewController, SubController {
+class ListController: UITableViewController {
   struct TableViewCellIdentifiers {
     static let listingCell = "ListingCell"
   }
   
-  var session: Session!
-  var filterBox: FilterBox!
+  var session: Session
+  var displayGrouped: Bool
   var category: Attraction.Category!
   var currentRegion: Region!
+  
+  init(session: Session, grouped: Bool) {
+    self.session = session
+    self.displayGrouped = grouped
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
   
   override func viewDidLoad() {
     UINib.registerNib(TableViewCellIdentifiers.listingCell, forTableView: tableView)
     
-    filterBox = UINib(nibName: "FilterBox", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! FilterBox
-    filterBox.delegate = self
-    let headerView = UIView()
-    headerView.addSubview(filterBox)
-    headerView.addConstraints("V:|-10-[filters(44)]", forViews: ["filters": filterBox])
-    headerView.addConstraints("H:|-0-[filters]-0-|", forViews: ["filters": filterBox])
-
     category = session.currentCategory
     currentRegion = session.currentRegion
 
-    var headerFrame = headerView.frame;
-    headerFrame.size.height = 44;
-    headerView.frame = headerFrame;
-    tableView.tableHeaderView = headerView
+    tableView.tableHeaderView = UIView(frame: CGRectZero)
     
     if self.session.currentRegion != nil {
       loadAttractions()
@@ -43,19 +43,11 @@ class ListController: UITableViewController, SubController {
   }
   
   func updateLabels() {
-    if let currentRegion = session.currentRegion {
-      filterBox.regionNameLabel.text = "\(currentRegion.listing.item.name!):"
-    }
-    else {
-      filterBox.regionNameLabel.text = "World:"
-    }
-    filterBox.categoryLabel.text = self.category.entityName(session.currentRegion)
   }
   
   func loadAttractions() {
     category = session.currentCategory
-    filterBox.categoryLabel.text = session.currentCategory.entityName
-    session.loadAttractions {      
+    session.loadAttractions {
       self.tableView.reloadData()
     }
   }
