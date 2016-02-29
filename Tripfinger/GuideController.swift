@@ -11,8 +11,6 @@ class GuideController: TableController {
   var contextSwitched = false
   var delegate: GuideControllerDelegate!
   
-  let downloadButton = UIButton(type: .System)
-
   var countryLists = [String: [Region]]()
   
   var guideItemExpanded = false
@@ -40,9 +38,7 @@ class GuideController: TableController {
     tableView.estimatedRowHeight = 44.0;
     tableView.tableHeaderView = UIView.init(frame: CGRectMake(0.0, 0.0, tableView.bounds.size.width, 0.01))
     tableView.tableFooterView = UIView.init(frame: CGRectZero)
-    
-    downloadButton.addTarget(self, action: "openDownloadCity:", forControlEvents: .TouchUpInside)
-    
+        
     if session.currentRegion == nil && countryLists.count == 0 {
       loadCountryLists()      
     }
@@ -50,6 +46,7 @@ class GuideController: TableController {
   }
   
   func updateUI() {
+    print("UPDATING UI")
     // title label
     if session.currentItem != nil {
       navigationItem.title = session.currentItem.name
@@ -57,17 +54,7 @@ class GuideController: TableController {
     else {
       navigationItem.title = "Countries"
     }
-    
-    // download button
-    if session.currentSection == nil && session.currentRegion != nil && session.currentItem.category == Region.Category.COUNTRY.rawValue {
-      let downloaded = DownloadService.isCountryDownloaded(session.currentRegion)
-      let title = downloaded ? "Downloaded" : "Download"
-      downloadButton.setTitle(title, forState: .Normal)
-      downloadButton.hidden = false
-    } else {
-      downloadButton.hidden = true
-    }
-    
+
     populateTableSections()
     tableView.reloadData {
       self.tableView.contentOffset = CGPointZero
@@ -83,12 +70,14 @@ class GuideController: TableController {
       let parentGuideController = navigationController.viewControllers.last as! GuideController
       session.moveBackInHierarchy {
         print("new currentREgion: \(self.session.currentRegion?.getName())")
-        parentGuideController.updateUI()
+        if parentGuideController.tableSections.count == 0 {
+          parentGuideController.updateUI()          
+        }
       }
     }
   }
   
-  func openDownloadCity(sender: UIButton) {
+  func downloadClicked() {
     let nav = UINavigationController()
     let vc = DownloadController()
     vc.country = session.currentCountry
@@ -153,7 +142,10 @@ extension GuideController {
         tableSections.append(section)
       } else {
         let attractionsSection = TableSection(title: "Wordwide", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
-        attractionsSection.elements.append((title: "Attractions", value: Attraction.Category.ATTRACTIONS.rawValue))
+        let guideText = GuideText()
+        guideText.item = GuideItem()
+        guideText.item.category = Attraction.Category.ATTRACTIONS.rawValue
+        attractionsSection.elements.append((title: "Attractions", value: guideText))
         tableSections.append(attractionsSection)
         for (regionName, countryList) in countryLists {
           let section = TableSection(title: regionName, cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
@@ -183,10 +175,11 @@ extension GuideController {
       let section2 = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
       var i = 0
       for categoryDesc in session.currentRegion.item().categoryDescriptions {
+        let category = Attraction.Category(rawValue: categoryDesc.item.category)!
         if i > 0 {
-          section2.elements.append((title: categoryDesc.getName(), value: categoryDesc.item.category))
+          section2.elements.append((title: category.entityName, value: categoryDesc))
         } else {
-          section.elements.append((title: categoryDesc.getName(), value: categoryDesc.item.category))
+          section.elements.append((title: category.entityName, value: categoryDesc))
         }
         i += 1
       }
@@ -289,9 +282,10 @@ extension GuideController: SearchViewControllerDelegate {
   }
   
   func navigateToCategory(object: AnyObject) {
-    session.currentCategory = Attraction.Category(rawValue: object as! Int)!
+    let categoryDescription = object as! GuideText
+    session.currentCategory = Attraction.Category(rawValue: categoryDescription.item.category)!
     
-    let attractionsController = AttractionsController(session: session, searchDelegate: self)
+    let attractionsController = AttractionsController(session: session, searchDelegate: self, categoryDescription: categoryDescription)
     attractionsController.edgesForExtendedLayout = .None // offset from navigation bar
     navigationController!.pushViewController(attractionsController, animated: true)
   }

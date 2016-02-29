@@ -3,6 +3,7 @@ import Foundation
 class DetailController: UIViewController {
   
   let scrollView = UIScrollView()
+  let heartImage = UIImageView()
   let mainImage = UIImageView()
   let name = UILabel()
   let descriptionText = UITextView()
@@ -20,6 +21,15 @@ class DetailController: UIViewController {
     scrollView.addSubview(name)
     scrollView.addSubview(mainImage)
     scrollView.addSubview(descriptionText)
+    
+    heartImage.image = UIImage(named: "heart-24")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+    let heartClick = UITapGestureRecognizer(target: self, action: "heartClick")
+    heartClick.numberOfTapsRequired = 1;
+    heartClick.numberOfTouchesRequired = 1;
+    heartImage.addGestureRecognizer(heartClick)
+    heartImage.userInteractionEnabled = true
+    setHeartTint()
+    scrollView.addSubview(heartImage)
 
     scrollView.backgroundColor = UIColor.whiteColor()
 
@@ -40,16 +50,18 @@ class DetailController: UIViewController {
     attributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, attributedString.length))
     descriptionText.attributedText = attributedString
     
-    var views = ["scroll": scrollView, "name": name, "image": mainImage, "description": descriptionText]
+    var views = ["scroll": scrollView, "heart": heartImage, "name": name, "image": mainImage, "description": descriptionText]
     view.addConstraints("V:|-0-[scroll]-0-|", forViews: views)
     view.addConstraints("H:|-0-[scroll]-0-|", forViews: views)
     let widthConstraint = NSLayoutConstraint(item: mainImage, attribute: .Width, relatedBy: .Equal, toItem: scrollView, attribute: .Width, multiplier: 1.0, constant: 0)
     view.addConstraint(widthConstraint)
     
     scrollView.addConstraints("V:|-0-[image(283)]-20-[name]-20-[description]", forViews: views)
+    scrollView.addConstraints("V:|-20-[heart]", forViews: views)
     scrollView.addConstraints("H:|-0-[image]-0-|", forViews: views)
     scrollView.addConstraints("H:|-20-[name]", forViews: views)
     scrollView.addConstraints("H:|-20-[description]-20-|", forViews: views)
+    scrollView.addConstraints("H:[heart]-20-|", forViews: views)
     var bottomElement = descriptionText
     
     if let price = attraction.price {
@@ -138,5 +150,23 @@ class DetailController: UIViewController {
     UIGraphicsEndImageContext()
     
     return newImage
+  }
+  
+  func setHeartTint() {
+    if let notes = attraction.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
+      heartImage.tintColor = UIColor.redColor()
+    }
+    else {
+      heartImage.tintColor = UIColor.darkGrayColor()
+    }
+  }
+  
+  func heartClick() {
+    if let notes = attraction.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
+      DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, attraction: attraction)
+    } else {
+      DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, attraction: attraction)
+    }
+    setHeartTint()
   }
 }

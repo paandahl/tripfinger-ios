@@ -12,6 +12,7 @@ class GuideItem: Object {
   dynamic var slug: String?
   dynamic var name: String!
   dynamic var category = 0
+  dynamic var subCategory = 0
   dynamic var status = 0
   
   dynamic var parent: String!

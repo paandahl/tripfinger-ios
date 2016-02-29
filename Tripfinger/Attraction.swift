@@ -10,8 +10,8 @@ class Attraction: Object {
   dynamic var openingHours: String?
   dynamic var directions: String?
   
-  func categoryName(currentRegion: Region?) -> String {
-    return Category(rawValue: listing.item.category)!.entityName(currentRegion)
+  func categoryName() -> String {
+    return Category(rawValue: listing.item.category)!.entityName
   }
   
   func item() -> GuideItem {
@@ -45,24 +45,40 @@ class Attraction: Object {
       }
     }
     
-    func entityName(currentRegion: Region?) -> String {
-      if entityName == "Explore the city" {
-        if currentRegion == nil {
-          return "Explore the world"
-        }
-        switch currentRegion!.listing.item.category {
-        case Region.Category.CONTINENT.rawValue:
-          return "Explore the continent"
-        case Region.Category.COUNTRY.rawValue:
-          return "Explore the country"
-        default:
-          return entityName
-        }
-      }
-      return entityName
-    }
-    
     static let allValues = [ATTRACTIONS, TRANSPORTATION, ACCOMODATION,
       FOOD_OR_DRINK, SHOPPING, INFORMATION]
+  }
+  
+  enum SubCategory: Int {
+    // TRANSPORT
+    case AIRPORT = 2300
+    case TRAIN_STATION = 2310
+    case BUS_STATION = 2320
+    case FERRY_TERMINAL = 2330
+    case CAR_RENTAL = 2340
+    case MOTORBIKE_RENTAL = 2350
+    case BICYCLE_RENTAL = 2360
+
+    var entityName: String {
+      switch self {
+      case .AIRPORT:
+        return "Airports"
+      case .TRAIN_STATION:
+        return "Train stations"
+      case .BUS_STATION:
+        return "Bus stations"
+      case .FERRY_TERMINAL:
+        return "Ferry terminals"
+      case .CAR_RENTAL:
+        return "Car rentals"
+      case .MOTORBIKE_RENTAL:
+        return "Motorbike rentals"
+      case .BICYCLE_RENTAL:
+        return "Bicycle rentals"
+      }
+    }
+    
+    static let allValues = [AIRPORT, TRAIN_STATION, BUS_STATION, FERRY_TERMINAL, CAR_RENTAL, MOTORBIKE_RENTAL, BICYCLE_RENTAL]
   }  
+
 }

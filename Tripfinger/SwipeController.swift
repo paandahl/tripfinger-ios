@@ -35,6 +35,9 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     }
   }
   
+  /*
+   * Load attractions that have not yet been swiped onto the stack.
+   */
   func loadAttractions() {
     attractionStack = nil
     self.displayCards()

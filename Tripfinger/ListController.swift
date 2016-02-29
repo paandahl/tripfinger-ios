@@ -1,18 +1,25 @@
 import Foundation
 
 class ListController: UITableViewController {
-  struct TableViewCellIdentifiers {
+  struct TableCellIdentifiers {
+    static let guideItemCell = "GuideItemCell"
     static let listingCell = "ListingCell"
+    static let likedCell = "LikedListingCell"
+    static let loadingCell = "LoadingCell"
+    static let rightDetailCell = "RightDetailCell"
   }
   
   let session: Session
-  var displayGrouped: Bool
-  var category: Attraction.Category!
-  var currentRegion: Region!
+  let searchDelegate: SearchViewControllerDelegate
+  let displayGrouped: Bool
+  let categoryDescription: GuideText
+  var attractionsList: [Attraction]?
   
-  init(session: Session, grouped: Bool) {
+  init(session: Session, searchDelegate: SearchViewControllerDelegate, grouped: Bool, categoryDescription: GuideText) {
     self.session = session
+    self.searchDelegate = searchDelegate
     self.displayGrouped = grouped
+    self.categoryDescription = categoryDescription
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -20,23 +27,23 @@ class ListController: UITableViewController {
     fatalError("init(coder:) has not been implemented")
   }
   
+  
   override func viewDidLoad() {
-    UINib.registerNib(TableViewCellIdentifiers.listingCell, forTableView: tableView)
-    
-    category = session.currentCategory
-    currentRegion = session.currentRegion
+    UINib.registerClass(RightDetailCell.self, reuseIdentifier: TableCellIdentifiers.rightDetailCell, forTableView: tableView)
+    UINib.registerClass(GuideItemCell.self, reuseIdentifier: TableCellIdentifiers.guideItemCell, forTableView: tableView)
+    UINib.registerClass(ListingCell.self, reuseIdentifier: TableCellIdentifiers.listingCell, forTableView: tableView)
+    UINib.registerClass(ListingCell.self, reuseIdentifier: TableCellIdentifiers.likedCell, forTableView: tableView)
+    UINib.registerNib(TableCellIdentifiers.loadingCell, forTableView: tableView)
 
     tableView.tableHeaderView = UIView(frame: CGRectZero)
-    
-    if self.session.currentRegion != nil {
+
+    if !displayGrouped && session.currentRegion != nil {
       loadAttractions()
     }
   }
   
   override func viewWillAppear(animated: Bool) {
-    if session.currentRegion != nil && (category != session.currentCategory || currentRegion != session.currentRegion) {
-      category = session.currentCategory
-      currentRegion = session.currentRegion
+    if !displayGrouped {
       loadAttractions()
     }
     updateLabels()
@@ -45,10 +52,41 @@ class ListController: UITableViewController {
   func updateLabels() {
   }
   
+  func loadDescription() {
+  }
+  
+  func loadSubCategoryList() {
+    self.tableView.reloadData()
+  }
+  
+  /*
+  * Load attractions, and put the liked ones first
+  */
   func loadAttractions() {
-    category = session.currentCategory
+    attractionsList = nil
+    self.tableView.reloadData()
     session.loadAttractions {
-      self.tableView.reloadData()
+      
+      var likedAttractions = [Attraction]()
+      var notLikedAttractions = [Attraction]()
+      for attraction in self.session.currentAttractions {
+        if attraction.listing.notes?.likedState == GuideListingNotes.LikedState.LIKED {
+          likedAttractions.append(attraction)
+        }
+        else {
+          notLikedAttractions.append(attraction)
+        }
+      }
+      var attractionsList = [Attraction]()
+      attractionsList.appendContentsOf(likedAttractions)
+      attractionsList.appendContentsOf(notLikedAttractions)
+      self.attractionsList = attractionsList
+
+      SyncManager.run_async {
+        dispatch_async(dispatch_get_main_queue()) {
+          self.tableView.reloadData()
+        }
+      }
     }
   }
   
@@ -77,15 +115,66 @@ class ListController: UITableViewController {
 extension ListController {
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return session.currentAttractions.count
+    var count: Int
+    if displayGrouped {
+      count = categoryDescription.item.guideSections.count
+    } else if let attractionsList = attractionsList {
+      count = attractionsList.count
+    } else {
+      count = 1
+    }
+    if categoryDescription.item.content != nil {
+      count = count + 1
+    }    
+    return count
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier(TableViewCellIdentifiers.listingCell, forIndexPath: indexPath) as! ListingCell
-    let attraction = session.currentAttractions[indexPath.row]
-    cell.setContent(attraction)
-    cell.delegate = self
-    return cell
+    let index = categoryDescription.item.content != nil ? indexPath.row - 1 : indexPath.row
+    if categoryDescription.item.content != nil && indexPath.row == 0 {
+      let cell = tableView.dequeueReusableCellWithIdentifier(TableCellIdentifiers.guideItemCell) as! GuideItemCell
+      cell.setContentFromGuideItem(categoryDescription.item)
+      return cell
+    }
+    
+    if displayGrouped {
+      let cell = tableView.dequeueReusableCellWithIdentifier(TableCellIdentifiers.rightDetailCell, forIndexPath: indexPath)
+      print("index: \(index)")
+      let subCatId = categoryDescription.item.guideSections[index].item.subCategory
+      print("subCatId: \(subCatId)")
+      let subCat = Attraction.SubCategory(rawValue: subCatId)!
+      cell.textLabel!.text = subCat.entityName
+      return cell
+      
+    } else if let attractionsList = attractionsList {
+      let attraction = attractionsList[index]
+      let cell: ListingCell!
+      if let notes = attraction.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
+        cell = tableView.dequeueReusableCellWithIdentifier(TableCellIdentifiers.likedCell, forIndexPath: indexPath) as! ListingCell
+      } else {
+        cell = tableView.dequeueReusableCellWithIdentifier(TableCellIdentifiers.listingCell, forIndexPath: indexPath) as! ListingCell
+      }
+      cell.setContent(attraction)
+      cell.delegate = self
+      return cell
+    } else {
+      let cell = tableView.dequeueReusableCellWithIdentifier(TableCellIdentifiers.loadingCell, forIndexPath: indexPath)
+      let activityIndicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
+      activityIndicator.startAnimating()
+      return cell
+    }
+  }
+  
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    if displayGrouped {
+      let index = categoryDescription.item.content != nil ? indexPath.row - 1 : indexPath.row
+      let subcategoryDescription = categoryDescription.item.guideSections[index]
+      session.currentSubCategory = Attraction.SubCategory(rawValue: subcategoryDescription.item.subCategory)!
+      
+      let attractionsController = AttractionsController(session: session, searchDelegate: searchDelegate, categoryDescription: subcategoryDescription)
+      attractionsController.edgesForExtendedLayout = .None // offset from navigation bar
+      navigationController!.pushViewController(attractionsController, animated: true)
+    }
   }
 }
 

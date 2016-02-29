@@ -35,6 +35,7 @@ class GuideViewOnlineTest: XCTestCase {
     let understandRow = app.tables.staticTexts["Understand"]
     expectationForPredicate(exists, evaluatedWithObject: understandRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
+    app.tables.element.scrollToElement(understandRow)
     understandRow.tap()
     
     let historyRow = app.tables.staticTexts["History"]
@@ -44,11 +45,12 @@ class GuideViewOnlineTest: XCTestCase {
     var backButton = app.navigationBars["Understand"].buttons["Thailand"]
     backButton.tap()
 
-    let exploreCountryRow = app.tables.staticTexts["Explore the country"]
-    expectationForPredicate(exists, evaluatedWithObject: exploreCountryRow, handler: nil)
+    let chiangMaiRow = app.tables.staticTexts["Chiang Mai"]
+    expectationForPredicate(exists, evaluatedWithObject: chiangMaiRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
 
     let bangkokRow = app.tables.staticTexts["Bangkok"]
+    app.tables.element.scrollToElement(bangkokRow)
     bangkokRow.tap()
     
     let silomRow = app.tables.staticTexts["Silom"]
@@ -75,7 +77,7 @@ class GuideViewOnlineTest: XCTestCase {
     waitForExpectationsWithTimeout(60, handler: nil)
     thailandRow.tap()
     
-    expectationForPredicate(exists, evaluatedWithObject: exploreCountryRow, handler: nil)
+    expectationForPredicate(exists, evaluatedWithObject: chiangMaiRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     let koSamuiRow = app.tables.staticTexts["Ko Samui"]
     koSamuiRow.tap()

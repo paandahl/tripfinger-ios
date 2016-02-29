@@ -12,6 +12,7 @@ class JsonParserService {
     guideItem.id = json["id"].string
     guideItem.content = json["description"].string
     guideItem.category = json["category"].int!
+    guideItem.subCategory = json["subCategory"].int!
     guideItem.status = json["status"].int!
     guideItem.parent = json["parent"].string
     guideItem.offline = false
@@ -126,7 +127,7 @@ class JsonParserService {
   class func parseRegionTreeFromJson(json: JSON) -> Region {
     let region = Region()
     region.listing = parseGuideListing(json)
-    region.listing.item.guideSections = parseSectionTreeFromJson(json["sectionTree"])
+    region.listing.item.guideSections = parseSectionTreeFromJson(json["guideSections"])
     if  json["attractions"].array != nil {
       region.attractions.appendContentsOf(parseAttractions(json["attractions"]))
     }
@@ -162,19 +163,19 @@ class JsonParserService {
   class func parseSectionTreeFromJson(json: JSON) -> List<GuideText> {
     let guideSections = List<GuideText>()
     for guideSectionObj in json.array! {
-      let guideSection = parseGuideText(guideSectionObj)
-      guideSection.item.guideSections = parseSectionTreeFromJson(guideSectionObj["sectionTree"])
+      let guideSection = parseGuideText(guideSectionObj)      
+      guideSection.item.guideSections = parseSectionTreeFromJson(guideSectionObj["guideSections"])
       guideSections.append(guideSection)
     }
     return guideSections
   }
   
   class func parseChildren(guideText: GuideText, withJson json: JSON) {
-    guideText.item.guideSections = parseGuideSections(json)
+    guideText.item.guideSections = parseSectionTreeFromJson(json["guideSections"])
   }
   
   class func parseChildren(region: Region, withJson json: JSON) {
-    region.item().guideSections = parseGuideSections(json)
+    region.item().guideSections = parseSectionTreeFromJson(json["guideSections"])
     region.item().categoryDescriptions = parseCategoryDescriptions(region, guideItemJson: json)
     let subRegions = List<Region>()
     for subRegion in parseRegions(json["subRegions"]) {
@@ -185,44 +186,40 @@ class JsonParserService {
   }
   
   internal class func parseCategoryDescriptions(region: Region, guideItemJson: JSON) -> List<GuideText> {
-    let categoryDescriptions = List<GuideText>()
-    var categoryDescriptionsDict = Dictionary<Int, String>()
-    for categoryDescriptionJson in guideItemJson["categoryDescriptions"].array! {
-      categoryDescriptionsDict[categoryDescriptionJson[0].int!] = categoryDescriptionJson[1].string!
+    let categoryDescriptions = parseSectionTreeFromJson(guideItemJson["categoryDescriptions"])
+    var categoryDescriptionsDict = Dictionary<Int, GuideText>()
+    for categoryDescription in categoryDescriptions {
+      categoryDescriptionsDict[categoryDescription.item.category] = categoryDescription
     }
     for category in Attraction.Category.allValues {
-      let categoryDescription = GuideText()
-      categoryDescription.item = GuideItem()
-      categoryDescription.item.category = category.rawValue
-      categoryDescription.item.name = category.entityName(region)
-      let categoryDescriptionId = categoryDescriptionsDict[category.rawValue]
-      if (categoryDescriptionId != nil) {
-        categoryDescription.item.loadStatus = GuideItem.LoadStatus.CONTENT_NOT_LOADED
-        categoryDescription.item.id = categoryDescriptionId
+      var categoryDescription = categoryDescriptionsDict[category.rawValue]
+      if let categoryDescription = categoryDescription {
+        print("found category for \(category.rawValue)")
+        categoryDescription.item.loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED
+      } else {
+        print("added category for \(category.rawValue)")
+        categoryDescription = GuideText()
+        categoryDescription!.item = GuideItem()
+        categoryDescription!.item.category = category.rawValue
+        categoryDescription!.item.name = category.entityName
+        categoryDescription!.item.content = nil
+        categoryDescription!.item.loadStatus = GuideItem.LoadStatus.FULLY_LOADED
+        categoryDescriptions.append(categoryDescription!)
       }
-      else {
-        categoryDescription.item.content = nil
-        categoryDescription.item.loadStatus = GuideItem.LoadStatus.FULLY_LOADED
-      }
-      categoryDescriptions.append(categoryDescription)
     }
     
     print("Returning \(categoryDescriptions.count) category descriptions")
-    return categoryDescriptions
+    let sorted = categoryDescriptions.sort({ (el1, el2) -> Bool in el1.item.category < el2.item.category })
+    let sortedList = List<GuideText>()
+    sortedList.appendContentsOf(sorted)
+    return sortedList
   }
   
-  internal class func parseGuideSections(guideItemJson: JSON) -> List<GuideText> {
-    let guideSections = List<GuideText>()
-    if let guideSectionsJson = guideItemJson["guideSections"].array {
-      for guideSectionArr in guideSectionsJson {
-        let guideSection = GuideText()
-        guideSection.item = GuideItem()
-        guideSection.item.loadStatus = GuideItem.LoadStatus.CONTENT_NOT_LOADED
-        guideSection.item.id = guideSectionArr[0].string
-        guideSection.item.name = guideSectionArr[1].string
-        guideSections.append(guideSection)
-      }
-    }
-    return guideSections
+  internal class func parseSubcategoryDescriptions(categoryDescription: GuideText, guideItemJson: JSON) -> List<GuideText> {
+    let subcategoryDescriptions = parseSectionTreeFromJson(guideItemJson["guideSections"])
+    let sorted = subcategoryDescriptions.sort({ (el1, el2) -> Bool in el1.item.subCategory < el2.item.subCategory })
+    let sortedList = List<GuideText>()
+    sortedList.appendContentsOf(sorted)
+    return sortedList
   }
 }

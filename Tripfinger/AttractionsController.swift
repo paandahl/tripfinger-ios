@@ -3,25 +3,33 @@ import Foundation
 class AttractionsController: UIViewController {
   
   let session: Session
-  var displayMode: DisplayMode
-  var searchDelegate: SearchViewControllerDelegate
+  let searchDelegate: SearchViewControllerDelegate
+  let displayMode: DisplayMode
   let container = UIView()
-  var listController: ListController
+  let listController: ListController
   var swipeController: SwipeController?
   
-  init(session: Session, searchDelegate: SearchViewControllerDelegate) {
+  init(session: Session, searchDelegate: SearchViewControllerDelegate, categoryDescription: GuideText) {
     self.session = session
     self.searchDelegate = searchDelegate
     
-    switch session.currentCategory {
-    case Attraction.Category.ATTRACTIONS:
-      displayMode = DisplayMode.WITH_SWIPER
-      listController = ListController(session: session, grouped: false)
-      swipeController = SwipeController()
-      swipeController!.session = session
-    default:
+    if session.currentSubCategory != nil {
       displayMode = DisplayMode.DIRECT_LIST
-      listController = ListController(session: session, grouped: false)
+      listController = ListController(session: session, searchDelegate: searchDelegate, grouped: false, categoryDescription: categoryDescription)
+    } else {
+      switch session.currentCategory {
+      case Attraction.Category.ATTRACTIONS:
+        displayMode = DisplayMode.WITH_SWIPER
+        listController = ListController(session: session, searchDelegate: searchDelegate, grouped: false, categoryDescription: categoryDescription)
+        swipeController = SwipeController()
+        swipeController!.session = session
+      case Attraction.Category.TRANSPORTATION:
+        displayMode = DisplayMode.GROUPED_LIST
+        listController = ListController(session: session, searchDelegate: searchDelegate, grouped: true, categoryDescription: categoryDescription)
+      default:
+        displayMode = DisplayMode.DIRECT_LIST
+        listController = ListController(session: session, searchDelegate: searchDelegate, grouped: false, categoryDescription: categoryDescription)
+      }
     }
     
     super.init(nibName: nil, bundle: nil)
@@ -39,7 +47,13 @@ class AttractionsController: UIViewController {
   override func viewDidLoad() {
     view.backgroundColor = UIColor.whiteColor()
     
-    navigationItem.title = session.currentCategory.entityName
+    if let currentSubCategory = session.currentSubCategory {
+      print("subcatty")
+      navigationItem.title = currentSubCategory.entityName
+    } else {
+      print("no subcatty")
+      navigationItem.title = session.currentCategory.entityName
+    }
     
     view.addSubview(container)
     
@@ -49,10 +63,10 @@ class AttractionsController: UIViewController {
     segmentedControl.tintColor = UIColor.darkGrayColor()
     segmentedControl.backgroundColor = UIColor.whiteColor()
     segmentedControl.addTarget(self, action: "segmentedControllerChanged:", forControlEvents: .ValueChanged)
-    view.addSubview(segmentedControl)
     
     let views = ["segmented": segmentedControl, "container": container]
     if displayMode == DisplayMode.WITH_SWIPER {
+      view.addSubview(segmentedControl)
       view.addConstraints("V:|-10-[segmented(32)]-10-[container]-0-|", forViews: views)
       view.addConstraints("H:[segmented(200)]", forViews: views)
       view.addConstraint(.CenterX, forView: segmentedControl)
@@ -102,6 +116,14 @@ class AttractionsController: UIViewController {
   func navigateToMap() {
     let mapController = MapController(session: session)
     navigationController!.pushViewController(mapController, animated: true)
+  }
+  
+  override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+    if let navigationController = navigationController where
+      navigationController.viewControllers.indexOf(self) == nil {
+        session.currentSubCategory = nil
+    }
   }
   
   enum DisplayMode {

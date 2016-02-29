@@ -2,70 +2,80 @@ import Foundation
 
 protocol GuideItemContainerDelegate: class {
   func readMoreClicked()
+  func downloadClicked()
   func updateTableSize()
 }
 
 class GuideItemCell: UITableViewCell {
 
   var constraintsAdded = false
-  var contentImage: UIImageView!
+  let contentImage = UIImageView()
   var contentImageHeightConstraint: NSLayoutConstraint!
   var contentImageMarginConstraint: NSLayoutConstraint!
-  var content: UITextView!
+  let content = UITextView()
+  var contentHeight: CGFloat = 100
   var contentHeightConstraint: NSLayoutConstraint!
+  let downloadView = UIView()
+  let downloadButton = UIButton(type: .System)
   var readMoreButton: UIButton!
   var readMoreButtonHeight: Int!
   var readMoreButtonHeightConstraint: NSLayoutConstraint!
   var readMoreButtonMarginConstraint: NSLayoutConstraint!
   weak var delegate: GuideItemContainerDelegate!
   
-  override func awakeFromNib() {
-    content.linkTextAttributes[NSForegroundColorAttributeName] = UIColor.blackColor()
-    content.textContainerInset = UIEdgeInsetsMake(15, 10, 0, 10);
-  }
-  
   override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    
-    contentImage = UIImageView()
-    contentView.addSubview(contentImage)
-    content = UITextView()
+    content.linkTextAttributes[NSForegroundColorAttributeName] = UIColor.blackColor()
     content.editable = false
-    contentView.addSubview(content)
     readMoreButton = UIButton(type: .System)
     readMoreButton.setTitle("Read more", forState: .Normal)
     readMoreButton.sizeToFit()
-    readMoreButton.addTarget(self, action: "readMore:", forControlEvents: .TouchUpInside)
-
+    contentView.addSubview(contentImage)
+    
+    downloadView.backgroundColor = UIColor.whiteColor()
+    downloadView.alpha = 0.6
+    downloadView.layer.cornerRadius = 10.0
+    downloadView.addSubview(downloadButton)
+    contentView.addSubview(content)
     contentView.addSubview(readMoreButton)
-    
-    let views = ["image": contentImage, "text": content, "readMore": readMoreButton]
-    contentImageHeightConstraint = contentView.addConstraints("V:[image(225)]", forViews: views)[0]
-    contentView.addConstraints("V:|-0-[image]", forViews: views)
-    contentImageMarginConstraint = contentView.addConstraints("V:[image]-10-[text]", forViews: views)[0]
-    contentHeightConstraint = contentView.addConstraints("V:[text(100)]", forViews: views)[0]
-    contentView.addConstraints("H:|-0-[image]-0-|", forViews: views)
-    contentView.addConstraint(.CenterX, forView: contentImage)
-    
-    contentView.addConstraints("H:|-10-[text]-10-|", forViews: views)
-    readMoreButtonHeight = Int(readMoreButton.frame.size.height)
-    readMoreButtonHeightConstraint = contentView.addConstraints("V:[readMore(\(readMoreButtonHeight))]", forViews: views)[0]
-    
-    contentView.addConstraints("V:[text]-10-[readMore]", forViews: views)
-    readMoreButtonMarginConstraint = contentView.addConstraints("V:[readMore]-10-|", forViews: views)[0]
-    contentView.addConstraints("H:|-14-[readMore]", forViews: views)
+    contentView.addSubview(downloadView)
+
+    readMoreButton.addTarget(self, action: "readMore", forControlEvents: .TouchUpInside)
+    downloadButton.addTarget(self, action: "openDownloadCountry", forControlEvents: .TouchUpInside)
   }
-  
-  override func layoutSubviews() {
-    super.layoutSubviews()
-  }
-  
+
   required init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
+      fatalError("init(coder:) has not been implemented")
   }
   
   override func updateConstraints() {
     super.updateConstraints()
+    if !constraintsAdded {
+      var views: [String: UIView] = ["button": downloadButton]
+      downloadView.addConstraints("V:|-5-[button]-5-|", forViews: views)
+      downloadView.addConstraints("H:|-10-[button]-10-|", forViews: views)
+      
+      views = ["image": contentImage, "download": downloadView, "text": content, "readMore": readMoreButton]
+      contentView.addConstraints("V:|-20-[download]", forViews: views)
+      contentView.addConstraints("H:[download]-20-|", forViews: views)
+      
+      contentImageHeightConstraint = try! contentView.addConstraint("V:[image(225)]", forViews: views)
+      contentView.addConstraints("V:|-0-[image]", forViews: views)
+      contentImageMarginConstraint = try! contentView.addConstraint("V:[image]-10-[text]", forViews: views)
+      contentHeightConstraint = try! contentView.addConstraint("V:[text(100)]", forViews: views)
+      contentView.addConstraints("H:|-0-[image]-0-|", forViews: views)
+      contentView.addConstraint(.CenterX, forView: contentImage)
+      
+      contentView.addConstraints("H:|-10-[text]-10-|", forViews: views)
+      readMoreButtonHeight = Int(readMoreButton.frame.size.height)
+      readMoreButtonHeightConstraint = try! contentView.addConstraint("V:[readMore(\(readMoreButtonHeight))]", forViews: views)
+      
+      contentView.addConstraints("V:[text]-10-[readMore]", forViews: views)
+      readMoreButtonMarginConstraint = try! contentView.addConstraint("V:[readMore]-10-|", forViews: views)
+      contentView.addConstraints("H:|-14-[readMore]", forViews: views)
+
+      constraintsAdded = true
+    }
     
     if contentImage.hidden {
       contentImageHeightConstraint.constant = 0
@@ -83,6 +93,7 @@ class GuideItemCell: UITableViewCell {
       readMoreButtonHeightConstraint.constant = CGFloat(readMoreButtonHeight)
       readMoreButtonMarginConstraint.constant = 10
     }
+    contentHeightConstraint.constant = contentHeight
   }
   
   override func prepareForReuse() {
@@ -97,15 +108,19 @@ class GuideItemCell: UITableViewCell {
   func expand() {
     let fixedWidth = UIScreen.mainScreen().bounds.width - 20
     let newSize = content.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-    contentHeightConstraint.constant = newSize.height - 20 // last paragraphs margin
+    contentHeight = newSize.height - 20 // last paragraphs margin
     readMoreButton.hidden = true
     setNeedsUpdateConstraints()
     
     content.setContentOffset(CGPointZero, animated: false)
   }
   
-  func readMore(sender: UIButton) {
+  func readMore() {
     delegate.readMoreClicked()
+  }
+  
+  func openDownloadCountry() {
+    delegate.downloadClicked()
   }
   
   func setContentFromGuideItem(guideItem: GuideItem) {    
@@ -128,6 +143,17 @@ class GuideItemCell: UITableViewCell {
 //      contentImage.removeFromSuperview()
 //      contentView.addSubview(contentImage)
 //      setNeedsUpdateConstraints()
+    }
+    
+    // download button
+    if guideItem.category == Region.Category.COUNTRY.rawValue {
+      let downloaded = DownloadService.isCountryDownloaded(guideItem.name)
+      let title = downloaded ? "Downloaded" : "Download"
+      downloadButton.setTitle(title, forState: .Normal)
+      downloadView.hidden = false
+      print("displaying downloadButton")
+    } else {
+      downloadView.hidden = true
     }
     
 

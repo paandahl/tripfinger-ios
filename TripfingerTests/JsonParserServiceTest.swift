@@ -13,8 +13,7 @@ class JsonParserServiceTest: XCTestCase {
     XCTAssertEqual("Bangkok", thailand.item().subRegions[0].getName())
     XCTAssertEqual(Region.Category.CITY.rawValue, thailand.item().subRegions[0].item().category)
     XCTAssertEqual("Ko Samui", thailand.item().subRegions[1].getName())
-    // the category will be set to city until the real object is fetched, since we cannot know for sure
-    XCTAssertEqual(Region.Category.CITY.rawValue, thailand.item().subRegions[1].item().category)
+    XCTAssertEqual(Region.Category.SUB_REGION.rawValue, thailand.item().subRegions[1].item().category)
   }
   
   func testParseDownloadedCountry() {

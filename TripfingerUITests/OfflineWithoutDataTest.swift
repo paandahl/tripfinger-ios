@@ -25,10 +25,5 @@ class OfflineWithoutDataTest: XCTestCase {
     let offlineMessage = app.tables.textViews["You are offline. Go online to view and download countries."]
     expectationForPredicate(hittable, evaluatedWithObject: offlineMessage, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
-
-    app.navigationBars["Tripfinger.Root"].buttons["Swipe"].tap()
-    let noAttractionsLabel = app.staticTexts["No attractions to swipe."]
-    expectationForPredicate(hittable, evaluatedWithObject: noAttractionsLabel, handler: nil)
-    waitForExpectationsWithTimeout(60, handler: nil)
   }
 }

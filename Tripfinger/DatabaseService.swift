@@ -47,9 +47,7 @@ class DatabaseService {
     let realm = getRealm()
     try! realm.write {
       realm.add(guideListingNotes)
-      if attraction.item().offline {
-        attraction.listing.notes = guideListingNotes
-      }
+      attraction.listing.notes = guideListingNotes
     }
   }
   

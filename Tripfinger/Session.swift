@@ -161,25 +161,36 @@ class Session {
   var attractionsFromRegion: String?
   var attractionsFromCategory: Attraction.Category?
   var currentCategory = Attraction.Category.ATTRACTIONS
+  var currentSubCategory: Attraction.SubCategory?
   var currentAttractions = List<Attraction>()
   
+  var attractionsFuture: Future<Void, NoError>?
   func loadAttractions(handler: () -> ()) {
 
-    if attractionsFromRegion != currentRegion?.item().name || attractionsFromCategory != currentCategory {
-      print("Reloading attractions")
-      ContentService.getCascadingAttractionsForRegion(self.currentRegion, withCategory: currentCategory) {
-        attractions in
-        
-        print("Loaded \(attractions.count) attractions.")
-        self.currentAttractions = attractions
+    if let attractionsFuture = attractionsFuture {
+      attractionsFuture.onComplete { _ in
         handler()
       }
-      attractionsFromCategory = currentCategory
-      attractionsFromRegion = currentRegion?.item().name
+    } else {
+      if attractionsFromRegion != currentRegion?.item().name || attractionsFromCategory != currentCategory {
+        print("Reloading attractions")
+        let promise = Promise<Void, NoError>()
+        ContentService.getCascadingAttractionsForRegion(self.currentRegion, withCategory: currentCategory) {
+          attractions in
+          
+          print("Loaded \(attractions.count) attractions.")
+          self.currentAttractions = attractions
+          handler()
+          promise.success()
+          self.attractionsFuture = nil
+        }
+        attractionsFromCategory = currentCategory
+        attractionsFromRegion = currentRegion?.item().name
+        attractionsFuture = promise.future
+      } else {
+        print("No need to reload attractions")
+        handler()
+      }
     }
-    else {
-      print("No need to reload attractions")
-      handler()
-    }    
   }
 }

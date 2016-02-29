@@ -34,8 +34,8 @@ class SearchOnlineTest: XCTestCase {
     waitForExpectationsWithTimeout(60, handler: nil)
     bruneiRow.tap()
     
-    let exploreCountryRow = app.tables.staticTexts["Explore the country"]
-    expectationForPredicate(exists, evaluatedWithObject: exploreCountryRow, handler: nil)
+    let bandarRow = app.tables.staticTexts["Bandar"]
+    expectationForPredicate(exists, evaluatedWithObject: bandarRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
   }
 }

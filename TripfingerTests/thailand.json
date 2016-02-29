@@ -1,117 +1,563 @@
 {
-  "radius": null,
-  "polygonCoordinates": null,
-  "guideSections": [
-                    [
-                     "text-thailand--get-around",
-                     " Get around "
-                     ],
-                    [
-                     "text-thailand-understand",
-                     "Understand"
-                     ],
-                    [
-                     "text-thailand-get-in",
-                     "Get in"
-                     ],
-                    [
-                     "text-thailand-see",
-                     "See"
-                     ],
-                    [
-                     "text-thailand-do",
-                     "Do"
-                     ],
-                    [
-                     "text-thailand-talk",
-                     "Talk"
-                     ],
-                    [
-                     "text-thailand-buy",
-                     "Buy"
-                     ],
-                    [
-                     "text-thailand-learn",
-                     "Learn"
-                     ],
-                    [
-                     "text-thailand-work",
-                     "Work"
-                     ],
-                    [
-                     "text-thailand-eat",
-                     "Eat"
-                     ],
-                    [
-                     "text-thailand-drink",
-                     "Drink"
-                     ],
-                    [
-                     "text-thailand-sleep",
-                     "Sleep"
-                     ],
-                    [
-                     "text-thailand-stay-safe",
-                     "Stay safe"
-                     ],
-                    [
-                     "text-thailand-stay-healthy",
-                     "Stay healthy"
-                     ],
-                    [
-                     "text-thailand-respect",
-                     "Respect"
-                     ],
-                    [
-                     "text-thailand-cope",
-                     "Cope"
-                     ],
-                    [
-                     "text-thailand-connect",
-                     "Connect"
-                     ],
-                    [
-                     "text-thailand-films",
-                     "Films"
-                     ]
-                    ],
-  "sectionTree": null,
-  "categoryDescriptions": [],
-  "categoryDescriptionTree": null,
-  "attractions": null,
-  "subRegions": [
-                 "Bangkok",
-                 "Ko Samui"
-                 ],
-  "subRegionTree": null,
-  "longitude": 100.991966,
-  "latitude": 15.470278,
-  "continent": "Asia",
-  "worldArea": null,
-  "country": null,
-  "region": null,
-  "subRegion": null,
-  "city": null,
-  "id": "region-thailand",
-  "uuid": "ba3d3193-db11-4171-90f2-b633bb811051",
-  "name": "Thailand",
-  "alternativeName": null,
-  "category": 130,
-  "subCategory": 0,
-  "status": 1,
-  "description": "<p>Thailand (officially the Kingdom of Thailand)  is a country in Southeast Asia with coasts on the Andaman Sea and the Gulf of Thailand. It borders Myanmar (Burma) to the northwest, Laos to the northeast, Cambodia to the southeast, and Malaysia to the south.</p><p>With great food, a tropical climate, fascinating culture and superb beaches, Thailand is a magnet for travellers the world over.</p>",
-  "images": [
-             {
-             "url": "http://storage.googleapis.com/tripfinger-images/region-thailand-1",
-             "description": null,
-             "creationDate": "Dec 19, 2015 10:18:19 AM",
-             "license": "All rights reserved",
-             "artist": "Anastasia Makarova",
-             "originalUrl": null
-             }
-             ],
-  "imagesNotFoundOnImport": [],
-  "parentAsString": null,
-  "entityType": "region",
-  "parent": "region-asia"
+  "radius":null,
+  "polygonCoordinates":null,
+  "guideSections":[
+                   {
+                   "order":0,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand--get-around",
+                   "uuid":"7f4217ae-a6c7-4d03-89d1-097eae63f55f",
+                   "name":" Get around ",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"",
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":1,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-understand",
+                   "uuid":"5eff8e51-87ea-4305-a93b-5dd165bebe3e",
+                   "name":"Understand",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003eThailand is the country in Southeast Asia most visited by tourists, and for good reason.  You can find almost anything here: thick jungle as green as can be, crystal blue waters that feel more like a warm bath than a swim in the ocean, and food that can curl your nose hairs while tap dancing across your taste buds. Exotic, yet safe; cheap, yet equipped with every modern amenity you need, there is something for every interest and every price bracket, from beach front backpacker bungalows to some of the best luxury hotels in the world. And despite the heavy flow of tourism, Thailand retains its quintessential identity, with a culture and history all its own and a carefree people famed for their smiles and their fun-seeking \u003cem\u003esanuk\u003c/em\u003e lifestyle.  Many travellers come to Thailand and extend their stay well beyond their original plans and others never find a reason to leave.  Whatever your cup of tea is, they know how to make it in Thailand.\u003c/p\u003e\u003cp\u003eThis is not to say that Thailand doesn\u0027t have its downsides, including the considerable growing pains of an economy where an agricultural labourer is lucky to earn 100 baht per day while the \u003cem\u003enouveaux riches\u003c/em\u003e cruise past in their BMWs, Bangkok, the capital, is notorious for its traffic jams and rampant development has wrecked much of once-beautiful Pattaya and Phuket. In heavily touristed areas, some lowlifes, both Thai and farang, have made scamming tourists into an art form.\u003c/p\u003e",
+                   "images":[
+                             {
+                             "url":"http://storage.googleapis.com/tripfinger-images/text-thailand-understand-2",
+                             "description":null,
+                             "creationDate":"Dec 19, 2015 10:31:21 AM",
+                             "license":"All rights reserved",
+                             "artist":"Anastasia Makarova",
+                             "originalUrl":null
+                             }
+                             ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":2,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-get-in",
+                   "uuid":"e3aa6f57-11c7-46a6-8fcd-d1431a7ec031",
+                   "name":"Get in",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003eOrdinary passport holders of many Western and Asian countries, including most ASEAN countries, Australia, Canada, most European Union countries, Hong Kong, Japan and the United States do not need a visa if their purpose of visit is tourism.  Visitors arriving by air receive \u003cstrong\u003e30-day\u003c/strong\u003e permits (except for citizens of Korea, Brazil, Chile and Peru who get \u003ca href\u003d\"http://www.mfa.go.th/main/en/services/123/15396-Tourist-Visa-Exemption.html\"\u003e90 days\u003c/a\u003e), but effective 15 Dec 2008, those arriving by land are only allowed \u003cstrong\u003e15 days\u003c/strong\u003e (visitors from several countries, mostly nearby ones, but notably including Russians, still get 30 days on the land border due to bilateral visa exemption). Thai immigration requires visitors\u0027 passports to have a minimum of 6 months validity and at least one completely blank visa page remaining.  Visa-on-arrival is available at certain entry points for passport holders of 28 other nations (Bhutan, China, Cyprus, Czech, Estonia, Hungary, India, Kazakhstan, Latvia, Liechtenstein, Lithuania, Maldives, Mauritius, Oman, Poland, Russia, Saudi Arabia, Slovakia, Slovenia, Uzbekistan, Ukraine, Ethiopia, Taiwan, Bulgaria, Andorra, Malta, Romania, San Marino). Check the latest information from the \u003cstrong\u003e\u003ca href\u003d\"http://www.mfa.go.th/main/en/services/123\"\u003eMinistry of Foreign Affairs\u003c/a\u003e\u003c/strong\u003e. \u003ca href\u003d\"https://www.gov.uk/foreign-travel-advice/thailand/local-laws-and-customs\"\u003eBy law, you must carry your passport with you at all times.\u003c/a\u003e\u003c/p\u003e\u003cp\u003eThose with passports from countries not widely known, including European city-states, or that have problems with document forgery, should obtain a visa in advance from the nearest Thai embassy. This is true even if visa on arrival is technically permitted. There are reports of tourists being detained using valid passports not commonly presented in Thailand. In addition, ask for a business card from the person or embassy which granted the visa, so they may be contacted on arrival, if necessary. Anyone whose nationality does not have its own embassy in Bangkok, should find out which third country represents your interests there, along with local contact information.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eProof of onward transit\u003c/strong\u003e, long happily ignored by Thai immigration, has been known to be strictly applied in some instances. (Airlines, who have to pay for your return flight if immigration doesn\u0027t let you in, also check this.)  A print-out of an e-ticket on a budget airline is sufficient to convince the enforcers, but those planning on continuing by land may have to get a little creative.  Buying a fully refundable ticket and getting it refunded once in Thailand is also an option. Land crossings, on the other hand, are a very straightforward process and no proof of onward journey required (unless the border officials decide otherwise).\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eOverstaying\u003c/strong\u003e in Thailand is dodgy. If you make it to Immigration and are fewer than 10 days over, you\u0027ll probably be allowed out with a fine of 500 baht per day. However, if for \u003cem\u003eany\u003c/em\u003e reason you\u0027re caught overstaying by the police you\u0027ll be carted off to the notoriously unpleasant illegal immigrant holding pens and may be blacklisted from Thailand entirely. For most people it\u0027s not worth the risk: get a legal extension or do a visa run to the nearest border instead.\u003c/p\u003e\u003cp\u003eThai immigration officers at land border crossings are known to ask foreigners for bribes of about 20 baht per person before they stamp your passport. Immigration officers at airports generally do not ask for bribes.\u003c/p\u003e",
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":3,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-see",
+                   "uuid":"a0884871-f2b1-4384-895a-27aaa1a4bbce",
+                   "name":"See",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":null,
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":4,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-do",
+                   "uuid":"e4b973fe-a38c-4b38-9da1-1600bc2c473a",
+                   "name":"Do",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003e\u003cbr\u003e\u003c/p\u003e",
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":5,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-talk",
+                   "uuid":"e05d2abd-f34d-4a7a-a9a1-6296410b71e9",
+                   "name":"Talk",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003eThe official language of Thailand is \u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Thai_phrasebook\" href\u003d\"https://en.wikivoyage.org/wiki/Thai_phrasebook\"\u003eThai\u003c/a\u003e\u003c/strong\u003e. Like Mandarin and Vietnamese, Thai is a tonal language (think about the difference in your voice when saying \"yes\" versus \"yes?\". That\u0027s tonal.) which can make it tricky for speakers of non-tonal languages to learn quickly, but despite this, everyone will appreciate any attempt you do make so pick up a \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Thai_phrasebook\" href\u003d\"https://en.wikivoyage.org/wiki/Thai_phrasebook\"\u003ephrasebook\u003c/a\u003e and give it a go. Thai is a language with many dialects, though the Bangkok dialect, also known as Central Thai, is used as the standard and is taught in all schools. Language schools can be found in all larger Thai cities, including \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Bangkok\" href\u003d\"https://en.wikivoyage.org/wiki/Bangkok\"\u003eBangkok\u003c/a\u003e and \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Phuket\" href\u003d\"https://en.wikivoyage.org/wiki/Phuket\"\u003ePhuket\u003c/a\u003e.\u003c/p\u003e\u003cp\u003eIn the Muslim-dominated south, dialects of \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Malay_phrasebook\" href\u003d\"https://en.wikivoyage.org/wiki/Malay_phrasebook\"\u003eMalay\u003c/a\u003e that are largely incomprehensible to speakers of standard Malay/Indonesian are spoken. Various dialects of Chinese are spoken by the ethnic Chinese community, with Teochew being the dominant dialect in Bangkok\u0027s Chinatown, and \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Cantonese_phrasebook\" href\u003d\"https://en.wikivoyage.org/wiki/Cantonese_phrasebook\"\u003eCantonese\u003c/a\u003e speakers also forming a sizable minority among the Chinese community. Down south in \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Hat_Yai\" href\u003d\"https://en.wikivoyage.org/wiki/Hat_Yai\"\u003eHat Yai\u003c/a\u003e, \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Minnan_phrasebook\" href\u003d\"https://en.wikivoyage.org/wiki/Minnan_phrasebook\"\u003eHokkien\u003c/a\u003e is also widely understood due to the large number of tourists from \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Penang\" href\u003d\"https://en.wikivoyage.org/wiki/Penang\"\u003ePenang\u003c/a\u003e. The eastern \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Isaan\" href\u003d\"https://en.wikivoyage.org/wiki/Isaan\"\u003eIsaan\u003c/a\u003e dialects are closely related to \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Lao_phrasebook\" href\u003d\"https://en.wikivoyage.org/wiki/Lao_phrasebook\"\u003eLao\u003c/a\u003e and there are dozens of small language groups in the tribal areas of the north, some so remote that Thai speakers are few and far between.\u003c/p\u003e\u003cp\u003ePublic signage is generally bilingual, written in both Thai and English. There is also some prevalence of Japanese and Chinese signs. Where there is English, it will usually be fairly phonetic - for example \"Sawatdee\" (meaning \u003cem\u003ehello\u003c/em\u003e) is pronounced just as it reads: sa-wat-dee. There is no universal agreement on how to transcribe Thai letters that don\u0027t have an English equivalent, so \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Bangkok/Khao_San_Road\" href\u003d\"https://en.wikivoyage.org/wiki/Bangkok/Khao_San_Road\"\u003eKhao San Road\u003c/a\u003e for example is also commonly spelled Kao Sarn, Kao Sahn, Khao San, Koh Saan, Khaosan, and many other variations. Maps with names in both Thai and English make it easier for locals to try and help you.\u003c/p\u003e\u003cp\u003eMost Thai youths learn \u003cstrong\u003eEnglish\u003c/strong\u003e in school, so many young people have a basic grasp of English, though few are fluent. Most \"front desk\" people in the travel industry speak at least enough English to communicate, and many are relatively fluent; some also speak one or more other languages popular with their clientèle, such as Chinese, Japanese, German, etc.\u003c/p\u003e\u003cp\u003eMany Thais have trouble pronouncing the consonant clusters of the English language. Common confusion comes from the fact that Thais often pronounce \"twenty\" as \"TEH-wen-ty\", making it sound like they\u0027re saying \"seventy\". Therefore it is a good idea to make use of the calculators that street vendors may offer you to avoid confusion about prices offered when buying goods.\u003c/p\u003e",
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":6,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-buy",
+                   "uuid":"e6672eda-7e15-4005-8ad5-f401e32012b2",
+                   "name":"Buy",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003e\u003cbr\u003e\u003c/p\u003e",
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":7,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-learn",
+                   "uuid":"47b91139-c02b-4279-bba5-b2cda625be7b",
+                   "name":"Learn",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cul\u003e\u003cli\u003e\u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Meditation_in_Thailand\" href\u003d\"https://en.wikivoyage.org/wiki/Meditation_in_Thailand\"\u003eThai Meditation\u003c/a\u003e\u003c/li\u003e\u003cli\u003e\u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Thai_phrasebook\" href\u003d\"https://en.wikivoyage.org/wiki/Thai_phrasebook\"\u003eThai language\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003ctable cellpadding\u003d\"8\" cellspacing\u003d\"1\" class\u003d\" cke_show_border\"\u003e\u003ctbody\u003e\u003ctr\u003e\u003ctd\u003e\u003cp\u003e\u003cstrong\u003eLong term visa\u003c/strong\u003e\u003c/p\u003e\u003cp\u003eIt is known that many Western foreigners who wish to stay in Thailand for a long time enrol in Thai language schools in order to get a student visa and then don\u0027t bother turning up. As long as fees are paid some institutions are fine with this arrangement.\u003c/p\u003e\u003c/td\u003e\u003c/tr\u003e\u003c/tbody\u003e\u003c/table\u003e\u003cp\u003eBangkok has many language schools for studying Thai:\u003c/p\u003e\u003cul\u003e\u003cli\u003e\u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"http://auathai.com/\" href\u003d\"http://auathai.com/\"\u003eAUA (American University Alumni) Language Center Bangkok\u003c/a\u003e\u003c/strong\u003e AUA uses a non-traditional method where all teaching is done in Thai without books or any use of English. Students learn by looking and listening and eventually after a certain number of hours are expected to begin to speak Thai \"naturally\".\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"http://dukelanguage.com/\" href\u003d\"http://dukelanguage.com/\"\u003eDuke Language School Bangkok\u003c/a\u003e\u003c/strong\u003e Duke Language School is conveniently located near BTS Nana station and has a very high success rate.\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"http://www.culi.chula.ac.th/\" href\u003d\"http://www.culi.chula.ac.th/\"\u003eChulalongkorn University Intensive Thai classes\u003c/a\u003e\u003c/strong\u003e Intensive Thai courses with an emphasis on learning to read and write academic Thai at a university level.\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"http://www.thai-lessons.com/\" href\u003d\"http://www.thai-lessons.com/\"\u003eJentana \u0026amp; Associates Thai Language School\u003c/a\u003e\u003c/strong\u003e\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cstrong\u003ePiammitr (Plenty of Friends) Language School\u003c/strong\u003e Near BTS Asok \u003ca data-cke-saved-href\u003d\"http://www.piammitrschool.com/\" href\u003d\"http://www.piammitrschool.com/\"\u003e[1]\u003c/a\u003e Courses are 60-hours of class time and last one month.\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"http://www.tlaschool.com/\" href\u003d\"http://www.tlaschool.com/\"\u003eThai Language Achievement School in Silom\u003c/a\u003e\u003c/strong\u003e\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"http://www.utl-school.com/\" href\u003d\"http://www.utl-school.com/\"\u003eUnity Thai Language School\u003c/a\u003e\u003c/strong\u003e\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"http://www.mythailanguage.com/\" href\u003d\"http://www.mythailanguage.com/\"\u003eMy Thai Language School\u003c/a\u003e\u003c/strong\u003e On Ratchada Rd, you can apply for a student ed Visa\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"http://www.thaiwalen.com/\" href\u003d\"http://www.thaiwalen.com/\"\u003eWalen School\u003c/a\u003e\u003c/strong\u003e\u003c/li\u003e\u003c/ul\u003e\u003cp\u003eAn on-line site for studying Thai:\u003c/p\u003e\u003cul\u003e\u003cli\u003e\u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"http://thai-language.com/\" href\u003d\"http://thai-language.com/\"\u003eThai Language\u003c/a\u003e\u003c/strong\u003e Reference documents, interactive lessons, dictionary, and forums for learning Thai\u003c/li\u003e\u003c/ul\u003e",
+                   "images":[
+                             {
+                             "url":"http://storage.googleapis.com/tripfinger-images/text-thailand-learn-2",
+                             "description":null,
+                             "creationDate":"Dec 21, 2015 10:44:26 AM",
+                             "license":"Public domain",
+                             "artist":"uploader",
+                             "originalUrl":"https://pixabay.com/ru/медитация-озеро-буддийские-17798/"
+                             }
+                             ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":8,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-work",
+                   "uuid":"a653780f-5350-42ba-9cb6-d3322627d8dd",
+                   "name":"Work",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003eThe two main opportunities for work for foreigners are \u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Teaching_English\" href\u003d\"https://en.wikivoyage.org/wiki/Teaching_English\"\u003eteaching English\u003c/a\u003e\u003c/strong\u003e and \u003cstrong\u003edive instructor\u003c/strong\u003e, but both are very competitive and dive masters in particular are paid a pittance.\u003c/p\u003e\u003cp\u003eTo become a dive instructor, the most popular destination is \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Ko_Tao\" href\u003d\"https://en.wikivoyage.org/wiki/Ko_Tao\"\u003eKo Tao\u003c/a\u003e (Turtle Island) a few hours off the coast of Chumphon in the Gulf of Thailand. There are dozens of dive shops that provide training and internships.\u003c/p\u003e\u003cp\u003eAnyone with a four-year degree can gain employment as an English teacher in Thailand, and even those without a degree can usually find work under the table. Normal starting salary is approximately 30,000 baht per month and this goes up and down slightly depending upon location (higher in Bangkok, lower in some up-country towns).\u003c/p\u003e\u003cp\u003eOne way to start working as a teacher is to gain a TESOL/TEFL Certificate. One of the largest TESOL schools in the world is head quartered in the small village of Ban Phe, Rayong. Other provinces in Thailand offer TEFL/TESOL Certification Courses. In Northern Thailand, Chiang Mai University \u003ca data-cke-saved-href\u003d\"http://www.cmutefl.com/\" href\u003d\"http://www.cmutefl.com/\"\u003e[2]\u003c/a\u003e has a comprehensive teacher training program located on its main campus.\u003c/p\u003e\u003cp\u003eFinding any other kind of work in Thailand can be difficult, as wages are poor and a large number of occupations are legally off limits to non-Thais. Thai law requires that a foreigner earn quite a high wage to be eligible for a work permit. Companies and schools may assist employees to obtain visas and work permits, but some schools avoid the extra work involved.\u003c/p\u003e\u003cp\u003eVolunteering is a great way to meet locals and experience the culture and traditions of Thailand. There are many worldwide organizations that offer volunteer work on such projects as community development, conservation, wildlife sanctuary maintenance \u0026amp; development, scientific research, \u0026amp; education programs. And they won\u0027t ask you for money! Here are three of them:\u003c/p\u003e\u003cul\u003e\u003cli\u003e\u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"http://www.childsdream.org/\" href\u003d\"http://www.childsdream.org/\"\u003eChild\u0027s Dream Foundation\u003c/a\u003e\u003c/strong\u003e, 238/3 Wualai Rd, Haiya, Muang, Chiang Mai 50100, ☎ \u003ca data-cke-saved-href\u003d\"tel:+6653201811\" href\u003d\"tel:+6653201811\"\u003e+66 53 201811\u003c/a\u003e, e-mail: \u003ca data-cke-saved-href\u003d\"mailto:info@childsdream.org\" href\u003d\"mailto:info@childsdream.org\"\u003einfo@childsdream.org\u003c/a\u003e. Founded by two Swiss financiers with good hearts, Child\u0027s Dream places volunteers in schools in Thailand, Laos, and Cambodia in addition to other good works. They are highly regarded for their ethics and efficiency. Does not charge volunteers. \u003ca data-cke-saved-href\u003d\"javascript:\" href\u003d\"javascript:\"\u003eedit\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"http://www.ghre.org/\" href\u003d\"http://www.ghre.org/\"\u003eFoundation for Education and Development\u003c/a\u003e\u003c/strong\u003e (\u003cem\u003eformerly known as Grassroots Human Rights and Development\u003c/em\u003e), Moo 4 Khuk Khak, Takua Pa, Phang Nga 82120 (\u003cem\u003eat km790 on Hwy 4 in Khuk Khak (Khao Lak)\u003c/em\u003e), ☎ \u003ca data-cke-saved-href\u003d\"tel:+6676486351\" href\u003d\"tel:+6676486351\"\u003e+66 76 486351\u003c/a\u003e. A joint Burmese-Thai NGO committed to assisting Burmese migrant workers in Phang Nga Province, just north of Ko Phuket in the region better known as Khao Lak. FED runs schools, health clinics, women\u0027s empowerment programs, and provides legal assistance to political and economic refugees. The organisation runs on a shoe-string and depends on the commitment of paid staff and volunteers. Does not charge volunteers. \u003ca data-cke-saved-href\u003d\"javascript:\" href\u003d\"javascript:\"\u003eedit\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"http://www.isara.org/\" href\u003d\"http://www.isara.org/\"\u003eIsara Foundation\u003c/a\u003e\u003c/strong\u003e, 897/1 Mee Chai Rd, Amphur Muang, Nong Khai 43000, ☎ \u003ca data-cke-saved-href\u003d\"tel:+6642460827\" href\u003d\"tel:+6642460827\"\u003e+66 42 460827\u003c/a\u003e. Provides help directly to those who are in need. Isara projects focus on the improvement of education (free Learning Centre, government school volunteer teachers, and scholarships), health and safety (helmet campaign), and the environment (Recycling Centre and trash clean-up campaigns). Do not charge you for volunteering. \u003ca data-cke-saved-href\u003d\"javascript:\" href\u003d\"javascript:\"\u003eedit\u003c/a\u003e\u003c/li\u003e\u003c/ul\u003e\u003cp\u003eIMPORTANT: Volunteering is defined as a form of employment by the Thai authorities. Foreigners must obtain a work permit even to volunteer for small projects. This is easier to obtain than a normal work permit, and can be issued even for one or two days. Tourists are advised to take these rules seriously. Thai jails are not comfortable; if you are arrested on a Friday you may not be able to contact anyone before Monday.\u003c/p\u003e",
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":9,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-eat",
+                   "uuid":"5ee98457-3206-4703-8964-791e285bef14",
+                   "name":"Eat",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003eThe food alone is really reason enough for a trip to Thailand. Curries, fruit shakes, stir fries, fresh fish made a zillion ways - and that\u0027s just the beginning. Food in Thailand can be as cheap and easy as 25 baht \u003cem\u003epad Thai\u003c/em\u003e (ผัดไทย, Thai fried noodles) cooked at a street stall or as expensive and complicated as a USD100 ten-course meal by a royal chef served in one of Bangkok\u0027s luxury hotels.\u003c/p\u003e\u003cp\u003eSince most backpackers will be sticking closer to the first than the second, one of the great things about Thailand is that food from stalls and tiny sidewalk restaurants is usually quite safe. Unlike some Asian countries, travellers should worry more about overeating or too much curry spice than about unclean kitchens and bad food. In fact, street restaurants, where you can see what you\u0027ll get and everything is cooked on the spot can be a safe option.\u003c/p\u003e",
+                   "images":[
+                             {
+                             "url":"http://storage.googleapis.com/tripfinger-images/text-thailand-eat-1",
+                             "description":null,
+                             "creationDate":"Dec 21, 2015 10:53:05 AM",
+                             "license":"All rights reserved",
+                             "artist":"Anastasia Makarova",
+                             "originalUrl":null
+                             }
+                             ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":10,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-drink",
+                   "uuid":"062f79e3-7ad8-4a9d-9633-a4ee469d312c",
+                   "name":"Drink",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003e\u003cstrong\u003eTap water\u003c/strong\u003e is usually \u003cem\u003enot\u003c/em\u003e drinkable in Thailand outside of Bangkok. In many places in Bangkok however, particularly in new buildings, drinking tap water is perfectly safe. However, if you don\u0027t want to chance it, buying a bottle of water is the obvious solution. Bottled water (น้ำเปล่า \u003cem\u003enaam plao\u003c/em\u003e) is cheap and ubiquitous at 5-20 baht a bottle depending on its size and brand, and drinking water served in restaurants is always at least boiled (น้ำต้ม \u003cem\u003enaam tom\u003c/em\u003e). \u003cstrong\u003eIce\u003c/strong\u003e (น้ำแข็ง \u003cem\u003enaam khaeng\u003c/em\u003e) in Thailand usually comes packaged straight from the factory and is safe; there is only reason to worry if you are served hand-cut ice. You can buy a large package of ice in most 7-Elevens for 7 baht, too.\u003c/p\u003e\u003cp\u003eMainly in residential areas, machines selling water into your own bottle (1 baht/L, or 50 satang (0.5 baht/L) if paid more than 5 baht) are often available, located in some (Thai mostly) hotels, local shops, or just on the street near one. This is a clean (the water is cleaned and UV-treated on the spot) and extremely cheap option, also, this way you\u0027ll avoid making unnecessary plastic waste from empty bottles.\u003c/p\u003e",
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":11,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-sleep",
+                   "uuid":"2b7c557c-88fd-4731-a354-1cf23fb8a36f",
+                   "name":"Sleep",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003eThailand has accommodation in every price bracket. Always take a look at the room (or better still several rooms, sometimes owners offer not the best/cheaper rooms first) before agreeing a price. In smaller establishments also do ask for the agreed price in writing to avoid problems during check out.\u003c/p\u003e\u003cp\u003eThe best prices (30-50% off rack rates) for accommodation can be found during Thailand\u0027s low season, which is during May-Aug, which not surprisingly also coincides with the region\u0027s monsoon season. The peak season is during Dec-Feb.\u003c/p\u003e\u003cp\u003eThe prices listed are average for the country, and vary depending on the region and season. Smaller provincial towns will not have fancy hotels or resorts, while on popular island beaches it may be hard to find something cheaper than 300-400 baht even during the low season.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eHomestays\u003c/strong\u003e are common in rural areas. Typically, what this means is that you will be staying at your host\u0027s home, or on the host\u0027s property in something less than a commercial lodging. Usually, meals are included.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eGuesthouses\u003c/strong\u003e are usually the cheapest option, basic ones cost 100-200 baht per room per night (100 or less for a dorm bed). This gets you a room with a fan, a squat toilet (often shared), shower (shared or private), and not much else. Better guesthouses, especially in towns with significant amount of foreign guests, have more amenities (European-style toilet, 24 hour hot shower, bigger room or even a balcony, free Wi-Fi, sometimes TV, everyday room service, fridge), with prices, subsequently, in the range of 200-500 baht. This makes them close to Thai hotels. The difference is they\u0027re more oriented to a Western clientèle, and as such, often offer various tours (sometimes overpriced), computers, and/or in-room Internet access, or even have a ground floor restaurant.\u003c/p\u003e\u003cp\u003eIf you\u0027re satisfied with the guesthouse of your choice and plan to stay there for more than several days (especially during the low season or in the places with abundant accommodation options such as Chiang Mai), ask for a discount; this may not be offered everywhere, but if it is, the weekly rate may be 25% less or so, and for monthly rates it\u0027s not uncommon to be half as much. Normally, you\u0027ll have to pay for the entire period asked, but note that if something changes and you have to check out early refunds are not customary in Thailand. As such, if an early departure is possible (but unlikely enough to pay a week/month in advance), you should discuss this option with the owner/manager beforehand.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003e\u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Hostels\" href\u003d\"https://en.wikivoyage.org/wiki/Hostels\"\u003eHostels\u003c/a\u003e\u003c/strong\u003e are not typical in Thailand. The reason is obvious: given the abundance of budget accommodation and that hostels are unfamiliar to Thais and, as such, purely Westerner-oriented, the price for a private room in a guesthouse will be almost the same, or even cheaper, than for a dorm bed in a hostel. You may get a bit more Westernised and hotel-like interiors, but at the cost of privacy. If you do insist on staying in a hostel, you can find some in the big cities by checking the web. Don\u0027t expect to find them just by walking by the streets, though.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eThai hotels\u003c/strong\u003e start around 200 baht and go up to around 800 baht. The upper-end of this range will be air-conditioned, the lower end will not. The primary difference is that with a hotel room, your bathroom should be private, bed linen, and towels will be provided, and there may be a hot shower. The guests are mostly Thais. TVs are available except at the lower end; Internet access, though, is less likely to be present than in guesthouses; and is even less likely to be free or in-room.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eTourist hotels\u003c/strong\u003e are generally around 1,000 baht and offer the basics for a beach vacation: swimming pool, room service, and colour TV.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eBoutique hotels\u003c/strong\u003e, 2,000 baht and up, have mushroomed during the past few years, they provide a limited number of rooms (10 or fewer) and more personalized service. While these can be excellent, quality varies widely, so research is essential.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eBusiness and luxury hotels\u003c/strong\u003e, 4,000 baht and up, offer every modern amenity you can think of and are largely indistinguishable from hotels anywhere else in the world. Some, notably \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Bangkok/Silom#Sleep\" href\u003d\"https://en.wikivoyage.org/wiki/Bangkok/Silom#Sleep\"\u003eBangkok\u003c/a\u003e\u0027s \u003cstrong\u003eThe Oriental\u003c/strong\u003e, \u003cstrong\u003eThe Sukhothai\u003c/strong\u003e and \u003cstrong\u003eThe Peninsula\u003c/strong\u003e are among the world\u0027s best hotels. The most luxurious \u003cstrong\u003eresorts\u003c/strong\u003e also fall in this price category, with some of the very best and most private adding a few zeros to the price.\u003c/p\u003e",
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":12,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-stay-safe",
+                   "uuid":"1aa037d5-a3b7-4e07-9f2f-b28d92d7b26c",
+                   "name":"Stay safe",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003eThe number one cause of death for visitors to Thailand is \u003cstrong\u003emotorbike accidents\u003c/strong\u003e, especially on the often narrow, mountainous and twisty roads of \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Phuket\" href\u003d\"https://en.wikivoyage.org/wiki/Phuket\"\u003ePhuket\u003c/a\u003e and \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Samui\" href\u003d\"https://en.wikivoyage.org/wiki/Samui\"\u003eSamui\u003c/a\u003e. Drive defensively, wear a helmet, don\u0027t drink and avoid travel at night.\u003cbr\u003e\u003c/p\u003e\u003cp\u003e In 2012 two Quebec sisters died mysteriously while staying at a lodging on Phi Phi Island. In 2009, a Norwegian woman and a US woman in adjacent rooms at a Phi Phi guesthouse died. Four others died about the same time while staying at a Chiang Mai lodging. Why? Suspicions now are that all may have been poisoned by outgassing from aluminum phosphide (AlP) pellets used to kill bedbugs. The use of aluminum phosphide is illegal in Thailand, but is available on the market. About all you can do to protect yourself is to quiz hotel management about their pesticide use policy. Check the room before committing to a stay. If you see (AlP is a grey-green-yellow powder) or smell anything that hints at the use of pesticides, stay elsewhere.\u003cbr\u003e\u003c/p\u003e",
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":13,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-stay-healthy",
+                   "uuid":"594274ad-c991-4ee0-a8b2-3208eeffdd37",
+                   "name":"Stay healthy",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003eBeing a tropical country, Thailand has its fair share of exotic tropical diseases. \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Malaria\" href\u003d\"https://en.wikivoyage.org/wiki/Malaria\"\u003eMalaria\u003c/a\u003e is generally not a problem in any of the major tourist destinations, but is endemic in rural areas along the borders with \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Cambodia\" href\u003d\"https://en.wikivoyage.org/wiki/Cambodia\"\u003eCambodia\u003c/a\u003e (including \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Ko_Chang\" href\u003d\"https://en.wikivoyage.org/wiki/Ko_Chang\"\u003eKo Chang\u003c/a\u003e in \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Trat_(province)\" href\u003d\"https://en.wikivoyage.org/wiki/Trat_(province)\"\u003eTrat Province\u003c/a\u003e), \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Laos\" href\u003d\"https://en.wikivoyage.org/wiki/Laos\"\u003eLaos\u003c/a\u003e, and \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Myanmar\" href\u003d\"https://en.wikivoyage.org/wiki/Myanmar\"\u003eMyanmar\u003c/a\u003e. As is the case throughout \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Southeast_Asia\" href\u003d\"https://en.wikivoyage.org/wiki/Southeast_Asia\"\u003eSoutheast Asia\u003c/a\u003e, \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Dengue_fever\" href\u003d\"https://en.wikivoyage.org/wiki/Dengue_fever\"\u003edengue fever\u003c/a\u003e can be encountered just about anywhere, including the most modern cities. The only prevention is avoiding mosquito bites. Wear long pants and long sleeves at dusk in mosquito areas and use repellent (available at any corner shop or pharmacy).\u003c/p\u003e\u003cp\u003eFood hygiene levels in Thailand are reasonably high, and it\u0027s generally safe to eat at street markets and to drink any water offered to you in restaurants. Using common sense — e.g., avoiding the vendor who leaves raw meat sitting in the sun with flies buzzing around — and following the precautions listed in our article on \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Travellers%27_diarrhea\" href\u003d\"https://en.wikivoyage.org/wiki/Travellers%27_diarrhea\"\u003etravellers\u0027 diarrhea\u003c/a\u003e is still advisable.\u003c/p\u003e\u003cp\u003e\u003cstrong\u003eHIV/AIDS\u003c/strong\u003e (\u003cem\u003eEstimated adult (15-49) HIV prevalence is 1.3% in 2007\u003c/em\u003e) and other sexually transmitted diseases are common, especially among sex workers. Condoms are sold in all convenience stores, supermarkets, pharmacies, etc. Avoid \u003cstrong\u003einjection drug use\u003c/strong\u003e.\u003c/p\u003e\u003cp\u003eThere\u0027s a pharmacy on every block in Thailand and most are happy to sell you anything you want without a prescription. Technically, however, this is illegal, and police have been known to bust tourists occasionally for possessing medicines without a prescription, even innocuous stuff like asthma medication.\u003c/p\u003e",
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":14,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-respect",
+                   "uuid":"16de3dd8-715a-4977-ad76-a523ae877521",
+                   "name":"Respect",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003eThais are a polite people and, while remarkably tolerant of foreigners gallivanting on their beaches and with their women, you\u0027ll find that you will get more respect if you in turn treat them and their customs with respect.\u003cbr\u003e\u003c/p\u003e",
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":15,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-cope",
+                   "uuid":"ce890c71-7e9e-4b26-90a5-93cd6a4ddf20",
+                   "name":"Cope",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003eBring an open mind and a sense of humour. Don\u0027t come with too many preconceived ideas about what Thailand is like, as media and friends’ experiences have a habit of distorting reality.\u003c/p\u003e\u003cp\u003eIf you\u0027re sticking to major cities and tourist areas, don\u0027t worry too much about under-packing; you can get hold of any essentials you\u0027ve forgotten. Essentials are a swimming costume, a day pack, an umbrella in rainy season and some warm clothes if travelling in Oct-Dec, as some areas get cool. Some sources say there is no point in bringing a raincoat during the warm rainy season because it is so hot and sticky your raincoat will be uncomfortable.\u003c/p\u003e\u003cp\u003eYou will only need a couple of changes of clothes as you can get washing done anywhere cheaply. Sandals for when your hiking shoes are too hot can be bought cheaply in Thailand, although large sizes for women are harder to come by. If female and anything above a size 2 (US), size 6 (UK \u0026amp; IRL), size 36 (rest of EU), busty, or tall, it is often difficult to find clothes that will fit you in any of the Thai shops. If you are male and have a waist more than 38\" you will have trouble finding pants. You will largely be limited to backpacker gear (the omnipresent fisherman pants and \"Same Same\" t-shirts) or Western imports in Bangkok malls, for the same prices as back home or more. While laundry is cheap, it is useful to bring a few changes of clothes, as you may sweat your way through several outfits a day in the Thai weather.\u003c/p\u003e\u003cp\u003eTake enough padlocks for every double zipper to stop wandering hands and lock up your belongings, even in your hotel room. Lock zippers through the lower holes, \u003cem\u003enot\u003c/em\u003e the upper ones on the pull tabs — although even this precaution won\u0027t help much if you encounter a razor-blade artist.\u003c/p\u003e\u003cp\u003eTake snorkeling gear or buy it on arrival if you plan to spend a lot of your time in the water. Alternatively put up a notice looking for gear from someone who is leaving. A tent for camping if you are a national park buff is a good idea, as is a compass. You might like to bring compact binoculars too if wildlife is your thing. A good map of Thailand is also handy.\u003c/p\u003e\u003cp\u003eTake earplugs for when you\u0027re stuck in a noisy room or want to sleep on the bus. Take a mirror for shaving, as often budget places won’t have any. String is very handy for hanging up washing. Cigarette papers can be difficult to find, except in tourist centres. Climbing shoes for rock climbing are useful as Thailand has some of the best cliffs in Southeast Asia.\u003c/p\u003e\u003cp\u003eIf you have prescription glasses, it is a good idea to bring a spare pair of glasses or contact lenses plus a copy of your prescription. Bring a book you\u0027re prepared to swap. A personal music player is great as a huge range of cheap music is available everywhere.\u003c/p\u003e\u003cp\u003eInto the toiletries bag throw sun screen and insect repellent. Mosquito coils are also a good idea. A small pocket size torch / flashlight will come in handy when the electricity goes out or for investigating caves. Passport photos come in handy for visas.\u003c/p\u003e\u003cp\u003eIf you plan to travel long distances by motorbike, purchase a good quality helmet, which you can do in Thailand. Last but not least, pack your stuff in plastic bags to stop them from getting wet, especially when travelling in the rainy season or on boats.\u003c/p\u003e\u003cp\u003eAside from the above, the following are recommended:\u003c/p\u003e\u003cul\u003e\u003cli\u003ePrescriptions for any prescription medications being brought through customs\u003c/li\u003e\u003cli\u003eTravel insurance\u003c/li\u003e\u003cli\u003eBlood donor/type card\u003c/li\u003e\u003cli\u003eDetails of your next of kin\u003c/li\u003e\u003cli\u003eA second photo ID other than your passport\u003c/li\u003e\u003cli\u003eCredit card plus a backup card for a separate account\u003c/li\u003e\u003c/ul\u003e",
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":16,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-connect",
+                   "uuid":"8bac473f-29f4-4634-91a5-ac8eeb7f29ec",
+                   "name":"Connect",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":null,
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   },
+                   {
+                   "order":17,
+                   "guideSections":[
+                   
+                   ],
+                   "id":"text-thailand-films",
+                   "uuid":"1d49b2ad-df53-4a41-b2fc-863da5923f6d",
+                   "name":"Films",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003eForeign films were popular in Thailand from the get-go, but in the 1920s a local film industry started to emerge in Bangkok. The most critically acclaimed Thai films were produced in the \"three waves\" of the Thai film industry, the 1930s, the 1950s and the late 1990s/early 2000s, although films made before World War II have unfortunately been lost. Predominant genres are action, historical epics, romance and gay/transgender films, almost always intertwined with elements of comedy. The following are staged (at least partly) in Bangkok:\u003c/p\u003e\u003cul\u003e\u003cli\u003e\u003cem\u003e6ixtynin9\u003c/em\u003e (Pen-ek Ratanaruang, 1999). Tum, a secretary just fired from a financial corporation during the Asian financial crisis, discovers an instant noodle box in front of her door. It is filled with money and she decides to keep it. However, the people that left it there soon want it back.\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cem\u003eBangkok Dangerous\u003c/em\u003e (The Pang Brothers, 1999). The debut of the Pang Brothers, Bangkok Dangerous is a stylish film about a hitman who finds love, and realises how his actions are hurting good people.\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cem\u003eThe Beach\u003c/em\u003e (Danny Boyle, 2000). Richard (played by Leonardo DiCaprio) is a young American backpacker looking for adventure. In Khao San Road, he meets Daffy, who makes him believe a beach paradise exists on a secret island. It is a popular film in the backpacker community. Besides Bangkok, some scenes in this Hollywood production are filmed in Ko Phi Phi, a beach island in the south of Thailand.\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cem\u003eCitizen Dog\u003c/em\u003e (Wisit Sasanatieng, 2004). An eccentric, bright, colour-splashed film that follows the life of Pod as he moves to Bangkok from the countryside. Without a goal in life, Pod falls in love with Jin, a girl who lives for her dreams. It gives a playfully ironic portrait of Bangkok, the city that offers false dreams and real disillusionment.\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cem\u003eThe Hangover Part II\u003c/em\u003e (Todd Phillips, 2011). American comedy film about a group of friends (the \"wolf pack\") who travel to Bangkok for a bachelor party. A lot of stereotypes are confirmed, but it is still a good laugh. Most scenes of the film are shot in Yaowarat, Sukhumvit and Thonburi. The State Tower in Silom is also featured.\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cem\u003eIron Ladies\u003c/em\u003e (Youngyooth Thongkonthun, 2000). This film follows the true story of a men\u0027s volleyball team that almost entirely consists of gay and transgender players. The team competes for the 1996 national championships, and while the crowd loves them, they are being judged by other teams and match officials.\u003c/li\u003e\u003c/ul\u003e\u003cul\u003e\u003cli\u003e\u003cem\u003eOng-Bak: Muay Thai Warrior\u003c/em\u003e (Prachya Pinkaew, 2003). Martial-arts star Tony Jaa\u0027s breakthrough film and an absolute must-see for those interested in Muay Thai or fight choreography. Many places in Bangkok are featured, but don\u0027t think \u003ca data-cke-saved-href\u003d\"https://en.wikivoyage.org/wiki/Bangkok/Khao_San_Road\" href\u003d\"https://en.wikivoyage.org/wiki/Bangkok/Khao_San_Road\"\u003eKhao San Road\u003c/a\u003e is the underground fighting den as it is portrayed.\u003c/li\u003e\u003c/ul\u003e",
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-thailand"
+                   }
+                   ],
+  "categoryDescriptions":[
+  
+  ],
+  "attractions":null,
+  "subRegions":[
+                {
+                "radius":null,
+                "polygonCoordinates":null,
+                "guideSections":null,
+                "categoryDescriptions":null,
+                "attractions":null,
+                "subRegions":null,
+                "simplePOIs":null,
+                "longitude":100.501232,
+                "latitude":13.772464,
+                "continent":"Asia",
+                "worldArea":"South East Asia",
+                "country":"Thailand",
+                "region":null,
+                "subRegion":null,
+                "city":null,
+                "id":"region-bangkok",
+                "uuid":"9c81ef54-e2f1-4e1e-aa94-3138eed0e293",
+                "name":"Bangkok",
+                "alternativeName":null,
+                "category":160,
+                "subCategory":0,
+                "status":1,
+                "description":"\u003cp\u003eBangkok is the capital of Thailand and, with a population of over eleven million inhabitants, by far its largest city. Its high-rise buildings, heavy traffic congestion, intense heat and naughty nightlife do not immediately give you a warm welcome — but don\u0027t let your first impression mislead you. It is one of Asia\u0027s most cosmopolitan cities with magnificent temples and palaces, authentic canals, busy markets and a vibrant nightlife that has something for everyone.\u003c/p\u003e\u003cp\u003eFor years, it was only a small trading post at the banks of the Chao Phraya River, until King Rama I, the first monarch of the present Chakri dynasty, turned it into the capital of Siam in 1782, after the burning of Ayutthaya by Burmese invaders. Since then, Bangkok has turned into a national treasure house and functions as Thailand\u0027s spiritual, cultural, political, commercial, educational and diplomatic centre.\u003c/p\u003e",
+                "images":[
+                          {
+                          "url":"http://storage.googleapis.com/tripfinger-images/region-bangkok-1",
+                          "description":null,
+                          "creationDate":"Dec 20, 2015 3:43:28 AM",
+                          "license":"All rights reserved",
+                          "artist":"Anastasia Makarova",
+                          "originalUrl":null
+                          }
+                          ],
+                "imagesNotFoundOnImport":[
+                
+                ],
+                "parentAsString":null,
+                "entityType":"region",
+                "parent":"region-thailand"
+                },
+                {
+                "radius":null,
+                "polygonCoordinates":null,
+                "guideSections":null,
+                "categoryDescriptions":null,
+                "attractions":null,
+                "subRegions":null,
+                "simplePOIs":null,
+                "longitude":99.990238,
+                "latitude":9.495259,
+                "continent":"Asia",
+                "worldArea":"South East Asia",
+                "country":"Thailand",
+                "region":null,
+                "subRegion":null,
+                "city":null,
+                "id":"region-ko-samui",
+                "uuid":"8497c827-0c42-4235-89b7-ce3bc5989706",
+                "name":"Ko Samui",
+                "alternativeName":null,
+                "category":150,
+                "subCategory":1510,
+                "status":1,
+                "description":"\u003cp\u003eKo Samui, often called just Samui is an island in the Gulf of Thailand, about 700 km south of Bangkok and 80 km from the eastern coastline of Southern Thailand.\u003c/p\u003e",
+                "images":[
+                          {
+                          "url":"http://storage.googleapis.com/tripfinger-images/region-ko-samui-1",
+                          "description":null,
+                          "creationDate":"Feb 7, 2016 11:43:00 AM",
+                          "license":"CC BY-ND 2.0 DE",
+                          "artist":"Sergei S.",
+                          "originalUrl":"http://www.fotocommunity.de/pc/pc/display/13301702"
+                          }
+                          ],
+                "imagesNotFoundOnImport":[
+                
+                ],
+                "parentAsString":null,
+                "entityType":"region",
+                "parent":"region-thailand"
+                }
+                ],
+  "simplePOIs":null,
+  "longitude":100.991966,
+  "latitude":15.470278,
+  "continent":"Asia",
+  "worldArea":"South East Asia",
+  "country":null,
+  "region":null,
+  "subRegion":null,
+  "city":null,
+  "id":"region-thailand",
+  "uuid":"6a790ffd-594b-4307-afa8-a9ec330c1054",
+  "name":"Thailand",
+  "alternativeName":null,
+  "category":130,
+  "subCategory":0,
+  "status":1,
+  "description":"\u003cp\u003eThailand (officially the Kingdom of Thailand)  is a country in Southeast Asia with coasts on the Andaman Sea and the Gulf of Thailand. It borders Myanmar (Burma) to the northwest, Laos to the northeast, Cambodia to the southeast, and Malaysia to the south.\u003c/p\u003e\u003cp\u003eWith great food, a tropical climate, fascinating culture and superb beaches, Thailand is a magnet for travellers the world over.\u003c/p\u003e",
+  "images":[
+            {
+            "url":"http://storage.googleapis.com/tripfinger-images/region-thailand-1",
+            "description":null,
+            "creationDate":"Dec 19, 2015 10:18:19 AM",
+            "license":"All rights reserved",
+            "artist":"Anastasia Makarova",
+            "originalUrl":null
+            }
+            ],
+  "imagesNotFoundOnImport":[
+  
+  ],
+  "parentAsString":null,
+  "entityType":"region",
+  "parent":"region-south-east-asia"
+  
 }

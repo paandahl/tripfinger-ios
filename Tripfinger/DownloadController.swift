@@ -19,7 +19,7 @@ class DownloadController: UIViewController {
     let cancelButton = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "close")
     navigationItem.leftBarButtonItem = cancelButton
     
-    let countryDownloaded = DownloadService.isCountryDownloaded(country)
+    let countryDownloaded = DownloadService.isCountryDownloaded(country.getName())
     let cityDownloaded = false
 //    let cityDownloaded = city == nil ? false : DownloadService.isRegionDownloaded(mapsObject, country: city)
 

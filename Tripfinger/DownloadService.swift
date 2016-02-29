@@ -21,8 +21,8 @@ class DownloadService {
     return false
   }
   
-  class func isCountryDownloaded(region: Region) -> Bool {
-    return hasMapPackage(region.getName())
+  class func isCountryDownloaded(countryName: String) -> Bool {
+    return hasMapPackage(countryName)
   }
   
   class func deleteCountry(countryName: String) {
