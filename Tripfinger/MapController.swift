@@ -5,11 +5,10 @@ import Alamofire
 
 class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDelegate, SKPositionerServiceDelegate {
   
-  var session: Session
+  let annotationService: AnnotationService
+  let session: Session
   var positionInitiatedFromRegion: Region?
   
-  var selectedPoi: SimplePOI!
-  var selectedAnnotation: SKAnnotation!
   var calloutView: AnnotationCalloutView!
   var positionButtonMargin: NSLayoutConstraint!
   var pois = List<SimplePOI>()
@@ -22,6 +21,7 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
   
   init(session: Session) {
     self.session = session
+    self.annotationService = AnnotationService()
     super.init(nibName: nil, bundle: nil)
   }
   
@@ -139,70 +139,12 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
     
     mapView.clearAllAnnotations()
     
-    print("adding annotations for \(pois.count) pois")
-    
-    var identifier: Int32 = 0
-    var likedAttractions = 0
-    for poi in pois {
-      let selected = selectedPoi != nil &&
-        (poi.latitude == selectedPoi.latitude &&
-          poi.longitude == selectedPoi.longitude)
-      if !selected && isPoiHidden(poi) {
-        identifier += 1
-        continue
-      }
-      let annotation = SKAnnotation()
-      annotation.identifier = identifier
-
-      if poi.category == 2392 {
-        annotation.annotationView = getAnnotationViewWithIcon("subway-m", selected: selected)
-      }
-      else if poi.category == 2393 {
-        annotation.annotationView = getAnnotationViewWithIcon("subway-entrance-m", selected: selected)
-      }
-      else if String(poi.category).hasPrefix("26") {
-        annotation.annotationView = getAnnotationViewWithIcon("shop-m", selected: selected)        
-      }
-      else {
-        if selected {
-          annotation.annotationType = SKAnnotationType.Green
-        }
-        else if let notes = poi.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
-          annotation.annotationType = SKAnnotationType.Red
-          print("was liked: \(poi.name)")
-          likedAttractions += 1
-        }
-        else {
-          annotation.annotationType = SKAnnotationType.Blue          
-        }
-      }
-      annotation.location = CLLocationCoordinate2DMake(poi.latitude, poi.longitude)
+    let annotations = annotationService.getAnnotations(pois, mapView: mapView)
+    for annotation in annotations {
       let animationSettings = SKAnimationSettings()
       mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
-      if selected {
-        selectedAnnotation = annotation
-      }
-      identifier += 1
     }
-    print("There were \(likedAttractions) liked attractions.")
-    mapView.accessibilityValue = String(likedAttractions)
-  }
-  
-  func getAnnotationViewWithIcon(named: String, selected: Bool) -> SKAnnotationView {
-    let annotationView = UIView(frame: CGRectMake(0, 0, 14, 14))
-    annotationView.backgroundColor = selected ? UIColor.greenColor() : UIColor.whiteColor()
-    annotationView.layer.cornerRadius = 7
-    let imageView = UIImageView(frame: CGRectMake(1, 1, 12, 12))
-    imageView.image = UIImage(named: named)
-    annotationView.addSubview(imageView)
-    let reuseIdentifier = selected ? "\(named)-selected" : named
-    return SKAnnotationView(view: annotationView, reuseIdentifier: reuseIdentifier)
-  }
-
-  
-  func isPoiHidden(poi: SimplePOI) -> Bool {
-    let zoomLevel = mapView.visibleRegion.zoomLevel
-    return (poi.category == 2392 && zoomLevel < 12) || (poi.category == 2393 && zoomLevel < 15) || String(poi.category).hasPrefix("1")
+//    mapView.accessibilityValue = String(likedAttractions)
   }
   
   func mapView(mapView: SKMapView!, didSelectAnnotation annotation: SKAnnotation!) {
@@ -210,21 +152,16 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
 
     print("Tapped on annotation")
     
-    let poi = pois[Int(annotation.identifier)]
-    poiSelected(annotation, poi: poi)
+    annotationSelected(annotation)
   }
   
-  func poiSelected(annotation: SKAnnotation, poi: SimplePOI) {
-    if annotation.annotationView != nil {
-      annotation.annotationView = getAnnotationViewWithIcon(annotation.annotationView.reuseIdentifier, selected: true)
+  func annotationSelected(annotation: SKAnnotation) {
+    let updatedAnnotations = annotationService.annotationSelected(annotation)
+    for updatedAnnotation in updatedAnnotations {
+      mapView.updateAnnotation(updatedAnnotation)
     }
-    else {
-      annotation.annotationType = SKAnnotationType.Green
-    }
-    mapView.updateAnnotation(annotation)
-    selectedAnnotation = annotation
-    selectedPoi = poi
-    calloutView = AnnotationCalloutView(poi: poi) {
+    let pois = annotationService.selectedPois()
+    calloutView = AnnotationCalloutView(pois: pois) { poi in
       ContentService.getAttractionWithId(poi.listingId) {
         attraction in
         
@@ -241,20 +178,13 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
     positionButtonMargin.constant = 60
   }
   
+  
   func poiUnselected() {
     if calloutView != nil {
-      if selectedAnnotation.annotationView != nil {
-        let reuseIdentifier = selectedAnnotation.annotationView.reuseIdentifier
-        let index = reuseIdentifier.endIndex.advancedBy(-9)
-        let iconName = reuseIdentifier.substringToIndex(index)
-        selectedAnnotation.annotationView = getAnnotationViewWithIcon(iconName, selected: false)
+      let updatedAnnotations = annotationService.poiUnselected()
+      for updatedAnnotation in updatedAnnotations {
+        mapView.updateAnnotation(updatedAnnotation)
       }
-      else {
-        selectedAnnotation.annotationType = SKAnnotationType.Blue
-      }
-      mapView.updateAnnotation(selectedAnnotation)
-      selectedAnnotation = nil
-      selectedPoi = nil
 
       calloutView.removeFromSuperview()
       calloutView = nil
@@ -262,32 +192,23 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
     }
   }
   
+  // Manually check if an annotation was tapped.
   func mapView(mapView: SKMapView!, didTapAtCoordinate coordinate: CLLocationCoordinate2D) {
     poiUnselected()
     print("Tapped on map at \(coordinate)")
     let clickedPoint = mapView.pointForCoordinate(coordinate)
-    if mapView.visibleRegion.zoomLevel < 12 {
-      var i = 0
-      for poi in pois {
-        
-        if isPoiHidden(poi) {
-          i += 1
-          continue
-        }
-        let poiPoint = mapView.pointForCoordinate(CLLocationCoordinate2DMake(poi.latitude, poi.longitude))
-//        let label = UILabel(frame: CGRectMake(poiPoint.x - 18, poiPoint.y - 36, 36, 36))
-//        label.backgroundColor = UIColor.greenColor()
-//        view.addSubview(label)
-        let xDiff = abs(Int32(clickedPoint.x - poiPoint.x))
-        let yDiff = abs(Int32(clickedPoint.y - (poiPoint.y - 18)))
+    let zoomLevel = Int(mapView.visibleRegion.zoomLevel)
+    if zoomLevel < 12 {
+      let annotations = mapView.annotations as! [SKAnnotation]
+      for annotation in annotations {
+        let annotationPoint = mapView.pointForCoordinate(annotation.location)
+        let xDiff = abs(Int32(clickedPoint.x - annotationPoint.x))
+        let yDiff = abs(Int32(clickedPoint.y - (annotationPoint.y - 18)))
         if xDiff < 18 && yDiff < 18 {
-          let annotation = mapView.annotationForIdentifier(Int32(i))
-          poiSelected(annotation, poi: poi)
+          annotationSelected(annotation)
           return
         }
-        i += 1
       }
-      // Manually check if an annotation was tapped.
     }
   }
     
@@ -297,12 +218,9 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
   }
 
   func loadMapPOIs() {
-    print("mapView.frame:")
-    print(mapView.frame)
+    print("mapView.frame: \(mapView.frame)")
     let bottomLeft = mapView.coordinateForPoint(CGPoint(x: 0, y: mapView.frame.maxY))
     print("bottomLeft: \(bottomLeft)")
-    print(bottomLeft.latitude)
-    print(bottomLeft.latitude.isNaN)
     
     if bottomLeft.latitude.isNaN {
       NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(2), target: self, selector: "loadMapPOIs", userInfo: nil, repeats: false)
@@ -331,7 +249,6 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
     }
   }
 }
-
 
 extension MapController: SearchViewControllerDelegate {
   
@@ -382,7 +299,7 @@ extension MapController: SearchViewControllerDelegate {
       delayTime = 1.1
     }
     if putAnnotation {
-      selectedPoi = searchResult
+//      selectedPoi = searchResult
     }
 //    delay(delayTime) {
 //      promise.success("Waited")

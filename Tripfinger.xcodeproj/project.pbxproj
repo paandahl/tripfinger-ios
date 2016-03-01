@@ -17,6 +17,7 @@
 		251F70461C7F59D40069EB6D /* RightDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F70451C7F59D40069EB6D /* RightDetailCell.swift */; };
 		251F70481C7F65D10069EB6D /* TableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F70471C7F65D10069EB6D /* TableController.swift */; };
 		251F704A1C8455CF0069EB6D /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F70491C8455CF0069EB6D /* TestUtils.swift */; };
+		251F704C1C8579390069EB6D /* AnnotationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F704B1C8579390069EB6D /* AnnotationService.swift */; };
 		25243E641BC410F400EF5F64 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E631BC410F400EF5F64 /* Region.swift */; };
 		25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E651BC4110E00EF5F64 /* GuideItem.swift */; };
 		253E60F61C6DB68A0069068B /* mapsObject.json in Resources */ = {isa = PBXBuildFile; fileRef = 253E60F51C6DB68A0069068B /* mapsObject.json */; };
@@ -146,6 +147,7 @@
 		251F70451C7F59D40069EB6D /* RightDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightDetailCell.swift; sourceTree = "<group>"; };
 		251F70471C7F65D10069EB6D /* TableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableController.swift; sourceTree = "<group>"; };
 		251F70491C8455CF0069EB6D /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		251F704B1C8579390069EB6D /* AnnotationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationService.swift; sourceTree = "<group>"; };
 		25243E631BC410F400EF5F64 /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		25243E651BC4110E00EF5F64 /* GuideItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItem.swift; sourceTree = "<group>"; };
 		253E60F51C6DB68A0069068B /* mapsObject.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mapsObject.json; sourceTree = "<group>"; };
@@ -524,11 +526,12 @@
 		25D707C41BC6BC25005A4BBA /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				2598E9221C65B4E600B693A4 /* Search */,
+				251F704B1C8579390069EB6D /* AnnotationService.swift */,
 				25D707C51BC6BC34005A4BBA /* ContentService.swift */,
 				25D281CE1BFCB0E10069BE86 /* DatabaseService.swift */,
 				25D281C61BFB67760069BE86 /* DownloadService.swift */,
 				25A14DE91C64D23000074F87 /* JsonParserService.swift */,
+				2598E9221C65B4E600B693A4 /* Search */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -823,6 +826,7 @@
 				25B506911BB401F400A36BA1 /* ImageLabelView.swift in Sources */,
 				25C9DFD11B9CD84200C516C1 /* AppDelegate.swift in Sources */,
 				25D707BA1BC6606E005A4BBA /* GuideController.swift in Sources */,
+				251F704C1C8579390069EB6D /* AnnotationService.swift in Sources */,
 				25D436321BD548400016E362 /* SearchService.swift in Sources */,
 				257922D21BA48697005EA785 /* SwiftyJSON.swift in Sources */,
 				251F70481C7F65D10069EB6D /* TableController.swift in Sources */,

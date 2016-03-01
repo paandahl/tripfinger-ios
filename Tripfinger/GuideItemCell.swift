@@ -142,7 +142,6 @@ class GuideItemCell: UITableViewCell {
       contentImage.hidden = true
 //      contentImage.removeFromSuperview()
 //      contentView.addSubview(contentImage)
-//      setNeedsUpdateConstraints()
     }
     
     // download button
@@ -177,5 +176,8 @@ class GuideItemCell: UITableViewCell {
     content.sizeToFit()
     content.scrollEnabled = false
     content.setContentOffset(CGPointZero, animated: true)
+    
+    setNeedsUpdateConstraints()
+
   }
 }
