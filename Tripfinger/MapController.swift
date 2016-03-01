@@ -32,6 +32,9 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
   override func viewDidLoad() {    
     super.viewDidLoad()
     
+    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
+    navigationItem.rightBarButtonItems = [searchButton]
+
     mapView = SKMapView(frame: CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame)))
     mapView.accessibilityIdentifier = "mapView"
     mapView.accessibilityValue = String(0) // acts as a counter for liked items, used in UI tests
@@ -225,12 +228,10 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
       ContentService.getAttractionWithId(poi.listingId) {
         attraction in
         
-        let vc = DetailController()
+        let vc = DetailController(session: self.session, searchDelegate: self)
         vc.attraction = attraction
         self.navigationController!.pushViewController(vc, animated: true)
       }
-
-
     }
     view.addSubview(calloutView)
     let views = ["callout": calloutView!]
@@ -358,6 +359,8 @@ extension MapController: SearchViewControllerDelegate {
 //      }
 //    }
     
+    stopSpinner()
+    dismissViewControllerAnimated(true, completion: nil)
     print("Going to location of search result")
     var delayTime = 0.1
     if !mapView.isLocationVisible(searchResult.latitude, long: searchResult.longitude) {
@@ -384,5 +387,14 @@ extension MapController: SearchViewControllerDelegate {
 //    delay(delayTime) {
 //      promise.success("Waited")
 //    }   
+  }
+  
+  func navigateToSearch() {
+    let nav = UINavigationController()
+    let regionId = session.currentRegion?.getId()
+    let countryId = session.currentCountry?.getId()
+    let searchController = SearchController(delegate: self, regionId: regionId, countryId: countryId)
+    nav.viewControllers = [searchController]
+    presentViewController(nav, animated: true, completion: nil)
   }
 }

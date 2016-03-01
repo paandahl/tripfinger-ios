@@ -21,8 +21,7 @@ class AttractionsController: UIViewController {
       case Attraction.Category.ATTRACTIONS:
         displayMode = DisplayMode.WITH_SWIPER
         listController = ListController(session: session, searchDelegate: searchDelegate, grouped: false, categoryDescription: categoryDescription)
-        swipeController = SwipeController()
-        swipeController!.session = session
+        swipeController = SwipeController(session: session, searchDelegate: searchDelegate)
       case Attraction.Category.TRANSPORTATION:
         displayMode = DisplayMode.GROUPED_LIST
         listController = ListController(session: session, searchDelegate: searchDelegate, grouped: true, categoryDescription: categoryDescription)
@@ -33,11 +32,6 @@ class AttractionsController: UIViewController {
     }
     
     super.init(nibName: nil, bundle: nil)
-    
-    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
-    mapButton.accessibilityLabel = "Map"
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
-    navigationItem.rightBarButtonItems = [searchButton, mapButton]
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -45,6 +39,11 @@ class AttractionsController: UIViewController {
   }
   
   override func viewDidLoad() {
+    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
+    mapButton.accessibilityLabel = "Map"
+    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
+    navigationItem.rightBarButtonItems = [searchButton, mapButton]
+
     view.backgroundColor = UIColor.whiteColor()
     
     if let currentSubCategory = session.currentSubCategory {

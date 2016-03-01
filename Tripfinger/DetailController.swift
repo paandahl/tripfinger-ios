@@ -2,6 +2,9 @@ import Foundation
 
 class DetailController: UIViewController {
   
+  let session: Session
+  let searchDelegate: SearchViewControllerDelegate
+  
   let scrollView = UIScrollView()
   let heartImage = UIImageView()
   let mainImage = UIImageView()
@@ -16,7 +19,22 @@ class DetailController: UIViewController {
   
   var attraction: Attraction!
   
+  init(session: Session, searchDelegate: SearchViewControllerDelegate) {
+    self.session = session
+    self.searchDelegate = searchDelegate
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   override func viewDidLoad() {
+    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
+    mapButton.accessibilityLabel = "Map"
+    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
+    navigationItem.rightBarButtonItems = [searchButton, mapButton]
+
     view.addSubview(scrollView)
     scrollView.addSubview(name)
     scrollView.addSubview(mainImage)
@@ -168,5 +186,19 @@ class DetailController: UIViewController {
       DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, attraction: attraction)
     }
     setHeartTint()
+  }
+  
+  func navigateToSearch() {
+    let nav = UINavigationController()
+    let regionId = session.currentRegion?.getId()
+    let countryId = session.currentCountry?.getId()
+    let searchController = SearchController(delegate: searchDelegate, regionId: regionId, countryId: countryId)
+    nav.viewControllers = [searchController]
+    presentViewController(nav, animated: true, completion: nil)
+  }
+  
+  func navigateToMap() {
+    let mapController = MapController(session: session)
+    navigationController!.pushViewController(mapController, animated: true)
   }
 }

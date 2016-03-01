@@ -27,7 +27,6 @@ class ListController: UITableViewController {
     fatalError("init(coder:) has not been implemented")
   }
   
-  
   override func viewDidLoad() {
     UINib.registerClass(RightDetailCell.self, reuseIdentifier: TableCellIdentifiers.rightDetailCell, forTableView: tableView)
     UINib.registerClass(GuideItemCell.self, reuseIdentifier: TableCellIdentifiers.guideItemCell, forTableView: tableView)
@@ -181,7 +180,7 @@ extension ListController {
 extension ListController: ListingCellContainer {
   
   func showDetail(attraction: Attraction) {
-    let vc = DetailController()
+    let vc = DetailController(session: session, searchDelegate: searchDelegate)
     vc.attraction = attraction
     self.navigationController!.pushViewController(vc, animated: true)
   }

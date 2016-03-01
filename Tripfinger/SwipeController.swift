@@ -6,7 +6,8 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   
   var noElementsLabel = UILabel()
   var attractionStack: [Attraction]?
-  var session: Session!
+  let session: Session
+  let searchDelegate: SearchViewControllerDelegate
 //  var filterBox: FilterBox!
   
   let ChooseAttractionButtonHorizontalPadding: CGFloat = 80.0
@@ -14,7 +15,17 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   var frontCardView: AttractionCardView!
   var orignalFrontCardFrame: CGRect!
   var backCardView: AttractionCardView!
-    
+  
+  init(session: Session, searchDelegate: SearchViewControllerDelegate) {
+    self.session = session
+    self.searchDelegate = searchDelegate
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
   override func viewDidLoad(){
 //    filterBox = UINib(nibName: "FilterBox", bundle: nil).instantiateWithOwner(nil, options: nil)[0] as! FilterBox
 //    filterBox.delegate = self
@@ -236,7 +247,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
 extension SwipeController: AttractionCardContainer {
   
   func showDetail(attraction: Attraction) {
-    let vc = DetailController()
+    let vc = DetailController(session: session, searchDelegate: searchDelegate)
     vc.attraction = attraction
     self.navigationController!.pushViewController(vc, animated: true)
   }
