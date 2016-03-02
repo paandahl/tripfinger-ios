@@ -19,7 +19,7 @@ class Attraction: Object {
   }
   
   enum Category: Int {
-    case ATTRACTIONS = 200
+    case ATTRACTIONS = 210
 //    case EXPLORE_CITY = 210
 //    case ACTIVITY_HIKE_DAYTRIP = 220
     case TRANSPORTATION = 230

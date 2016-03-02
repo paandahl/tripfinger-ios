@@ -34,6 +34,7 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
     
     let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
     navigationItem.rightBarButtonItems = [searchButton]
+    navigationItem.title = session.currentCategory.entityName
 
     mapView = SKMapView(frame: CGRectMake(0.0, 0.0, CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame)))
     mapView.accessibilityIdentifier = "mapView"
@@ -139,7 +140,7 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
     
     mapView.clearAllAnnotations()
     
-    let annotations = annotationService.getAnnotations(pois, mapView: mapView)
+    let annotations = annotationService.getAnnotations(pois, mapView: mapView, selectedPoi: calloutView?.currentPoi)
     for annotation in annotations {
       let animationSettings = SKAnimationSettings()
       mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
@@ -235,7 +236,7 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
       }
       
       if NetworkUtil.connectedToNetwork() { // TODO: This test can fail right after went offline, should retry
-        mapPoisRequest = ContentService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel) {
+        mapPoisRequest = ContentService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel, category: session.currentCategory) {
           searchResults in
           
           self.pois = searchResults

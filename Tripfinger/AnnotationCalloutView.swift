@@ -9,6 +9,10 @@ class AnnotationCalloutView : UIView {
   var index = 0
   var detailAction: ((SimplePOI) -> ())!
   
+  var currentPoi: SimplePOI {
+    get { return pois[index] }
+  }
+  
   init(pois: [SimplePOI], detailAction: (SimplePOI) -> ()) {
     self.pois = pois
     super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
@@ -45,14 +49,14 @@ class AnnotationCalloutView : UIView {
   }
   
   func updateView() {
-    var titleText = pois[index].name
+    var titleText = currentPoi.name
     if pois.count > 1 {
       titleText = "\(index+1)/\(pois.count) \(titleText)"
     }
     titleLabel.text = titleText
     titleLabel.sizeToFit()
 
-    detailButton.hidden = (pois[index].listingId == nil || pois[index].listingId == "simple")
+    detailButton.hidden = (currentPoi.listingId == nil || currentPoi.listingId == "simple")
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -60,12 +64,11 @@ class AnnotationCalloutView : UIView {
   }
 
   func detailButtonClicked() {
-    detailAction(pois[index])
+    detailAction(currentPoi)
   }
   
   override func awakeFromNib() {
     super.awakeFromNib()
-    
   }
 }
 

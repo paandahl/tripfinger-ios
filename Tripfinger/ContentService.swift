@@ -8,10 +8,11 @@ class ContentService {
   
   init() {}
   
-  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int, handler: List<SimplePOI> -> ()) -> Request {
+  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int, category: Attraction.Category, handler: List<SimplePOI> -> ()) -> Request {
     
     let bounds = "\(bottomLeft.latitude),\(bottomLeft.longitude),\(topRight.latitude),\(topRight.longitude)"
-    return NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/search_by_bounds/\(bounds)/\(zoomLevel)", success: {
+    let parameters = ["categoryId": "\(category.rawValue)"]
+    return NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/search_by_bounds/\(bounds)/\(zoomLevel)", parameters: parameters, success: {
       json in
       
       let searchResults = JsonParserService.parseSearchResults(json)
