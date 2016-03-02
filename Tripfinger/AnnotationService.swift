@@ -29,7 +29,12 @@ class AnnotationService {
         let poiCoord = CLLocationCoordinate2DMake(poi.latitude, poi.longitude)
         let poiPoint = mapView.pointForCoordinate(poiCoord)
         if abs(annotationPoint.x - poiPoint.x) < groupingDistance && abs(annotationPoint.y - poiPoint.y) < groupingDistance {
-          annotationGroups[annotation]!.append(poi)
+          if let notes = poi.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
+            annotationGroups[annotation]!.insert(poi, atIndex: 0)
+            print("LIKED")
+          } else {
+            annotationGroups[annotation]!.append(poi)
+          }
           wasGrouped = true
           if selected {
             selectedAnnotation = annotation
@@ -71,6 +76,8 @@ class AnnotationService {
       annotation.annotationView = nil
       if selected {
         annotation.annotationType = SKAnnotationType.Green
+      } else if let notes = pois[0].notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
+        annotation.annotationType = SKAnnotationType.Red
       } else {
         annotation.annotationType = SKAnnotationType.Purple
       }

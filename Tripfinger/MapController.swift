@@ -139,13 +139,18 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
   func addAnnotations() {
     
     mapView.clearAllAnnotations()
-    
+
+    var likedAttractions = 0
     let annotations = annotationService.getAnnotations(pois, mapView: mapView, selectedPoi: calloutView?.currentPoi)
     for annotation in annotations {
       let animationSettings = SKAnimationSettings()
       mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
+      if annotation.annotationType == SKAnnotationType.Red {
+        likedAttractions += 1
+      }
     }
-//    mapView.accessibilityValue = String(likedAttractions)
+    print("There were \(likedAttractions) liked attractions.")
+    mapView.accessibilityValue = String(likedAttractions)
   }
   
   func mapView(mapView: SKMapView!, didSelectAnnotation annotation: SKAnnotation!) {
