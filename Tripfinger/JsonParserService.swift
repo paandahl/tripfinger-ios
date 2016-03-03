@@ -131,8 +131,8 @@ class JsonParserService {
     if  json["attractions"].array != nil {
       region.attractions.appendContentsOf(parseAttractions(json["attractions"]))
     }
-    if json["subRegionTree"].array != nil {
-      region.listing.item.subRegions.appendContentsOf(parseRegionTreesFromJson(json["subRegionTree"]))
+    if json["subRegions"].array != nil {
+      region.listing.item.subRegions.appendContentsOf(parseRegionTreesFromJson(json["subRegions"]))
     }
     if json["simplePOIs"].array != nil {
       region.listing.item.simplePois.appendContentsOf(parseSimplePois(json["simplePOIs"]))
@@ -187,26 +187,6 @@ class JsonParserService {
   
   internal class func parseCategoryDescriptions(region: Region, guideItemJson: JSON) -> List<GuideText> {
     let categoryDescriptions = parseSectionTreeFromJson(guideItemJson["categoryDescriptions"])
-    var categoryDescriptionsDict = Dictionary<Int, GuideText>()
-    for categoryDescription in categoryDescriptions {
-      categoryDescriptionsDict[categoryDescription.item.category] = categoryDescription
-    }
-    for category in Attraction.Category.allValues {
-      var categoryDescription = categoryDescriptionsDict[category.rawValue]
-      if let categoryDescription = categoryDescription {
-        print("found category for \(category.rawValue)")
-        categoryDescription.item.loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED
-      } else {
-        print("added category for \(category.rawValue)")
-        categoryDescription = GuideText()
-        categoryDescription!.item = GuideItem()
-        categoryDescription!.item.category = category.rawValue
-        categoryDescription!.item.name = category.entityName
-        categoryDescription!.item.content = nil
-        categoryDescription!.item.loadStatus = GuideItem.LoadStatus.FULLY_LOADED
-        categoryDescriptions.append(categoryDescription!)
-      }
-    }
     
     print("Returning \(categoryDescriptions.count) category descriptions")
     let sorted = categoryDescriptions.sort({ (el1, el2) -> Bool in el1.item.category < el2.item.category })

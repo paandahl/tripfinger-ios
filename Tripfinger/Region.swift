@@ -28,10 +28,6 @@ class Region: Object {
     case NEIGHBOURHOOD = 170
   }
   
-  // temporary data to make life easier
-  var mapCountry = false
-  var offline = false;
-  
   override static func ignoredProperties() -> [String] {
     return ["offline", "mapCountry", "mapPackage"]
   }

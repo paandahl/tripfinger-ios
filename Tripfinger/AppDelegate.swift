@@ -28,10 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
       print("Switching to test mode")
       AppDelegate.mode = AppMode.TEST
     }
-    if NSProcessInfo.processInfo().arguments.contains("OFFLINE") {
-      print("Simulating offline mode")
-      NetworkUtil.simulateOffline = true
-    }
   
     let URLCache = NSURLCache(memoryCapacity: 20 * 1024 * 1024, diskCapacity: 100 * 1024 * 1024, diskPath: nil)
     NSURLCache.setSharedURLCache(URLCache)
@@ -67,6 +63,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     nav.viewControllers = [guideController]
     window.rootViewController = nav
     
+    if NSProcessInfo.processInfo().arguments.contains("OFFLINEMAP") {
+      print("Installing test-map before offline-mode")
+      DownloadService.downloadCountry("Brunei", progressHandler: { progress in }) {
+        print("Brunei download finished")
+        guideController.loadCountryLists() // remove online countries from list
+        guideController.tableView.accessibilityValue = "bruneiReady"
+      }
+      NetworkUtil.simulateOffline = true
+    } else if NSProcessInfo.processInfo().arguments.contains("OFFLINE") {
+      print("Simulating offline mode")
+      NetworkUtil.simulateOffline = true
+    }
+
+
     return true
   }
   

@@ -129,8 +129,7 @@ class Session {
         print("Setting region \(region.getName()) with category: \(region.item().category)")
         handler()
       }
-    }
-    else {
+    } else {
       if handler != nil {
         handler()
       }
@@ -168,6 +167,7 @@ class Session {
   func loadAttractions(handler: () -> ()) {
 
     if let attractionsFuture = attractionsFuture {
+      print("Attractions loading already in progress")
       attractionsFuture.onComplete { _ in
         handler()
       }
@@ -175,6 +175,9 @@ class Session {
       if attractionsFromRegion != currentRegion?.item().name || attractionsFromCategory != currentCategory {
         print("Reloading attractions")
         let promise = Promise<Void, NoError>()
+        attractionsFromCategory = currentCategory
+        attractionsFromRegion = currentRegion?.item().name
+        attractionsFuture = promise.future
         ContentService.getCascadingAttractionsForRegion(self.currentRegion, withCategory: currentCategory) {
           attractions in
           
@@ -182,11 +185,9 @@ class Session {
           self.currentAttractions = attractions
           handler()
           promise.success()
+          print("Setting attractionsFuture to nil")
           self.attractionsFuture = nil
         }
-        attractionsFromCategory = currentCategory
-        attractionsFromRegion = currentRegion?.item().name
-        attractionsFuture = promise.future
       } else {
         print("No need to reload attractions")
         handler()

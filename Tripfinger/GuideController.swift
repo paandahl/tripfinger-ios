@@ -36,18 +36,22 @@ class GuideController: TableController {
   }
   
   func updateUI() {
-    print("UPDATING UI")
-    // title label
-    if session.currentItem != nil {
-      navigationItem.title = session.currentItem.name
-    }
-    else {
-      navigationItem.title = "Countries"
-    }
-
-    populateTableSections()
-    tableView.reloadData {
-      self.tableView.contentOffset = CGPointZero
+    // if nil, we are in offline mode, changeRegion returned immediately, and viewdidload will trigger this method
+    if let tableView = tableView {
+      print("UPDATING UI")
+      // title label
+      if session.currentItem != nil {
+        navigationItem.title = session.currentItem.name
+      }
+      else {
+        navigationItem.title = "Countries"
+      }
+      
+      populateTableSections()
+      print("tableView: \(tableView)")
+      tableView.reloadData {
+        self.tableView.contentOffset = CGPointZero
+      }
     }
   }
   
@@ -72,9 +76,6 @@ class GuideController: TableController {
     let vc = DownloadController()
     vc.country = session.currentCountry
     vc.city = session.currentCity
-    if session.currentRegion.mapCountry {
-      vc.onlyMap = true
-    }
     nav.viewControllers = [vc]
     view.window!.rootViewController!.presentViewController(nav, animated: true, completion: nil)
   }
@@ -160,11 +161,11 @@ extension GuideController {
       tableSections.append(section)
     }
     
-    if session.currentRegion != nil && !session.currentRegion.mapCountry && session.currentSection == nil {
+    if session.currentRegion != nil && session.currentSection == nil {
       var section = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
       let section2 = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
       var i = 0
-      for categoryDesc in session.currentRegion.item().categoryDescriptions {
+      for categoryDesc in session.currentRegion.item().allCategoryDescriptions {
         let category = Attraction.Category(rawValue: categoryDesc.item.category)!
         if i > 0 {
           section2.elements.append((title: category.entityName, value: categoryDesc))
@@ -274,6 +275,7 @@ extension GuideController: SearchViewControllerDelegate {
   func navigateToCategory(object: AnyObject) {
     let categoryDescription = object as! GuideText
     session.currentCategory = Attraction.Category(rawValue: categoryDescription.item.category)!
+    print("set curent category to: \(session.currentCategory)")
     
     let attractionsController = AttractionsController(session: session, searchDelegate: self, categoryDescription: categoryDescription)
     attractionsController.edgesForExtendedLayout = .None // offset from navigation bar

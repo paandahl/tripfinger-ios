@@ -23,5 +23,6 @@ class JsonParserServiceTest: XCTestCase {
     let brunei = JsonParserService.parseRegionTreeFromJson(json)
 
     XCTAssertEqual(2, brunei.item().simplePois.count)
+    XCTAssertEqual(1, brunei.item().subRegions.count)
   }
 }

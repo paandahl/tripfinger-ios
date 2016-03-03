@@ -44,15 +44,26 @@ class DownloadService {
     SKMapsService.sharedInstance().packagesManager.deleteOfflineMapPackageNamed(mapPackageCode)
   }
   
-  class func downloadCountry(countryName: String, onlyMap: Bool = false, progressHandler: Float -> (), finishedHandler: () -> ()) {
+  class func downloadCountry(countryName: String, progressHandler: Float -> (), finishedHandler: () -> ()) {
     
+    var progress1: Float = 0.0
+    var progress2: Float = 0.0
+    let multiProgressHandler1 = { (progress: Float) -> () in
+      progress1 = progress / 2
+      progressHandler(progress1 + progress2)
+    }
+    let multiProgressHandler2 = { (progress: Float) -> () in
+      progress2 = progress / 2
+      progressHandler(progress1 + progress2)
+    }
+
     UIApplication.sharedApplication().idleTimerDisabled = true
 
     let countryPath = NSURL.createDirectory(.LibraryDirectory, withPath: countryName)
     var finished = true
     if !hasMapPackage(countryName) {
       finished = false
-      try! downloadMapForCountry(countryName, regionPath: countryPath, progressHandler: progressHandler) {
+      try! downloadMapForCountry(countryName, regionPath: countryPath, progressHandler: multiProgressHandler1) {
         if finished {
           UIApplication.sharedApplication().idleTimerDisabled = false
           finishedHandler()
@@ -62,14 +73,12 @@ class DownloadService {
         }
       }
     }
-    if !onlyMap {
-      downloadTripfingerData(AppDelegate.serverUrl + "/download_country/\(countryName)", path: countryPath) {
-        if finished {
-          finishedHandler()
-        }
-        else {
-          finished = true
-        }
+    downloadTripfingerData(AppDelegate.serverUrl + "/download_country/\(countryName)", path: countryPath, progressHandler: multiProgressHandler2) {
+      if finished {
+        finishedHandler()
+      }
+      else {
+        finished = true
       }
     }
   }
@@ -138,7 +147,7 @@ class DownloadService {
     }
   }
   
-  class func downloadTripfingerData(url: String, path: NSURL, finishedHandler: () -> ()) {
+  class func downloadTripfingerData(url: String, path: NSURL, progressHandler: (Float) -> (), finishedHandler: () -> ()) {
     
     var parameters = [String: String]()
     if AppDelegate.mode != AppDelegate.AppMode.RELEASE {
@@ -153,18 +162,20 @@ class DownloadService {
       let dispatchGroup = dispatch_group_create()
       fetchImages(region, path: path, dispatchGroup: dispatchGroup)
       
-      try! DatabaseService.saveRegion(region)
-      
-      dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) {
-        print("Finished image downloads")
-        finishedHandler()
+      try! DatabaseService.saveRegion(region) { _ in
+        print("Persisted region to database")
+        dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) {
+          print("Finished image downloads")
+          progressHandler(1.0)
+          finishedHandler()
+        }
       }
     })
     
   }
   
-  class func fetchImages(region: Region, path: NSURL, dispatchGroup: dispatch_group_t) {
-    fetchImages(region.item(), path: path, dispatchGroup: dispatchGroup)
+  class func fetchImages(region: Region, path: NSURL, progressHandler: (Float -> ())? = nil, dispatchGroup: dispatch_group_t) {
+    fetchImages(region.item(), path: path, progressHandler: progressHandler, dispatchGroup: dispatchGroup)
     for attraction in region.attractions {
       fetchImages(attraction.listing.item, path: path, dispatchGroup: dispatchGroup)
     }
@@ -175,7 +186,7 @@ class DownloadService {
     return fileUrl.absoluteString.substringFromIndex(pathIndex!.endIndex)
   }
   
-  class func fetchImages(guideItem: GuideItem, path: NSURL, dispatchGroup: dispatch_group_t) {
+  class func fetchImages(guideItem: GuideItem, path: NSURL, progressHandler: (Float -> ())? = nil, dispatchGroup: dispatch_group_t) {
     for image in guideItem.images {
       let index = gcsImagesUrl.startIndex.advancedBy(gcsImagesUrl.characters.count)
       let fileName = image.url.substringFromIndex(index)
@@ -189,6 +200,8 @@ class DownloadService {
     for categoryDescription in guideItem.categoryDescriptions {
       fetchImages(categoryDescription.item, path: path, dispatchGroup: dispatchGroup)
     }
+    
+    print("Fetching images in \(guideItem.name)'s \(guideItem.subRegions.count) sub regions")
     for subRegion in guideItem.subRegions {
       let subPath = NSURL.appendToDirectory(path, pathElement: subRegion.getName())
       fetchImages(subRegion, path: subPath, dispatchGroup: dispatchGroup)

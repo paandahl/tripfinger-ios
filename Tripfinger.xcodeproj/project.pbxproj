@@ -18,6 +18,7 @@
 		251F70481C7F65D10069EB6D /* TableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F70471C7F65D10069EB6D /* TableController.swift */; };
 		251F704A1C8455CF0069EB6D /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F70491C8455CF0069EB6D /* TestUtils.swift */; };
 		251F704C1C8579390069EB6D /* AnnotationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F704B1C8579390069EB6D /* AnnotationService.swift */; };
+		251F704E1C8817B10069EB6D /* OfflineWithDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 251F704D1C8817AF0069EB6D /* OfflineWithDataTest.swift */; };
 		25243E641BC410F400EF5F64 /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E631BC410F400EF5F64 /* Region.swift */; };
 		25243E661BC4110E00EF5F64 /* GuideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25243E651BC4110E00EF5F64 /* GuideItem.swift */; };
 		253E60F61C6DB68A0069068B /* mapsObject.json in Resources */ = {isa = PBXBuildFile; fileRef = 253E60F51C6DB68A0069068B /* mapsObject.json */; };
@@ -148,6 +149,7 @@
 		251F70471C7F65D10069EB6D /* TableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableController.swift; sourceTree = "<group>"; };
 		251F70491C8455CF0069EB6D /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		251F704B1C8579390069EB6D /* AnnotationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationService.swift; sourceTree = "<group>"; };
+		251F704D1C8817AF0069EB6D /* OfflineWithDataTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineWithDataTest.swift; sourceTree = "<group>"; };
 		25243E631BC410F400EF5F64 /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
 		25243E651BC4110E00EF5F64 /* GuideItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItem.swift; sourceTree = "<group>"; };
 		253E60F51C6DB68A0069068B /* mapsObject.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mapsObject.json; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 				25C48EA61C72E7DC00BCAABB /* DownloadCountryTest.swift */,
 				25A14DE51C6453B500074F87 /* GuideViewOnlineTest.swift */,
 				25C48EA81C7455DD00BCAABB /* ListViewOnlineTest.swift */,
+				251F704D1C8817AF0069EB6D /* OfflineWithDataTest.swift */,
 				258B3A721C75B0D300106EB2 /* OfflineWithoutDataTest.swift */,
 				258B3A701C75A29300106EB2 /* SearchOnlineTest.swift */,
 				25C48EA51C71F19F00BCAABB /* Supporting Files */,
@@ -771,6 +774,7 @@
 				258B3A711C75A29300106EB2 /* SearchOnlineTest.swift in Sources */,
 				25A14DE61C6453B500074F87 /* GuideViewOnlineTest.swift in Sources */,
 				251F704A1C8455CF0069EB6D /* TestUtils.swift in Sources */,
+				251F704E1C8817B10069EB6D /* OfflineWithDataTest.swift in Sources */,
 				258B3A731C75B0D300106EB2 /* OfflineWithoutDataTest.swift in Sources */,
 				25C48EA31C71CCE600BCAABB /* SwipeViewOnlineTest.swift in Sources */,
 			);

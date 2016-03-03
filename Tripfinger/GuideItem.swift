@@ -25,6 +25,34 @@ class GuideItem: Object {
   var subRegions = List<Region>()
   var simplePois = List<SimplePOI>()
   var categoryDescriptions = List<GuideText>()
+  
+  var allCategoryDescriptions: List<GuideText> {
+    get {
+      let allCategoryDescriptions = List<GuideText>()
+      var categoryDescriptionsDict = Dictionary<Int, GuideText>()
+      for categoryDescription in categoryDescriptions {
+        categoryDescriptionsDict[categoryDescription.item.category] = categoryDescription
+      }
+      
+      for category in Attraction.Category.allValues {
+        var categoryDescription = categoryDescriptionsDict[category.rawValue]
+        if let categoryDescription = categoryDescription {
+          print("found category for \(category.rawValue)")
+          categoryDescription.item.loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED
+        } else {
+          print("added category for \(category.rawValue)")
+          categoryDescription = GuideText()
+          categoryDescription!.item = GuideItem()
+          categoryDescription!.item.category = category.rawValue
+          categoryDescription!.item.name = category.entityName
+          categoryDescription!.item.content = nil
+          categoryDescription!.item.loadStatus = GuideItem.LoadStatus.FULLY_LOADED
+          allCategoryDescriptions.append(categoryDescription!)
+        }
+      }
+      return allCategoryDescriptions
+    }
+  }
 
   // temporary data to make things easier
   var loadStatus = LoadStatus.CONTENT_NOT_LOADED

@@ -92,7 +92,7 @@ class DownloadController: UIViewController {
 //      }
       
       nameLabel.text = "Downloading \(country.getName())."
-      DownloadService.downloadCountry(country.getName(), onlyMap: onlyMap, progressHandler: {
+      DownloadService.downloadCountry(country.getName(), progressHandler: {
         progress in
         
         self.progressView.progress = progress

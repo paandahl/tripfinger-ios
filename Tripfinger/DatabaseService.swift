@@ -58,7 +58,9 @@ class DatabaseService {
   
   class func saveRegion(region: Region, callback: (Region -> ())? = nil) throws {
 
+    print("Saving region")
     SyncManager.run_async_throws {
+      print("Saving region2")
       let realm = getRealm()
       let existing = getRegionWithId(region.getId(), writeRealm: realm)
       if existing != nil {
@@ -80,7 +82,7 @@ class DatabaseService {
 
     for region in regions {
       if region.listing.item.id == regionId {
-        region.offline = true
+        region.item().offline = true
         return region
       }
     }
@@ -88,7 +90,9 @@ class DatabaseService {
   }
     
   class func getCountries() -> Results<Region> {
-    return getRealm().objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue)")
+    let realm = getRealm()
+    realm.refresh()
+    return realm.objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue)")
   }
   
   class func getCountry(countryName: String) -> Region! {
@@ -113,7 +117,7 @@ class DatabaseService {
     return getRealm().objects(Attraction).filter(predicate)
   }
   
-  class func getCascadingAttractionsForRegion(region: Region?) -> List<Attraction> {
+  class func getCascadingAttractionsForRegion(region: Region?, category: Attraction.Category? = nil) -> List<Attraction> {
     var predicate: NSPredicate!
     var attractions: Results<Attraction>!
     if let region = region {
@@ -133,6 +137,11 @@ class DatabaseService {
     }
     else {
       attractions = getRealm().objects(Attraction)
+    }
+    if let category = category {
+      print("Filtering by category: \(category.rawValue)")
+      let categoryPredicate = NSPredicate(format: "listing.item.category = %d", category.rawValue)
+      attractions = attractions.filter(categoryPredicate)
     }
     let list = List<Attraction>()
     for attraction in attractions {

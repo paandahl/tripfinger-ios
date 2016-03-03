@@ -151,10 +151,12 @@ class ContentService {
   }
   
   class func getGuideTextWithId(region: Region, guideTextId: String, handler: GuideText -> ()) {
-    if region.offline {
+    print("getting guidetext")
+    if region.item().offline {
       handler(DatabaseService.getGuideTextWithId(region, guideTextId: guideTextId))
       return
     }
+    print("region not offline")
     NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/guideTexts/\(guideTextId)", success: {
       json in
       
@@ -187,7 +189,7 @@ class ContentService {
     
     if !NetworkUtil.connectedToNetwork() {
       print("fetching offline attractions")
-      let attractions = DatabaseService.getCascadingAttractionsForRegion(region)
+      let attractions = DatabaseService.getCascadingAttractionsForRegion(region, category: category)
       handler(attractions)
       
     } else {
@@ -195,7 +197,7 @@ class ContentService {
       var url: String
       var parameters = [String: String]()
       if let region = region {
-        if region.offline {
+        if region.item().offline {
           handler(region.attractions)
           return
         }
