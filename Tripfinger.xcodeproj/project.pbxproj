@@ -61,7 +61,6 @@
 		25C8F3DC1C44FD3C007BD932 /* UITableView+ReloadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C8F3DB1C44FD3C007BD932 /* UITableView+ReloadData.swift */; };
 		25C9DFD11B9CD84200C516C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C9DFD01B9CD84200C516C1 /* AppDelegate.swift */; };
 		25C9DFD31B9CD84200C516C1 /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25C9DFD21B9CD84200C516C1 /* MapController.swift */; };
-		25C9DFD81B9CD84200C516C1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFD71B9CD84200C516C1 /* Images.xcassets */; };
 		25C9DFDB1B9CD84200C516C1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25C9DFD91B9CD84200C516C1 /* LaunchScreen.xib */; };
 		25C9DFF81B9CD97000C516C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFF71B9CD97000C516C1 /* UIKit.framework */; };
 		25C9DFFA1B9CD98000C516C1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C9DFF91B9CD98000C516C1 /* Foundation.framework */; };
@@ -102,6 +101,7 @@
 		25D707D51BCA7848005A4BBA /* UIView+AddConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */; };
 		25F048E21BCC365C002DE14E /* ContentServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F048E11BCC365C002DE14E /* ContentServiceTest.swift */; };
 		25F048E71BCC4B7E002DE14E /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F048E61BCC4B7E002DE14E /* LoadingCell.xib */; };
+		25F5AD011C895A18006F1E7F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25F5AD001C895A18006F1E7F /* Images.xcassets */; };
 		25F644D91C63180200C696A0 /* thailand.json in Resources */ = {isa = PBXBuildFile; fileRef = 25F644D81C63180200C696A0 /* thailand.json */; };
 		F15403DC29A8017C1BA97FA3 /* Pods_Tripfinger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D65EBCD3D5BCD8F85D4EA0F /* Pods_Tripfinger.framework */; };
 /* End PBXBuildFile section */
@@ -195,7 +195,6 @@
 		25C9DFCF1B9CD84200C516C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25C9DFD01B9CD84200C516C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		25C9DFD21B9CD84200C516C1 /* MapController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
-		25C9DFD71B9CD84200C516C1 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		25C9DFDA1B9CD84200C516C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		25C9DFE01B9CD84200C516C1 /* TripfingerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripfingerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		25C9DFE51B9CD84200C516C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -239,6 +238,7 @@
 		25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AddConstraints.swift"; sourceTree = "<group>"; };
 		25F048E11BCC365C002DE14E /* ContentServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentServiceTest.swift; sourceTree = "<group>"; };
 		25F048E61BCC4B7E002DE14E /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
+		25F5AD001C895A18006F1E7F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		25F644D81C63180200C696A0 /* thailand.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = thailand.json; sourceTree = "<group>"; };
 		356EFCE331E62CA7B8254017 /* Pods-Tripfinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.release.xcconfig"; sourceTree = "<group>"; };
 		6D65EBCD3D5BCD8F85D4EA0F /* Pods_Tripfinger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripfinger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -452,9 +452,9 @@
 		25C9DFCD1B9CD84200C516C1 /* Tripfinger */ = {
 			isa = PBXGroup;
 			children = (
+				25F5AD001C895A18006F1E7F /* Images.xcassets */,
 				25C9DFD01B9CD84200C516C1 /* AppDelegate.swift */,
 				25B506891BB3FD4800A36BA1 /* Controllers */,
-				25C9DFD71B9CD84200C516C1 /* Images.xcassets */,
 				25B506881BB3FD1C00A36BA1 /* Model */,
 				25D707C41BC6BC25005A4BBA /* Service */,
 				25C9DFCE1B9CD84200C516C1 /* Supporting Files */,
@@ -518,10 +518,10 @@
 				25B506901BB401F400A36BA1 /* ImageLabelView.swift */,
 				25D436481BDA50570016E362 /* ListingCell.swift */,
 				25F048E61BCC4B7E002DE14E /* LoadingCell.xib */,
-				25C8F3D91C44CB7C007BD932 /* TableSection.swift */,
-				258B3A6E1C758B9000106EB2 /* TextMessageCell.swift */,
 				251F70451C7F59D40069EB6D /* RightDetailCell.swift */,
 				251F70471C7F65D10069EB6D /* TableController.swift */,
+				25C8F3D91C44CB7C007BD932 /* TableSection.swift */,
+				258B3A6E1C758B9000106EB2 /* TextMessageCell.swift */,
 			);
 			name = "UI Components";
 			sourceTree = "<group>";
@@ -677,9 +677,9 @@
 			files = (
 				254091091C0D47C200A2002F /* SKMaps.bundle in Resources */,
 				25B506871BB3F33900A36BA1 /* Podfile in Resources */,
+				25F5AD011C895A18006F1E7F /* Images.xcassets in Resources */,
 				2503D3AE1BE1330E0078C0F0 /* FilterBox.xib in Resources */,
 				25C9DFDB1B9CD84200C516C1 /* LaunchScreen.xib in Resources */,
-				25C9DFD81B9CD84200C516C1 /* Images.xcassets in Resources */,
 				25F048E71BCC4B7E002DE14E /* LoadingCell.xib in Resources */,
 				253E60F61C6DB68A0069068B /* mapsObject.json in Resources */,
 			);

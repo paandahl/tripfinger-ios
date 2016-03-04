@@ -87,38 +87,24 @@ class JsonParserService {
     }
     return regions
   }
-
-  class func parseSimplePois(jsonArray: JSON) -> [SimplePOI] {
-    var simplePois = [SimplePOI]()
-    for json in jsonArray.array! {
-      simplePois.append(parseSimplePoi(json))
-    }
-    return simplePois
-  }
   
-  class func parseSimplePoi(json: JSON) -> SimplePOI { // TODO: Merge these two functions
+  class func parseSimplePoi(json: JSON) -> SimplePOI {
     let simplePoi = SimplePOI()
     simplePoi.name = json["name"].string
+    simplePoi.location = json["location"].string!
     simplePoi.category = json["category"].int!
+    simplePoi.subCategory = json["subCategory"].int!
     simplePoi.location = json["location"].string
-    let latitude = json["latitude"].double!
-    let longitude = json["longitude"].double!
-    simplePoi.latitude = latitude
-    simplePoi.longitude = longitude
+    simplePoi.latitude = json["latitude"].double!
+    simplePoi.longitude = json["longitude"].double!
+    simplePoi.listingId = json["listingId"].string!
     return simplePoi
   }
   
-  class func parseSearchResults(json: JSON) -> List<SimplePOI> {
+  class func parseSimplePois(json: JSON) -> List<SimplePOI> {
     let searchResults = List<SimplePOI>()
     for resultJson in json.array! {
-      let searchResult = SimplePOI()
-      searchResult.name = resultJson["name"].string!
-      searchResult.location = resultJson["location"].string!
-      searchResult.latitude = resultJson["latitude"].double!
-      searchResult.longitude = resultJson["longitude"].double!
-      searchResult.category = resultJson["category"].int!
-      searchResult.listingId = resultJson["listingId"].string!
-      searchResults.append(searchResult)
+      searchResults.append(parseSimplePoi(resultJson))
     }
     return searchResults
   }

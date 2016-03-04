@@ -14,7 +14,7 @@ class OnlineSearch {
     let req = NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/search/\(escapedString)", parameters: parameters, success: {
       json in
       
-      let searchResults = JsonParserService.parseSearchResults(json)
+      let searchResults = JsonParserService.parseSimplePois(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(searchResults)

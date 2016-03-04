@@ -7,6 +7,7 @@ class SimplePOI: Object {
     self.init()
     name = listing.item.name
     category = listing.item.category
+    subCategory = listing.item.subCategory
     location = listing.country
     if listing.city != nil {
       location = location + ", \(listing.city)"
@@ -20,6 +21,7 @@ class SimplePOI: Object {
 
   dynamic var name: String!
   dynamic var category = 0
+  dynamic var subCategory = 0
   dynamic var location: String!
   dynamic var latitude = 0.0
   dynamic var longitude = 0.0
@@ -29,6 +31,14 @@ class SimplePOI: Object {
     return listingId != nil && listingId != "simple"
   }
   
+  func getAttractionCategory() -> Attraction.Category {
+    return Attraction.Category(rawValue: category)!
+  }
+
+  func getAttractionSubCategory() -> Attraction.SubCategory {
+    return Attraction.SubCategory(rawValue: subCategory)!
+  }
+
   // temporary variable connecting SimplePOI-representations of real Attractions to AttractionSwipe
   var notes: GuideListingNotes!
   

@@ -71,45 +71,89 @@ class AnnotationService {
     
     let selected = (selectedAnnotation != nil && selectedAnnotation!.location.latitude == annotation.location.latitude
       && selectedAnnotation!.location.longitude == annotation.location.longitude)
-    let pois = annotationGroups[annotation]!
-    if pois.count > 1 {
-      annotation.annotationView = nil
-      if selected {
-        annotation.annotationType = SKAnnotationType.Green
-      } else if let notes = pois[0].notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
-        annotation.annotationType = SKAnnotationType.Red
-      } else {
-        annotation.annotationType = SKAnnotationType.Purple
+    let poi = annotationGroups[annotation]![0]
+    let liked = poi.notes != nil && poi.notes!.likedState == GuideListingNotes.LikedState.LIKED
+    
+    let annotationIcon: String
+    switch poi.getAttractionCategory() {
+    case Attraction.Category.ATTRACTIONS:
+      switch poi.getAttractionSubCategory() {
+
+      case Attraction.SubCategory.SIGHTS_AND_LANDMARKS:
+        annotationIcon = "attraction"
+      case Attraction.SubCategory.PARK:
+        annotationIcon = "park"
+      case Attraction.SubCategory.MUSEUM:
+        annotationIcon = "museum"
+      case Attraction.SubCategory.SPORTS:
+        annotationIcon = "sports"
+      case Attraction.SubCategory.THEATER_AND_CONCERTS:
+        annotationIcon = "theatre"
+      default:
+        print("displaying poi from category: \(poi.getAttractionSubCategory().rawValue)")
+        annotationIcon = "attraction"
       }
-    } else {
       
-      let poi = pois[0]
-      if poi.category == 2392 {
-        annotation.annotationView = getAnnotationViewWithIcon("subway-m", selected: selected)
-      } else if poi.category == 2393 {
-        annotation.annotationView = getAnnotationViewWithIcon("subway-entrance-m", selected: selected)
-      } else if String(poi.category).hasPrefix("26") {
-        annotation.annotationView = getAnnotationViewWithIcon("shop-m", selected: selected)
-      } else {
-        if selected {
-          annotation.annotationType = SKAnnotationType.Green
-        } else if let notes = poi.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
-          annotation.annotationType = SKAnnotationType.Red
-        } else {
-          annotation.annotationType = SKAnnotationType.Blue
-        }
+    case Attraction.Category.FOOD_OR_DRINK:
+      annotationIcon = "restaurant"
+    case Attraction.Category.INFORMATION:
+      annotationIcon = "information"
+    case Attraction.Category.SHOPPING:
+      annotationIcon = "shop"
+    case Attraction.Category.ACCOMODATION:
+      annotationIcon = "hotel"
+      
+    case Attraction.Category.TRANSPORTATION:
+      switch poi.getAttractionSubCategory() {
+      case Attraction.SubCategory.AIRPORT:
+        annotationIcon = "airport"
+      case Attraction.SubCategory.TRAIN_STATION:
+        annotationIcon = "train"
+      case Attraction.SubCategory.BUS_STATION:
+        fallthrough
+      case Attraction.SubCategory.BUS_STOP:
+        annotationIcon = "bus"
+      case Attraction.SubCategory.FERRY_TERMINAL:
+        fallthrough
+      case Attraction.SubCategory.FERRY_STOP:
+        annotationIcon = "ferry"
+      case Attraction.SubCategory.METRO_STATION:
+        annotationIcon = "metro"
+      case Attraction.SubCategory.METRO_ENTRANCE:
+        annotationIcon = "metro_entrance"
+      case Attraction.SubCategory.TRAM_STOP:
+        annotationIcon = "tram"
+      case Attraction.SubCategory.CAR_RENTAL:
+        annotationIcon = "metro_entrance"
+      case Attraction.SubCategory.BICYCLE_RENTAL:
+        fallthrough
+      case Attraction.SubCategory.MOTORBIKE_RENTAL:
+        annotationIcon = "bicycle"
+      default:
+        fatalError("Unrecognized subCategory for transportation: \(poi.getAttractionSubCategory().rawValue)")
       }
     }
+
+    annotation.annotationView = getAnnotationViewWithIcon(annotationIcon, selected: selected, liked: liked)
   }
   
-  private func getAnnotationViewWithIcon(named: String, selected: Bool) -> SKAnnotationView {
+  private func getAnnotationViewWithIcon(named: String, selected: Bool, liked: Bool) -> SKAnnotationView {
     let annotationView = UIView(frame: CGRectMake(0, 0, 14, 14))
-    annotationView.backgroundColor = selected ? UIColor.greenColor() : UIColor.whiteColor()
     annotationView.layer.cornerRadius = 7
     let imageView = UIImageView(frame: CGRectMake(1, 1, 12, 12))
     imageView.image = UIImage(named: named)
     annotationView.addSubview(imageView)
-    let reuseIdentifier = selected ? "\(named)-selected" : named
+    let reuseIdentifier: String
+    if selected {
+      annotationView.backgroundColor = UIColor.greenColor()
+      reuseIdentifier = "\(named)-selected"
+    } else if liked {
+      annotationView.backgroundColor = UIColor.redColor()
+      reuseIdentifier = "\(named)-liked"
+    } else {
+      annotationView.backgroundColor = UIColor.whiteColor()
+      reuseIdentifier = named
+    }
     return SKAnnotationView(view: annotationView, reuseIdentifier: reuseIdentifier)
   }
   
@@ -133,7 +177,7 @@ class AnnotationService {
       styleAnnotation(selectedAnnotation)
       return [selectedAnnotation]
     } else {
-      fatalError()
+      return []
     }
   }
 }

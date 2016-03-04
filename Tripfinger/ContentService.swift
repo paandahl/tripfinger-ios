@@ -15,7 +15,7 @@ class ContentService {
     return NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/search_by_bounds/\(bounds)/\(zoomLevel)", parameters: parameters, success: {
       json in
       
-      let searchResults = JsonParserService.parseSearchResults(json)
+      let searchResults = JsonParserService.parseSimplePois(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         for searchResult in searchResults {
