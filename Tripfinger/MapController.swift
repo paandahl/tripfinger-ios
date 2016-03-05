@@ -145,7 +145,7 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
     for annotation in annotations {
       let animationSettings = SKAnimationSettings()
       mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
-      if annotation.annotationType == SKAnnotationType.Red {
+      if annotation.annotationView.reuseIdentifier.containsString("liked") {
         likedAttractions += 1
       }
     }
