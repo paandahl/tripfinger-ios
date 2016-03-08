@@ -29,7 +29,7 @@ class AttractionCardView: MDCSwipeToChooseView {
     }
     else {
       imageView.image = UIImage(color: UIColor.whiteColor())
-      let imageUrl = attraction.listing.item.images[0].url + "-600x800"
+      let imageUrl = DownloadService.gcsImagesUrl + attraction.listing.item.images[0].url + "-600x800"
       try! imageView.loadImageWithUrl(imageUrl)
     }
     

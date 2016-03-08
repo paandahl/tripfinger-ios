@@ -162,16 +162,15 @@ class DownloadService {
       let dispatchGroup = dispatch_group_create()
       fetchImages(region, path: path, dispatchGroup: dispatchGroup)
       
-      try! DatabaseService.saveRegion(region) { _ in
-        print("Persisted region to database")
-        dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) {
-          print("Finished image downloads")
+      dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) {
+        print("Finished image downloads")
+        try! DatabaseService.saveRegion(region) { _ in
+          print("Persisted region to database")
           progressHandler(1.0)
           finishedHandler()
         }
       }
-    })
-    
+    })    
   }
   
   class func fetchImages(region: Region, path: NSURL, progressHandler: (Float -> ())? = nil, dispatchGroup: dispatch_group_t) {
@@ -188,10 +187,9 @@ class DownloadService {
   
   class func fetchImages(guideItem: GuideItem, path: NSURL, progressHandler: (Float -> ())? = nil, dispatchGroup: dispatch_group_t) {
     for image in guideItem.images {
-      let index = gcsImagesUrl.startIndex.advancedBy(gcsImagesUrl.characters.count)
-      let fileName = image.url.substringFromIndex(index)
-      let destinationPath = path.URLByAppendingPathComponent(fileName)
-      NetworkUtil.saveDataFromUrl(image.url, destinationPath: destinationPath, dispatchGroup: dispatchGroup)
+      let imageUrl = gcsImagesUrl + image.url
+      let destinationPath = path.URLByAppendingPathComponent(image.url)
+      NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: destinationPath, dispatchGroup: dispatchGroup)
       image.url = getLocalPartOfFileUrl(destinationPath)
     }
     for guideSection in guideItem.guideSections {

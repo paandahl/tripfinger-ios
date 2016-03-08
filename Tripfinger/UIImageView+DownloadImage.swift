@@ -5,7 +5,7 @@ extension UIImageView {
     if url == "" {
       throw Error.RuntimeError("URL was empty")
     }
-    let nsUrl = NetworkUtil.encodeTripfingerImageUrl(url)
+    let nsUrl = NSURL(string: url)!
     return loadImageWithNSUrl(nsUrl)
   }
   

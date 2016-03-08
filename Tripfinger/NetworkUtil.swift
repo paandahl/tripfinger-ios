@@ -107,13 +107,7 @@ class NetworkUtil {
 
   
   class func saveDataFromUrl(url: String, destinationPath: NSURL, dispatchGroup: dispatch_group_t? = nil, retryTimes: Int = 100, progressHandler: (Float -> ())? = nil) {
-    var nsUrl: NSURL!
-    if url.containsString("tripfinger-images") {
-      nsUrl = encodeTripfingerImageUrl(url)
-    }
-    else {
-      nsUrl = NSURL(string: url)!
-    }
+    let nsUrl = NSURL(string: url)!
     let request = alamoFireManager.request(.GET, nsUrl)
     let backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
     
@@ -142,15 +136,10 @@ class NetworkUtil {
         print("downloading file: \(url)")
         if response.result.isSuccess {
           print("Writing image to file: \(destinationPath)")
-          let result = response.data?.writeToURL(destinationPath, atomically: true)
-          if !result! {
-            try! { throw Error.RuntimeError("ERROR: Writing file failed: \(destinationPath)") }()
-          }
-          else {
-            if let dispatchGroup = dispatchGroup {
-              dispatch_group_leave(dispatchGroup)
-              print("dispatch_group_leave: \(url)")
-            }
+          try! response.data!.writeToURL(destinationPath, options: NSDataWritingOptions.AtomicWrite)
+          if let dispatchGroup = dispatchGroup {
+            dispatch_group_leave(dispatchGroup)
+            print("dispatch_group_leave: \(url)")
           }
         }
         else {
@@ -170,17 +159,5 @@ class NetworkUtil {
           }
         }
     })
-  }
-  
-  /*
-   * Necessary because on server, some image urls are encoded properly, some are not
-   */
-  class func encodeTripfingerImageUrl(url: String) -> NSURL {
-    let index = url.rangeOfString("/tripfinger-images/")!
-    let decodedUrl = url.stringByRemovingPercentEncoding!
-    let firstPart = decodedUrl.substringToIndex(index.endIndex)
-    let lastPart = decodedUrl.substringFromIndex(index.endIndex)
-    let encodedUrl = firstPart + lastPart.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLPathAllowedCharacterSet())!
-    return NSURL(string: encodedUrl)!
   }
 }

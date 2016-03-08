@@ -13,6 +13,7 @@ class GuideItemCell: UITableViewCell {
   var contentImageHeightConstraint: NSLayoutConstraint!
   var contentImageMarginConstraint: NSLayoutConstraint!
   let content = UITextView()
+  var imageHeight: CGFloat = UIScreen.mainScreen().bounds.width * 0.75 - 50
   var contentHeight: CGFloat = 100
   var contentHeightConstraint: NSLayoutConstraint!
   let downloadView = UIView()
@@ -59,7 +60,7 @@ class GuideItemCell: UITableViewCell {
       contentView.addConstraints("V:|-20-[download]", forViews: views)
       contentView.addConstraints("H:[download]-20-|", forViews: views)
       
-      contentImageHeightConstraint = try! contentView.addConstraint("V:[image(225)]", forViews: views)
+      contentImageHeightConstraint = try! contentView.addConstraint("V:[image(\(imageHeight))]", forViews: views)
       contentView.addConstraints("V:|-0-[image]", forViews: views)
       contentImageMarginConstraint = try! contentView.addConstraint("V:[image]-10-[text]", forViews: views)
       contentHeightConstraint = try! contentView.addConstraint("V:[text(100)]", forViews: views)
@@ -82,7 +83,7 @@ class GuideItemCell: UITableViewCell {
       contentImageMarginConstraint.constant = 0
     }
     else {
-      contentImageHeightConstraint.constant = 225
+      contentImageHeightConstraint.constant = imageHeight
       contentImageMarginConstraint.constant = 10
     }
     if readMoreButton.hidden {
@@ -128,12 +129,13 @@ class GuideItemCell: UITableViewCell {
     if guideItem.images.count > 0 {
       
       if guideItem.offline {
+        contentImage.clipsToBounds = true
         contentImage.contentMode = UIViewContentMode.ScaleAspectFill
         print("offline url: \(guideItem.images[0].getFileUrl())")
         contentImage.image = UIImage(data: NSData(contentsOfURL: guideItem.images[0].getFileUrl())!)
       }
       else {
-        let imageUrl = guideItem.images[0].url + "-712x534"
+        let imageUrl = DownloadService.gcsImagesUrl + guideItem.images[0].url + "-712x534"
         try! contentImage.loadImageWithUrl(imageUrl)
       }
       contentImage.hidden = false

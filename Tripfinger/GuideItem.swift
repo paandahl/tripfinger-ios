@@ -9,6 +9,7 @@ protocol GuideItemHolder: class {
 class GuideItem: Object {
   
   dynamic var id: String!
+  dynamic var uuid: String!
   dynamic var slug: String?
   dynamic var name: String!
   dynamic var category = 0

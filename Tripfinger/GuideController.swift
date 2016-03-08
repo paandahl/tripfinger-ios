@@ -81,6 +81,7 @@ class GuideController: TableController {
   }
   
   func loadCountryLists() {
+    print("loading country lists")
     if NetworkUtil.connectedToNetwork() {
       ContentService.getCountries() {
         countries in

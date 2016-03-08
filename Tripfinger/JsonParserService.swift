@@ -10,6 +10,7 @@ class JsonParserService {
   class func parseGuideItem(guideItem: GuideItem, withJson json: JSON) -> GuideItem {
     guideItem.name = json["name"].string
     guideItem.id = json["id"].string
+    guideItem.uuid = json["uuid"].string!
     guideItem.content = json["description"].string
     guideItem.category = json["category"].int!
     guideItem.subCategory = json["subCategory"].int!

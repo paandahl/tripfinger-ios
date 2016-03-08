@@ -137,7 +137,7 @@ class DetailController: UIViewController {
     }
     else {
       if attraction.item().images.count > 0 {
-        let imageUrl = attraction.item().images[0].url + "-712x534"
+        let imageUrl = DownloadService.gcsImagesUrl + attraction.item().images[0].url + "-712x534"
         mainImage.image = UIImage(named: "Placeholder")
         try! mainImage.loadImageWithUrl(imageUrl)
       }
