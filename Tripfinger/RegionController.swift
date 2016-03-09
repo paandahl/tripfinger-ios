@@ -1,20 +1,24 @@
 import RealmSwift
 
-protocol GuideControllerDelegate: class {
+protocol RegionControllerDelegate: class {
   func categorySelected(category: Attraction.Category, view: String)
   func navigateInternally(callback: () -> ())
 }
 
-class GuideController: TableController {
+class RegionController: GuideItemController {
   
-  var contextSwitched = false
-  var delegate: GuideControllerDelegate!
-  
+  var delegate: RegionControllerDelegate!
   var countryLists = [String: [Region]]()
   
-  var guideItemExpanded = false
-  var containerFrame: CGRect!
-    
+  init(session: Session) {
+    super.init(session: session, searchDelegate: nil)
+    self.searchDelegate = self
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -35,7 +39,7 @@ class GuideController: TableController {
     updateUI()
   }
   
-  func updateUI() {
+  override func updateUI() {
     // if nil, we are in offline mode, changeRegion returned immediately, and viewdidload will trigger this method
     if let tableView = tableView {
       print("UPDATING UI")
@@ -61,17 +65,17 @@ class GuideController: TableController {
       navigationController.viewControllers.indexOf(self) == nil && !contextSwitched {
       print("moving back in hierarchy")
       guideItemExpanded = false
-      let parentGuideController = navigationController.viewControllers.last as! GuideController
+      let parentRegionController = navigationController.viewControllers.last as! RegionController
       session.moveBackInHierarchy {
         print("new currentREgion: \(self.session.currentRegion?.getName())")
-        if parentGuideController.tableSections.count == 0 {
-          parentGuideController.updateUI()          
+        if parentRegionController.tableSections.count == 0 {
+          parentRegionController.updateUI()          
         }
       }
     }
   }
   
-  func downloadClicked() {
+  override func downloadClicked() {
     let nav = UINavigationController()
     let vc = DownloadController()
     vc.country = session.currentCountry
@@ -89,11 +93,11 @@ class GuideController: TableController {
         for country in countries {
           country.item().loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED
         }
-        self.countryLists = GuideController.makeCountryDict(countries)
+        self.countryLists = RegionController.makeCountryDict(countries)
         self.updateUI()
       }
     } else {
-      self.countryLists = GuideController.makeCountryDict(Array<Region>(DatabaseService.getCountries()))
+      self.countryLists = RegionController.makeCountryDict(Array<Region>(DatabaseService.getCountries()))
       self.updateUI()
     }
   }
@@ -122,9 +126,9 @@ class GuideController: TableController {
 }
 
 // MARK: - Table data source
-extension GuideController {
+extension RegionController {
   
-  func populateTableSections() {
+  override func populateTableSections() {
     tableSections = [TableSection]()
     
     if session.currentItem == nil {
@@ -147,7 +151,7 @@ extension GuideController {
           tableSections.append(section)
         }
       }
-    } else if (session.currentSection == nil && session.currentItem.category > Region.Category.CONTINENT.rawValue) || (session.currentSection != nil && session.currentSection.item.content != nil) {
+    } else if session.currentItem.category > Region.Category.CONTINENT.rawValue {
       let section = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell, handler: nil)
       section.elements.append(("", ""))
       tableSections.append(section)
@@ -155,14 +159,13 @@ extension GuideController {
     
     if guideItemExpanded {
       let section = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToSection)
-      
       for guideSection in session.currentItem.guideSections {
         section.elements.append((title: guideSection.item.name, value: guideSection))
       }
       tableSections.append(section)
     }
     
-    if session.currentRegion != nil && session.currentSection == nil {
+    if session.currentRegion != nil {
       var section = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
       let section2 = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
       var i = 0
@@ -231,65 +234,32 @@ extension GuideController {
   }
 }
 
-
-extension GuideController: GuideItemContainerDelegate {
-  
-  func readMoreClicked() {
-    guideItemExpanded = true
-    populateTableSections()
-    tableView.reloadData()
-  }
-}
-
 // MARK: - Navigation
-extension GuideController: SearchViewControllerDelegate {
+extension RegionController: SearchViewControllerDelegate {
   
   func navigateToRegion(object: AnyObject) {
     guideItemExpanded = false
     let region = object as! Region
     
-    let guideController = constructGuideController()
-    navigationController!.pushViewController(guideController, animated: true)
+    let regionController = constructRegionController()
+    navigationController!.pushViewController(regionController, animated: true)
     
     session.changeRegion(region) {
-      guideController.updateUI()
+      regionController.updateUI()
     }
   }
-  
-  func navigateToSection(object: AnyObject) {
-    let section = object as! GuideText
     
-    let guideController = constructGuideController()
-    guideController.guideItemExpanded = true
-    navigationController!.pushViewController(guideController, animated: true)
-    
-    session.changeSection(section) {
-      guideController.updateUI()
-    }
-  }
-  
   func navigateToCategory(object: AnyObject) {
     let categoryDescription = object as! GuideText
     session.currentCategory = Attraction.Category(rawValue: categoryDescription.item.category)!
     print("set curent category to: \(session.currentCategory)")
     
-    let attractionsController = AttractionsController(session: session, searchDelegate: self, categoryDescription: categoryDescription)
-    attractionsController.edgesForExtendedLayout = .None // offset from navigation bar
-    navigationController!.pushViewController(attractionsController, animated: true)
-  }
-  
-  func navigateToSearch() {
-    let nav = UINavigationController()
-    let regionId = session.currentRegion?.getId()
-    let countryId = session.currentCountry?.getId()
-    let searchController = SearchController(delegate: self, regionId: regionId, countryId: countryId)
-    nav.viewControllers = [searchController]
-    presentViewController(nav, animated: true, completion: nil)
-  }
-  
-  func navigateToMap() {
-    let mapController = MapController(session: session)
-    navigationController!.pushViewController(mapController, animated: true)
+    let listingsController = ListingsController(session: session, searchDelegate: self, categoryDescription: categoryDescription)
+    listingsController.edgesForExtendedLayout = .None // offset from navigation bar
+    navigationController!.pushViewController(listingsController, animated: true)
+    session.changeSection(categoryDescription) {
+      listingsController.updateUI()
+    }
   }
   
   func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ()) {
@@ -298,35 +268,35 @@ extension GuideController: SearchViewControllerDelegate {
       self.dismissViewControllerAnimated(true) {
         let nav = self.navigationController!
         for viewController in nav.viewControllers {
-          if let guideController = viewController as? GuideController {
-            guideController.contextSwitched = true
+          if let regionController = viewController as? RegionController {
+            regionController.contextSwitched = true
           }
         }
         nav.popToRootViewControllerAnimated(false)
         let currentListing = self.session.currentRegion.listing
         var viewControllers = [nav.viewControllers.first!]
         if self.session.currentRegion.item().category > Region.Category.COUNTRY.rawValue {
-          viewControllers.append(self.constructGuideController(currentListing.country))
+          viewControllers.append(self.constructRegionController(currentListing.country))
         }
         if self.session.currentRegion.item().category > Region.Category.SUB_REGION.rawValue {
           if self.session.currentRegion.listing.subRegion != nil {
-            viewControllers.append(self.constructGuideController(currentListing.subRegion))
+            viewControllers.append(self.constructRegionController(currentListing.subRegion))
           }
         }
         if self.session.currentRegion.item().category > Region.Category.CITY.rawValue {
-          viewControllers.append(self.constructGuideController(currentListing.city))
+          viewControllers.append(self.constructRegionController(currentListing.city))
         }
-        viewControllers.append(self.constructGuideController())
+        viewControllers.append(self.constructRegionController())
         nav.setViewControllers(viewControllers, animated: true)
       }
     }
   }
   
-  private func constructGuideController(title: String? = nil) -> GuideController {
-    let guideController = GuideController(session: session)
-    guideController.edgesForExtendedLayout = .None // offset from navigation bar
-    guideController.navigationItem.title = title
-    return guideController
+  private func constructRegionController(title: String? = nil) -> RegionController {
+    let regionController = RegionController(session: session)
+    regionController.edgesForExtendedLayout = .None // offset from navigation bar
+    regionController.navigationItem.title = title
+    return regionController
   }
   
   //extension RootController: SearchViewControllerDelegate {

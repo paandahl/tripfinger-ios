@@ -58,17 +58,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     window.makeKeyAndVisible()
     let nav = UINavigationController()
     nav.automaticallyAdjustsScrollViewInsets = false
-    let guideController = GuideController(session: AppDelegate.session)
-    guideController.edgesForExtendedLayout = .None // offset from navigation bar
-    nav.viewControllers = [guideController]
+    let regionController = RegionController(session: AppDelegate.session)
+    regionController.edgesForExtendedLayout = .None // offset from navigation bar
+    nav.viewControllers = [regionController]
     window.rootViewController = nav
     
     if NSProcessInfo.processInfo().arguments.contains("OFFLINEMAP") {
       print("Installing test-map before offline-mode")
       DownloadService.downloadCountry("Brunei", progressHandler: { progress in }) {
         print("Brunei download finished")
-        guideController.loadCountryLists() // remove online countries from list
-        guideController.tableView.accessibilityValue = "bruneiReady"
+        regionController.loadCountryLists() // remove online countries from list
+        regionController.tableView.accessibilityValue = "bruneiReady"
       }
       NetworkUtil.simulateOffline = true
     } else if NSProcessInfo.processInfo().arguments.contains("OFFLINE") {

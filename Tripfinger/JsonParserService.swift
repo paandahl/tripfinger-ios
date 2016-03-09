@@ -55,7 +55,7 @@ class JsonParserService {
     let guideText = GuideText()
     guideText.item = parseGuideItem(json)
     
-    if guideText.item.category == 0 && fetchChildren { // GuideSection
+    if fetchChildren { 
       parseChildren(guideText, withJson: json)
     }
     
@@ -162,7 +162,9 @@ class JsonParserService {
   
   class func parseChildren(guideText: GuideText, withJson json: JSON) {
     guideText.item.guideSections = parseSectionTreeFromJson(json["guideSections"])
-    guideText.item.categoryDescriptions = parseSectionTreeFromJson(json["categoryDescriptions"])
+    if json["categoryDescriptions"].array != nil {
+      guideText.item.categoryDescriptions = parseSectionTreeFromJson(json["categoryDescriptions"])      
+    }
   }
   
   class func parseChildren(region: Region, withJson json: JSON) {

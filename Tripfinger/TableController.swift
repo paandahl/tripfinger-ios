@@ -26,7 +26,6 @@ class TableController: UIViewController, UITableViewDelegate, UITableViewDataSou
   var tableSections = [TableSection]()
   
   override func loadView() { // *
-    print("loadView()")
     view = UITableView(frame: CGRectZero, style: .Grouped)
     tableView = self.view as! UITableView
     tableView.delegate = self
@@ -40,12 +39,10 @@ class TableController: UIViewController, UITableViewDelegate, UITableViewDataSou
   }
   
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    print("creating sections: \(tableSections.count)")
     return tableSections.count;
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    print("numRows: \(tableSections[section].elements.count)")
     return tableSections[section].elements.count;
   }
   

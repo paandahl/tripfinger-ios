@@ -90,6 +90,10 @@ class Attraction: Object {
         return "Train stations"
       case .BUS_STATION:
         return "Bus stations"
+      case .METRO_STATION:
+        return "Metro stations"
+      case .TRAM_STOP:
+        return "Tram stations"
       case .FERRY_TERMINAL:
         return "Ferry terminals"
       case .CAR_RENTAL:

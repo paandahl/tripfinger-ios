@@ -8,8 +8,8 @@ class Session {
     
   init() {
     
-    let mapsFileUrl = NSBundle.mainBundle().URLForResource("mapsObject", withExtension: "json")!
-    let json = JSON(data: NSData(contentsOfURL: mapsFileUrl)!).rawString()!
+//    let mapsFileUrl = NSBundle.mainBundle().URLForResource("mapsObject", withExtension: "json")!
+//    let json = JSON(data: NSData(contentsOfURL: mapsFileUrl)!).rawString()!
     searchService = SearchService()
   }
   
@@ -21,7 +21,7 @@ class Session {
   var currentSubRegion: Region!
   var currentCity: Region!
   
-  var previousSection: GuideText!
+  var sectionStack = [GuideText]()
   var currentSection: GuideText!
   
   func loadRegionFromSearchResult(searchResult: SimplePOI, handler: () -> ()) {
@@ -38,11 +38,9 @@ class Session {
   
   func moveBackInHierarchy(handler: () -> ()) {
     
-    if currentSection != nil && previousSection != nil {
-      let prev = previousSection
-      previousSection = nil
+    if currentSection != nil && sectionStack.count > 0 {
       currentSection = nil
-      changeSection(prev, handler: handler)
+      changeSection(sectionStack.popLast()!, handler: handler)
     }
     else {
       var newRegion: Region!
@@ -115,7 +113,7 @@ class Session {
       currentCity = Region.constructRegion(region.listing.city, subRegion: subRegion, country: currentCountry.getName())
     }
     
-    previousSection = nil
+    sectionStack = [GuideText]()
     currentSection = nil
     currentRegion = region
     currentItem = region != nil ? region.listing.item : nil
@@ -138,7 +136,7 @@ class Session {
   
   func changeSection(section: GuideText, handler: (() -> ())) {
     if currentSection != nil {
-      previousSection = currentSection
+      sectionStack.append(currentSection)
     }
     currentSection = section
     currentItem = section.item

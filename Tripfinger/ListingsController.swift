@@ -1,6 +1,6 @@
 import Foundation
 
-class AttractionsController: UIViewController {
+class ListingsController: UIViewController {
   
   let session: Session
   let searchDelegate: SearchViewControllerDelegate
@@ -122,14 +122,15 @@ class AttractionsController: UIViewController {
     navigationController!.pushViewController(mapController, animated: true)
   }
   
-  override func viewWillDisappear(animated: Bool) {
-    super.viewWillDisappear(animated)
-    if let navigationController = navigationController where
-      navigationController.viewControllers.indexOf(self) == nil {
-        session.currentSubCategory = nil
-    }
+  func updateUI() {
+    listController.updateUI()
   }
   
+  override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+    listController.parentViewWillDisappear(self)
+  }
+    
   enum DisplayMode {
     case WITH_SWIPER
     case GROUPED_LIST

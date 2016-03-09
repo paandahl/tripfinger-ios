@@ -1,18 +1,15 @@
 import Foundation
 
-class ListController: TableController {
+class ListController: GuideItemController {
   
-  let searchDelegate: SearchViewControllerDelegate
   let displayGrouped: Bool
   let categoryDescription: GuideText
   var listings: [Attraction]?
-  var guideItemExpanded = false
   
   init(session: Session, searchDelegate: SearchViewControllerDelegate, grouped: Bool, categoryDescription: GuideText) {
-    self.searchDelegate = searchDelegate
     self.displayGrouped = grouped
     self.categoryDescription = categoryDescription
-    super.init(session: session)
+    super.init(session: session, searchDelegate: searchDelegate)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -20,21 +17,15 @@ class ListController: TableController {
   }
   
   override func viewDidLoad() {
+
     super.viewDidLoad()
-
-    tableView.rowHeight = UITableViewAutomaticDimension
-    tableView.estimatedRowHeight = 44.0;
-    tableView.tableHeaderView = UIView.init(frame: CGRectMake(0.0, 0.0, tableView.bounds.size.width, 0.01))
-    tableView.tableFooterView = UIView.init(frame: CGRectZero)
-
     if !displayGrouped && session.currentRegion != nil {
       loadAttractions()
     } else {
       populateTableSections()
     }
-  }
-  
-  func loadDescription() {
+    
+    print("arriving at ListController sectionStack had: \(session.sectionStack.count)")
   }
   
   /*
@@ -85,7 +76,7 @@ class ListController: TableController {
 // MARK: - Table View Data Source
 extension ListController {
   
-  func populateTableSections() {
+  override func populateTableSections() {
     tableSections = [TableSection]()
     
     if categoryDescription.item.content != nil {
@@ -93,9 +84,18 @@ extension ListController {
       section.elements.append((title: "", value: ""))
       tableSections.append(section)
     }
+    
+    if guideItemExpanded {
+      let section = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToSection)
+      for guideSection in session.currentItem.guideSections {
+        section.elements.append((title: guideSection.item.name, value: guideSection))
+      }
+      print("displaying guideSections for \(session.currentItem.name): \(session.currentItem.guideSections)")
+      tableSections.append(section)
+    }
 
     if displayGrouped {
-      let section = TableSection(title: "", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToSubCategory)
+      let section = TableSection(title: "", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToSubSection)
       for subCatDesc in categoryDescription.item.categoryDescriptions {
         section.elements.append((title: "", value: subCatDesc))
       }
@@ -127,7 +127,6 @@ extension ListController {
     
     let section = tableSections[indexPath.section]
     let cell = tableView.dequeueReusableCellWithIdentifier(section.cellIdentifier, forIndexPath: indexPath)
-    print("begging for cell: \(section.cellIdentifier)")
 
     if let cell = cell as? GuideItemCell {
       cell.delegate = self
@@ -139,12 +138,14 @@ extension ListController {
       return cell
       
     } else if let cell = cell as? RightDetailCell {
-      let subCatDesc = section.elements[indexPath.row].1 as! GuideText
-      let subCatId =  subCatDesc.item.subCategory
-      let subCat = Attraction.SubCategory(rawValue: subCatId)!
-      cell.textLabel!.text = subCat.entityName
+      let subSection = section.elements[indexPath.row].1 as! GuideText
+      if subSection.item.subCategory == 0 {
+        cell.textLabel!.text = subSection.item.name
+      } else {
+        let subCat = Attraction.SubCategory(rawValue: subSection.item.subCategory)!
+        cell.textLabel!.text = subCat.entityName
+      }
       return cell
-      
     } else if let cell = cell as? ListingCell {
       let attraction = section.elements[indexPath.row].1 as! Attraction
       cell.setContent(attraction)
@@ -159,27 +160,35 @@ extension ListController {
     }
   }
   
-  func navigateToSubCategory(object: AnyObject) {
-    let subcategoryDescription = object as! GuideText
-    session.currentSubCategory = Attraction.SubCategory(rawValue: subcategoryDescription.item.subCategory)!
-    
-    let attractionsController = AttractionsController(session: session, searchDelegate: searchDelegate, categoryDescription: subcategoryDescription)
-    attractionsController.edgesForExtendedLayout = .None // offset from navigation bar
-    navigationController!.pushViewController(attractionsController, animated: true)
-  }
-}
-
-extension ListController: GuideItemContainerDelegate {
-  
-  func readMoreClicked() {
-    guideItemExpanded = true
-    populateTableSections()
-    tableView.reloadData()
+  func navigateToSubSection(object: AnyObject) {
+    let subSection = object as! GuideText
+    if subSection.item.subCategory == 0 {
+      session.currentSubCategory = Attraction.SubCategory(rawValue: subSection.item.subCategory)!
+      let listingsController = ListingsController(session: session, searchDelegate: searchDelegate, categoryDescription: subSection)
+      listingsController.edgesForExtendedLayout = .None // offset from navigation bar
+      navigationController!.pushViewController(listingsController, animated: true)
+      session.changeSection(subSection) {
+        listingsController.updateUI()
+      }
+    } else {
+      navigateToSection(object)
+    }
   }
   
-  func downloadClicked() {}
+  override func viewWillDisappear(animated: Bool) {}
+  
+  func parentViewWillDisappear(viewController: UIViewController) {
+    if let navigationController = navigationController where
+      navigationController.viewControllers.indexOf(viewController) == nil && !contextSwitched {
+        if categoryDescription.item.subCategory != 0 {
+          session.currentSubCategory = nil
+        } else {
+          session.currentCategory = Attraction.Category.ATTRACTIONS
+        }
+    }
+    super.backButtonAction(viewController)
+  }
 }
-
 
 extension ListController: ListingCellContainer {
   
