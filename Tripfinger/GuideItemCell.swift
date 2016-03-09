@@ -3,7 +3,6 @@ import Foundation
 protocol GuideItemContainerDelegate: class {
   func readMoreClicked()
   func downloadClicked()
-  func updateTableSize()
 }
 
 class GuideItemCell: UITableViewCell {
@@ -94,7 +93,7 @@ class GuideItemCell: UITableViewCell {
       readMoreButtonHeightConstraint.constant = CGFloat(readMoreButtonHeight)
       readMoreButtonMarginConstraint.constant = 10
     }
-    contentHeightConstraint.constant = contentHeight
+    contentHeightConstraint.constant = min(8192, contentHeight)
   }
   
   override func prepareForReuse() {
@@ -180,6 +179,5 @@ class GuideItemCell: UITableViewCell {
     content.setContentOffset(CGPointZero, animated: true)
     
     setNeedsUpdateConstraints()
-
   }
 }

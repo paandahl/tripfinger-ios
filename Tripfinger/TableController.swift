@@ -9,6 +9,8 @@ class TableController: UIViewController, UITableViewDelegate, UITableViewDataSou
     static let guideItemCell = "GuideItemCell"
     static let textMessageCell = "TextMessageCell"
     static let rightDetailCell = "RightDetailCell"
+    static let listingCell = "ListingCell"
+    static let likedCell = "LikedListingCell"
     static let loadingCell = "LoadingCell"
   }
   
@@ -24,21 +26,26 @@ class TableController: UIViewController, UITableViewDelegate, UITableViewDataSou
   var tableSections = [TableSection]()
   
   override func loadView() { // *
-    self.view = UITableView(frame: CGRectZero, style: .Grouped)
-    self.tableView = self.view as! UITableView
-    self.tableView.delegate = self
-    self.tableView.dataSource = self
+    print("loadView()")
+    view = UITableView(frame: CGRectZero, style: .Grouped)
+    tableView = self.view as! UITableView
+    tableView.delegate = self
+    tableView.dataSource = self
     UINib.registerClass(RightDetailCell.self, reuseIdentifier: TableCellIdentifiers.rightDetailCell, forTableView: tableView)
     UINib.registerClass(GuideItemCell.self, reuseIdentifier: TableCellIdentifiers.guideItemCell, forTableView: tableView)
+    UINib.registerClass(ListingCell.self, reuseIdentifier: TableCellIdentifiers.likedCell, forTableView: tableView)
+    UINib.registerClass(ListingCell.self, reuseIdentifier: TableCellIdentifiers.listingCell, forTableView: tableView)
     UINib.registerClass(TextMessageCell.self, reuseIdentifier: TableCellIdentifiers.textMessageCell, forTableView: tableView)
     UINib.registerNib(TableCellIdentifiers.loadingCell, forTableView: tableView)
   }
   
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    print("creating sections: \(tableSections.count)")
     return tableSections.count;
   }
   
   func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    print("numRows: \(tableSections[section].elements.count)")
     return tableSections[section].elements.count;
   }
   
@@ -62,6 +69,7 @@ class TableController: UIViewController, UITableViewDelegate, UITableViewDataSou
   }
   
   func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    print("default")
     return UITableViewCell()
   }
 }

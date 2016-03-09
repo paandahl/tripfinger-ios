@@ -103,6 +103,11 @@ class AttractionsController: UIViewController {
     container.addSubview(to.view)
   }
   
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    container.subviews[0].frame = container.bounds
+  }
+  
   func navigateToSearch() {
     let nav = UINavigationController()
     let regionId = session.currentRegion?.getId()

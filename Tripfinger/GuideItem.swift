@@ -40,6 +40,7 @@ class GuideItem: Object {
         if let categoryDescription = categoryDescription {
           print("found category for \(category.rawValue)")
           categoryDescription.item.loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED
+          allCategoryDescriptions.append(categoryDescription)
         } else {
           print("added category for \(category.rawValue)")
           categoryDescription = GuideText()
@@ -51,6 +52,7 @@ class GuideItem: Object {
           allCategoryDescriptions.append(categoryDescription!)
         }
       }
+      print("returning \(allCategoryDescriptions.count) catDescs")
       return allCategoryDescriptions
     }
   }

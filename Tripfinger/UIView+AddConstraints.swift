@@ -1,11 +1,3 @@
-//
-//  UIView+AddConstraints.swift
-//  Tripfinger
-//
-//  Created by Preben Ludviksen on 11/10/15.
-//  Copyright (c) 2015 Preben Ludviksen. All rights reserved.
-//
-
 import Foundation
 
 let customPriority = Float(999)

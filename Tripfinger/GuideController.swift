@@ -239,11 +239,6 @@ extension GuideController: GuideItemContainerDelegate {
     populateTableSections()
     tableView.reloadData()
   }
-  
-  func updateTableSize() {
-    tableView.beginUpdates()
-    tableView.endUpdates()
-  }
 }
 
 // MARK: - Navigation

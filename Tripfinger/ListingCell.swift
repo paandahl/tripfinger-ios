@@ -79,7 +79,7 @@ class ListingCell: UITableViewCell {
       mainImage.image = UIImage(data: NSData(contentsOfURL: attraction.item().images[0].getFileUrl())!)
     }
     else {
-      let imageUrl = attraction.item().images[0].url + "-712x534"
+      let imageUrl = DownloadService.gcsImagesUrl + attraction.item().images[0].url + "-712x534"
       try! mainImage.loadImageWithUrl(imageUrl)
     }
     
