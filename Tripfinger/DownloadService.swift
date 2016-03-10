@@ -66,7 +66,9 @@ class DownloadService {
       try! downloadMapForCountry(countryName, regionPath: countryPath, progressHandler: multiProgressHandler1) {
         if finished {
           UIApplication.sharedApplication().idleTimerDisabled = false
-          finishedHandler()
+          dispatch_async(dispatch_get_main_queue()) {
+            finishedHandler()
+          }
         }
         else {
           finished = true
@@ -75,7 +77,9 @@ class DownloadService {
     }
     downloadTripfingerData(AppDelegate.serverUrl + "/download_country/\(countryName)", path: countryPath, progressHandler: multiProgressHandler2) {
       if finished {
-        finishedHandler()
+        dispatch_async(dispatch_get_main_queue()) {
+          finishedHandler()
+        }
       }
       else {
         finished = true

@@ -215,15 +215,14 @@ extension RegionController {
         cell.expand()
       }
       cell.setNeedsUpdateConstraints()
-    }
-    else if let cell = cell as? TextMessageCell {
+      
+    } else if let cell = cell as? TextMessageCell {
       cell.setTextMessage("You are offline. Go online to view and download countries.")
-    }
-    else if cell.reuseIdentifier == TableCellIdentifiers.loadingCell {
+      
+    } else if cell.reuseIdentifier == TableCellIdentifiers.loadingCell {
       let indicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
       indicator.startAnimating()
-    }
-    else {
+    } else {
       cell.textLabel!.text = section.elements[indexPath.row].0
     }
     

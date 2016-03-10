@@ -53,9 +53,12 @@ class GuideViewOnlineTest: XCTestCase {
     app.tables.element.scrollToElement(bangkokRow)
     bangkokRow.tap()
     
+    print("TAPPED THE KOK")
+    
     let silomRow = app.tables.staticTexts["Silom"]
     expectationForPredicate(exists, evaluatedWithObject: silomRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
+    app.tables.element.scrollToElement(silomRow)
     silomRow.tap()
 
     backButton = app.navigationBars["Silom"].buttons["Bangkok"]
@@ -80,11 +83,13 @@ class GuideViewOnlineTest: XCTestCase {
     expectationForPredicate(exists, evaluatedWithObject: chiangMaiRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     let koSamuiRow = app.tables.staticTexts["Ko Samui"]
+    app.tables.element.scrollToElement(koSamuiRow)
     koSamuiRow.tap()
 
     let chawengRow = app.tables.staticTexts["Chaweng"]
     expectationForPredicate(exists, evaluatedWithObject: chawengRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
+    app.tables.element.scrollToElement(chawengRow)
     chawengRow.tap()
     
     backButton = app.navigationBars["Chaweng"].buttons["Ko Samui"]

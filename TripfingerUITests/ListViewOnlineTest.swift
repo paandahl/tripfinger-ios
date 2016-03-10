@@ -18,6 +18,7 @@ class ListViewOnlineTest: XCTestCase {
   
   func testViewList() {
     tapWhenHittable(app.tables.staticTexts["Brunei"])
+    waitUntilExists(app.tables.staticTexts["Bandar"])
     app.tables.staticTexts["Attractions"].tap()
     waitUntilNotHittable(app.staticTexts["Loading..."])
 
