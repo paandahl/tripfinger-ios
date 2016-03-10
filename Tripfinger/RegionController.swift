@@ -42,8 +42,6 @@ class RegionController: GuideItemController {
   override func updateUI() {
     // if nil, we are in offline mode, changeRegion returned immediately, and viewdidload will trigger this method
     if let tableView = tableView {
-      print("UPDATING UI")
-      // title label
       if session.currentItem != nil {
         navigationItem.title = session.currentItem.name
       }
@@ -52,7 +50,6 @@ class RegionController: GuideItemController {
       }
       
       populateTableSections()
-      print("tableView: \(tableView)")
       tableView.reloadData {
         self.tableView.contentOffset = CGPointZero
       }

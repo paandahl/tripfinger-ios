@@ -38,11 +38,9 @@ class GuideItem: Object {
       for category in Attraction.Category.allValues {
         var categoryDescription = categoryDescriptionsDict[category.rawValue]
         if let categoryDescription = categoryDescription {
-          print("found category for \(category.rawValue)")
           categoryDescription.item.loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED
           allCategoryDescriptions.append(categoryDescription)
         } else {
-          print("added category for \(category.rawValue)")
           categoryDescription = GuideText()
           categoryDescription!.item = GuideItem()
           categoryDescription!.item.category = category.rawValue
@@ -52,7 +50,6 @@ class GuideItem: Object {
           allCategoryDescriptions.append(categoryDescription!)
         }
       }
-      print("returning \(allCategoryDescriptions.count) catDescs")
       return allCategoryDescriptions
     }
   }
