@@ -249,7 +249,7 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
         }
       }
       else {
-        pois = DatabaseService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel)
+        pois = DatabaseService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel, category: session.currentCategory)
         addAnnotations()
       }
     }
