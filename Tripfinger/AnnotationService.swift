@@ -64,7 +64,36 @@ class AnnotationService {
   }
 
   func isPoiHidden(poi: SimplePOI, zoomLevel: Int) -> Bool {
-    return (poi.category == 2392 && zoomLevel < 12) || (poi.category == 2393 && zoomLevel < 15) || String(poi.category).hasPrefix("1")
+    
+    // regions
+    if String(poi.category).hasPrefix("1") {
+      return true
+    }
+
+    let visibilityLevel: Int
+    switch poi.getAttractionCategory() {
+    case Attraction.Category.TRANSPORTATION:
+      switch poi.getAttractionSubCategory() {
+      case Attraction.SubCategory.METRO_STATION:
+        visibilityLevel = 12
+      case Attraction.SubCategory.METRO_ENTRANCE:
+        visibilityLevel = 15
+      default:
+        visibilityLevel = 5
+      }
+      
+    case Attraction.Category.SHOPPING:
+//      switch poi.getAttractionSubCategory() {
+//        case Attraction.SubCategory.
+//        
+//      }
+      visibilityLevel = 12
+      
+    default:
+      visibilityLevel = 5
+    }
+    
+    return zoomLevel < visibilityLevel
   }
   
   private func styleAnnotation(annotation: SKAnnotation) {
@@ -133,6 +162,7 @@ class AnnotationService {
         fatalError("Unrecognized subCategory for transportation: \(poi.getAttractionSubCategory().rawValue)")
       }
     }
+    print(annotationIcon)
 
     annotation.annotationView = getAnnotationViewWithIcon(annotationIcon, selected: selected, liked: liked)
   }
