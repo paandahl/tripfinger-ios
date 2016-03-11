@@ -10,8 +10,7 @@ class OnlineSearch {
       parameters["onlyPublished"] = "false"
     }
     
-    let escapedString = fullSearchString.stringByAddingPercentEncodingWithAllowedCharacters(.URLPathAllowedCharacterSet())!
-    let req = NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/search/\(escapedString)", parameters: parameters, success: {
+    let req = NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/search/\(fullSearchString)", parameters: parameters, success: {
       json in
       
       let searchResults = JsonParserService.parseSimplePois(json)
