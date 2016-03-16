@@ -26,7 +26,11 @@ class SimplePOI: Object {
   dynamic var latitude = 0.0
   dynamic var longitude = 0.0
   var listingId: String!
-  
+
+  func isAttraction() -> Bool {
+    return String(category).hasPrefix("2")
+  }
+
   func isRealAttraction() -> Bool {
     return listingId != nil && listingId != "simple"
   }

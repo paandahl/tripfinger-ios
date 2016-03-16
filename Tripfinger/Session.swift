@@ -24,10 +24,10 @@ class Session {
   var sectionStack = [GuideText]()
   var currentSection: GuideText!
   
-  func loadRegionFromSearchResult(searchResult: SimplePOI, handler: () -> ()) {
-    currentRegion = Region.constructRegion(searchResult.name, fromSearchResult: true)
-    currentItem = currentRegion.item()
-    ContentService.getRegionWithId(searchResult.listingId) {
+  func loadRegionFromId(regionId: String, handler: () -> ()) {
+//    currentRegion = Region.constructRegion(searchResult.name, fromSearchResult: true)
+//    currentItem = currentRegion.item()
+    ContentService.getRegionWithId(regionId) {
       region in
       
       self.changeRegion(region) {

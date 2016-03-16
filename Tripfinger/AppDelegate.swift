@@ -6,7 +6,7 @@ import Alamofire
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
   
-  static var serverUrl = "https://1-1-dot-tripfinger-server.appspot.com"
+  static var serverUrl = "https://1-2-dot-tripfinger-server.appspot.com"
   static var metadataCallback: (() -> ())? // hack to know when maps are indexed in tests
   static var mode = AppMode.BETA
   var window: UIWindow!

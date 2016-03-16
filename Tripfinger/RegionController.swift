@@ -259,16 +259,21 @@ extension RegionController: SearchViewControllerDelegate {
   }
   
   func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ()) {
-    session.loadRegionFromSearchResult(searchResult) {
+    let toRegion = { (handler: (UINavigationController, [UIViewController]) -> ()) in
       stopSpinner()
       self.dismissViewControllerAnimated(true) {
+        print("nav1: \(self.navigationController)")
+
         let nav = self.navigationController!
         for viewController in nav.viewControllers {
           if let regionController = viewController as? RegionController {
             regionController.contextSwitched = true
           }
         }
+        print("nav2: \(self.navigationController)")
+
         nav.popToRootViewControllerAnimated(false)
+        print("nav3: \(self.navigationController)")
         let currentListing = self.session.currentRegion.listing
         var viewControllers = [nav.viewControllers.first!]
         if self.session.currentRegion.item().category > Region.Category.COUNTRY.rawValue {
@@ -283,7 +288,28 @@ extension RegionController: SearchViewControllerDelegate {
           viewControllers.append(self.constructRegionController(currentListing.city))
         }
         viewControllers.append(self.constructRegionController())
-        nav.setViewControllers(viewControllers, animated: true)
+
+        handler(nav, viewControllers)
+      }
+    }
+
+    if searchResult.isAttraction() {
+      ContentService.getAttractionWithId(searchResult.listingId) { attraction in
+        self.session.loadRegionFromId(attraction.item().parent) {
+          toRegion { nav, viewControllers in
+            let vc = DetailController(session: self.session, searchDelegate: self.searchDelegate)
+            vc.attraction = attraction
+            let vcs = viewControllers + [vc]
+            print("nav4: \(self.navigationController)")
+            nav.setViewControllers(vcs, animated: true)
+          }
+        }
+      }
+    } else {
+      session.loadRegionFromId(searchResult.listingId) {
+        toRegion { nav, viewControllers in
+          nav.setViewControllers(viewControllers, animated: true)
+        }
       }
     }
   }

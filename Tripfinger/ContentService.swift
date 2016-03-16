@@ -146,6 +146,8 @@ class ContentService {
       }}, failure: {
         if let failure = failure {
           failure()
+        } else {
+          fatalError("Fetching region with id \(regionId) failed.")
         }
     })
   }
