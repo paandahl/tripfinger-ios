@@ -34,5 +34,8 @@ class OfflineWithDataTest: XCTestCase {
     tapWhenHittable(app.tables.staticTexts["Food and drinks"])
     waitUntilExists(app.tables.staticTexts["Kaizen Sushi"])
     XCTAssertEqual(2, app.tables.cells.count)
+    tapWhenHittable(app.navigationBars["Food and drinks"].buttons["Brunei"])
+    tapWhenHittable(app.tables.staticTexts["Bandar"])
+    tapWhenHittable(app.tables.staticTexts["Food and drinks"])
   }
 }

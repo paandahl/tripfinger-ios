@@ -127,7 +127,7 @@ class DatabaseService {
       case Region.Category.SUB_REGION.rawValue:
         predicate = NSPredicate(format: "listing.country = %@ and listing.subRegion = %@", region.listing.country, region.item().name)
       case Region.Category.CITY.rawValue:
-        predicate = NSPredicate(format: "listing.country = %@ and city = %@", region.listing.country, region.item().name)
+        predicate = NSPredicate(format: "listing.country = %@ and listing.city = %@", region.listing.country, region.item().name)
       case Region.Category.NEIGHBOURHOOD.rawValue:
         predicate = NSPredicate(format: "listing.parent = %@", region.item().id)
       default:
