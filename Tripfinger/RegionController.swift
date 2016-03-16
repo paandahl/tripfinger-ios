@@ -131,12 +131,6 @@ extension RegionController {
         section.elements.append((title: "", value: ""))
         tableSections.append(section)
       } else {
-        let attractionsSection = TableSection(title: "Wordwide", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
-        let guideText = GuideText()
-        guideText.item = GuideItem()
-        guideText.item.category = Listing.Category.ATTRACTIONS.rawValue
-        attractionsSection.elements.append((title: "Attractions", value: guideText))
-        tableSections.append(attractionsSection)
         for (regionName, countryList) in countryLists {
           let section = TableSection(title: regionName, cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
           for country in countryList {
