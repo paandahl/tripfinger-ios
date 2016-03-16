@@ -33,7 +33,7 @@ class AnnotationCalloutView : UIView {
     addSubview(detailButton)
     
     let views = ["title": titleLabel, "detail": detailButton]
-    addConstraints("H:|-10-[title]-[detail]-10-|", forViews: views)
+    addConstraints("H:|-10-[title]-[detail(60)]-10-|", forViews: views)
     addConstraints("V:|-5-[title]-5-|", forViews: views)
     addConstraints("V:|-5-[detail]-5-|", forViews: views)
     
