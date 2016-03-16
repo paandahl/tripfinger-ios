@@ -8,6 +8,7 @@ protocol RegionControllerDelegate: class {
 class RegionController: GuideItemController {
   
   var delegate: RegionControllerDelegate!
+  let refreshControl = UIRefreshControl()
   var countryLists = [String: [Region]]()
   
   init(session: Session) {
@@ -21,22 +22,17 @@ class RegionController: GuideItemController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    automaticallyAdjustsScrollViewInsets = false
-    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
-    mapButton.accessibilityLabel = "Map"
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
-    navigationItem.rightBarButtonItems = [searchButton, mapButton]
-        
-    tableView.rowHeight = UITableViewAutomaticDimension
-    tableView.estimatedRowHeight = 44.0;
-    tableView.tableHeaderView = UIView.init(frame: CGRectMake(0.0, 0.0, tableView.bounds.size.width, 0.01))
-    tableView.tableFooterView = UIView.init(frame: CGRectZero)
-        
+    
     if session.currentRegion == nil && countryLists.count == 0 {
-      loadCountryLists()      
+      refreshControl.addTarget(self, action: "reffo", forControlEvents: .ValueChanged)
+      tableView.addSubview(refreshControl)
+      loadCountryLists()
     }
     updateUI()
+  }
+  
+  func reffo() {
+    loadCountryLists()
   }
   
   override func updateUI() {
@@ -54,6 +50,7 @@ class RegionController: GuideItemController {
         self.tableView.contentOffset = CGPointZero
       }
     }
+    refreshControl.endRefreshing()
   }
   
   override func viewWillDisappear(animated: Bool) {
