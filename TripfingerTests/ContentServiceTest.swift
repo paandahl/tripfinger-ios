@@ -74,4 +74,21 @@ class ContentServiceTest: XCTestCase {
       XCTAssertNil(error, "Error")
     })
   }
+  
+  // check that category is filtered on also in offline mode
+  func testGetCascadingListingsForRegion() {
+    let exp = expectationWithDescription("ready")
+    DatabaseServiceTest.insertBrunei { brunei in
+      ContentService.getCascadingListingsForRegion(brunei, withCategory: Listing.Category.ATTRACTIONS) { listings in
+        XCTAssertEqual(1, listings.count)
+        XCTAssertEqual(1, brunei.item().subRegions.count)
+        let bandar = brunei.item().subRegions[0]
+        ContentService.getCascadingListingsForRegion(bandar, withCategory: Listing.Category.ATTRACTIONS) { listings in
+          XCTAssertEqual(0, listings.count)
+          exp.fulfill()
+        }
+      }
+    }
+    waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
+  }
 }

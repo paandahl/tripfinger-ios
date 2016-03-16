@@ -19,7 +19,7 @@ class FilterController: UITableViewController {
   }
   
   override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-    if indexPath.section == 1 && indexPath.row == Attraction.Category.allValues.indexOf(session.currentCategory) {
+    if indexPath.section == 1 && indexPath.row == Listing.Category.allValues.indexOf(session.currentCategory) {
       cell.selected = true
       selectedCell = cell
     }
@@ -39,7 +39,7 @@ extension FilterController {
     case 0:
       return 1
     case 1:
-      return Attraction.Category.allValues.count
+      return Listing.Category.allValues.count
     case 2:
       return 0
     default:
@@ -69,7 +69,7 @@ extension FilterController {
       return cell
     case 1:
       let cell = tableView.dequeueReusableCellWithIdentifier("categoryCell", forIndexPath: indexPath)
-      cell.textLabel?.text = Attraction.Category.allValues[indexPath.row].entityName
+      cell.textLabel?.text = Listing.Category.allValues[indexPath.row].entityName
       return cell
     case 2:
       let cell = tableView.dequeueReusableCellWithIdentifier("subCategoryCell", forIndexPath: indexPath)
@@ -84,7 +84,7 @@ extension FilterController {
     case 0:
       return
     case 1:
-      session.currentCategory = Attraction.Category.allValues[indexPath.row]
+      session.currentCategory = Listing.Category.allValues[indexPath.row]
       selectedCell.selected = false
     case 2:
       return

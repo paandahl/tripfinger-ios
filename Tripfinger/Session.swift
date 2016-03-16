@@ -156,16 +156,16 @@ class Session {
   
   // attractions (swipe and list view)
   var attractionsFromRegion: String?
-  var attractionsFromCategory: Attraction.Category?
-  var currentCategory = Attraction.Category.ATTRACTIONS
-  var currentSubCategory: Attraction.SubCategory?
-  var currentAttractions = List<Attraction>()
+  var attractionsFromCategory: Listing.Category?
+  var currentCategory = Listing.Category.ATTRACTIONS
+  var currentSubCategory: Listing.SubCategory?
+  var currentListings = List<Listing>()
   
   var attractionsFuture: Future<Void, NoError>?
-  func loadAttractions(handler: () -> ()) {
+  func loadListings(handler: () -> ()) {
 
     if let attractionsFuture = attractionsFuture {
-      print("Attractions loading already in progress")
+      print("Listings loading already in progress")
       attractionsFuture.onComplete { _ in
         handler()
       }
@@ -176,11 +176,11 @@ class Session {
         attractionsFromCategory = currentCategory
         attractionsFromRegion = currentRegion?.item().name
         attractionsFuture = promise.future
-        ContentService.getCascadingAttractionsForRegion(self.currentRegion, withCategory: currentCategory) {
-          attractions in
+        ContentService.getCascadingListingsForRegion(self.currentRegion, withCategory: currentCategory) {
+          listings in
           
-          print("Loaded \(attractions.count) attractions.")
-          self.currentAttractions = attractions
+          print("Loaded \(listings.count) listings.")
+          self.currentListings = listings
           handler()
           promise.success()
           print("Setting attractionsFuture to nil")

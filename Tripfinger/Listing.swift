@@ -1,7 +1,7 @@
 import Foundation
 import RealmSwift
 
-class Attraction: Object {
+class Listing: Object {
   
   // composition (instead of inheritance - for Realm-purposes)
   dynamic var listing: GuideListing!

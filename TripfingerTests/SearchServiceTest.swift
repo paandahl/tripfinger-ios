@@ -36,9 +36,9 @@ class SearchServiceTest: XCTestCase {
     super.tearDown()
   }
   
-  func testOfflineSearchForAttraction() {
+  func testOfflineSearchForListing() {
     NetworkUtil.simulateOffline = true
-    let exp = expectationWithDescription("offlineSearchForAttraction")
+    let exp = expectationWithDescription("offlineSearchForListing")
     var fulfilled = false
     DatabaseServiceTest.insertBrunei { _ in
       print(SKMapsService.sharedInstance().packagesManager.installedOfflineMapPackages)

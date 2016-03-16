@@ -4,7 +4,7 @@ class ListController: GuideItemController {
   
   let displayGrouped: Bool
   let categoryDescription: GuideText
-  var listings: [Attraction]?
+  var listings: [Listing]?
   
   init(session: Session, searchDelegate: SearchViewControllerDelegate, grouped: Bool, categoryDescription: GuideText) {
     self.displayGrouped = grouped
@@ -20,7 +20,7 @@ class ListController: GuideItemController {
 
     super.viewDidLoad()
     if !displayGrouped && session.currentRegion != nil {
-      loadAttractions()
+      loadListings()
     } else {
       populateTableSections()
     }
@@ -31,25 +31,25 @@ class ListController: GuideItemController {
   /*
   * Load attractions, and put the liked ones first
   */
-  func loadAttractions() {
+  func loadListings() {
     listings = nil
     self.tableView.reloadData()
-    session.loadAttractions {
+    session.loadListings {
       
-      var likedAttractions = [Attraction]()
-      var notLikedAttractions = [Attraction]()
-      for attraction in self.session.currentAttractions {
+      var likedListings = [Listing]()
+      var notLikedListings = [Listing]()
+      for attraction in self.session.currentListings {
         if attraction.listing.notes?.likedState == GuideListingNotes.LikedState.LIKED {
-          likedAttractions.append(attraction)
+          likedListings.append(attraction)
         }
         else {
-          notLikedAttractions.append(attraction)
+          notLikedListings.append(attraction)
         }
       }
-      var attractionsList = [Attraction]()
-      attractionsList.appendContentsOf(likedAttractions)
-      attractionsList.appendContentsOf(notLikedAttractions)
-      self.listings = attractionsList
+      var listings = [Listing]()
+      listings.appendContentsOf(likedListings)
+      listings.appendContentsOf(notLikedListings)
+      self.listings = listings
 
       SyncManager.run_async {
         dispatch_async(dispatch_get_main_queue()) {
@@ -142,12 +142,12 @@ extension ListController {
       if subSection.item.subCategory == 0 {
         cell.textLabel!.text = subSection.item.name
       } else {
-        let subCat = Attraction.SubCategory(rawValue: subSection.item.subCategory)!
+        let subCat = Listing.SubCategory(rawValue: subSection.item.subCategory)!
         cell.textLabel!.text = subCat.entityName
       }
       return cell
     } else if let cell = cell as? ListingCell {
-      let attraction = section.elements[indexPath.row].1 as! Attraction
+      let attraction = section.elements[indexPath.row].1 as! Listing
       cell.setContent(attraction)
       cell.delegate = self
       print("returning listing cell")
@@ -163,7 +163,7 @@ extension ListController {
   func navigateToSubSection(object: AnyObject) {
     let subSection = object as! GuideText
     if subSection.item.subCategory == 0 {
-      session.currentSubCategory = Attraction.SubCategory(rawValue: subSection.item.subCategory)!
+      session.currentSubCategory = Listing.SubCategory(rawValue: subSection.item.subCategory)!
       let listingsController = ListingsController(session: session, searchDelegate: searchDelegate, categoryDescription: subSection)
       listingsController.edgesForExtendedLayout = .None // offset from navigation bar
       navigationController!.pushViewController(listingsController, animated: true)
@@ -183,7 +183,7 @@ extension ListController {
         if categoryDescription.item.subCategory != 0 {
           session.currentSubCategory = nil
         } else {
-          session.currentCategory = Attraction.Category.ATTRACTIONS
+          session.currentCategory = Listing.Category.ATTRACTIONS
         }
     }
     super.backButtonAction(viewController)
@@ -192,9 +192,9 @@ extension ListController {
 
 extension ListController: ListingCellContainer {
   
-  func showDetail(attraction: Attraction) {
+  func showDetail(listing: Listing) {
     let vc = DetailController(session: session, searchDelegate: searchDelegate)
-    vc.attraction = attraction
+    vc.listing = listing
     self.navigationController!.pushViewController(vc, animated: true)
   }
 }

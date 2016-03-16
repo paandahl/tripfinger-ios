@@ -179,7 +179,7 @@ class DownloadService {
   
   class func fetchImages(region: Region, path: NSURL, progressHandler: (Float -> ())? = nil, dispatchGroup: dispatch_group_t) {
     fetchImages(region.item(), path: path, progressHandler: progressHandler, dispatchGroup: dispatchGroup)
-    for attraction in region.attractions {
+    for attraction in region.listings {
       fetchImages(attraction.listing.item, path: path, dispatchGroup: dispatchGroup)
     }
   }

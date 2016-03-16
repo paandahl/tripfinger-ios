@@ -18,11 +18,11 @@ class ListingsController: UIViewController {
       listController = ListController(session: session, searchDelegate: searchDelegate, grouped: false, categoryDescription: categoryDescription)
     } else {
       switch session.currentCategory {
-      case Attraction.Category.ATTRACTIONS:
+      case Listing.Category.ATTRACTIONS:
         displayMode = DisplayMode.WITH_SWIPER
         listController = ListController(session: session, searchDelegate: searchDelegate, grouped: false, categoryDescription: categoryDescription)
         swipeController = SwipeController(session: session, searchDelegate: searchDelegate)
-      case Attraction.Category.TRANSPORTATION:
+      case Listing.Category.TRANSPORTATION:
         displayMode = DisplayMode.GROUPED_LIST
         listController = ListController(session: session, searchDelegate: searchDelegate, grouped: true, categoryDescription: categoryDescription)
       default:

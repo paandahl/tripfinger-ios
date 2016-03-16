@@ -116,7 +116,7 @@ class JsonParserService {
     region.listing = parseGuideListing(json)
     region.listing.item.guideSections = parseSectionTreeFromJson(json["guideSections"])
     if  json["attractions"].array != nil {
-      region.attractions.appendContentsOf(parseAttractions(json["attractions"]))
+      region.listings.appendContentsOf(parseListings(json["attractions"]))
     }
     if json["subRegions"].array != nil {
       region.listing.item.subRegions.appendContentsOf(parseRegionTreesFromJson(json["subRegions"]))
@@ -127,24 +127,24 @@ class JsonParserService {
     return region
   }
   
-  class func parseAttractions(jsonArray: JSON) -> List<Attraction> {
-    let attractions = List<Attraction>()
+  class func parseListings(jsonArray: JSON) -> List<Listing> {
+    let listings = List<Listing>()
     for json in jsonArray.array! {
-      let attraction = parseAttraction(json)
-      if attraction.listing.latitude != 0.0 && attraction.listing.longitude != 0.0 && attraction.item().images.count > 0 {
-        attractions.append(attraction)
+      let listing = parseListing(json)
+      if listing.listing.latitude != 0.0 && listing.listing.longitude != 0.0 && listing.item().images.count > 0 {
+        listings.append(listing)
       }
     }
-    return attractions
+    return listings
   }
   
-  class func parseAttraction(json: JSON) -> Attraction {
-    let attraction = Attraction()
-    attraction.listing = parseGuideListing(json)
-    attraction.price = json["price"].string
-    attraction.openingHours = json["openingHours"].string
-    attraction.directions = json["directions"].string
-    return attraction
+  class func parseListing(json: JSON) -> Listing {
+    let listing = Listing()
+    listing.listing = parseGuideListing(json)
+    listing.price = json["price"].string
+    listing.openingHours = json["openingHours"].string
+    listing.directions = json["directions"].string
+    return listing
   }
   
   class func parseSectionTreeFromJson(json: JSON) -> List<GuideText> {

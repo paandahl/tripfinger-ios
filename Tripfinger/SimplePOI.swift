@@ -27,23 +27,23 @@ class SimplePOI: Object {
   dynamic var longitude = 0.0
   var listingId: String!
 
-  func isAttraction() -> Bool {
+  func isListing() -> Bool {
     return String(category).hasPrefix("2")
   }
 
-  func isRealAttraction() -> Bool {
+  func isRealListing() -> Bool {
     return listingId != nil && listingId != "simple"
   }
   
-  func getAttractionCategory() -> Attraction.Category {
-    return Attraction.Category(rawValue: category)!
+  func getListingCategory() -> Listing.Category {
+    return Listing.Category(rawValue: category)!
   }
 
-  func getAttractionSubCategory() -> Attraction.SubCategory {
-    return Attraction.SubCategory(rawValue: subCategory)!
+  func getListingSubCategory() -> Listing.SubCategory {
+    return Listing.SubCategory(rawValue: subCategory)!
   }
 
-  // temporary variable connecting SimplePOI-representations of real Attractions to AttractionSwipe
+  // temporary variable connecting SimplePOI-representations of real Listings to ListingSwipe
   var notes: GuideListingNotes!
   
   // temporary variables for skobbler search code

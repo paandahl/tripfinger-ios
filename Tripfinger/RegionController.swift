@@ -1,7 +1,7 @@
 import RealmSwift
 
 protocol RegionControllerDelegate: class {
-  func categorySelected(category: Attraction.Category, view: String)
+  func categorySelected(category: Listing.Category, view: String)
   func navigateInternally(callback: () -> ())
 }
 
@@ -137,7 +137,7 @@ extension RegionController {
         let attractionsSection = TableSection(title: "Wordwide", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
         let guideText = GuideText()
         guideText.item = GuideItem()
-        guideText.item.category = Attraction.Category.ATTRACTIONS.rawValue
+        guideText.item.category = Listing.Category.ATTRACTIONS.rawValue
         attractionsSection.elements.append((title: "Attractions", value: guideText))
         tableSections.append(attractionsSection)
         for (regionName, countryList) in countryLists {
@@ -167,7 +167,7 @@ extension RegionController {
       let section2 = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
       var i = 0
       for categoryDesc in session.currentRegion.item().allCategoryDescriptions {
-        let category = Attraction.Category(rawValue: categoryDesc.item.category)!
+        let category = Listing.Category(rawValue: categoryDesc.item.category)!
         if i > 0 {
           section2.elements.append((title: category.entityName, value: categoryDesc))
         } else {
@@ -247,7 +247,7 @@ extension RegionController: SearchViewControllerDelegate {
     
   func navigateToCategory(object: AnyObject) {
     let categoryDescription = object as! GuideText
-    session.currentCategory = Attraction.Category(rawValue: categoryDescription.item.category)!
+    session.currentCategory = Listing.Category(rawValue: categoryDescription.item.category)!
     print("set curent category to: \(session.currentCategory)")
     
     let listingsController = ListingsController(session: session, searchDelegate: self, categoryDescription: categoryDescription)
@@ -262,7 +262,6 @@ extension RegionController: SearchViewControllerDelegate {
     let toRegion = { (handler: (UINavigationController, [UIViewController]) -> ()) in
       stopSpinner()
       self.dismissViewControllerAnimated(true) {
-        print("nav1: \(self.navigationController)")
 
         let nav = self.navigationController!
         for viewController in nav.viewControllers {
@@ -270,10 +269,8 @@ extension RegionController: SearchViewControllerDelegate {
             regionController.contextSwitched = true
           }
         }
-        print("nav2: \(self.navigationController)")
 
         nav.popToRootViewControllerAnimated(false)
-        print("nav3: \(self.navigationController)")
         let currentListing = self.session.currentRegion.listing
         var viewControllers = [nav.viewControllers.first!]
         if self.session.currentRegion.item().category > Region.Category.COUNTRY.rawValue {
@@ -293,14 +290,13 @@ extension RegionController: SearchViewControllerDelegate {
       }
     }
 
-    if searchResult.isAttraction() {
-      ContentService.getAttractionWithId(searchResult.listingId) { attraction in
-        self.session.loadRegionFromId(attraction.item().parent) {
+    if searchResult.isListing() {
+      ContentService.getListingWithId(searchResult.listingId) { listing in
+        self.session.loadRegionFromId(listing.item().parent) {
           toRegion { nav, viewControllers in
             let vc = DetailController(session: self.session, searchDelegate: self.searchDelegate)
-            vc.attraction = attraction
+            vc.listing = listing
             let vcs = viewControllers + [vc]
-            print("nav4: \(self.navigationController)")
             nav.setViewControllers(vcs, animated: true)
           }
         }
@@ -330,7 +326,7 @@ extension RegionController: SearchViewControllerDelegate {
   //        navigateToSubview("mapController", controllerType: MapController.self)
   //      }
   //    }
-  //    else if String(searchResult.category).hasPrefix("2") { // Attraction
+  //    else if String(searchResult.category).hasPrefix("2") { // Listing
   //      if !(currentController is MapController) {
   //        navigateToSubview("mapController", controllerType: MapController.self)
   //      }

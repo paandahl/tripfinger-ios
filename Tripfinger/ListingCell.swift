@@ -1,7 +1,7 @@
 import Foundation
 
 protocol ListingCellContainer: class {
-  func showDetail(attraction: Attraction)
+  func showDetail(listing: Listing)
 }
 
 class ListingCell: UITableViewCell {
@@ -10,7 +10,7 @@ class ListingCell: UITableViewCell {
   let heartImage = UIImageView()
   let descriptionView = UIView()
   let name = UILabel()
-  var attraction: Attraction!
+  var listing: Listing!
   var delegate: ListingCellContainer!
   var hasSetupConstraints = false
   var heightConstraint: NSLayoutConstraint!
@@ -60,11 +60,11 @@ class ListingCell: UITableViewCell {
     heightConstraint.constant = height
   }
   
-  func setContent(attraction: Attraction) {
-    print("setContent for \(attraction.item().name)")
-    name.text = attraction.listing.item.name
+  func setContent(listing: Listing) {
+    print("setContent for \(listing.item().name)")
+    name.text = listing.listing.item.name
     mainImage.image = UIImage(named: "Placeholder")
-    if let notes = attraction.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
+    if let notes = listing.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
       heartImage.tintColor = UIColor.redColor()
       height = 130
     }
@@ -75,28 +75,28 @@ class ListingCell: UITableViewCell {
     
     mainImage.clipsToBounds = true
     mainImage.contentMode = UIViewContentMode.ScaleAspectFill
-    if attraction.item().offline {
-      mainImage.image = UIImage(data: NSData(contentsOfURL: attraction.item().images[0].getFileUrl())!)
+    if listing.item().offline {
+      mainImage.image = UIImage(data: NSData(contentsOfURL: listing.item().images[0].getFileUrl())!)
     }
     else {
-      let imageUrl = DownloadService.gcsImagesUrl + attraction.item().images[0].url + "-712x534"
+      let imageUrl = DownloadService.gcsImagesUrl + listing.item().images[0].url + "-712x534"
       try! mainImage.loadImageWithUrl(imageUrl)
     }
     
-    self.attraction = attraction
+    self.listing = listing
     setNeedsUpdateConstraints()
   }
   
   func imageClick(sender: UIImageView) {
-    delegate.showDetail(attraction)
+    delegate.showDetail(listing)
   }
   
   func heartClick() {
-    if let notes = attraction.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
-      DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, attraction: attraction)
+    if let notes = listing.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
+      DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, listing: listing)
     } else {
-      DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, attraction: attraction)
+      DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, listing: listing)
     }
-    setContent(attraction)
+    setContent(listing)
   }
 }

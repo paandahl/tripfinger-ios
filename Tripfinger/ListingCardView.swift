@@ -1,35 +1,35 @@
 import UIKit
 import MDCSwipeToChoose
 
-protocol AttractionCardContainer: class {
-  func showDetail(attraction: Attraction)
+protocol ListingCardContainer: class {
+  func showDetail(attraction: Listing)
 }
 
-class AttractionCardView: MDCSwipeToChooseView {
+class ListingCardView: MDCSwipeToChooseView {
   
   let ChoosePersonViewImageLabelWidth:CGFloat = 42.0;
-  var attraction: Attraction!
+  var listing: Listing!
   var informationView: UIView!
   var nameLabel: UILabel!
   var carmeraImageLabelView: ImagelabelView!
   var interestsImageLabelView: ImagelabelView!
   var friendsImageLabelView: ImagelabelView!
-  var delegate: AttractionCardContainer!
+  var delegate: ListingCardContainer!
   
-  init(frame: CGRect, attraction: Attraction, delegate: AttractionCardContainer, options: MDCSwipeToChooseViewOptions) {
+  init(frame: CGRect, listing: Listing, delegate: ListingCardContainer, options: MDCSwipeToChooseViewOptions) {
     
     super.init(frame: frame, options: options)
-    self.attraction = attraction
+    self.listing = listing
     self.delegate = delegate
     
-    if attraction.listing.item.offline {
+    if listing.listing.item.offline {
       imageView.contentMode = UIViewContentMode.ScaleAspectFill
-      print("loading attraction image \(attraction.item().images[0].getFileUrl())")
-      imageView.image = UIImage(data: NSData(contentsOfURL: attraction.item().images[0].getFileUrl())!)
+      print("loading attraction image \(listing.item().images[0].getFileUrl())")
+      imageView.image = UIImage(data: NSData(contentsOfURL: listing.item().images[0].getFileUrl())!)
     } else {
       imageView.contentMode = UIViewContentMode.ScaleAspectFill
       imageView.image = UIImage(color: UIColor.whiteColor())
-      let imageUrl = DownloadService.gcsImagesUrl + attraction.listing.item.images[0].url + "-600x800"
+      let imageUrl = DownloadService.gcsImagesUrl + listing.listing.item.images[0].url + "-600x800"
       try! imageView.loadImageWithUrl(imageUrl)
     }
     
@@ -58,7 +58,7 @@ class AttractionCardView: MDCSwipeToChooseView {
   }
   
   func imageClick(sender: UIImageView) {
-    delegate.showDetail(attraction)
+    delegate.showDetail(listing)
   }
   
   func constructInformationView() -> Void{
@@ -74,7 +74,7 @@ class AttractionCardView: MDCSwipeToChooseView {
   
   func constructNameLabel() -> Void{
     nameLabel = UILabel()
-    nameLabel.text = attraction.listing.item.name!
+    nameLabel.text = listing.listing.item.name!
     nameLabel.numberOfLines = 0
     nameLabel.lineBreakMode = .ByWordWrapping
     informationView .addSubview(nameLabel)

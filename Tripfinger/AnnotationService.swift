@@ -71,20 +71,20 @@ class AnnotationService {
     }
 
     let visibilityLevel: Int
-    switch poi.getAttractionCategory() {
-    case Attraction.Category.TRANSPORTATION:
-      switch poi.getAttractionSubCategory() {
-      case Attraction.SubCategory.METRO_STATION:
+    switch poi.getListingCategory() {
+    case Listing.Category.TRANSPORTATION:
+      switch poi.getListingSubCategory() {
+      case Listing.SubCategory.METRO_STATION:
         visibilityLevel = 12
-      case Attraction.SubCategory.METRO_ENTRANCE:
+      case Listing.SubCategory.METRO_ENTRANCE:
         visibilityLevel = 15
       default:
         visibilityLevel = 5
       }
       
-    case Attraction.Category.SHOPPING:
-//      switch poi.getAttractionSubCategory() {
-//        case Attraction.SubCategory.
+    case Listing.Category.SHOPPING:
+//      switch poi.getListingSubCategory() {
+//        case Listing.SubCategory.
 //        
 //      }
       visibilityLevel = 12
@@ -104,62 +104,62 @@ class AnnotationService {
     let liked = poi.notes != nil && poi.notes!.likedState == GuideListingNotes.LikedState.LIKED
     
     let annotationIcon: String
-    switch poi.getAttractionCategory() {
-    case Attraction.Category.ATTRACTIONS:
-      switch poi.getAttractionSubCategory() {
+    switch poi.getListingCategory() {
+    case Listing.Category.ATTRACTIONS:
+      switch poi.getListingSubCategory() {
 
-      case Attraction.SubCategory.SIGHTS_AND_LANDMARKS:
+      case Listing.SubCategory.SIGHTS_AND_LANDMARKS:
         annotationIcon = "attraction"
-      case Attraction.SubCategory.PARK:
+      case Listing.SubCategory.PARK:
         annotationIcon = "park"
-      case Attraction.SubCategory.MUSEUM:
+      case Listing.SubCategory.MUSEUM:
         annotationIcon = "museum"
-      case Attraction.SubCategory.SPORTS:
+      case Listing.SubCategory.SPORTS:
         annotationIcon = "sports"
-      case Attraction.SubCategory.THEATER_AND_CONCERTS:
+      case Listing.SubCategory.THEATER_AND_CONCERTS:
         annotationIcon = "theatre"
       default:
-        print("displaying poi from category: \(poi.getAttractionSubCategory().rawValue)")
+        print("displaying poi from category: \(poi.getListingSubCategory().rawValue)")
         annotationIcon = "attraction"
       }
       
-    case Attraction.Category.FOOD_OR_DRINK:
+    case Listing.Category.FOOD_OR_DRINK:
       annotationIcon = "restaurant"
-    case Attraction.Category.INFORMATION:
+    case Listing.Category.INFORMATION:
       annotationIcon = "information"
-    case Attraction.Category.SHOPPING:
+    case Listing.Category.SHOPPING:
       annotationIcon = "shop"
-    case Attraction.Category.ACCOMODATION:
+    case Listing.Category.ACCOMODATION:
       annotationIcon = "hotel"
       
-    case Attraction.Category.TRANSPORTATION:
-      switch poi.getAttractionSubCategory() {
-      case Attraction.SubCategory.AIRPORT:
+    case Listing.Category.TRANSPORTATION:
+      switch poi.getListingSubCategory() {
+      case Listing.SubCategory.AIRPORT:
         annotationIcon = "airport"
-      case Attraction.SubCategory.TRAIN_STATION:
+      case Listing.SubCategory.TRAIN_STATION:
         annotationIcon = "train"
-      case Attraction.SubCategory.BUS_STATION:
+      case Listing.SubCategory.BUS_STATION:
         fallthrough
-      case Attraction.SubCategory.BUS_STOP:
+      case Listing.SubCategory.BUS_STOP:
         annotationIcon = "bus"
-      case Attraction.SubCategory.FERRY_TERMINAL:
+      case Listing.SubCategory.FERRY_TERMINAL:
         fallthrough
-      case Attraction.SubCategory.FERRY_STOP:
+      case Listing.SubCategory.FERRY_STOP:
         annotationIcon = "ferry"
-      case Attraction.SubCategory.METRO_STATION:
+      case Listing.SubCategory.METRO_STATION:
         annotationIcon = "metro"
-      case Attraction.SubCategory.METRO_ENTRANCE:
+      case Listing.SubCategory.METRO_ENTRANCE:
         annotationIcon = "metro_entrance"
-      case Attraction.SubCategory.TRAM_STOP:
+      case Listing.SubCategory.TRAM_STOP:
         annotationIcon = "tram"
-      case Attraction.SubCategory.CAR_RENTAL:
+      case Listing.SubCategory.CAR_RENTAL:
         annotationIcon = "metro_entrance"
-      case Attraction.SubCategory.BICYCLE_RENTAL:
+      case Listing.SubCategory.BICYCLE_RENTAL:
         fallthrough
-      case Attraction.SubCategory.MOTORBIKE_RENTAL:
+      case Listing.SubCategory.MOTORBIKE_RENTAL:
         annotationIcon = "bicycle"
       default:
-        fatalError("Unrecognized subCategory for transportation: \(poi.getAttractionSubCategory().rawValue)")
+        fatalError("Unrecognized subCategory for transportation: \(poi.getListingSubCategory().rawValue)")
       }
     }
     print(annotationIcon)

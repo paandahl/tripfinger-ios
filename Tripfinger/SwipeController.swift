@@ -5,16 +5,16 @@ import RealmSwift
 class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   
   var noElementsLabel = UILabel()
-  var attractionStack: [Attraction]?
+  var listingStack: [Listing]?
   let session: Session
   let searchDelegate: SearchViewControllerDelegate
 //  var filterBox: FilterBox!
   
-  let ChooseAttractionButtonHorizontalPadding: CGFloat = 80.0
-  let ChooseAttractionButtonVerticalPadding: CGFloat = 20.0
-  var frontCardView: AttractionCardView!
+  let ChooseListingButtonHorizontalPadding: CGFloat = 80.0
+  let ChooseListingButtonVerticalPadding: CGFloat = 20.0
+  var frontCardView: ListingCardView!
   var orignalFrontCardFrame: CGRect!
-  var backCardView: AttractionCardView!
+  var backCardView: ListingCardView!
   
   init(session: Session, searchDelegate: SearchViewControllerDelegate) {
     self.session = session
@@ -37,7 +37,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   }
   
   override func viewWillAppear(animated: Bool) {
-    loadAttractions()
+    loadListings()
   }
   
   override func viewDidLayoutSubviews() {
@@ -51,17 +51,17 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   /*
    * Load attractions that have not yet been swiped onto the stack.
    */
-  func loadAttractions() {
-    attractionStack = nil
+  func loadListings() {
+    listingStack = nil
     self.displayCards()
-    session.loadAttractions {
-      var newStack = [Attraction]()
-      for attraction in self.session.currentAttractions {
+    session.loadListings {
+      var newStack = [Listing]()
+      for attraction in self.session.currentListings {
         if attraction.listing.notes == nil || attraction.listing.notes!.likedState == GuideListingNotes.LikedState.NOT_YET_LIKED_OR_SWIPED {
           newStack.append(attraction)
         }
       }
-      self.attractionStack = newStack
+      self.listingStack = newStack
       SyncManager.run_async {
         dispatch_async(dispatch_get_main_queue()) {
           self.displayCards()
@@ -71,16 +71,16 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   }
   
   func displayCards() {
-    if let attractionStack = attractionStack {
+    if let attractionStack = listingStack {
       if attractionStack.count > 0 {
         noElementsLabel.hidden = true
 
-        setFrontCardViewFunc(popAttractionViewWithFrame(CGRectZero)!)
+        setFrontCardViewFunc(popListingViewWithFrame(CGRectZero)!)
         view.addSubview(frontCardView)
         addFrontCardConstraints()
         
         if attractionStack.count > 1 {
-          backCardView = popAttractionViewWithFrame(CGRectZero)!
+          backCardView = popListingViewWithFrame(CGRectZero)!
           view.insertSubview(backCardView, belowSubview: frontCardView)
         }
       } else {
@@ -126,7 +126,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   
   // This is called when a user didn't fully swipe left or right.
   func viewDidCancelSwipe(view: UIView) -> Void{
-    print("You couldn't decide on \(frontCardView.attraction.listing.item.name)");
+    print("You couldn't decide on \(frontCardView.listing.listing.item.name)");
   }
   
   // This is called then a user swipes the view fully left or right.
@@ -134,12 +134,12 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     // MDCSwipeToChooseView shows "NOPE" on swipes to the left,
     // and "LIKED" on swipes to the right.
     if(wasChosenWithDirection == MDCSwipeDirection.Left) {
-      DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, attraction: frontCardView.attraction)
-      print("You noped: \(frontCardView.attraction.listing.item.name)")
+      DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, listing: frontCardView.listing)
+      print("You noped: \(frontCardView.listing.listing.item.name)")
     }
     else{
-      DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, attraction: frontCardView.attraction)
-      print("You liked: \(frontCardView.attraction.listing.item.name)")
+      DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, listing: frontCardView.listing)
+      print("You liked: \(frontCardView.listing.listing.item.name)")
     }
     
     if(backCardView != nil){
@@ -149,7 +149,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
       addFrontCardConstraints()
     }
     
-    backCardView = popAttractionViewWithFrame(CGRectZero)
+    backCardView = popListingViewWithFrame(CGRectZero)
     
     // Fade the back card into view.
     if(backCardView != nil){
@@ -160,15 +160,15 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
         },completion:nil)
     }
   }
-  func setFrontCardViewFunc(frontCardView: AttractionCardView) -> Void{
+  func setFrontCardViewFunc(frontCardView: ListingCardView) -> Void{
     
     self.frontCardView = frontCardView
     self.frontCardView.accessibilityIdentifier = "frontCard"
   }
   
   
-  func popAttractionViewWithFrame(frame:CGRect) -> AttractionCardView? {
-    if(attractionStack!.count == 0){
+  func popListingViewWithFrame(frame:CGRect) -> ListingCardView? {
+    if(listingStack!.count == 0){
       return nil;
     }
     
@@ -184,14 +184,14 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     }
     options.likedText = "Liked"
     
-    return AttractionCardView(frame: frame, attraction: attractionStack!.removeLast(), delegate: self, options: options)
+    return ListingCardView(frame: frame, listing: listingStack!.removeLast(), delegate: self, options: options)
     
   }
   
   func constructNopeButton() -> Void{
     let button:UIButton =  UIButton(type: UIButtonType.System)
     let image:UIImage = UIImage(named:"nope")!
-    button.frame = CGRectMake(ChooseAttractionButtonHorizontalPadding, CGRectGetMaxY(self.backCardView.frame) + ChooseAttractionButtonVerticalPadding, image.size.width, image.size.height)
+    button.frame = CGRectMake(ChooseListingButtonHorizontalPadding, CGRectGetMaxY(self.backCardView.frame) + ChooseListingButtonVerticalPadding, image.size.width, image.size.height)
     button.setImage(image, forState: UIControlState.Normal)
     button.tintColor = UIColor(red: 247.0/255.0, green: 91.0/255.0, blue: 37.0/255.0, alpha: 1.0)
     button.addTarget(self, action: "nopeFrontCardView", forControlEvents: UIControlEvents.TouchUpInside)
@@ -201,7 +201,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   func constructLikedButton() -> Void{
     let button:UIButton = UIButton(type: UIButtonType.System)
     let image:UIImage = UIImage(named:"liked")!
-    button.frame = CGRectMake(CGRectGetMaxX(self.view.frame) - image.size.width - ChooseAttractionButtonHorizontalPadding, CGRectGetMaxY(self.backCardView.frame) + ChooseAttractionButtonVerticalPadding, image.size.width, image.size.height)
+    button.frame = CGRectMake(CGRectGetMaxX(self.view.frame) - image.size.width - ChooseListingButtonHorizontalPadding, CGRectGetMaxY(self.backCardView.frame) + ChooseListingButtonVerticalPadding, image.size.width, image.size.height)
     button.setImage(image, forState:UIControlState.Normal)
     button.tintColor = UIColor(red: 29.0/255.0, green: 245.0/255.0, blue: 106.0/255.0, alpha: 1.0)
     button.addTarget(self, action: "likeFrontCardView", forControlEvents: UIControlEvents.TouchUpInside)
@@ -228,11 +228,11 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   }
 }
 
-extension SwipeController: AttractionCardContainer {
+extension SwipeController: ListingCardContainer {
   
-  func showDetail(attraction: Attraction) {
+  func showDetail(listing: Listing) {
     let vc = DetailController(session: session, searchDelegate: searchDelegate)
-    vc.attraction = attraction
+    vc.listing = listing
     self.navigationController!.pushViewController(vc, animated: true)
   }
 }

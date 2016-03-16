@@ -8,7 +8,7 @@ class ContentService {
   
   init() {}
   
-  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int, category: Attraction.Category, handler: List<SimplePOI> -> ()) -> Request {
+  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int, category: Listing.Category, handler: List<SimplePOI> -> ()) -> Request {
     
     let bounds = "\(bottomLeft.latitude),\(bottomLeft.longitude),\(topRight.latitude),\(topRight.longitude)"
     let parameters = ["categoryId": "\(category.rawValue)"]
@@ -19,8 +19,8 @@ class ContentService {
       
       dispatch_async(dispatch_get_main_queue()) {
         for searchResult in searchResults {
-          if searchResult.isRealAttraction() {
-            if let guideListingNotes = DatabaseService.getAttractionNotes(searchResult.listingId) {
+          if searchResult.isRealListing() {
+            if let guideListingNotes = DatabaseService.getListingNotes(searchResult.listingId) {
               searchResult.notes = guideListingNotes
             }
           }
@@ -170,15 +170,15 @@ class ContentService {
       }})
   }
   
-  class func getAttractionWithId(attractionId: String, handler: Attraction -> ()) {
-    if let attraction = DatabaseService.getAttractionWithId(attractionId) {
+  class func getListingWithId(attractionId: String, handler: Listing -> ()) {
+    if let attraction = DatabaseService.getListingWithId(attractionId) {
       handler(attraction)
       return
     }
     NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/attractions/\(attractionId)", success: {
       json in
       
-      let attraction = JsonParserService.parseAttraction(json)
+      let attraction = JsonParserService.parseListing(json)
       
       dispatch_async(dispatch_get_main_queue()) {
         handler(attraction)
@@ -187,11 +187,11 @@ class ContentService {
     
   }
     
-  class func getCascadingAttractionsForRegion(region: Region?, withCategory category: Attraction.Category? = nil, handler: List<Attraction> -> ()) {
+  class func getCascadingListingsForRegion(region: Region?, withCategory category: Listing.Category? = nil, handler: List<Listing> -> ()) {
     
-    if !NetworkUtil.connectedToNetwork() {
+    if !NetworkUtil.connectedToNetwork() || (region != nil && region!.item().offline) {
       print("fetching offline attractions")
-      let attractions = DatabaseService.getCascadingAttractionsForRegion(region, category: category)
+      let attractions = DatabaseService.getCascadingListingsForRegion(region, category: category)
       handler(attractions)
       
     } else {
@@ -199,10 +199,6 @@ class ContentService {
       var url: String
       var parameters = [String: String]()
       if let region = region {
-        if region.item().offline {
-          handler(region.attractions)
-          return
-        }
         
         switch region.item().category {
         case Region.Category.CONTINENT.rawValue:
@@ -236,14 +232,14 @@ class ContentService {
         json in
         
         dispatch_async(dispatch_get_main_queue()) {
-          let attractions = JsonParserService.parseAttractions(json)
-          for attraction in attractions {
-            if let notes = DatabaseService.getAttractionNotes(attraction.item().id) {
-              attraction.listing.notes = notes
+          let listings = JsonParserService.parseListings(json)
+          for listing in listings {
+            if let notes = DatabaseService.getListingNotes(listing.item().id) {
+              listing.listing.notes = notes
             }
           }
           
-          handler(attractions)
+          handler(listings)
           
         }}, failure: nil)
     }

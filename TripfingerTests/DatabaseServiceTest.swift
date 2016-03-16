@@ -46,7 +46,7 @@ class DatabaseServiceTest: XCTestCase {
     DatabaseServiceTest.insertBrunei { region in
       var brunei = DatabaseService.getCountry("Brunei")
       XCTAssertNotNil(brunei)
-      let attractions = DatabaseService.getAttractionsForRegion(brunei)
+      let attractions = DatabaseService.getListingsForRegion(brunei)
       XCTAssertEqual(1, attractions.count)
       let attractionId = attractions.first!.item().id
       
@@ -54,7 +54,7 @@ class DatabaseServiceTest: XCTestCase {
 
       brunei = DatabaseService.getCountry("Brunei")
       XCTAssertNil(brunei)
-      let attraction = DatabaseService.getAttractionWithId(attractionId)
+      let attraction = DatabaseService.getListingWithId(attractionId)
       XCTAssertNil(attraction)
       exp.fulfill()
     }
@@ -62,9 +62,9 @@ class DatabaseServiceTest: XCTestCase {
     waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
   }
   
-  func testGetAttractionNotes() {
+  func testGetListingNotes() {
     
     // make sure it can handle quotes in id's
-    DatabaseService.getAttractionNotes("attraction-tapgol-(\"pagoda\")-park-탑골공원")
+    DatabaseService.getListingNotes("attraction-tapgol-(\"pagoda\")-park-탑골공원")
   }
 }

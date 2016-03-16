@@ -35,7 +35,7 @@ class GuideItem: Object {
         categoryDescriptionsDict[categoryDescription.item.category] = categoryDescription
       }
       
-      for category in Attraction.Category.allValues {
+      for category in Listing.Category.allValues {
         var categoryDescription = categoryDescriptionsDict[category.rawValue]
         if let categoryDescription = categoryDescription {
           categoryDescription.item.loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED

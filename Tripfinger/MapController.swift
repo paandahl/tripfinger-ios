@@ -140,17 +140,17 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
     
     mapView.clearAllAnnotations()
 
-    var likedAttractions = 0
+    var likedListings = 0
     let annotations = annotationService.getAnnotations(pois, mapView: mapView, selectedPoi: calloutView?.currentPoi)
     for annotation in annotations {
       let animationSettings = SKAnimationSettings()
       mapView.addAnnotation(annotation, withAnimationSettings: animationSettings)
       if annotation.annotationView.reuseIdentifier.containsString("liked") {
-        likedAttractions += 1
+        likedListings += 1
       }
     }
-    print("There were \(likedAttractions) liked attractions.")
-    mapView.accessibilityValue = String(likedAttractions)
+    print("There were \(likedListings) liked listings.")
+    mapView.accessibilityValue = String(likedListings)
   }
   
   func mapView(mapView: SKMapView!, didSelectAnnotation annotation: SKAnnotation!) {
@@ -168,11 +168,11 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
     }
     let pois = annotationService.selectedPois()
     calloutView = AnnotationCalloutView(pois: pois) { poi in
-      ContentService.getAttractionWithId(poi.listingId) {
-        attraction in
+      ContentService.getListingWithId(poi.listingId) {
+        listing in
         
         let vc = DetailController(session: self.session, searchDelegate: self)
-        vc.attraction = attraction
+        vc.listing = listing
         self.navigationController!.pushViewController(vc, animated: true)
       }
     }
@@ -271,10 +271,10 @@ extension MapController: SearchViewControllerDelegate {
     
 //    let promise = Promise<String, NoError>()
 //    if String(searchResult.resultType).hasPrefix("2") { // attraction
-//      ContentService.getAttractionWithId(searchResult.listingId!) {
+//      ContentService.getListingWithId(searchResult.listingId!) {
 //        attraction in
 //        
-//        self.currentAttraction = attraction
+//        self.currentListing = attraction
 //        
 //        promise.future.onComplete() { _ in
 //          self.performSegueWithIdentifier("showDetail", sender: attraction)

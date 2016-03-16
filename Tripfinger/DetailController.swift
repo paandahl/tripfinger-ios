@@ -17,7 +17,7 @@ class DetailController: UIViewController {
   let directionsLabel = UILabel()
   let directionsText = UITextView()
   
-  var attraction: Attraction!
+  var listing: Listing!
   
   init(session: Session, searchDelegate: SearchViewControllerDelegate) {
     self.session = session
@@ -52,10 +52,10 @@ class DetailController: UIViewController {
     scrollView.backgroundColor = UIColor.whiteColor()
 
     name.font = UIFont.boldSystemFontOfSize(16)
-    name.text = attraction.listing.item.name
+    name.text = listing.listing.item.name
 
     descriptionText.scrollEnabled = false
-    let encodedData = attraction.item().content!.dataUsingEncoding(NSUTF8StringEncoding)!
+    let encodedData = listing.item().content!.dataUsingEncoding(NSUTF8StringEncoding)!
     let options : [String: AnyObject] = [
       NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
       NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding,
@@ -82,7 +82,7 @@ class DetailController: UIViewController {
     scrollView.addConstraints("H:[heart]-20-|", forViews: views)
     var bottomElement = descriptionText
     
-    if let price = attraction.price {
+    if let price = listing.price {
       scrollView.addSubview(priceLabel)
       scrollView.addSubview(priceText)
       priceLabel.text = "Price"
@@ -97,7 +97,7 @@ class DetailController: UIViewController {
       bottomElement = priceText
     }
     
-    if let openingHours = attraction.openingHours {
+    if let openingHours = listing.openingHours {
       scrollView.addSubview(openingHoursLabel)
       scrollView.addSubview(openingHoursText)
       openingHoursLabel.text = "Opening hours"
@@ -112,7 +112,7 @@ class DetailController: UIViewController {
       bottomElement = openingHoursText
     }
 
-    if let directions = attraction.directions {
+    if let directions = listing.directions {
       scrollView.addSubview(directionsLabel)
       scrollView.addSubview(directionsText)
       directionsLabel.text = "Directions"
@@ -131,13 +131,13 @@ class DetailController: UIViewController {
     view.addConstraint(bottomConstraint)
 
     mainImage.contentMode = UIViewContentMode.ScaleAspectFit
-    if attraction.item().offline {
-      print("fetching image from \(attraction.item().images[0].getFileUrl())")
-      mainImage.image = UIImage(data: NSData(contentsOfURL: attraction.item().images[0].getFileUrl())!)
+    if listing.item().offline {
+      print("fetching image from \(listing.item().images[0].getFileUrl())")
+      mainImage.image = UIImage(data: NSData(contentsOfURL: listing.item().images[0].getFileUrl())!)
     }
     else {
-      if attraction.item().images.count > 0 {
-        let imageUrl = DownloadService.gcsImagesUrl + attraction.item().images[0].url + "-712x534"
+      if listing.item().images.count > 0 {
+        let imageUrl = DownloadService.gcsImagesUrl + listing.item().images[0].url + "-712x534"
         mainImage.image = UIImage(named: "Placeholder")
         try! mainImage.loadImageWithUrl(imageUrl)
       }
@@ -171,7 +171,7 @@ class DetailController: UIViewController {
   }
   
   func setHeartTint() {
-    if let notes = attraction.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
+    if let notes = listing.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
       heartImage.tintColor = UIColor.redColor()
     }
     else {
@@ -180,10 +180,10 @@ class DetailController: UIViewController {
   }
   
   func heartClick() {
-    if let notes = attraction.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
-      DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, attraction: attraction)
+    if let notes = listing.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
+      DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, listing: listing)
     } else {
-      DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, attraction: attraction)
+      DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, listing: listing)
     }
     setHeartTint()
   }

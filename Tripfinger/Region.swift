@@ -12,7 +12,7 @@ class Region: Object {
   // polygons
   //  var polygonCoordinates: [Double]?
   
-  let attractions = List<Attraction>()
+  let listings = List<Listing>()
   
   func setCategory(category: Region.Category) {
     listing.item.category = category.rawValue
