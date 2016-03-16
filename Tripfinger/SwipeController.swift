@@ -41,7 +41,9 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   }
   
   override func viewDidLayoutSubviews() {
-    if let frontCardView = frontCardView {
+    if let frontCardView = frontCardView, let backCardView = backCardView {
+      let frame = frontCardView.frame
+      backCardView.frame = CGRectMake(frame.origin.x + 10, frame.origin.y + 10, frame.width, frame.height)
       orignalFrontCardFrame = frontCardView.frame
     }
   }
@@ -73,14 +75,13 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
       if attractionStack.count > 0 {
         noElementsLabel.hidden = true
 
-        setFrontCardViewFunc(popAttractionViewWithFrame(frontCardViewFrame())!)
+        setFrontCardViewFunc(popAttractionViewWithFrame(CGRectZero)!)
         view.addSubview(frontCardView)
         addFrontCardConstraints()
         
         if attractionStack.count > 1 {
-          backCardView = popAttractionViewWithFrame(backCardViewFrame())!
+          backCardView = popAttractionViewWithFrame(CGRectZero)!
           view.insertSubview(backCardView, belowSubview: frontCardView)
-          addBackCardConstraints()
         }
       } else {
         noElementsLabel.hidden = false
@@ -109,22 +110,19 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   
   func addFrontCardConstraints() {
     let views: [String: UIView] = ["card": frontCardView]
-    view.addConstraints("H:[card(300)]", forViews: views)
-    view.addConstraints("V:|-20-[card]", forViews: views)
+    view.addConstraint(.CenterX, forView: frontCardView)
+    view.addConstraint(.CenterY, forView: frontCardView)
+    frontCardView.backgroundColor = UIColor.greenColor()
+    view.addConstraint(NSLayoutConstraint(item: frontCardView, attribute: .Width, relatedBy: .Equal, toItem: frontCardView, attribute: .Height, multiplier: 0.75, constant: 0))
+    view.addConstraints("V:|-(>=20)-[card]-(>=20)-|", forViews: views)
+    view.addConstraints("H:|-(>=20)-[card]-(>=20)-|", forViews: views)
     view.addConstraint(NSLayoutAttribute.CenterX, forView: frontCardView)
-  }
-  
-  func addBackCardConstraints() {
-    let views: [String: UIView] = ["card": backCardView]
-    view.addConstraints("H:[card(300)]", forViews: views)
-    view.addConstraints("V:|-30-[card]", forViews: views)
-    view.addConstraint(NSLayoutAttribute.CenterX, forView: backCardView)
   }
   
   func suportedInterfaceOrientations() -> UIInterfaceOrientationMask{
     return UIInterfaceOrientationMask.Portrait
   }
-  
+
   
   // This is called when a user didn't fully swipe left or right.
   func viewDidCancelSwipe(view: UIView) -> Void{
@@ -151,7 +149,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
       addFrontCardConstraints()
     }
     
-    backCardView = popAttractionViewWithFrame(backCardViewFrame())
+    backCardView = popAttractionViewWithFrame(CGRectZero)
     
     // Fade the back card into view.
     if(backCardView != nil){
@@ -160,8 +158,6 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
       UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: {
         self.backCardView.alpha = 1.0
         },completion:nil)
-      
-      addBackCardConstraints()
     }
   }
   func setFrontCardViewFunc(frontCardView: AttractionCardView) -> Void{
@@ -190,18 +186,6 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     
     return AttractionCardView(frame: frame, attraction: attractionStack!.removeLast(), delegate: self, options: options)
     
-  }
-  
-  func frontCardViewFrame() -> CGRect{
-    let horizontalPadding:CGFloat = 20.0
-    let topPadding:CGFloat = 60.0
-    let bottomPadding:CGFloat = 130.0
-    return CGRectMake(horizontalPadding,topPadding,CGRectGetWidth(self.view.frame) - (horizontalPadding * 2), CGRectGetHeight(self.view.frame) - bottomPadding)
-  }
-  
-  func backCardViewFrame() ->CGRect{
-    let frontFrame:CGRect = frontCardViewFrame()
-    return CGRectMake(frontFrame.origin.x, frontFrame.origin.y + 10.0, CGRectGetWidth(frontFrame), CGRectGetHeight(frontFrame))
   }
   
   func constructNopeButton() -> Void{

@@ -26,8 +26,8 @@ class AttractionCardView: MDCSwipeToChooseView {
       imageView.contentMode = UIViewContentMode.ScaleAspectFill
       print("loading attraction image \(attraction.item().images[0].getFileUrl())")
       imageView.image = UIImage(data: NSData(contentsOfURL: attraction.item().images[0].getFileUrl())!)
-    }
-    else {
+    } else {
+      imageView.contentMode = UIViewContentMode.ScaleAspectFill
       imageView.image = UIImage(color: UIColor.whiteColor())
       let imageUrl = DownloadService.gcsImagesUrl + attraction.listing.item.images[0].url + "-600x800"
       try! imageView.loadImageWithUrl(imageUrl)
@@ -43,10 +43,14 @@ class AttractionCardView: MDCSwipeToChooseView {
     imageView.addGestureRecognizer(singleTap)
     imageView.userInteractionEnabled = true
     
+    informationView.alpha = 0.6
     let views = ["image": imageView!, "info": informationView!]
-    addConstraints("V:|-0-[image(400)]-0-[info(80)]-0-|", forViews: views)
+//    addConstraints("V:|-0-[image(400)]-0-|", forViews: views)
+    addConstraints("V:[info(80)]|", forViews: views)
+    addConstraint(NSLayoutConstraint(item: informationView, attribute: .Bottom, relatedBy: .Equal, toItem: imageView, attribute: .Bottom, multiplier: 1.0, constant: 0))
     addConstraints("H:|-0-[info]-0-|", forViews: views)
     addConstraints("H:|-0-[image]-0-|", forViews: views)
+    addConstraints("V:|-0-[image]-0-|", forViews: views)
   }
   
   required init?(coder aDecoder: NSCoder) {
