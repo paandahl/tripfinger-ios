@@ -167,6 +167,10 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
       mapView.updateAnnotation(updatedAnnotation)
     }
     let pois = annotationService.selectedPois()
+    openCalloutView(pois)
+  }
+  
+  private func openCalloutView(pois: [SimplePOI]) {
     calloutView = AnnotationCalloutView(pois: pois) { poi in
       let failure = {
         fatalError("Not designed to fail.")
@@ -186,7 +190,6 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
     print("Added callout view")
     positionButtonMargin.constant = 60
   }
-  
   
   func poiUnselected() {
     if calloutView != nil {
@@ -262,38 +265,14 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
 }
 
 extension MapController: SearchViewControllerDelegate {
-  
-  func delay(delay:Double, closure:()->()) {
-    dispatch_after(
-      dispatch_time(
-        DISPATCH_TIME_NOW,
-        Int64(delay * Double(NSEC_PER_SEC))
-      ),
-      dispatch_get_main_queue(), closure)
-  }
-  
-  func selectedSearchResult(searchResult: SimplePOI, failure: () -> (), stopSpinner: () -> ()) {
     
-//    let promise = Promise<String, NoError>()
-//    if String(searchResult.resultType).hasPrefix("2") { // attraction
-//      ContentService.getListingWithId(searchResult.listingId!) {
-//        attraction in
-//        
-//        self.currentListing = attraction
-//        
-//        promise.future.onComplete() { _ in
-//          self.performSegueWithIdentifier("showDetail", sender: attraction)
-//        }
-//      }
-//    }
+  func selectedSearchResult(searchResult: SimplePOI, failure: () -> (), stopSpinner: () -> ()) {
     
     stopSpinner()
     dismissViewControllerAnimated(true, completion: nil)
     print("Going to location of search result")
-    var delayTime = 0.1
     if !mapView.isLocationVisible(searchResult.latitude, long: searchResult.longitude) {
       mapView.animateToLocation(CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude), withDuration: 1.0)
-      delayTime = 1.1
     }
     
     let oldZoomLevel = mapView.visibleRegion.zoomLevel
@@ -307,14 +286,10 @@ extension MapController: SearchViewControllerDelegate {
     if (newZoomLevel == 15 && oldZoomLevel < 14) || (newZoomLevel == 6 && oldZoomLevel > 7) {
       mapView.animateToZoomLevel(Float(newZoomLevel))
       mapView.animateToLocation(CLLocationCoordinate2DMake(searchResult.latitude, searchResult.longitude), withDuration: 1.0)
-      delayTime = 1.1
     }
     if putAnnotation {
-//      selectedPoi = searchResult
+      openCalloutView([searchResult])
     }
-//    delay(delayTime) {
-//      promise.success("Waited")
-//    }   
   }
   
   func navigateToSearch() {
