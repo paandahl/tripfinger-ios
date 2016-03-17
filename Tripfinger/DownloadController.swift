@@ -92,12 +92,15 @@ class DownloadController: UIViewController {
 //      }
       
       nameLabel.text = "Downloading \(country.getName())."
+      let failure = {
+        self.nameLabel.text = "Connection failed."
+      }
       DownloadService.downloadCountry(country.getName(), progressHandler: {
         progress in
         
         self.progressView.progress = progress
         
-        }, finishedHandler: {
+        }, failure: failure, finishedHandler: {
           
           self.deleteButton.hidden = false
       })

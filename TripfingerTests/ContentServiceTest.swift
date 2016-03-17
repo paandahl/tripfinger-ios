@@ -21,7 +21,7 @@ class ContentServiceTest: XCTestCase {
     let readyExpectation = expectationWithDescription("ready")
     
     guideItem.id = brusselsId
-    ContentService.getGuideTextsForGuideItem(guideItem) {
+    ContentService.getGuideTextsForGuideItem(guideItem, failure: {fatalError("EX1")}) {
       guideTexts in
       
       print(guideTexts.count)
@@ -48,7 +48,7 @@ class ContentServiceTest: XCTestCase {
   func testGetRegionWithId() {
     let readyExpectation = expectationWithDescription("ready")
     
-    ContentService.getRegionWithId(brusselsId) {
+    ContentService.getRegionWithId(brusselsId, failure: {fatalError("EX8")}) {
       region in
       
       XCTAssertEqual(12, region.listing.item.guideSections.count)
@@ -64,7 +64,7 @@ class ContentServiceTest: XCTestCase {
   func testGetFullRegion() {
     let readyExpectation = expectationWithDescription("ready")
     
-    ContentService.getFullRegionTree(brusselsId) {
+    ContentService.getFullRegionTree(brusselsId, failure: {fatalError("EX2")}) {
       region in
       
       readyExpectation.fulfill()
@@ -79,11 +79,11 @@ class ContentServiceTest: XCTestCase {
   func testGetCascadingListingsForRegion() {
     let exp = expectationWithDescription("ready")
     DatabaseServiceTest.insertBrunei { brunei in
-      ContentService.getCascadingListingsForRegion(brunei, withCategory: Listing.Category.ATTRACTIONS) { listings in
+      ContentService.getCascadingListingsForRegion(brunei, withCategory: Listing.Category.ATTRACTIONS, failure: {fatalError("EX3")}) { listings in
         XCTAssertEqual(1, listings.count)
         XCTAssertEqual(1, brunei.item().subRegions.count)
         let bandar = brunei.item().subRegions[0]
-        ContentService.getCascadingListingsForRegion(bandar, withCategory: Listing.Category.ATTRACTIONS) { listings in
+        ContentService.getCascadingListingsForRegion(bandar, withCategory: Listing.Category.ATTRACTIONS, failure: {fatalError("EX4")}) { listings in
           XCTAssertEqual(0, listings.count)
           exp.fulfill()
         }

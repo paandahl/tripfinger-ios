@@ -8,7 +8,7 @@ class ContentService {
   
   init() {}
   
-  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int, category: Listing.Category, handler: List<SimplePOI> -> ()) -> Request {
+  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int, category: Listing.Category, failure: () -> (), handler: List<SimplePOI> -> ()) -> Request {
     
     let bounds = "\(bottomLeft.latitude),\(bottomLeft.longitude),\(topRight.latitude),\(topRight.longitude)"
     let parameters = ["categoryId": "\(category.rawValue)"]
@@ -27,11 +27,11 @@ class ContentService {
         }
         handler(searchResults)
       }
-      }, failure: nil)
+      }, failure: failure)
   }
   
   
-  class func getCountries(handler: [Region] -> ()) {
+  class func getCountries(failure: () -> (), handler: [Region] -> ()) {
     let parameters = ["onlyPublished": "false"]
     NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/countries", parameters: parameters, success: {
       json in
@@ -42,10 +42,10 @@ class ContentService {
         handler(regions)
       }
       
-      }, failure: nil)
+      }, failure: failure)
   }
   
-  class func getGuideTextsForGuideItem(guideItem: GuideItem, handler: (guideTexts: [GuideText]) -> ()) {
+  class func getGuideTextsForGuideItem(guideItem: GuideItem, failure: () -> (), handler: (guideTexts: [GuideText]) -> ()) {
     let id = String(guideItem.id!)
     NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/regions/\(id)/guideTexts", success: {
       json in
@@ -55,10 +55,10 @@ class ContentService {
       dispatch_async(dispatch_get_main_queue()) {
         handler(guideTexts: guideTexts)
       }
-      }, failure: nil)
+      }, failure: failure)
   }
   
-  class func getFullRegionTree(regionId: String, handler: (region: Region) -> ()) {
+  class func getFullRegionTree(regionId: String, failure: () -> (), handler: (region: Region) -> ()) {
     NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/regions/\(regionId)/full", success: {
       json in
       
@@ -67,10 +67,10 @@ class ContentService {
       dispatch_async(dispatch_get_main_queue()) {
         handler(region: region)
       }
-      }, failure: nil)
+      }, failure: failure)
   }
   
-  class func getRegions(handler: [Region] -> ()) {
+  class func getRegions(failure: () -> (), handler: [Region] -> ()) {
     NetworkUtil.getJsonFromUrl(AppDelegate.serverUrl + "/regions", success: {
       json in
       
@@ -84,10 +84,10 @@ class ContentService {
         
       }
       
-      }, failure: nil)
+      }, failure: failure)
   }
   
-  class func getRegionFromListing(listing: GuideListing, handler: (Region) -> ()) {
+  class func getRegionFromListing(listing: GuideListing, failure: () -> (), handler: (Region) -> ()) {
     var url: String!
     switch listing.item.category {
     case Region.Category.NEIGHBOURHOOD.rawValue:
@@ -127,10 +127,10 @@ class ContentService {
       dispatch_async(dispatch_get_main_queue()) {
         handler(region)
         
-      }})
+      }}, failure: failure)
   }
   
-  class func getRegionWithId(regionId: String, failure: (() -> ())? = nil, handler: Region -> ()) {
+  class func getRegionWithId(regionId: String, failure: () -> (), handler: Region -> ()) {
     if let region = DatabaseService.getRegionWithId(regionId) {
       handler(region)
       return
@@ -143,16 +143,10 @@ class ContentService {
       dispatch_async(dispatch_get_main_queue()) {
         handler(region)
         
-      }}, failure: {
-        if let failure = failure {
-          failure()
-        } else {
-          fatalError("Fetching region with id \(regionId) failed.")
-        }
-    })
+      }}, failure: failure)
   }
   
-  class func getGuideTextWithId(region: Region, guideTextId: String, handler: GuideText -> ()) {
+  class func getGuideTextWithId(region: Region, guideTextId: String, failure: () -> (), handler: GuideText -> ()) {
     print("getting guidetext")
     if region.item().offline {
       handler(DatabaseService.getGuideTextWithId(region, guideTextId: guideTextId))
@@ -167,10 +161,10 @@ class ContentService {
       dispatch_async(dispatch_get_main_queue()) {
         handler(guideText)
         
-      }})
+      }}, failure: failure)
   }
   
-  class func getListingWithId(attractionId: String, handler: Listing -> ()) {
+  class func getListingWithId(attractionId: String, failure: () -> (), handler: Listing -> ()) {
     if let attraction = DatabaseService.getListingWithId(attractionId) {
       handler(attraction)
       return
@@ -183,11 +177,10 @@ class ContentService {
       dispatch_async(dispatch_get_main_queue()) {
         handler(attraction)
       }
-    })
-    
+    }, failure: failure)
   }
     
-  class func getCascadingListingsForRegion(region: Region?, withCategory category: Listing.Category? = nil, handler: List<Listing> -> ()) {
+  class func getCascadingListingsForRegion(region: Region?, withCategory category: Listing.Category? = nil, failure: () -> (), handler: List<Listing> -> ()) {
     
     if !NetworkUtil.connectedToNetwork() || (region != nil && region!.item().offline) {
       print("fetching offline attractions")
@@ -241,7 +234,7 @@ class ContentService {
           
           handler(listings)
           
-        }}, failure: nil)
+        }}, failure: failure)
     }
   }
   

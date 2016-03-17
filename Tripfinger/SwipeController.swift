@@ -54,16 +54,26 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   func loadListings() {
     listingStack = nil
     self.displayCards()
-    session.loadListings {
+    let failure = {
+      self.listingStack = [Listing]()
+      self.noElementsLabel.text = "Connection failed."
+      self.displayCards()
+    }
+    session.loadListings(failure) {
       var newStack = [Listing]()
-      for attraction in self.session.currentListings {
-        if attraction.listing.notes == nil || attraction.listing.notes!.likedState == GuideListingNotes.LikedState.NOT_YET_LIKED_OR_SWIPED {
-          newStack.append(attraction)
+      for listing in self.session.currentListings {
+        if listing.listing.notes == nil || listing.listing.notes!.likedState == GuideListingNotes.LikedState.NOT_YET_LIKED_OR_SWIPED {
+          newStack.append(listing)
         }
       }
       self.listingStack = newStack
       SyncManager.run_async {
         dispatch_async(dispatch_get_main_queue()) {
+          if !NetworkUtil.connectedToNetwork() && !self.session.currentRegion.item().offline {
+            self.noElementsLabel.text = "You are currently offline."
+          } else {
+            self.noElementsLabel.text = "No attractions to swipe."
+          }
           self.displayCards()
         }
       }
@@ -85,7 +95,6 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
         }
       } else {
         noElementsLabel.hidden = false
-        noElementsLabel.text = "No attractions to swipe."
         noElementsLabel.sizeToFit()
       }
     } else {

@@ -1,4 +1,5 @@
 import RealmSwift
+import MBProgressHUD
 
 protocol RegionControllerDelegate: class {
   func categorySelected(category: Listing.Category, view: String)
@@ -60,7 +61,10 @@ class RegionController: GuideItemController {
       print("moving back in hierarchy")
       guideItemExpanded = false
       let parentRegionController = navigationController.viewControllers.last as! RegionController
-      session.moveBackInHierarchy {
+        let failure = {
+          fatalError("Moved back but couldn't fetch parent. We're stranded.")
+        }
+        session.moveBackInHierarchy(failure) {
         print("new currentREgion: \(self.session.currentRegion?.getName())")
         if parentRegionController.tableSections.count == 0 {
           parentRegionController.updateUI()          
@@ -81,7 +85,10 @@ class RegionController: GuideItemController {
   func loadCountryLists() {
     print("loading country lists")
     if NetworkUtil.connectedToNetwork() {
-      ContentService.getCountries() {
+      let failure = { () -> () in
+        NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(2), target: self, selector: "loadCountryLists", userInfo: nil, repeats: false)
+      }
+      ContentService.getCountries(failure) {
         countries in
         
         for country in countries {
@@ -231,7 +238,7 @@ extension RegionController: SearchViewControllerDelegate {
     let regionController = constructRegionController()
     navigationController!.pushViewController(regionController, animated: true)
     
-    session.changeRegion(region) {
+    session.changeRegion(region, failure: navigationFailure) {
       regionController.updateUI()
     }
   }
@@ -244,12 +251,12 @@ extension RegionController: SearchViewControllerDelegate {
     let listingsController = ListingsController(session: session, searchDelegate: self, categoryDescription: categoryDescription)
     listingsController.edgesForExtendedLayout = .None // offset from navigation bar
     navigationController!.pushViewController(listingsController, animated: true)
-    session.changeSection(categoryDescription) {
+    session.changeSection(categoryDescription, failure: navigationFailure) {
       listingsController.updateUI()
     }
   }
   
-  func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ()) {
+  func selectedSearchResult(searchResult: SimplePOI, failure: () -> (), stopSpinner: () -> ()) {
     let toRegion = { (handler: (UINavigationController, [UIViewController]) -> ()) in
       stopSpinner()
       self.dismissViewControllerAnimated(true) {
@@ -282,8 +289,8 @@ extension RegionController: SearchViewControllerDelegate {
     }
 
     if searchResult.isListing() {
-      ContentService.getListingWithId(searchResult.listingId) { listing in
-        self.session.loadRegionFromId(listing.item().parent) {
+      ContentService.getListingWithId(searchResult.listingId, failure: failure) { listing in
+        self.session.loadRegionFromId(listing.item().parent, failure: failure ) {
           toRegion { nav, viewControllers in
             let vc = DetailController(session: self.session, searchDelegate: self.searchDelegate)
             vc.listing = listing
@@ -293,7 +300,7 @@ extension RegionController: SearchViewControllerDelegate {
         }
       }
     } else {
-      session.loadRegionFromId(searchResult.listingId) {
+      session.loadRegionFromId(searchResult.listingId, failure: failure) {
         toRegion { nav, viewControllers in
           nav.setViewControllers(viewControllers, animated: true)
         }

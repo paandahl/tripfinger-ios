@@ -34,7 +34,10 @@ class ListController: GuideItemController {
   func loadListings() {
     listings = nil
     self.tableView.reloadData()
-    session.loadListings {
+    let failure = { () -> () in
+      NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(2), target: self, selector: "loadListings", userInfo: nil, repeats: false)
+    }
+    session.loadListings(failure) {
       
       var likedListings = [Listing]()
       var notLikedListings = [Listing]()
@@ -167,7 +170,7 @@ extension ListController {
       let listingsController = ListingsController(session: session, searchDelegate: searchDelegate, categoryDescription: subSection)
       listingsController.edgesForExtendedLayout = .None // offset from navigation bar
       navigationController!.pushViewController(listingsController, animated: true)
-      session.changeSection(subSection) {
+      session.changeSection(subSection, failure: navigationFailure) {
         listingsController.updateUI()
       }
     } else {

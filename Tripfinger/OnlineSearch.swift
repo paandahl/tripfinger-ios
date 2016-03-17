@@ -18,7 +18,9 @@ class OnlineSearch {
       dispatch_async(dispatch_get_main_queue()) {
         handler(searchResults)
       }
-      }, failure: nil)
+      }, failure: {
+        handler(List<SimplePOI>())
+    })
     
     return req
   }

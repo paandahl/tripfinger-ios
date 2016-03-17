@@ -3,7 +3,7 @@ import RealmSwift
 import MBProgressHUD
 
 protocol SearchViewControllerDelegate: class {
-  func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ())
+  func selectedSearchResult(searchResult: SimplePOI, failure: () -> (), stopSpinner: () -> ())
 }
 
 class SearchController: UITableViewController {
@@ -107,7 +107,17 @@ extension SearchController {
     loadingNotification.labelText = "Loading"
     
     let searchResult = searchResults[indexPath.row]
-    delegate.selectedSearchResult(searchResult) {
+    let failure = {
+      MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+      let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+      loadingNotification.mode = MBProgressHUDMode.CustomView
+      loadingNotification.labelText = "Connection failed"
+      let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
+      dispatch_after(delayTime, dispatch_get_main_queue()) {
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+      }
+    }
+    delegate.selectedSearchResult(searchResult, failure: failure) {
       self.searchBar.resignFirstResponder()
       tableView.deselectRowAtIndexPath(indexPath, animated: true)
       MBProgressHUD.hideAllHUDsForView(self.view, animated: true)

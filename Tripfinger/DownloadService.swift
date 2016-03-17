@@ -44,7 +44,7 @@ class DownloadService {
     SKMapsService.sharedInstance().packagesManager.deleteOfflineMapPackageNamed(mapPackageCode)
   }
   
-  class func downloadCountry(countryName: String, progressHandler: Float -> (), finishedHandler: () -> ()) {
+  class func downloadCountry(countryName: String, progressHandler: Float -> (), failure: () -> (), finishedHandler: () -> ()) {
     
     var progress1: Float = 0.0
     var progress2: Float = 0.0
@@ -75,7 +75,7 @@ class DownloadService {
         }
       }
     }
-    downloadTripfingerData(AppDelegate.serverUrl + "/download_country/\(countryName)", path: countryPath, progressHandler: multiProgressHandler2) {
+    downloadTripfingerData(AppDelegate.serverUrl + "/download_country/\(countryName)", path: countryPath, progressHandler: multiProgressHandler2, failure: failure) {
       if finished {
         dispatch_async(dispatch_get_main_queue()) {
           finishedHandler()
@@ -151,7 +151,7 @@ class DownloadService {
     }
   }
   
-  class func downloadTripfingerData(url: String, path: NSURL, progressHandler: (Float) -> (), finishedHandler: () -> ()) {
+  class func downloadTripfingerData(url: String, path: NSURL, progressHandler: (Float) -> (), failure: () -> (), finishedHandler: () -> ()) {
     
     var parameters = [String: String]()
     if AppDelegate.mode != AppDelegate.AppMode.RELEASE {
@@ -174,7 +174,7 @@ class DownloadService {
           finishedHandler()
         }
       }
-    })    
+    }, failure: failure)
   }
   
   class func fetchImages(region: Region, path: NSURL, progressHandler: (Float -> ())? = nil, dispatchGroup: dispatch_group_t) {

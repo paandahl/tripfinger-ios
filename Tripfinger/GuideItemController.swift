@@ -1,4 +1,5 @@
 import RealmSwift
+import MBProgressHUD
 
 class GuideItemController: TableController {
   
@@ -32,6 +33,19 @@ class GuideItemController: TableController {
     updateUI()
   }
   
+  func navigationFailure() {
+    self.navigationController?.popViewControllerAnimated(true)
+    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+    let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+    loadingNotification.mode = MBProgressHUDMode.CustomView
+    loadingNotification.labelText = "Connection failed"
+    let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
+    dispatch_after(delayTime, dispatch_get_main_queue()) {
+      MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+    }
+  }
+
+  
   func updateUI() {
     // if nil, we are in offline mode, changeRegion returned immediately, and viewdidload will trigger this method
     if let tableView = tableView {
@@ -53,7 +67,10 @@ class GuideItemController: TableController {
       navigationController.viewControllers.indexOf(viewController) == nil && !contextSwitched {
         guideItemExpanded = false
         let parentViewController = navigationController.viewControllers.last as? GuideItemController
-        session.moveBackInHierarchy {
+        let failure = {
+          fatalError("we're stranded")
+        }
+        session.moveBackInHierarchy(failure) {
           // sometimes we will get a ListingsController, but it's not possible to move to sections by search,
           // so it will note be necessary to update UI upon moving back
           if let parentViewController = parentViewController {
@@ -92,7 +109,7 @@ extension GuideItemController {
     sectionController.guideItemExpanded = true
     navigationController!.pushViewController(sectionController, animated: true)
     
-    session.changeSection(section) {
+    session.changeSection(section, failure: navigationFailure) {
       sectionController.updateUI()
     }
   }

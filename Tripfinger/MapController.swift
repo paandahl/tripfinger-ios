@@ -168,7 +168,10 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
     }
     let pois = annotationService.selectedPois()
     calloutView = AnnotationCalloutView(pois: pois) { poi in
-      ContentService.getListingWithId(poi.listingId) {
+      let failure = {
+        fatalError("Not designed to fail.")
+      }
+      ContentService.getListingWithId(poi.listingId, failure: failure) {
         listing in
         
         let vc = DetailController(session: self.session, searchDelegate: self)
@@ -230,8 +233,8 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
     
     if bottomLeft.latitude.isNaN {
       NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(2), target: self, selector: "loadMapPOIs", userInfo: nil, repeats: false)
-    }
-    else {
+    } else {
+      
       let topRight = mapView.coordinateForPoint(CGPoint(x: mapView.frame.maxX, y: 0))
       let zoomLevel = Int(mapView.visibleRegion.zoomLevel)
       print("zoomLevel: \(mapView.visibleRegion.zoomLevel)")
@@ -241,14 +244,16 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
       }
       
       if NetworkUtil.connectedToNetwork() { // TODO: This test can fail right after went offline, should retry
-        mapPoisRequest = ContentService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel, category: session.currentCategory) {
+        let failure = { () -> () in
+          NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(2), target: self, selector: "loadMapPOIs", userInfo: nil, repeats: false)
+        }
+        mapPoisRequest = ContentService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel, category: session.currentCategory, failure: failure) {
           searchResults in
           
           self.pois = searchResults
           self.addAnnotations()
         }
-      }
-      else {
+      } else {
         pois = DatabaseService.getPois(bottomLeft, topRight: topRight, zoomLevel: zoomLevel, category: session.currentCategory)
         addAnnotations()
       }
@@ -267,7 +272,7 @@ extension MapController: SearchViewControllerDelegate {
       dispatch_get_main_queue(), closure)
   }
   
-  func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ()) {
+  func selectedSearchResult(searchResult: SimplePOI, failure: () -> (), stopSpinner: () -> ()) {
     
 //    let promise = Promise<String, NoError>()
 //    if String(searchResult.resultType).hasPrefix("2") { // attraction

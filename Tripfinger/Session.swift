@@ -24,23 +24,23 @@ class Session {
   var sectionStack = [GuideText]()
   var currentSection: GuideText!
   
-  func loadRegionFromId(regionId: String, handler: () -> ()) {
+  func loadRegionFromId(regionId: String, failure: () -> (), handler: () -> ()) {
 //    currentRegion = Region.constructRegion(searchResult.name, fromSearchResult: true)
 //    currentItem = currentRegion.item()
-    ContentService.getRegionWithId(regionId) {
+    ContentService.getRegionWithId(regionId, failure: failure) {
       region in
       
-      self.changeRegion(region) {
+      self.changeRegion(region, failure: failure) {
         handler()        
       }
     }
   }
   
-  func moveBackInHierarchy(handler: () -> ()) {
+  func moveBackInHierarchy(failure: () -> (), handler: () -> ()) {
     
     if currentSection != nil && sectionStack.count > 0 {
       currentSection = nil
-      changeSection(sectionStack.popLast()!, handler: handler)
+      changeSection(sectionStack.popLast()!, failure: failure, handler: handler)
     }
     else {
       var newRegion: Region!
@@ -64,13 +64,13 @@ class Session {
           newRegion = nil
         }
       }
-      changeRegion(newRegion, handler: handler)
+      changeRegion(newRegion, failure: failure, handler: handler)
     }
   }
   
   /* The handler is only necessary if you pass a region that might need unwrapping.
   */
-  func changeRegion(region: Region!, handler: (() -> ())! = nil) {
+  func changeRegion(region: Region!, failure: () -> (), handler: (() -> ())! = nil) {
     
     let category = region != nil ? region.listing.item.category : 0
     switch category {
@@ -119,7 +119,7 @@ class Session {
     currentItem = region != nil ? region.listing.item : nil
     
     if region != nil && region.listing.item.loadStatus != GuideItem.LoadStatus.FULLY_LOADED {
-      ContentService.getRegionFromListing(region.listing) {
+      ContentService.getRegionFromListing(region.listing, failure: failure) {
         region in
         
         self.currentRegion = region
@@ -134,14 +134,14 @@ class Session {
     }
   }
   
-  func changeSection(section: GuideText, handler: (() -> ())) {
+  func changeSection(section: GuideText, failure: () -> (), handler: (() -> ())) {
     if currentSection != nil {
       sectionStack.append(currentSection)
     }
     currentSection = section
     currentItem = section.item
     if section.item.loadStatus != GuideItem.LoadStatus.FULLY_LOADED  {
-      ContentService.getGuideTextWithId(currentRegion, guideTextId: section.getId()) {
+      ContentService.getGuideTextWithId(currentRegion, guideTextId: section.getId(), failure: failure) {
         section in
         
         self.currentSection = section
@@ -154,40 +154,44 @@ class Session {
     }
   }
   
-  // attractions (swipe and list view)
-  var attractionsFromRegion: String?
-  var attractionsFromCategory: Listing.Category?
+  // listings (swipe and list view)
+  var listingsFromRegion: String?
+  var listingsFromCategory: Listing.Category?
   var currentCategory = Listing.Category.ATTRACTIONS
   var currentSubCategory: Listing.SubCategory?
   var currentListings = List<Listing>()
   
-  var attractionsFuture: Future<Void, NoError>?
-  func loadListings(handler: () -> ()) {
+  var listingsFuture: Future<Void, NoError>?
+  func loadListings(failure: () -> (), handler: () -> ()) {
 
-    if let attractionsFuture = attractionsFuture {
+    if let attractionsFuture = listingsFuture {
       print("Listings loading already in progress")
       attractionsFuture.onComplete { _ in
         handler()
       }
     } else {
-      if attractionsFromRegion != currentRegion?.item().name || attractionsFromCategory != currentCategory {
-        print("Reloading attractions")
+      if listingsFromRegion != currentRegion?.item().name || listingsFromCategory != currentCategory {
+        print("Reloading listings")
         let promise = Promise<Void, NoError>()
-        attractionsFromCategory = currentCategory
-        attractionsFromRegion = currentRegion?.item().name
-        attractionsFuture = promise.future
-        ContentService.getCascadingListingsForRegion(self.currentRegion, withCategory: currentCategory) {
+        listingsFuture = promise.future
+        let failureHandler = {
+          self.listingsFuture = nil
+          failure()
+        }
+        ContentService.getCascadingListingsForRegion(self.currentRegion, withCategory: currentCategory, failure: failureHandler) {
           listings in
           
+          self.listingsFromCategory = self.currentCategory
+          self.listingsFromRegion = self.currentRegion?.item().name
           print("Loaded \(listings.count) listings.")
           self.currentListings = listings
           handler()
           promise.success()
-          print("Setting attractionsFuture to nil")
-          self.attractionsFuture = nil
+          print("Setting listingsFuture to nil")
+          self.listingsFuture = nil
         }
       } else {
-        print("No need to reload attractions")
+        print("No need to reload listings")
         handler()
       }
     }

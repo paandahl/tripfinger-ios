@@ -65,7 +65,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     
     if NSProcessInfo.processInfo().arguments.contains("OFFLINEMAP") {
       print("Installing test-map before offline-mode")
-      DownloadService.downloadCountry("Brunei", progressHandler: { progress in }) {
+      let failure = {
+        fatalError("Connection failed")
+      }
+      DownloadService.downloadCountry("Brunei", progressHandler: { progress in }, failure: failure) {
         print("Brunei download finished")
         regionController.loadCountryLists() // remove online countries from list
         regionController.tableView.accessibilityValue = "bruneiReady"

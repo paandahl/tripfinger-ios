@@ -33,16 +33,13 @@ class NetworkUtil {
   }
 
   
-  class func getJsonFromUrl(var url: String, var parameters: [String: String] = Dictionary<String, String>(), method: Alamofire.Method = .GET, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) -> Request {
+  class func getJsonFromUrl(var url: String, var parameters: [String: String] = Dictionary<String, String>(), method: Alamofire.Method = .GET, appendPass: Bool = true, success: (json: JSON) -> (), failure: () -> ()) -> Request {
     if appendPass {
       parameters["pass"] = "plJR86!!"
     }
     
     url = url.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!
     
-    let thrower = {
-      throw Error.DownloadError("Failure fetching url: \(url)")
-    }
     print("Fetching URL: \(url)")
     if parameters.count > 1 {
       print("Params: \(parameters)")
@@ -63,12 +60,7 @@ class NetworkUtil {
         }
         else if response.result.error?.code != -999 {
           print(response.result.error)
-          if let failure = failure {
-            dispatch_async(dispatch_get_main_queue(), failure)
-          }
-          else {
-            try! thrower()
-          }
+          dispatch_async(dispatch_get_main_queue(), failure)
         }
     })
     
