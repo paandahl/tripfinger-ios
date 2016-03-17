@@ -220,8 +220,14 @@ extension RegionController {
     } else if cell.reuseIdentifier == TableCellIdentifiers.loadingCell {
       let indicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
       indicator.startAnimating()
+    } else if indexPath.row < section.elements.count {
+      cell.textLabel!.text = section.elements[indexPath.row].0 
     } else {
-      cell.textLabel!.text = section.elements[indexPath.row].0
+      // this is just for the application not to hang when we have race conditions
+      // f.ex. you navigate to a region, the cell count is calculated, but before
+      // rendering starts, the table is re-populated because the fetch finished fast.
+      // in these cases we return empty cells, since a re-render is under way
+      return UITableViewCell()
     }
     
     return cell
