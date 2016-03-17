@@ -120,7 +120,7 @@ class RegionController: GuideItemController {
       }
     }
     if betaList.count > 0 {
-      countryDict["Beta"] = betaList
+      countryDict["Unfinished test-content"] = betaList
     }
     return countryDict
   }  
