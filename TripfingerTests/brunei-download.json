@@ -2,8 +2,32 @@
   "radius":null,
   "polygonCoordinates":null,
   "guideSections":[
-  
-  ],
+                   {
+                   "order":0,
+                   "guideSections":[
+                   
+                   ],
+                   "categoryDescriptions":null,
+                   "id":"text-brunei-history",
+                   "uuid":"a008ebdb-b42e-4fbc-a989-3e0b4654ad7b",
+                   "name":"History",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003eBrunei has a history.\u003c/p\u003e",
+                   "textLicense":null,
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-brunei"
+                   }
+                   ],
   "categoryDescriptions":[
                           {
                           "order":0,
@@ -13,14 +37,15 @@
                                            "guideSections":[
                                            
                                            ],
-                                           "id":"text-brunei-2300",
-                                           "uuid":"482b4d2b-9822-49af-9df2-790155919c24",
-                                           "name":"2300",
+                                           "categoryDescriptions":null,
+                                           "id":"text-brunei-history-pistory5",
+                                           "uuid":"746c5e39-68a7-49e0-8fbc-0356a3068a42",
+                                           "name":"Pistory",
                                            "alternativeName":null,
-                                           "category":230,
-                                           "subCategory":2300,
+                                           "category":0,
+                                           "subCategory":0,
                                            "status":1,
-                                           "description":"\u003cp\u003eBrunei has an airport.\u003c/p\u003e",
+                                           "description":null,
                                            "textLicense":null,
                                            "images":[
                                            
@@ -30,9 +55,65 @@
                                            ],
                                            "parentAsString":null,
                                            "entityType":"guidetext",
-                                           "parent":"region-brunei"
+                                           "parent":"text-brunei-230"
                                            }
                                            ],
+                          "categoryDescriptions":[
+                                                  {
+                                                  "order":1,
+                                                  "guideSections":[
+                                                  
+                                                  ],
+                                                  "categoryDescriptions":[
+                                                  
+                                                  ],
+                                                  "id":"text-brunei-23007",
+                                                  "uuid":"03161888-1007-416f-95f4-6bfccb0b085a",
+                                                  "name":"2300",
+                                                  "alternativeName":null,
+                                                  "category":230,
+                                                  "subCategory":2300,
+                                                  "status":1,
+                                                  "description":null,
+                                                  "textLicense":null,
+                                                  "images":[
+                                                  
+                                                  ],
+                                                  "imagesNotFoundOnImport":[
+                                                  
+                                                  ],
+                                                  "parentAsString":null,
+                                                  "entityType":"guidetext",
+                                                  "parent":"region-brunei"
+                                                  },
+                                                  {
+                                                  "order":2,
+                                                  "guideSections":[
+                                                  
+                                                  ],
+                                                  "categoryDescriptions":[
+                                                  
+                                                  ],
+                                                  "id":"text-brunei-23104",
+                                                  "uuid":"45801506-dcd0-46f3-867e-c5bfc2569664",
+                                                  "name":"2310",
+                                                  "alternativeName":null,
+                                                  "category":230,
+                                                  "subCategory":2310,
+                                                  "status":1,
+                                                  "description":null,
+                                                  "textLicense":null,
+                                                  "images":[
+                                                  
+                                                  ],
+                                                  "imagesNotFoundOnImport":[
+                                                  
+                                                  ],
+                                                  "parentAsString":null,
+                                                  "entityType":"guidetext",
+                                                  "parent":"region-brunei"
+                                                  }
+                                                  ],
                           "id":"text-brunei-230",
                           "uuid":"a5381a37-4676-4dc1-a809-a2b17b761e2c",
                           "name":"230",
@@ -41,6 +122,33 @@
                           "subCategory":0,
                           "status":1,
                           "description":"\u003cp\u003eBrunei has some transportation.\u003c/p\u003e",
+                          "textLicense":null,
+                          "images":[
+                          
+                          ],
+                          "imagesNotFoundOnImport":[
+                          
+                          ],
+                          "parentAsString":null,
+                          "entityType":"guidetext",
+                          "parent":"region-brunei"
+                          },
+                          {
+                          "order":1,
+                          "guideSections":[
+                          
+                          ],
+                          "categoryDescriptions":[
+                          
+                          ],
+                          "id":"text-brunei-260",
+                          "uuid":"787b2546-2fcc-45bc-9f1a-38c31194d332",
+                          "name":"260",
+                          "alternativeName":null,
+                          "category":260,
+                          "subCategory":0,
+                          "status":1,
+                          "description":null,
                           "textLicense":null,
                           "images":[
                           
@@ -88,7 +196,7 @@
                  "textLicense":null,
                  "images":[
                            {
-                           "url":"http://storage.googleapis.com/tripfinger-images/attraction-ulu-temburong-national-park-1",
+                           "url":"ecd22ca8-48d3-448e-8cbb-3cac815eda78",
                            "description":null,
                            "creationDate":"Feb 7, 2016 2:59:01 AM",
                            "license":null,
@@ -100,7 +208,7 @@
                  
                  ],
                  "parentAsString":null,
-                 "entityType":"attraction",
+                 "entityType":"listing",
                  "parent":"region-brunei"
                  }
                  ],
@@ -115,31 +223,37 @@
                                         {
                                         "order":0,
                                         "guideSections":[
-                                                         {
-                                                         "order":0,
-                                                         "guideSections":[
-                                                         
-                                                         ],
-                                                         "id":"text-bandar-2300",
-                                                         "uuid":"4cf52ae6-9410-4852-a187-c8205f569af0",
-                                                         "name":"2300",
-                                                         "alternativeName":null,
-                                                         "category":230,
-                                                         "subCategory":2300,
-                                                         "status":1,
-                                                         "description":null,
-                                                         "textLicense":null,
-                                                         "images":[
-                                                         
-                                                         ],
-                                                         "imagesNotFoundOnImport":[
-                                                         
-                                                         ],
-                                                         "parentAsString":null,
-                                                         "entityType":"guidetext",
-                                                         "parent":"region-bandar"
-                                                         }
-                                                         ],
+                                        
+                                        ],
+                                        "categoryDescriptions":[
+                                                                {
+                                                                "order":0,
+                                                                "guideSections":[
+                                                                
+                                                                ],
+                                                                "categoryDescriptions":[
+                                                                
+                                                                ],
+                                                                "id":"text-bandar-2300",
+                                                                "uuid":"4cf52ae6-9410-4852-a187-c8205f569af0",
+                                                                "name":"2300",
+                                                                "alternativeName":null,
+                                                                "category":230,
+                                                                "subCategory":2300,
+                                                                "status":1,
+                                                                "description":null,
+                                                                "textLicense":null,
+                                                                "images":[
+                                                                
+                                                                ],
+                                                                "imagesNotFoundOnImport":[
+                                                                
+                                                                ],
+                                                                "parentAsString":null,
+                                                                "entityType":"guidetext",
+                                                                "parent":"region-bandar"
+                                                                }
+                                                                ],
                                         "id":"text-bandar-230",
                                         "uuid":"faea7500-d9d7-4611-9487-cd37ca947712",
                                         "name":"230",
@@ -195,7 +309,7 @@
                                "textLicense":"Wiki-license.",
                                "images":[
                                          {
-                                         "url":"http://storage.googleapis.com/tripfinger-images/attraction-brunei-international-airport-1",
+                                         "url":"ce6eadc4-1ba0-49de-a212-c19be3b3d3e5",
                                          "description":null,
                                          "creationDate":"Feb 29, 2016 8:14:56 AM",
                                          "license":null,
@@ -207,7 +321,7 @@
                                
                                ],
                                "parentAsString":null,
-                               "entityType":"attraction",
+                               "entityType":"listing",
                                "parent":"region-bandar"
                                },
                                {
@@ -244,7 +358,7 @@
                                "textLicense":null,
                                "images":[
                                          {
-                                         "url":"http://storage.googleapis.com/tripfinger-images/attraction-kaizen-sushi-1",
+                                         "url":"2c1f14b2-3e51-41b1-963b-b0b55adea6ad",
                                          "description":null,
                                          "creationDate":"Feb 29, 2016 10:16:17 AM",
                                          "license":null,
@@ -256,7 +370,7 @@
                                
                                ],
                                "parentAsString":null,
-                               "entityType":"attraction",
+                               "entityType":"listing",
                                "parent":"region-bandar"
                                },
                                {
@@ -293,7 +407,7 @@
                                "textLicense":null,
                                "images":[
                                          {
-                                         "url":"http://storage.googleapis.com/tripfinger-images/attraction-thien-thien-1",
+                                         "url":"8bacbdf7-23e4-4ee1-8098-11d2aee881d6",
                                          "description":null,
                                          "creationDate":"Feb 29, 2016 8:49:31 AM",
                                          "license":null,
@@ -305,13 +419,55 @@
                                
                                ],
                                "parentAsString":null,
-                               "entityType":"attraction",
+                               "entityType":"listing",
                                "parent":"region-bandar"
                                }
                                ],
                 "subRegions":[
-                
-                ],
+                              {
+                              "radius":null,
+                              "polygonCoordinates":null,
+                              "guideSections":[
+                              
+                              ],
+                              "categoryDescriptions":[
+                              
+                              ],
+                              "attractions":[
+                              
+                              ],
+                              "subRegions":[
+                              
+                              ],
+                              "simplePOIs":null,
+                              "longitude":0.0,
+                              "latitude":0.0,
+                              "continent":"Asia",
+                              "worldArea":"South East Asia",
+                              "country":"Brunei",
+                              "region":null,
+                              "subRegion":null,
+                              "city":"Bandar",
+                              "id":"region-melabau",
+                              "uuid":"08f399b0-235c-41b2-8905-4af0fea8d508",
+                              "name":"Melabau",
+                              "alternativeName":null,
+                              "category":170,
+                              "subCategory":0,
+                              "status":0,
+                              "description":null,
+                              "textLicense":null,
+                              "images":[
+                              
+                              ],
+                              "imagesNotFoundOnImport":[
+                              
+                              ],
+                              "parentAsString":null,
+                              "entityType":"region",
+                              "parent":"region-bandar"
+                              }
+                              ],
                 "simplePOIs":null,
                 "longitude":0.0,
                 "latitude":0.0,

@@ -85,7 +85,12 @@ class ContentServiceTest: XCTestCase {
         let bandar = brunei.item().subRegions[0]
         ContentService.getCascadingListingsForRegion(bandar, withCategory: Listing.Category.ATTRACTIONS, failure: {fatalError("EX4")}) { listings in
           XCTAssertEqual(0, listings.count)
-          exp.fulfill()
+          XCTAssertEqual(1, bandar.item().subRegions.count)
+          let malabau = bandar.item().subRegions[0]
+          ContentService.getCascadingListingsForRegion(malabau, withCategory: Listing.Category.ATTRACTIONS, failure: {fatalError("EX10")}) { listings in
+            XCTAssertEqual(0, listings.count)
+            exp.fulfill()
+          }
         }
       }
     }

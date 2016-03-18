@@ -130,7 +130,7 @@ class DatabaseService {
       case Region.Category.CITY.rawValue:
         predicate = NSPredicate(format: "listing.country = %@ and listing.city = %@", region.listing.country, region.item().name)
       case Region.Category.NEIGHBOURHOOD.rawValue:
-        predicate = NSPredicate(format: "listing.parent = %@", region.item().id)
+        predicate = NSPredicate(format: "listing.item.parent = %@", region.item().id)
       default:
         try! { throw Error.RuntimeError("Cascade not supported for type: \(region.item().category)") }()
       }
