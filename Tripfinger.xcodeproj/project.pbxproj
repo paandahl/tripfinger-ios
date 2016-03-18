@@ -101,6 +101,7 @@
 		25D707CC1BC6D05B005A4BBA /* GuideItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707CB1BC6D05B005A4BBA /* GuideItemCell.swift */; };
 		25D707D31BCA7620005A4BBA /* UINib+RegisterNib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707D21BCA7620005A4BBA /* UINib+RegisterNib.swift */; };
 		25D707D51BCA7848005A4BBA /* UIView+AddConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */; };
+		25D9C2411C9AA52000D882B4 /* LicenseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D9C2401C9AA51F00D882B4 /* LicenseController.swift */; };
 		25F048E21BCC365C002DE14E /* ContentServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25F048E11BCC365C002DE14E /* ContentServiceTest.swift */; };
 		25F048E71BCC4B7E002DE14E /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25F048E61BCC4B7E002DE14E /* LoadingCell.xib */; };
 		25F5AD011C895A18006F1E7F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 25F5AD001C895A18006F1E7F /* Images.xcassets */; };
@@ -240,6 +241,7 @@
 		25D707CB1BC6D05B005A4BBA /* GuideItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemCell.swift; sourceTree = "<group>"; };
 		25D707D21BCA7620005A4BBA /* UINib+RegisterNib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINib+RegisterNib.swift"; sourceTree = "<group>"; };
 		25D707D41BCA7848005A4BBA /* UIView+AddConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AddConstraints.swift"; sourceTree = "<group>"; };
+		25D9C2401C9AA51F00D882B4 /* LicenseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LicenseController.swift; sourceTree = "<group>"; };
 		25F048E11BCC365C002DE14E /* ContentServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentServiceTest.swift; sourceTree = "<group>"; };
 		25F048E61BCC4B7E002DE14E /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
 		25F5AD001C895A18006F1E7F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -332,6 +334,7 @@
 			children = (
 				2503D3A41BDA5E2A0078C0F0 /* DetailController.swift */,
 				2527A98A1C8FF72300B9CF60 /* GuideItemController.swift */,
+				25D9C2401C9AA51F00D882B4 /* LicenseController.swift */,
 				25D436441BDA4B000016E362 /* ListController.swift */,
 				251F70431C7DE1550069EB6D /* ListingsController.swift */,
 				25D707B91BC6606E005A4BBA /* RegionController.swift */,
@@ -823,6 +826,7 @@
 				253E60F81C7084BB0069068B /* UIImage+ColourInit.swift in Sources */,
 				2527A98B1C8FF72300B9CF60 /* GuideItemController.swift in Sources */,
 				25D281C71BFB67760069BE86 /* DownloadService.swift in Sources */,
+				25D9C2411C9AA52000D882B4 /* LicenseController.swift in Sources */,
 				25243E641BC410F400EF5F64 /* Region.swift in Sources */,
 				25D436491BDA50570016E362 /* ListingCell.swift in Sources */,
 				25D436411BD7B5F90016E362 /* SimplePOI.swift in Sources */,

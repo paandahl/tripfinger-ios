@@ -4,7 +4,6 @@ let customPriority = Float(999)
 
 extension UIView {
   
-  
   func addConstraints(constraints: String, forViews views: [String : UIView]) -> [NSLayoutConstraint] {
     
     for (_, view) in views {

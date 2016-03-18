@@ -40,24 +40,26 @@ extension SectionController {
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
     let section = tableSections[indexPath.section]
-    let cell = tableView.dequeueReusableCellWithIdentifier(section.cellIdentifier, forIndexPath: indexPath)
-    
-    if let cell = cell as? GuideItemCell {
+    if section.cellIdentifier == TableCellIdentifiers.guideItemCell {
+      let cell = GuideItemCell()
       cell.delegate = self
       cell.setContentFromGuideItem(session.currentItem)
       if (guideItemExpanded) {
         cell.expand()
       }
       cell.setNeedsUpdateConstraints()
+      return cell
+      
+    } else {
+      let cell = tableView.dequeueReusableCellWithIdentifier(section.cellIdentifier, forIndexPath: indexPath)
+      if cell.reuseIdentifier == TableCellIdentifiers.loadingCell {
+        let indicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
+        indicator.startAnimating()
+      }
+      else {
+        cell.textLabel!.text = section.elements[indexPath.row].0
+      }
+      return cell
     }
-    else if cell.reuseIdentifier == TableCellIdentifiers.loadingCell {
-      let indicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
-      indicator.startAnimating()
-    }
-    else {
-      cell.textLabel!.text = section.elements[indexPath.row].0
-    }
-    
-    return cell
   }
 }

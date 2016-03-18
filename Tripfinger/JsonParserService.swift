@@ -16,10 +16,14 @@ class JsonParserService {
     guideItem.subCategory = json["subCategory"].int!
     guideItem.status = json["status"].int!
     guideItem.parent = json["parent"].string
+    guideItem.textLicense = json["textLicense"].string
     guideItem.offline = false
     for imageJson in json["images"].array! {
       let image = GuideItemImage()
       image.url = imageJson["url"].string
+      image.license = imageJson["license"].string
+      image.artist = imageJson["artist"].string
+      image.originalUrl = imageJson["originalUrl"].string
       image.imageDescription = imageJson["description"].string
       guideItem.images.append(image)
     }

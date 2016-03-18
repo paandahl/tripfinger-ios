@@ -204,33 +204,36 @@ extension RegionController {
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
     let section = tableSections[indexPath.section]
-    let cell = tableView.dequeueReusableCellWithIdentifier(section.cellIdentifier, forIndexPath: indexPath)
-    
-    if let cell = cell as? GuideItemCell {
+    if section.cellIdentifier == TableCellIdentifiers.guideItemCell {
+      let cell = GuideItemCell()
       cell.delegate = self
       cell.setContentFromGuideItem(session.currentItem)
       if (guideItemExpanded) {
         cell.expand()
       }
       cell.setNeedsUpdateConstraints()
+      return cell
       
-    } else if let cell = cell as? TextMessageCell {
-      cell.setTextMessage("You are offline. Go online to view and download countries.")
-      
-    } else if cell.reuseIdentifier == TableCellIdentifiers.loadingCell {
-      let indicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
-      indicator.startAnimating()
-    } else if indexPath.row < section.elements.count {
-      cell.textLabel!.text = section.elements[indexPath.row].0 
     } else {
-      // this is just for the application not to hang when we have race conditions
-      // f.ex. you navigate to a region, the cell count is calculated, but before
-      // rendering starts, the table is re-populated because the fetch finished fast.
-      // in these cases we return empty cells, since a re-render is under way
-      return UITableViewCell()
+      let cell = tableView.dequeueReusableCellWithIdentifier(section.cellIdentifier, forIndexPath: indexPath)
+      if let cell = cell as? TextMessageCell {
+        cell.setTextMessage("You are offline. Go online to view and download countries.")
+        
+      } else if cell.reuseIdentifier == TableCellIdentifiers.loadingCell {
+        let indicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
+        indicator.startAnimating()
+      } else if indexPath.row < section.elements.count {
+        cell.textLabel!.text = section.elements[indexPath.row].0
+      } else {
+        // this is just for the application not to hang when we have race conditions
+        // f.ex. you navigate to a region, the cell count is calculated, but before
+        // rendering starts, the table is re-populated because the fetch finished fast.
+        // in these cases we return empty cells, since a re-render is under way
+        return UITableViewCell()
+      }
+      
+      return cell
     }
-    
-    return cell
   }
 }
 

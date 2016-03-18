@@ -8,6 +8,7 @@ class DetailController: UIViewController {
   let scrollView = UIScrollView()
   let heartImage = UIImageView()
   let mainImage = UIImageView()
+  let licenseButton = UIButton()
   let name = UILabel()
   let descriptionText = UITextView()
   let priceLabel = UILabel()
@@ -48,8 +49,14 @@ class DetailController: UIViewController {
     heartImage.userInteractionEnabled = true
     setHeartTint()
     scrollView.addSubview(heartImage)
-
     scrollView.backgroundColor = UIColor.whiteColor()
+    
+    licenseButton.setTitle("Content license", forState: .Normal)
+    licenseButton.titleLabel!.font = UIFont.systemFontOfSize(12.0)
+    licenseButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+    licenseButton.sizeToFit()
+    licenseButton.addTarget(self, action: "navigateToLicense", forControlEvents: .TouchUpInside)
+    scrollView.addSubview(licenseButton)
 
     name.font = UIFont.boldSystemFontOfSize(16)
     name.text = listing.listing.item.name
@@ -68,16 +75,19 @@ class DetailController: UIViewController {
     attributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, attributedString.length))
     descriptionText.attributedText = attributedString
     
-    var views = ["scroll": scrollView, "heart": heartImage, "name": name, "image": mainImage, "description": descriptionText]
+    var views = ["scroll": scrollView, "heart": heartImage, "name": name, "image": mainImage,
+      "description": descriptionText, "license": licenseButton]
     view.addConstraints("V:|-0-[scroll]-0-|", forViews: views)
     view.addConstraints("H:|-0-[scroll]-0-|", forViews: views)
     let widthConstraint = NSLayoutConstraint(item: mainImage, attribute: .Width, relatedBy: .Equal, toItem: scrollView, attribute: .Width, multiplier: 1.0, constant: 0)
     view.addConstraint(widthConstraint)
     
     scrollView.addConstraints("V:|-0-[image(283)]-20-[name]-20-[description]", forViews: views)
+    scrollView.addConstraints("V:[license]-30-[name]", forViews: views)
     scrollView.addConstraints("V:|-20-[heart]", forViews: views)
     scrollView.addConstraints("H:|-0-[image]-0-|", forViews: views)
     scrollView.addConstraints("H:|-20-[name]", forViews: views)
+    scrollView.addConstraints("H:[license]-20-|", forViews: views)
     scrollView.addConstraints("H:|-20-[description]-20-|", forViews: views)
     scrollView.addConstraints("H:[heart]-20-|", forViews: views)
     var bottomElement = descriptionText
@@ -200,5 +210,16 @@ class DetailController: UIViewController {
   func navigateToMap() {
     let mapController = MapController(session: session)
     navigationController!.pushViewController(mapController, animated: true)
+  }
+  
+  func navigateToLicense() {
+    let licenseController: UIViewController
+    if session.currentItem.textLicense == nil || session.currentItem.textLicense == "" && session.currentSection != nil {
+      licenseController = LicenseController(textItem: session.currentRegion.item(), imageItem: session.currentItem)
+    } else {
+      licenseController = LicenseController(textItem: session.currentItem, imageItem: session.currentItem)
+    }
+    licenseController.edgesForExtendedLayout = .None // offset from navigation bar
+    navigationController!.pushViewController(licenseController, animated: true)
   }
 }

@@ -2,6 +2,7 @@ import Foundation
 
 protocol GuideItemContainerDelegate: class {
   func readMoreClicked()
+  func licenseClicked()
   func downloadClicked()
 }
 
@@ -9,8 +10,7 @@ class GuideItemCell: UITableViewCell {
 
   var constraintsAdded = false
   let contentImage = UIImageView()
-  var contentImageHeightConstraint: NSLayoutConstraint!
-  var contentImageMarginConstraint: NSLayoutConstraint!
+  let licenseButton = UIButton(type: .System)
   let content = UITextView()
   var imageHeight: CGFloat = UIScreen.mainScreen().bounds.width * 0.75 - 50
   var contentHeight: CGFloat = 100
@@ -23,8 +23,11 @@ class GuideItemCell: UITableViewCell {
   var readMoreButtonMarginConstraint: NSLayoutConstraint!
   weak var delegate: GuideItemContainerDelegate!
   
-  override required init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
+  init() {
+    super.init(style: .Default, reuseIdentifier: nil)
+    
+    selectionStyle = .None
+    
     content.linkTextAttributes[NSForegroundColorAttributeName] = UIColor.blackColor()
     content.editable = false
     readMoreButton = UIButton(type: .System)
@@ -39,6 +42,13 @@ class GuideItemCell: UITableViewCell {
     contentView.addSubview(content)
     contentView.addSubview(readMoreButton)
     contentView.addSubview(downloadView)
+    
+    licenseButton.setTitle("Content license", forState: .Normal)
+    licenseButton.titleLabel!.font = UIFont.systemFontOfSize(12.0)
+    licenseButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
+    licenseButton.sizeToFit()
+    licenseButton.addTarget(self, action: "navigateToLicense", forControlEvents: .TouchUpInside)
+    contentView.addSubview(licenseButton)
 
     readMoreButton.addTarget(self, action: "readMore", forControlEvents: .TouchUpInside)
     downloadButton.addTarget(self, action: "openDownloadCountry", forControlEvents: .TouchUpInside)
@@ -55,16 +65,20 @@ class GuideItemCell: UITableViewCell {
       downloadView.addConstraints("V:|-5-[button]-5-|", forViews: views)
       downloadView.addConstraints("H:|-10-[button]-10-|", forViews: views)
       
-      views = ["image": contentImage, "download": downloadView, "text": content, "readMore": readMoreButton]
+      views = ["image": contentImage, "download": downloadView, "text": content, "readMore": readMoreButton, "license": licenseButton]
       contentView.addConstraints("V:|-20-[download]", forViews: views)
       contentView.addConstraints("H:[download]-20-|", forViews: views)
-      
-      contentImageHeightConstraint = try! contentView.addConstraint("V:[image(\(imageHeight))]", forViews: views)
-      contentView.addConstraints("V:|-0-[image]", forViews: views)
-      contentImageMarginConstraint = try! contentView.addConstraint("V:[image]-10-[text]", forViews: views)
+
+      if !contentImage.hidden {
+        contentView.addConstraints("V:[image(\(imageHeight))]", forViews: views)
+        contentView.addConstraints("V:|-0-[image]-20-[text]", forViews: views)
+        contentView.addConstraints("H:|-0-[image]-0-|", forViews: views)
+        contentView.addConstraints("V:[license]-20-[text]", forViews: views)
+      } else {
+        contentView.addConstraints("V:|-0-[license]-20-[text]", forViews: views)
+      }
+      contentView.addConstraints("H:[license]-20-|", forViews: ["license": licenseButton])
       contentHeightConstraint = try! contentView.addConstraint("V:[text(100)]", forViews: views)
-      contentView.addConstraints("H:|-0-[image]-0-|", forViews: views)
-      contentView.addConstraint(.CenterX, forView: contentImage)
       
       contentView.addConstraints("H:|-10-[text]-10-|", forViews: views)
       readMoreButtonHeight = Int(readMoreButton.frame.size.height)
@@ -77,14 +91,6 @@ class GuideItemCell: UITableViewCell {
       constraintsAdded = true
     }
     
-    if contentImage.hidden {
-      contentImageHeightConstraint.constant = 0
-      contentImageMarginConstraint.constant = 0
-    }
-    else {
-      contentImageHeightConstraint.constant = imageHeight
-      contentImageMarginConstraint.constant = 10
-    }
     if readMoreButton.hidden {
       readMoreButtonHeightConstraint.constant = 0
       readMoreButtonMarginConstraint.constant = 0
@@ -156,7 +162,6 @@ class GuideItemCell: UITableViewCell {
       downloadView.hidden = true
     }
     
-
     var description = ""
     if let content = guideItem.content {
       description = content      
@@ -179,5 +184,10 @@ class GuideItemCell: UITableViewCell {
     content.setContentOffset(CGPointZero, animated: true)
     
     setNeedsUpdateConstraints()
+  }
+  
+  func navigateToLicense() {
+    print("licenseClicked")
+    delegate.licenseClicked()
   }
 }

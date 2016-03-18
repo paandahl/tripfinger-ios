@@ -31,7 +31,6 @@ class TableController: UIViewController, UITableViewDelegate, UITableViewDataSou
     tableView.delegate = self
     tableView.dataSource = self
     UINib.registerClass(RightDetailCell.self, reuseIdentifier: TableCellIdentifiers.rightDetailCell, forTableView: tableView)
-    UINib.registerClass(GuideItemCell.self, reuseIdentifier: TableCellIdentifiers.guideItemCell, forTableView: tableView)
     UINib.registerClass(ListingCell.self, reuseIdentifier: TableCellIdentifiers.likedCell, forTableView: tableView)
     UINib.registerClass(ListingCell.self, reuseIdentifier: TableCellIdentifiers.listingCell, forTableView: tableView)
     UINib.registerClass(TextMessageCell.self, reuseIdentifier: TableCellIdentifiers.textMessageCell, forTableView: tableView)

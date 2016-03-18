@@ -19,6 +19,7 @@ class GuideItem: Object {
   dynamic var parent: String!
   dynamic var content: String?
   dynamic var openingHours: String?
+  dynamic var textLicense: String?
     
   let images = List<GuideItemImage>()
   

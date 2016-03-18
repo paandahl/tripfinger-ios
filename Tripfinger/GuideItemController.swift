@@ -85,13 +85,23 @@ class GuideItemController: TableController {
   func downloadClicked() {}
 }
 
-
 extension GuideItemController: GuideItemContainerDelegate {
   
   func readMoreClicked() {
     guideItemExpanded = true
     populateTableSections()
     tableView.reloadData()
+  }
+  
+  func licenseClicked() {
+    let licenseController: UIViewController
+    if session.currentItem.textLicense == nil || session.currentItem.textLicense == "" && session.currentSection != nil {
+      licenseController = LicenseController(textItem: session.currentRegion.item(), imageItem: session.currentItem)
+    } else {
+      licenseController = LicenseController(textItem: session.currentItem, imageItem: session.currentItem)
+    }
+    licenseController.edgesForExtendedLayout = .None // offset from navigation bar
+    navigationController!.pushViewController(licenseController, animated: true)
   }
   
   func populateTableSections() {}

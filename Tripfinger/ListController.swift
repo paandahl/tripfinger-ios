@@ -129,9 +129,8 @@ extension ListController {
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
     let section = tableSections[indexPath.section]
-    let cell = tableView.dequeueReusableCellWithIdentifier(section.cellIdentifier, forIndexPath: indexPath)
-
-    if let cell = cell as? GuideItemCell {
+    if section.cellIdentifier == TableCellIdentifiers.guideItemCell {
+      let cell = GuideItemCell()
       cell.delegate = self
       cell.setContentFromGuideItem(categoryDescription.item)
       if (guideItemExpanded) {
@@ -140,25 +139,25 @@ extension ListController {
       cell.setNeedsUpdateConstraints()
       return cell
       
-    } else if let cell = cell as? RightDetailCell {
-      let subSection = section.elements[indexPath.row].1 as! GuideText
-      if subSection.item.subCategory == 0 {
-        cell.textLabel!.text = subSection.item.name
-      } else {
-        let subCat = Listing.SubCategory(rawValue: subSection.item.subCategory)!
-        cell.textLabel!.text = subCat.entityName
-      }
-      return cell
-    } else if let cell = cell as? ListingCell {
-      let attraction = section.elements[indexPath.row].1 as! Listing
-      cell.setContent(attraction)
-      cell.delegate = self
-      print("returning listing cell")
-      return cell
-      
     } else {
-      let activityIndicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
-      activityIndicator.startAnimating()
+      let cell = tableView.dequeueReusableCellWithIdentifier(section.cellIdentifier, forIndexPath: indexPath)
+      if let cell = cell as? RightDetailCell {
+        let subSection = section.elements[indexPath.row].1 as! GuideText
+        if subSection.item.subCategory == 0 {
+          cell.textLabel!.text = subSection.item.name
+        } else {
+          let subCat = Listing.SubCategory(rawValue: subSection.item.subCategory)!
+          cell.textLabel!.text = subCat.entityName
+        }
+      } else if let cell = cell as? ListingCell {
+        let attraction = section.elements[indexPath.row].1 as! Listing
+        cell.setContent(attraction)
+        cell.delegate = self
+        
+      } else {
+        let activityIndicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
+        activityIndicator.startAnimating()
+      }
       return cell
     }
   }
