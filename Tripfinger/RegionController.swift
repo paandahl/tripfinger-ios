@@ -191,7 +191,7 @@ extension RegionController {
         case Region.Category.COUNTRY.rawValue:
           section = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
         case Region.Category.SUB_REGION.rawValue:
-          section = TableSection(title: "Cities:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
+          section = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
         default:
           section = TableSection(title: "Neighbourhoods:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
         }
