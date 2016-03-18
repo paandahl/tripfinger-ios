@@ -31,7 +31,6 @@ class AnnotationService {
         if abs(annotationPoint.x - poiPoint.x) < groupingDistance && abs(annotationPoint.y - poiPoint.y) < groupingDistance {
           if let notes = poi.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
             annotationGroups[annotation]!.insert(poi, atIndex: 0)
-            print("LIKED")
           } else {
             annotationGroups[annotation]!.append(poi)
           }
@@ -119,7 +118,6 @@ class AnnotationService {
       case Listing.SubCategory.THEATER_AND_CONCERTS:
         annotationIcon = "theatre"
       default:
-        print("displaying poi from category: \(poi.getListingSubCategory().rawValue)")
         annotationIcon = "attraction"
       }
       
@@ -162,7 +160,6 @@ class AnnotationService {
         fatalError("Unrecognized subCategory for transportation: \(poi.getListingSubCategory().rawValue)")
       }
     }
-    print(annotationIcon)
 
     annotation.annotationView = getAnnotationViewWithIcon(annotationIcon, selected: selected, liked: liked)
   }

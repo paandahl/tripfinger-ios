@@ -183,14 +183,14 @@ class DetailController: UIViewController {
   func setHeartTint() {
     if let notes = listing.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
       heartImage.tintColor = UIColor.redColor()
-    }
-    else {
+    } else {
       heartImage.tintColor = UIColor.darkGrayColor()
     }
   }
   
   func heartClick() {
     if let notes = listing.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
+      print("unselected heart")
       DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, listing: listing)
     } else {
       DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, listing: listing)

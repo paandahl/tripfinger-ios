@@ -41,13 +41,17 @@ class DatabaseService {
   }
   
   class func saveLike(likedState: GuideListingNotes.LikedState, listing: Listing) {
-    let guideListingNotes = GuideListingNotes()
-    guideListingNotes.likedState = likedState
-    guideListingNotes.attractionId = listing.item().id
     let realm = getRealm()
     try! realm.write {
-      realm.add(guideListingNotes)
-      listing.listing.notes = guideListingNotes
+      if let listingNotes = listing.listing.notes {
+        listingNotes.likedState = likedState
+      } else {
+        let guideListingNotes = GuideListingNotes()
+        guideListingNotes.likedState = likedState
+        guideListingNotes.attractionId = listing.item().id
+        realm.add(guideListingNotes)
+        listing.listing.notes = guideListingNotes
+      }
     }
   }
   
