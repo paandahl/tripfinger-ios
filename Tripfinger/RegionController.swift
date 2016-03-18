@@ -10,7 +10,7 @@ class RegionController: GuideItemController {
   
   var delegate: RegionControllerDelegate!
   let refreshControl = UIRefreshControl()
-  var countryLists = [String: [Region]]()
+  var countryLists = [(String, List<Region>)]()
   
   init(session: Session) {
     super.init(session: session, searchDelegate: nil)
@@ -94,35 +94,44 @@ class RegionController: GuideItemController {
         for country in countries {
           country.item().loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED
         }
-        self.countryLists = RegionController.makeCountryDict(countries)
+        self.countryLists = self.makeCountryLists(countries)
         self.updateUI()
       }
     } else {
-      self.countryLists = RegionController.makeCountryDict(Array<Region>(DatabaseService.getCountries()))
-      self.updateUI()
+      countryLists = makeCountryLists(Array<Region>(DatabaseService.getCountries()))
+      updateUI()
     }
   }
   
-  class func makeCountryDict(countries: [Region]) -> [String: [Region]] {
-    var countryDict = [String: [Region]]()
-    var betaList = [Region]()
+  private func getCountryList(worldArea: String) -> List<Region>? {
+    for (area, countryList) in countryLists {
+      if area == worldArea {
+        return countryList
+      }
+    }
+    return nil
+  }
+  
+  private func makeCountryLists(countries: [Region]) -> [(String, List<Region>)] {
+    var countryLists = [(String, List<Region>)]()
+    let betaList = List<Region>()
     for country in countries {
       if country.item().status == 0 {
         betaList.append(country)
       }
       else {
-        var countryList = countryDict[country.listing.worldArea]
+        var countryList = getCountryList(country.listing.worldArea)
         if countryList == nil {
-          countryList = [Region]()
+          countryList = List<Region>()
+          countryLists.append((country.listing.worldArea, countryList!))
         }
         countryList!.append(country)
-        countryDict[country.listing.worldArea] = countryList        
       }
     }
     if betaList.count > 0 {
-      countryDict["Unfinished test-content"] = betaList
+      countryLists.append(("Unfinished test-content", betaList))
     }
-    return countryDict
+    return countryLists
   }  
 }
 
