@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, SKMapVersioningDelegate {
     
     let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
     configuration.timeoutIntervalForRequest = 300 // seconds
-    configuration.timeoutIntervalForResource = 300
+    configuration.timeoutIntervalForResource = 60 * 60 * 48
     NetworkUtil.alamoFireManager = Alamofire.Manager(configuration: configuration)
     
     let apiKey = "0511a5e338b00db8b426fb8ec0a7fb2ebd6816bb9324425d4edd9b726e40a3d5"

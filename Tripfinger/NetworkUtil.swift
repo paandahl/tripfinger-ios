@@ -45,7 +45,8 @@ class NetworkUtil {
       print("Params: \(parameters)")
     }
     
-    let request = Alamofire.request(method, url, parameters: parameters).validate(statusCode: 200..<300)
+    let request = alamoFireManager.request(method, url, parameters: parameters)
+
     let backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
     
     request.validate(statusCode: 200..<300).response(
