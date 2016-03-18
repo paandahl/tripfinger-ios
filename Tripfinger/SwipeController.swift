@@ -8,6 +8,8 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   var listingStack: [Listing]?
   let session: Session
   let searchDelegate: SearchViewControllerDelegate
+  var cardWidth: CGFloat!
+  var cardHeight: CGFloat!
 //  var filterBox: FilterBox!
   
   let ChooseListingButtonHorizontalPadding: CGFloat = 80.0
@@ -85,12 +87,18 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
       if attractionStack.count > 0 {
         noElementsLabel.hidden = true
 
-        setFrontCardViewFunc(popListingViewWithFrame(CGRectZero)!)
+        cardWidth = view.bounds.width - 40
+        cardHeight = cardWidth * 1.33
+        if cardHeight > (view.bounds.height - 30) {
+          cardHeight = view.bounds.height - 30
+          cardWidth = cardHeight * 0.75
+        }
+        setFrontCardViewFunc(popListingViewWithFrame(CGRectMake(0, 0, cardWidth, cardHeight))!)
         view.addSubview(frontCardView)
-        addFrontCardConstraints()
+        addFrontCardConstraints(cardWidth, height: cardHeight)
         
         if attractionStack.count > 1 {
-          backCardView = popListingViewWithFrame(CGRectZero)!
+          backCardView = popListingViewWithFrame(CGRectMake(0, 0, cardWidth, cardHeight))!
           view.insertSubview(backCardView, belowSubview: frontCardView)
         }
       } else {
@@ -117,15 +125,21 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     self.tabBarController?.selectedIndex = 0
   }
   
-  func addFrontCardConstraints() {
+  func addFrontCardConstraints(width: CGFloat, height: CGFloat) {
+    print("bounds: \(view.bounds)")
+    print("frame: \(frontCardView.frame)")
     let views: [String: UIView] = ["card": frontCardView]
     view.addConstraint(.CenterX, forView: frontCardView)
     view.addConstraint(.CenterY, forView: frontCardView)
-    frontCardView.backgroundColor = UIColor.greenColor()
-    view.addConstraint(NSLayoutConstraint(item: frontCardView, attribute: .Width, relatedBy: .Equal, toItem: frontCardView, attribute: .Height, multiplier: 0.75, constant: 0))
-    view.addConstraints("V:|-(>=20)-[card]-(>=20)-|", forViews: views)
-    view.addConstraints("H:|-(>=20)-[card]-(>=20)-|", forViews: views)
-    view.addConstraint(NSLayoutAttribute.CenterX, forView: frontCardView)
+//    frontCardView.backgroundColor = UIColor.greenColor()
+//    view.addConstraint(NSLayoutConstraint(item: frontCardView, attribute: .Width, relatedBy: .Equal, toItem: frontCardView, attribute: .Height, multiplier: 0.75, constant: 0))
+//    view.addConstraints("V:|-(>=20)-[card]-(>=20)-|", forViews: views)
+//    view.addConstraints("H:|-(>=20)-[card]-(>=20)-|", forViews: views)
+    view.addConstraints("V:[card(\(height))]", forViews: views)
+    view.addConstraints("H:[card(\(width))]", forViews: views)
+    
+    
+//    view.addConstraint(NSLayoutAttribute.CenterX, forView: frontCardView)
   }
   
   func suportedInterfaceOrientations() -> UIInterfaceOrientationMask{
@@ -155,10 +169,10 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
       setFrontCardViewFunc(backCardView)
       frontCardView.removeFromSuperview()
       self.view.addSubview(backCardView)
-      addFrontCardConstraints()
+      addFrontCardConstraints(cardWidth, height: cardHeight)
     }
     
-    backCardView = popListingViewWithFrame(CGRectZero)
+    backCardView = popListingViewWithFrame(CGRectMake(0, 0, cardWidth, cardHeight))
     
     // Fade the back card into view.
     if(backCardView != nil){
@@ -194,7 +208,6 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     options.likedText = "Liked"
     
     return ListingCardView(frame: frame, listing: listingStack!.removeLast(), delegate: self, options: options)
-    
   }
   
   func constructNopeButton() -> Void{
