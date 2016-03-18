@@ -9,7 +9,7 @@ class DetailController: UIViewController {
   let heartImage = UIImageView()
   let mainImage = UIImageView()
   let licenseButton = UIButton()
-  let name = UILabel()
+  let nameLabel = UILabel()
   let descriptionText = UITextView()
   let priceLabel = UILabel()
   let priceText = UITextView()
@@ -31,13 +31,14 @@ class DetailController: UIViewController {
   }
   
   override func viewDidLoad() {
+    navigationItem.title = listing.item().name
     let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
     mapButton.accessibilityLabel = "Map"
     let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
     navigationItem.rightBarButtonItems = [searchButton, mapButton]
 
     view.addSubview(scrollView)
-    scrollView.addSubview(name)
+    scrollView.addSubview(nameLabel)
     scrollView.addSubview(mainImage)
     scrollView.addSubview(descriptionText)
     
@@ -58,8 +59,10 @@ class DetailController: UIViewController {
     licenseButton.addTarget(self, action: "navigateToLicense", forControlEvents: .TouchUpInside)
     scrollView.addSubview(licenseButton)
 
-    name.font = UIFont.boldSystemFontOfSize(16)
-    name.text = listing.listing.item.name
+    nameLabel.font = UIFont.boldSystemFontOfSize(16)
+    nameLabel.text = listing.listing.item.name
+    nameLabel.lineBreakMode = .ByWordWrapping
+    nameLabel.numberOfLines = 2
 
     descriptionText.scrollEnabled = false
     let encodedData = listing.item().content!.dataUsingEncoding(NSUTF8StringEncoding)!
@@ -75,18 +78,19 @@ class DetailController: UIViewController {
     attributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, attributedString.length))
     descriptionText.attributedText = attributedString
     
-    var views = ["scroll": scrollView, "heart": heartImage, "name": name, "image": mainImage,
+    var views = ["scroll": scrollView, "heart": heartImage, "name": nameLabel, "image": mainImage,
       "description": descriptionText, "license": licenseButton]
     view.addConstraints("V:|-0-[scroll]-0-|", forViews: views)
     view.addConstraints("H:|-0-[scroll]-0-|", forViews: views)
     let widthConstraint = NSLayoutConstraint(item: mainImage, attribute: .Width, relatedBy: .Equal, toItem: scrollView, attribute: .Width, multiplier: 1.0, constant: 0)
     view.addConstraint(widthConstraint)
     
-    scrollView.addConstraints("V:|-0-[image(283)]-20-[name]-20-[description]", forViews: views)
+    let imageHeight = UIScreen.mainScreen().bounds.width * 0.75
+    scrollView.addConstraints("V:|-0-[image(\(imageHeight))]-20-[name]-20-[description]", forViews: views)
     scrollView.addConstraints("V:[license]-30-[name]", forViews: views)
     scrollView.addConstraints("V:|-20-[heart]", forViews: views)
     scrollView.addConstraints("H:|-0-[image]-0-|", forViews: views)
-    scrollView.addConstraints("H:|-20-[name]", forViews: views)
+    scrollView.addConstraints("H:|-20-[name]-10-|", forViews: views)
     scrollView.addConstraints("H:[license]-20-|", forViews: views)
     scrollView.addConstraints("H:|-20-[description]-20-|", forViews: views)
     scrollView.addConstraints("H:[heart]-20-|", forViews: views)

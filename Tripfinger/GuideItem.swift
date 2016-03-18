@@ -2,7 +2,7 @@ import Foundation
 import RealmSwift
 
 protocol GuideItemHolder: class {
-  func getId() -> String
+  func getId() -> String!
   func getName() -> String
 }
 

@@ -12,7 +12,7 @@ class GuideText: Object {
 
 extension GuideText: GuideItemHolder {
   
-  func getId() -> String {
+  func getId() -> String! {
     return item.id
   }
   

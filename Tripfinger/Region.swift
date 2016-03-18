@@ -86,7 +86,7 @@ class Region: Object {
 
 extension Region: GuideItemHolder {
   
-  func getId() -> String {
+  func getId() -> String! {
     return listing.item.id
   }
   

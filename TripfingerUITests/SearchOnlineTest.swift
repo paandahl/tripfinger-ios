@@ -49,5 +49,10 @@ class SearchOnlineTest: XCTestCase {
     
     let bangPaeRow = app.tables.staticTexts["Bang Pae Waterfall"]
     tapWhenHittable(bangPaeRow)
+    
+    let backButton = app.navigationBars["Bang Pae Waterfall"].buttons["Back"]    
+    tapWhenHittable(backButton)
+    waitUntilExists(app.tables.staticTexts["Kata"])
+    app.navigationBars["Phuket"].buttons["Search"].tap()
   }
 }

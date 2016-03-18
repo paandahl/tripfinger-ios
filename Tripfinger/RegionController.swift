@@ -58,18 +58,18 @@ class RegionController: GuideItemController {
     print("view will dissappear")
     if let navigationController = navigationController where
       navigationController.viewControllers.indexOf(self) == nil && !contextSwitched {
-      print("moving back in hierarchy")
-      guideItemExpanded = false
-      let parentRegionController = navigationController.viewControllers.last as! RegionController
+        print("moving back in hierarchy")
+        guideItemExpanded = false
+        let parentRegionController = navigationController.viewControllers.last as! RegionController
         let failure = {
           fatalError("Moved back but couldn't fetch parent. We're stranded.")
         }
         session.moveBackInHierarchy(failure) {
-        print("new currentREgion: \(self.session.currentRegion?.getName())")
-        if parentRegionController.tableSections.count == 0 {
-          parentRegionController.updateUI()          
+          print("new currentREgion: \(self.session.currentRegion?.getName())")
+          if parentRegionController.tableSections.count == 0 {
+            parentRegionController.updateUI()
+          }
         }
-      }
     }
   }
   

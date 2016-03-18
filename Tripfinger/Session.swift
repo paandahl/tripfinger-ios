@@ -24,6 +24,10 @@ class Session {
   var sectionStack = [GuideText]()
   var currentSection: GuideText!
   
+//  func loadCurrentCountry(failure: () -> (), handler: () -> ()) {
+//    loadRegionIfNecessary(currentCountry, failure: failure, handler: handler)
+//  }
+  
   func loadRegionFromId(regionId: String, failure: () -> (), handler: () -> ()) {
 //    currentRegion = Region.constructRegion(searchResult.name, fromSearchResult: true)
 //    currentItem = currentRegion.item()
@@ -117,7 +121,10 @@ class Session {
     currentSection = nil
     currentRegion = region
     currentItem = region != nil ? region.listing.item : nil
-    
+    loadRegionIfNecessary(region, failure: failure, handler: handler)
+  }
+  
+  private func loadRegionIfNecessary(region: Region!, failure: () -> (), handler: (() -> ())! = nil) {
     if region != nil && region.listing.item.loadStatus != GuideItem.LoadStatus.FULLY_LOADED {
       ContentService.getRegionFromListing(region.listing, failure: failure) {
         region in
