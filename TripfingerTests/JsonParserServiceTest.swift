@@ -30,5 +30,6 @@ class JsonParserServiceTest: XCTestCase {
 
     XCTAssertEqual(2, brunei.item().simplePois.count)
     XCTAssertEqual(1, brunei.item().subRegions.count)
+    XCTAssertEqual(2, brunei.item().categoryDescriptions.count)
   }
 }
