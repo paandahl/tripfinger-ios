@@ -35,6 +35,7 @@ class GuideItem: Object {
       for categoryDescription in categoryDescriptions {
         categoryDescriptionsDict[categoryDescription.item.category] = categoryDescription
       }
+      print("region \(name) had \(allCategoryDescriptions.count) category sections.")
       
       for category in Listing.Category.allValues {
         var categoryDescription = categoryDescriptionsDict[category.rawValue]

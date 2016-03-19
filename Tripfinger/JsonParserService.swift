@@ -119,6 +119,7 @@ class JsonParserService {
     let region = Region()
     region.listing = parseGuideListing(json)
     region.listing.item.guideSections = parseSectionTreeFromJson(json["guideSections"])
+    region.listing.item.categoryDescriptions = parseSectionTreeFromJson(json["categoryDescriptions"])
     if  json["attractions"].array != nil {
       region.listings.appendContentsOf(parseListings(json["attractions"]))
     }
