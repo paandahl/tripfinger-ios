@@ -29,6 +29,7 @@ class LicenseController: UIViewController {
   
   override func viewDidLoad() {
     navigationItem.title = "License"
+    view.backgroundColor = UIColor.whiteColor()
     textLicenseHeader.text = "Text license"
     textLicenseHeader.font = UIFont.boldSystemFontOfSize(17.0)
     view.addSubview(textLicenseHeader)

@@ -32,6 +32,7 @@ class MapController: UIViewController, SKMapViewDelegate, CLLocationManagerDeleg
   override func viewDidLoad() {    
     super.viewDidLoad()
     
+    view.backgroundColor = UIColor.blackColor()
     let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
     navigationItem.rightBarButtonItems = [searchButton]
     navigationItem.title = session.currentCategory.entityName
