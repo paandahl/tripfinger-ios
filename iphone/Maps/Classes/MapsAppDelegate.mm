@@ -20,6 +20,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Parse/Parse.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
+#import "tripfinger-Swift.h"
 
 #import "3party/Alohalytics/src/alohalytics_objc.h"
 
@@ -144,6 +145,7 @@ using namespace osm_auth_ios;
 
   NSString * m_scheme;
   NSString * m_sourceApplication;
+  MapViewController * iMapViewController;
 }
 
 + (MapsAppDelegate *)theApp
@@ -167,6 +169,8 @@ using namespace osm_auth_ios;
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+  NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken");
+
   PFInstallation * currentInstallation = [PFInstallation currentInstallation];
   [currentInstallation setDeviceTokenFromData:deviceToken];
   AppInfo * appInfo = [AppInfo sharedInfo];
@@ -265,6 +269,7 @@ using namespace osm_auth_ios;
 
 - (void)commonInit
 {
+  NSLog(@"commonInit");
   [HttpThread setDownloadIndicatorProtocol:self];
   InitLocalizedStrings();
   [Preferences setup];
@@ -282,6 +287,8 @@ using namespace osm_auth_ios;
 
 - (void)determineMapStyle
 {
+  NSLog(@"determineMapStyle");
+
   auto & f = GetFramework();
   if ([MapsAppDelegate isAutoNightMode])
   {
@@ -323,6 +330,8 @@ using namespace osm_auth_ios;
 
 + (void)resetToDefaultMapStyle
 {
+  NSLog(@"resetToDefaultMapStyle");
+
   MapsAppDelegate * app = MapsAppDelegate.theApp;
   auto & f = GetFramework();
   auto style = f.GetMapStyle();
@@ -336,6 +345,8 @@ using namespace osm_auth_ios;
 
 + (void)changeMapStyleIfNedeed
 {
+  NSLog(@"changeMapStyleIfNedeed");
+
   NSAssert([MapsAppDelegate isAutoNightMode], @"Invalid auto switcher's state");
   auto & f = GetFramework();
   MapsAppDelegate * app = MapsAppDelegate.theApp;
@@ -373,6 +384,10 @@ using namespace osm_auth_ios;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  TripfingerAppDelegate *appDelegate = [[TripfingerAppDelegate alloc] init];
+  UIWindow *window = [appDelegate applicationLaunched:application delegate:self didFinishLaunchingWithOptions:launchOptions];
+  self.window = window;
+
   InitCrashTrackers();
 
   // Initialize all 3party engines.
@@ -419,6 +434,8 @@ using namespace osm_auth_ios;
     performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
                completionHandler:(void (^)(BOOL))completionHandler
 {
+  NSLog(@"performActionForShortcutItem");
+
   [self.mapViewController performAction:shortcutItem.type];
   completionHandler(YES);
 }
@@ -584,6 +601,8 @@ using namespace osm_auth_ios;
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+  NSLog(@"applicationDidBecomeActive");
+
   if (application.applicationState == UIApplicationStateBackground)
     return;
   [self.mapViewController onGetFocus: YES];
@@ -602,6 +621,7 @@ using namespace osm_auth_ios;
 
 - (BOOL)initStatistics:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  NSLog(@"initStatistics");
   Statistics * statistics = [Statistics instance];
   BOOL returnValue = [statistics application:application didFinishLaunchingWithOptions:launchOptions];
 
@@ -709,11 +729,15 @@ using namespace osm_auth_ios;
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
+  NSLog(@"didReceiveLocalNotification");
+
   [[LocalNotificationManager sharedManager] processNotification:notification onLaunch:NO];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+  NSLog(@"application:openURL");
+
   m_sourceApplication = sourceApplication;
 
   if ([self checkLaunchURL:url])
@@ -796,9 +820,21 @@ using namespace osm_auth_ios;
 
 #pragma mark - Properties
 
+- (void)setMapViewController:(MapViewController *)mapViewController
+{
+  iMapViewController = mapViewController;
+}
+
+
 - (MapViewController *)mapViewController
 {
-  return [(UINavigationController *)self.window.rootViewController viewControllers].firstObject;
+  if (iMapViewController == nil) {
+    NSLog(@"instantiating MapViewController");
+
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Mapsme" bundle: nil];
+    iMapViewController = [storyboard instantiateViewControllerWithIdentifier:@"mapViewController"];
+  }
+  return iMapViewController;
 }
 
 - (LocationManager *)locationManager
@@ -874,6 +910,8 @@ using namespace osm_auth_ios;
 
 - (void)firstLaunchSetup
 {
+  NSLog(@"firstLaunchSetup");
+
   NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
   NSUserDefaults *standartDefaults = [NSUserDefaults standardUserDefaults];
   [standartDefaults setObject:currentVersion forKey:kUDFirstVersionKey];
