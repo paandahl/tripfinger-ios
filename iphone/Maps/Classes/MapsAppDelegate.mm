@@ -20,7 +20,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Parse/Parse.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
-#import "tripfinger-Swift.h"
+#import "SwiftBridge.h"
 
 #import "3party/Alohalytics/src/alohalytics_objc.h"
 

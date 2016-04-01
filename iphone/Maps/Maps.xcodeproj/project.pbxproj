@@ -11,9 +11,62 @@
 		1D60589B0D05DD56006BFB54 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.mm */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		2581DC091CACD8910086285E /* GuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC081CACD8910086285E /* GuideViewController.swift */; };
 		2581DC0C1CACF8AB0086285E /* TripfingerAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */; };
 		2581DC0F1CAD299C0086285E /* MapsAppDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC0E1CAD299C0086285E /* MapsAppDelegateWrapper.mm */; };
+		2581DC121CAE30D50086285E /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC111CAE30D50086285E /* ListController.swift */; };
+		2581DC141CAE30E10086285E /* RegionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC131CAE30E10086285E /* RegionController.swift */; };
+		2581DC161CAE30E70086285E /* GuideItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC151CAE30E70086285E /* GuideItemController.swift */; };
+		2581DC191CAE311C0086285E /* TableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC181CAE311B0086285E /* TableController.swift */; };
+		2581DC251CAE31340086285E /* AnnotationCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC1A1CAE31340086285E /* AnnotationCalloutView.swift */; };
+		2581DC261CAE31340086285E /* FilterBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC1B1CAE31340086285E /* FilterBox.swift */; };
+		2581DC271CAE31340086285E /* FilterBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2581DC1C1CAE31340086285E /* FilterBox.xib */; };
+		2581DC281CAE31340086285E /* GuideItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC1D1CAE31340086285E /* GuideItemCell.swift */; };
+		2581DC291CAE31340086285E /* ImageLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC1E1CAE31340086285E /* ImageLabelView.swift */; };
+		2581DC2A1CAE31340086285E /* ListingCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC1F1CAE31340086285E /* ListingCardView.swift */; };
+		2581DC2B1CAE31340086285E /* ListingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC201CAE31340086285E /* ListingCell.swift */; };
+		2581DC2C1CAE31340086285E /* LoadingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2581DC211CAE31340086285E /* LoadingCell.xib */; };
+		2581DC2D1CAE31340086285E /* RightDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC221CAE31340086285E /* RightDetailCell.swift */; };
+		2581DC2E1CAE31340086285E /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC231CAE31340086285E /* TableSection.swift */; };
+		2581DC2F1CAE31340086285E /* TextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC241CAE31340086285E /* TextMessageCell.swift */; };
+		2581DC351CAE31490086285E /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC301CAE31490086285E /* DetailController.swift */; };
+		2581DC361CAE31490086285E /* LicenseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC311CAE31490086285E /* LicenseController.swift */; };
+		2581DC371CAE31490086285E /* ListingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC321CAE31490086285E /* ListingsController.swift */; };
+		2581DC381CAE31490086285E /* SectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC331CAE31490086285E /* SectionController.swift */; };
+		2581DC391CAE31490086285E /* SwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC341CAE31490086285E /* SwipeController.swift */; };
+		2581DC3F1CAE315F0086285E /* DownloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC3B1CAE315F0086285E /* DownloadController.swift */; };
+		2581DC401CAE315F0086285E /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC3C1CAE315F0086285E /* FilterController.swift */; };
+		2581DC411CAE315F0086285E /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC3D1CAE315F0086285E /* MapController.swift */; };
+		2581DC421CAE315F0086285E /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC3E1CAE315F0086285E /* SearchController.swift */; };
+		2581DC4D1CAE31700086285E /* GuideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC441CAE31700086285E /* GuideItem.swift */; };
+		2581DC4E1CAE31700086285E /* GuideItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC451CAE31700086285E /* GuideItemImage.swift */; };
+		2581DC4F1CAE31700086285E /* GuideListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC461CAE31700086285E /* GuideListing.swift */; };
+		2581DC501CAE31700086285E /* GuideListingNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC471CAE31700086285E /* GuideListingNotes.swift */; };
+		2581DC511CAE31700086285E /* GuideText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC481CAE31700086285E /* GuideText.swift */; };
+		2581DC521CAE31700086285E /* Listing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC491CAE31700086285E /* Listing.swift */; };
+		2581DC531CAE31700086285E /* Region.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC4A1CAE31700086285E /* Region.swift */; };
+		2581DC541CAE31700086285E /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC4B1CAE31700086285E /* Session.swift */; };
+		2581DC551CAE31700086285E /* SimplePOI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC4C1CAE31700086285E /* SimplePOI.swift */; };
+		2581DC5C1CAE31890086285E /* AnnotationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC571CAE31890086285E /* AnnotationService.swift */; };
+		2581DC5D1CAE31890086285E /* ContentService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC581CAE31890086285E /* ContentService.swift */; };
+		2581DC5E1CAE31890086285E /* DatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC591CAE31890086285E /* DatabaseService.swift */; };
+		2581DC5F1CAE31890086285E /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC5A1CAE31890086285E /* DownloadService.swift */; };
+		2581DC601CAE31890086285E /* JsonParserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC5B1CAE31890086285E /* JsonParserService.swift */; };
+		2581DC681CAE31B00086285E /* OnlineSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC641CAE31B00086285E /* OnlineSearch.swift */; };
+		2581DC691CAE31B00086285E /* SearchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC651CAE31B00086285E /* SearchService.swift */; };
+		2581DC7A1CAE31CD0086285E /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC6D1CAE31CD0086285E /* DataManager.swift */; };
+		2581DC7B1CAE31CD0086285E /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC6E1CAE31CD0086285E /* ErrorHandler.swift */; };
+		2581DC7C1CAE31CD0086285E /* NetworkUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC6F1CAE31CD0086285E /* NetworkUtil.swift */; };
+		2581DC7D1CAE31CD0086285E /* NSBundle+BundlePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC701CAE31CD0086285E /* NSBundle+BundlePath.swift */; };
+		2581DC7E1CAE31CD0086285E /* NSURL+GetDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC711CAE31CD0086285E /* NSURL+GetDirectory.swift */; };
+		2581DC801CAE31CD0086285E /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC731CAE31CD0086285E /* SyncManager.swift */; };
+		2581DC811CAE31CD0086285E /* UIImage+ColourInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC741CAE31CD0086285E /* UIImage+ColourInit.swift */; };
+		2581DC821CAE31CD0086285E /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC751CAE31CD0086285E /* UIImageView+DownloadImage.swift */; };
+		2581DC831CAE31CD0086285E /* UINib+RegisterNib.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC761CAE31CD0086285E /* UINib+RegisterNib.swift */; };
+		2581DC841CAE31CD0086285E /* UITableView+ReloadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC771CAE31CD0086285E /* UITableView+ReloadData.swift */; };
+		2581DC851CAE31CD0086285E /* UIView+AddConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC781CAE31CD0086285E /* UIView+AddConstraints.swift */; };
+		2581DC861CAE31CD0086285E /* String+AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC791CAE31CD0086285E /* String+AttributedString.swift */; };
+		2581DC8A1CAE3B650086285E /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC891CAE3B650086285E /* SwiftyJSON.swift */; };
+		2581DC8C1CAE41EF0086285E /* RLMSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC8B1CAE41EF0086285E /* RLMSupport.swift */; };
 		288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
 		3400A6811CA29D7D003DA0EC /* NSString+Categories.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3400A6801CA29D7D003DA0EC /* NSString+Categories.mm */; };
 		3400A6821CA29D7D003DA0EC /* NSString+Categories.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3400A6801CA29D7D003DA0EC /* NSString+Categories.mm */; };
@@ -672,6 +725,7 @@
 		F607C1891C032A8800B53A87 /* resources-hdpi_dark in Resources */ = {isa = PBXBuildFile; fileRef = F607C1841C032A8800B53A87 /* resources-hdpi_dark */; };
 		F607C18A1C032A8800B53A87 /* resources-hdpi_dark in Resources */ = {isa = PBXBuildFile; fileRef = F607C1841C032A8800B53A87 /* resources-hdpi_dark */; };
 		F607C18E1C047FDC00B53A87 /* MWMSegue.mm in Sources */ = {isa = PBXBuildFile; fileRef = F607C18D1C047FDC00B53A87 /* MWMSegue.mm */; };
+		F60F4A8A3B3464BD12F9018F /* Pods_MAPS_ME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B6E363A378AF516C9FA8576 /* Pods_MAPS_ME.framework */; };
 		F60F02E11C904E08003A0AF6 /* MWMReportProblemController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F60F02E01C904E08003A0AF6 /* MWMReportProblemController.mm */; };
 		F60F02E41C904E3E003A0AF6 /* MWMReportProblemExtendedController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F60F02E31C904E3E003A0AF6 /* MWMReportProblemExtendedController.mm */; };
 		F60F02E51C904E3E003A0AF6 /* MWMReportProblemExtendedController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F60F02E31C904E3E003A0AF6 /* MWMReportProblemExtendedController.mm */; };
@@ -839,16 +893,72 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		083A28646AC9FFF435D93765 /* Pods-MAPS.ME.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.adhoc.xcconfig"; sourceTree = "<group>"; };
 		1003EAD917170741005EBDAE /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* MapsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapsAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* MapsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = MapsAppDelegate.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		2581DC071CACD8900086285E /* MAPS.ME-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAPS.ME-Bridging-Header.h"; sourceTree = "<group>"; };
-		2581DC081CACD8910086285E /* GuideViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideViewController.swift; sourceTree = "<group>"; };
 		2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerAppDelegate.swift; sourceTree = "<group>"; };
 		2581DC0D1CAD29510086285E /* MapsAppDelegateWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapsAppDelegateWrapper.h; sourceTree = "<group>"; };
 		2581DC0E1CAD299C0086285E /* MapsAppDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapsAppDelegateWrapper.mm; sourceTree = "<group>"; };
+		2581DC111CAE30D50086285E /* ListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListController.swift; sourceTree = "<group>"; };
+		2581DC131CAE30E10086285E /* RegionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionController.swift; sourceTree = "<group>"; };
+		2581DC151CAE30E70086285E /* GuideItemController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemController.swift; sourceTree = "<group>"; };
+		2581DC181CAE311B0086285E /* TableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableController.swift; sourceTree = "<group>"; };
+		2581DC1A1CAE31340086285E /* AnnotationCalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationCalloutView.swift; sourceTree = "<group>"; };
+		2581DC1B1CAE31340086285E /* FilterBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterBox.swift; sourceTree = "<group>"; };
+		2581DC1C1CAE31340086285E /* FilterBox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterBox.xib; sourceTree = "<group>"; };
+		2581DC1D1CAE31340086285E /* GuideItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemCell.swift; sourceTree = "<group>"; };
+		2581DC1E1CAE31340086285E /* ImageLabelView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageLabelView.swift; sourceTree = "<group>"; };
+		2581DC1F1CAE31340086285E /* ListingCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingCardView.swift; sourceTree = "<group>"; };
+		2581DC201CAE31340086285E /* ListingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingCell.swift; sourceTree = "<group>"; };
+		2581DC211CAE31340086285E /* LoadingCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LoadingCell.xib; sourceTree = "<group>"; };
+		2581DC221CAE31340086285E /* RightDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightDetailCell.swift; sourceTree = "<group>"; };
+		2581DC231CAE31340086285E /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
+		2581DC241CAE31340086285E /* TextMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageCell.swift; sourceTree = "<group>"; };
+		2581DC301CAE31490086285E /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
+		2581DC311CAE31490086285E /* LicenseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LicenseController.swift; sourceTree = "<group>"; };
+		2581DC321CAE31490086285E /* ListingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingsController.swift; sourceTree = "<group>"; };
+		2581DC331CAE31490086285E /* SectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
+		2581DC341CAE31490086285E /* SwipeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeController.swift; sourceTree = "<group>"; };
+		2581DC3B1CAE315F0086285E /* DownloadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadController.swift; sourceTree = "<group>"; };
+		2581DC3C1CAE315F0086285E /* FilterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
+		2581DC3D1CAE315F0086285E /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
+		2581DC3E1CAE315F0086285E /* SearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
+		2581DC441CAE31700086285E /* GuideItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItem.swift; sourceTree = "<group>"; };
+		2581DC451CAE31700086285E /* GuideItemImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemImage.swift; sourceTree = "<group>"; };
+		2581DC461CAE31700086285E /* GuideListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideListing.swift; sourceTree = "<group>"; };
+		2581DC471CAE31700086285E /* GuideListingNotes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideListingNotes.swift; sourceTree = "<group>"; };
+		2581DC481CAE31700086285E /* GuideText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideText.swift; sourceTree = "<group>"; };
+		2581DC491CAE31700086285E /* Listing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Listing.swift; sourceTree = "<group>"; };
+		2581DC4A1CAE31700086285E /* Region.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Region.swift; sourceTree = "<group>"; };
+		2581DC4B1CAE31700086285E /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
+		2581DC4C1CAE31700086285E /* SimplePOI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimplePOI.swift; sourceTree = "<group>"; };
+		2581DC571CAE31890086285E /* AnnotationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationService.swift; sourceTree = "<group>"; };
+		2581DC581CAE31890086285E /* ContentService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentService.swift; sourceTree = "<group>"; };
+		2581DC591CAE31890086285E /* DatabaseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseService.swift; sourceTree = "<group>"; };
+		2581DC5A1CAE31890086285E /* DownloadService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
+		2581DC5B1CAE31890086285E /* JsonParserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonParserService.swift; sourceTree = "<group>"; };
+		2581DC641CAE31B00086285E /* OnlineSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineSearch.swift; sourceTree = "<group>"; };
+		2581DC651CAE31B00086285E /* SearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
+		2581DC6C1CAE31CD0086285E /* BridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
+		2581DC6D1CAE31CD0086285E /* DataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		2581DC6E1CAE31CD0086285E /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
+		2581DC6F1CAE31CD0086285E /* NetworkUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkUtil.swift; sourceTree = "<group>"; };
+		2581DC701CAE31CD0086285E /* NSBundle+BundlePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBundle+BundlePath.swift"; sourceTree = "<group>"; };
+		2581DC711CAE31CD0086285E /* NSURL+GetDirectory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURL+GetDirectory.swift"; sourceTree = "<group>"; };
+		2581DC731CAE31CD0086285E /* SyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
+		2581DC741CAE31CD0086285E /* UIImage+ColourInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+ColourInit.swift"; sourceTree = "<group>"; };
+		2581DC751CAE31CD0086285E /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
+		2581DC761CAE31CD0086285E /* UINib+RegisterNib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINib+RegisterNib.swift"; sourceTree = "<group>"; };
+		2581DC771CAE31CD0086285E /* UITableView+ReloadData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+ReloadData.swift"; sourceTree = "<group>"; };
+		2581DC781CAE31CD0086285E /* UIView+AddConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AddConstraints.swift"; sourceTree = "<group>"; };
+		2581DC791CAE31CD0086285E /* String+AttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+AttributedString.swift"; sourceTree = "<group>"; };
+		2581DC891CAE3B650086285E /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		2581DC8B1CAE41EF0086285E /* RLMSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLMSupport.swift; sourceTree = "<group>"; };
+		2581DC8D1CAE4D670086285E /* SwiftBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftBridge.h; sourceTree = "<group>"; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AB4B0D9B1048005BE974 /* Maps_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Maps_Prefix.pch; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		29B97316FDCFA39411CA2CEA /* main.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = main.mm; sourceTree = "<group>"; };
@@ -1187,6 +1297,7 @@
 		46F26CD710F623BA00ECCA39 /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = EAGLView.mm; sourceTree = "<group>"; };
 		46F26D1E10F626CB00ECCA39 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		46F8A2EB10EB63040045521A /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MapViewController.h; sourceTree = "<group>"; };
+		48463EEC30786F3EADE8301C /* Pods-MAPS.ME.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.release.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.release.xcconfig"; sourceTree = "<group>"; };
 		4A00DBDE1AB704C400113624 /* drules_proto_dark.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; name = drules_proto_dark.bin; path = ../../data/drules_proto_dark.bin; sourceTree = "<group>"; };
 		4A23D1561B8B4DD700D4EB6F /* drules_proto_clear.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; name = drules_proto_clear.bin; path = ../../data/drules_proto_clear.bin; sourceTree = "<group>"; };
 		4A23D1571B8B4DD700D4EB6F /* resources-6plus_clear */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-6plus_clear"; path = "../../data/resources-6plus_clear"; sourceTree = "<group>"; };
@@ -1204,6 +1315,7 @@
 		671182DE1C7F0DD400CB8177 /* countries_obsolete.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = countries_obsolete.txt; path = ../../data/countries_obsolete.txt; sourceTree = "<group>"; };
 		671182DF1C7F0DD400CB8177 /* packed_polygons_obsolete.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; name = packed_polygons_obsolete.bin; path = ../../data/packed_polygons_obsolete.bin; sourceTree = "<group>"; };
 		671182E01C7F0DD400CB8177 /* WorldCoasts_obsolete.mwm */ = {isa = PBXFileReference; lastKnownFileType = file; name = WorldCoasts_obsolete.mwm; path = ../../data/WorldCoasts_obsolete.mwm; sourceTree = "<group>"; };
+		5B40FF37F639DA95F25CFE23 /* Pods-MAPS.ME.simulator.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.simulator.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.simulator.xcconfig"; sourceTree = "<group>"; };
 		6741AA5D1BF340DE002C974C /* xcMAPS.ME.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xcMAPS.ME.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6741AA5F1BF34185002C974C /* defaults.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = defaults.xcconfig; path = ../../xcode/defaults.xcconfig; sourceTree = "<group>"; };
 		6741AAA21BF356B9002C974C /* libagg.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libagg.a; path = "../../../omim-xcode-build/Debug/libagg.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1247,6 +1359,8 @@
 		845C89321C8983F300940D7F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		845C89331C8983F300940D7F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		845C89341C8983F300940D7F /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		7B6E363A378AF516C9FA8576 /* Pods_MAPS_ME.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MAPS_ME.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		80C02D461403AF26C702260F /* Pods-MAPS.ME.production full.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.production full.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.production full.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MAPSME.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MAPSME.plist; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		972CDCC51887F1B7006641CA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		974386DB19373EA400FD5659 /* ToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastView.h; sourceTree = "<group>"; };
@@ -1309,8 +1423,10 @@
 		B08AA8D81A26299A00810B1C /* TimeUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeUtils.h; path = Categories/TimeUtils.h; sourceTree = "<group>"; };
 		B08AA8D91A26299A00810B1C /* TimeUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TimeUtils.mm; path = Categories/TimeUtils.mm; sourceTree = "<group>"; };
 		B0DFE6301A1B78A200B6C35E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/LocalNotifications.plist; sourceTree = "<group>"; };
+		C5198AC459AB3AA175F6EB97 /* Pods-MAPS.ME.simulator release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.simulator release.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.simulator release.xcconfig"; sourceTree = "<group>"; };
 		CB252D6B16FF82C8001E41E9 /* Statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Statistics.h; sourceTree = "<group>"; };
 		CB252D6C16FF82C8001E41E9 /* Statistics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Statistics.mm; sourceTree = "<group>"; };
+		CDCA75F59E51BB52ECFB2C91 /* Pods-MAPS.ME.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.debug.xcconfig"; sourceTree = "<group>"; };
 		ED48BBB317C267F5003E7E92 /* ColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPickerView.h; sourceTree = "<group>"; };
 		ED48BBB417C267F5003E7E92 /* ColorPickerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ColorPickerView.mm; sourceTree = "<group>"; };
 		ED48BBB817C2B1E2003E7E92 /* CircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleView.h; sourceTree = "<group>"; };
@@ -1595,6 +1711,7 @@
 				46F26C7310F61FD600ECCA39 /* OpenGLES.framework in Frameworks */,
 				845C892C1C8981CE00940D7F /* HockeySDK.framework in Frameworks */,
 				EEB7E22211E9079400080A68 /* CoreLocation.framework in Frameworks */,
+				F60F4A8A3B3464BD12F9018F /* Pods_MAPS_ME.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1731,11 +1848,122 @@
 		2581DC0A1CACF8930086285E /* Tripfinger */ = {
 			isa = PBXGroup;
 			children = (
-				2581DC081CACD8910086285E /* GuideViewController.swift */,
 				2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */,
+				2581DC891CAE3B650086285E /* SwiftyJSON.swift */,
+				2581DC3A1CAE31550086285E /* Controllers */,
+				2581DC101CAE30C30086285E /* Guide */,
+				2581DC431CAE31660086285E /* Model */,
+				2581DC561CAE31800086285E /* Service */,
+				2581DC171CAE30FC0086285E /* UI Components */,
+				2581DC6B1CAE31C00086285E /* Utils */,
+				2581DC8B1CAE41EF0086285E /* RLMSupport.swift */,
+				2581DC8D1CAE4D670086285E /* SwiftBridge.h */,
 			);
 			name = Tripfinger;
 			path = Classes;
+			sourceTree = "<group>";
+		};
+		2581DC101CAE30C30086285E /* Guide */ = {
+			isa = PBXGroup;
+			children = (
+				2581DC151CAE30E70086285E /* GuideItemController.swift */,
+				2581DC301CAE31490086285E /* DetailController.swift */,
+				2581DC311CAE31490086285E /* LicenseController.swift */,
+				2581DC321CAE31490086285E /* ListingsController.swift */,
+				2581DC331CAE31490086285E /* SectionController.swift */,
+				2581DC341CAE31490086285E /* SwipeController.swift */,
+				2581DC111CAE30D50086285E /* ListController.swift */,
+				2581DC131CAE30E10086285E /* RegionController.swift */,
+			);
+			name = Guide;
+			sourceTree = "<group>";
+		};
+		2581DC171CAE30FC0086285E /* UI Components */ = {
+			isa = PBXGroup;
+			children = (
+				2581DC1A1CAE31340086285E /* AnnotationCalloutView.swift */,
+				2581DC1B1CAE31340086285E /* FilterBox.swift */,
+				2581DC1C1CAE31340086285E /* FilterBox.xib */,
+				2581DC1D1CAE31340086285E /* GuideItemCell.swift */,
+				2581DC1E1CAE31340086285E /* ImageLabelView.swift */,
+				2581DC1F1CAE31340086285E /* ListingCardView.swift */,
+				2581DC201CAE31340086285E /* ListingCell.swift */,
+				2581DC211CAE31340086285E /* LoadingCell.xib */,
+				2581DC221CAE31340086285E /* RightDetailCell.swift */,
+				2581DC231CAE31340086285E /* TableSection.swift */,
+				2581DC241CAE31340086285E /* TextMessageCell.swift */,
+				2581DC181CAE311B0086285E /* TableController.swift */,
+			);
+			name = "UI Components";
+			sourceTree = "<group>";
+		};
+		2581DC3A1CAE31550086285E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2581DC3B1CAE315F0086285E /* DownloadController.swift */,
+				2581DC3C1CAE315F0086285E /* FilterController.swift */,
+				2581DC3D1CAE315F0086285E /* MapController.swift */,
+				2581DC3E1CAE315F0086285E /* SearchController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		2581DC431CAE31660086285E /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2581DC441CAE31700086285E /* GuideItem.swift */,
+				2581DC451CAE31700086285E /* GuideItemImage.swift */,
+				2581DC461CAE31700086285E /* GuideListing.swift */,
+				2581DC471CAE31700086285E /* GuideListingNotes.swift */,
+				2581DC481CAE31700086285E /* GuideText.swift */,
+				2581DC491CAE31700086285E /* Listing.swift */,
+				2581DC4A1CAE31700086285E /* Region.swift */,
+				2581DC4B1CAE31700086285E /* Session.swift */,
+				2581DC4C1CAE31700086285E /* SimplePOI.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		2581DC561CAE31800086285E /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				2581DC611CAE31A30086285E /* Search */,
+				2581DC571CAE31890086285E /* AnnotationService.swift */,
+				2581DC581CAE31890086285E /* ContentService.swift */,
+				2581DC591CAE31890086285E /* DatabaseService.swift */,
+				2581DC5A1CAE31890086285E /* DownloadService.swift */,
+				2581DC5B1CAE31890086285E /* JsonParserService.swift */,
+			);
+			name = Service;
+			sourceTree = "<group>";
+		};
+		2581DC611CAE31A30086285E /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				2581DC641CAE31B00086285E /* OnlineSearch.swift */,
+				2581DC651CAE31B00086285E /* SearchService.swift */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		2581DC6B1CAE31C00086285E /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				2581DC6C1CAE31CD0086285E /* BridgingHeader.h */,
+				2581DC6D1CAE31CD0086285E /* DataManager.swift */,
+				2581DC6E1CAE31CD0086285E /* ErrorHandler.swift */,
+				2581DC6F1CAE31CD0086285E /* NetworkUtil.swift */,
+				2581DC701CAE31CD0086285E /* NSBundle+BundlePath.swift */,
+				2581DC711CAE31CD0086285E /* NSURL+GetDirectory.swift */,
+				2581DC731CAE31CD0086285E /* SyncManager.swift */,
+				2581DC741CAE31CD0086285E /* UIImage+ColourInit.swift */,
+				2581DC751CAE31CD0086285E /* UIImageView+DownloadImage.swift */,
+				2581DC761CAE31CD0086285E /* UINib+RegisterNib.swift */,
+				2581DC771CAE31CD0086285E /* UITableView+ReloadData.swift */,
+				2581DC781CAE31CD0086285E /* UIView+AddConstraints.swift */,
+				2581DC791CAE31CD0086285E /* String+AttributedString.swift */,
+			);
+			name = Utils;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* Maps */ = {
@@ -1755,6 +1983,7 @@
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				8D1107310486CEB800E47090 /* MAPSME.plist */,
+				D30F007A28658400A04F8959 /* Pods */,
 			);
 			indentWidth = 2;
 			name = Maps;
@@ -1862,6 +2091,7 @@
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765070DF74369002DB57D /* CoreGraphics.framework */,
 				FA87151A12B1518F00592DAF /* SystemConfiguration.framework */,
+				7B6E363A378AF516C9FA8576 /* Pods_MAPS_ME.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2558,6 +2788,19 @@
 			path = Statistics;
 			sourceTree = "<group>";
 		};
+		D30F007A28658400A04F8959 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5B40FF37F639DA95F25CFE23 /* Pods-MAPS.ME.simulator.xcconfig */,
+				C5198AC459AB3AA175F6EB97 /* Pods-MAPS.ME.simulator release.xcconfig */,
+				CDCA75F59E51BB52ECFB2C91 /* Pods-MAPS.ME.debug.xcconfig */,
+				083A28646AC9FFF435D93765 /* Pods-MAPS.ME.adhoc.xcconfig */,
+				48463EEC30786F3EADE8301C /* Pods-MAPS.ME.release.xcconfig */,
+				80C02D461403AF26C702260F /* Pods-MAPS.ME.production full.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		F607C18B1C047FCA00B53A87 /* Segue */ = {
 			isa = PBXGroup;
 			children = (
@@ -3114,12 +3357,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MAPS.ME" */;
 			buildPhases = (
+				038F3781796A7A37D5C47484 /* Check Pods Manifest.lock */,
 				FA3A60E715AD5BBD00F40D20 /* Run Script */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 				F6D434721AD2AB97007C7728 /* Embed App Extensions */,
 				34A62D4A1C9034D0007FDCB7 /* ShellScript */,
+				A09E6597B2E1EBD435608BBC /* Embed Pods Frameworks */,
+				65A883D0952D96D3002AA800 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3284,6 +3530,7 @@
 				6B653B941C7F2DE4007BEFC5 /* cuisine-strings in Resources */,
 				34B6CF5D1BBBFC6B009203C6 /* LaunchScreen.storyboard in Resources */,
 				3476B8DC1BFDD30B00874594 /* tts-how-to-set-up-voice.html in Resources */,
+				2581DC271CAE31340086285E /* FilterBox.xib in Resources */,
 				978D4A31199A11E600D72CA7 /* faq.html in Resources */,
 				3491E7CD1C06F1F10042FE24 /* MWMPlacePageButtonCell.xib in Resources */,
 				F66A8FB21B0A0954001B9C97 /* PlacePageView.xib in Resources */,
@@ -3303,6 +3550,7 @@
 				F6A750BB1BE8C7BA00981B41 /* MWMSearchHistoryMyPositionCell.xib in Resources */,
 				671182E31C7F0DD400CB8177 /* WorldCoasts_obsolete.mwm in Resources */,
 				4A7D89C51B2EBF3B00AC843E /* resources-6plus_dark in Resources */,
+				2581DC2C1CAE31340086285E /* LoadingCell.xib in Resources */,
 				FA459EB414327AF700B5BB3C /* WorldCoasts.mwm in Resources */,
 				FA85F633145DDDC20090E1A0 /* packed_polygons.bin in Resources */,
 				F6ED13561B16439E0095C6DE /* MWMDirectionView.xib in Resources */,
@@ -3513,18 +3761,50 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		34A62D4A1C9034D0007FDCB7 /* ShellScript */ = {
+		038F3781796A7A37D5C47484 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
+			name = "Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\nLOWERED_CONFIG=`echo $CONFIGURATION | tr [A-Z] [a-z]`\nif [[ \"$LOWERED_CONFIG\" == *production* || \"$LOWERED_CONFIG\" == *adhoc* ]]; then\n  LINE=`grep CRASHLYTICS_IOS_KEY ../../private.h`\n    if [[ $LINE =~ \\\"(.*)\\\" ]]; then\n      CRASHLYTICS_KEY=${BASH_REMATCH[1]}\n      if [[ \"$CRASHLYTICS_KEY\" ]]; then\n        bash \"./Fabric.framework/run\" \"$CRASHLYTICS_KEY\"\n      fi\n    fi\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		65A883D0952D96D3002AA800 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A09E6597B2E1EBD435608BBC /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		FA3A60E715AD5BBD00F40D20 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3550,12 +3830,17 @@
 				344825971B8DCEC400757B1B /* MWMSearchDownloadView.mm in Sources */,
 				978D4A251996B0EC00D72CA7 /* CommunityVC.mm in Sources */,
 				1D60589B0D05DD56006BFB54 /* main.mm in Sources */,
+				2581DC2A1CAE31340086285E /* ListingCardView.swift in Sources */,
+				2581DC421CAE315F0086285E /* SearchController.swift in Sources */,
+				2581DC5F1CAE31890086285E /* DownloadService.swift in Sources */,
 				34CC4C091B81F3B500E44C1F /* MWMSearchTabbedViewController.mm in Sources */,
 				340837161B72451A00B5C185 /* MWMShareLocationActivityItem.mm in Sources */,
 				34F9FB901C43AF2400F71201 /* MWMStreetEditorEditTableViewCell.mm in Sources */,
+				2581DC281CAE31340086285E /* GuideItemCell.swift in Sources */,
 				978D4A291996C17300D72CA7 /* RichTextVC.mm in Sources */,
 				9747278418338F0C006B7CB7 /* UIViewController+Navigation.mm in Sources */,
 				F6BC1E521ACBF98600EF0360 /* MWMFacebookAlert.mm in Sources */,
+				2581DC4D1CAE31700086285E /* GuideItem.swift in Sources */,
 				F64F199D1AB81A00006EAF7E /* MWMDefaultAlert.mm in Sources */,
 				3438CDF81B8616760051AA78 /* MWMSearchShowOnMapCell.mm in Sources */,
 				34F45E8E1B96E88100AC93F8 /* MWMSearchTabButtonsView.mm in Sources */,
@@ -3564,9 +3849,11 @@
 				34CD81BB1C91C24D007D2A60 /* MWMWelcomeController.mm in Sources */,
 				F6C934401AE64E4200DDC624 /* MWMSpringAnimation.mm in Sources */,
 				34B82ACA1B8465C100180497 /* MWMSearchCategoryCell.mm in Sources */,
+				2581DC7C1CAE31CD0086285E /* NetworkUtil.swift in Sources */,
 				1D3623260D0F684500981E51 /* MapsAppDelegate.mm in Sources */,
 				341522BF1B666A550077AA8F /* MWMAPIBarView.mm in Sources */,
 				349A35831B53E967009677EE /* MWMDownloadMapRequest.mm in Sources */,
+				2581DC521CAE31700086285E /* Listing.swift in Sources */,
 				349C26B51BB02C6F0005DF2F /* MWMBottomMenuViewController.mm in Sources */,
 				3438CDF41B85F1170051AA78 /* MWMConsole.mm in Sources */,
 				F6AD57BA1C87039F00CED368 /* MWMEditorCategoryCell.mm in Sources */,
@@ -3576,6 +3863,7 @@
 				F6791B131C43DEA7007A8A6E /* MWMStartButton.mm in Sources */,
 				46F26CD810F623BA00ECCA39 /* EAGLView.mm in Sources */,
 				34F9FB8B1C438ADB00F71201 /* MWMStreetEditorViewController.mm in Sources */,
+				2581DC4E1CAE31700086285E /* GuideItemImage.swift in Sources */,
 				EED10A4511F78D120095FAD4 /* MapViewController.mm in Sources */,
 				34CCFDD11C21945500F28959 /* MWMPlacePageOpeningHoursDayView.mm in Sources */,
 				F60F02E41C904E3E003A0AF6 /* MWMReportProblemExtendedController.mm in Sources */,
@@ -3586,27 +3874,41 @@
 				34181EB91C0ED1C30081B586 /* MWMOpeningHoursSection.mm in Sources */,
 				F62404FB1AAF3DB200B58DB6 /* UILabel+RuntimeAttributes.mm in Sources */,
 				34CC4C0E1B82069C00E44C1F /* MWMSearchTabbedCollectionViewCell.mm in Sources */,
+				2581DC5E1CAE31890086285E /* DatabaseService.swift in Sources */,
 				F6588E2C1B15C26700EE1E58 /* MWMTextView.mm in Sources */,
+				2581DC851CAE31CD0086285E /* UIView+AddConstraints.swift in Sources */,
+				2581DC291CAE31340086285E /* ImageLabelView.swift in Sources */,
 				34FE4C451BCC013500066718 /* MWMMapWidgets.mm in Sources */,
 				F61B0F2C1B8B82DB00C08258 /* MWMNextTurnPanel.mm in Sources */,
 				347FD8831C60B2CE002FB65E /* MWMOpeningHoursTableViewCell.mm in Sources */,
 				F6F722F81AE1572400DA3DA1 /* MWMiPhonePortraitPlacePage.mm in Sources */,
+				2581DC7A1CAE31CD0086285E /* DataManager.swift in Sources */,
+				2581DC8C1CAE41EF0086285E /* RLMSupport.swift in Sources */,
 				F6CB21681AEFC6AA00FB8963 /* MWMPlacePageActionBar.mm in Sources */,
 				F68E6BD21B8DB7AE0040566D /* MWMRouteHelperPanel.mm in Sources */,
 				34E273251C73876500463965 /* MWMMigrationView.mm in Sources */,
 				347FD87B1C60B2CE002FB65E /* MWMOpeningHoursDeleteScheduleTableViewCell.mm in Sources */,
 				34BC72291B0DECAE0012A34B /* MWMZoomButtons.mm in Sources */,
 				340C20E31C3E565600111D22 /* MWMCuisineEditorViewController.mm in Sources */,
+				2581DC801CAE31CD0086285E /* SyncManager.swift in Sources */,
 				34B82ADE1B84A4A000180497 /* MWMSearchCommonCell.mm in Sources */,
+				978F9253183BD530000D6C7C /* NavigationController.mm in Sources */,
+				2581DC511CAE31700086285E /* GuideText.swift in Sources */,
+				2581DC2F1CAE31340086285E /* TextMessageCell.swift in Sources */,
+				2581DC2B1CAE31340086285E /* ListingCell.swift in Sources */,
 				F66A8FA81B09F052001B9C97 /* MWMiPhoneLandscapePlacePage.mm in Sources */,
+				2581DC2E1CAE31340086285E /* TableSection.swift in Sources */,
 				974386DD19373EA400FD5659 /* ToastView.mm in Sources */,
 				F6C9343C1AE4F94A00DDC624 /* MWMAnimator.mm in Sources */,
 				347FD8771C60B2CE002FB65E /* MWMOpeningHoursDaysSelectorTableViewCell.mm in Sources */,
 				342EE4111C43DAA7009F6A49 /* MWMAuthorizationWebViewLoginViewController.mm in Sources */,
+				2581DC391CAE31490086285E /* SwipeController.swift in Sources */,
 				3438CDFC1B862F5C0051AA78 /* MWMSearchContentView.mm in Sources */,
 				34479C7C1C60C6130065D261 /* MWMFrameworkListener.mm in Sources */,
 				3485C0121B85C20E00F7712D /* MWMSearchTableViewController.mm in Sources */,
 				F64D9C9F1C899C350063FA30 /* MWMEditorViralAlert.mm in Sources */,
+				2581DC3F1CAE315F0086285E /* DownloadController.swift in Sources */,
+				977E26B919E2E64200BA2219 /* MapsObservers.mm in Sources */,
 				34CFFE8B1B7DE6FD009D0C9F /* MWMSearchManager.mm in Sources */,
 				34ABA62C1C2D57D500FE1BEC /* MWMInputPasswordValidator.mm in Sources */,
 				34ABA6161C2D185C00FE1BEC /* MWMAuthorizationOSMLoginViewController.mm in Sources */,
@@ -3615,8 +3917,12 @@
 				F66A8FB01B09F268001B9C97 /* MWMPlacePage.mm in Sources */,
 				F6ED13911B1EF96B0095C6DE /* MWMBookmarkDescriptionViewController.mm in Sources */,
 				349A35851B53E967009677EE /* MWMDownloadMapRequestView.mm in Sources */,
+				2581DC5C1CAE31890086285E /* AnnotationService.swift in Sources */,
 				F64F19991AB81A00006EAF7E /* MWMAlertViewController.mm in Sources */,
 				341223BB1BEB58FA007227E9 /* MWMBaseMapDownloaderViewController.mm in Sources */,
+				2581DC7E1CAE31CD0086285E /* NSURL+GetDirectory.swift in Sources */,
+				2581DC191CAE311C0086285E /* TableController.swift in Sources */,
+				2581DC541CAE31700086285E /* Session.swift in Sources */,
 				FAFCB63613366E78001A5C59 /* WebViewController.mm in Sources */,
 				34C9BD091C6DBCDA000DC38D /* MWMNavigationController.mm in Sources */,
 				3406FA151C6E0C3300E9FAD2 /* MWMMapDownloadDialog.mm in Sources */,
@@ -3627,8 +3933,11 @@
 				F607C18E1C047FDC00B53A87 /* MWMSegue.mm in Sources */,
 				34DCDE3A1C75CD8100652CAC /* Framework.cpp in Sources */,
 				F6FE2C0F1B03A006009814AA /* MWMPlacePageNavigationBar.mm in Sources */,
+				2581DC261CAE31340086285E /* FilterBox.swift in Sources */,
+				2581DC841CAE31CD0086285E /* UITableView+ReloadData.swift in Sources */,
 				F64A37D01B9EE24C00180464 /* MWMRouteHelperPanelsDrawer.mm in Sources */,
 				341138801C15B50B002E3B3E /* MWMOpeningHoursModel.mm in Sources */,
+				2581DC8A1CAE3B650086285E /* SwiftyJSON.swift in Sources */,
 				340F24631B14910500F874CD /* RouteState.mm in Sources */,
 				F6830F111B85F6B900C42AAE /* MWMLanesPanel.mm in Sources */,
 				9747264318323080006B7CB7 /* UIKitCategories.mm in Sources */,
@@ -3642,22 +3951,28 @@
 				B08AA8DA1A26299A00810B1C /* TimeUtils.mm in Sources */,
 				F6CB216D1AF13EBD00FB8963 /* MWMPlacePageBookmarkCell.mm in Sources */,
 				F653D4231AE9398700282659 /* MWMPlacePageViewManager.mm in Sources */,
+				2581DC411CAE315F0086285E /* MapController.swift in Sources */,
 				341F99ED1C6B28A7001C67B8 /* MWMMapDownloaderExtendedDataSource.mm in Sources */,
 				F65243351B0B634F00BFA9D4 /* MWMPlacePage+Animation.mm in Sources */,
 				349A357C1B53D4C9009677EE /* MWMCircularProgressView.mm in Sources */,
 				3465E7D81B6658C000854C4D /* MWMAPIBar.mm in Sources */,
 				FA29FDAA141E77F8004ADF66 /* Preferences.mm in Sources */,
 				F6588E371B15D87A00EE1E58 /* MWMBookmarkColorCell.mm in Sources */,
+				2581DC551CAE31700086285E /* SimplePOI.swift in Sources */,
+				2581DC861CAE31CD0086285E /* String+AttributedString.swift in Sources */,
 				F6D409FA1B319BD70041730F /* ContextViews.mm in Sources */,
 				342CC5F11C2D7730005F3FE5 /* MWMAuthorizationLoginViewController.mm in Sources */,
 				347FD8851C60B2CE002FB65E /* MWMOpeningHoursTimeSelectorTableViewCell.mm in Sources */,
 				34EB84581C073DF70004689F /* MWMOpeningHoursEditorViewController.mm in Sources */,
 				349A357A1B53D4C9009677EE /* MWMCircularProgress.mm in Sources */,
 				FAA5C2A2144F135F005337F6 /* LocationManager.mm in Sources */,
+				2581DC351CAE31490086285E /* DetailController.swift in Sources */,
 				34B82ADA1B847FFC00180497 /* MWMSearchCell.mm in Sources */,
 				F6FEA82D1C58E89B007223CC /* MWMButton.mm in Sources */,
+				2581DC401CAE315F0086285E /* FilterController.swift in Sources */,
 				F66A8FAC1B09F137001B9C97 /* MWMiPadPlacePage.mm in Sources */,
 				978F9240183B660F000D6C7C /* SettingsViewController.mm in Sources */,
+				2581DC501CAE31700086285E /* GuideListingNotes.swift in Sources */,
 				F6BD33871B62412E00F2CE18 /* MWMNavigationDashboardEntity.mm in Sources */,
 				F6CB21601AEE7A5B00FB8963 /* MWMPlacePageInfoCell.mm in Sources */,
 				340E10601B944DAB00D975D5 /* MWMSearchHistoryManager.mm in Sources */,
@@ -3665,24 +3980,33 @@
 				347FD8731C60B2CE002FB65E /* MWMOpeningHoursClosedSpanTableViewCell.mm in Sources */,
 				FA36B80D15403A4F004560CC /* BookmarksVC.mm in Sources */,
 				F668F6561BCD4507002D6FFC /* MWMTTSSettingsViewController.mm in Sources */,
+				2581DC681CAE31B00086285E /* OnlineSearch.swift in Sources */,
 				34ABA61B1C2D4DCC00FE1BEC /* UITextField+RuntimeAttributes.mm in Sources */,
 				F6ED135B1B18AA930095C6DE /* MWMExtendedPlacePageView.mm in Sources */,
+				2581DC811CAE31CD0086285E /* UIImage+ColourInit.swift in Sources */,
 				2581DC0C1CACF8AB0086285E /* TripfingerAppDelegate.swift in Sources */,
 				3401CD7D1C3CF1BE0028C6F8 /* MWMEditorSwitchTableViewCell.mm in Sources */,
 				34B16C451B72655D000D3A0D /* MWMPedestrianShareAlert.mm in Sources */,
 				347BAC6E1B736BA70010FF78 /* MWMSharePedestrianRoutesToastActivityItem.mm in Sources */,
+				2581DC7B1CAE31CD0086285E /* ErrorHandler.swift in Sources */,
 				34B82AD61B84746E00180497 /* MWMSearchSuggestionCell.mm in Sources */,
 				F6C641B01C15BBE6008FCAF3 /* MWMRecentTrackSettingsController.mm in Sources */,
 				341F99F11C6B4288001C67B8 /* MWMMapDownloaderSearchDataSource.mm in Sources */,
 				F6588E2F1B15D2BC00EE1E58 /* MWMBookmarkColorViewController.mm in Sources */,
 				34BC1E561C2ADBD3009BBF51 /* MWMOpeningHoursCommon.mm in Sources */,
 				F653CE161C71F60200A453F1 /* MWMAddPlaceNavigationBar.mm in Sources */,
+				349A358E1B53EABC009677EE /* MWMSearchDownloadMapRequestView.mm in Sources */,
+				2581DC121CAE30D50086285E /* ListController.swift in Sources */,
+				2581DC531CAE31700086285E /* Region.swift in Sources */,
+				34FDF4BB1C5F8D6D00542F62 /* UIButton+Coloring.mm in Sources */,
 				A32B6D4D1A14980500E54A65 /* iosOGLContextFactory.mm in Sources */,
 				347FD8671C60B2CE002FB65E /* MWMOpeningHoursAddClosedTableViewCell.mm in Sources */,
 				FA054612155C465E001F4E37 /* SelectSetVC.mm in Sources */,
 				FAA614B8155F16950031C345 /* AddSetVC.mm in Sources */,
 				34ABA6301C2D58F300FE1BEC /* MWMInputEmailValidator.mm in Sources */,
 				34CC4C121B82120700E44C1F /* MWMSearchTabbedViewLayout.mm in Sources */,
+				F681DE971BFB390A00B547C7 /* MWMWhatsNewController.mm in Sources */,
+				2581DC5D1CAE31890086285E /* ContentService.swift in Sources */,
 				FAAEA7D5161D8D3100CCD661 /* BookmarksRootVC.mm in Sources */,
 				3401CD671C3C03A80028C6F8 /* MWMEditorTextTableViewCell.mm in Sources */,
 				340837131B7243CE00B5C185 /* MWMActivityViewController.mm in Sources */,
@@ -3692,13 +4016,18 @@
 				344825931B8DBADF00757B1B /* MWMSearchDownloadViewController.mm in Sources */,
 				345FDD261C3BB3AF0070C459 /* MWMEditorViewController.mm in Sources */,
 				34B82ABA1B837FFD00180497 /* MWMSearchHistoryRequestCell.mm in Sources */,
+				2581DC2D1CAE31340086285E /* RightDetailCell.swift in Sources */,
 				34BAB6E91BB2DA0C00DB941B /* MWMBottomMenuLayout.mm in Sources */,
 				F785EB4016386FC4003A38A8 /* BookmarkCell.mm in Sources */,
+				2581DC4F1CAE31700086285E /* GuideListing.swift in Sources */,
 				34BAB6ED1BB2DFCE00DB941B /* MWMBottomMenuCollectionViewCell.mm in Sources */,
 				34CCFDE01C22A2EF00F28959 /* MWMPlacePageOpeningHoursCell.mm in Sources */,
 				341F99E11C6B1165001C67B8 /* MWMMapDownloaderTableViewCell.mm in Sources */,
+				2581DC361CAE31490086285E /* LicenseController.swift in Sources */,
 				34BC72241B0DECAE0012A34B /* MWMMapViewControlsManager.mm in Sources */,
+				2581DC141CAE30E10086285E /* RegionController.swift in Sources */,
 				F6B2E61F1C3D5F31005562DF /* MWMNightModeController.mm in Sources */,
+				2581DC381CAE31490086285E /* SectionController.swift in Sources */,
 				F6BD33791B62400E00F2CE18 /* MWMNavigationDashboard.mm in Sources */,
 				F60F02E91C904F40003A0AF6 /* MWMReportBaseController.mm in Sources */,
 				F6BD1D201CA412920047B8E8 /* MWMOsmAuthAlert.mm in Sources */,
@@ -3712,21 +4041,28 @@
 				978F9242183B660F000D6C7C /* SelectableCell.mm in Sources */,
 				34ABA6241C2D551900FE1BEC /* MWMInputValidatorFactory.mm in Sources */,
 				34B82AE21B84AC5E00180497 /* MWMSearchCategoriesManager.mm in Sources */,
+				2581DC831CAE31CD0086285E /* UINib+RegisterNib.swift in Sources */,
 				34BC722A1B0DECAE0012A34B /* MWMZoomButtonsView.mm in Sources */,
 				34CE8A671C7740E100F4351A /* MWMStorage.mm in Sources */,
+				2581DC161CAE30E70086285E /* GuideItemController.swift in Sources */,
 				F6F533A31B3C248900C1940B /* UIColor+MapsMeColor.mm in Sources */,
 				346EDADB1B9F0E35004F8DB5 /* MWMMultilineLabel.mm in Sources */,
 				34C9BD041C6DB693000DC38D /* MWMViewController.mm in Sources */,
+				2581DC7D1CAE31CD0086285E /* NSBundle+BundlePath.swift in Sources */,
 				CB252D6F16FF82C9001E41E9 /* Statistics.mm in Sources */,
 				342AF0E01BE24E9A0016F3AE /* MWMMapDownloaderViewController.mm in Sources */,
 				341F99DD1C6B1165001C67B8 /* MWMMapDownloaderSubplaceTableViewCell.mm in Sources */,
+				2581DC251CAE31340086285E /* AnnotationCalloutView.swift in Sources */,
+				F6D5822D1BFDB7C6009409E8 /* MWMPageController.mm in Sources */,
 				6BA0BCD11B74DDBA00CC9969 /* MWMCustomFacebookEvents.mm in Sources */,
 				978F9244183B660F000D6C7C /* SwitchCell.mm in Sources */,
 				342AD7721B53D32F00E0B997 /* UIView+RuntimeAttributes.mm in Sources */,
 				F626D52E1C3E6CAA00C17D15 /* MWMTableViewCell.mm in Sources */,
 				34F9FB871C438ADB00F71201 /* MWMStreetEditorCommonTableViewCell.mm in Sources */,
+				2581DC601CAE31890086285E /* JsonParserService.swift in Sources */,
 				F64F4B6D1B46A51F0081A24A /* MWMDownloaderDialogCell.mm in Sources */,
 				3491E7CB1C06F1F10042FE24 /* MWMPlacePageButtonCell.mm in Sources */,
+				2581DC821CAE31CD0086285E /* UIImageView+DownloadImage.swift in Sources */,
 				97508423199522D300A7457D /* SettingsAndMoreVC.mm in Sources */,
 				F60F02E11C904E08003A0AF6 /* MWMReportProblemController.mm in Sources */,
 				341F99D91C6B1165001C67B8 /* MWMMapDownloaderPlaceTableViewCell.mm in Sources */,
@@ -3743,14 +4079,15 @@
 				F6BD33841B6240F200F2CE18 /* MWMNavigationView.mm in Sources */,
 				3472EC051B4D44BE0085CB79 /* UIFont+MapsMeFonts.mm in Sources */,
 				342AD76F1B53D30C00E0B997 /* UIButton+RuntimeAttributes.mm in Sources */,
+				2581DC371CAE31490086285E /* ListingsController.swift in Sources */,
 				349C26B91BB04ED30005DF2F /* MWMBottomMenuView.mm in Sources */,
 				2581DC0F1CAD299C0086285E /* MapsAppDelegateWrapper.mm in Sources */,
+				2581DC691CAE31B00086285E /* SearchService.swift in Sources */,
 				349A358C1B53EABC009677EE /* MWMSearchDownloadMapRequest.mm in Sources */,
 				F63732961AE9431E00A03764 /* MWMBasePlacePageView.mm in Sources */,
 				F64F199B1AB81A00006EAF7E /* MWMAlert.mm in Sources */,
 				ED48BBB517C267F5003E7E92 /* ColorPickerView.mm in Sources */,
 				ED48BBBA17C2B1E2003E7E92 /* CircleView.mm in Sources */,
-				2581DC091CACD8910086285E /* GuideViewController.swift in Sources */,
 				340E10631B949D1900D975D5 /* MWMSearchBookmarksManager.mm in Sources */,
 				34D15BA81BD8F93C00C8BCBE /* AddSetTableViewCell.mm in Sources */,
 				F6A218491CA3F26800BE2CC6 /* MWMEditorViralActivityItem.mm in Sources */,
@@ -4361,7 +4698,7 @@
 					"-loauthcpp",
 					"-leditor",
 				);
-				PRODUCT_NAME = tripfinger;
+				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4372,6 +4709,7 @@
 		};
 		FAAB411A149BA83500C245B1 /* Simulator */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B40FF37F639DA95F25CFE23 /* Pods-MAPS.ME.simulator.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -4494,7 +4832,7 @@
 					"-loauthcpp",
 					"-leditor",
 				);
-				PRODUCT_NAME = tripfinger;
+				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4504,6 +4842,7 @@
 		};
 		FAAB411C149BA84700C245B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CDCA75F59E51BB52ECFB2C91 /* Pods-MAPS.ME.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -4639,6 +4978,7 @@
 		};
 		FAAB411E149BA85500C245B1 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 083A28646AC9FFF435D93765 /* Pods-MAPS.ME.adhoc.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -4762,7 +5102,7 @@
 					"-loauthcpp",
 					"-leditor",
 				);
-				PRODUCT_NAME = maps.me;
+				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4773,6 +5113,7 @@
 		};
 		FAAB4120149BA86000C245B1 /* Production Full */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 80C02D461403AF26C702260F /* Pods-MAPS.ME.production full.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -4895,7 +5236,7 @@
 					"-loauthcpp",
 					"-leditor",
 				);
-				PRODUCT_NAME = tripfinger;
+				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -4905,6 +5246,7 @@
 		};
 		FABB561F149CD957006969C0 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 48463EEC30786F3EADE8301C /* Pods-MAPS.ME.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -4912,6 +5254,7 @@
 				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5037,6 +5380,7 @@
 		};
 		FACFE54515F8F35600CE8B20 /* Simulator Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5198AC459AB3AA175F6EB97 /* Pods-MAPS.ME.simulator release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;

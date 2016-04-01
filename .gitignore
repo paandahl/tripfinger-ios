@@ -61,6 +61,14 @@ xcode/**/xcshareddata
 tools/emacsmode/build
 **/DerivedData/*
 
+# Tripfinger additions
+iphone/Maps/*.xcworkspace/
+## Build generated
+iphone/Maps/build/
+iphone/Maps/DerivedData
+iphone/Maps/.idea/
+Pods/
+
 # GeneratedFiles
 version/version.hpp
 tools/win/MapsWithMe*
