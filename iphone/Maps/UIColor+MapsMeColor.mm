@@ -53,7 +53,7 @@ NSDictionary<NSString *, UIColor *> * night =
 NSDictionary<NSString *, UIColor *> * day =
 @{
   @"primaryDark" : [UIColor colorWithRed:scaled(24.) green:scaled(128) blue:scaled(68.) alpha:alpha100],
-  @"primary" : [UIColor colorWithRed:scaled(32.) green:scaled(152.) blue:scaled(82.) alpha:alpha100],
+  @"primary" : [UIColor colorWithRed:scaled(36.) green:scaled(182.) blue:scaled(243.) alpha:alpha100],
   // Light green color
   @"primaryLight" : [UIColor colorWithRed:scaled(36.) green:scaled(180.) blue:scaled(98.) alpha:alpha100],
   @"menuBackground" : [UIColor colorWithWhite:1. alpha:alpha80],
