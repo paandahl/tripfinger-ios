@@ -19,8 +19,8 @@ static CGFloat const kDefaultAnimationDuration = .2;
 
 static inline NSString * const kApplicationGroupIdentifier()
 {
-  static NSString * const productionGroupIdentifier = @"group.mapsme.watchkit.production";
-  static NSString * const developerGroupIdentifier = @"group.mapsme.watchkit";
+  static NSString * const productionGroupIdentifier = @"group.tripfinger.watchkit.production";
+  static NSString * const developerGroupIdentifier = @"group.tripfinger.watchkit";
 
   static NSString * const productionAppBundleIdentifier = @"com.mapswithme.full";
   static NSString * const productionExtBundleIdentifier = @"com.mapswithme.full.watchkitextension";

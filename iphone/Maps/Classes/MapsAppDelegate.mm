@@ -16,6 +16,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <Parse/Parse.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
+#import "tripfinger-Swift.h"
 
 #import "3party/Alohalytics/src/alohalytics_objc.h"
 
@@ -100,6 +101,7 @@ void InitLocalizedStrings()
   NSString * m_scheme;
   NSString * m_sourceApplication;
   ActiveMapsObserver * m_mapsObserver;
+  MapViewController * iMapViewController;
 }
 
 + (MapsAppDelegate *)theApp
@@ -111,6 +113,8 @@ void InitLocalizedStrings()
 
 - (void)registerNotifications:(UIApplication *)application launchOptions:(NSDictionary *)launchOptions
 {
+  NSLog(@"registerNotifications");
+
   [Parse enableLocalDatastore];
   [Parse setApplicationId:@(PARSE_APPLICATION_ID) clientKey:@(PARSE_CLIENT_KEY)];
   [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
@@ -129,6 +133,8 @@ void InitLocalizedStrings()
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
+  NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken");
+
   PFInstallation * currentInstallation = [PFInstallation currentInstallation];
   [currentInstallation setDeviceTokenFromData:deviceToken];
   AppInfo * appInfo = [AppInfo sharedInfo];
@@ -148,6 +154,8 @@ void InitLocalizedStrings()
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+  NSLog(@"didReceiveRemoteNotification");
+
   [[Statistics instance] logEvent:kStatEventName(kStatApplication, kStatPushReceived) withParameters:userInfo];
   if (![self handleURLPush:userInfo])
     [PFPush handlePush:userInfo];
@@ -227,6 +235,7 @@ void InitLocalizedStrings()
 
 - (void)commonInit
 {
+  NSLog(@"commonInit");
   [HttpThread setDownloadIndicatorProtocol:self];
   InitLocalizedStrings();
   [Preferences setup];
@@ -244,6 +253,8 @@ void InitLocalizedStrings()
 
 - (void)determineMapStyle
 {
+  NSLog(@"determineMapStyle");
+
   auto & f = GetFramework();
   if ([MapsAppDelegate isAutoNightMode])
   {
@@ -285,6 +296,8 @@ void InitLocalizedStrings()
 
 + (void)resetToDefaultMapStyle
 {
+  NSLog(@"resetToDefaultMapStyle");
+
   MapsAppDelegate * app = MapsAppDelegate.theApp;
   auto & f = GetFramework();
   auto style = f.GetMapStyle();
@@ -298,6 +311,8 @@ void InitLocalizedStrings()
 
 + (void)changeMapStyleIfNedeed
 {
+  NSLog(@"changeMapStyleIfNedeed");
+
   NSAssert([MapsAppDelegate isAutoNightMode], @"Invalid auto switcher's state");
   auto & f = GetFramework();
   MapsAppDelegate * app = MapsAppDelegate.theApp;
@@ -335,6 +350,10 @@ void InitLocalizedStrings()
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  TripfingerAppDelegate *appDelegate = [[TripfingerAppDelegate alloc] init];
+  UIWindow *window = [appDelegate applicationLaunched:application delegate:self didFinishLaunchingWithOptions:launchOptions];
+  self.window = window;
+
   // Initialize all 3party engines.
   BOOL returnValue = [self initStatistics:application didFinishLaunchingWithOptions:launchOptions];
   if (launchOptions[UIApplicationLaunchOptionsLocationKey])
@@ -380,12 +399,15 @@ void InitLocalizedStrings()
     performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem
                completionHandler:(void (^)(BOOL))completionHandler
 {
+  NSLog(@"performActionForShortcutItem");
+
   [self.mapViewController performAction:shortcutItem.type];
   completionHandler(YES);
 }
 
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
+    NSLog(@"performFetchWithCompletionHandler");
   // At the moment, we need to perform 2 asynchronous background tasks simultaneously:
   // 1. Check if map for current location is already downloaded, and if not - notify user to download it.
   // 2. Try to send collected statistics (if any) to our server.
@@ -395,12 +417,16 @@ void InitLocalizedStrings()
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
+  NSLog(@"applicationWillTerminate");
+
   [self.m_locationManager beforeTerminate];
   [self.mapViewController onTerminate];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+  NSLog(@"applicationDidEnterBackground");
+
   [self.m_locationManager onBackground];
   [self.mapViewController onEnterBackground];
   if (m_activeDownloadsCounter)
@@ -414,12 +440,16 @@ void InitLocalizedStrings()
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {
+  NSLog(@"applicationWillResignActive");
+
   [self.mapViewController.appWallAd close];
   [RouteState save];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
+  NSLog(@"applicationWillEnterForeground");
+
   if (self.m_locationManager.isDaemonMode)
   {
     [self.m_locationManager onForeground];
@@ -440,6 +470,8 @@ void InitLocalizedStrings()
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+  NSLog(@"applicationDidBecomeActive");
+
   if (application.applicationState == UIApplicationStateBackground)
     return;
   [self handleURLs];
@@ -456,6 +488,7 @@ void InitLocalizedStrings()
 
 - (BOOL)initStatistics:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  NSLog(@"initStatistics");
   Statistics * statistics = [Statistics instance];
   BOOL returnValue = [statistics application:application didFinishLaunchingWithOptions:launchOptions];
 
@@ -509,6 +542,7 @@ void InitLocalizedStrings()
 
 + (void)customizeAppearance
 {
+  NSLog(@"customizeAppeareance");
   NSDictionary * attributes = @{
     NSForegroundColorAttributeName : [UIColor whitePrimaryText],
     NSFontAttributeName : [UIFont regular18]
@@ -532,11 +566,15 @@ void InitLocalizedStrings()
 
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
+  NSLog(@"didReceiveLocalNotification");
+
   [[LocalNotificationManager sharedManager] processNotification:notification onLaunch:NO];
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
+  NSLog(@"application:openURL");
+
   m_sourceApplication = sourceApplication;
 
   if ([self checkLaunchURL:url])
@@ -626,9 +664,21 @@ void InitLocalizedStrings()
 
 #pragma mark - Properties
 
+- (void)setMapViewController:(MapViewController *)mapViewController
+{
+  iMapViewController = mapViewController;
+}
+
+
 - (MapViewController *)mapViewController
 {
-  return [(UINavigationController *)self.window.rootViewController viewControllers].firstObject;
+  if (iMapViewController == nil) {
+    NSLog(@"instantiating MapViewController");
+
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Mapsme" bundle: nil];
+    iMapViewController = [storyboard instantiateViewControllerWithIdentifier:@"mapViewController"];
+  }
+  return iMapViewController;
 }
 
 #pragma mark - Route state
@@ -678,6 +728,8 @@ void InitLocalizedStrings()
 
 - (void)firstLaunchSetup
 {
+  NSLog(@"firstLaunchSetup");
+
   NSString *currentVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
   NSUserDefaults *standartDefaults = [NSUserDefaults standardUserDefaults];
   [standartDefaults setObject:currentVersion forKey:kUDFirstVersionKey];
