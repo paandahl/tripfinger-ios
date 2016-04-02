@@ -5,7 +5,7 @@ import RealmSwift
 class JsonParserServiceTest: XCTestCase {
   
   func testParseRegion() {
-    let jsonPath = NSBundle.bundlePathForIdentifier("com.tripfinger.TripfingerTests") + "/thailand.json"
+    let jsonPath = NSBundle.bundlePathForIdentifier("no.tripfinger.TripfingerTests") + "/thailand.json"
     let json = JSON(data: NSData(contentsOfFile: jsonPath)!)
     let thailand = JsonParserService.parseRegion(json)
     
@@ -27,7 +27,7 @@ class JsonParserServiceTest: XCTestCase {
     let result = data.writeToURL(url, atomically: true)
     print(result)
     
-    let jsonPath = NSBundle.bundlePathForIdentifier("com.tripfinger.TripfingerTests") + "/brunei-download.json"
+    let jsonPath = NSBundle.bundlePathForIdentifier("no.tripfinger.TripfingerTests") + "/brunei-download.json"
     print(jsonPath)
     let json = JSON(data: NSData(contentsOfFile: jsonPath)!)
     let brunei = JsonParserService.parseRegionTreeFromJson(json)

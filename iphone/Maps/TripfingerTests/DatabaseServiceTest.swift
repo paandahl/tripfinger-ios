@@ -15,7 +15,7 @@ class DatabaseServiceTest: XCTestCase {
   }
   
   class func insertBrunei(callback: (Region -> ())? = nil) {
-    let jsonPath = NSBundle.bundlePathForIdentifier("com.tripfinger.TripfingerTests") + "/brunei-download.json"
+    let jsonPath = NSBundle.bundlePathForIdentifier("no.tripfinger.TripfingerTests") + "/brunei-download.json"
     let json = JSON(data: NSData(contentsOfFile: jsonPath)!)
     let region = JsonParserService.parseRegionTreeFromJson(json)
     if let brunei = DatabaseService.getCountry("Brunei") {
