@@ -4,7 +4,7 @@ extension NSBundle {
   
   class func bundlePathForIdentifier(identifier: String) -> String! {
     for bundle in NSBundle.allBundles() {
-      if bundle.bundleIdentifier == "no.prebenludviksen.TripfingerTests" {
+      if bundle.bundleIdentifier == identifier {
         return bundle.bundlePath
       }
     }

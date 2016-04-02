@@ -26,6 +26,9 @@ class SearchService: NSObject {
     if let onlineSearchRequest = onlineSearchRequest {
       onlineSearchRequest.cancel()
     }
+    if let callback = callback {
+      callback()
+    }
   }
   
   //TODO: Need to handle duplicates from online, database and skobbler search

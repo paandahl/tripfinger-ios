@@ -1,0 +1,551 @@
+{
+  "radius":null,
+  "polygonCoordinates":null,
+  "guideSections":[
+                   {
+                   "order":0,
+                   "guideSections":[
+                   
+                   ],
+                   "categoryDescriptions":null,
+                   "id":"text-brunei-history",
+                   "uuid":"a008ebdb-b42e-4fbc-a989-3e0b4654ad7b",
+                   "name":"History",
+                   "alternativeName":null,
+                   "category":0,
+                   "subCategory":0,
+                   "status":1,
+                   "description":"\u003cp\u003eBrunei has a history.\u003c/p\u003e",
+                   "textLicense":null,
+                   "images":[
+                   
+                   ],
+                   "imagesNotFoundOnImport":[
+                   
+                   ],
+                   "parentAsString":null,
+                   "entityType":"guidetext",
+                   "parent":"region-brunei"
+                   }
+                   ],
+  "categoryDescriptions":[
+                          {
+                          "order":0,
+                          "guideSections":[
+                                           {
+                                           "order":0,
+                                           "guideSections":[
+                                           
+                                           ],
+                                           "categoryDescriptions":null,
+                                           "id":"text-brunei-history-pistory5",
+                                           "uuid":"746c5e39-68a7-49e0-8fbc-0356a3068a42",
+                                           "name":"Pistory",
+                                           "alternativeName":null,
+                                           "category":0,
+                                           "subCategory":0,
+                                           "status":1,
+                                           "description":null,
+                                           "textLicense":null,
+                                           "images":[
+                                           
+                                           ],
+                                           "imagesNotFoundOnImport":[
+                                           
+                                           ],
+                                           "parentAsString":null,
+                                           "entityType":"guidetext",
+                                           "parent":"text-brunei-230"
+                                           }
+                                           ],
+                          "categoryDescriptions":[
+                                                  {
+                                                  "order":1,
+                                                  "guideSections":[
+                                                  
+                                                  ],
+                                                  "categoryDescriptions":[
+                                                  
+                                                  ],
+                                                  "id":"text-brunei-23007",
+                                                  "uuid":"03161888-1007-416f-95f4-6bfccb0b085a",
+                                                  "name":"2300",
+                                                  "alternativeName":null,
+                                                  "category":230,
+                                                  "subCategory":2300,
+                                                  "status":1,
+                                                  "description":null,
+                                                  "textLicense":null,
+                                                  "images":[
+                                                  
+                                                  ],
+                                                  "imagesNotFoundOnImport":[
+                                                  
+                                                  ],
+                                                  "parentAsString":null,
+                                                  "entityType":"guidetext",
+                                                  "parent":"region-brunei"
+                                                  },
+                                                  {
+                                                  "order":2,
+                                                  "guideSections":[
+                                                  
+                                                  ],
+                                                  "categoryDescriptions":[
+                                                  
+                                                  ],
+                                                  "id":"text-brunei-23104",
+                                                  "uuid":"45801506-dcd0-46f3-867e-c5bfc2569664",
+                                                  "name":"2310",
+                                                  "alternativeName":null,
+                                                  "category":230,
+                                                  "subCategory":2310,
+                                                  "status":1,
+                                                  "description":null,
+                                                  "textLicense":null,
+                                                  "images":[
+                                                  
+                                                  ],
+                                                  "imagesNotFoundOnImport":[
+                                                  
+                                                  ],
+                                                  "parentAsString":null,
+                                                  "entityType":"guidetext",
+                                                  "parent":"region-brunei"
+                                                  }
+                                                  ],
+                          "id":"text-brunei-230",
+                          "uuid":"a5381a37-4676-4dc1-a809-a2b17b761e2c",
+                          "name":"230",
+                          "alternativeName":null,
+                          "category":230,
+                          "subCategory":0,
+                          "status":1,
+                          "description":"\u003cp\u003eBrunei has some transportation.\u003c/p\u003e",
+                          "textLicense":null,
+                          "images":[
+                          
+                          ],
+                          "imagesNotFoundOnImport":[
+                          
+                          ],
+                          "parentAsString":null,
+                          "entityType":"guidetext",
+                          "parent":"region-brunei"
+                          },
+                          {
+                          "order":1,
+                          "guideSections":[
+                          
+                          ],
+                          "categoryDescriptions":[
+                          
+                          ],
+                          "id":"text-brunei-260",
+                          "uuid":"787b2546-2fcc-45bc-9f1a-38c31194d332",
+                          "name":"260",
+                          "alternativeName":null,
+                          "category":260,
+                          "subCategory":0,
+                          "status":1,
+                          "description":null,
+                          "textLicense":null,
+                          "images":[
+                          
+                          ],
+                          "imagesNotFoundOnImport":[
+                          
+                          ],
+                          "parentAsString":null,
+                          "entityType":"guidetext",
+                          "parent":"region-brunei"
+                          }
+                          ],
+  "attractions":[
+                 {
+                 "url":null,
+                 "email":null,
+                 "address":null,
+                 "directions":null,
+                 "phone":null,
+                 "phoneextra":null,
+                 "tollfree":null,
+                 "price":null,
+                 "checkin":null,
+                 "checkout":null,
+                 "openingHours":null,
+                 "tags":[
+                 
+                 ],
+                 "longitude":115.212501,
+                 "latitude":4.448076,
+                 "continent":"Asia",
+                 "worldArea":"South East Asia",
+                 "country":"Brunei",
+                 "region":null,
+                 "subRegion":null,
+                 "city":null,
+                 "id":"attraction-ulu-temburong-national-park",
+                 "uuid":"6edbbda2-31b2-4cc0-b32a-db978ed80303",
+                 "name":"Ulu Temburong National Park",
+                 "alternativeName":null,
+                 "category":210,
+                 "subCategory":2145,
+                 "status":0,
+                 "description":"\u003cp\u003eHave alook at the Bruneian rainforest.\u003c/p\u003e",
+                 "textLicense":null,
+                 "images":[
+                           {
+                           "url":"ecd22ca8-48d3-448e-8cbb-3cac815eda78",
+                           "description":null,
+                           "creationDate":"Feb 7, 2016 2:59:01 AM",
+                           "license":null,
+                           "artist":null,
+                           "originalUrl":null
+                           }
+                           ],
+                 "imagesNotFoundOnImport":[
+                 
+                 ],
+                 "parentAsString":null,
+                 "entityType":"listing",
+                 "parent":"region-brunei"
+                 }
+                 ],
+  "subRegions":[
+                {
+                "radius":null,
+                "polygonCoordinates":null,
+                "guideSections":[
+                
+                ],
+                "categoryDescriptions":[
+                                        {
+                                        "order":0,
+                                        "guideSections":[
+                                        
+                                        ],
+                                        "categoryDescriptions":[
+                                                                {
+                                                                "order":0,
+                                                                "guideSections":[
+                                                                
+                                                                ],
+                                                                "categoryDescriptions":[
+                                                                
+                                                                ],
+                                                                "id":"text-bandar-2300",
+                                                                "uuid":"4cf52ae6-9410-4852-a187-c8205f569af0",
+                                                                "name":"2300",
+                                                                "alternativeName":null,
+                                                                "category":230,
+                                                                "subCategory":2300,
+                                                                "status":1,
+                                                                "description":null,
+                                                                "textLicense":null,
+                                                                "images":[
+                                                                
+                                                                ],
+                                                                "imagesNotFoundOnImport":[
+                                                                
+                                                                ],
+                                                                "parentAsString":null,
+                                                                "entityType":"guidetext",
+                                                                "parent":"region-bandar"
+                                                                }
+                                                                ],
+                                        "id":"text-bandar-230",
+                                        "uuid":"faea7500-d9d7-4611-9487-cd37ca947712",
+                                        "name":"230",
+                                        "alternativeName":null,
+                                        "category":230,
+                                        "subCategory":0,
+                                        "status":1,
+                                        "description":null,
+                                        "textLicense":null,
+                                        "images":[
+                                        
+                                        ],
+                                        "imagesNotFoundOnImport":[
+                                        
+                                        ],
+                                        "parentAsString":null,
+                                        "entityType":"guidetext",
+                                        "parent":"region-bandar"
+                                        }
+                                        ],
+                "attractions":[
+                               {
+                               "url":null,
+                               "email":null,
+                               "address":null,
+                               "directions":null,
+                               "phone":null,
+                               "phoneextra":null,
+                               "tollfree":null,
+                               "price":null,
+                               "checkin":null,
+                               "checkout":null,
+                               "openingHours":null,
+                               "tags":[
+                               
+                               ],
+                               "longitude":114.928301,
+                               "latitude":4.944146,
+                               "continent":"Asia",
+                               "worldArea":"South East Asia",
+                               "country":"Brunei",
+                               "region":null,
+                               "subRegion":null,
+                               "city":"Bandar",
+                               "id":"attraction-brunei-international-airport",
+                               "uuid":"14d32612-813b-422a-bbd5-d9c0c1d3ef87",
+                               "name":"Brunei International Airport",
+                               "alternativeName":null,
+                               "category":230,
+                               "subCategory":2300,
+                               "status":0,
+                               "description":"\u003cp\u003eBrunei airport is not so big.\u003c/p\u003e",
+                               "textLicense":"Wiki-license.",
+                               "images":[
+                                         {
+                                         "url":"ce6eadc4-1ba0-49de-a212-c19be3b3d3e5",
+                                         "description":null,
+                                         "creationDate":"Feb 29, 2016 8:14:56 AM",
+                                         "license":null,
+                                         "artist":null,
+                                         "originalUrl":null
+                                         }
+                                         ],
+                               "imagesNotFoundOnImport":[
+                               
+                               ],
+                               "parentAsString":null,
+                               "entityType":"listing",
+                               "parent":"region-bandar"
+                               },
+                               {
+                               "url":null,
+                               "email":null,
+                               "address":null,
+                               "directions":null,
+                               "phone":null,
+                               "phoneextra":null,
+                               "tollfree":null,
+                               "price":null,
+                               "checkin":null,
+                               "checkout":null,
+                               "openingHours":null,
+                               "tags":[
+                               
+                               ],
+                               "longitude":114.941581,
+                               "latitude":4.886727,
+                               "continent":"Asia",
+                               "worldArea":"South East Asia",
+                               "country":"Brunei",
+                               "region":null,
+                               "subRegion":null,
+                               "city":"Bandar",
+                               "id":"attraction-kaizen-sushi",
+                               "uuid":"f79bb8fd-b63b-4e59-a4a0-fdc0f721497c",
+                               "name":"Kaizen Sushi",
+                               "alternativeName":null,
+                               "category":250,
+                               "subCategory":2510,
+                               "status":0,
+                               "description":"\u003cp\u003eSushi place, with raw fish.\u003c/p\u003e",
+                               "textLicense":null,
+                               "images":[
+                                         {
+                                         "url":"2c1f14b2-3e51-41b1-963b-b0b55adea6ad",
+                                         "description":null,
+                                         "creationDate":"Feb 29, 2016 10:16:17 AM",
+                                         "license":null,
+                                         "artist":null,
+                                         "originalUrl":null
+                                         }
+                                         ],
+                               "imagesNotFoundOnImport":[
+                               
+                               ],
+                               "parentAsString":null,
+                               "entityType":"listing",
+                               "parent":"region-bandar"
+                               },
+                               {
+                               "url":null,
+                               "email":null,
+                               "address":null,
+                               "directions":null,
+                               "phone":null,
+                               "phoneextra":null,
+                               "tollfree":null,
+                               "price":null,
+                               "checkin":null,
+                               "checkout":null,
+                               "openingHours":null,
+                               "tags":[
+                               
+                               ],
+                               "longitude":114.931771,
+                               "latitude":4.887086,
+                               "continent":"Asia",
+                               "worldArea":"South East Asia",
+                               "country":"Brunei",
+                               "region":null,
+                               "subRegion":null,
+                               "city":"Bandar",
+                               "id":"attraction-thien-thien",
+                               "uuid":"c1d32966-b88c-438e-8d17-d910e6afb9fc",
+                               "name":"Thien Thien",
+                               "alternativeName":null,
+                               "category":250,
+                               "subCategory":2510,
+                               "status":0,
+                               "description":"\u003cp\u003eCheap chicken.\u003c/p\u003e",
+                               "textLicense":null,
+                               "images":[
+                                         {
+                                         "url":"8bacbdf7-23e4-4ee1-8098-11d2aee881d6",
+                                         "description":null,
+                                         "creationDate":"Feb 29, 2016 8:49:31 AM",
+                                         "license":null,
+                                         "artist":null,
+                                         "originalUrl":null
+                                         }
+                                         ],
+                               "imagesNotFoundOnImport":[
+                               
+                               ],
+                               "parentAsString":null,
+                               "entityType":"listing",
+                               "parent":"region-bandar"
+                               }
+                               ],
+                "subRegions":[
+                              {
+                              "radius":null,
+                              "polygonCoordinates":null,
+                              "guideSections":[
+                              
+                              ],
+                              "categoryDescriptions":[
+                              
+                              ],
+                              "attractions":[
+                              
+                              ],
+                              "subRegions":[
+                              
+                              ],
+                              "simplePOIs":null,
+                              "longitude":0.0,
+                              "latitude":0.0,
+                              "continent":"Asia",
+                              "worldArea":"South East Asia",
+                              "country":"Brunei",
+                              "region":null,
+                              "subRegion":null,
+                              "city":"Bandar",
+                              "id":"region-melabau",
+                              "uuid":"08f399b0-235c-41b2-8905-4af0fea8d508",
+                              "name":"Melabau",
+                              "alternativeName":null,
+                              "category":170,
+                              "subCategory":0,
+                              "status":0,
+                              "description":null,
+                              "textLicense":null,
+                              "images":[
+                              
+                              ],
+                              "imagesNotFoundOnImport":[
+                              
+                              ],
+                              "parentAsString":null,
+                              "entityType":"region",
+                              "parent":"region-bandar"
+                              }
+                              ],
+                "simplePOIs":null,
+                "longitude":0.0,
+                "latitude":0.0,
+                "continent":"Asia",
+                "worldArea":"South East Asia",
+                "country":"Brunei",
+                "region":null,
+                "subRegion":null,
+                "city":null,
+                "id":"region-bandar",
+                "uuid":"ded2269d-3fa8-4453-9661-a2a2f51fdbec",
+                "name":"Bandar",
+                "alternativeName":null,
+                "category":160,
+                "subCategory":0,
+                "status":0,
+                "description":"\u003cp\u003eBandar is the capital of Brunei\u003c/p\u003e",
+                "textLicense":null,
+                "images":[
+                
+                ],
+                "imagesNotFoundOnImport":[
+                
+                ],
+                "parentAsString":null,
+                "entityType":"region",
+                "parent":"region-brunei"
+                }
+                ],
+  "simplePOIs":[
+                {
+                "id":"8340104801669914322",
+                "listingId":"simple",
+                "name":"KFC",
+                "latitude":4.893803,
+                "longitude":114.848742,
+                "category":250,
+                "subCategory":2510,
+                "country":"Brunei",
+                "location":""
+                },
+                {
+                "id":"-1421773907518991892",
+                "listingId":"simple",
+                "name":"Nyonya Restaurant",
+                "latitude":4.909687,
+                "longitude":114.913737,
+                "category":250,
+                "subCategory":2510,
+                "country":"Brunei",
+                "location":""
+                }
+                ],
+  "longitude":114.620571,
+  "latitude":4.502128,
+  "continent":"Asia",
+  "worldArea":"South East Asia",
+  "country":null,
+  "region":null,
+  "subRegion":null,
+  "city":null,
+  "id":"region-brunei",
+  "uuid":"364c60a0-be0a-4c89-9a7a-a6213e5527ce",
+  "name":"Brunei",
+  "alternativeName":null,
+  "category":130,
+  "subCategory":0,
+  "status":0,
+  "description":"\u003cp\u003eThis is a simple placeholder article for testing purposes. Don\u0027t edit.\u003c/p\u003e",
+  "textLicense":null,
+  "images":[
+  
+  ],
+  "imagesNotFoundOnImport":[
+  
+  ],
+  "parentAsString":null,
+  "entityType":"region",
+  "parent":"region-south-east-asia"
+  
+}

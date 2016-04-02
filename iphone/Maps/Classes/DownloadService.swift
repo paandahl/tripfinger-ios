@@ -45,45 +45,45 @@ class DownloadService {
   
   class func downloadCountry(countryName: String, progressHandler: Float -> (), failure: () -> (), finishedHandler: () -> ()) {
     
-    var progress1: Float = 0.0
-    var progress2: Float = 0.0
-    let multiProgressHandler1 = { (progress: Float) -> () in
-      progress1 = progress / 2
-      dispatch_async(dispatch_get_main_queue()) {
-        progressHandler(progress1 + progress2)
-      }
-    }
+//    var progress1: Float = 0.0
+//    var progress2: Float = 0.0
+//    let multiProgressHandler1 = { (progress: Float) -> () in
+//      progress1 = progress / 2
+//      dispatch_async(dispatch_get_main_queue()) {
+//        progressHandler(progress1 + progress2)
+//      }
+//    }
     let multiProgressHandler2 = { (progress: Float) -> () in
-      progress2 = progress / 2
+//      progress2 = progress / 2
       dispatch_async(dispatch_get_main_queue()) {
-        progressHandler(progress1 + progress2)
+        progressHandler(progress)
       }
     }
 
     UIApplication.sharedApplication().idleTimerDisabled = true
 
     let countryPath = NSURL.createDirectory(.LibraryDirectory, withPath: countryName)
-    var finished = true
-    if !hasMapPackage(countryName) {
-      finished = false
-      try! downloadMapForCountry(countryName, regionPath: countryPath, progressHandler: multiProgressHandler1) {
-        if finished {
-          UIApplication.sharedApplication().idleTimerDisabled = false
-          dispatch_async(dispatch_get_main_queue(), finishedHandler)
-        }
-        else {
-          finished = true
-        }
-      }
-    }
+//    var finished = true
+//    if !hasMapPackage(countryName) {
+//      finished = false
+//      try! downloadMapForCountry(countryName, regionPath: countryPath, progressHandler: multiProgressHandler1) {
+//        if finished {
+//          UIApplication.sharedApplication().idleTimerDisabled = false
+//          dispatch_async(dispatch_get_main_queue(), finishedHandler)
+//        }
+//        else {
+//          finished = true
+//        }
+//      }
+//    }
     downloadTripfingerData(TripfingerAppDelegate.serverUrl + "/download_country/\(countryName)", path: countryPath, progressHandler: multiProgressHandler2, failure: failure) {
-      if finished {
-        
+//      if finished {
+      
         dispatch_async(dispatch_get_main_queue(), finishedHandler)
-      }
-      else {
-        finished = true
-      }
+//      }
+//      else {
+//        finished = true
+//      }
     }
   }
   
