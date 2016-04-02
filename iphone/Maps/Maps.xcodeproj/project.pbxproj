@@ -1137,6 +1137,7 @@
 		3485C0101B85C20E00F7712D /* MWMSearchTableViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMSearchTableViewController.mm; sourceTree = "<group>"; };
 		3485C0111B85C20E00F7712D /* MWMSearchTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MWMSearchTableViewController.xib; sourceTree = "<group>"; };
 		348D1DF91C525B8300860465 /* MWMTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMTypes.h; sourceTree = "<group>"; };
+		348E57981B0F49D8000FA02A /* Tripfinger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripfinger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		348E57981B0F49D8000FA02A /* maps.me dbg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "maps.me dbg.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3491E7C81C06F1F10042FE24 /* MWMPlacePageButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMPlacePageButtonCell.h; sourceTree = "<group>"; };
 		3491E7C91C06F1F10042FE24 /* MWMPlacePageButtonCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMPlacePageButtonCell.mm; sourceTree = "<group>"; };
@@ -1839,7 +1840,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				348E57981B0F49D8000FA02A /* maps.me dbg.app */,
+				348E57981B0F49D8000FA02A /* Tripfinger.app */,
 				6741AA5D1BF340DE002C974C /* xcMAPS.ME.app */,
 			);
 			name = Products;
@@ -3373,7 +3374,7 @@
 			);
 			name = MAPS.ME;
 			productName = Maps;
-			productReference = 348E57981B0F49D8000FA02A /* maps.me dbg.app */;
+			productReference = 348E57981B0F49D8000FA02A /* Tripfinger.app */;
 			productType = "com.apple.product-type.application";
 		};
 		6741A93D1BF340DE002C974C /* xcMAPS.ME */ = {
