@@ -1011,33 +1011,33 @@ using namespace osm_auth_ios;
 
 - (BOOL)shouldShowRateAlert
 {
-  NSUInteger const kMaximumSessionCountForShowingAlert = 21;
-  NSUserDefaults const * const standartDefaults = [NSUserDefaults standardUserDefaults];
-  if ([standartDefaults boolForKey:kUDAlreadyRatedKey])
-    return NO;
-
-  NSUInteger const sessionCount = [standartDefaults integerForKey:kUDSessionsCountKey];
-  if (sessionCount > kMaximumSessionCountForShowingAlert)
-    return NO;
-
-  NSDate * const lastRateRequestDate = [standartDefaults objectForKey:kUDLastRateRequestDate];
-  NSUInteger const daysFromLastRateRequest = [MapsAppDelegate daysBetweenNowAndDate:lastRateRequestDate];
-  // Do not show more than one alert per day.
-  if (lastRateRequestDate != nil && daysFromLastRateRequest == 0)
-    return NO;
-
-  if (self.userIsNew)
-  {
-    // It's new user.
-    if (sessionCount == 3 || sessionCount == 10 || sessionCount == kMaximumSessionCountForShowingAlert)
-      return YES;
-  }
-  else
-  {
-    // User just got updated. Show alert, if it first session or if 90 days spent.
-    if (daysFromLastRateRequest >= 90 || daysFromLastRateRequest == 0)
-      return YES;
-  }
+//  NSUInteger const kMaximumSessionCountForShowingAlert = 21;
+//  NSUserDefaults const * const standartDefaults = [NSUserDefaults standardUserDefaults];
+//  if ([standartDefaults boolForKey:kUDAlreadyRatedKey])
+//    return NO;
+//
+//  NSUInteger const sessionCount = [standartDefaults integerForKey:kUDSessionsCountKey];
+//  if (sessionCount > kMaximumSessionCountForShowingAlert)
+//    return NO;
+//
+//  NSDate * const lastRateRequestDate = [standartDefaults objectForKey:kUDLastRateRequestDate];
+//  NSUInteger const daysFromLastRateRequest = [MapsAppDelegate daysBetweenNowAndDate:lastRateRequestDate];
+//  // Do not show more than one alert per day.
+//  if (lastRateRequestDate != nil && daysFromLastRateRequest == 0)
+//    return NO;
+//
+//  if (self.userIsNew)
+//  {
+//    // It's new user.
+//    if (sessionCount == 3 || sessionCount == 10 || sessionCount == kMaximumSessionCountForShowingAlert)
+//      return YES;
+//  }
+//  else
+//  {
+//    // User just got updated. Show alert, if it first session or if 90 days spent.
+//    if (daysFromLastRateRequest >= 90 || daysFromLastRateRequest == 0)
+//      return YES;
+//  }
   return NO;
 }
 
