@@ -107,10 +107,15 @@ typedef int swift_int4  __attribute__((__ext_vector_type__(4)));
 @protocol UIApplicationDelegate;
 @class UIWindow;
 
+@class TripfingerAnnotation;
+
+
 SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 @interface TripfingerAppDelegate : NSObject
 + (NSString * __nonnull)serverUrl;
 + (void)setServerUrl:(NSString * __nonnull)value;
 - (UIWindow * __nonnull)applicationLaunched:(UIApplication * __nonnull)application delegate:(id <UIApplicationDelegate> __nonnull)delegate didFinishLaunchingWithOptions:(NSDictionary * __nullable)launchOptions;
++ (NSArray<TripfingerAnnotation *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight;
++ (TripfingerAnnotation * __nonnull)getPoiById:(int32_t)id;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end

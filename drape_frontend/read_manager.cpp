@@ -1,14 +1,17 @@
+#include "indexer/feature.hpp"
 #include "drape_frontend/read_manager.hpp"
 #include "drape_frontend/message_subclasses.hpp"
 #include "drape_frontend/visual_params.hpp"
 
 #include "platform/platform.hpp"
+#include "base/logging.hpp"
 
 #include "base/buffer_vector.hpp"
 #include "base/stl_add.hpp"
 
 #include "std/bind.hpp"
 #include "std/algorithm.hpp"
+#include "geometry/mercator.hpp"
 
 namespace df
 {
@@ -90,8 +93,22 @@ void ReadManager::UpdateCoverage(ScreenBase const & screen, bool have3dBuildings
   m_modeChanged |= (m_have3dBuildings != have3dBuildings);
   m_have3dBuildings = have3dBuildings;
 
+  m2::PointD topLeft(0, 0);
+  m2::PointD botRight(screen.GetWidth(), screen.GetHeight());
+  LOG(LINFO, ("topLeft coordz: ", MercatorBounds::ToLatLon(screen.PtoG(topLeft))));
+  LOG(LINFO, ("botRight coordz: ", MercatorBounds::ToLatLon(screen.PtoG(botRight))));
+  SelfBakedFeatureType::topLeft = topLeft;
+  SelfBakedFeatureType::bottomRight = botRight;
+
   if (m_modeChanged || MustDropAllTiles(screen))
   {
+    LOG(LINFO, ("ReadManager::UpdateCoverage:MustDropAll", ""));
+//    LOG(LINFO, ("screen clip: ", screen.ClipRect()));
+//    LOG(LINFO, ("screen touch: ", screen.GlobalRect()));
+//    LOG(LINFO, ("screen pixel: ", screen.PixelRect()()));
+    SelfBakedFeatureType::shouldAddTripfingerPois += 1;
+
+//    LOG(LINFO, ("Screen: ", screen.));
     m_modeChanged = false;
 
     for_each(m_tileInfos.begin(), m_tileInfos.end(), bind(&ReadManager::CancelTileInfo, this, _1));
@@ -134,6 +151,12 @@ void ReadManager::UpdateCoverage(ScreenBase const & screen, bool have3dBuildings
                    back_inserter(readyTiles), LessCoverageCell());
 
     IncreaseCounter(static_cast<int>(newTiles.size()));
+
+    if (rereadTiles.size() > 0 || inputRects.size() > 0) {
+      LOG(LINFO, ("ReadManager::UpdateCoverage:PartialUpdate", ""));
+      SelfBakedFeatureType::shouldAddTripfingerPois += 1;
+    }
+
     CheckFinishedTiles(readyTiles);
     for_each(newTiles.begin(), newTiles.end(), bind(&ReadManager::PushTaskBackForTileKey, this, _1, texMng));
   }

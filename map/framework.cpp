@@ -319,6 +319,7 @@ Framework::Framework()
 
   m_model.InitClassificator();
   m_model.SetOnMapDeregisteredCallback(bind(&Framework::OnMapDeregistered, this, _1));
+  m_model.GetIndex().SetPoiSupplierCallback(bind(&Framework::GetTripfingerMarks, this, _1));
   LOG(LDEBUG, ("Classificator initialized"));
 
 
@@ -1786,13 +1787,34 @@ unique_ptr<FeatureType> Framework::GetFeatureByID(FeatureID const & fid, bool pa
 {
   ASSERT(fid.IsValid(), ());
 
-  unique_ptr<FeatureType> feature(new FeatureType);
-  // Note: all parse methods should be called with guard alive.
-  Index::FeaturesLoaderGuard guard(m_model.GetIndex(), fid.m_mwmId);
-  guard.GetFeatureByIndex(fid.m_index, *feature);
-  if (parse)
-    feature->ParseEverything();
-  return feature;
+  // check for tripfinger prefix
+  if ((id.m_index / 1000) == 789) {
+    SelfBakedFeatureType ft;
+    ft = SelfBakedFeatureType();
+    TripfingerMark mark = m_poiFetcherFn(id.m_index);
+    ft.Make(mark);
+
+    ft.ParseMetadata();
+    metadata = ft.GetMetadata();
+
+    ASSERT_NOT_EQUAL(ft.GetFeatureType(), feature::GEOM_LINE, ());
+    m2::PointD const center = feature::GetCenter(ft);
+
+    GetAddressInfo(ft, center, info);
+
+    info.m_name = mark.name;
+
+    return ft;
+
+  } else {
+    unique_ptr<FeatureType> feature(new FeatureType);
+    // Note: all parse methods should be called with guard alive.
+    Index::FeaturesLoaderGuard guard(m_model.GetIndex(), fid.m_mwmId);
+    guard.GetFeatureByIndex(fid.m_index, *feature);
+    if (parse)
+      feature->ParseEverything();
+    return feature;
+  }
 }
 
 BookmarkAndCategory Framework::FindBookmark(UserMark const * mark) const
@@ -1831,6 +1853,12 @@ void Framework::SetMapSelectionListeners(TActivateMapSelectionFn const & activat
   m_activateMapSelectionFn = activator;
   m_deactivateMapSelectionFn = deactivator;
 }
+
+
+vector<TripfingerMark> Framework::GetTripfingerMarks(TripfingerMarkParams params) {
+return m_poiSupplierFn(params);
+}
+
 
 void Framework::ActivateMapSelection(bool needAnimation, df::SelectionShape::ESelectedObject selectionType,
                                      place_page::Info const & info) const
