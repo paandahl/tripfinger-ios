@@ -22,7 +22,7 @@
                         <viewControllerLayoutGuide type="top" id="u5r-yh-3ov"/>
                         <viewControllerLayoutGuide type="bottom" id="84t-cE-Wmx"/>
                     </layoutGuides>
-                    <view key="view" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="5Fk-Ov-23Z" customClass="EAGLView">
+                    <view key="view" clearsContextBeforeDrawing="NO" multipleTouchEnabled="YES" contentMode="scaleToFill" id="5Fk-Ov-23Z" customClass="EAGLView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1001,6 +1001,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="img_perspective_view" width="220" height="220"/>
+        <image name="img_perspective_view" width="32" height="32"/>
     </resources>
 </document>

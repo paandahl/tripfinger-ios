@@ -14,12 +14,14 @@
 
 #include "base/macros.hpp"
 #include "base/observer_list.hpp"
+#include "base/logging.hpp"
 
 #include "std/algorithm.hpp"
 #include "std/limits.hpp"
 #include "std/utility.hpp"
 #include "std/vector.hpp"
 
+#include "map/user_mark.hpp"
 
 class MwmInfoEx : public MwmInfo
 {
@@ -87,6 +89,16 @@ public:
 
   bool RemoveObserver(Observer const & observer);
 
+  typedef function<vector<TripfingerMark>(TripfingerMarkParams)> TPoiSupplierCallback;
+
+  TPoiSupplierCallback m_poiSupplierCallback;
+
+  inline void SetPoiSupplierCallback(TPoiSupplierCallback const & callback)
+  {
+    m_poiSupplierCallback = callback;
+  }
+
+
 private:
 
   template <typename F> class ReadMWMFunctor
@@ -97,10 +109,12 @@ private:
 
     void operator()(MwmHandle const & handle, covering::CoveringGetter & cov, uint32_t scale) const
     {
+      LOG(LINFO, ("Reading MWM: ", ""));
       MwmValue const * pValue = handle.GetValue<MwmValue>();
       if (pValue)
       {
         feature::DataHeader const & header = pValue->GetHeader();
+
 
         // Prepare needed covering.
         uint32_t const lastScale = header.GetLastScale();
@@ -147,9 +161,11 @@ private:
 
     void operator()(MwmHandle const & handle, covering::CoveringGetter & cov, uint32_t scale) const
     {
+
       MwmValue const * pValue = handle.GetValue<MwmValue>();
       if (pValue)
       {
+        LOG(LINFO, ("Reading FeatureIndex: ", pValue->GetCountryFileName()));
         feature::DataHeader const & header = pValue->GetHeader();
 
         // Prepare needed covering.
@@ -208,6 +224,11 @@ public:
     ReadMWMFunctor<F> implFunctor(f);
     ForEachInIntervals(implFunctor, covering::FullCover, m2::RectD::GetInfiniteRect(), scale);
   }
+  
+  FeatureType createFeatureType() {
+    FeatureType featureType;
+    return featureType;
+  }
 
   // "features" must be sorted using FeatureID::operator< as predicate.
   template <typename F>
@@ -215,6 +236,7 @@ public:
   {
     auto fidIter = features.begin();
     auto const endIter = features.end();
+    LOG(LINFO, ("Reading Features For Realz: ", ""));
     while (fidIter != endIter)
     {
       MwmId const & id = fidIter->m_mwmId;
@@ -222,15 +244,34 @@ public:
       if (handle.IsAlive())
       {
         MwmValue const * pValue = handle.GetValue<MwmValue>();
+        LOG(LINFO, ("Reading Features for: ", pValue->GetCountryFileName()));
         FeaturesVector const featureReader(pValue->m_cont, pValue->GetHeader(), pValue->m_table);
         do
         {
           FeatureType featureType;
           featureReader.GetByIndex(fidIter->m_index, featureType);
           featureType.SetID(*fidIter);
+//          LOG(LINFO, ("Calling f() on featureType: ", featureType.GetID()));
           f(featureType);
         }
         while (++fidIter != endIter && id == fidIter->m_mwmId);
+        // ADD TRIPFINGER SHIT
+//        if (SelfBakedFeatureType::shouldAddTripfingerPois > 0) {
+//          TripfingerMarkParams params;
+//          vector<TripfingerMark> tripfingerMarks = m_poiSupplierCallback(params);
+//          SelfBakedFeatureType::shouldAddTripfingerPois -= 1;
+//          unsigned long size = tripfingerMarks.size();
+//          for (int i = 0; i < size; i++) {
+//            TripfingerMark tripfingerMark = tripfingerMarks[i];
+//            SelfBakedFeatureType tripfingerFeature;
+//            tripfingerFeature.Make(tripfingerMark);
+//            FeatureID fid(id, tripfingerMark.identifier);
+////            LOG(LINFO, ("MADE SELFBAKED TYPE with id", (uint32_t)tripfingerMark.identifier));
+//            tripfingerFeature.SetID(fid);
+//            tripfingerFeature.ParseTypes();
+//            f(tripfingerFeature);
+//          }
+//        }
       }
       else
       {

@@ -1,14 +1,17 @@
+#include "indexer/feature.hpp"
 #include "drape_frontend/read_manager.hpp"
 #include "drape_frontend/message_subclasses.hpp"
 #include "drape_frontend/visual_params.hpp"
 
 #include "platform/platform.hpp"
+#include "base/logging.hpp"
 
 #include "base/buffer_vector.hpp"
 #include "base/stl_add.hpp"
 
 #include "std/bind.hpp"
 #include "std/algorithm.hpp"
+#include "geometry/mercator.hpp"
 
 namespace df
 {
@@ -78,13 +81,27 @@ void ReadManager::UpdateCoverage(ScreenBase const & screen, bool is3dBuildings,
 {
   if (screen == m_currentViewport && !m_forceUpdate)
     return;
-
+  
   m_forceUpdate = false;
   m_modeChanged |= m_need3dBuildings != is3dBuildings;
   m_need3dBuildings = is3dBuildings;
 
+  m2::PointD topLeft(0, 0);
+  m2::PointD botRight(screen.GetWidth(), screen.GetHeight());
+  LOG(LINFO, ("topLeft coordz: ", MercatorBounds::ToLatLon(screen.PtoG(topLeft))));
+  LOG(LINFO, ("botRight coordz: ", MercatorBounds::ToLatLon(screen.PtoG(botRight))));
+  SelfBakedFeatureType::topLeft = topLeft;
+  SelfBakedFeatureType::bottomRight = botRight;
+
   if (m_modeChanged || MustDropAllTiles(screen))
   {
+    LOG(LINFO, ("ReadManager::UpdateCoverage:MustDropAll", ""));
+//    LOG(LINFO, ("screen clip: ", screen.ClipRect()));
+//    LOG(LINFO, ("screen touch: ", screen.GlobalRect()));
+//    LOG(LINFO, ("screen pixel: ", screen.PixelRect()()));
+    SelfBakedFeatureType::shouldAddTripfingerPois += 1;
+
+//    LOG(LINFO, ("Screen: ", screen.));
     m_modeChanged = false;
 
     IncreaseCounter(static_cast<int>(tiles.size()));
@@ -130,6 +147,10 @@ void ReadManager::UpdateCoverage(ScreenBase const & screen, bool is3dBuildings,
 
     IncreaseCounter(static_cast<int>(inputRects.size() + rereadTiles.size()));
 
+    if (rereadTiles.size() > 0 || inputRects.size() > 0) {
+      LOG(LINFO, ("ReadManager::UpdateCoverage:PartialUpdate", ""));
+      SelfBakedFeatureType::shouldAddTripfingerPois += 1;
+    }
     for_each(outdatedTiles.begin(), outdatedTiles.end(), bind(&ReadManager::ClearTileInfo, this, _1));
     for_each(rereadTiles.begin(), rereadTiles.end(), bind(&ReadManager::PushTaskFront, this, _1));
     for_each(inputRects.begin(), inputRects.end(), bind(&ReadManager::PushTaskBackForTileKey, this, _1, texMng));

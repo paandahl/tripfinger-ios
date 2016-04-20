@@ -21,6 +21,7 @@ struct FeatureID
 {
   MwmSet::MwmId m_mwmId;
   uint32_t m_index;
+  //mutable string tripfingerId = "";
 
   FeatureID() : m_index(0) {}
   FeatureID(MwmSet::MwmId const & mwmId, uint32_t index) : m_mwmId(mwmId), m_index(index) {}

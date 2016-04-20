@@ -11,9 +11,11 @@
 #import "MWMTextToSpeech.h"
 #import "RouteState.h"
 #import "Statistics.h"
+#import "TripfingerAnnotation.h"
 #import "UIFont+MapsMeFonts.h"
 #import "UIViewController+Navigation.h"
 #import <MyTargetSDKCorp/MTRGManager_Corp.h>
+#import <CoreLocation/CoreLocation.h>
 
 #import "UIColor+MapsMeColor.h"
 
@@ -23,8 +25,6 @@
 
 #include "../Statistics/Statistics.h"
 
-#include "map/user_mark.hpp"
-
 #include "drape_frontend/user_event_stream.hpp"
 
 #include "platform/file_logging.hpp"
@@ -33,6 +33,8 @@
 
 // If you have a "missing header error" here, then please run configure.sh script in the root repo folder.
 #import "../../../private.h"
+#import "SwiftBridge.h"
+
 
 extern NSString * const kAlohalyticsTapEventKey = @"$onClick";
 extern NSString * const kUDWhatsNewWasShown = @"WhatsNewWithNightModeWasShown";
@@ -227,6 +229,38 @@ typedef NS_ENUM(NSUInteger, UserTouchesAction)
     self.controlsManager.hidden = NO;
     [self.controlsManager showPlacePageWithUserMark:move(mark)];
   }
+}
+
+- (vector<TripfingerMark>)poiSupplier:(TripfingerMarkParams)params
+{
+  CLLocationCoordinate2D topLeft = CLLocationCoordinate2DMake(params.topLeft.x, params.topLeft.y);
+  CLLocationCoordinate2D botRight = CLLocationCoordinate2DMake(params.botRight.x, params.botRight.y);
+  NSArray *tfAnnotations = [TripfingerAppDelegate getPoisForArea:topLeft bottomRight:botRight];
+  vector<TripfingerMark> tripfingerVector;
+  for (id tfAnnotation in tfAnnotations) {
+    TripfingerMark mark = [self annotationToMark:tfAnnotation];
+    tripfingerVector.push_back(mark);
+  }
+  
+  return tripfingerVector;
+}
+
+- (TripfingerMark)poiFetcher:(uint32_t)id
+{
+  TripfingerAnnotation *annotation = [TripfingerAppDelegate getPoiById:id ];
+  return [self annotationToMark:annotation];
+}
+
+
+- (TripfingerMark)annotationToMark:(TripfingerAnnotation*)annotation
+{
+  TripfingerMark mark = {};
+  mark.name = std::string([annotation.name UTF8String]);
+  ms::LatLon latlon(annotation.lat, annotation.lon);
+  mark.coordinates = MercatorBounds::FromLatLon(latlon); // m2::PointD(annotation.lat, annotation.lon);
+  mark.identifier = annotation.identifier;
+  mark.type = annotation.type;
+  return mark;
 }
 
 - (void)onMyPositionClicked:(id)sender
@@ -508,6 +542,8 @@ typedef NS_ENUM(NSUInteger, UserTouchesAction)
   Framework & f = GetFramework();
 
   using UserMarkActivatedFnT = void (*)(id, SEL, unique_ptr<UserMarkCopy>);
+  using PoiSupplierFnT = vector<TripfingerMark> (*)(id, SEL, TripfingerMarkParams);
+  using PoiFetcherFnT = TripfingerMark (*)(id, SEL, uint32_t);
   using PlacePageDismissedFnT = void (*)(id, SEL);
 
   SEL userMarkSelector = @selector(onUserMarkClicked:);
@@ -518,6 +554,15 @@ typedef NS_ENUM(NSUInteger, UserTouchesAction)
   self.userTouchesAction = UserTouchesActionNone;
   self.menuRestoreState = MWMBottomMenuStateInactive;
   f.LoadBookmarks();
+
+  SEL poiSupplierSelector = @selector(poiSupplier:);
+  PoiSupplierFnT poiSupplierFn = (PoiSupplierFnT)[self methodForSelector:poiSupplierSelector];
+  f.SetPoiSupplierFunction(bind(poiSupplierFn, self, poiSupplierSelector, _1));
+
+  SEL poiFetcherSelector = @selector(poiFetcher:);
+  PoiFetcherFnT poiFetcherFn = (PoiFetcherFnT)[self methodForSelector:poiFetcherSelector];
+  f.SetPoiFetcherFunction(bind(poiFetcherFn, self, poiFetcherSelector, _1));
+
 
   using TLocationStateModeFn = void (*)(id, SEL, location::EMyPositionMode);
   SEL locationStateModeSelector = @selector(onLocationStateModeChanged:);

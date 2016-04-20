@@ -270,6 +270,7 @@ Framework::Framework()
 
   m_model.InitClassificator();
   m_model.SetOnMapDeregisteredCallback(bind(&Framework::OnMapDeregistered, this, _1));
+  m_model.GetIndex().SetPoiSupplierCallback(bind(&Framework::GetTripfingerMarks, this, _1));
   LOG(LDEBUG, ("Classificator initialized"));
 
 
@@ -1587,18 +1588,40 @@ m2::PointD Framework::GetVisiblePOI(FeatureID const & id, search::AddressInfo & 
   ASSERT(id.IsValid(), ());
   Index::FeaturesLoaderGuard guard(m_model.GetIndex(), id.m_mwmId);
 
-  FeatureType ft;
-  guard.GetFeatureByIndex(id.m_index, ft);
+  // check for tripfinger prefix
+  if ((id.m_index / 1000) == 789) {
+    SelfBakedFeatureType ft;
+    ft = SelfBakedFeatureType();
+    TripfingerMark mark = m_poiFetcherFn(id.m_index);
+    ft.Make(mark);
 
-  ft.ParseMetadata();
-  metadata = ft.GetMetadata();
+    ft.ParseMetadata();
+    metadata = ft.GetMetadata();
+    
+    ASSERT_NOT_EQUAL(ft.GetFeatureType(), feature::GEOM_LINE, ());
+    m2::PointD const center = feature::GetCenter(ft);
+    
+    GetAddressInfo(ft, center, info);
 
-  ASSERT_NOT_EQUAL(ft.GetFeatureType(), feature::GEOM_LINE, ());
-  m2::PointD const center = feature::GetCenter(ft);
+    info.m_name = mark.name;
 
-  GetAddressInfo(ft, center, info);
+    return m_currentModelView.isPerspective() ? GtoP3d(center) : GtoP(center);
 
-  return m_currentModelView.isPerspective() ? GtoP3d(center) : GtoP(center);
+  } else {
+    FeatureType ft;
+    guard.GetFeatureByIndex(id.m_index, ft);
+    LOG(LINFO, ("GetVisiblePOI: ", ft));
+
+    ft.ParseMetadata();
+    metadata = ft.GetMetadata();
+    
+    ASSERT_NOT_EQUAL(ft.GetFeatureType(), feature::GEOM_LINE, ());
+    m2::PointD const center = feature::GetCenter(ft);
+    
+    GetAddressInfo(ft, center, info);
+    
+    return m_currentModelView.isPerspective() ? GtoP3d(center) : GtoP(center);
+  }
 }
 
 namespace
@@ -1632,6 +1655,8 @@ public:
 
   void LoadMetadata(model::FeaturesFetcher const & model, feature::Metadata & metadata) const
   {
+
+    LOG(LINFO, ("LoadMetadatazzz: ", ""));
     if (!m_id.IsValid())
       return;
 
@@ -1695,6 +1720,10 @@ PoiMarkPoint * Framework::GetAddressMark(m2::PointD const & globalPoint) const
   mark->SetPtOrg(globalPoint);
   mark->SetInfo(info);
   return mark;
+}
+
+vector<TripfingerMark> Framework::GetTripfingerMarks(TripfingerMarkParams params) {
+  return m_poiSupplierFn(params);
 }
 
 void Framework::ActivateUserMark(UserMark const * mark, bool needAnim)
@@ -1783,7 +1812,15 @@ void Framework::InvalidateRendering()
 UserMark const * Framework::OnTapEventImpl(m2::PointD pxPoint, bool isLong, bool isMyPosition, FeatureID const & feature)
 {
   m2::PointD const pxPoint2d = m_currentModelView.P3dtoP(pxPoint);
+  LOG(LINFO, ("Tapped on pxPoint: ", pxPoint));
+  LOG(LINFO, ("Tapped on pxPoint2d: ", pxPoint2d));
+  LOG(LINFO, ("Tapped on PtoG: ", m_currentModelView.PtoG(pxPoint)));
+  LOG(LINFO, ("Real coordz 1: ", MercatorBounds::ToLatLon(pxPoint)));
+  LOG(LINFO, ("Real coordz 2: ", MercatorBounds::ToLatLon(m_currentModelView.PtoG(pxPoint))));
+//  LOG(LINFO, ("Tapped on blah: ", m_currentModelView.PtoG(m_currentModelView.P3dtoP(pxPivot))));
+  LOG(LINFO, ("Tapped on feature: ", feature));
 
+  
   if (isMyPosition)
   {
     search::AddressInfo info;
@@ -1831,6 +1868,9 @@ UserMark const * Framework::OnTapEventImpl(m2::PointD pxPoint, bool isLong, bool
     pxPivot = pxPoint;
     needMark = true;
   }
+
+//  LOG(LINFO, ("Tapped on metadata: ", metadata.));
+//  LOG(LINFO, ("Tapped on info: ", info));
 
   if (needMark)
   {

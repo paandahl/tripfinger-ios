@@ -173,14 +173,14 @@ class DatabaseService {
   class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int, category: Listing.Category) -> List<SimplePOI> {
     let realm = getRealm()
     let attractions = realm.objects(Listing).filter("listing.latitude > \(bottomLeft.latitude) and listing.latitude < \(topRight.latitude) and listing.longitude > \(bottomLeft.longitude)  and listing.longitude < \(topRight.longitude) and listing.item.category = \(category.rawValue)")
-    let simplePois = realm.objects(SimplePOI).filter("latitude > \(bottomLeft.latitude) and latitude < \(topRight.latitude) and longitude > \(bottomLeft.longitude)  and longitude < \(topRight.longitude)")
+//    let simplePois = realm.objects(SimplePOI).filter("latitude > \(bottomLeft.latitude) and latitude < \(topRight.latitude) and longitude > \(bottomLeft.longitude)  and longitude < \(topRight.longitude)")
 
     let results = List<SimplePOI>()
     for attraction in attractions {
       let poi = SimplePOI(listing: attraction.listing)
       results.append(poi)
     }
-    results.appendContentsOf(simplePois)
+//    results.appendContentsOf(simplePois)
     return results
   }
   

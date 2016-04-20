@@ -1,4 +1,5 @@
 #pragma once
+
 #include "indexer/cell_id.hpp"
 #include "indexer/feature_data.hpp"
 
@@ -35,13 +36,13 @@ public:
 
   /// @name Parse functions. Do simple dispatching to m_pLoader.
   //@{
-  void ParseTypes() const;
-  void ParseCommon() const;
+  virtual void ParseTypes() const;
+  virtual void ParseCommon() const;
   //@}
 
-  feature::EGeomType GetFeatureType() const;
+  virtual feature::EGeomType GetFeatureType() const;
 
-  inline uint8_t GetTypesCount() const
+  virtual inline uint8_t GetTypesCount() const
   {
     return ((Header() & feature::HEADER_TYPE_MASK) + 1);
   }
@@ -120,7 +121,7 @@ protected:
   inline void SetHeader(uint8_t h) { m_header = h; }
   //@}
 
-  string DebugString() const;
+  virtual string DebugString() const;
 
   inline uint8_t Header() const { return m_header; }
 
@@ -161,10 +162,10 @@ public:
   void ParseHeader2() const;
 
   void ResetGeometry() const;
-  uint32_t ParseGeometry(int scale) const;
-  uint32_t ParseTriangles(int scale) const;
+  virtual uint32_t ParseGeometry(int scale) const;
+  virtual uint32_t ParseTriangles(int scale) const;
 
-  void ParseMetadata() const;
+  virtual void ParseMetadata() const;
   //@}
 
   /// @name Geometry.
@@ -240,7 +241,7 @@ public:
   //@}
 
   /// For test cases only.
-  string DebugString(int scale) const;
+  virtual string DebugString(int scale) const;
   friend string DebugPrint(FeatureType const & ft);
 
   string GetHouseNumber() const;
@@ -250,7 +251,7 @@ public:
   /// @param[out] intName optionally choosen from tags "name:<lang_code>" by the algorithm
   //@{
   /// Just get feature names.
-  void GetPreferredNames(string & defaultName, string & intName) const;
+  virtual void GetPreferredNames(string & defaultName, string & intName) const;
   /// Get one most suitable name for user.
   void GetReadableName(string & name) const;
 
@@ -311,6 +312,8 @@ public:
     return m_points.swap(points);
   }
 
+  mutable feature::Metadata m_metadata;
+
 private:
   void ParseAll(int scale) const;
 
@@ -320,7 +323,6 @@ private:
 
   typedef buffer_vector<m2::PointD, static_buffer> points_t;
   mutable points_t m_points, m_triangles;
-  mutable feature::Metadata m_metadata;
 
   mutable bool m_bHeader2Parsed, m_bPointsParsed, m_bTrianglesParsed, m_bMetadataParsed;
 
@@ -329,6 +331,53 @@ private:
   friend class feature::LoaderCurrent;
   friend class old_101::feature::LoaderImpl;
 };
+
+/// Feature created from Tripfinger code, instead of loaded from file
+struct TripfingerMarkParams
+{
+  m2::PointD topLeft;
+  m2::PointD botRight;
+};
+
+class TripfingerMark
+{
+public:
+  uint32_t type;
+  string name;
+  m2::PointD coordinates;
+  uint32_t identifier;
+};
+
+class SelfBakedFeatureType : public FeatureType
+{
+public:
+  void Make(TripfingerMark const & mark) const;
+  void ParseTypes() const;
+  void ParseCommon() const;
+  uint32_t ParseGeometry(int scale) const;
+  uint32_t ParseTriangles(int scale) const;
+  void ParseMetadata() const;
+
+  feature::EGeomType GetFeatureType() const;
+  void GetPreferredNames(string & defaultName, string & intName) const;
+
+  string DebugString() const;
+  string DebugString(int scale) const;
+  
+  void LoadFromId(int id);
+  static int shouldAddTripfingerPois;
+  static m2::PointD topLeft;
+  static m2::PointD bottomRight;
+
+  inline uint8_t GetTypesCount() const
+  {
+    return 1;
+  }
+
+private:
+  mutable string m_name;
+};
+
 
 namespace feature
 {

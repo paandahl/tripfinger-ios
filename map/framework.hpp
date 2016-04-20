@@ -263,6 +263,13 @@ public:
   using TActivateCallbackFn = function<void (unique_ptr<UserMarkCopy> mark)>;
   void SetUserMarkActivationListener(TActivateCallbackFn const & fn) { m_activateUserMarkFn = fn; }
 
+  vector<TripfingerMark> GetTripfingerMarks(TripfingerMarkParams params);
+  using TPoiSupplierFn = function<vector<TripfingerMark> (TripfingerMarkParams params)>;
+  void SetPoiSupplierFunction(TPoiSupplierFn const & fn) { m_poiSupplierFn = fn; }
+
+  using TPoiFetcherFn = function<TripfingerMark (uint32_t id)>;
+  void SetPoiFetcherFunction(TPoiFetcherFn const & fn) { m_poiFetcherFn = fn; }
+
   void ResetLastTapEvent();
 
   void InvalidateRendering();
@@ -286,6 +293,8 @@ private:
   //@}
 
   TActivateCallbackFn m_activateUserMarkFn;
+  TPoiSupplierFn m_poiSupplierFn;
+  TPoiFetcherFn m_poiFetcherFn;
 
 public:
 

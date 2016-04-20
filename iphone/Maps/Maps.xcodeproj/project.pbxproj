@@ -66,7 +66,26 @@
 		2581DC851CAE31CD0086285E /* UIView+AddConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC781CAE31CD0086285E /* UIView+AddConstraints.swift */; };
 		2581DC861CAE31CD0086285E /* String+AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC791CAE31CD0086285E /* String+AttributedString.swift */; };
 		2581DC8A1CAE3B650086285E /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC891CAE3B650086285E /* SwiftyJSON.swift */; };
-		2581DC8C1CAE41EF0086285E /* RLMSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC8B1CAE41EF0086285E /* RLMSupport.swift */; };
+		2581DC951CAF91150086285E /* TripfingerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC941CAF91150086285E /* TripfingerTests.swift */; };
+		2581DCA51CAF915E0086285E /* ContentServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA01CAF915E0086285E /* ContentServiceTest.swift */; };
+		2581DCA61CAF915E0086285E /* DatabaseServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA11CAF915E0086285E /* DatabaseServiceTest.swift */; };
+		2581DCA71CAF915E0086285E /* DownloadServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA21CAF915E0086285E /* DownloadServiceTest.swift */; };
+		2581DCA81CAF915E0086285E /* JsonParserServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA31CAF915E0086285E /* JsonParserServiceTest.swift */; };
+		2581DCA91CAF915E0086285E /* NetworkUtilTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA41CAF915E0086285E /* NetworkUtilTest.swift */; };
+		2581DCAD1CAF917D0086285E /* SearchServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCAB1CAF917D0086285E /* SearchServiceTest.swift */; };
+		2581DCAE1CAF917D0086285E /* OnlineSearchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */; };
+		25D378F21CAFD13400552633 /* thailand.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D378F11CAFD13400552633 /* thailand.json */; };
+		25D378F41CAFD13900552633 /* brunei-download.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D378F31CAFD13900552633 /* brunei-download.json */; };
+		25D378F61CAFD49500552633 /* SyncManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D378F51CAFD49500552633 /* SyncManagerTest.swift */; };
+		25D379111CAFD4F500552633 /* DownloadCountryTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D379091CAFD4F500552633 /* DownloadCountryTest.swift */; };
+		25D379121CAFD4F500552633 /* GuideViewOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D3790A1CAFD4F500552633 /* GuideViewOnlineTest.swift */; };
+		25D379131CAFD4F500552633 /* ListViewOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D3790B1CAFD4F500552633 /* ListViewOnlineTest.swift */; };
+		25D379141CAFD4F500552633 /* OfflineWithDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D3790C1CAFD4F500552633 /* OfflineWithDataTest.swift */; };
+		25D379151CAFD4F500552633 /* OfflineWithoutDataTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D3790D1CAFD4F500552633 /* OfflineWithoutDataTest.swift */; };
+		25D379161CAFD4F500552633 /* SearchOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D3790E1CAFD4F500552633 /* SearchOnlineTest.swift */; };
+		25D379171CAFD4F500552633 /* SwipeViewOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D3790F1CAFD4F500552633 /* SwipeViewOnlineTest.swift */; };
+		25D379181CAFD4F500552633 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D379101CAFD4F500552633 /* TestUtils.swift */; };
+		25E477BE1CBD072B008C668E /* TripfingerAnnotation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25E477BD1CBD072B008C668E /* TripfingerAnnotation.mm */; };
 		288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
 		340837131B7243CE00B5C185 /* MWMActivityViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 340837121B7243CE00B5C185 /* MWMActivityViewController.mm */; };
 		340837161B72451A00B5C185 /* MWMShareLocationActivityItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 340837151B72451A00B5C185 /* MWMShareLocationActivityItem.mm */; };
@@ -670,6 +689,23 @@
 		FAFF422A1347F101009BBB14 /* World.mwm in Resources */ = {isa = PBXBuildFile; fileRef = FAFF42291347F101009BBB14 /* World.mwm */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		2581DC971CAF91150086285E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D6058900D05DD3D006BFB54;
+			remoteInfo = Tripfinger;
+		};
+		25D379001CAFD4C100552633 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D6058900D05DD3D006BFB54;
+			remoteInfo = Tripfinger;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		6741AA521BF340DE002C974C /* Embed App Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -700,6 +736,7 @@
 		1D3623240D0F684500981E51 /* MapsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapsAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* MapsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = MapsAppDelegate.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2554A9DD1CBCFB9E0084785B /* TripfingerAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TripfingerAnnotation.h; sourceTree = "<group>"; };
 		2581DC071CACD8900086285E /* MAPS.ME-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAPS.ME-Bridging-Header.h"; sourceTree = "<group>"; };
 		2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerAppDelegate.swift; sourceTree = "<group>"; };
 		2581DC0D1CAD29510086285E /* MapsAppDelegateWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapsAppDelegateWrapper.h; sourceTree = "<group>"; };
@@ -758,8 +795,31 @@
 		2581DC781CAE31CD0086285E /* UIView+AddConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AddConstraints.swift"; sourceTree = "<group>"; };
 		2581DC791CAE31CD0086285E /* String+AttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+AttributedString.swift"; sourceTree = "<group>"; };
 		2581DC891CAE3B650086285E /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
-		2581DC8B1CAE41EF0086285E /* RLMSupport.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RLMSupport.swift; sourceTree = "<group>"; };
 		2581DC8D1CAE4D670086285E /* SwiftBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftBridge.h; sourceTree = "<group>"; };
+		2581DC921CAF91150086285E /* TripfingerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripfingerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2581DC941CAF91150086285E /* TripfingerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripfingerTests.swift; sourceTree = "<group>"; };
+		2581DC961CAF91150086285E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2581DCA01CAF915E0086285E /* ContentServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentServiceTest.swift; sourceTree = "<group>"; };
+		2581DCA11CAF915E0086285E /* DatabaseServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseServiceTest.swift; sourceTree = "<group>"; };
+		2581DCA21CAF915E0086285E /* DownloadServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadServiceTest.swift; sourceTree = "<group>"; };
+		2581DCA31CAF915E0086285E /* JsonParserServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonParserServiceTest.swift; sourceTree = "<group>"; };
+		2581DCA41CAF915E0086285E /* NetworkUtilTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkUtilTest.swift; sourceTree = "<group>"; };
+		2581DCAB1CAF917D0086285E /* SearchServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchServiceTest.swift; sourceTree = "<group>"; };
+		2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineSearchTest.swift; sourceTree = "<group>"; };
+		25D378F11CAFD13400552633 /* thailand.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = thailand.json; sourceTree = "<group>"; };
+		25D378F31CAFD13900552633 /* brunei-download.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "brunei-download.json"; sourceTree = "<group>"; };
+		25D378F51CAFD49500552633 /* SyncManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTest.swift; sourceTree = "<group>"; };
+		25D378FB1CAFD4C000552633 /* TripfingerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripfingerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		25D378FF1CAFD4C100552633 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		25D379091CAFD4F500552633 /* DownloadCountryTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadCountryTest.swift; sourceTree = "<group>"; };
+		25D3790A1CAFD4F500552633 /* GuideViewOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideViewOnlineTest.swift; sourceTree = "<group>"; };
+		25D3790B1CAFD4F500552633 /* ListViewOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewOnlineTest.swift; sourceTree = "<group>"; };
+		25D3790C1CAFD4F500552633 /* OfflineWithDataTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineWithDataTest.swift; sourceTree = "<group>"; };
+		25D3790D1CAFD4F500552633 /* OfflineWithoutDataTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfflineWithoutDataTest.swift; sourceTree = "<group>"; };
+		25D3790E1CAFD4F500552633 /* SearchOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOnlineTest.swift; sourceTree = "<group>"; };
+		25D3790F1CAFD4F500552633 /* SwipeViewOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeViewOnlineTest.swift; sourceTree = "<group>"; };
+		25D379101CAFD4F500552633 /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		25E477BD1CBD072B008C668E /* TripfingerAnnotation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TripfingerAnnotation.mm; sourceTree = "<group>"; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AB4B0D9B1048005BE974 /* Maps_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Maps_Prefix.pch; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		29B97316FDCFA39411CA2CEA /* main.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = main.mm; sourceTree = "<group>"; };
@@ -847,7 +907,7 @@
 		3485C0101B85C20E00F7712D /* MWMSearchTableViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMSearchTableViewController.mm; sourceTree = "<group>"; };
 		3485C0111B85C20E00F7712D /* MWMSearchTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MWMSearchTableViewController.xib; sourceTree = "<group>"; };
 		348D1DF91C525B8300860465 /* MWMTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMTypes.h; sourceTree = "<group>"; };
-		348E57981B0F49D8000FA02A /* maps.me dbg.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = "maps.me dbg.app"; path = tripfinger.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		348E57981B0F49D8000FA02A /* Tripfinger.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tripfinger.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		34921F691BFA0CDC00737D6E /* MyTargetSDKCorp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MyTargetSDKCorp.framework; sourceTree = "<group>"; };
 		3497A9361B5CF8A900F51E55 /* MWMNavigationDashboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMNavigationDashboardManager.h; sourceTree = "<group>"; };
 		3497A9371B5CF8A900F51E55 /* MWMNavigationDashboardManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMNavigationDashboardManager.mm; sourceTree = "<group>"; };
@@ -1347,6 +1407,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2581DC8F1CAF91150086285E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25D378F81CAFD4C000552633 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6741AA311BF340DE002C974C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1458,6 +1532,8 @@
 				458287C21AD3BE2000BA8940 /* DownloadIndicatorProtocol.h */,
 				F6F9BD221AD3C3A600308C33 /* Macros.h */,
 				2581DC071CACD8900086285E /* MAPS.ME-Bridging-Header.h */,
+				2554A9DD1CBCFB9E0084785B /* TripfingerAnnotation.h */,
+				25E477BD1CBD072B008C668E /* TripfingerAnnotation.mm */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1465,8 +1541,10 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				348E57981B0F49D8000FA02A /* maps.me dbg.app */,
+				348E57981B0F49D8000FA02A /* Tripfinger.app */,
 				6741AA5D1BF340DE002C974C /* xcMAPS.ME.app */,
+				2581DC921CAF91150086285E /* TripfingerTests.xctest */,
+				25D378FB1CAFD4C000552633 /* TripfingerUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1482,7 +1560,6 @@
 				2581DC561CAE31800086285E /* Service */,
 				2581DC171CAE30FC0086285E /* UI Components */,
 				2581DC6B1CAE31C00086285E /* Utils */,
-				2581DC8B1CAE41EF0086285E /* RLMSupport.swift */,
 				2581DC8D1CAE4D670086285E /* SwiftBridge.h */,
 			);
 			name = Tripfinger;
@@ -1592,11 +1669,64 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
+		2581DC931CAF91150086285E /* TripfingerTests */ = {
+			isa = PBXGroup;
+			children = (
+				2581DCAA1CAF916D0086285E /* Search */,
+				2581DCA01CAF915E0086285E /* ContentServiceTest.swift */,
+				2581DCA11CAF915E0086285E /* DatabaseServiceTest.swift */,
+				2581DCA21CAF915E0086285E /* DownloadServiceTest.swift */,
+				2581DCA31CAF915E0086285E /* JsonParserServiceTest.swift */,
+				2581DCA41CAF915E0086285E /* NetworkUtilTest.swift */,
+				2581DC941CAF91150086285E /* TripfingerTests.swift */,
+				25D378F51CAFD49500552633 /* SyncManagerTest.swift */,
+				25D378F01CAFD12600552633 /* Supporting Files */,
+			);
+			path = TripfingerTests;
+			sourceTree = "<group>";
+		};
+		2581DCAA1CAF916D0086285E /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				2581DCAB1CAF917D0086285E /* SearchServiceTest.swift */,
+				2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */,
+			);
+			name = Search;
+			sourceTree = "<group>";
+		};
+		25D378F01CAFD12600552633 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				25D378F31CAFD13900552633 /* brunei-download.json */,
+				25D378F11CAFD13400552633 /* thailand.json */,
+				2581DC961CAF91150086285E /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		25D378FC1CAFD4C100552633 /* TripfingerUITests */ = {
+			isa = PBXGroup;
+			children = (
+				25D379091CAFD4F500552633 /* DownloadCountryTest.swift */,
+				25D3790A1CAFD4F500552633 /* GuideViewOnlineTest.swift */,
+				25D3790B1CAFD4F500552633 /* ListViewOnlineTest.swift */,
+				25D3790C1CAFD4F500552633 /* OfflineWithDataTest.swift */,
+				25D3790D1CAFD4F500552633 /* OfflineWithoutDataTest.swift */,
+				25D3790E1CAFD4F500552633 /* SearchOnlineTest.swift */,
+				25D3790F1CAFD4F500552633 /* SwipeViewOnlineTest.swift */,
+				25D379101CAFD4F500552633 /* TestUtils.swift */,
+				25D378FF1CAFD4C100552633 /* Info.plist */,
+			);
+			path = TripfingerUITests;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* Maps */ = {
 			isa = PBXGroup;
 			children = (
 				6741AA5F1BF34185002C974C /* defaults.xcconfig */,
 				2581DC0A1CACF8930086285E /* Tripfinger */,
+				2581DC931CAF91150086285E /* TripfingerTests */,
+				25D378FC1CAFD4C100552633 /* TripfingerUITests */,
 				CB252D6816FF82C8001E41E9 /* Statistics */,
 				FA36B8011540388B004560CC /* Bookmarks */,
 				FA34BEC71338D6DB00FFB2A7 /* Common */,
@@ -2644,9 +2774,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* MAPS.ME */ = {
+		1D6058900D05DD3D006BFB54 /* Tripfinger */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MAPS.ME" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Tripfinger" */;
 			buildPhases = (
 				038F3781796A7A37D5C47484 /* Check Pods Manifest.lock */,
 				FA3A60E715AD5BBD00F40D20 /* Run Script */,
@@ -2661,10 +2791,47 @@
 			);
 			dependencies = (
 			);
-			name = MAPS.ME;
+			name = Tripfinger;
 			productName = Maps;
-			productReference = 348E57981B0F49D8000FA02A /* maps.me dbg.app */;
+			productReference = 348E57981B0F49D8000FA02A /* Tripfinger.app */;
 			productType = "com.apple.product-type.application";
+		};
+		2581DC911CAF91150086285E /* TripfingerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2581DC991CAF91150086285E /* Build configuration list for PBXNativeTarget "TripfingerTests" */;
+			buildPhases = (
+				2581DC8E1CAF91150086285E /* Sources */,
+				2581DC8F1CAF91150086285E /* Frameworks */,
+				2581DC901CAF91150086285E /* Resources */,
+				25D378EF1CAFBD1300552633 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2581DC981CAF91150086285E /* PBXTargetDependency */,
+			);
+			name = TripfingerTests;
+			productName = TripfingerTests;
+			productReference = 2581DC921CAF91150086285E /* TripfingerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		25D378FA1CAFD4C000552633 /* TripfingerUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 25D379021CAFD4C100552633 /* Build configuration list for PBXNativeTarget "TripfingerUITests" */;
+			buildPhases = (
+				25D378F71CAFD4C000552633 /* Sources */,
+				25D378F81CAFD4C000552633 /* Frameworks */,
+				25D378F91CAFD4C000552633 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				25D379011CAFD4C100552633 /* PBXTargetDependency */,
+			);
+			name = TripfingerUITests;
+			productName = TripfingerUITests;
+			productReference = 25D378FB1CAFD4C000552633 /* TripfingerUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		6741A93D1BF340DE002C974C /* xcMAPS.ME */ = {
 			isa = PBXNativeTarget;
@@ -2690,6 +2857,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = MapsWithMe;
 				TargetAttributes = {
@@ -2703,6 +2871,14 @@
 								enabled = 1;
 							};
 						};
+					};
+					2581DC911CAF91150086285E = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 1D6058900D05DD3D006BFB54;
+					};
+					25D378FA1CAFD4C000552633 = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 1D6058900D05DD3D006BFB54;
 					};
 					6741A93D1BF340DE002C974C = {
 						DevelopmentTeam = XMK5825GXK;
@@ -2752,8 +2928,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* MAPS.ME */,
+				1D6058900D05DD3D006BFB54 /* Tripfinger */,
 				6741A93D1BF340DE002C974C /* xcMAPS.ME */,
+				2581DC911CAF91150086285E /* TripfingerTests */,
+				25D378FA1CAFD4C000552633 /* TripfingerUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -2866,6 +3044,22 @@
 				347BAC691B733D540010FF78 /* MWMPedestrianShareAlert.xib in Resources */,
 				F6FF2E2B1B8C5C020063FD1F /* MWMNextTurnPanel.xib in Resources */,
 				FAF30A95173AB23900818BF6 /* 07_roboto_medium.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2581DC901CAF91150086285E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25D378F41CAFD13900552633 /* brunei-download.json in Resources */,
+				25D378F21CAFD13400552633 /* thailand.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25D378F91CAFD4C000552633 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2996,6 +3190,19 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		25D378EF1CAFBD1300552633 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = ". run-script-for-target.sh";
+		};
 		65A883D0952D96D3002AA800 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3028,7 +3235,7 @@
 		};
 		FA3A60E715AD5BBD00F40D20 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -3093,7 +3300,6 @@
 				F61B0F2C1B8B82DB00C08258 /* MWMNextTurnPanel.mm in Sources */,
 				F6F722F81AE1572400DA3DA1 /* MWMiPhonePortraitPlacePage.mm in Sources */,
 				2581DC7A1CAE31CD0086285E /* DataManager.swift in Sources */,
-				2581DC8C1CAE41EF0086285E /* RLMSupport.swift in Sources */,
 				F6CB21681AEFC6AA00FB8963 /* MWMPlacePageActionBar.mm in Sources */,
 				F68E6BD21B8DB7AE0040566D /* MWMRouteHelperPanel.mm in Sources */,
 				34BC72291B0DECAE0012A34B /* MWMZoomButtons.mm in Sources */,
@@ -3122,6 +3328,7 @@
 				2581DC7E1CAE31CD0086285E /* NSURL+GetDirectory.swift in Sources */,
 				2581DC191CAE311C0086285E /* TableController.swift in Sources */,
 				2581DC541CAE31700086285E /* Session.swift in Sources */,
+				25E477BE1CBD072B008C668E /* TripfingerAnnotation.mm in Sources */,
 				FAFCB63613366E78001A5C59 /* WebViewController.mm in Sources */,
 				F63BA3711BCD5B520044C504 /* MWMTTSLanguageViewController.mm in Sources */,
 				F607C18E1C047FDC00B53A87 /* MWMSegue.mm in Sources */,
@@ -3253,6 +3460,37 @@
 				F62F1D951C3281F1006CF38E /* UIImageView+Coloring.mm in Sources */,
 				F6FE2C151B04A44E009814AA /* MWMPlacePageEntity.mm in Sources */,
 				34B82AB21B8344E300180497 /* MWMSearchTextField.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2581DC8E1CAF91150086285E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2581DCAD1CAF917D0086285E /* SearchServiceTest.swift in Sources */,
+				2581DCA91CAF915E0086285E /* NetworkUtilTest.swift in Sources */,
+				2581DCA61CAF915E0086285E /* DatabaseServiceTest.swift in Sources */,
+				25D378F61CAFD49500552633 /* SyncManagerTest.swift in Sources */,
+				2581DCA71CAF915E0086285E /* DownloadServiceTest.swift in Sources */,
+				2581DCAE1CAF917D0086285E /* OnlineSearchTest.swift in Sources */,
+				2581DC951CAF91150086285E /* TripfingerTests.swift in Sources */,
+				2581DCA51CAF915E0086285E /* ContentServiceTest.swift in Sources */,
+				2581DCA81CAF915E0086285E /* JsonParserServiceTest.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		25D378F71CAFD4C000552633 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				25D379111CAFD4F500552633 /* DownloadCountryTest.swift in Sources */,
+				25D379121CAFD4F500552633 /* GuideViewOnlineTest.swift in Sources */,
+				25D379131CAFD4F500552633 /* ListViewOnlineTest.swift in Sources */,
+				25D379181CAFD4F500552633 /* TestUtils.swift in Sources */,
+				25D379171CAFD4F500552633 /* SwipeViewOnlineTest.swift in Sources */,
+				25D379151CAFD4F500552633 /* OfflineWithoutDataTest.swift in Sources */,
+				25D379161CAFD4F500552633 /* SearchOnlineTest.swift in Sources */,
+				25D379141CAFD4F500552633 /* OfflineWithDataTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3417,6 +3655,19 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		2581DC981CAF91150086285E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D6058900D05DD3D006BFB54 /* Tripfinger */;
+			targetProxy = 2581DC971CAF91150086285E /* PBXContainerItemProxy */;
+		};
+		25D379011CAFD4C100552633 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D6058900D05DD3D006BFB54 /* Tripfinger */;
+			targetProxy = 25D379001CAFD4C100552633 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		34C659451BD12A77009DC20A /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -3497,6 +3748,352 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2581DC9A1CAF91150086285E /* Simulator */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PushNotifications",
+					"$(PROJECT_DIR)/Statistics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/MyTracker",
+				);
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Simulator;
+		};
+		2581DC9B1CAF91150086285E /* Simulator Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PushNotifications",
+					"$(PROJECT_DIR)/Statistics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/MyTracker",
+				);
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Simulator Release";
+		};
+		2581DC9C1CAF91150086285E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_TESTABILITY = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PushNotifications",
+					"$(PROJECT_DIR)/Statistics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/MyTracker",
+				);
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
+				VALID_ARCHS = i386;
+			};
+			name = Debug;
+		};
+		2581DC9D1CAF91150086285E /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PushNotifications",
+					"$(PROJECT_DIR)/Statistics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/MyTracker",
+				);
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = AdHoc;
+		};
+		2581DC9E1CAF91150086285E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PushNotifications",
+					"$(PROJECT_DIR)/Statistics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/MyTracker",
+				);
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2581DC9F1CAF91150086285E /* Production Full */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PushNotifications",
+					"$(PROJECT_DIR)/Statistics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/MyTracker",
+				);
+				GCC_C_LANGUAGE_STANDARD = "compiler-default";
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Production Full";
+		};
+		25D379031CAFD4C100552633 /* Simulator */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TEST_TARGET_NAME = Tripfinger;
+				USES_XCTRUNNER = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s";
+			};
+			name = Simulator;
+		};
+		25D379041CAFD4C100552633 /* Simulator Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Tripfinger;
+				USES_XCTRUNNER = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Simulator Release";
+		};
+		25D379051CAFD4C100552633 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TEST_TARGET_NAME = Tripfinger;
+				USES_XCTRUNNER = YES;
+				VALID_ARCHS = i386;
+			};
+			name = Debug;
+		};
+		25D379061CAFD4C100552633 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Tripfinger;
+				USES_XCTRUNNER = YES;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s";
+			};
+			name = AdHoc;
+		};
+		25D379071CAFD4C100552633 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Tripfinger;
+				USES_XCTRUNNER = YES;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "arm64 armv7 armv7s";
+			};
+			name = Release;
+		};
+		25D379081CAFD4C100552633 /* Production Full */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = Tripfinger;
+				USES_XCTRUNNER = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = "Production Full";
+		};
 		6741AA551BF340DE002C974C /* Simulator */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3709,7 +4306,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_IDENTIFIER = com.tripfinger;
+				BUNDLE_IDENTIFIER = no.tripfinger;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -3740,7 +4337,7 @@
 					DEBUG,
 					_DEBUG,
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -3804,13 +4401,16 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				BUNDLE_IDENTIFIER = no.tripfinger;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PushNotifications",
@@ -3826,7 +4426,7 @@
 					"-Wno-unused-local-typedef",
 					"-Wimplicit-retain-self",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
+				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/MAPS.ME-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3870,7 +4470,7 @@
 					_DEBUG,
 					TARGET_OS_IPHONE,
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -3934,10 +4534,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				BUNDLE_IDENTIFIER = no.tripfinger;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3950,16 +4552,18 @@
 				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-Wall",
 					"-Wno-unused-local-typedef",
 					"-Wimplicit-retain-self",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
+				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/MAPS.ME-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALID_ARCHS = i386;
 			};
 			name = Debug;
 		};
@@ -4002,7 +4606,7 @@
 					TARGET_OS_IPHONE,
 					"NS_BLOCK_ASSERTIONS=1",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -4071,6 +4675,7 @@
 				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4099,7 +4704,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_IDENTIFIER = com.mapswithme.full;
+				BUNDLE_IDENTIFIER = no.tripfinger;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -4134,7 +4739,7 @@
 					TARGET_OS_IPHONE,
 					"NS_BLOCK_ASSERTIONS=1",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -4199,10 +4804,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				BUNDLE_IDENTIFIER = no.tripfinger;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.production.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4220,7 +4827,7 @@
 					"-Wno-unused-local-typedef",
 					"-Wimplicit-retain-self",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
+				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/MAPS.ME-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4231,7 +4838,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_IDENTIFIER = com.tripfinger;
+				BUNDLE_IDENTIFIER = no.tripfinger;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -4264,7 +4871,7 @@
 					TARGET_OS_IPHONE,
 					"NS_BLOCK_ASSERTIONS=1",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -4329,10 +4936,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				BUNDLE_IDENTIFIER = no.tripfinger;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
@@ -4351,7 +4960,7 @@
 					"-Wno-unused-local-typedef",
 					"-Wimplicit-retain-self",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
+				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/MAPS.ME-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -4395,7 +5004,7 @@
 					_RELEASE,
 					"NS_BLOCK_ASSERTIONS=1",
 				);
-				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -4464,6 +5073,7 @@
 				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -4491,7 +5101,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "MAPS.ME" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Tripfinger" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				FAAB411A149BA83500C245B1 /* Simulator */,
@@ -4500,6 +5110,32 @@
 				FAAB411E149BA85500C245B1 /* AdHoc */,
 				FABB561F149CD957006969C0 /* Release */,
 				FAAB4120149BA86000C245B1 /* Production Full */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = AdHoc;
+		};
+		2581DC991CAF91150086285E /* Build configuration list for PBXNativeTarget "TripfingerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2581DC9A1CAF91150086285E /* Simulator */,
+				2581DC9B1CAF91150086285E /* Simulator Release */,
+				2581DC9C1CAF91150086285E /* Debug */,
+				2581DC9D1CAF91150086285E /* AdHoc */,
+				2581DC9E1CAF91150086285E /* Release */,
+				2581DC9F1CAF91150086285E /* Production Full */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = AdHoc;
+		};
+		25D379021CAFD4C100552633 /* Build configuration list for PBXNativeTarget "TripfingerUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				25D379031CAFD4C100552633 /* Simulator */,
+				25D379041CAFD4C100552633 /* Simulator Release */,
+				25D379051CAFD4C100552633 /* Debug */,
+				25D379061CAFD4C100552633 /* AdHoc */,
+				25D379071CAFD4C100552633 /* Release */,
+				25D379081CAFD4C100552633 /* Production Full */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = AdHoc;

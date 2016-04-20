@@ -1,7 +1,9 @@
+#include <map/user_mark.hpp>
 #include "indexer/feature.hpp"
 #include "indexer/feature_visibility.hpp"
 #include "indexer/feature_loader_base.hpp"
 #include "indexer/classificator.hpp"
+#include "base/logging.hpp"
 
 #include "geometry/distance.hpp"
 #include "geometry/robust_orientation.hpp"
@@ -66,6 +68,10 @@ string FeatureBase::DebugString() const
   string res = "Types";
   for (size_t i = 0; i < GetTypesCount(); ++i)
     res += (" : " + c.GetReadableObjectName(m_types[i]));
+  res += "\n";
+  res += "TypeIDs";
+  for (size_t i = 0; i < GetTypesCount(); ++i)
+    res += (" : " + std::to_string(m_types[i]));
   res += "\n";
 
   return (res + m_params.DebugString());
@@ -461,3 +467,146 @@ void FeatureType::SwapGeometry(FeatureType & r)
   if (m_bTrianglesParsed)
     m_triangles.swap(r.m_triangles);
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// SelfBakedFeatureType implementation
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+//bool hasName = true;
+//bool hasLayer = false;
+//bool isLine = false;
+//bool isArea = false;
+//m_limitRect = m2::RectD::GetEmptyRect();
+//m_bTypesParsed = m_bCommonParsed = false;
+//uint8_t header = 0;
+//
+//if (hasName)
+//header |= ::feature::HEADER_HAS_NAME;
+//
+//if (hasLayer)
+//header |= ::feature::HEADER_HAS_LAYER;
+//
+//if (isLine)
+//header |= ::feature::HEADER_GEOM_LINE;
+//
+//if (isArea)
+//header |= ::feature::HEADER_GEOM_AREA;
+//
+//m_header = header;
+
+
+int SelfBakedFeatureType::shouldAddTripfingerPois = 0;
+m2::PointD SelfBakedFeatureType::topLeft;
+m2::PointD SelfBakedFeatureType::bottomRight;
+
+void SelfBakedFeatureType::Make(TripfingerMark const & mark) const
+{
+  m_center = m2::PointD(mark.coordinates.x, mark.coordinates.y);
+//  m_center = m2::PointD(77.0596, 48.34);
+
+  m_name = mark.name;
+  m_types[0] = mark.type;
+
+//  m_name = "Penisville";
+  LOG(LINFO, ("MADE SELFBAKED TYPE with Coords", m_center));
+  LOG(LINFO, ("MADE SELFBAKED TYPE with Name", m_name));
+}
+
+
+void SelfBakedFeatureType::ParseTypes() const
+{
+//  m_types[0] = 4097;
+  m_bTypesParsed = true;
+}
+
+void SelfBakedFeatureType::ParseCommon() const
+{
+  m_params.layer = 0;
+  m_params.name.AddString(StringUtf8Multilang::DEFAULT_CODE, "Penis Airport");
+//  m_center = m2::PointD(77.0596, 48.34);
+  m_limitRect.Add(m_center);
+}
+
+uint32_t SelfBakedFeatureType::ParseGeometry(int scale) const
+{
+  return 0;
+}
+
+uint32_t SelfBakedFeatureType::ParseTriangles(int scale) const
+{
+  return 0;
+}
+
+void SelfBakedFeatureType::ParseMetadata() const
+{
+  m_metadata.Set(feature::Metadata::FMD_PHONE_NUMBER, "90032017");
+  
+//  if (HasInternet())
+//    m_metadata.Set(Metadata::FMD_INTERNET, "wlan");
+  
+}
+
+
+string SelfBakedFeatureType::DebugString() const
+{
+  Classificator const & c = classif();
+  
+  string res = "Types";
+  for (size_t i = 0; i < GetTypesCount(); ++i)
+    res += (" : " + c.GetReadableObjectName(m_types[i]));
+  res += "\n";
+  res += "TypeIDs";
+  for (size_t i = 0; i < GetTypesCount(); ++i)
+    res += (" : " + std::to_string(m_types[i]));
+  res += "\n";
+  
+  return (res + m_params.DebugString());
+}
+
+string SelfBakedFeatureType::DebugString(int scale) const
+{
+  string s = DebugString();
+  
+  switch (GetFeatureType())
+  {
+    case GEOM_POINT:
+      s += (" Center:" + DebugPrint(m_center));
+      break;
+      
+    case GEOM_LINE:
+      s += " Points:";
+      break;
+      
+    case GEOM_AREA:
+      s += " Triangles:";
+      break;
+      
+    case GEOM_UNDEFINED:
+      ASSERT(false, ("Assume that we have valid feature always"));
+      break;
+  }
+  
+  return s;
+}
+
+void SelfBakedFeatureType::LoadFromId(int id) {
+  if (id == 789032) {
+    m_params.name.AddString(StringUtf8Multilang::DEFAULT_CODE, "Penis Airport");
+  }
+}
+
+void SelfBakedFeatureType::GetPreferredNames(string & defaultName, string & intName) const
+{
+//  string dfName = "Cockodrome";
+  defaultName.swap(m_name);
+  intName.clear();
+
+//  string iName = "Penisodrome";
+//  intName.swap(iName);
+}
+
+feature::EGeomType SelfBakedFeatureType::GetFeatureType() const
+{
+ return GEOM_POINT;
+}
+
