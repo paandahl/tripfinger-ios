@@ -108,6 +108,22 @@ import CoreLocation
     annotation.type = Int32(Listing.SubCategory(rawValue: listing!.item().subCategory)!.osmType)
     return annotation
   }
+  
+  public class func coordinateToInt(coord: CLLocationCoordinate2D) -> Int {
+    let latInt = Int(coord.latitude * 6)
+    let lonInt = Int(coord.longitude * 6)
+    let sign: Int
+    if latInt >= 0 && lonInt >= 0 {
+      sign = 1
+    } else if latInt >= 0 {
+      sign = 2
+    } else if lonInt >= 0 {
+      sign = 3
+    } else {
+      sign = 4
+    }
+    return (sign * 100000000000000000) + (abs(latInt) * 100000000) + abs(lonInt)
+  }
 
 
   enum AppMode {

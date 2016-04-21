@@ -150,7 +150,7 @@ extension GuideItemController {
   
   func navigateToMap() {
     let vc = MapsAppDelegateWrapper.getMapViewController()
-    presentViewController(vc, animated: true, completion: nil)
-//    navigationController!.pushViewController(vc, animated: true)
+//    presentViewController(vc, animated: true, completion: nil)
+    navigationController!.pushViewController(vc, animated: true)
   }
 }
