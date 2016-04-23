@@ -53,9 +53,11 @@ class ApplyPointFeature : public BaseApplyFeature
   using TBase = BaseApplyFeature;
 
 public:
+  using TCoordinateCheckerFn = function<bool (m2::PointD coord)>;
+
   ApplyPointFeature(TInsertShapeFn const & insertShape, FeatureID const & id,
                     int minVisibleScale, uint8_t rank, CaptionDescription const & captions,
-                    float posZ);
+                    float posZ, TCoordinateCheckerFn const & coordinateCheckerFn);
 
   void operator()(m2::PointD const & point, bool hasArea);
   void ProcessRule(Stylist::TRuleWrapper const & rule);
@@ -63,6 +65,7 @@ public:
 
 protected:
   float const m_posZ;
+  TCoordinateCheckerFn m_coordinateCheckerFn;
 
 private:
   bool m_hasPoint;
@@ -81,7 +84,8 @@ class ApplyAreaFeature : public ApplyPointFeature
 
 public:
   ApplyAreaFeature(TInsertShapeFn const & insertShape, FeatureID const & id, m2::RectD tileRect, float minPosZ,
-                   float posZ, int minVisibleScale, uint8_t rank, CaptionDescription const & captions);
+                   float posZ, int minVisibleScale, uint8_t rank, CaptionDescription const & captions,
+                   TCoordinateCheckerFn const & coordinateCheckerFn);
 
   using TBase::operator ();
 

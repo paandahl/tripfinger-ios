@@ -239,7 +239,7 @@ void BaseApplyFeature::ExtractCaptionParams(CaptionDefProto const * primaryProto
 
 ApplyPointFeature::ApplyPointFeature(TInsertShapeFn const & insertShape, FeatureID const & id,
                                      int minVisibleScale, uint8_t rank, CaptionDescription const & captions,
-                                     float posZ)
+                                     float posZ, TCoordinateCheckerFn const & coordinateCheckerFn)
   : TBase(insertShape, id, minVisibleScale, rank, captions)
   , m_posZ(posZ)
   , m_hasPoint(false)
@@ -249,6 +249,7 @@ ApplyPointFeature::ApplyPointFeature(TInsertShapeFn const & insertShape, Feature
   , m_circleDepth(dp::minDepth)
   , m_symbolRule(NULL)
   , m_circleRule(NULL)
+  , m_coordinateCheckerFn(coordinateCheckerFn)
 {
 }
 
@@ -322,23 +323,27 @@ void ApplyPointFeature::Finish()
   }
   else if (m_symbolRule)
   {
-    PoiSymbolViewParams params(m_id);
-    params.m_depth = m_symbolDepth;
-    params.m_minVisibleScale = m_minVisibleScale;
-    params.m_rank = m_rank;
-    params.m_symbolName = m_symbolRule->name();
-    float const mainScale = df::VisualParams::Instance().GetVisualScale();
-    params.m_extendingSize = m_symbolRule->has_min_distance() ? mainScale * m_symbolRule->min_distance() : 0;
-    params.m_posZ = m_posZ;
-    params.m_hasArea = m_hasArea;
-    params.m_createdByEditor = m_createdByEditor;
-    m_insertShape(make_unique_dp<PoiSymbolShape>(m_centerPoint, params));
+    ms::LatLon coord = MercatorBounds::ToLatLon(m_centerPoint);
+    if (((m_id.m_index / 1000) == 789) || !m_coordinateCheckerFn(m2::PointD(coord.lat, coord.lon))) {
+      PoiSymbolViewParams params(m_id);
+      params.m_depth = m_symbolDepth;
+      params.m_minVisibleScale = m_minVisibleScale;
+      params.m_rank = m_rank;
+      params.m_symbolName = m_symbolRule->name();
+      float const mainScale = df::VisualParams::Instance().GetVisualScale();
+      params.m_extendingSize = m_symbolRule->has_min_distance() ? mainScale * m_symbolRule->min_distance() : 0;
+      params.m_posZ = m_posZ;
+      params.m_hasArea = m_hasArea;
+      params.m_createdByEditor = m_createdByEditor;
+      m_insertShape(make_unique_dp<PoiSymbolShape>(m_centerPoint, params));
+    }
   }
 }
 
 ApplyAreaFeature::ApplyAreaFeature(TInsertShapeFn const & insertShape, FeatureID const & id, m2::RectD tileRect, float minPosZ,
-                                   float posZ, int minVisibleScale, uint8_t rank, CaptionDescription const & captions)
-  : TBase(insertShape, id, minVisibleScale, rank, captions, posZ)
+                                   float posZ, int minVisibleScale, uint8_t rank, CaptionDescription const & captions,
+                                   TCoordinateCheckerFn const & coordinateCheckerFn)
+  : TBase(insertShape, id, minVisibleScale, rank, captions, posZ, coordinateCheckerFn)
   , m_minPosZ(minPosZ)
   , m_isBuilding(posZ > 0.0f)
   , m_tileRect(tileRect)

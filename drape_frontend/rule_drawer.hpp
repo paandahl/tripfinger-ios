@@ -27,9 +27,11 @@ public:
   using TDrawerCallback = function<void (FeatureType const &, Stylist &)>;
   using TCheckCancelledCallback = function<bool ()>;
   using TIsCountryLoadedByNameFn = function<bool (string const &)>;
+  using TCoordinateCheckerFn = function<bool (m2::PointD coord)>;
 
   RuleDrawer(TDrawerCallback const & drawerFn, TCheckCancelledCallback const & checkCancelled,
-             TIsCountryLoadedByNameFn const & isLoadedFn, ref_ptr<EngineContext> context, bool is3dBuildings);
+             TIsCountryLoadedByNameFn const & isLoadedFn, ref_ptr<EngineContext> context, bool is3dBuildings,
+             TCoordinateCheckerFn const & coordinateCheckerFn);
   ~RuleDrawer();
 
   void operator() (FeatureType const & f);
@@ -49,6 +51,10 @@ private:
 
   array<TMapShapes, df::MapShapeTypeCount> m_mapShapes;
   bool m_wasCancelled;
+
+public:
+  TCoordinateCheckerFn m_coordinateCheckerFn;
+
 };
 
 } // namespace dfo

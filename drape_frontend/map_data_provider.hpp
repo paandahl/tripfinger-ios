@@ -20,11 +20,13 @@ public:
   using TIsCountryLoadedFn = function<bool (m2::PointD const &)>;
   using TIsCountryLoadedByNameFn = function<bool (string const &)>;
   using TUpdateCurrentCountryFn = function<void (m2::PointD const &, int)>;
+  using TCoordinateCheckerFn = function<bool (m2::PointD coord)>;
 
   MapDataProvider(TReadIDsFn const & idsReader,
                   TReadFeaturesFn const & featureReader,
                   TIsCountryLoadedByNameFn const & isCountryLoadedByNameFn,
-                  TUpdateCurrentCountryFn const & updateCurrentCountryFn);
+                  TUpdateCurrentCountryFn const & updateCurrentCountryFn,
+                  TCoordinateCheckerFn const & coordinateCheckerFn);
 
   void ReadFeaturesID(TReadCallback<FeatureID> const & fn, m2::RectD const & r, int scale) const;
   void ReadFeatures(TReadCallback<FeatureType> const & fn, vector<FeatureID> const & ids) const;
@@ -38,6 +40,7 @@ private:
 
 public:
   TIsCountryLoadedByNameFn m_isCountryLoadedByName;
+  TCoordinateCheckerFn m_coordinateCheckerFn;
 };
 
 } // namespace df

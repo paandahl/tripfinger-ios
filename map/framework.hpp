@@ -273,6 +273,10 @@ public:
   using TPoiSupplierFn = function<vector<TripfingerMark> (TripfingerMarkParams params)>;
   void SetPoiSupplierFunction(TPoiSupplierFn const & fn) { m_poiSupplierFn = fn; }
 
+  bool CheckIfCoordinateIsTripfingered(m2::PointD coord);
+  using TCoordinateCheckerFn = function<bool (m2::PointD coord)>;
+  void SetCoordinateCheckerFunction(TCoordinateCheckerFn const & fn) { m_coordinateCheckerFn = fn; }
+
   using TPoiFetcherFn = function<TripfingerMark (uint32_t id)>;
   void SetPoiFetcherFunction(TPoiFetcherFn const & fn) { m_poiFetcherFn = fn; }
 
@@ -308,6 +312,7 @@ private:
   TDeactivateMapSelectionFn m_deactivateMapSelectionFn;
   TPoiSupplierFn m_poiSupplierFn;
   TPoiFetcherFn m_poiFetcherFn;
+  TCoordinateCheckerFn m_coordinateCheckerFn;
 
 public:
 

@@ -170,9 +170,10 @@ class DatabaseService {
     }
   }
   
-  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int, category: Listing.Category) -> List<SimplePOI> {
+  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int) -> List<SimplePOI> {
     let realm = getRealm()
-    let attractions = realm.objects(Listing).filter("listing.latitude > \(bottomLeft.latitude) and listing.latitude < \(topRight.latitude) and listing.longitude > \(bottomLeft.longitude)  and listing.longitude < \(topRight.longitude) and listing.item.category = \(category.rawValue)")
+    let attractions = realm.objects(Listing).filter("listing.latitude > \(bottomLeft.latitude) and listing.latitude < \(topRight.latitude) and listing.longitude > \(bottomLeft.longitude)  and listing.longitude < \(topRight.longitude)")
+    //and listing.item.category = \(category.rawValue)")
 //    let simplePois = realm.objects(SimplePOI).filter("latitude > \(bottomLeft.latitude) and latitude < \(topRight.latitude) and longitude > \(bottomLeft.longitude)  and longitude < \(topRight.longitude)")
 
     let results = List<SimplePOI>()
@@ -267,5 +268,14 @@ class DatabaseService {
     let predicate = NSPredicate(format: "item.id = %@", guideTextId)
     let guideTexts = getRealm().objects(GuideText).filter(predicate)
     return guideTexts[0]
+  }
+  
+  class func getCoordinateSet() -> Set<Int64> {
+    var coordinateSet = Set<Int64>()
+    let listings = getRealm().objects(Listing)
+    for listing in listings {
+      coordinateSet.insert(TripfingerAppDelegate.coordinateToInt(CLLocationCoordinate2DMake(listing.listing.latitude, listing.listing.longitude)))
+    }
+    return coordinateSet
   }
 }

@@ -1459,7 +1459,7 @@ void Framework::CreateDrapeEngine(ref_ptr<dp::OGLContextFactory> contextFactory,
   df::DrapeEngine::Params p(contextFactory,
                             make_ref(&m_stringsBundle),
                             df::Viewport(0, 0, params.m_surfaceWidth, params.m_surfaceHeight),
-                            df::MapDataProvider(idReadFn, featureReadFn, isCountryLoadedByNameFn, updateCurrentCountryFn),
+                            df::MapDataProvider(idReadFn, featureReadFn, isCountryLoadedByNameFn, updateCurrentCountryFn, m_coordinateCheckerFn),
                             params.m_visualScale, move(params.m_widgetsInitInfo),
                             make_pair(params.m_initialMyPositionState, params.m_hasMyPositionState),
                             allow3dBuildings, params.m_isChoosePositionMode, params.m_isChoosePositionMode);
@@ -1857,6 +1857,10 @@ void Framework::SetMapSelectionListeners(TActivateMapSelectionFn const & activat
 
 vector<TripfingerMark> Framework::GetTripfingerMarks(TripfingerMarkParams params) {
 return m_poiSupplierFn(params);
+}
+
+bool Framework::CheckIfCoordinateIsTripfingered(m2::PointD coord) {
+  return m_coordinateCheckerFn(coord);
 }
 
 

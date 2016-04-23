@@ -95,8 +95,8 @@ void ReadManager::UpdateCoverage(ScreenBase const & screen, bool have3dBuildings
 
   m2::PointD topLeft(0, 0);
   m2::PointD botRight(screen.GetWidth(), screen.GetHeight());
-  LOG(LINFO, ("topLeft coordz: ", MercatorBounds::ToLatLon(screen.PtoG(topLeft))));
-  LOG(LINFO, ("botRight coordz: ", MercatorBounds::ToLatLon(screen.PtoG(botRight))));
+//  LOG(LINFO, ("topLeft coordz: ", MercatorBounds::ToLatLon(screen.PtoG(topLeft))));
+//  LOG(LINFO, ("botRight coordz: ", MercatorBounds::ToLatLon(screen.PtoG(botRight))));
   SelfBakedFeatureType::topLeft = topLeft;
   SelfBakedFeatureType::bottomRight = botRight;
 

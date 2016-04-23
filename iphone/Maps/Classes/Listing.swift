@@ -81,6 +81,36 @@ class Listing: Object {
     case METRO_STATION = 2392
     case METRO_ENTRANCE = 2393
     case TRAM_STOP = 2394
+    
+    // ACCOMODATION
+    case HOSTELS = 2400
+    case GUESTHOUSES = 2410
+    case HOTELS = 2420
+    case APARTMENTS = 2430
+    
+    case CAFE = 2500//NIGHTLIFE, // CASINO_OR_GAMBLING
+    case RESTAURANT = 2510
+    case STREETFOOD = 2520
+    case BAR = 2530
+    case NIGHTCLUB = 2540
+    
+    // SHOPPING
+    case MARKET = 2600
+    case SHOPPING_CENTRE = 2610
+    case SHOP = 2620
+    // only for simplePois
+    case SMALL_GROCERY = 2690
+    case SUPERMARKET = 2691
+    case BAKERY = 2692
+    case ALCOHOL_SHOP = 2693
+    case PHARMACY = 2694
+    
+    // INFORMATION & HEALTH
+    case TOURIST_OFFICES = 2700
+    case EMBASSIES = 2710 // TRAVELLER_RESOURCES,
+    // only for SimplePois
+    case HOSPITAL = 2790
+
 
     var entityName: String {
       switch self {
@@ -168,6 +198,12 @@ class Listing: Object {
         return 4610 // amenity-bus_station
       case .BICYCLE_RENTAL:
         return 4610 // amenity-bus_station
+        
+      case .CAFE:
+        return 4674 // amenity-cafe
+      case .RESTAURANT:
+        return 6658 // amenity-restaurant
+
       default:
         print("osmType not defined for category: \(self.rawValue)")
         return 4610 // amenity-bus_station

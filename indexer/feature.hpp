@@ -64,7 +64,7 @@ public:
     return m_params.layer;
   }
 
-  inline bool HasName() const
+  virtual inline bool HasName() const
   {
     return (Header() & feature::HEADER_HAS_NAME) != 0;
   }
@@ -285,10 +285,10 @@ public:
   /// Just get feature names.
   virtual void GetPreferredNames(string & defaultName, string & intName) const;
   /// Get one most suitable name for user.
-  void GetReadableName(string & name) const;
+  virtual void GetReadableName(string & name) const;
 
   static int8_t const DEFAULT_LANG = StringUtf8Multilang::kDefaultCode;
-  bool GetName(int8_t lang, string & name) const;
+  virtual bool GetName(int8_t lang, string & name) const;
   //@}
 
   uint8_t GetRank() const;
@@ -390,6 +390,11 @@ public:
 class SelfBakedFeatureType : public FeatureType
 {
 public:
+  inline bool HasName() const
+  {
+    return true;
+  }
+
   void Make(TripfingerMark const & mark) const;
   void ParseTypes() const;
   void ParseCommon() const;
@@ -399,6 +404,8 @@ public:
 
   feature::EGeomType GetFeatureType() const;
   void GetPreferredNames(string & defaultName, string & intName) const;
+  void GetReadableName(string & name) const;
+  bool GetName(int8_t lang, string & name) const;
 
   string DebugString() const;
   string DebugString(int scale) const;

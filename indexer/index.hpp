@@ -92,7 +92,6 @@ private:
 
     void operator()(MwmHandle const & handle, covering::CoveringGetter & cov, uint32_t scale) const
     {
-      LOG(LINFO, ("Reading MWM: ", ""));
       MwmValue const * pValue = handle.GetValue<MwmValue>();
       if (pValue)
       {
@@ -168,7 +167,6 @@ private:
       MwmValue const * pValue = handle.GetValue<MwmValue>();
       if (pValue)
       {
-        LOG(LINFO, ("Reading FeatureIndex: ", pValue->GetCountryFileName()));
         feature::DataHeader const & header = pValue->GetHeader();
 
         // Prepare needed covering.
@@ -244,7 +242,6 @@ public:
       if (handle.IsAlive())
       {
         MwmValue const * pValue = handle.GetValue<MwmValue>();
-        LOG(LINFO, ("Reading Features for: ", pValue->GetCountryFileName()));
         FeaturesVector const featureReader(pValue->m_cont, pValue->GetHeader(), pValue->m_table);
         do
         {
@@ -265,22 +262,22 @@ public:
         }
         while (++fidIter != endIter && id == fidIter->m_mwmId);
         // ADD TRIPFINGER SHIT
-//        if (SelfBakedFeatureType::shouldAddTripfingerPois > 0) {
-//          TripfingerMarkParams params;
-//          vector<TripfingerMark> tripfingerMarks = m_poiSupplierCallback(params);
-//          SelfBakedFeatureType::shouldAddTripfingerPois -= 1;
-//          unsigned long size = tripfingerMarks.size();
-//          for (int i = 0; i < size; i++) {
-//            TripfingerMark tripfingerMark = tripfingerMarks[i];
-//            SelfBakedFeatureType tripfingerFeature;
-//            tripfingerFeature.Make(tripfingerMark);
-//            FeatureID fid(id, tripfingerMark.identifier);
-////            LOG(LINFO, ("MADE SELFBAKED TYPE with id", (uint32_t)tripfingerMark.identifier));
-//            tripfingerFeature.SetID(fid);
-//            tripfingerFeature.ParseTypes();
-//            f(tripfingerFeature);
-//          }
-//        }
+        if (SelfBakedFeatureType::shouldAddTripfingerPois > 0) {
+          TripfingerMarkParams params;
+          vector<TripfingerMark> tripfingerMarks = m_poiSupplierCallback(params);
+          SelfBakedFeatureType::shouldAddTripfingerPois -= 1;
+          unsigned long size = tripfingerMarks.size();
+          for (int i = 0; i < size; i++) {
+            TripfingerMark tripfingerMark = tripfingerMarks[i];
+            SelfBakedFeatureType tripfingerFeature;
+            tripfingerFeature.Make(tripfingerMark);
+            FeatureID fid(id, tripfingerMark.identifier);
+//            LOG(LINFO, ("MADE SELFBAKED TYPE with id", (uint32_t)tripfingerMark.identifier));
+            tripfingerFeature.SetID(fid);
+            tripfingerFeature.ParseTypes();
+            f(tripfingerFeature);
+          }
+        }
       }
       else
       {

@@ -69,7 +69,7 @@ void TileInfo::ReadFeatures(MapDataProvider const & model)
     RuleDrawer drawer(bind(&TileInfo::InitStylist, this, _1, _2),
                       bind(&TileInfo::IsCancelled, this),
                       model.m_isCountryLoadedByName,
-                      make_ref(m_context), m_is3dBuildings);
+                      make_ref(m_context), m_is3dBuildings, model.m_coordinateCheckerFn);
     model.ReadFeatures(bind<void>(ref(drawer), _1), m_featureInfo);
   }
 }

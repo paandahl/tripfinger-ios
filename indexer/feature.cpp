@@ -686,8 +686,8 @@ void SelfBakedFeatureType::Make(TripfingerMark const & mark) const
   m_types[0] = mark.type;
 
 //  m_name = "Penisville";
-  LOG(LINFO, ("MADE SELFBAKED TYPE with Coords", m_center));
-  LOG(LINFO, ("MADE SELFBAKED TYPE with Name", m_name));
+//  LOG(LINFO, ("MADE SELFBAKED TYPE with Coords", m_center));
+//  LOG(LINFO, ("MADE SELFBAKED TYPE with Name", m_name));
 }
 
 
@@ -776,12 +776,24 @@ void SelfBakedFeatureType::LoadFromId(int id) {
 void SelfBakedFeatureType::GetPreferredNames(string & defaultName, string & intName) const
 {
 //  string dfName = "Cockodrome";
-  defaultName.swap(m_name);
+  defaultName = m_name;
   intName.clear();
 
-//  string iName = "Penisodrome";
+//  string iName = "Russkiy pusskiy";
 //  intName.swap(iName);
 }
+
+void SelfBakedFeatureType::GetReadableName(string & name) const
+{
+  name = m_name;
+}
+
+bool SelfBakedFeatureType::GetName(int8_t lang, string & name) const
+{
+  name = m_name;
+  return true;
+}
+
 
 feature::EGeomType SelfBakedFeatureType::GetFeatureType() const
 {

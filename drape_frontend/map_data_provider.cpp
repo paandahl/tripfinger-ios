@@ -6,11 +6,13 @@ namespace df
 MapDataProvider::MapDataProvider(TReadIDsFn const & idsReader,
                                  TReadFeaturesFn const & featureReader,
                                  TIsCountryLoadedByNameFn const & isCountryLoadedByNameFn,
-                                 TUpdateCurrentCountryFn const & updateCurrentCountryFn)
+                                 TUpdateCurrentCountryFn const & updateCurrentCountryFn,
+                                 TCoordinateCheckerFn const & coordinateCheckerFn)
   : m_featureReader(featureReader)
   , m_idsReader(idsReader)
   , m_updateCurrentCountry(updateCurrentCountryFn)
   , m_isCountryLoadedByName(isCountryLoadedByNameFn)
+  , m_coordinateCheckerFn(coordinateCheckerFn)
 {
 }
 

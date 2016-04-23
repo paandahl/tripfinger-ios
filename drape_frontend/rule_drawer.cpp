@@ -10,6 +10,7 @@
 #include "indexer/scales.hpp"
 #include "indexer/ftypes_matcher.hpp"
 
+#include "base/logging.hpp"
 #include "base/assert.hpp"
 #include "base/logging.hpp"
 
@@ -33,13 +34,14 @@ int const kLineSimplifyLevelEnd = 12;
 RuleDrawer::RuleDrawer(TDrawerCallback const & fn,
                        TCheckCancelledCallback const & checkCancelled,
                        TIsCountryLoadedByNameFn const & isLoadedFn,
-                       ref_ptr<EngineContext> context, bool is3dBuildings)
+                       ref_ptr<EngineContext> context, bool is3dBuildings, TCoordinateCheckerFn const & coordinateCheckerFn)
   : m_callback(fn)
   , m_checkCancelled(checkCancelled)
   , m_isLoadedFn(isLoadedFn)
   , m_context(context)
   , m_is3dBuidings(is3dBuildings)
   , m_wasCancelled(false)
+  , m_coordinateCheckerFn(coordinateCheckerFn)
 {
   ASSERT(m_callback != nullptr, ());
   ASSERT(m_checkCancelled != nullptr, ());
@@ -190,7 +192,7 @@ void RuleDrawer::operator()(FeatureType const & f)
     }
 
     ApplyAreaFeature apply(insertShape, f.GetID(), m_globalRect, areaMinHeight, areaHeight,
-                           minVisibleScale, f.GetRank(), s.GetCaptionDescription());
+                           minVisibleScale, f.GetRank(), s.GetCaptionDescription(), m_coordinateCheckerFn);
     f.ForEachTriangle(apply, zoomLevel);
 
     m2::PointD const featureCenter = feature::GetCenter(f, zoomLevel);
@@ -221,7 +223,7 @@ void RuleDrawer::operator()(FeatureType const & f)
   else
   {
     ASSERT(s.PointStyleExists(), ());
-    ApplyPointFeature apply(insertShape, f.GetID(), minVisibleScale, f.GetRank(), s.GetCaptionDescription(), 0.0f /* posZ */);
+    ApplyPointFeature apply(insertShape, f.GetID(), minVisibleScale, f.GetRank(), s.GetCaptionDescription(), 0.0f /* posZ */, m_coordinateCheckerFn);
     f.ForEachPoint([&apply](m2::PointD const & pt) { apply(pt, false /* hasArea */); }, zoomLevel);
 
     if (CheckCancelled())

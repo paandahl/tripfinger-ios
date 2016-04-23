@@ -7,6 +7,7 @@ import CoreLocation
   static var serverUrl = "https://1-3-dot-tripfinger-server.appspot.com"
   static var mode = AppMode.BETA
   static var session: Session!
+  static var coordinateSet = Set<Int64>()
 
   public func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
     
@@ -48,6 +49,10 @@ import CoreLocation
       print("Simulating offline mode")
       NetworkUtil.simulateOffline = true
     }
+    
+    TripfingerAppDelegate.coordinateSet = DatabaseService.getCoordinateSet()
+    print("fetched coordinateSet: ")
+    print(TripfingerAppDelegate.coordinateSet)
 
     return window
   }
@@ -61,7 +66,7 @@ import CoreLocation
 //    let topRight = CLLocationCoordinate2DMake(bottomRight.latitude, topLeft.longitude)
     let bottomLeft = CLLocationCoordinate2DMake(-180, -90)
     let topRight = CLLocationCoordinate2DMake(180, 90)
-    let pois = DatabaseService.getPois(bottomLeft, topRight: topRight, zoomLevel: 15, category: session.currentCategory)
+    let pois = DatabaseService.getPois(bottomLeft, topRight: topRight, zoomLevel: 15) //, category: session.currentCategory)
       ////          searchResults in
       ////
       ////          self.pois = searchResults
@@ -109,10 +114,10 @@ import CoreLocation
     return annotation
   }
   
-  public class func coordinateToInt(coord: CLLocationCoordinate2D) -> Int {
-    let latInt = Int(coord.latitude * 6)
-    let lonInt = Int(coord.longitude * 6)
-    let sign: Int
+  public class func coordinateToInt(coord: CLLocationCoordinate2D) -> Int64 {
+    let latInt = Int64((coord.latitude * 1000000) + 0.5)
+    let lonInt = Int64((coord.longitude * 1000000) + 0.5)
+    let sign: Int64
     if latInt >= 0 && lonInt >= 0 {
       sign = 1
     } else if latInt >= 0 {
@@ -124,7 +129,12 @@ import CoreLocation
     }
     return (sign * 100000000000000000) + (abs(latInt) * 100000000) + abs(lonInt)
   }
-
+  
+  public class func coordinateExists(coord: CLLocationCoordinate2D) -> Bool {
+    let intCoord = coordinateToInt(coord)
+    let exists = TripfingerAppDelegate.coordinateSet.contains(intCoord)
+    return exists
+  }
 
   enum AppMode {
     case TEST

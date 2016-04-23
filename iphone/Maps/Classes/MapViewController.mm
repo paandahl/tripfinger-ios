@@ -233,6 +233,12 @@ TripfingerAnnotation *annotation = [TripfingerAppDelegate getPoiById:id ];
 return [self annotationToMark:annotation];
 }
 
+- (bool)coordinateChecker:(m2::PointD)coord
+{
+  CLLocationCoordinate2D checkCoord = CLLocationCoordinate2DMake(coord.x, coord.y);
+  return [TripfingerAppDelegate coordinateExists:checkCoord ];
+}
+
 
 - (TripfingerMark)annotationToMark:(TripfingerAnnotation*)annotation
 {
@@ -563,6 +569,7 @@ return mark;
 
 using PoiSupplierFnT = vector<TripfingerMark> (*)(id, SEL, TripfingerMarkParams);
 using PoiFetcherFnT = TripfingerMark (*)(id, SEL, uint32_t);
+using CoordinateCheckerFnT = bool (*)(id, SEL, m2::PointD);
 
 SEL poiSupplierSelector = @selector(poiSupplier:);
 PoiSupplierFnT poiSupplierFn = (PoiSupplierFnT)[self methodForSelector:poiSupplierSelector];
@@ -571,6 +578,10 @@ f.SetPoiSupplierFunction(bind(poiSupplierFn, self, poiSupplierSelector, _1));
 SEL poiFetcherSelector = @selector(poiFetcher:);
 PoiFetcherFnT poiFetcherFn = (PoiFetcherFnT)[self methodForSelector:poiFetcherSelector];
 f.SetPoiFetcherFunction(bind(poiFetcherFn, self, poiFetcherSelector, _1));
+
+SEL coordinateCheckerSelector = @selector(coordinateChecker:);
+CoordinateCheckerFnT coordinateCheckerFn = (CoordinateCheckerFnT)[self methodForSelector:coordinateCheckerSelector];
+f.SetCoordinateCheckerFunction(bind(coordinateCheckerFn, self, coordinateCheckerSelector, _1));
 
   m_predictor = [[LocationPredictor alloc] initWithObserver:self];
   self.forceRoutingStateChange = ForceRoutingStateChangeNone;
