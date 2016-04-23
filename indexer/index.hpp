@@ -264,6 +264,9 @@ public:
         // ADD TRIPFINGER SHIT
         if (SelfBakedFeatureType::shouldAddTripfingerPois > 0) {
           TripfingerMarkParams params;
+          params.topLeft = SelfBakedFeatureType::topLeft;
+          params.botRight = SelfBakedFeatureType::bottomRight;
+          params.zoomLevel = SelfBakedFeatureType::zoomLevel;
           vector<TripfingerMark> tripfingerMarks = m_poiSupplierCallback(params);
           SelfBakedFeatureType::shouldAddTripfingerPois -= 1;
           unsigned long size = tripfingerMarks.size();

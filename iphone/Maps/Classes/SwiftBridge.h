@@ -115,7 +115,7 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 + (NSString * __nonnull)serverUrl;
 + (void)setServerUrl:(NSString * __nonnull)value;
 - (UIWindow * __nonnull)applicationLaunched:(UIApplication * __nonnull)application delegate:(id <UIApplicationDelegate> __nonnull)delegate didFinishLaunchingWithOptions:(NSDictionary * __nullable)launchOptions;
-+ (NSArray<TripfingerAnnotation *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight;
++ (NSArray<TripfingerAnnotation *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight zoomLevel:(NSInteger)zoomLevel;
 + (TripfingerAnnotation * __nonnull)getPoiById:(int32_t)id;
 + (BOOL)coordinateExists:(CLLocationCoordinate2D)coord;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;

@@ -676,6 +676,7 @@ void FeatureType::SwapGeometry(FeatureType & r)
 int SelfBakedFeatureType::shouldAddTripfingerPois = 0;
 m2::PointD SelfBakedFeatureType::topLeft;
 m2::PointD SelfBakedFeatureType::bottomRight;
+int SelfBakedFeatureType::zoomLevel = 0;
 
 void SelfBakedFeatureType::Make(TripfingerMark const & mark) const
 {

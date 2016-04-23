@@ -376,6 +376,7 @@ struct TripfingerMarkParams
 {
   m2::PointD topLeft;
   m2::PointD botRight;
+  int zoomLevel;
 };
 
 class TripfingerMark
@@ -414,6 +415,7 @@ public:
   static int shouldAddTripfingerPois;
   static m2::PointD topLeft;
   static m2::PointD bottomRight;
+  static int zoomLevel;
 
   inline uint8_t GetTypesCount() const
   {

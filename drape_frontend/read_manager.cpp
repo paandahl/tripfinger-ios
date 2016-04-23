@@ -95,10 +95,12 @@ void ReadManager::UpdateCoverage(ScreenBase const & screen, bool have3dBuildings
 
   m2::PointD topLeft(0, 0);
   m2::PointD botRight(screen.GetWidth(), screen.GetHeight());
+  ms::LatLon topLeftCoord = MercatorBounds::ToLatLon(screen.PtoG(topLeft));
+  ms::LatLon botRightCoord = MercatorBounds::ToLatLon(screen.PtoG(botRight));
 //  LOG(LINFO, ("topLeft coordz: ", MercatorBounds::ToLatLon(screen.PtoG(topLeft))));
 //  LOG(LINFO, ("botRight coordz: ", MercatorBounds::ToLatLon(screen.PtoG(botRight))));
-  SelfBakedFeatureType::topLeft = topLeft;
-  SelfBakedFeatureType::bottomRight = botRight;
+  SelfBakedFeatureType::topLeft = m2::PointD(topLeftCoord.lat, topLeftCoord.lon);
+  SelfBakedFeatureType::bottomRight = m2::PointD(botRightCoord.lat, botRightCoord.lon);
 
   if (m_modeChanged || MustDropAllTiles(screen))
   {
@@ -224,6 +226,7 @@ void ReadManager::PushTaskBackForTileKey(TileKey const & tileKey, ref_ptr<dp::Te
 {
   shared_ptr<TileInfo> tileInfo(new TileInfo(make_unique_dp<EngineContext>(TileKey(tileKey, m_generationCounter),
                                                                            m_commutator, texMng)));
+  SelfBakedFeatureType::zoomLevel = tileInfo->GetTileKey().m_zoomLevel;
   tileInfo->Set3dBuildings(m_have3dBuildings && m_allow3dBuildings);
   m_tileInfos.insert(tileInfo);
   ReadMWMTask * task = myPool.Get();

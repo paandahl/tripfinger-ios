@@ -215,16 +215,16 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 
 - (vector<TripfingerMark>)poiSupplier:(TripfingerMarkParams)params
 {
-CLLocationCoordinate2D topLeft = CLLocationCoordinate2DMake(params.topLeft.x, params.topLeft.y);
-CLLocationCoordinate2D botRight = CLLocationCoordinate2DMake(params.botRight.x, params.botRight.y);
-NSArray *tfAnnotations = [TripfingerAppDelegate getPoisForArea:topLeft bottomRight:botRight];
-vector<TripfingerMark> tripfingerVector;
-for (id tfAnnotation in tfAnnotations) {
-TripfingerMark mark = [self annotationToMark:tfAnnotation];
-tripfingerVector.push_back(mark);
-}
-
-return tripfingerVector;
+  CLLocationCoordinate2D topLeft = CLLocationCoordinate2DMake(params.topLeft.x, params.topLeft.y);
+  CLLocationCoordinate2D botRight = CLLocationCoordinate2DMake(params.botRight.x, params.botRight.y);
+  NSArray *tfAnnotations = [TripfingerAppDelegate getPoisForArea:topLeft bottomRight:botRight zoomLevel:params.zoomLevel];
+  vector<TripfingerMark> tripfingerVector;
+  for (id tfAnnotation in tfAnnotations) {
+    TripfingerMark mark = [self annotationToMark:tfAnnotation];
+    tripfingerVector.push_back(mark);
+  }
+  
+  return tripfingerVector;
 }
 
 - (TripfingerMark)poiFetcher:(uint32_t)id

@@ -60,12 +60,14 @@ import CoreLocation
   static var identifier: Int32 = 789000
   static var idMap: [Int32: String] = [Int32: String]()
 
-  public class func getPoisForArea(topLeft: CLLocationCoordinate2D, bottomRight: CLLocationCoordinate2D) -> [TripfingerAnnotation] {
+  public class func getPoisForArea(topLeft: CLLocationCoordinate2D, bottomRight: CLLocationCoordinate2D, zoomLevel: Int) -> [TripfingerAnnotation] {
+    
+    if zoomLevel < 10 {
+      return [TripfingerAnnotation]()
+    }
 
-//    let bottomLeft = CLLocationCoordinate2DMake(topLeft.latitude, bottomRight.longitude)
-//    let topRight = CLLocationCoordinate2DMake(bottomRight.latitude, topLeft.longitude)
-    let bottomLeft = CLLocationCoordinate2DMake(-180, -90)
-    let topRight = CLLocationCoordinate2DMake(180, 90)
+    let topRight = CLLocationCoordinate2DMake(topLeft.latitude, bottomRight.longitude)
+    let bottomLeft = CLLocationCoordinate2DMake(bottomRight.latitude, topLeft.longitude)
     let pois = DatabaseService.getPois(bottomLeft, topRight: topRight, zoomLevel: 15) //, category: session.currentCategory)
       ////          searchResults in
       ////
