@@ -22,11 +22,21 @@ public:
   using TUpdateCurrentCountryFn = function<void (m2::PointD const &, int)>;
   using TCoordinateCheckerFn = function<bool (m2::PointD coord)>;
 
+  typedef function<vector<TripfingerMark>(TripfingerMarkParams)> TPoiSupplierCallback;
+
+  TPoiSupplierCallback m_poiSupplierCallback;
+
+  inline void SetPoiSupplierCallback(TPoiSupplierCallback const & callback)
+  {
+    m_poiSupplierCallback = callback;
+  }
+
   MapDataProvider(TReadIDsFn const & idsReader,
                   TReadFeaturesFn const & featureReader,
                   TIsCountryLoadedByNameFn const & isCountryLoadedByNameFn,
                   TUpdateCurrentCountryFn const & updateCurrentCountryFn,
-                  TCoordinateCheckerFn const & coordinateCheckerFn);
+                  TCoordinateCheckerFn const & coordinateCheckerFn,
+                  TPoiSupplierCallback const & poiSupplierFn);
 
   void ReadFeaturesID(TReadCallback<FeatureID> const & fn, m2::RectD const & r, int scale) const;
   void ReadFeatures(TReadCallback<FeatureType> const & fn, vector<FeatureID> const & ids) const;

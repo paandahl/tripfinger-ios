@@ -66,15 +66,6 @@ public:
   ///         now, returns false.
   bool DeregisterMap(platform::CountryFile const & countryFile);
 
-  typedef function<vector<TripfingerMark>(TripfingerMarkParams)> TPoiSupplierCallback;
-
-  TPoiSupplierCallback m_poiSupplierCallback;
-
-  inline void SetPoiSupplierCallback(TPoiSupplierCallback const & callback)
-  {
-    m_poiSupplierCallback = callback;
-  }
-
 private:
 
   template <typename F> class ReadMWMFunctor
@@ -261,26 +252,6 @@ public:
           f(featureType);
         }
         while (++fidIter != endIter && id == fidIter->m_mwmId);
-        // ADD TRIPFINGER SHIT
-        if (SelfBakedFeatureType::shouldAddTripfingerPois > 0) {
-          TripfingerMarkParams params;
-          params.topLeft = SelfBakedFeatureType::topLeft;
-          params.botRight = SelfBakedFeatureType::bottomRight;
-          params.zoomLevel = SelfBakedFeatureType::zoomLevel;
-          vector<TripfingerMark> tripfingerMarks = m_poiSupplierCallback(params);
-          SelfBakedFeatureType::shouldAddTripfingerPois -= 1;
-          unsigned long size = tripfingerMarks.size();
-          for (int i = 0; i < size; i++) {
-            TripfingerMark tripfingerMark = tripfingerMarks[i];
-            SelfBakedFeatureType tripfingerFeature;
-            tripfingerFeature.Make(tripfingerMark);
-            FeatureID fid(id, tripfingerMark.identifier);
-//            LOG(LINFO, ("MADE SELFBAKED TYPE with id", (uint32_t)tripfingerMark.identifier));
-            tripfingerFeature.SetID(fid);
-            tripfingerFeature.ParseTypes();
-            f(tripfingerFeature);
-          }
-        }
       }
       else
       {

@@ -672,19 +672,16 @@ void FeatureType::SwapGeometry(FeatureType & r)
 //
 //m_header = header;
 
-
-int SelfBakedFeatureType::shouldAddTripfingerPois = 0;
-m2::PointD SelfBakedFeatureType::topLeft;
-m2::PointD SelfBakedFeatureType::bottomRight;
-int SelfBakedFeatureType::zoomLevel = 0;
-
-void SelfBakedFeatureType::Make(TripfingerMark const & mark) const
+SelfBakedFeatureType::SelfBakedFeatureType(TripfingerMark const & mark)
 {
   m_center = m2::PointD(mark.coordinates.x, mark.coordinates.y);
 //  m_center = m2::PointD(77.0596, 48.34);
 
   m_name = mark.name;
+  m_names.AddString(StringUtf8Multilang::kDefaultCode, m_name);
   m_types[0] = mark.type;
+  m_params.layer = 0;
+  m_limitRect.Add(m_center);
 
 //  m_name = "Penisville";
 //  LOG(LINFO, ("MADE SELFBAKED TYPE with Coords", m_center));
@@ -700,10 +697,8 @@ void SelfBakedFeatureType::ParseTypes() const
 
 void SelfBakedFeatureType::ParseCommon() const
 {
-  m_params.layer = 0;
-  m_params.name.AddString(StringUtf8Multilang::DEFAULT_CODE, "Penis Airport");
+  //m_params.name.AddString(StringUtf8Multilang::DEFAULT_LANG, "Penis Airport");
 //  m_center = m2::PointD(77.0596, 48.34);
-  m_limitRect.Add(m_center);
 }
 
 uint32_t SelfBakedFeatureType::ParseGeometry(int scale) const
@@ -768,12 +763,6 @@ string SelfBakedFeatureType::DebugString(int scale) const
   return s;
 }
 
-void SelfBakedFeatureType::LoadFromId(int id) {
-  if (id == 789032) {
-    m_params.name.AddString(StringUtf8Multilang::DEFAULT_CODE, "Penis Airport");
-  }
-}
-
 void SelfBakedFeatureType::GetPreferredNames(string & defaultName, string & intName) const
 {
 //  string dfName = "Cockodrome";
@@ -795,6 +784,10 @@ bool SelfBakedFeatureType::GetName(int8_t lang, string & name) const
   return true;
 }
 
+StringUtf8Multilang const & SelfBakedFeatureType::GetNames() const
+{
+  return m_names;
+}
 
 feature::EGeomType SelfBakedFeatureType::GetFeatureType() const
 {

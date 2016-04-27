@@ -7,12 +7,14 @@ MapDataProvider::MapDataProvider(TReadIDsFn const & idsReader,
                                  TReadFeaturesFn const & featureReader,
                                  TIsCountryLoadedByNameFn const & isCountryLoadedByNameFn,
                                  TUpdateCurrentCountryFn const & updateCurrentCountryFn,
-                                 TCoordinateCheckerFn const & coordinateCheckerFn)
+                                 TCoordinateCheckerFn const & coordinateCheckerFn,
+                                 TPoiSupplierCallback const & poiSupplierFn)
   : m_featureReader(featureReader)
   , m_idsReader(idsReader)
   , m_updateCurrentCountry(updateCurrentCountryFn)
   , m_isCountryLoadedByName(isCountryLoadedByNameFn)
   , m_coordinateCheckerFn(coordinateCheckerFn)
+  , m_poiSupplierCallback(poiSupplierFn)
 {
 }
 

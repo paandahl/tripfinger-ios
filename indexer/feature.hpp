@@ -185,7 +185,7 @@ public:
 
   /// @name Editor functions.
   //@{
-  StringUtf8Multilang const & GetNames() const;
+  virtual StringUtf8Multilang const & GetNames() const;
   void SetNames(StringUtf8Multilang const & newNames);
   void SetMetadata(feature::Metadata const & newMetadata);
   //@}
@@ -391,12 +391,12 @@ public:
 class SelfBakedFeatureType : public FeatureType
 {
 public:
+  SelfBakedFeatureType(TripfingerMark const & mark);
+  
   inline bool HasName() const
   {
     return true;
   }
-
-  void Make(TripfingerMark const & mark) const;
   void ParseTypes() const;
   void ParseCommon() const;
   uint32_t ParseGeometry(int scale) const;
@@ -407,15 +407,10 @@ public:
   void GetPreferredNames(string & defaultName, string & intName) const;
   void GetReadableName(string & name) const;
   bool GetName(int8_t lang, string & name) const;
+  StringUtf8Multilang const & GetNames() const;
 
   string DebugString() const;
   string DebugString(int scale) const;
-  
-  void LoadFromId(int id);
-  static int shouldAddTripfingerPois;
-  static m2::PointD topLeft;
-  static m2::PointD bottomRight;
-  static int zoomLevel;
 
   inline uint8_t GetTypesCount() const
   {
@@ -424,6 +419,7 @@ public:
 
 private:
   mutable string m_name;
+  mutable StringUtf8Multilang m_names;
 };
 
 

@@ -66,11 +66,35 @@ void TileInfo::ReadFeatures(MapDataProvider const & model)
 
   if (!m_featureInfo.empty())
   {
+
+    MwmSet::MwmId id = m_featureInfo[0].m_mwmId;
     RuleDrawer drawer(bind(&TileInfo::InitStylist, this, _1, _2),
                       bind(&TileInfo::IsCancelled, this),
                       model.m_isCountryLoadedByName,
                       make_ref(m_context), m_is3dBuildings, model.m_coordinateCheckerFn);
     model.ReadFeatures(bind<void>(ref(drawer), _1), m_featureInfo);
+
+    // ADD TRIPFINGER SHIT
+//    if (SelfBakedFeatureType::shouldAddTripfingerPois > 0) {
+    TripfingerMarkParams params;
+    ms::LatLon topLeftCoord = MercatorBounds::ToLatLon(GetGlobalRect().LeftTop());
+    ms::LatLon botRightCoord = MercatorBounds::ToLatLon(GetGlobalRect().RightBottom());
+    params.topLeft = m2::PointD(topLeftCoord.lat, topLeftCoord.lon);
+    params.botRight = m2::PointD(botRightCoord.lat, botRightCoord.lon);
+    params.zoomLevel = GetZoomLevel();
+    vector<TripfingerMark> tripfingerMarks = model.m_poiSupplierCallback(params);
+    unsigned long size = tripfingerMarks.size();
+    for (int i = 0; i < size; i++) {
+      TripfingerMark tripfingerMark = tripfingerMarks[i];
+      SelfBakedFeatureType tripfingerFeature(tripfingerMark);
+//            tripfingerFeature.Make(tripfingerMark);
+      FeatureID fid(id, tripfingerMark.identifier);
+//            LOG(LINFO, ("MADE SELFBAKED TYPE with id", (uint32_t)tripfingerMark.identifier));
+      tripfingerFeature.SetID(fid);
+      tripfingerFeature.ParseTypes();
+      drawer.operator()(tripfingerFeature);
+    }
+//    }
   }
 }
 

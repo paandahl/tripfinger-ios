@@ -423,8 +423,8 @@ return mark;
 
   [self updateStatusBarStyle];
   GetFramework().InvalidateRendering();
-  [self showWelcomeScreenIfNeeded];
-  [self showViralAlertIfNeeded];
+  //[self showWelcomeScreenIfNeeded];
+  //[self showViralAlertIfNeeded];
 }
 
 - (void)viewDidAppear:(BOOL)animated

@@ -61,6 +61,7 @@
 #include "geometry/angles.hpp"
 #include "geometry/distance_on_sphere.hpp"
 
+#include "base/logging.hpp"
 #include "base/math.hpp"
 #include "base/timer.hpp"
 #include "base/scope_guard.hpp"
@@ -319,7 +320,6 @@ Framework::Framework()
 
   m_model.InitClassificator();
   m_model.SetOnMapDeregisteredCallback(bind(&Framework::OnMapDeregistered, this, _1));
-  m_model.GetIndex().SetPoiSupplierCallback(bind(&Framework::GetTripfingerMarks, this, _1));
   LOG(LDEBUG, ("Classificator initialized"));
 
 
@@ -669,10 +669,18 @@ void Framework::FillFeatureInfo(FeatureID const & fid, place_page::Info & info) 
     return;
   }
 
-  Index::FeaturesLoaderGuard const guard(m_model.GetIndex(), fid.m_mwmId);
-  FeatureType ft;
-  guard.GetFeatureByIndex(fid.m_index, ft);
-  FillInfoFromFeatureType(ft, info);
+  if ((fid.m_index / 1000) == 789) {
+    TripfingerMark mark = m_poiFetcherFn(fid.m_index);
+    SelfBakedFeatureType ft(mark);
+    ft.SetID(fid);
+    FillInfoFromFeatureType(ft, info);
+  }
+  else {
+    Index::FeaturesLoaderGuard const guard(m_model.GetIndex(), fid.m_mwmId);
+    FeatureType ft;
+    guard.GetFeatureByIndex(fid.m_index, ft);
+    FillInfoFromFeatureType(ft, info);
+  }
 }
 
 void Framework::FillPointInfo(m2::PointD const & mercator, string const & customTitle, place_page::Info & info) const
@@ -1459,7 +1467,7 @@ void Framework::CreateDrapeEngine(ref_ptr<dp::OGLContextFactory> contextFactory,
   df::DrapeEngine::Params p(contextFactory,
                             make_ref(&m_stringsBundle),
                             df::Viewport(0, 0, params.m_surfaceWidth, params.m_surfaceHeight),
-                            df::MapDataProvider(idReadFn, featureReadFn, isCountryLoadedByNameFn, updateCurrentCountryFn, m_coordinateCheckerFn),
+                            df::MapDataProvider(idReadFn, featureReadFn, isCountryLoadedByNameFn, updateCurrentCountryFn, m_coordinateCheckerFn, m_poiSupplierFn),
                             params.m_visualScale, move(params.m_widgetsInitInfo),
                             make_pair(params.m_initialMyPositionState, params.m_hasMyPositionState),
                             allow3dBuildings, params.m_isChoosePositionMode, params.m_isChoosePositionMode);
@@ -1788,21 +1796,15 @@ unique_ptr<FeatureType> Framework::GetFeatureByID(FeatureID const & fid, bool pa
   ASSERT(fid.IsValid(), ());
 
   // check for tripfinger prefix
-  if ((id.m_index / 1000) == 789) {
-    SelfBakedFeatureType ft;
-    ft = SelfBakedFeatureType();
-    TripfingerMark mark = m_poiFetcherFn(id.m_index);
-    ft.Make(mark);
+  if ((fid.m_index / 1000) == 789) {
+    TripfingerMark mark = m_poiFetcherFn(fid.m_index);
+    unique_ptr<FeatureType> ft(new SelfBakedFeatureType(mark));
+//    ft->Make(mark);
 
-    ft.ParseMetadata();
-    metadata = ft.GetMetadata();
+//    ft.ParseMetadata();
+//    metadata = ft.GetMetadata();
 
-    ASSERT_NOT_EQUAL(ft.GetFeatureType(), feature::GEOM_LINE, ());
-    m2::PointD const center = feature::GetCenter(ft);
-
-    GetAddressInfo(ft, center, info);
-
-    info.m_name = mark.name;
+    //ASSERT_NOT_EQUAL(ft.GetFeatureType(), feature::GEOM_LINE, ());
 
     return ft;
 
