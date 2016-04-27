@@ -85,6 +85,7 @@
 		25D379161CAFD4F500552633 /* SearchOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D3790E1CAFD4F500552633 /* SearchOnlineTest.swift */; };
 		25D379171CAFD4F500552633 /* SwipeViewOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D3790F1CAFD4F500552633 /* SwipeViewOnlineTest.swift */; };
 		25D379181CAFD4F500552633 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D379101CAFD4F500552633 /* TestUtils.swift */; };
+		25E301941CD0AB2B001CF4B6 /* MWMFullscreenPlacePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E301931CD0AB2A001CF4B6 /* MWMFullscreenPlacePage.swift */; };
 		25E477C01CC8AB5A008C668E /* AppDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E477BF1CC8AB5A008C668E /* AppDelegateTest.swift */; };
 		25E477C51CC8E03C008C668E /* TripfingerAnnotation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25E477C31CC8DF5C008C668E /* TripfingerAnnotation.mm */; };
 		288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
@@ -1018,6 +1019,7 @@
 		25D3790E1CAFD4F500552633 /* SearchOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOnlineTest.swift; sourceTree = "<group>"; };
 		25D3790F1CAFD4F500552633 /* SwipeViewOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeViewOnlineTest.swift; sourceTree = "<group>"; };
 		25D379101CAFD4F500552633 /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		25E301931CD0AB2A001CF4B6 /* MWMFullscreenPlacePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWMFullscreenPlacePage.swift; sourceTree = "<group>"; };
 		25E477BF1CC8AB5A008C668E /* AppDelegateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateTest.swift; sourceTree = "<group>"; };
 		25E477C21CC8DF5C008C668E /* TripfingerAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TripfingerAnnotation.h; sourceTree = "<group>"; };
 		25E477C31CC8DF5C008C668E /* TripfingerAnnotation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TripfingerAnnotation.mm; sourceTree = "<group>"; };
@@ -1973,6 +1975,7 @@
 				2581DC231CAE31340086285E /* TableSection.swift */,
 				2581DC241CAE31340086285E /* TextMessageCell.swift */,
 				2581DC181CAE311B0086285E /* TableController.swift */,
+				25E301931CD0AB2A001CF4B6 /* MWMFullscreenPlacePage.swift */,
 			);
 			name = "UI Components";
 			sourceTree = "<group>";
@@ -3976,14 +3979,14 @@
 		};
 		25D378EF1CAFBD1300552633 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
 			shellScript = ". run-script-for-target.sh";
 		};
@@ -4019,7 +4022,7 @@
 		};
 		FA3A60E715AD5BBD00F40D20 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -4027,7 +4030,7 @@
 			name = "Run Script";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
 			shellScript = ". run-script-for-target.sh";
 		};
@@ -4256,6 +4259,7 @@
 				34BC722A1B0DECAE0012A34B /* MWMZoomButtonsView.mm in Sources */,
 				34CE8A671C7740E100F4351A /* MWMStorage.mm in Sources */,
 				2581DC161CAE30E70086285E /* GuideItemController.swift in Sources */,
+				25E301941CD0AB2B001CF4B6 /* MWMFullscreenPlacePage.swift in Sources */,
 				F6F533A31B3C248900C1940B /* UIColor+MapsMeColor.mm in Sources */,
 				346EDADB1B9F0E35004F8DB5 /* MWMMultilineLabel.mm in Sources */,
 				34C9BD041C6DB693000DC38D /* MWMViewController.mm in Sources */,
