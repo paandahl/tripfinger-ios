@@ -73,7 +73,7 @@ extern NSString * const kAlohalyticsTapEventKey;
   self.menuController = [[MWMBottomMenuViewController alloc] initWithParentController:controller delegate:self];
   self.placePageManager = [[MWMPlacePageViewManager alloc] initWithViewController:controller delegate:self];
   self.navigationManager = [[MWMNavigationDashboardManager alloc] initWithParentView:controller.view delegate:self];
-  self.searchManager = [[MWMSearchManager alloc] initWithParentView:controller.view delegate:self];
+  self.searchManager = [[MWMSearchManager alloc] initWithParentView:controller delegate:self];
   self.hidden = NO;
   self.zoomHidden = NO;
   self.menuState = MWMBottomMenuStateInactive;

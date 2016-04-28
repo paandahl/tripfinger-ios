@@ -4,3 +4,4 @@
 #import "MapsAppDelegateWrapper.h"
 #import "TripfingerAnnotation.h"
 #import "MWMPlacePage.h"
+#import "UIColor+MapsMeColor.h"

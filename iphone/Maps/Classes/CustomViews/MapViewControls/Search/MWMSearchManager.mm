@@ -24,6 +24,7 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
                                MWMSearchTabbedViewProtocol, MWMSearchTabButtonsViewProtocol,
                                UITextFieldDelegate, MWMFrameworkStorageObserver>
 
+@property (weak, nonatomic) UIViewController * parentViewController;
 @property (weak, nonatomic) UIView * parentView;
 @property (nonatomic) IBOutlet MWMSearchView * rootView;
 @property (weak, nonatomic) IBOutlet UIView * contentView;
@@ -41,7 +42,7 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 @implementation MWMSearchManager
 
-- (nullable instancetype)initWithParentView:(nonnull UIView *)view
+- (nullable instancetype)initWithParentView:(nonnull UIViewController *)viewController
                                    delegate:(nonnull id<MWMSearchManagerProtocol, MWMSearchViewProtocol, MWMRoutingProtocol>)delegate
 {
   self = [super init];
@@ -50,7 +51,8 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
     [NSBundle.mainBundle loadNibNamed:@"MWMSearchView" owner:self options:nil];
     self.delegate = delegate;
     self.rootView.delegate = delegate;
-    self.parentView = view;
+    self.parentViewController = viewController;
+    self.parentView = viewController.view;
     self.state = MWMSearchManagerStateHidden;
   }
   return self;
@@ -249,6 +251,7 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 - (void)changeToHiddenState
 {
+  self.parentViewController.navigationController.navigationBarHidden = NO;
   [self endSearch];
   [self.tabbedController resetSelectedTab];
   self.tableViewController = nil;
@@ -258,6 +261,8 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 - (void)changeToDefaultState
 {
+  NSLog(@"opening search shit");
+  self.parentViewController.navigationController.navigationBarHidden = YES;
   self.view.alpha = 1.;
   [self updateTopController];
   [self.navigationController popToRootViewControllerAnimated:NO];
@@ -272,7 +277,7 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 {
   self.rootView.tabBarIsVisible = NO;
   self.tableViewController.searchOnMap = NO;
-  [self.navigationController pushViewController:self.tableViewController animated:NO];
+  [self.navigationController pushViewController:self.tableViewController animated:YES];
 }
 
 - (void)changeToMapSearchState

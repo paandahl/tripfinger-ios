@@ -683,14 +683,9 @@ using namespace osm_auth_ios;
 
 + (void)customizeAppearanceForNavigationBar:(UINavigationBar *)navigationBar
 {
-  navigationBar.tintColor = [UIColor primary];
-  navigationBar.barTintColor = [UIColor primary];
-  [navigationBar setBackgroundImage:nil forBarMetrics:UIBarMetricsDefault];
-  navigationBar.shadowImage = [UIImage imageWithColor:[UIColor fadeBackground]];
+  navigationBar.tintColor = [UIColor whiteColor];
+  navigationBar.barTintColor = [UIColor whiteColor];
   navigationBar.titleTextAttributes = [self navigationBarTextAttributes];
-  // Workaround for ios 7 crash.
-  if (!isIOS7)
-    navigationBar.translucent = NO;
 }
 
 + (void)customizeAppearance

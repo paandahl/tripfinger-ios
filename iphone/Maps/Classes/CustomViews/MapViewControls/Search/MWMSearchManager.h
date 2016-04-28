@@ -31,7 +31,7 @@ typedef NS_ENUM(NSUInteger, MWMSearchManagerState)
 @property (nonnull, nonatomic, readonly) UIView * view;
 
 - (nullable instancetype)init __attribute__((unavailable("init is not available")));
-- (nullable instancetype)initWithParentView:(nonnull UIView *)view
+- (nullable instancetype)initWithParentView:(nonnull UIViewController *)viewController
                                    delegate:(nonnull id<MWMSearchManagerProtocol, MWMSearchViewProtocol, MWMRoutingProtocol>)delegate;
 
 - (void)mwm_refreshUI;

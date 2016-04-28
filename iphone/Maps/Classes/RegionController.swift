@@ -20,9 +20,22 @@ class RegionController: GuideItemController {
   required init?(coder aDecoder: NSCoder) {
       fatalError("init(coder:) has not been implemented")
   }
-  
+
+  func imageFromColor(color: UIColor, frame: CGRect) -> UIImage {
+    UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
+    color.setFill()
+    UIRectFill(frame)
+    let image = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+    return image
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    let colorImage = imageFromColor(UIColor.primary(), frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 64))
+    navigationController!.navigationBar.setBackgroundImage(colorImage, forBarMetrics: .Default)
+    navigationController!.navigationBar.translucent = true
     
     if session.currentRegion == nil && countryLists.count == 0 {
       refreshControl.addTarget(self, action: "reffo", forControlEvents: .ValueChanged)
