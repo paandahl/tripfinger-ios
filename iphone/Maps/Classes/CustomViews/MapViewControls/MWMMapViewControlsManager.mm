@@ -152,6 +152,13 @@ extern NSString * const kAlohalyticsTapEventKey;
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
+  UIDeviceOrientation toOrientation   = [[UIDevice currentDevice] orientation];
+  if (toOrientation == UIDeviceOrientationLandscapeLeft || toOrientation == UIDeviceOrientationLandscapeRight) {
+    self.ownerController.navigationController.navigationBarHidden = YES;
+  } else {
+    self.ownerController.navigationController.navigationBarHidden = self.hidden;
+  }
+
   [self.menuController viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
   [self.placePageManager viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
   [self.navigationManager viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
@@ -686,6 +693,7 @@ extern NSString * const kAlohalyticsTapEventKey;
   self.menuState = _menuState;
   EAGLView * glView = (EAGLView *)self.ownerController.view;
   glView.widgetsManager.fullScreen = hidden;
+  self.ownerController.navigationController.navigationBarHidden = hidden;
 }
 
 - (void)setZoomHidden:(BOOL)zoomHidden
