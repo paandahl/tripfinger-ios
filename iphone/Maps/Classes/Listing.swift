@@ -142,13 +142,22 @@ class Listing: Object {
     // 4498 - leisure-park
     // 268418 - amenity-place_of_worship-christian
     // 5762 - amentiy-hospital
+    // 6210 - amenity-marketplace
     // 4674 - amenity-cafe
     // 6658 - amenity-restaurant
+    // 5570 - amenity-fast_food
     // 7042 - amenity-theatre
+    // 4226 - amenity-pub
+    // 6274 - amenity-nightclub
     // 4771 - tourism-museum
     // 4259 - tourism-attraction
+    // 4579 - tourism-hotel
+    // 266787 - tourism-information-office
     // 4429 - historic-memorial
     // 4493 - historic-monument
+    // 5985 - shop-mall
+    // 97   - shop
+    
     var osmType: Int {
       switch self {
       case .SIGHTS_AND_LANDMARKS:
@@ -199,10 +208,35 @@ class Listing: Object {
       case .BICYCLE_RENTAL:
         return 4610 // amenity-bus_station
         
+      case .GUESTHOUSES:
+        fallthrough
+      case .HOSTELS:
+        fallthrough
+      case .APARTMENTS:
+        fallthrough
+      case .HOSTELS:
+        return 4579 // tourism-hotel
+        
       case .CAFE:
         return 4674 // amenity-cafe
       case .RESTAURANT:
         return 6658 // amenity-restaurant
+      case .BAR:
+        return 4226 // amenity-bar
+      case .NIGHTCLUB:
+        return 6274 // amenity-nightclub
+      case .STREETFOOD:
+        return 5570 // amenity-fast_food
+        
+      case .MARKET:
+        return 6210 // amenity-marketplace
+      case .SHOPPING_CENTRE:
+        return 5985 // shop-mall
+      case .SHOP:
+        return 97 // shop
+
+      case .TOURIST_OFFICES:
+        return 266787 // tourism-information-office
 
       default:
         print("osmType not defined for category: \(self.rawValue)")
