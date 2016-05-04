@@ -21,19 +21,10 @@ class RegionController: GuideItemController {
       fatalError("init(coder:) has not been implemented")
   }
 
-  func imageFromColor(color: UIColor, frame: CGRect) -> UIImage {
-    UIGraphicsBeginImageContextWithOptions(frame.size, false, 0)
-    color.setFill()
-    UIRectFill(frame)
-    let image = UIGraphicsGetImageFromCurrentImageContext()
-    UIGraphicsEndImageContext()
-    return image
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    let colorImage = imageFromColor(UIColor.primary(), frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 64))
+    let colorImage = UIImage(withColor: UIColor.primary(), frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 64))
     navigationController!.navigationBar.setBackgroundImage(colorImage, forBarMetrics: .Default)
     navigationController!.navigationBar.translucent = true
     
@@ -326,10 +317,10 @@ extension RegionController: SearchViewControllerDelegate {
       ContentService.getListingWithId(searchResult.listingId, failure: failure) { listing in
         self.session.loadRegionFromId(listing.item().parent, failure: failure ) {
           toRegion { nav, viewControllers in
-            let vc = DetailController(session: self.session, searchDelegate: self.searchDelegate)
-            vc.listing = listing
-            let vcs = viewControllers + [vc]
-            nav.setViewControllers(vcs, animated: true)
+            self.session.currentListing = listing
+            let entity = TripfingerEntity(listing: listing)
+            TripfingerAppDelegate.viewControllers = viewControllers
+            MapsAppDelegateWrapper.openPlacePage(entity)
           }
         }
       }

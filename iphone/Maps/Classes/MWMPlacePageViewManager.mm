@@ -14,9 +14,11 @@
 #import "MWMiPadPlacePage.h"
 #import "MWMiPhoneLandscapePlacePage.h"
 #import "MWMiPhonePortraitPlacePage.h"
+#import "MWMiPhoneFullscreenPlacePage.h"
 #import "MapViewController.h"
 #import "MapsAppDelegate.h"
 #import "Statistics.h"
+#import "SwiftBridge.h"
 
 #import "3party/Alohalytics/src/alohalytics_objc.h"
 
@@ -33,6 +35,7 @@ extern NSString * const kBookmarksChangedNotification;
 @property (nonatomic, readwrite) MWMPlacePageEntity * entity;
 @property (nonatomic) MWMPlacePage * placePage;
 @property (nonatomic) MWMDirectionView * directionView;
+@property (nonatomic, readwrite) bool fullscreenInProgress;
 
 @property (weak, nonatomic) id<MWMPlacePageViewManagerProtocol> delegate;
 
@@ -43,6 +46,7 @@ extern NSString * const kBookmarksChangedNotification;
 - (instancetype)initWithViewController:(UIViewController *)viewController
                               delegate:(id<MWMPlacePageViewManagerProtocol>)delegate
 {
+  self.fullscreenInProgress = NO;
   self = [super init];
   if (self)
   {
@@ -76,6 +80,26 @@ extern NSString * const kBookmarksChangedNotification;
     [self setPlacePageForiPhoneWithOrientation:self.ownerViewController.interfaceOrientation];
   [self configPlacePage];
 }
+
+- (void)showPlacePageWithEntity:(TripfingerEntity*)entity
+{
+  [[MapsAppDelegate theApp].locationManager start:self];
+  self.entity = [[MWMPlacePageEntity alloc] initWithEntity:entity];
+  if (IPAD)
+    [self setPlacePageForiPad];
+  else
+    [self setPlacePageForiPhoneWithOrientation:self.ownerViewController.interfaceOrientation];
+  [self configPlacePage];
+}
+
+- (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity
+{
+  self.fullscreenInProgress = YES;
+  self.entity = [[MWMPlacePageEntity alloc] initWithEntity:entity];
+  self.placePage = [[MWMiPhoneFullscreenPlacePage alloc] initWithManager:self];
+  [self configPlacePage];
+}
+
 
 #pragma mark - Layout
 
@@ -177,9 +201,14 @@ extern NSString * const kBookmarksChangedNotification;
 
 - (void)addSubviews:(NSArray *)views withNavigationController:(UINavigationController *)controller
 {
-  if (controller)
-    [self.ownerViewController addChildViewController:controller];
-  [self.delegate addPlacePageViews:views];
+  if (self.fullscreenInProgress) {
+    [TripfingerAppDelegate displayPlacePage:views];
+    self.fullscreenInProgress = NO;
+  } else {
+    if (controller)
+      [self.ownerViewController addChildViewController:controller];
+    [self.delegate addPlacePageViews:views];
+  }
 }
 
 - (void)buildRoute

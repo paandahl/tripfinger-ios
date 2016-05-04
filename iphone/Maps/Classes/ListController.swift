@@ -192,9 +192,9 @@ extension ListController {
 extension ListController: ListingCellContainer {
   
   func showDetail(listing: Listing) {
-    let vc = DetailController(session: session, searchDelegate: searchDelegate)
-    vc.listing = listing
-    self.navigationController!.pushViewController(vc, animated: true)
+    self.session.currentListing = listing
+    let entity = TripfingerEntity(listing: listing)
+    MapsAppDelegateWrapper.openPlacePage(entity)
   }
 }
 

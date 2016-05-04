@@ -14,7 +14,7 @@ class ListingCell: UITableViewCell {
   var delegate: ListingCellContainer!
   var hasSetupConstraints = false
   var heightConstraint: NSLayoutConstraint!
-  var height: CGFloat!
+  var contentHeight: CGFloat!
   
   override func updateConstraints() {
     super.updateConstraints()
@@ -57,7 +57,7 @@ class ListingCell: UITableViewCell {
       
       hasSetupConstraints = true
     }
-    heightConstraint.constant = height
+    heightConstraint.constant = contentHeight
   }
   
   func setContent(listing: Listing) {
@@ -66,11 +66,11 @@ class ListingCell: UITableViewCell {
     mainImage.image = UIImage(named: "Placeholder")
     if let notes = listing.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
       heartImage.tintColor = UIColor.redColor()
-      height = 130
+      contentHeight = 130
     }
     else {
       heartImage.tintColor = UIColor.darkGrayColor()
-      height = 267
+      contentHeight = 267
     }
     
     mainImage.clipsToBounds = true

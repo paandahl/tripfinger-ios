@@ -24,6 +24,8 @@ class Session {
   var sectionStack = [GuideText]()
   var currentSection: GuideText!
   
+  var currentListing: Listing!
+  
 //  func loadCurrentCountry(failure: () -> (), handler: () -> ()) {
 //    loadRegionIfNecessary(currentCountry, failure: failure, handler: handler)
 //  }

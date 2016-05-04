@@ -1,6 +1,7 @@
 #import "MWMBottomMenuViewController.h"
 #import "MWMNavigationDashboardManager.h"
 #import "MWMRoutingProtocol.h"
+#import "SwiftBridge.h"
 
 #include "map/user_mark.hpp"
 #include "platform/location.hpp"
@@ -37,6 +38,8 @@
 
 - (void)dismissPlacePage;
 - (void)showPlacePage:(place_page::Info const &)info;
+- (void)showPlacePageWithEntity:(TripfingerEntity*)entity;
+- (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity;
 
 #pragma mark - MWMNavigationDashboardManager
 

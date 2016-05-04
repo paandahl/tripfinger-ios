@@ -20,7 +20,11 @@ extension NSURL {
     let folderPath = getDirectory(baseDir, withPath: path)
     return NSFileManager.defaultManager().fileExistsAtPath(folderPath.path!)
   }
-  
+
+  class func fileExists(url: NSURL) -> Bool {
+    return NSFileManager.defaultManager().fileExistsAtPath(url.path!)
+  }
+
   class func deleteFile(url: NSURL) {
     do {
       try NSFileManager.defaultManager().removeItemAtURL(url)

@@ -674,11 +674,13 @@ void Framework::FillFeatureInfo(FeatureID const & fid, place_page::Info & info) 
     SelfBakedFeatureType ft(mark);
     ft.SetID(fid);
     FillInfoFromFeatureType(ft, info);
+    info.tripfingerId = fid.m_index;
   }
   else {
     Index::FeaturesLoaderGuard const guard(m_model.GetIndex(), fid.m_mwmId);
     FeatureType ft;
     guard.GetFeatureByIndex(fid.m_index, ft);
+    LOG(LINFO, (ft.DebugString(1), ""));
     FillInfoFromFeatureType(ft, info);
   }
 }

@@ -62,6 +62,38 @@ void initFieldsMap()
   return self;
 }
 
+- (instancetype)initWithEntity:(TripfingerEntity*)entity
+{
+  self = [super init];
+  if (self)
+  {
+    self.tripfingerEntity = entity;
+    initFieldsMap();
+    self.title = entity.name;
+    self.address = entity.address;
+    if (entity.email != nil) {
+      [self setMetaField:gMetaFieldsMap[Metadata::FMD_EMAIL] value:[entity.email UTF8String]];
+    }
+    if (entity.website != nil) {
+      [self setMetaField:gMetaFieldsMap[Metadata::FMD_URL] value:[entity.website UTF8String]];
+    }
+    if (entity.phone != nil) {
+      [self setMetaField:gMetaFieldsMap[Metadata::FMD_PHONE_NUMBER] value:[entity.phone UTF8String]];
+    }
+    if (entity.openingHours != nil) {
+      [self setMetaField:gMetaFieldsMap[Metadata::FMD_OPEN_HOURS] value:[entity.openingHours UTF8String]];
+    }
+//    [self setMetaField:gMetaFieldsMap[Metadata::FMD_CUISINE] value:string("Bakst")];
+
+    self.bookmarkTitle = entity.name;
+    self.bookmarkCategory = entity.address;
+    self.bookmarkDescription = nil;
+    _isHTMLDescription = NO;
+  }
+  return self;
+}
+
+
 - (void)config
 {
   [self configureDefault];
@@ -148,12 +180,18 @@ void initFieldsMap()
     case MWMPlacePageCellTypeCoordinate:
       return [self coordinate];
     case MWMPlacePageCellTypeBookmark:
-      return m_info.IsBookmark() ? @"" : nil;
+      if ([self isTripfinger]) {
+        return self.tripfingerEntity.liked ? @"" : nil;
+      } else {
+        return m_info.IsBookmark() ? @"" : nil;
+      }
+    case MWMPlacePageCellTypeInfo:
+      return [self isTripfinger] ? @"": nil;
     case MWMPlacePageCellTypeEditButton:
       // TODO(Vlad): It's a really strange way to "display" cell if returned text is not nil.
-      return m_info.IsEditable() && isNewMWM ? @"" : nil;
+      return nil; //@"";
     case MWMPlacePageCellTypeReportButton:
-      return m_info.IsFeature() && isNewMWM ? @"" : nil;
+      return nil; // m_info.IsFeature() && isNewMWM ? @"" : nil;
     default:
     {
       auto const it = m_values.find(cellType);
@@ -180,7 +218,11 @@ void initFieldsMap()
 
 - (BOOL)isBookmark
 {
-  return m_info.IsBookmark();
+  if ([self isTripfinger]) {
+    return self.tripfingerEntity.liked;
+  } else {
+    return m_info.IsBookmark();
+  }
 }
 
 - (BOOL)isApi
@@ -188,9 +230,18 @@ void initFieldsMap()
   return m_info.HasApiUrl();
 }
 
+- (BOOL)isTripfinger
+{
+  return self.tripfingerEntity != nil;
+}
+
 - (ms::LatLon)latlon
 {
-  return m_info.GetLatLon();
+  if ([self isTripfinger]) {
+    return ms::LatLon(self.tripfingerEntity.lat, self.tripfingerEntity.lon);
+  } else {
+    return m_info.GetLatLon();
+  }
 }
 
 - (m2::PointD const &)mercator

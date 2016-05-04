@@ -6,6 +6,10 @@ class Listing: Object {
   // composition (instead of inheritance - for Realm-purposes)
   dynamic var listing: GuideListing!
   
+  dynamic var website: String?
+  dynamic var email: String?
+  dynamic var address: String?
+  dynamic var phone: String?
   dynamic var price: String?
   dynamic var openingHours: String?
   dynamic var directions: String?

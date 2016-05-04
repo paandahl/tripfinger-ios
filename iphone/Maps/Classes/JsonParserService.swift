@@ -147,6 +147,10 @@ class JsonParserService {
   class func parseListing(json: JSON) -> Listing {
     let listing = Listing()
     listing.listing = parseGuideListing(json)
+    listing.address = json["address"].string
+    listing.website = json["url"].string
+    listing.phone = json["phone"].string
+    listing.email = json["email"].string
     listing.price = json["price"].string
     listing.openingHours = json["openingHours"].string
     listing.directions = json["directions"].string

@@ -11,6 +11,10 @@
 		1D60589B0D05DD56006BFB54 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.mm */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		2502337D1CD36896005F9943 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2502337C1CD36896005F9943 /* DetailController.swift */; };
+		2502337F1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2502337E1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm */; };
+		2571ADED1CD882F000CF2EFF /* TripfingerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */; };
+		2571ADEF1CD8966100CF2EFF /* PlacePageInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */; };
 		2581DC0C1CACF8AB0086285E /* TripfingerAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */; };
 		2581DC0F1CAD299C0086285E /* MapsAppDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC0E1CAD299C0086285E /* MapsAppDelegateWrapper.mm */; };
 		2581DC121CAE30D50086285E /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC111CAE30D50086285E /* ListController.swift */; };
@@ -28,7 +32,6 @@
 		2581DC2D1CAE31340086285E /* RightDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC221CAE31340086285E /* RightDetailCell.swift */; };
 		2581DC2E1CAE31340086285E /* TableSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC231CAE31340086285E /* TableSection.swift */; };
 		2581DC2F1CAE31340086285E /* TextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC241CAE31340086285E /* TextMessageCell.swift */; };
-		2581DC351CAE31490086285E /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC301CAE31490086285E /* DetailController.swift */; };
 		2581DC361CAE31490086285E /* LicenseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC311CAE31490086285E /* LicenseController.swift */; };
 		2581DC371CAE31490086285E /* ListingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC321CAE31490086285E /* ListingsController.swift */; };
 		2581DC381CAE31490086285E /* SectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC331CAE31490086285E /* SectionController.swift */; };
@@ -85,7 +88,6 @@
 		25D379161CAFD4F500552633 /* SearchOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D3790E1CAFD4F500552633 /* SearchOnlineTest.swift */; };
 		25D379171CAFD4F500552633 /* SwipeViewOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D3790F1CAFD4F500552633 /* SwipeViewOnlineTest.swift */; };
 		25D379181CAFD4F500552633 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D379101CAFD4F500552633 /* TestUtils.swift */; };
-		25E301941CD0AB2B001CF4B6 /* MWMFullscreenPlacePage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E301931CD0AB2A001CF4B6 /* MWMFullscreenPlacePage.swift */; };
 		25E477C01CC8AB5A008C668E /* AppDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E477BF1CC8AB5A008C668E /* AppDelegateTest.swift */; };
 		25E477C51CC8E03C008C668E /* TripfingerAnnotation.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25E477C31CC8DF5C008C668E /* TripfingerAnnotation.mm */; };
 		288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
@@ -937,6 +939,11 @@
 		1D3623240D0F684500981E51 /* MapsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapsAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* MapsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = MapsAppDelegate.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		2502337C1CD36896005F9943 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
+		2502337E1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMiPhoneFullscreenPlacePage.mm; sourceTree = "<group>"; };
+		250233801CD36C00005F9943 /* MWMiPhoneFullscreenPlacePage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMiPhoneFullscreenPlacePage.h; sourceTree = "<group>"; };
+		2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerEntity.swift; sourceTree = "<group>"; };
+		2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacePageInfoCell.swift; sourceTree = "<group>"; };
 		2581DC071CACD8900086285E /* MAPS.ME-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAPS.ME-Bridging-Header.h"; sourceTree = "<group>"; };
 		2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerAppDelegate.swift; sourceTree = "<group>"; };
 		2581DC0D1CAD29510086285E /* MapsAppDelegateWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapsAppDelegateWrapper.h; sourceTree = "<group>"; };
@@ -956,7 +963,6 @@
 		2581DC221CAE31340086285E /* RightDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RightDetailCell.swift; sourceTree = "<group>"; };
 		2581DC231CAE31340086285E /* TableSection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableSection.swift; sourceTree = "<group>"; };
 		2581DC241CAE31340086285E /* TextMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageCell.swift; sourceTree = "<group>"; };
-		2581DC301CAE31490086285E /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		2581DC311CAE31490086285E /* LicenseController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LicenseController.swift; sourceTree = "<group>"; };
 		2581DC321CAE31490086285E /* ListingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingsController.swift; sourceTree = "<group>"; };
 		2581DC331CAE31490086285E /* SectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
@@ -1019,7 +1025,6 @@
 		25D3790E1CAFD4F500552633 /* SearchOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOnlineTest.swift; sourceTree = "<group>"; };
 		25D3790F1CAFD4F500552633 /* SwipeViewOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeViewOnlineTest.swift; sourceTree = "<group>"; };
 		25D379101CAFD4F500552633 /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
-		25E301931CD0AB2A001CF4B6 /* MWMFullscreenPlacePage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MWMFullscreenPlacePage.swift; sourceTree = "<group>"; };
 		25E477BF1CC8AB5A008C668E /* AppDelegateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateTest.swift; sourceTree = "<group>"; };
 		25E477C21CC8DF5C008C668E /* TripfingerAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TripfingerAnnotation.h; sourceTree = "<group>"; };
 		25E477C31CC8DF5C008C668E /* TripfingerAnnotation.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = TripfingerAnnotation.mm; sourceTree = "<group>"; };
@@ -1927,6 +1932,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		250233771CD34304005F9943 /* iPhoneFullscreen */ = {
+			isa = PBXGroup;
+			children = (
+				250233801CD36C00005F9943 /* MWMiPhoneFullscreenPlacePage.h */,
+				2502337E1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm */,
+			);
+			name = iPhoneFullscreen;
+			sourceTree = "<group>";
+		};
 		2581DC0A1CACF8930086285E /* Tripfinger */ = {
 			isa = PBXGroup;
 			children = (
@@ -1948,7 +1962,7 @@
 			isa = PBXGroup;
 			children = (
 				2581DC151CAE30E70086285E /* GuideItemController.swift */,
-				2581DC301CAE31490086285E /* DetailController.swift */,
+				2502337C1CD36896005F9943 /* DetailController.swift */,
 				2581DC311CAE31490086285E /* LicenseController.swift */,
 				2581DC321CAE31490086285E /* ListingsController.swift */,
 				2581DC331CAE31490086285E /* SectionController.swift */,
@@ -1974,7 +1988,7 @@
 				2581DC231CAE31340086285E /* TableSection.swift */,
 				2581DC241CAE31340086285E /* TextMessageCell.swift */,
 				2581DC181CAE311B0086285E /* TableController.swift */,
-				25E301931CD0AB2A001CF4B6 /* MWMFullscreenPlacePage.swift */,
+				2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */,
 			);
 			name = "UI Components";
 			sourceTree = "<group>";
@@ -2002,6 +2016,7 @@
 				2581DC4A1CAE31700086285E /* Region.swift */,
 				2581DC4B1CAE31700086285E /* Session.swift */,
 				2581DC4C1CAE31700086285E /* SimplePOI.swift */,
+				2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -3164,6 +3179,7 @@
 		F66A8FA51B09F02A001B9C97 /* OrientationVariants */ = {
 			isa = PBXGroup;
 			children = (
+				250233771CD34304005F9943 /* iPhoneFullscreen */,
 				F6FE2C121B04A2AF009814AA /* iPhonePortrait */,
 				F66A8FA91B09F069001B9C97 /* iPhoneLandscape */,
 				F66A8FAD1B09F13C001B9C97 /* iPadPlacePageView */,
@@ -4051,6 +4067,7 @@
 				2581DC281CAE31340086285E /* GuideItemCell.swift in Sources */,
 				978D4A291996C17300D72CA7 /* RichTextVC.mm in Sources */,
 				9747278418338F0C006B7CB7 /* UIViewController+Navigation.mm in Sources */,
+				2571ADEF1CD8966100CF2EFF /* PlacePageInfoCell.swift in Sources */,
 				F6BC1E521ACBF98600EF0360 /* MWMFacebookAlert.mm in Sources */,
 				2581DC4D1CAE31700086285E /* GuideItem.swift in Sources */,
 				F64F199D1AB81A00006EAF7E /* MWMDefaultAlert.mm in Sources */,
@@ -4067,6 +4084,7 @@
 				349A35831B53E967009677EE /* MWMDownloadMapRequest.mm in Sources */,
 				2581DC521CAE31700086285E /* Listing.swift in Sources */,
 				349C26B51BB02C6F0005DF2F /* MWMBottomMenuViewController.mm in Sources */,
+				2502337D1CD36896005F9943 /* DetailController.swift in Sources */,
 				3438CDF41B85F1170051AA78 /* MWMConsole.mm in Sources */,
 				F6AD57BA1C87039F00CED368 /* MWMEditorCategoryCell.mm in Sources */,
 				A32B6D4C1A14980500E54A65 /* iosOGLContext.mm in Sources */,
@@ -4151,6 +4169,7 @@
 				340F24631B14910500F874CD /* RouteState.mm in Sources */,
 				F6830F111B85F6B900C42AAE /* MWMLanesPanel.mm in Sources */,
 				9747264318323080006B7CB7 /* UIKitCategories.mm in Sources */,
+				2502337F1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm in Sources */,
 				F6BD33811B62403B00F2CE18 /* MWMRoutePreview.mm in Sources */,
 				F6BB6CC31BB1860D00DF1DF2 /* MWMRoutePointLayout.mm in Sources */,
 				34BF0CC61C31304A00D097EB /* MWMAuthorizationCommon.mm in Sources */,
@@ -4176,7 +4195,6 @@
 				34EB84581C073DF70004689F /* MWMOpeningHoursEditorViewController.mm in Sources */,
 				349A357A1B53D4C9009677EE /* MWMCircularProgress.mm in Sources */,
 				FAA5C2A2144F135F005337F6 /* LocationManager.mm in Sources */,
-				2581DC351CAE31490086285E /* DetailController.swift in Sources */,
 				34B82ADA1B847FFC00180497 /* MWMSearchCell.mm in Sources */,
 				F6FEA82D1C58E89B007223CC /* MWMButton.mm in Sources */,
 				2581DC401CAE315F0086285E /* FilterController.swift in Sources */,
@@ -4239,6 +4257,7 @@
 				F60F02E91C904F40003A0AF6 /* MWMReportBaseController.mm in Sources */,
 				F6BD1D201CA412920047B8E8 /* MWMOsmAuthAlert.mm in Sources */,
 				347FD8891C60B2CE002FB65E /* MWMOpeningHoursTimeSpanTableViewCell.mm in Sources */,
+				2571ADED1CD882F000CF2EFF /* TripfingerEntity.swift in Sources */,
 				34CD81C31C91C281007D2A60 /* MWMWhatsNewNightModeController.mm in Sources */,
 				974D041D1977DE430081D0A7 /* LocalNotificationManager.mm in Sources */,
 				97C98522186AE3CF00AF7E9E /* AppInfo.mm in Sources */,
@@ -4252,7 +4271,6 @@
 				34BC722A1B0DECAE0012A34B /* MWMZoomButtonsView.mm in Sources */,
 				34CE8A671C7740E100F4351A /* MWMStorage.mm in Sources */,
 				2581DC161CAE30E70086285E /* GuideItemController.swift in Sources */,
-				25E301941CD0AB2B001CF4B6 /* MWMFullscreenPlacePage.swift in Sources */,
 				F6F533A31B3C248900C1940B /* UIColor+MapsMeColor.mm in Sources */,
 				346EDADB1B9F0E35004F8DB5 /* MWMMultilineLabel.mm in Sources */,
 				34C9BD041C6DB693000DC38D /* MWMViewController.mm in Sources */,

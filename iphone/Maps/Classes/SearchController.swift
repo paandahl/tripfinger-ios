@@ -32,6 +32,11 @@ class SearchController: UITableViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    let colorImage = UIImage(withColor: UIColor.primary(), frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 64))
+    navigationController!.navigationBar.setBackgroundImage(colorImage, forBarMetrics: .Default)
+    navigationController!.navigationBar.translucent = true
+
     searchService = SearchService()
     
     // Include the search controller's search bar within the table's header view.
@@ -43,6 +48,8 @@ class SearchController: UITableViewController {
     backButton.setTitle("Cancel", forState: UIControlState.Normal)
     backButton.sizeToFit()
     self.navigationItem.titleView = searchBar
+    self.navigationItem.titleView!.tintColor = UIColor.darkGrayColor()
+
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: backButton)
   }
   

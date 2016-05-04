@@ -189,6 +189,17 @@ extern NSString * const kAlohalyticsTapEventKey;
   [self refreshHelperPanels:UIInterfaceOrientationIsLandscape(self.ownerController.interfaceOrientation)];
 }
 
+- (void)showPlacePageWithEntity:(TripfingerEntity*)entity {
+  [self.placePageManager showPlacePageWithEntity:entity];
+  [self refreshHelperPanels:UIInterfaceOrientationIsLandscape(self.ownerController.interfaceOrientation)];
+}
+
+- (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity {
+  [self.placePageManager showPlacePageWithEntityFullscreen:entity];
+  [self refreshHelperPanels:UIInterfaceOrientationIsLandscape(self.ownerController.interfaceOrientation)];
+}
+
+
 - (void)apiBack
 {
   [self.ownerController.apiBar back];

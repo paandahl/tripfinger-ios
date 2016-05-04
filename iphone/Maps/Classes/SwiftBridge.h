@@ -109,6 +109,28 @@ typedef int swift_int4  __attribute__((__ext_vector_type__(4)));
 
 @class TripfingerAnnotation;
 
+SWIFT_CLASS("_TtC10Tripfinger16TripfingerEntity")
+@interface TripfingerEntity : NSObject
+@property (nonatomic) double lat;
+@property (nonatomic) double lon;
+@property (nonatomic, copy) NSString * __null_unspecified name;
+@property (nonatomic, copy) NSString * __null_unspecified phone;
+@property (nonatomic, copy) NSString * __null_unspecified address;
+@property (nonatomic, copy) NSString * __null_unspecified website;
+@property (nonatomic, copy) NSString * __null_unspecified email;
+@property (nonatomic, copy) NSString * __null_unspecified content;
+@property (nonatomic, copy) NSString * __null_unspecified price;
+@property (nonatomic, copy) NSString * __null_unspecified openingHours;
+@property (nonatomic, copy) NSString * __null_unspecified directions;
+@property (nonatomic, copy) NSString * __null_unspecified url;
+@property (nonatomic, copy) NSString * __null_unspecified imageDescription;
+@property (nonatomic, copy) NSString * __null_unspecified license;
+@property (nonatomic, copy) NSString * __null_unspecified artist;
+@property (nonatomic, copy) NSString * __null_unspecified originalUrl;
+@property (nonatomic) BOOL liked;
+- (NSURL * __nonnull)getFileUrl;- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 
 SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 @interface TripfingerAppDelegate : NSObject
@@ -117,6 +139,23 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 - (UIWindow * __nonnull)applicationLaunched:(UIApplication * __nonnull)application delegate:(id <UIApplicationDelegate> __nonnull)delegate didFinishLaunchingWithOptions:(NSDictionary * __nullable)launchOptions;
 + (NSArray<TripfingerAnnotation *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight zoomLevel:(NSInteger)zoomLevel;
 + (TripfingerAnnotation * __nonnull)getPoiById:(int32_t)id;
++ (TripfingerEntity * __nonnull)getListingById:(int32_t)id;
 + (BOOL)coordinateExists:(CLLocationCoordinate2D)coord;
++ (void)displayPlacePage:(NSArray<UIView *> * __nonnull)views;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+SWIFT_CLASS("_TtC10Tripfinger17PlacePageInfoCell")
+@interface PlacePageInfoCell : UITableViewCell
+@property (nonatomic) BOOL contentSet;
+@property (nonatomic, readonly, strong) UIImageView * __nonnull myImageView;
+@property (nonatomic, readonly, strong) UITextView * __nonnull descriptionText;
+@property (nonatomic, readonly, strong) UILabel * __nonnull priceLabel;
+@property (nonatomic, readonly, strong) UITextView * __nonnull priceText;
+@property (nonatomic, readonly, strong) UILabel * __nonnull directionsLabel;
+@property (nonatomic, readonly, strong) UITextView * __nonnull directionsText;
+@property (nonatomic, readonly) CGFloat myWidth;
+- (nonnull instancetype)initWithWidth:(CGFloat)width OBJC_DESIGNATED_INITIALIZER;
+- (nullable instancetype)initWithCoder:(NSCoder * __nonnull)aDecoder OBJC_DESIGNATED_INITIALIZER;
+- (void)setContentFromGuideItem:(TripfingerEntity * __nonnull)tripfingerEntity;
 @end

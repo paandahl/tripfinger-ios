@@ -8,6 +8,7 @@ import CoreLocation
   static var mode = AppMode.BETA
   static var session: Session!
   static var coordinateSet = Set<Int64>()
+  static let navigationController = UINavigationController()
 
   public func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
     
@@ -27,12 +28,11 @@ import CoreLocation
     let window = UIWindow(frame: UIScreen.mainScreen().bounds)
     window.backgroundColor = UIColor.whiteColor()
     window.makeKeyAndVisible()
-    let nav = UINavigationController()
-    nav.automaticallyAdjustsScrollViewInsets = false
+    TripfingerAppDelegate.navigationController.automaticallyAdjustsScrollViewInsets = false
     let regionController = RegionController(session: TripfingerAppDelegate.session)
     regionController.edgesForExtendedLayout = .None // offset from navigation bar
-    nav.viewControllers = [regionController]
-    window.rootViewController = nav
+    TripfingerAppDelegate.navigationController.viewControllers = [regionController]
+    window.rootViewController = TripfingerAppDelegate.navigationController
 
     if NSProcessInfo.processInfo().arguments.contains("OFFLINEMAP") {
       print("Installing test-map before offline-mode")
@@ -69,11 +69,6 @@ import CoreLocation
     let topRight = CLLocationCoordinate2DMake(topLeft.latitude, bottomRight.longitude)
     let bottomLeft = CLLocationCoordinate2DMake(bottomRight.latitude, topLeft.longitude)
     let pois = DatabaseService.getPois(bottomLeft, topRight: topRight, zoomLevel: 15) //, category: session.currentCategory)
-      ////          searchResults in
-      ////
-      ////          self.pois = searchResults
-      ////          self.addAnnotations()
-      ////        }
 
     var annotations = [TripfingerAnnotation]()
 
@@ -96,13 +91,6 @@ import CoreLocation
     print("Fetched \(annotations.count) annotations. botLeft: \(bottomLeft), topRight: \(topRight)")
 
     return annotations;
-
-//    let annotation = TripfingerAnnotation()
-//    annotation.name = "Cunt Airport";
-//    annotation.lat = 43.257673;
-//    annotation.lon = 76.954907;
-//    annotation.identifier = 789032;
-//    return [annotation];
   }
 
   public class func getPoiById(id: Int32) -> TripfingerAnnotation {
@@ -115,7 +103,13 @@ import CoreLocation
     annotation.type = Int32(Listing.SubCategory(rawValue: listing!.item().subCategory)!.osmType)
     return annotation
   }
-  
+
+  public class func getListingById(id: Int32) -> TripfingerEntity {
+    let listingId = idMap[id]!
+    let listing = DatabaseService.getListingWithId(listingId)!
+    return TripfingerEntity(listing: listing)
+  }
+
   public class func coordinateToInt(coord: CLLocationCoordinate2D) -> Int64 {
     let latInt = Int64((coord.latitude * 1000000) + 0.5)
     let lonInt = Int64((coord.longitude * 1000000) + 0.5)
@@ -137,6 +131,36 @@ import CoreLocation
     let exists = TripfingerAppDelegate.coordinateSet.contains(intCoord)
     return exists
   }
+  
+  static var viewControllers = [UIViewController]()
+    
+  public class func displayPlacePage(views: [UIView]) {
+    let searchDelegate = TripfingerAppDelegate.navigationController.viewControllers[0] as! RegionController
+    let detailController = DetailController(session: session, searchDelegate: searchDelegate, placePageViews: views)
+    if viewControllers.count > 0 {
+      let newViewControllers = TripfingerAppDelegate.viewControllers + [detailController]
+      TripfingerAppDelegate.navigationController.setViewControllers(newViewControllers, animated: true)
+      TripfingerAppDelegate.viewControllers = [UIViewController]()
+    } else {
+      TripfingerAppDelegate.navigationController.pushViewController(detailController, animated: true)
+    }
+  }
+  
+  class func navigateToLicense() {
+    let licenseController: UIViewController
+    if session.currentItem.textLicense == nil || session.currentItem.textLicense == "" && session.currentSection != nil {
+      licenseController = LicenseController(textItem: session.currentRegion.item(), imageItem: session.currentItem)
+    } else {
+      licenseController = LicenseController(textItem: session.currentItem, imageItem: session.currentItem)
+    }
+    licenseController.edgesForExtendedLayout = .None // offset from navigation bar
+    TripfingerAppDelegate.navigationController.pushViewController(licenseController, animated: true)
+  }
+
+  
+//  public class func getImageViewCell() -> UIView {
+//    
+//  }
 
   enum AppMode {
     case TEST

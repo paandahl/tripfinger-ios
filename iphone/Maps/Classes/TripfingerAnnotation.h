@@ -1,11 +1,3 @@
-//
-//  TripfingerAnnotation.h
-//  Maps
-//
-//  Created by Preben Ludviksen on 12/04/16.
-//  Copyright © 2016 MapsWithMe. All rights reserved.
-//
-
 #ifndef TripfingerAnnotation_h
 #define TripfingerAnnotation_h
 

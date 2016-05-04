@@ -253,9 +253,9 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
 extension SwipeController: ListingCardContainer {
   
   func showDetail(listing: Listing) {
-    let vc = DetailController(session: session, searchDelegate: searchDelegate)
-    vc.listing = listing
-    self.navigationController!.pushViewController(vc, animated: true)
+    self.session.currentListing = listing
+    let entity = TripfingerEntity(listing: listing)
+    MapsAppDelegateWrapper.openPlacePage(entity)
   }
 }
 

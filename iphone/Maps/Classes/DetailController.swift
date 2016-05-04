@@ -1,206 +1,56 @@
 import Foundation
 
+class SuperScrollView: UIScrollView {
+  override func touchesShouldCancelInContentView(view: UIView) -> Bool {
+    return true
+  }
+}
+
 class DetailController: UIViewController {
   
   let session: Session
   let searchDelegate: SearchViewControllerDelegate
+
+  let scrollView = SuperScrollView()
+  let placePageViews: [UIView]
   
-  let scrollView = UIScrollView()
-  let heartImage = UIImageView()
-  let mainImage = UIImageView()
-  let licenseButton = UIButton()
-  let nameLabel = UILabel()
-  let descriptionText = UITextView()
-  let priceLabel = UILabel()
-  let priceText = UITextView()
-  let openingHoursLabel = UILabel()
-  let openingHoursText = UITextView()
-  let directionsLabel = UILabel()
-  let directionsText = UITextView()
-  
-  var listing: Listing!
-  
-  init(session: Session, searchDelegate: SearchViewControllerDelegate) {
+  init(session: Session, searchDelegate: SearchViewControllerDelegate, placePageViews: [UIView]) {
     self.session = session
     self.searchDelegate = searchDelegate
+    scrollView.canCancelContentTouches = true
+    self.placePageViews = placePageViews
     super.init(nibName: nil, bundle: nil)
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
+
   override func viewDidLoad() {
-    navigationItem.title = listing.item().name
+    navigationItem.title = session.currentListing.listing.item.name
     let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
     mapButton.accessibilityLabel = "Map"
     let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
     navigationItem.rightBarButtonItems = [searchButton, mapButton]
 
+    let infoView = placePageViews[0]
+    let actionBar = placePageViews[1]
+    view.backgroundColor = UIColor.whiteColor()
     view.addSubview(scrollView)
-    scrollView.addSubview(nameLabel)
-    scrollView.addSubview(mainImage)
-    scrollView.addSubview(descriptionText)
-    
-    heartImage.image = UIImage(named: "heart-24")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-    let heartClick = UITapGestureRecognizer(target: self, action: "heartClick")
-    heartClick.numberOfTapsRequired = 1;
-    heartClick.numberOfTouchesRequired = 1;
-    heartImage.addGestureRecognizer(heartClick)
-    heartImage.userInteractionEnabled = true
-    setHeartTint()
-    scrollView.addSubview(heartImage)
-    scrollView.backgroundColor = UIColor.whiteColor()
-    
-    licenseButton.setTitle("Content license", forState: .Normal)
-    licenseButton.titleLabel!.font = UIFont.systemFontOfSize(12.0)
-    licenseButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
-    licenseButton.sizeToFit()
-    licenseButton.addTarget(self, action: "navigateToLicense", forControlEvents: .TouchUpInside)
-    scrollView.addSubview(licenseButton)
-
-    nameLabel.font = UIFont.boldSystemFontOfSize(16)
-    nameLabel.text = listing.listing.item.name
-    nameLabel.lineBreakMode = .ByWordWrapping
-    nameLabel.numberOfLines = 2
-
-    descriptionText.scrollEnabled = false
-    let encodedData = listing.item().content!.dataUsingEncoding(NSUTF8StringEncoding)!
-    let options : [String: AnyObject] = [
-      NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-      NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding,
-    ]
-    let attributedString = try! NSMutableAttributedString(data: encodedData, options: options, documentAttributes: nil)
-    attributedString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(16.0), range: NSMakeRange(0, attributedString.length))
-    let style = NSMutableParagraphStyle()
-    style.lineSpacing = 5
-    style.paragraphSpacing = 20
-    attributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, attributedString.length))
-    descriptionText.attributedText = attributedString
-    
-    var views = ["scroll": scrollView, "heart": heartImage, "name": nameLabel, "image": mainImage,
-      "description": descriptionText, "license": licenseButton]
-    view.addConstraints("V:|-0-[scroll]-0-|", forViews: views)
-    view.addConstraints("H:|-0-[scroll]-0-|", forViews: views)
-    let widthConstraint = NSLayoutConstraint(item: mainImage, attribute: .Width, relatedBy: .Equal, toItem: scrollView, attribute: .Width, multiplier: 1.0, constant: 0)
-    view.addConstraint(widthConstraint)
-    
-    let imageHeight = UIScreen.mainScreen().bounds.width * 0.75
-    scrollView.addConstraints("V:|-0-[image(\(imageHeight))]-20-[name]-20-[description]", forViews: views)
-    scrollView.addConstraints("V:[license]-30-[name]", forViews: views)
-    scrollView.addConstraints("V:|-20-[heart]", forViews: views)
-    scrollView.addConstraints("H:|-0-[image]-0-|", forViews: views)
-    scrollView.addConstraints("H:|-20-[name]-10-|", forViews: views)
-    scrollView.addConstraints("H:[license]-20-|", forViews: views)
-    scrollView.addConstraints("H:|-20-[description]-20-|", forViews: views)
-    scrollView.addConstraints("H:[heart]-20-|", forViews: views)
-    var bottomElement = descriptionText
-    
-    if let price = listing.price {
-      scrollView.addSubview(priceLabel)
-      scrollView.addSubview(priceText)
-      priceLabel.text = "Price"
-      priceLabel.font = UIFont.boldSystemFontOfSize(16)
-      priceText.scrollEnabled = false
-      priceText.font = UIFont.systemFontOfSize(16)
-      priceText.text = price
-      views = ["description": descriptionText, "priceLabel": priceLabel, "priceText": priceText]
-      scrollView.addConstraints("V:[description]-20-[priceLabel]-20-[priceText]", forViews: views)
-      scrollView.addConstraints("H:|-20-[priceLabel]-20-|", forViews: views)
-      scrollView.addConstraints("H:|-20-[priceText]-20-|", forViews: views)
-      bottomElement = priceText
-    }
-    
-    if let openingHours = listing.openingHours {
-      scrollView.addSubview(openingHoursLabel)
-      scrollView.addSubview(openingHoursText)
-      openingHoursLabel.text = "Opening hours"
-      openingHoursLabel.font = UIFont.boldSystemFontOfSize(16)
-      openingHoursText.scrollEnabled = false
-      openingHoursText.font = UIFont.systemFontOfSize(16)
-      openingHoursText.text = openingHours
-      views = ["bottom": bottomElement, "hoursLabel": openingHoursLabel, "hoursText": openingHoursText]
-      scrollView.addConstraints("V:[bottom]-20-[hoursLabel]-20-[hoursText]", forViews: views)
-      scrollView.addConstraints("H:|-20-[hoursLabel]-20-|", forViews: views)
-      scrollView.addConstraints("H:|-20-[hoursText]-20-|", forViews: views)
-      bottomElement = openingHoursText
-    }
-
-    if let directions = listing.directions {
-      scrollView.addSubview(directionsLabel)
-      scrollView.addSubview(directionsText)
-      directionsLabel.text = "Directions"
-      directionsLabel.font = UIFont.boldSystemFontOfSize(16)
-      directionsText.scrollEnabled = false
-      directionsText.font = UIFont.systemFontOfSize(16)
-      directionsText.text = directions
-      views = ["bottom": bottomElement, "dirLabel": directionsLabel, "dirText": directionsText]
-      scrollView.addConstraints("V:[bottom]-20-[dirLabel]-20-[dirText]", forViews: views)
-      scrollView.addConstraints("H:|-20-[dirLabel]-20-|", forViews: views)
-      scrollView.addConstraints("H:|-20-[dirText]-20-|", forViews: views)
-      bottomElement = directionsText
-    }
-
-    let bottomConstraint = NSLayoutConstraint(item: bottomElement, attribute: .Bottom, relatedBy: .Equal, toItem: scrollView, attribute: .Bottom, multiplier: 1.0, constant: -20)
-    view.addConstraint(bottomConstraint)
-
-    mainImage.contentMode = UIViewContentMode.ScaleAspectFit
-    if listing.item().offline {
-      print("fetching image from \(listing.item().images[0].getFileUrl())")
-      mainImage.image = UIImage(data: NSData(contentsOfURL: listing.item().images[0].getFileUrl())!)
-    }
-    else {
-      if listing.item().images.count > 0 {
-        let imageUrl = DownloadService.gcsImagesUrl + listing.item().images[0].url + "-712x534"
-        mainImage.image = UIImage(named: "Placeholder")
-        try! mainImage.loadImageWithUrl(imageUrl)
-      }
-      else {
-        print("No image")
-        let blankImage = UIImage(color: UIColor.lightGrayColor(), size: CGSizeMake(200, 200))
-        mainImage.image = textToImage("This is a draft without image.", inImage: blankImage, atPoint: CGPointMake(50, 100))
-      }
+    let res = UIScreen.mainScreen().bounds.size
+    scrollView.frame = CGRectMake(0, 0, res.width, res.height - actionBar.height)
+    scrollView.addSubview(infoView)
+    actionBar.frame = CGRectMake(0, res.height - actionBar.height, res.width, actionBar.height)
+    view.addSubview(actionBar)
+    for placePageView in placePageViews {
+      placePageView.userInteractionEnabled = true
     }
   }
   
-  func textToImage(drawText: NSString, inImage: UIImage, atPoint:CGPoint)->UIImage{
-    let textColor: UIColor = UIColor.blackColor()
-    let textFont: UIFont = UIFont(name: "Helvetica Bold", size: 20)!
-    
-    UIGraphicsBeginImageContext(inImage.size)
-    
-    let textFontAttributes = [
-      NSFontAttributeName: textFont,
-      NSForegroundColorAttributeName: textColor,
-    ]
-    
-    inImage.drawInRect(CGRectMake(0, 0, inImage.size.width, inImage.size.height))
-    let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, inImage.size.width, inImage.size.height)
-    drawText.drawInRect(rect, withAttributes: textFontAttributes)
-    let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
-    
-    UIGraphicsEndImageContext()
-    
-    return newImage
-  }
-  
-  func setHeartTint() {
-    print("likedState: \(listing.listing.notes?.likedState)")
-    if let notes = listing.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
-      heartImage.tintColor = UIColor.redColor()
-    } else {
-      heartImage.tintColor = UIColor.darkGrayColor()
-    }
-  }
-  
-  func heartClick() {
-    if let notes = listing.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
-      print("unselected heart")
-      DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, listing: listing)
-    } else {
-      DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, listing: listing)
-    }
-    setHeartTint()
+  override func viewDidLayoutSubviews() {
+    let uiTableView = placePageViews[0].subviews[2].subviews[1] as! UITableView
+    let height: CGFloat = uiTableView.contentSize.height + placePageViews[1].frame.size.height + 100;
+    scrollView.contentSize = CGSizeMake(UIScreen.mainScreen().bounds.width, height)
   }
   
   func navigateToSearch() {
@@ -216,15 +66,5 @@ class DetailController: UIViewController {
     let vc = MapsAppDelegateWrapper.getMapViewController()
     navigationController!.pushViewController(vc, animated: true)
   }
-  
-  func navigateToLicense() {
-    let licenseController: UIViewController
-    if session.currentItem.textLicense == nil || session.currentItem.textLicense == "" && session.currentSection != nil {
-      licenseController = LicenseController(textItem: session.currentRegion.item(), imageItem: session.currentItem)
-    } else {
-      licenseController = LicenseController(textItem: session.currentItem, imageItem: session.currentItem)
-    }
-    licenseController.edgesForExtendedLayout = .None // offset from navigation bar
-    navigationController!.pushViewController(licenseController, animated: true)
-  }
+
 }

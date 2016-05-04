@@ -1,7 +1,7 @@
 #import "Common.h"
 #import "MapViewController.h"
 #import "MWMBasePlacePageView.h"
-#import "MWMiPhonePortraitPlacePage.h"
+#import "MWMiPhoneFullscreenPlacePage.h"
 #import "MWMMapViewControlsManager.h"
 #import "MWMPlacePage+Animation.h"
 #import "MWMPlacePageActionBar.h"
@@ -24,7 +24,7 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
   MWMiPhonePortraitPlacePageStateHover
 };
 
-@interface MWMiPhonePortraitPlacePage ()
+@interface MWMiPhoneFullscreenPlacePage ()
 
 @property (nonatomic) MWMiPhonePortraitPlacePageState state;
 @property (nonatomic) CGPoint targetPoint;
@@ -33,7 +33,7 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
 
 @end
 
-@implementation MWMiPhonePortraitPlacePage
+@implementation MWMiPhoneFullscreenPlacePage
 
 - (void)configure
 {
@@ -50,10 +50,16 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
   self.actionBar.center = {width / 2, height + self.actionBar.height / 2};
   [self.manager addSubviews:@[ppv, self.actionBar] withNavigationController:nil];
   [UIView animateWithDuration:kDefaultAnimationDuration delay:0. options:UIViewAnimationOptionCurveEaseOut animations:^
-  {
-    self.actionBar.center = {width / 2, height - self.actionBar.height / 2};
-  }
-  completion:nil];
+   {
+     self.actionBar.center = {width / 2, height - self.actionBar.height / 2};
+   }
+                   completion:nil];
+  self.panRecognizer.enabled = NO;
+}
+
+- (void)layoutSubviews
+{
+  self.basePlacePageView.featureTable.height = 200;
 }
 
 - (void)determineIfIsHover
@@ -66,7 +72,7 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
 
 - (void)show
 {
-  self.state = MWMiPhonePortraitPlacePageStatePreview;
+  self.state = MWMiPhonePortraitPlacePageStateOpen;
 }
 
 - (void)hide
@@ -88,7 +94,7 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
 
 - (void)removeBookmark
 {
- [super removeBookmark];
+  [super removeBookmark];
   self.state = MWMiPhonePortraitPlacePageStatePreview;
 }
 
@@ -107,7 +113,30 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
 - (void)refresh
 {
   [self updateTargetPoint];
+//  [self configureContentInset];
 }
+
+//- (void)configureContentInset
+//{
+//  CGFloat const height = self.extendedPlacePageView.height - self.anchorImageView.height;
+//  CGFloat const actionBarHeight = self.actionBar.height;
+//  UITableView * featureTable = self.basePlacePageView.featureTable;
+//  CGFloat const tableContentHeight = featureTable.contentSize.height;
+//  CGFloat const headerViewHeight = self.basePlacePageView.separatorView.maxY;
+//  CGFloat const availableTableHeight = height - headerViewHeight - actionBarHeight;
+//  CGFloat const externalHeight = tableContentHeight - availableTableHeight;
+//  NSLog(@"externalHeight: %f", externalHeight);
+//  if (externalHeight > 0)
+//  {
+//    featureTable.contentInset = UIEdgeInsetsMake(0., 0., externalHeight, 0.);
+//    featureTable.scrollEnabled = YES;
+//  }
+//  else
+//  {
+//    [featureTable setContentOffset:CGPointZero animated:YES];
+//    featureTable.scrollEnabled = NO;
+//  }
+//}
 
 - (void)setState:(MWMiPhonePortraitPlacePageState)state
 {
@@ -185,7 +214,7 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
   CGSize const size = UIScreen.mainScreen.bounds.size;
   CGFloat const height = MAX(size.width, size.height);
   CGFloat const tableViewHeight = basePPV.featureTable.height;
-  return height - (self.topPlacePageHeight + tableViewHeight);
+  return 0.0;
 }
 
 - (CGFloat)topPlacePageHeight
@@ -205,122 +234,112 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
 
 - (IBAction)didPan:(UIPanGestureRecognizer *)sender
 {
-  UIView * ppv = self.extendedPlacePageView;
-  UIView * ppvSuper = ppv.superview;
 
-  ppv.midY = MAX(ppv.midY + [sender translationInView:ppvSuper].y, [self getOpenTargetPoint].y);
-  _targetPoint = ppv.center;
-  if (ppv.minY <= 0.0)
-    [MWMPlacePageNavigationBar showNavigationBarForPlacePage:self];
-  else
-    [MWMPlacePageNavigationBar dismissNavigationBar];
-  [sender setTranslation:CGPointZero inView:ppvSuper];
-  [self cancelSpringAnimation];
-  UIGestureRecognizerState const state = sender.state;
-  if (state == UIGestureRecognizerStateEnded || state == UIGestureRecognizerStateCancelled)
-  {
-    self.panVelocity = [sender velocityInView:ppvSuper].y;
-    CGFloat const estimatedYPosition = [MWMSpringAnimation approxTargetFor:ppv.frame.origin.y velocity:self.panVelocity];
-    CGFloat const bound1 = ppvSuper.height * 0.2;
-    CGFloat const bound2 = ppvSuper.height * (self.isHover ? 0.7 : 0.5);
-    if (estimatedYPosition < bound1)
-    {
-      if (self.isHover)
-      {
-        if (self.state != MWMiPhonePortraitPlacePageStateHover)
-          self.state = MWMiPhonePortraitPlacePageStateHover;
-        return;
-      }
-      if ([self.manager.entity isTripfinger]) {
-        self.state = MWMiPhonePortraitPlacePageStateHover;
-      } else {
-        self.state = MWMiPhonePortraitPlacePageStateOpen;
-      }
-    }
-    else if (self.panVelocity <= 0.0)
-    {
-      if (self.isHover)
-      {
-        if (self.state != MWMiPhonePortraitPlacePageStateHover)
-          self.state = MWMiPhonePortraitPlacePageStateHover;
-        return;
-      }
-      if ([self.manager.entity isTripfinger]) {
-        self.state = MWMiPhonePortraitPlacePageStateHover;
-      } else {
-        self.state = MWMiPhonePortraitPlacePageStateOpen;
-      }
-    }
-    else if (ppv.minY < bound2)
-    {
-      if (self.isHover)
-      {
-        if (self.state == MWMiPhonePortraitPlacePageStateHover)
-        {
-          if (self.targetPoint.y < self.getHoverTargetPoint.y)
-            self.state = MWMiPhonePortraitPlacePageStateHover;
-          else
-            self.state = MWMiPhonePortraitPlacePageStatePreview;
-          return;
-        }
-        self.state = MWMiPhonePortraitPlacePageStateHover;
-      }
-      else
-      {
-        self.state = MWMiPhonePortraitPlacePageStatePreview;
-      }
-    }
-    else
-    {
-      [self.manager dismissPlacePage];
-    }
-  }
+  NSLog(@"Panning the bitch");
+  sender.cancelsTouchesInView = NO;
+
+//  UIView * ppv = self.extendedPlacePageView;
+//  UIView * ppvSuper = ppv.superview;
+//  
+//  ppv.midY = MAX(ppv.midY + [sender translationInView:ppvSuper].y, [self getOpenTargetPoint].y);
+//  _targetPoint = ppv.center;
+////  if (ppv.minY <= 0.0)
+////    [MWMPlacePageNavigationBar showNavigationBarForPlacePage:self];
+////  else
+////    [MWMPlacePageNavigationBar dismissNavigationBar];
+//  [sender setTranslation:CGPointZero inView:ppvSuper];
+//  [self cancelSpringAnimation];
+//  UIGestureRecognizerState const state = sender.state;
+//  if (state == UIGestureRecognizerStateEnded || state == UIGestureRecognizerStateCancelled)
+//  {
+//    self.panVelocity = [sender velocityInView:ppvSuper].y;
+//    CGFloat const estimatedYPosition = [MWMSpringAnimation approxTargetFor:ppv.frame.origin.y velocity:self.panVelocity];
+//    CGFloat const bound1 = ppvSuper.height * 0.2;
+//    CGFloat const bound2 = ppvSuper.height * (self.isHover ? 0.7 : 0.5);
+//    if (estimatedYPosition < bound1)
+//    {
+//      if (self.isHover)
+//      {
+//        if (self.state != MWMiPhonePortraitPlacePageStateHover)
+//          self.state = MWMiPhonePortraitPlacePageStateHover;
+//        return;
+//      }
+//      self.state = MWMiPhonePortraitPlacePageStateOpen;
+//    }
+//    else if (self.panVelocity <= 0.0)
+//    {
+//      if (self.isHover)
+//      {
+//        if (self.state != MWMiPhonePortraitPlacePageStateHover)
+//          self.state = MWMiPhonePortraitPlacePageStateHover;
+//        return;
+//      }
+//      self.state = MWMiPhonePortraitPlacePageStateOpen;
+//    }
+//    else if (ppv.minY < bound2)
+//    {
+//      if (self.isHover)
+//      {
+//        if (self.state == MWMiPhonePortraitPlacePageStateHover)
+//        {
+//          if (self.targetPoint.y < self.getHoverTargetPoint.y)
+//            self.state = MWMiPhonePortraitPlacePageStateHover;
+//          else
+//            self.state = MWMiPhonePortraitPlacePageStatePreview;
+//          return;
+//        }
+//        self.state = MWMiPhonePortraitPlacePageStateHover;
+//      }
+//      else
+//      {
+//        self.state = MWMiPhonePortraitPlacePageStatePreview;
+//      }
+//    }
+//    else
+//    {
+//      [self.manager dismissPlacePage];
+//    }
+//  }
 }
 
 - (IBAction)didTap:(UITapGestureRecognizer *)sender
 {
   [super didTap:sender];
-  switch (self.state)
-  {
-    case MWMiPhonePortraitPlacePageStateClosed:
-      self.state = MWMiPhonePortraitPlacePageStatePreview;
-      break;
-    case MWMiPhonePortraitPlacePageStatePreview:
-      if (self.isHover) {
-        self.state = MWMiPhonePortraitPlacePageStateHover;
-      } else {
-        if ([self.manager.entity isTripfinger]) {
-          self.state = MWMiPhonePortraitPlacePageStateHover;
-        } else {
-          self.state = MWMiPhonePortraitPlacePageStateOpen;
-        }
-      }
-      break;
-    case MWMiPhonePortraitPlacePageStateOpen:
-      self.state = MWMiPhonePortraitPlacePageStatePreview;
-    case MWMiPhonePortraitPlacePageStateHover:
-      if (!self.isHover)
-      {
-        self.state = MWMiPhonePortraitPlacePageStatePreview;
-      }
-      else
-      {
-        if (self.targetPoint.y < self.getHoverTargetPoint.y)
-          self.state = MWMiPhonePortraitPlacePageStateHover;
-        else
-          self.state = MWMiPhonePortraitPlacePageStatePreview;
-      }
-      break;
-  }
+  sender.cancelsTouchesInView = NO;
+
+//  switch (self.state)
+//  {
+//    case MWMiPhonePortraitPlacePageStateClosed:
+//      self.state = MWMiPhonePortraitPlacePageStatePreview;
+//      break;
+//    case MWMiPhonePortraitPlacePageStatePreview:
+//      self.state = self.isHover ? MWMiPhonePortraitPlacePageStateHover : MWMiPhonePortraitPlacePageStateOpen;
+//      break;
+//    case MWMiPhonePortraitPlacePageStateOpen:
+//      self.state = MWMiPhonePortraitPlacePageStatePreview;
+//    case MWMiPhonePortraitPlacePageStateHover:
+//      if (!self.isHover)
+//      {
+//        self.state = MWMiPhonePortraitPlacePageStatePreview;
+//      }
+//      else
+//      {
+//        if (self.targetPoint.y < self.getHoverTargetPoint.y)
+//          self.state = MWMiPhonePortraitPlacePageStateHover;
+//        else
+//          self.state = MWMiPhonePortraitPlacePageStatePreview;
+//      }
+//      break;
+//  }
 }
 
 - (void)willStartEditingBookmarkTitle
 {
   [super willStartEditingBookmarkTitle];
-  if (self.isHover)
-    self.state = MWMiPhonePortraitPlacePageStateHover;
-  else
-    self.state = MWMiPhonePortraitPlacePageStateOpen;
+//  if (self.isHover)
+//    self.state = MWMiPhonePortraitPlacePageStateHover;
+//  else
+//    self.state = MWMiPhonePortraitPlacePageStateOpen;
 }
 
 - (void)willFinishEditingBookmarkTitle:(NSString *)title
@@ -331,25 +350,25 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
 
 - (void)setAnchorImage
 {
-  NSString * anchorImageName = nil;
-  switch (self.state)
-  {
-    case MWMiPhonePortraitPlacePageStateClosed:
-      break;
-    case MWMiPhonePortraitPlacePageStatePreview:
-      anchorImageName = @"bg_placepage_tablet_normal_";
-      break;
-    case MWMiPhonePortraitPlacePageStateOpen:
-    case MWMiPhonePortraitPlacePageStateHover:
-      anchorImageName = @"bg_placepage_tablet_open_";
-      break;
-  }
-  if (anchorImageName)
-  {
-    CGSize const size = UIScreen.mainScreen.bounds.size;
-    CGFloat const width = MIN(size.height, size.width);
-    self.anchorImageView.mwm_name = [anchorImageName stringByAppendingString:@((NSUInteger)width).stringValue];
-  }
+//  NSString * anchorImageName = nil;
+//  switch (self.state)
+//  {
+//    case MWMiPhonePortraitPlacePageStateClosed:
+//      break;
+//    case MWMiPhonePortraitPlacePageStatePreview:
+//      anchorImageName = @"bg_placepage_tablet_normal_";
+//      break;
+//    case MWMiPhonePortraitPlacePageStateOpen:
+//    case MWMiPhonePortraitPlacePageStateHover:
+//      anchorImageName = @"bg_placepage_tablet_open_";
+//      break;
+//  }
+//  if (anchorImageName)
+//  {
+//    CGSize const size = UIScreen.mainScreen.bounds.size;
+//    CGFloat const width = MIN(size.height, size.width);
+//    self.anchorImageView.mwm_name = [anchorImageName stringByAppendingString:@((NSUInteger)width).stringValue];
+//  }
 }
 
 #pragma mark - Properties
@@ -359,25 +378,25 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
   if (CGPointEqualToPoint(_targetPoint, targetPoint))
     return;
   _targetPoint = targetPoint;
-  __weak MWMiPhonePortraitPlacePage * weakSelf = self;
+  __weak MWMiPhoneFullscreenPlacePage * weakSelf = self;
   if (self.state == MWMiPhonePortraitPlacePageStateClosed)
     GetFramework().DeactivateMapSelection(false);
   
   [self startAnimatingPlacePage:self initialVelocity:{0.0, self.panVelocity} completion:^
-  {
-    __strong MWMiPhonePortraitPlacePage * self = weakSelf;
-    if (self.state == MWMiPhonePortraitPlacePageStateClosed)
-    {
-      [self.manager dismissPlacePage];
-    }
-    else
-    {
-      if (self.extendedPlacePageView.minY <= 0.0)
-        [MWMPlacePageNavigationBar showNavigationBarForPlacePage:self];
-      else
-        [MWMPlacePageNavigationBar dismissNavigationBar];
-    }
-  }];
+   {
+     __strong MWMiPhoneFullscreenPlacePage * self = weakSelf;
+     if (self.state == MWMiPhonePortraitPlacePageStateClosed)
+     {
+       [self.manager dismissPlacePage];
+     }
+     else
+     {
+//       if (self.extendedPlacePageView.minY <= 0.0)
+//         [MWMPlacePageNavigationBar showNavigationBarForPlacePage:self];
+//       else
+//         [MWMPlacePageNavigationBar dismissNavigationBar];
+     }
+   }];
   self.panVelocity = 0.0;
 }
 

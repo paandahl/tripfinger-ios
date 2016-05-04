@@ -30,10 +30,16 @@ CGFloat const kMaximumWidth = 360.;
 
 enum class PlacePageSection
 {
+  Info,
   Bookmark,
   Metadata,
   Editing
 };
+  
+vector<MWMPlacePageCellType> const kSectionInfoCellTypes {
+  MWMPlacePageCellTypeInfo
+};
+
 
 vector<MWMPlacePageCellType> const kSectionBookmarkCellTypes {
   MWMPlacePageCellTypeBookmark
@@ -52,6 +58,7 @@ vector<MWMPlacePageCellType> const kSectionEditingCellTypes {
 using TCellTypesSectionMap = pair<vector<MWMPlacePageCellType>, PlacePageSection>;
 
 vector<TCellTypesSectionMap> const kCellTypesSectionMap {
+  {kSectionInfoCellTypes, PlacePageSection::Info},
   {kSectionBookmarkCellTypes, PlacePageSection::Bookmark},
   {kSectionMetadataCellTypes, PlacePageSection::Metadata},
   {kSectionEditingCellTypes, PlacePageSection::Editing}
@@ -67,6 +74,7 @@ MWMPlacePageCellTypeValueMap const kCellType2ReuseIdentifier{
     {MWMPlacePageCellTypePhoneNumber, "PlacePageLinkCell"},
     {MWMPlacePageCellTypeOpenHours, "MWMPlacePageOpeningHoursCell"},
     {MWMPlacePageCellTypeBookmark, "PlacePageBookmarkCell"},
+    {MWMPlacePageCellTypeInfo, "PlacePageTripfingerCell"},
     {MWMPlacePageCellTypeEditButton, "MWMPlacePageButtonCell"},
     {MWMPlacePageCellTypeReportButton, "MWMPlacePageButtonCell"}};
 
@@ -137,6 +145,7 @@ enum class AttributePosition
 
 - (void)configTable
 {
+  self.offscreenCells = [@{} mutableCopy];
   m_sections.clear();
   m_cells.clear();
   for (auto const cellSection : kCellTypesSectionMap)
@@ -411,7 +420,12 @@ enum class AttributePosition
   UITableViewCell * cell = self.offscreenCells[reuseIdentifier];
   if (!cell)
   {
-    cell = [[[NSBundle mainBundle] loadNibNamed:reuseIdentifier owner:nil options:nil] firstObject];
+    if ([reuseIdentifier isEqual: @"PlacePageTripfingerCell"]) {
+      cell = [[PlacePageInfoCell alloc] initWithWidth:placePageWidth()];
+    }
+    else {
+      cell = [[[NSBundle mainBundle] loadNibNamed:reuseIdentifier owner:nil options:nil] firstObject];
+    }
     self.offscreenCells[reuseIdentifier] = cell;
   }
   return cell;
@@ -443,6 +457,9 @@ enum class AttributePosition
       break;
     case MWMPlacePageCellTypeBookmark:
       [(MWMPlacePageBookmarkCell *)cell config:self.ownerPlacePage forHeight:NO];
+      break;
+    case MWMPlacePageCellTypeInfo:
+      [(PlacePageInfoCell *)cell setContentFromGuideItem:self.entity.tripfingerEntity];
       break;
     case MWMPlacePageCellTypeOpenHours:
       [(MWMPlacePageOpeningHoursCell *)cell configWithDelegate:self info:[entity getCellValue:cellType]];
@@ -503,7 +520,12 @@ enum class AttributePosition
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NSString * reuseIdentifier = [self cellIdentifierForIndexPath:indexPath];
-  return [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
+  if ([reuseIdentifier  isEqual: @"PlacePageTripfingerCell"]) {
+    return [[PlacePageInfoCell alloc] initWithWidth:placePageWidth()];
+  }
+  else {
+    return [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];    
+  }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

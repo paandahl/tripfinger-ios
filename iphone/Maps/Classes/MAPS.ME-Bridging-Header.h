@@ -4,4 +4,10 @@
 #import "MapsAppDelegateWrapper.h"
 #import "TripfingerAnnotation.h"
 #import "MWMPlacePage.h"
+#import "MWMTypes.h"
+#import "UIKitCategories.h"
+#import "MWMBasePlacePageView.h"
+#import "MWMPlacePageActionBar.h"
+//#import "MWMMapViewControlsManager.h"
 #import "UIColor+MapsMeColor.h"
+

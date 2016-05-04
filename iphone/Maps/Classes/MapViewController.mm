@@ -263,7 +263,13 @@ return mark;
 - (void)onMapObjectSelected:(place_page::Info const &)info
 {
   self.controlsManager.hidden = NO;
-  [self.controlsManager showPlacePage:info];
+  NSLog(@"Id selected: %n", info.tripfingerId);
+  if (info.tripfingerId == 0) {
+    [self.controlsManager showPlacePage:info];
+  } else {
+    TripfingerEntity *entity = [TripfingerAppDelegate getListingById:info.tripfingerId ];
+    [self.controlsManager showPlacePageWithEntity:entity];
+  }
 }
 
 - (void)checkMaskedPointer:(UITouch *)touch withEvent:(df::TouchEvent &)e

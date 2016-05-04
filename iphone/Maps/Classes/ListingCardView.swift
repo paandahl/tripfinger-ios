@@ -28,7 +28,7 @@ class ListingCardView: MDCSwipeToChooseView {
       imageView.image = UIImage(data: NSData(contentsOfURL: listing.item().images[0].getFileUrl())!)
     } else {
       imageView.contentMode = UIViewContentMode.ScaleAspectFill
-      imageView.image = UIImage(color: UIColor.whiteColor())
+      imageView.image = UIImage(withColor: UIColor.whiteColor())
       let imageUrl = DownloadService.gcsImagesUrl + listing.listing.item.images[0].url + "-600x800"
       try! imageView.loadImageWithUrl(imageUrl)
     }

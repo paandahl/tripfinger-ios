@@ -1,3 +1,4 @@
+#import "SwiftBridge.h"
 #include "Framework.h"
 
 #include "indexer/feature_meta.hpp"
@@ -13,6 +14,7 @@ typedef NS_ENUM(NSUInteger, MWMPlacePageCellType)
   MWMPlacePageCellTypeWiFi,
   MWMPlacePageCellTypeCoordinate,
   MWMPlacePageCellTypeBookmark,
+  MWMPlacePageCellTypeInfo,
   MWMPlacePageCellTypeEditButton,
   MWMPlacePageCellTypeReportButton,
   MWMPlacePageCellTypeCategory,
@@ -29,6 +31,7 @@ using MWMPlacePageCellTypeValueMap = map<MWMPlacePageCellType, string>;
 
 @interface MWMPlacePageEntity : NSObject
 
+@property (nonatomic) TripfingerEntity * tripfingerEntity;
 @property (copy, nonatomic) NSString * title;
 @property (copy, nonatomic) NSString * category;
 @property (copy, nonatomic) NSString * address;
@@ -45,12 +48,14 @@ using MWMPlacePageCellTypeValueMap = map<MWMPlacePageCellType, string>;
 - (BOOL)isMyPosition;
 - (BOOL)isBookmark;
 - (BOOL)isApi;
+- (BOOL)isTripfinger;
 - (ms::LatLon)latlon;
 - (m2::PointD const &)mercator;
 - (NSString *)apiURL;
 - (string)titleForNewBookmark;
 
 - (instancetype)initWithInfo:(place_page::Info const &)info;
+- (instancetype)initWithEntity:(TripfingerEntity*)entity;
 - (void)synchronize;
 
 - (void)toggleCoordinateSystem;

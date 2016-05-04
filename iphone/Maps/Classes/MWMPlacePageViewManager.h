@@ -1,4 +1,5 @@
 #include "Framework.h"
+#include "SwiftBridge.h"
 
 @class MWMPlacePageEntity, MWMPlacePageNavigationBar;
 @protocol MWMPlacePageViewManagerProtocol;
@@ -15,6 +16,8 @@
 - (instancetype)initWithViewController:(UIViewController *)viewController
                               delegate:(id<MWMPlacePageViewManagerProtocol>)delegate;
 - (void)showPlacePage:(place_page::Info const &)info;
+- (void)showPlacePageWithEntity:(TripfingerEntity*)entity;
+- (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity;
 - (void)refreshPlacePage;
 - (void)mwm_refreshUI;
 - (BOOL)hasPlacePage;

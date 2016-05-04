@@ -21,7 +21,7 @@ class DownloadService {
   }
   
   class func isCountryDownloaded(countryName: String) -> Bool {
-    return hasMapPackage(countryName)
+    return DatabaseService.getCountry(countryName) != nil
   }
   
   class func deleteCountry(countryName: String) {
@@ -195,6 +195,9 @@ class DownloadService {
     for image in guideItem.images {
       let imageUrl = gcsImagesUrl + image.url
       let destinationPath = path.URLByAppendingPathComponent(image.url)
+      if NSURL.fileExists(destinationPath) {
+        continue
+      }
       NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: destinationPath, dispatchGroup: dispatchGroup)
       image.url = getLocalPartOfFileUrl(destinationPath)
     }
