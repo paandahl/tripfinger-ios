@@ -24,6 +24,11 @@ class FilterController: UITableViewController {
       selectedCell = cell
     }
   }
+  
+  override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.Portrait
+  }
+
 }
 
 // MARK: - Table View Data Source

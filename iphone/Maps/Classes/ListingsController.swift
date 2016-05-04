@@ -81,6 +81,10 @@ class ListingsController: UIViewController {
     }
   }
   
+  override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.Portrait
+  }
+  
   func segmentedControllerChanged(sender: UISegmentedControl) {
     if sender.selectedSegmentIndex == 0 {
       switchToSubview(swipeController!, from: listController)

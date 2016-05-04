@@ -127,6 +127,11 @@ class LicenseController: UIViewController {
     view.addConstraints("H:|-10-[noteTxt]-10-|", forViews: views)
   }
   
+  override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.Portrait
+  }
+
+  
   func navigateToImage() {
     let urlString = imageItem.images[0].originalUrl!
     let url = NSURL(string: urlString)

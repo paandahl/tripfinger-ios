@@ -34,6 +34,10 @@ class GuideItemController: TableController {
     updateUI()
   }
   
+  override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.Portrait
+  }
+  
   func navigationFailure() {
     self.navigationController?.popViewControllerAnimated(true)
     MBProgressHUD.hideAllHUDsForView(self.view, animated: true)

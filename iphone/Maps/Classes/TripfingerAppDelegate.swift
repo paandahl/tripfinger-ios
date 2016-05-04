@@ -2,13 +2,25 @@ import UIKit
 import Alamofire
 import CoreLocation
 
+class MyNavigationController: UINavigationController {
+  
+  override func supportedInterfaceOrientations() -> UInt {
+    let className = String(topViewController!.dynamicType)
+    if className == "MapViewController" {
+      return UInt(UIInterfaceOrientationMask.All.rawValue)
+    } else {
+      return UInt(UIInterfaceOrientationMask.Portrait.rawValue)
+    }
+  }
+}
+
 @objc public class TripfingerAppDelegate: NSObject {
   
   static var serverUrl = "https://1-3-dot-tripfinger-server.appspot.com"
   static var mode = AppMode.BETA
   static var session: Session!
   static var coordinateSet = Set<Int64>()
-  static let navigationController = UINavigationController()
+  static let navigationController = MyNavigationController()
 
   public func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
     

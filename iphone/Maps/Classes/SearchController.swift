@@ -53,6 +53,10 @@ class SearchController: UITableViewController {
     self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: backButton)
   }
   
+  override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.Portrait
+  }
+  
   func closeSearch() {
     searchBar.resignFirstResponder()
     dismissViewControllerAnimated(true, completion: nil)

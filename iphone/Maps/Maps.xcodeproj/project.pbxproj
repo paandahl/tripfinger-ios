@@ -38,7 +38,6 @@
 		2581DC391CAE31490086285E /* SwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC341CAE31490086285E /* SwipeController.swift */; };
 		2581DC3F1CAE315F0086285E /* DownloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC3B1CAE315F0086285E /* DownloadController.swift */; };
 		2581DC401CAE315F0086285E /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC3C1CAE315F0086285E /* FilterController.swift */; };
-		2581DC411CAE315F0086285E /* MapController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC3D1CAE315F0086285E /* MapController.swift */; };
 		2581DC421CAE315F0086285E /* SearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC3E1CAE315F0086285E /* SearchController.swift */; };
 		2581DC4D1CAE31700086285E /* GuideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC441CAE31700086285E /* GuideItem.swift */; };
 		2581DC4E1CAE31700086285E /* GuideItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC451CAE31700086285E /* GuideItemImage.swift */; };
@@ -969,7 +968,6 @@
 		2581DC341CAE31490086285E /* SwipeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeController.swift; sourceTree = "<group>"; };
 		2581DC3B1CAE315F0086285E /* DownloadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadController.swift; sourceTree = "<group>"; };
 		2581DC3C1CAE315F0086285E /* FilterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
-		2581DC3D1CAE315F0086285E /* MapController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapController.swift; sourceTree = "<group>"; };
 		2581DC3E1CAE315F0086285E /* SearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchController.swift; sourceTree = "<group>"; };
 		2581DC441CAE31700086285E /* GuideItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItem.swift; sourceTree = "<group>"; };
 		2581DC451CAE31700086285E /* GuideItemImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemImage.swift; sourceTree = "<group>"; };
@@ -1998,7 +1996,6 @@
 			children = (
 				2581DC3B1CAE315F0086285E /* DownloadController.swift */,
 				2581DC3C1CAE315F0086285E /* FilterController.swift */,
-				2581DC3D1CAE315F0086285E /* MapController.swift */,
 				2581DC3E1CAE315F0086285E /* SearchController.swift */,
 			);
 			name = Controllers;
@@ -4180,7 +4177,6 @@
 				B08AA8DA1A26299A00810B1C /* TimeUtils.mm in Sources */,
 				F6CB216D1AF13EBD00FB8963 /* MWMPlacePageBookmarkCell.mm in Sources */,
 				F653D4231AE9398700282659 /* MWMPlacePageViewManager.mm in Sources */,
-				2581DC411CAE315F0086285E /* MapController.swift in Sources */,
 				341F99ED1C6B28A7001C67B8 /* MWMMapDownloaderExtendedDataSource.mm in Sources */,
 				F65243351B0B634F00BFA9D4 /* MWMPlacePage+Animation.mm in Sources */,
 				349A357C1B53D4C9009677EE /* MWMCircularProgressView.mm in Sources */,

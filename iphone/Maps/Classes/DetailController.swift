@@ -53,6 +53,11 @@ class DetailController: UIViewController {
     scrollView.contentSize = CGSizeMake(UIScreen.mainScreen().bounds.width, height)
   }
   
+  override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.Portrait
+  }
+
+  
   func navigateToSearch() {
     let nav = UINavigationController()
     let regionId = session.currentRegion?.getId()

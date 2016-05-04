@@ -83,6 +83,11 @@ class DownloadController: UIViewController {
     downloadButton.sizeToFit()
   }
   
+  override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.Portrait
+  }
+
+  
   func close() {
     dismissViewControllerAnimated(true, completion: nil)
   }
