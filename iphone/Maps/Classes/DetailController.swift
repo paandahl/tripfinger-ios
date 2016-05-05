@@ -70,6 +70,10 @@ class DetailController: UIViewController {
   func navigateToMap() {
     let vc = MapsAppDelegateWrapper.getMapViewController()
     navigationController!.pushViewController(vc, animated: true)
+    let listing = session.currentListing.listing
+    let margin = 0.01
+    let botLeft = CLLocationCoordinate2DMake(listing.latitude - margin, listing.longitude - margin)
+    let topRight = CLLocationCoordinate2DMake(listing.latitude + margin, listing.longitude + margin)
+    MapsAppDelegateWrapper.navigateToRect(botLeft, topRight: topRight)
   }
-
 }

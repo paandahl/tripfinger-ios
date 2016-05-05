@@ -4033,7 +4033,7 @@
 		};
 		FA3A60E715AD5BBD00F40D20 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -4041,7 +4041,7 @@
 			name = "Run Script";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
 			shellScript = ". run-script-for-target.sh";
 		};

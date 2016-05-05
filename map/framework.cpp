@@ -471,6 +471,13 @@ void Framework::ShowNode(storage::TCountryId const & countryId)
   ShowRect(CalcLimitRect(countryId, Storage(), CountryInfoGetter()));
 }
 
+void Framework::GoToRect(m2::RectD const & rect)
+{
+  StopLocationFollow();
+  ShowRect(rect);
+}
+
+
 void Framework::OnCountryFileDownloaded(storage::TCountryId const & countryId, storage::Storage::TLocalFilePtr const localFile)
 {
   // Soft reset to signal that mwm file may be out of date in routing caches.

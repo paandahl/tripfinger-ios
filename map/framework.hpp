@@ -197,6 +197,7 @@ public:
 
   /// Shows group or leaf mwm on the map.
   void ShowNode(storage::TCountryId const & countryId);
+  void GoToRect(m2::RectD const & rect);
 
   /// Checks, whether the country which contains the specified point is loaded.
   bool IsCountryLoaded(m2::PointD const & pt) const;

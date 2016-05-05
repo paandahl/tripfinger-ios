@@ -14,6 +14,10 @@ class Region: Object {
   
   let listings = List<Listing>()
   
+  func getCategory() -> Category {
+    return Category(rawValue: item().category)!
+  }
+  
   func setCategory(category: Region.Category) {
     listing.item.category = category.rawValue
   }

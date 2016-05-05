@@ -242,13 +242,13 @@ return [self annotationToMark:annotation];
 
 - (TripfingerMark)annotationToMark:(TripfingerAnnotation*)annotation
 {
-TripfingerMark mark = {};
-mark.name = std::string([annotation.name UTF8String]);
-ms::LatLon latlon(annotation.lat, annotation.lon);
-mark.coordinates = MercatorBounds::FromLatLon(latlon); // m2::PointD(annotation.lat, annotation.lon);
-mark.identifier = annotation.identifier;
-mark.type = annotation.type;
-return mark;
+  TripfingerMark mark = {};
+  mark.name = std::string([annotation.name UTF8String]);
+  ms::LatLon latlon(annotation.lat, annotation.lon);
+  mark.coordinates = MercatorBounds::FromLatLon(latlon);
+  mark.identifier = annotation.identifier;
+  mark.type = annotation.type;
+  return mark;
 }
 
 - (void)onMapObjectDeselected:(bool)switchFullScreenMode

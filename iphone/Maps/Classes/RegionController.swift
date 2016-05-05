@@ -34,6 +34,10 @@ class RegionController: GuideItemController {
       loadCountryLists()
     }
     updateUI()
+    
+    dispatch_async(dispatch_get_main_queue()) {
+      MapsAppDelegateWrapper.getMapViewController().view.layoutSubviews()
+    }
   }
   
   func reffo() {

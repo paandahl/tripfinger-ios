@@ -36,7 +36,6 @@ class PlacePageInfoCell: UITableViewCell {
     
     myImageView.contentMode = UIViewContentMode.ScaleAspectFill
     myImageView.image = UIImage(named: "placeholder-712")
-    myImageView.backgroundColor = UIColor.redColor()
     if tripfingerEntity.url != nil {
       
       let alignment = UIDevice.currentDevice().orientation
