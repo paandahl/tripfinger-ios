@@ -32,7 +32,17 @@ struct FeatureID
   FeatureID() : m_index(0) {}
   FeatureID(MwmSet::MwmId const & mwmId, uint32_t index) : m_mwmId(mwmId), m_index(index) {}
 
-  bool IsValid() const { return m_mwmId.IsAlive(); }
+  bool IsValid() const {
+    if (m_mwmId.IsAlive()) {
+      return true;
+    } else {
+      return IsTripfinger();
+    }
+  }
+
+  bool IsTripfinger() const {
+    return (m_index / 1000) == 789;
+  }
 
   inline bool operator<(FeatureID const & r) const
   {

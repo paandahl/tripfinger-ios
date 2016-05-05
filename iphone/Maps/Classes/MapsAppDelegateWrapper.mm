@@ -7,7 +7,9 @@
 #include "geometry/mercator.hpp"
 #include "geometry/point2d.hpp"
 #include "geometry/rect2d.hpp"
-
+#include "search/result.hpp"
+#include "indexer/mwm_set.hpp"
+#include "platform/mwm_version.hpp"
 
 @implementation MapsAppDelegateWrapper
 + (UIViewController*)getMapViewController {
@@ -25,6 +27,14 @@
 
   m2::RectD mwmRect(mercBotLeft.x, mercBotLeft.y, mercTopRight.x, mercTopRight.y);
   GetFramework().GoToRect(mwmRect);
+}
+
++ (void)selectListing:(TripfingerEntity *)entity {
+  FeatureID fid(MwmSet::MwmId(), entity.identifier);
+  search::Result::Metadata metadata;
+  m2::PointD centre(entity.lat, entity.lon);
+  search::Result searchResult(fid, centre, "Harooo", "Adreees", "Typeee", entity.type, metadata);
+  GetFramework().ShowSearchResult(searchResult);
 }
 
 @end

@@ -25,7 +25,6 @@
 #import "RouteState.h"
 #import "Statistics.h"
 #import "UIColor+MapsMeColor.h"
-#import "TripfingerAnnotation.h"
 #import "UIFont+MapsMeFonts.h"
 #import "UIViewController+Navigation.h"
 #import <MyTargetSDKCorp/MTRGManager_Corp.h>
@@ -229,8 +228,8 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 
 - (TripfingerMark)poiFetcher:(uint32_t)id
 {
-TripfingerAnnotation *annotation = [TripfingerAppDelegate getPoiById:id ];
-return [self annotationToMark:annotation];
+  TripfingerEntity *annotation = [TripfingerAppDelegate getPoiById:id ];
+  return [self annotationToMark:annotation];
 }
 
 - (bool)coordinateChecker:(m2::PointD)coord
@@ -240,7 +239,7 @@ return [self annotationToMark:annotation];
 }
 
 
-- (TripfingerMark)annotationToMark:(TripfingerAnnotation*)annotation
+- (TripfingerMark)annotationToMark:(TripfingerEntity*)annotation
 {
   TripfingerMark mark = {};
   mark.name = std::string([annotation.name UTF8String]);

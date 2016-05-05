@@ -676,7 +676,7 @@ void Framework::FillFeatureInfo(FeatureID const & fid, place_page::Info & info) 
     return;
   }
 
-  if ((fid.m_index / 1000) == 789) {
+  if (fid.IsTripfinger()) {
     TripfingerMark mark = m_poiFetcherFn(fid.m_index);
     SelfBakedFeatureType ft(mark);
     ft.SetID(fid);
@@ -708,7 +708,7 @@ void Framework::FillInfoFromFeatureType(FeatureType const & ft, place_page::Info
 {
   info.SetFromFeatureType(ft);
 
-  info.m_isEditable = osm::Editor::Instance().GetEditableProperties(ft).IsEditable();
+  info.m_isEditable = false; //osm::Editor::Instance().GetEditableProperties(ft).IsEditable();
   info.m_localizedWifiString = m_stringsBundle.GetString("wifi");
 
   if (ftypes::IsAddressObjectChecker::Instance()(ft))

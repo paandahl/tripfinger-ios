@@ -107,12 +107,12 @@ typedef int swift_int4  __attribute__((__ext_vector_type__(4)));
 @protocol UIApplicationDelegate;
 @class UIWindow;
 
-@class TripfingerAnnotation;
-
 SWIFT_CLASS("_TtC10Tripfinger16TripfingerEntity")
 @interface TripfingerEntity : NSObject
 @property (nonatomic) double lat;
 @property (nonatomic) double lon;
+@property (nonatomic) int32_t identifier;
+@property (nonatomic) int32_t type;
 @property (nonatomic, copy) NSString * __null_unspecified name;
 @property (nonatomic, copy) NSString * __null_unspecified phone;
 @property (nonatomic, copy) NSString * __null_unspecified address;
@@ -137,8 +137,8 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 + (NSString * __nonnull)serverUrl;
 + (void)setServerUrl:(NSString * __nonnull)value;
 - (UIWindow * __nonnull)applicationLaunched:(UIApplication * __nonnull)application delegate:(id <UIApplicationDelegate> __nonnull)delegate didFinishLaunchingWithOptions:(NSDictionary * __nullable)launchOptions;
-+ (NSArray<TripfingerAnnotation *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight zoomLevel:(NSInteger)zoomLevel;
-+ (TripfingerAnnotation * __nonnull)getPoiById:(int32_t)id;
++ (NSArray<TripfingerEntity *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight zoomLevel:(NSInteger)zoomLevel;
++ (TripfingerEntity * __nonnull)getPoiById:(int32_t)id;
 + (TripfingerEntity * __nonnull)getListingById:(int32_t)id;
 + (BOOL)coordinateExists:(CLLocationCoordinate2D)coord;
 + (void)displayPlacePage:(NSArray<UIView *> * __nonnull)views;

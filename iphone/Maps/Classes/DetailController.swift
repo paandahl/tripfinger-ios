@@ -27,11 +27,16 @@ class DetailController: UIViewController {
   }
 
   override func viewDidLoad() {
+    var barButtons = [UIBarButtonItem]()
+    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
+    barButtons.append(searchButton)
     navigationItem.title = session.currentListing.listing.item.name
     let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
     mapButton.accessibilityLabel = "Map"
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
-    navigationItem.rightBarButtonItems = [searchButton, mapButton]
+    if session.currentListing.item().offline {
+      barButtons.append(mapButton)
+    }
+    navigationItem.rightBarButtonItems = barButtons
 
     let infoView = placePageViews[0]
     let actionBar = placePageViews[1]
@@ -70,10 +75,8 @@ class DetailController: UIViewController {
   func navigateToMap() {
     let vc = MapsAppDelegateWrapper.getMapViewController()
     navigationController!.pushViewController(vc, animated: true)
-    let listing = session.currentListing.listing
-    let margin = 0.01
-    let botLeft = CLLocationCoordinate2DMake(listing.latitude - margin, listing.longitude - margin)
-    let topRight = CLLocationCoordinate2DMake(listing.latitude + margin, listing.longitude + margin)
-    MapsAppDelegateWrapper.navigateToRect(botLeft, topRight: topRight)
+    let entity = TripfingerEntity(listing: session.currentListing)
+    entity.putInIdMap(session.currentListing.item().id)
+    MapsAppDelegateWrapper.selectListing(entity)
   }
 }

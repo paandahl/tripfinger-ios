@@ -69,34 +69,20 @@ class MyNavigationController: UINavigationController {
     return window
   }
   
-  static var identifier: Int32 = 789000
-  static var idMap: [Int32: String] = [Int32: String]()
-
-  public class func getPoisForArea(topLeft: CLLocationCoordinate2D, bottomRight: CLLocationCoordinate2D, zoomLevel: Int) -> [TripfingerAnnotation] {
+  public class func getPoisForArea(topLeft: CLLocationCoordinate2D, bottomRight: CLLocationCoordinate2D, zoomLevel: Int) -> [TripfingerEntity] {
     
     if zoomLevel < 10 {
-      return [TripfingerAnnotation]()
+      return [TripfingerEntity]()
     }
 
     let topRight = CLLocationCoordinate2DMake(topLeft.latitude, bottomRight.longitude)
     let bottomLeft = CLLocationCoordinate2DMake(bottomRight.latitude, topLeft.longitude)
     let pois = DatabaseService.getPois(bottomLeft, topRight: topRight, zoomLevel: 15) //, category: session.currentCategory)
 
-    var annotations = [TripfingerAnnotation]()
+    var annotations = [TripfingerEntity]()
 
     for poi in pois {
-      let annotation = TripfingerAnnotation()
-      annotation.name = poi.name
-      annotation.lat = poi.latitude
-      annotation.lon = poi.longitude
-      annotation.type = Int32(Listing.SubCategory(rawValue: poi.subCategory)!.osmType)
-      let annotationId = identifier
-      identifier += 1
-      if identifier >= 790000 {
-        identifier = 789000
-      }
-      idMap[annotationId] = poi.listingId!
-      annotation.identifier = annotationId
+      let annotation = TripfingerEntity(poi: poi)
       annotations.append(annotation)
     }
 
@@ -105,10 +91,10 @@ class MyNavigationController: UINavigationController {
     return annotations;
   }
 
-  public class func getPoiById(id: Int32) -> TripfingerAnnotation {
-    let listingId = idMap[id]!
+  public class func getPoiById(id: Int32) -> TripfingerEntity {
+    let listingId = TripfingerEntity.idMap[id]!
     let listing = DatabaseService.getListingWithId(listingId)
-    let annotation = TripfingerAnnotation()
+    let annotation = TripfingerEntity()
     annotation.name = listing?.item().name
     annotation.lat = listing!.listing.latitude
     annotation.lon = listing!.listing.longitude
@@ -117,7 +103,7 @@ class MyNavigationController: UINavigationController {
   }
 
   public class func getListingById(id: Int32) -> TripfingerEntity {
-    let listingId = idMap[id]!
+    let listingId = TripfingerEntity.idMap[id]!
     let listing = DatabaseService.getListingWithId(listingId)!
     return TripfingerEntity(listing: listing)
   }
