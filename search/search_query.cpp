@@ -1206,6 +1206,7 @@ void Query::InitParams(bool localitySearch, SearchQueryParams & params)
     };
     ForEachCategoryTypes(addSyms);
   }
+  LOG(LINFO, ("All tokens: ", params.m_tokens));
 
   for (int i = 0; i < LANG_COUNT; ++i)
     params.m_langs.insert(GetLanguage(i));

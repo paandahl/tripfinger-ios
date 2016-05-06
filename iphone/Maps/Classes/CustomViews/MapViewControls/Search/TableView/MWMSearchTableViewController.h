@@ -24,6 +24,7 @@ namespace search
 @interface MWMSearchTableViewController : MWMViewController
 
 @property (nonatomic) BOOL searchOnMap;
+@property (nonatomic) BOOL tripfingerSearch;
 
 - (nonnull instancetype)init __attribute__((unavailable("init is not available")));
 - (nonnull instancetype)initWithDelegate:(nonnull id<MWMSearchTableViewProtocol>)delegate;

@@ -39,10 +39,16 @@ class ListingsController: UIViewController {
   }
   
   override func viewDidLoad() {
+    var barButtons = [UIBarButtonItem]()
+    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
+    barButtons.append(searchButton)
     let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
     mapButton.accessibilityLabel = "Map"
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
-    navigationItem.rightBarButtonItems = [searchButton, mapButton]
+    let downloaded = DownloadService.isCountryDownloaded(session.currentCountry.getName())
+    if downloaded {
+      barButtons.append(mapButton)
+    }
+    navigationItem.rightBarButtonItems = barButtons
 
     view.backgroundColor = UIColor.whiteColor()
     
@@ -122,6 +128,7 @@ class ListingsController: UIViewController {
   func navigateToMap() {
     let vc = MapsAppDelegateWrapper.getMapViewController()
     navigationController!.pushViewController(vc, animated: true)
+    MapsAppDelegateWrapper.openMapSearchWithQuery(session.currentCategory.entityName)
   }
   
   func updateUI() {

@@ -32,6 +32,15 @@ class Listing: Object {
     case SHOPPING = 260
     case INFORMATION = 270
     
+    static let entityMap = [
+      "Attractions": ATTRACTIONS,
+      "Transportation": TRANSPORTATION,
+      "Accomodation": ACCOMODATION,
+      "Food and drinks": FOOD_OR_DRINK,
+      "Shopping": SHOPPING,
+      "Information": INFORMATION
+    ]
+    
     var entityName: String {
       switch self {
       case .ATTRACTIONS:
@@ -130,6 +139,8 @@ class Listing: Object {
         return "Tram stations"
       case .FERRY_TERMINAL:
         return "Ferry terminals"
+      case .FERRY_STOP:
+        return "Ferry stops"
       case .CAR_RENTAL:
         return "Car rentals"
       case .MOTORBIKE_RENTAL:

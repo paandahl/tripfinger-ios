@@ -377,6 +377,7 @@ struct TripfingerMarkParams
   m2::PointD topLeft;
   m2::PointD botRight;
   int zoomLevel;
+  int category;
 };
 
 class TripfingerMark

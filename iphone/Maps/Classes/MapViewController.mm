@@ -216,7 +216,12 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 {
   CLLocationCoordinate2D topLeft = CLLocationCoordinate2DMake(params.topLeft.x, params.topLeft.y);
   CLLocationCoordinate2D botRight = CLLocationCoordinate2DMake(params.botRight.x, params.botRight.y);
-  NSArray *tfAnnotations = [TripfingerAppDelegate getPoisForArea:topLeft bottomRight:botRight zoomLevel:params.zoomLevel];
+  NSArray *tfAnnotations;
+  if (params.category != 0) {
+    tfAnnotations = [TripfingerAppDelegate getPoisForArea:topLeft bottomRight:botRight category:params.category];
+  } else {
+    tfAnnotations = [TripfingerAppDelegate getPoisForArea:topLeft bottomRight:botRight zoomLevel:params.zoomLevel];
+  }
   vector<TripfingerMark> tripfingerVector;
   for (id tfAnnotation in tfAnnotations) {
     TripfingerMark mark = [self annotationToMark:tfAnnotation];
@@ -236,6 +241,12 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 {
   CLLocationCoordinate2D checkCoord = CLLocationCoordinate2DMake(coord.x, coord.y);
   return [TripfingerAppDelegate coordinateExists:checkCoord ];
+}
+
+- (int)categoryChecker:(string)name
+{
+  NSString *catName = [NSString stringWithCString:name.c_str() encoding:[NSString defaultCStringEncoding]];
+  return [TripfingerAppDelegate nameToCategoryId:catName ];
 }
 
 
@@ -572,21 +583,26 @@ NSString * const kReportSegue = @"Map2ReportSegue";
     [self.controlsManager.menuController processMyPositionStateModeEvent:mode];
   });
 
-using PoiSupplierFnT = vector<TripfingerMark> (*)(id, SEL, TripfingerMarkParams);
-using PoiFetcherFnT = TripfingerMark (*)(id, SEL, uint32_t);
-using CoordinateCheckerFnT = bool (*)(id, SEL, m2::PointD);
+  using PoiSupplierFnT = vector<TripfingerMark> (*)(id, SEL, TripfingerMarkParams);
+  using PoiFetcherFnT = TripfingerMark (*)(id, SEL, uint32_t);
+  using CoordinateCheckerFnT = bool (*)(id, SEL, m2::PointD);
+  using CategoryCheckerFnT = int (*)(id, SEL, string);
+  
+  SEL poiSupplierSelector = @selector(poiSupplier:);
+  PoiSupplierFnT poiSupplierFn = (PoiSupplierFnT)[self methodForSelector:poiSupplierSelector];
+  f.SetPoiSupplierFunction(bind(poiSupplierFn, self, poiSupplierSelector, _1));
+  
+  SEL poiFetcherSelector = @selector(poiFetcher:);
+  PoiFetcherFnT poiFetcherFn = (PoiFetcherFnT)[self methodForSelector:poiFetcherSelector];
+  f.SetPoiFetcherFunction(bind(poiFetcherFn, self, poiFetcherSelector, _1));
+  
+  SEL coordinateCheckerSelector = @selector(coordinateChecker:);
+  CoordinateCheckerFnT coordinateCheckerFn = (CoordinateCheckerFnT)[self methodForSelector:coordinateCheckerSelector];
+  f.SetCoordinateCheckerFunction(bind(coordinateCheckerFn, self, coordinateCheckerSelector, _1));
 
-SEL poiSupplierSelector = @selector(poiSupplier:);
-PoiSupplierFnT poiSupplierFn = (PoiSupplierFnT)[self methodForSelector:poiSupplierSelector];
-f.SetPoiSupplierFunction(bind(poiSupplierFn, self, poiSupplierSelector, _1));
-
-SEL poiFetcherSelector = @selector(poiFetcher:);
-PoiFetcherFnT poiFetcherFn = (PoiFetcherFnT)[self methodForSelector:poiFetcherSelector];
-f.SetPoiFetcherFunction(bind(poiFetcherFn, self, poiFetcherSelector, _1));
-
-SEL coordinateCheckerSelector = @selector(coordinateChecker:);
-CoordinateCheckerFnT coordinateCheckerFn = (CoordinateCheckerFnT)[self methodForSelector:coordinateCheckerSelector];
-f.SetCoordinateCheckerFunction(bind(coordinateCheckerFn, self, coordinateCheckerSelector, _1));
+  SEL categoryCheckerSelector = @selector(categoryChecker:);
+  CategoryCheckerFnT categoryCheckerFn = (CategoryCheckerFnT)[self methodForSelector:categoryCheckerSelector];
+  f.SetCategoryCheckerFn(bind(categoryCheckerFn, self, categoryCheckerSelector, _1));
 
   m_predictor = [[LocationPredictor alloc] initWithObserver:self];
   self.forceRoutingStateChange = ForceRoutingStateChangeNone;

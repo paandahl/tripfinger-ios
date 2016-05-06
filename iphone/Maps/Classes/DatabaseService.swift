@@ -185,6 +185,18 @@ class DatabaseService {
     return results
   }
   
+  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, category: Int) -> List<SimplePOI> {
+    let realm = getRealm()
+    let attractions = realm.objects(Listing).filter("listing.latitude > \(bottomLeft.latitude) and listing.latitude < \(topRight.latitude) and listing.longitude > \(bottomLeft.longitude)  and listing.longitude < \(topRight.longitude) and listing.item.category = \(category)")
+
+    let results = List<SimplePOI>()
+    for attraction in attractions {
+      let poi = SimplePOI(listing: attraction.listing)
+      results.append(poi)
+    }
+    return results
+  }
+  
   
   class func search(query: String, callback: List<SimplePOI> -> ()) {
     dispatch_async(dispatch_get_main_queue()) {

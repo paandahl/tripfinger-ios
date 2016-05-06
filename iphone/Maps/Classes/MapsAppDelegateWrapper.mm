@@ -20,6 +20,10 @@
   [[MapsAppDelegate theApp].mapViewController.controlsManager showPlacePageWithEntityFullscreen:entity];
 }
 
++ (void)openMapSearchWithQuery:(NSString*)query {
+  [[MapsAppDelegate theApp].mapViewController.controlsManager openMapSearchWithQuery:query];
+}
+
 + (void)navigateToRect:(CLLocationCoordinate2D)botLeft topRight:(CLLocationCoordinate2D)topRight {
   
   m2::PointD mercBotLeft = MercatorBounds::FromLatLon(botLeft.latitude, botLeft.longitude);

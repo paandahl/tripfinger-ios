@@ -35,6 +35,7 @@ typedef NS_ENUM(NSUInteger, MWMSearchManagerState)
                                    delegate:(nonnull id<MWMSearchManagerProtocol, MWMSearchViewProtocol, MWMRoutingProtocol>)delegate;
 
 - (void)mwm_refreshUI;
+- (void)searchText:(NSString *)text forInputLocale:(NSString *)locale;
 
 #pragma mark - Layout
 

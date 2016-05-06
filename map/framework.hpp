@@ -278,6 +278,9 @@ public:
   using TCoordinateCheckerFn = function<bool (m2::PointD coord)>;
   void SetCoordinateCheckerFunction(TCoordinateCheckerFn const & fn) { m_coordinateCheckerFn = fn; }
 
+  using TCategoryCheckerFn = function<int (string name)>;
+  void SetCategoryCheckerFn(TCategoryCheckerFn const & fn) { m_categoryCheckerFn = fn; }
+
   using TPoiFetcherFn = function<TripfingerMark (uint32_t id)>;
   void SetPoiFetcherFunction(TPoiFetcherFn const & fn) { m_poiFetcherFn = fn; }
 
@@ -314,6 +317,7 @@ private:
   TPoiSupplierFn m_poiSupplierFn;
   TPoiFetcherFn m_poiFetcherFn;
   TCoordinateCheckerFn m_coordinateCheckerFn;
+  TCategoryCheckerFn m_categoryCheckerFn;
 
 public:
 

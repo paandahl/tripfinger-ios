@@ -1020,6 +1020,7 @@ void Framework::StartInteractiveSearch(search::SearchParams const & params)
       });
     }
   };
+  UpdateUserViewportChanged();
 }
 
 void Framework::ClearAllCaches()
@@ -1057,9 +1058,31 @@ void Framework::UpdateUserViewportChanged()
 {
   if (IsInteractiveSearchActive())
   {
-    (void)GetCurrentPosition(m_lastInteractiveSearchParams.m_lat,
-                             m_lastInteractiveSearchParams.m_lon);
-    Search(m_lastInteractiveSearchParams);
+    int tfCategory = m_categoryCheckerFn(m_lastInteractiveSearchParams.m_query);
+    if (tfCategory != 0) {
+      m2::RectD const viewport = GetCurrentViewport();
+      TripfingerMarkParams params;
+      ms::LatLon topLeftCoord = MercatorBounds::ToLatLon(viewport.LeftTop());
+      ms::LatLon botRightCoord = MercatorBounds::ToLatLon(viewport.RightBottom());
+      params.topLeft = m2::PointD(topLeftCoord.lat, topLeftCoord.lon);
+      params.botRight = m2::PointD(botRightCoord.lat, botRightCoord.lon);
+      params.category = tfCategory;
+      vector<TripfingerMark> tfMarks = m_poiSupplierFn(params);
+      search::Results results;
+      for (int i = 0; i < tfMarks.size(); i++) {
+        TripfingerMark tfMark = tfMarks[i];
+        FeatureID fid(MwmSet::MwmId(), tfMark.identifier);
+        search::Result::Metadata metadata;
+        m2::PointD centre(tfMark.coordinates.x, tfMark.coordinates.y);
+        search::Result result(fid, centre, "Harooo", "Adreees", "Typeee", tfMark.type, metadata);
+        results.AddResult(move(result));
+      }
+      m_lastInteractiveSearchParams.m_onResults(results);
+    } else {
+      (void)GetCurrentPosition(m_lastInteractiveSearchParams.m_lat,
+                               m_lastInteractiveSearchParams.m_lon);
+      Search(m_lastInteractiveSearchParams);
+    }
   }
 }
 

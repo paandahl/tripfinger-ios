@@ -90,6 +90,24 @@ class MyNavigationController: UINavigationController {
 
     return annotations;
   }
+  
+  public class func getPoisForArea(topLeft: CLLocationCoordinate2D, bottomRight: CLLocationCoordinate2D, category: Int) -> [TripfingerEntity] {
+    
+    let topRight = CLLocationCoordinate2DMake(topLeft.latitude, bottomRight.longitude)
+    let bottomLeft = CLLocationCoordinate2DMake(bottomRight.latitude, topLeft.longitude)
+    let pois = DatabaseService.getPois(bottomLeft, topRight: topRight, category: category)
+    
+    var annotations = [TripfingerEntity]()
+    
+    for poi in pois {
+      let annotation = TripfingerEntity(poi: poi)
+      annotations.append(annotation)
+    }
+    
+    print("Searched \(annotations.count) annotations. botLeft: \(bottomLeft), topRight: \(topRight)")
+    
+    return annotations;
+  }
 
   public class func getPoiById(id: Int32) -> TripfingerEntity {
     let listingId = TripfingerEntity.idMap[id]!
@@ -128,6 +146,16 @@ class MyNavigationController: UINavigationController {
     let intCoord = coordinateToInt(coord)
     let exists = TripfingerAppDelegate.coordinateSet.contains(intCoord)
     return exists
+  }
+  
+  public class func nameToCategoryId(name: String) -> Int {
+    let trimmedString = name.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceAndNewlineCharacterSet())
+    if let cat = Listing.Category.entityMap[trimmedString] {
+      print("returning category with entName: \(cat.entityName)")
+      return cat.rawValue
+    } else {
+      return 0
+    }
   }
   
   static var viewControllers = [UIViewController]()

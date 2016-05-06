@@ -76,6 +76,7 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 - (void)endSearch
 {
+  NSLog(@"ENDED SEARCH BEFORE IT BEGAN");
   GetFramework().CancelInteractiveSearch();
   if (self.state != MWMSearchManagerStateHidden)
     self.state = MWMSearchManagerStateDefault;
@@ -261,7 +262,6 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 - (void)changeToDefaultState
 {
-  NSLog(@"opening search shit");
   self.parentViewController.navigationController.navigationBarHidden = YES;
   self.view.alpha = 1.;
   [self updateTopController];
@@ -375,6 +375,8 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
                                                     userInfo:@{
                                                       kSearchStateKey : @(state)
                                                     }];
+  self.tableViewController.tripfingerSearch = NO;
+  MWMSearchManagerState oldState = _state;
   _state = state;
   switch (state)
   {
@@ -392,6 +394,10 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
     break;
   case MWMSearchManagerStateMapSearch:
     [Statistics logEvent:kStatSearchEnteredState withParameters:@{kStatName : kStatMapSearch}];
+    if (oldState == MWMSearchManagerStateHidden) {
+      self.tableViewController.tripfingerSearch = YES;
+      [self changeToDefaultState];
+    }
     [self changeToMapSearchState];
     break;
   }
