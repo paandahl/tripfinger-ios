@@ -1069,8 +1069,7 @@ void Framework::UpdateUserViewportChanged()
       params.category = tfCategory;
       vector<TripfingerMark> tfMarks = m_poiSupplierFn(params);
       search::Results results;
-      for (int i = 0; i < tfMarks.size(); i++) {
-        TripfingerMark tfMark = tfMarks[i];
+      for (auto& tfMark : tfMarks) {
         FeatureID fid(MwmSet::MwmId(), tfMark.identifier);
         search::Result::Metadata metadata;
         m2::PointD centre(tfMark.coordinates.x, tfMark.coordinates.y);
