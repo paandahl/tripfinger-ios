@@ -275,14 +275,17 @@ public:
   void SetPoiSupplierFunction(TPoiSupplierFn const & fn) { m_poiSupplierFn = fn; }
 
   bool CheckIfCoordinateIsTripfingered(m2::PointD coord);
-  using TCoordinateCheckerFn = function<bool (m2::PointD coord)>;
+  using TCoordinateCheckerFn = function<bool (ms::LatLon coord)>;
   void SetCoordinateCheckerFunction(TCoordinateCheckerFn const & fn) { m_coordinateCheckerFn = fn; }
 
   using TCategoryCheckerFn = function<int (string name)>;
   void SetCategoryCheckerFn(TCategoryCheckerFn const & fn) { m_categoryCheckerFn = fn; }
 
-  using TPoiFetcherFn = function<TripfingerMark (uint32_t id)>;
-  void SetPoiFetcherFunction(TPoiFetcherFn const & fn) { m_poiFetcherFn = fn; }
+  using TPoiByIdFetcherFn = function<TripfingerMark (uint32_t id)>;
+  void SetPoiByIdFetcherFunction(TPoiByIdFetcherFn const & fn) { m_poiByIdFetcherFn = fn; }
+
+  using TPoiByCoordFetcherFn = function<TripfingerMark (ms::LatLon coord)>;
+  void SetPoiByCoordFetcherFunction(TPoiByCoordFetcherFn const & fn) { m_poiByCoordFetcherFn = fn; }
 
   void ResetLastTapEvent();
 
@@ -315,7 +318,8 @@ private:
   TActivateMapSelectionFn m_activateMapSelectionFn;
   TDeactivateMapSelectionFn m_deactivateMapSelectionFn;
   TPoiSupplierFn m_poiSupplierFn;
-  TPoiFetcherFn m_poiFetcherFn;
+  TPoiByIdFetcherFn m_poiByIdFetcherFn;
+  TPoiByCoordFetcherFn m_poiByCoordFetcherFn;
   TCoordinateCheckerFn m_coordinateCheckerFn;
   TCategoryCheckerFn m_categoryCheckerFn;
 

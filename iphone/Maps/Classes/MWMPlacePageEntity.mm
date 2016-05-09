@@ -48,6 +48,7 @@ void initFieldsMap()
 {
   MWMPlacePageCellTypeValueMap m_values;
   place_page::Info m_info;
+  m2::PointD m_tripfingerMercator;
 }
 
 - (instancetype)initWithInfo:(const place_page::Info &)info
@@ -89,6 +90,8 @@ void initFieldsMap()
     self.bookmarkCategory = entity.address;
     self.bookmarkDescription = nil;
     _isHTMLDescription = NO;
+    
+    m_tripfingerMercator = MercatorBounds::FromLatLon(self.tripfingerEntity.lat, self.tripfingerEntity.lon);
   }
   return self;
 }
@@ -246,7 +249,11 @@ void initFieldsMap()
 
 - (m2::PointD const &)mercator
 {
-  return m_info.GetMercator();
+  if ([self isTripfinger]) {
+    return m_tripfingerMercator;
+  } else {
+    return m_info.GetMercator();
+  }
 }
 
 - (NSString *)apiURL
@@ -256,7 +263,11 @@ void initFieldsMap()
 
 - (string)titleForNewBookmark
 {
-  return m_info.FormatNewBookmarkName();
+  if ([self isTripfinger]) {
+    return [self.title UTF8String];
+  } else {
+    return m_info.FormatNewBookmarkName();
+  }
 }
 
 - (NSString *)coordinate

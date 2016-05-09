@@ -141,6 +141,7 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 + (NSArray<TripfingerEntity *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight category:(NSInteger)category;
 + (TripfingerEntity * __nonnull)getPoiById:(int32_t)id;
 + (TripfingerEntity * __nonnull)getListingById:(int32_t)id;
++ (TripfingerEntity * __nonnull)getListingByCoordinate:(CLLocationCoordinate2D)coord;
 + (BOOL)coordinateExists:(CLLocationCoordinate2D)coord;
 + (NSInteger)nameToCategoryId:(NSString * __nonnull)name;
 + (void)displayPlacePage:(NSArray<UIView *> * __nonnull)views;

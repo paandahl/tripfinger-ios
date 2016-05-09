@@ -20,7 +20,7 @@ public:
   using TIsCountryLoadedFn = function<bool (m2::PointD const &)>;
   using TIsCountryLoadedByNameFn = function<bool (string const &)>;
   using TUpdateCurrentCountryFn = function<void (m2::PointD const &, int)>;
-  using TCoordinateCheckerFn = function<bool (m2::PointD coord)>;
+  using TCoordinateCheckerFn = function<bool (ms::LatLon coord)>;
 
   typedef function<vector<TripfingerMark>(TripfingerMarkParams)> TPoiSupplierCallback;
 

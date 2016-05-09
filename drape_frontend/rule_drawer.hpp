@@ -1,5 +1,6 @@
 #pragma once
 
+#include <geometry/latlon.hpp>
 #include "drape_frontend/map_shape.hpp"
 #include "drape_frontend/tile_key.hpp"
 
@@ -27,7 +28,7 @@ public:
   using TDrawerCallback = function<void (FeatureType const &, Stylist &)>;
   using TCheckCancelledCallback = function<bool ()>;
   using TIsCountryLoadedByNameFn = function<bool (string const &)>;
-  using TCoordinateCheckerFn = function<bool (m2::PointD coord)>;
+  using TCoordinateCheckerFn = function<bool (ms::LatLon coord)>;
 
   RuleDrawer(TDrawerCallback const & drawerFn, TCheckCancelledCallback const & checkCancelled,
              TIsCountryLoadedByNameFn const & isLoadedFn, ref_ptr<EngineContext> context, bool is3dBuildings,

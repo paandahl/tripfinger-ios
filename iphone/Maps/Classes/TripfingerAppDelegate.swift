@@ -123,7 +123,16 @@ class MyNavigationController: UINavigationController {
   public class func getListingById(id: Int32) -> TripfingerEntity {
     let listingId = TripfingerEntity.idMap[id]!
     let listing = DatabaseService.getListingWithId(listingId)!
+    session.currentListing = listing
     return TripfingerEntity(listing: listing)
+  }
+  
+  public class func getListingByCoordinate(coord: CLLocationCoordinate2D) -> TripfingerEntity {
+    let listing = DatabaseService.getListingByCoordinate(coord)
+    session.currentListing = listing
+    let entity = TripfingerEntity(listing: listing!)
+    entity.putInIdMap(listing!.item().id)
+    return entity
   }
 
   public class func coordinateToInt(coord: CLLocationCoordinate2D) -> Int64 {
@@ -172,13 +181,9 @@ class MyNavigationController: UINavigationController {
     }
   }
   
-  class func navigateToLicense() {
+  class func navigateToLicense() { // for listings from map
     let licenseController: UIViewController
-    if session.currentItem.textLicense == nil || session.currentItem.textLicense == "" && session.currentSection != nil {
-      licenseController = LicenseController(textItem: session.currentRegion.item(), imageItem: session.currentItem)
-    } else {
-      licenseController = LicenseController(textItem: session.currentItem, imageItem: session.currentItem)
-    }
+    licenseController = LicenseController(textItem: session.currentListing.item(), imageItem: session.currentListing.item())
     licenseController.edgesForExtendedLayout = .None // offset from navigation bar
     TripfingerAppDelegate.navigationController.pushViewController(licenseController, animated: true)
   }

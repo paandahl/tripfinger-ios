@@ -37,7 +37,7 @@
   [super viewDidLoad];
   self.tableView.backgroundColor = [UIColor pressBackground];
   self.tableView.separatorColor = [UIColor blackDividers];
-  [self.navigationController.navigationBar setTranslucent:NO];
+//  [self.navigationController.navigationBar setTranslucent:NO];
   [self.tableView registerClass:[MWMTableViewCell class] forCellReuseIdentifier:[UITableViewCell className]];
 }
 

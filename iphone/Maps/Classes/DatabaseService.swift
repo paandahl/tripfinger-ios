@@ -170,6 +170,18 @@ class DatabaseService {
     }
   }
   
+  class func getListingByCoordinate(coord: CLLocationCoordinate2D) -> Listing? {
+    let realm = getRealm()
+    let margin = 0.0000005
+    let minCoord = CLLocationCoordinate2DMake(coord.latitude - margin, coord.longitude - margin)
+    let maxCoord = CLLocationCoordinate2DMake(coord.latitude + margin, coord.longitude + margin)
+    print("fetching listing by coordinate")
+    print("latitude \(minCoord.latitude) > < \(maxCoord.latitude)")
+    print("longitude \(minCoord.latitude) > < \(maxCoord.latitude)")
+    let attraction = realm.objects(Listing).filter("listing.latitude > \(minCoord.latitude) and listing.latitude < \(maxCoord.latitude) and listing.longitude > \(minCoord.longitude)  and listing.longitude < \(maxCoord.longitude)").first
+    return attraction
+  }
+  
   class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int) -> List<SimplePOI> {
     let realm = getRealm()
     let attractions = realm.objects(Listing).filter("listing.latitude > \(bottomLeft.latitude) and listing.latitude < \(topRight.latitude) and listing.longitude > \(bottomLeft.longitude)  and listing.longitude < \(topRight.longitude)")

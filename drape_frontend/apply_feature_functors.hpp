@@ -1,5 +1,6 @@
 #pragma once
 
+#include <geometry/latlon.hpp>
 #include "drape_frontend/stylist.hpp"
 #include "drape_frontend/tile_key.hpp"
 
@@ -53,7 +54,7 @@ class ApplyPointFeature : public BaseApplyFeature
   using TBase = BaseApplyFeature;
 
 public:
-  using TCoordinateCheckerFn = function<bool (m2::PointD coord)>;
+  using TCoordinateCheckerFn = function<bool (ms::LatLon coord)>;
 
   ApplyPointFeature(TInsertShapeFn const & insertShape, FeatureID const & id,
                     int minVisibleScale, uint8_t rank, CaptionDescription const & captions,

@@ -231,15 +231,22 @@ NSString * const kReportSegue = @"Map2ReportSegue";
   return tripfingerVector;
 }
 
-- (TripfingerMark)poiFetcher:(uint32_t)id
+- (TripfingerMark)poiByIdFetcher:(uint32_t)id
 {
   TripfingerEntity *annotation = [TripfingerAppDelegate getPoiById:id ];
   return [self annotationToMark:annotation];
 }
 
-- (bool)coordinateChecker:(m2::PointD)coord
+- (TripfingerMark)poiByCoordFetcher:(ms::LatLon)coord
 {
-  CLLocationCoordinate2D checkCoord = CLLocationCoordinate2DMake(coord.x, coord.y);
+  CLLocationCoordinate2D clCoord = CLLocationCoordinate2DMake(coord.lat, coord.lon);
+  TripfingerEntity *annotation = [TripfingerAppDelegate getListingByCoordinate:clCoord ];
+  return [self annotationToMark:annotation];
+}
+
+- (bool)coordinateChecker:(ms::LatLon)coord
+{
+  CLLocationCoordinate2D checkCoord = CLLocationCoordinate2DMake(coord.lat, coord.lon);
   return [TripfingerAppDelegate coordinateExists:checkCoord ];
 }
 
@@ -584,18 +591,23 @@ NSString * const kReportSegue = @"Map2ReportSegue";
   });
 
   using PoiSupplierFnT = vector<TripfingerMark> (*)(id, SEL, TripfingerMarkParams);
-  using PoiFetcherFnT = TripfingerMark (*)(id, SEL, uint32_t);
-  using CoordinateCheckerFnT = bool (*)(id, SEL, m2::PointD);
+  using PoiByIdFetcherFnT = TripfingerMark (*)(id, SEL, uint32_t);
+  using PoiByCoordFetcherFnT = TripfingerMark (*)(id, SEL, ms::LatLon);
+  using CoordinateCheckerFnT = bool (*)(id, SEL, ms::LatLon);
   using CategoryCheckerFnT = int (*)(id, SEL, string);
   
   SEL poiSupplierSelector = @selector(poiSupplier:);
   PoiSupplierFnT poiSupplierFn = (PoiSupplierFnT)[self methodForSelector:poiSupplierSelector];
   f.SetPoiSupplierFunction(bind(poiSupplierFn, self, poiSupplierSelector, _1));
   
-  SEL poiFetcherSelector = @selector(poiFetcher:);
-  PoiFetcherFnT poiFetcherFn = (PoiFetcherFnT)[self methodForSelector:poiFetcherSelector];
-  f.SetPoiFetcherFunction(bind(poiFetcherFn, self, poiFetcherSelector, _1));
-  
+  SEL poiByIdFetcherSelector = @selector(poiByIdFetcher:);
+  PoiByIdFetcherFnT poiByIdFetcherFn = (PoiByIdFetcherFnT)[self methodForSelector:poiByIdFetcherSelector];
+  f.SetPoiByIdFetcherFunction(bind(poiByIdFetcherFn, self, poiByIdFetcherSelector, _1));
+
+  SEL poiByCoordFetcherSelector = @selector(poiByCoordFetcher:);
+  PoiByCoordFetcherFnT poiByCoordFetcherFn = (PoiByCoordFetcherFnT)[self methodForSelector:poiByCoordFetcherSelector];
+  f.SetPoiByCoordFetcherFunction(bind(poiByCoordFetcherFn, self, poiByCoordFetcherSelector, _1));
+
   SEL coordinateCheckerSelector = @selector(coordinateChecker:);
   CoordinateCheckerFnT coordinateCheckerFn = (CoordinateCheckerFnT)[self methodForSelector:coordinateCheckerSelector];
   f.SetCoordinateCheckerFunction(bind(coordinateCheckerFn, self, coordinateCheckerSelector, _1));

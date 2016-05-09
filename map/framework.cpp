@@ -677,11 +677,10 @@ void Framework::FillFeatureInfo(FeatureID const & fid, place_page::Info & info) 
   }
 
   if (fid.IsTripfinger()) {
-    TripfingerMark mark = m_poiFetcherFn(fid.m_index);
+    TripfingerMark mark = m_poiByIdFetcherFn(fid.m_index);
     SelfBakedFeatureType ft(mark);
     ft.SetID(fid);
     FillInfoFromFeatureType(ft, info);
-    info.tripfingerId = fid.m_index;
   }
   else {
     Index::FeaturesLoaderGuard const guard(m_model.GetIndex(), fid.m_mwmId);
@@ -706,6 +705,10 @@ void Framework::FillPointInfo(m2::PointD const & mercator, string const & custom
 
 void Framework::FillInfoFromFeatureType(FeatureType const & ft, place_page::Info & info) const
 {
+  if (ft.GetID().IsTripfinger()) {
+    info.tripfingerId = ft.GetID().m_index;
+  }
+
   info.SetFromFeatureType(ft);
 
   info.m_isEditable = false; //osm::Editor::Instance().GetEditableProperties(ft).IsEditable();
@@ -1069,7 +1072,7 @@ void Framework::UpdateUserViewportChanged()
       params.category = tfCategory;
       vector<TripfingerMark> tfMarks = m_poiSupplierFn(params);
       search::Results results;
-      for (auto& tfMark : tfMarks) {
+      for (const auto& tfMark : tfMarks) {
         FeatureID fid(MwmSet::MwmId(), tfMark.identifier);
         search::Result::Metadata metadata;
         m2::PointD centre(tfMark.coordinates.x, tfMark.coordinates.y);
@@ -1790,6 +1793,15 @@ void Framework::ForEachFeatureAtPoint(TFeatureTypeFn && fn, m2::PointD const & m
 
 unique_ptr<FeatureType> Framework::GetFeatureAtPoint(m2::PointD const & mercator) const
 {
+  ms::LatLon latlon = MercatorBounds::ToLatLon(mercator);
+  if (m_coordinateCheckerFn(latlon)) {
+    TripfingerMark mark = m_poiByCoordFetcherFn(latlon);
+    int tfIdentifier = mark.identifier;
+    FeatureID fid(MwmSet::MwmId(), tfIdentifier);
+    unique_ptr<FeatureType> ft(new SelfBakedFeatureType(mark));
+    ft->SetID(fid);
+    return ft;
+  }
   unique_ptr<FeatureType> poi, line, area;
   uint32_t const coastlineType = classif().GetCoastType();
   ForEachFeatureAtPoint([&, coastlineType](FeatureType & ft)
@@ -1827,18 +1839,10 @@ unique_ptr<FeatureType> Framework::GetFeatureByID(FeatureID const & fid, bool pa
   ASSERT(fid.IsValid(), ());
 
   // check for tripfinger prefix
-  if ((fid.m_index / 1000) == 789) {
-    TripfingerMark mark = m_poiFetcherFn(fid.m_index);
+  if (fid.IsTripfinger()) {
+    TripfingerMark mark = m_poiByIdFetcherFn(fid.m_index);
     unique_ptr<FeatureType> ft(new SelfBakedFeatureType(mark));
-//    ft->Make(mark);
-
-//    ft.ParseMetadata();
-//    metadata = ft.GetMetadata();
-
-    //ASSERT_NOT_EQUAL(ft.GetFeatureType(), feature::GEOM_LINE, ());
-
     return ft;
-
   } else {
     unique_ptr<FeatureType> feature(new FeatureType);
     // Note: all parse methods should be called with guard alive.
@@ -1891,11 +1895,6 @@ void Framework::SetMapSelectionListeners(TActivateMapSelectionFn const & activat
 vector<TripfingerMark> Framework::GetTripfingerMarks(TripfingerMarkParams params) {
 return m_poiSupplierFn(params);
 }
-
-bool Framework::CheckIfCoordinateIsTripfingered(m2::PointD coord) {
-  return m_coordinateCheckerFn(coord);
-}
-
 
 void Framework::ActivateMapSelection(bool needAnimation, df::SelectionShape::ESelectedObject selectionType,
                                      place_page::Info const & info) const

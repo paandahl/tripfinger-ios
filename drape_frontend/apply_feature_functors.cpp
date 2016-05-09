@@ -323,8 +323,7 @@ void ApplyPointFeature::Finish()
   }
   else if (m_symbolRule)
   {
-    ms::LatLon coord = MercatorBounds::ToLatLon(m_centerPoint);
-    if (((m_id.m_index / 1000) == 789) || !m_coordinateCheckerFn(m2::PointD(coord.lat, coord.lon))) {
+    if (m_id.IsTripfinger() || !m_coordinateCheckerFn(MercatorBounds::ToLatLon(m_centerPoint))) {
       PoiSymbolViewParams params(m_id);
       params.m_depth = m_symbolDepth;
       params.m_minVisibleScale = m_minVisibleScale;
