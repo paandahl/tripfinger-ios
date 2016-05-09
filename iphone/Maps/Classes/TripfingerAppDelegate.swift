@@ -188,6 +188,13 @@ class MyNavigationController: UINavigationController {
     TripfingerAppDelegate.navigationController.pushViewController(licenseController, animated: true)
   }
 
+  class func bookmarkAdded() {
+    DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, listing: session.currentListing)
+  }
+  
+  class func bookmarkRemoved() {
+    DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, listing: session.currentListing)
+  }
   
 //  public class func getImageViewCell() -> UIView {
 //    

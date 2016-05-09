@@ -6,6 +6,9 @@
 #include "geometry/point2d.hpp"
 #include "geometry/rect2d.hpp"
 #include "indexer/map_style.hpp"
+#include "indexer/feature.hpp"
+#import "SwiftBridge.h"
+
 
 namespace search { struct AddressInfo; }
 
@@ -40,6 +43,8 @@ namespace search { struct AddressInfo; }
 - (void)refreshAd;
 
 - (void)initialize;
++ (TripfingerMark)entityToMark:(TripfingerEntity*)entity;
+
 
 @property (nonatomic) MTRGNativeAppwallAd * appWallAd;
 @property (nonatomic, readonly) BOOL isAppWallAdActive;

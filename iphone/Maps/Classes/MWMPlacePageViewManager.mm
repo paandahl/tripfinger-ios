@@ -307,6 +307,7 @@ extern NSString * const kBookmarksChangedNotification;
                                                     object:nil
                                                   userInfo:nil];
   [self updateDistance];
+  [TripfingerAppDelegate bookmarkAdded];
 }
 
 - (void)removeBookmark
@@ -330,6 +331,7 @@ extern NSString * const kBookmarksChangedNotification;
                                                     object:nil
                                                   userInfo:nil];
   [self updateDistance];
+  [TripfingerAppDelegate bookmarkRemoved];
 }
 
 - (void)reloadBookmark

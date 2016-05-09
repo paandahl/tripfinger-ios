@@ -83,7 +83,11 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
 - (void)addBookmark
 {
   [super addBookmark];
-  self.state = MWMiPhonePortraitPlacePageStateOpen;
+  if ([self.manager.entity isTripfinger]) {
+    self.state = MWMiPhonePortraitPlacePageStateHover;
+  } else {
+    self.state = MWMiPhonePortraitPlacePageStateOpen;
+  }
 }
 
 - (void)removeBookmark

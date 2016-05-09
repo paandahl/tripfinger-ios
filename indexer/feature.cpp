@@ -650,56 +650,23 @@ void FeatureType::SwapGeometry(FeatureType & r)
 // SelfBakedFeatureType implementation
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-//bool hasName = true;
-//bool hasLayer = false;
-//bool isLine = false;
-//bool isArea = false;
-//m_limitRect = m2::RectD::GetEmptyRect();
-//m_bTypesParsed = m_bCommonParsed = false;
-//uint8_t header = 0;
-//
-//if (hasName)
-//header |= ::feature::HEADER_HAS_NAME;
-//
-//if (hasLayer)
-//header |= ::feature::HEADER_HAS_LAYER;
-//
-//if (isLine)
-//header |= ::feature::HEADER_GEOM_LINE;
-//
-//if (isArea)
-//header |= ::feature::HEADER_GEOM_AREA;
-//
-//m_header = header;
-
 SelfBakedFeatureType::SelfBakedFeatureType(TripfingerMark const & mark)
 {
-  m_center = m2::PointD(mark.coordinates.x, mark.coordinates.y);
-//  m_center = m2::PointD(77.0596, 48.34);
-
+  m_center = mark.mercator;
   m_name = mark.name;
   m_names.AddString(StringUtf8Multilang::kDefaultCode, m_name);
   m_types[0] = mark.type;
   m_params.layer = 0;
   m_limitRect.Add(m_center);
-
-//  m_name = "Penisville";
-//  LOG(LINFO, ("MADE SELFBAKED TYPE with Coords", m_center));
-//  LOG(LINFO, ("MADE SELFBAKED TYPE with Name", m_name));
 }
 
 
 void SelfBakedFeatureType::ParseTypes() const
 {
-//  m_types[0] = 4097;
   m_bTypesParsed = true;
 }
 
-void SelfBakedFeatureType::ParseCommon() const
-{
-  //m_params.name.AddString(StringUtf8Multilang::DEFAULT_LANG, "Penis Airport");
-//  m_center = m2::PointD(77.0596, 48.34);
-}
+void SelfBakedFeatureType::ParseCommon() const {}
 
 uint32_t SelfBakedFeatureType::ParseGeometry(int scale) const
 {
@@ -711,15 +678,7 @@ uint32_t SelfBakedFeatureType::ParseTriangles(int scale) const
   return 0;
 }
 
-void SelfBakedFeatureType::ParseMetadata() const
-{
-  m_metadata.Set(feature::Metadata::FMD_PHONE_NUMBER, "90032017");
-
-//  if (HasInternet())
-//    m_metadata.Set(Metadata::FMD_INTERNET, "wlan");
-
-}
-
+void SelfBakedFeatureType::ParseMetadata() const {}
 
 string SelfBakedFeatureType::DebugString() const
 {
@@ -765,7 +724,6 @@ string SelfBakedFeatureType::DebugString(int scale) const
 
 void SelfBakedFeatureType::GetPreferredNames(string & defaultName, string & intName) const
 {
-//  string dfName = "Cockodrome";
   defaultName = m_name;
   intName.clear();
 

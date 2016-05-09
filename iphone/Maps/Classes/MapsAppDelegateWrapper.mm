@@ -41,5 +41,24 @@
   GetFramework().ShowSearchResult(searchResult);
 }
 
++ (void)saveBookmark:(TripfingerEntity *)entity {
+  Framework & f = GetFramework();
+  BookmarkData bmData = { [entity.name UTF8String], "placemark-red" };
+  size_t const categoryIndex = f.LastEditedBMCategory();
+  m2::PointD mercator = MercatorBounds::FromLatLon(entity.lat, entity.lon);
+  f.GetBookmarkManager().AddBookmark(categoryIndex, mercator, bmData);
+}
+
++ (void)deleteBookmark:(TripfingerEntity *)entity {
+  Framework & f = GetFramework();
+  
+  TripfingerMark mark = [MapViewController entityToMark:entity];
+  BookmarkAndCategory bookmarkAndCat = f.FindBookmark(&mark);
+  BookmarkCategory* bookmarkCat = f.GetBookmarkManager().GetBmCategory(bookmarkAndCat.first);
+  BookmarkCategory::Guard guard(*bookmarkCat);
+  guard.m_controller.DeleteUserMark(bookmarkAndCat.second);
+  bookmarkCat->SaveToKMLFile();
+}
+
 @end
 

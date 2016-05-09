@@ -42,9 +42,19 @@ class DatabaseService {
   }
   
   class func saveLike(likedState: GuideListingNotes.LikedState, listing: Listing) {
+    
+    if likedState == .LIKED {
+      print("Adding bookmark")
+      MapsAppDelegateWrapper.saveBookmark(TripfingerEntity(listing: listing))
+    }
+    
     let realm = getRealm()
     try! realm.write {
       if let listingNotes = listing.listing.notes {
+        if likedState != .LIKED && listingNotes.likedState == .LIKED {
+          print("Deleting bookmark")
+          MapsAppDelegateWrapper.deleteBookmark(TripfingerEntity(listing: listing))
+        }
         listingNotes.likedState = likedState
       } else {
         let guideListingNotes = GuideListingNotes()

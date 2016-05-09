@@ -224,7 +224,7 @@ NSString * const kReportSegue = @"Map2ReportSegue";
   }
   vector<TripfingerMark> tripfingerVector;
   for (id tfAnnotation in tfAnnotations) {
-    TripfingerMark mark = [self annotationToMark:tfAnnotation];
+    TripfingerMark mark = [MapViewController entityToMark:tfAnnotation];
     tripfingerVector.push_back(mark);
   }
   
@@ -233,15 +233,15 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 
 - (TripfingerMark)poiByIdFetcher:(uint32_t)id
 {
-  TripfingerEntity *annotation = [TripfingerAppDelegate getPoiById:id ];
-  return [self annotationToMark:annotation];
+  TripfingerEntity *entity = [TripfingerAppDelegate getPoiById:id ];
+  return [MapViewController entityToMark:entity];
 }
 
 - (TripfingerMark)poiByCoordFetcher:(ms::LatLon)coord
 {
   CLLocationCoordinate2D clCoord = CLLocationCoordinate2DMake(coord.lat, coord.lon);
-  TripfingerEntity *annotation = [TripfingerAppDelegate getListingByCoordinate:clCoord ];
-  return [self annotationToMark:annotation];
+  TripfingerEntity *entity = [TripfingerAppDelegate getListingByCoordinate:clCoord ];
+  return [MapViewController entityToMark:entity];
 }
 
 - (bool)coordinateChecker:(ms::LatLon)coord
@@ -257,14 +257,14 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 }
 
 
-- (TripfingerMark)annotationToMark:(TripfingerEntity*)annotation
++ (TripfingerMark)entityToMark:(TripfingerEntity*)entity
 {
   TripfingerMark mark = {};
-  mark.name = std::string([annotation.name UTF8String]);
-  ms::LatLon latlon(annotation.lat, annotation.lon);
-  mark.coordinates = MercatorBounds::FromLatLon(latlon);
-  mark.identifier = annotation.identifier;
-  mark.type = annotation.type;
+  mark.name = std::string([entity.name UTF8String]);
+  ms::LatLon latlon(entity.lat, entity.lon);
+  mark.mercator = MercatorBounds::FromLatLon(latlon);
+  mark.identifier = entity.identifier;
+  mark.type = entity.type;
   return mark;
 }
 

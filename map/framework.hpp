@@ -250,6 +250,7 @@ public:
   bool AddBookmarksFile(string const & filePath);
 
   BookmarkAndCategory FindBookmark(UserMark const * mark) const;
+  BookmarkAndCategory FindBookmark(TripfingerMark const * mark) const;
   BookmarkManager & GetBookmarkManager() { return m_bmManager; }
 
 private:

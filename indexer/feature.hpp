@@ -385,7 +385,7 @@ class TripfingerMark
 public:
   uint32_t type;
   string name;
-  m2::PointD coordinates;
+  m2::PointD mercator;
   uint32_t identifier;
 };
 

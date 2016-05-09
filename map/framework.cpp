@@ -1075,8 +1075,7 @@ void Framework::UpdateUserViewportChanged()
       for (const auto& tfMark : tfMarks) {
         FeatureID fid(MwmSet::MwmId(), tfMark.identifier);
         search::Result::Metadata metadata;
-        m2::PointD centre(tfMark.coordinates.x, tfMark.coordinates.y);
-        search::Result result(fid, centre, "Harooo", "Adreees", "Typeee", tfMark.type, metadata);
+        search::Result result(fid, tfMark.mercator, "Harooo", "Adreees", "Typeee", tfMark.type, metadata);
         results.AddResult(move(result));
       }
       m_lastInteractiveSearchParams.m_onResults(results);
@@ -1793,15 +1792,15 @@ void Framework::ForEachFeatureAtPoint(TFeatureTypeFn && fn, m2::PointD const & m
 
 unique_ptr<FeatureType> Framework::GetFeatureAtPoint(m2::PointD const & mercator) const
 {
-  ms::LatLon latlon = MercatorBounds::ToLatLon(mercator);
-  if (m_coordinateCheckerFn(latlon)) {
-    TripfingerMark mark = m_poiByCoordFetcherFn(latlon);
-    int tfIdentifier = mark.identifier;
-    FeatureID fid(MwmSet::MwmId(), tfIdentifier);
-    unique_ptr<FeatureType> ft(new SelfBakedFeatureType(mark));
-    ft->SetID(fid);
-    return ft;
-  }
+//  ms::LatLon latlon = MercatorBounds::ToLatLon(mercator);
+//  if (m_coordinateCheckerFn(latlon)) {
+//    TripfingerMark mark = m_poiByCoordFetcherFn(latlon);
+//    int tfIdentifier = mark.identifier;
+//    FeatureID fid(MwmSet::MwmId(), tfIdentifier);
+//    unique_ptr<FeatureType> ft(new SelfBakedFeatureType(mark));
+//    ft->SetID(fid);
+//    return ft;
+//  }
   unique_ptr<FeatureType> poi, line, area;
   uint32_t const coastlineType = classif().GetCoastType();
   ForEachFeatureAtPoint([&, coastlineType](FeatureType & ft)
@@ -1883,6 +1882,34 @@ BookmarkAndCategory Framework::FindBookmark(UserMark const * mark) const
   ASSERT(result != empty, ());
   return result;
 }
+
+BookmarkAndCategory Framework::FindBookmark(TripfingerMark const * mark) const
+{
+  BookmarkAndCategory empty = MakeEmptyBookmarkAndCategory();
+  BookmarkAndCategory result = empty;
+  for (size_t i = 0; i < GetBmCategoriesCount(); ++i)
+  {
+    BookmarkCategory const * cat = GetBmCategory(i);
+    for (size_t j = 0; j < cat->GetUserMarkCount(); ++j)
+    {
+      m2::PointD latlon = cat->GetUserMark(j)->GetPivot();
+      double margin = 0.0000005;
+      m2::PointD minLatLon = m2::PointD(mark->mercator.x - margin, mark->mercator.y - margin);
+      m2::PointD maxLatLon = m2::PointD(mark->mercator.x + margin, mark->mercator.y + margin);
+
+      if (latlon.x > minLatLon.x && latlon.x < maxLatLon.x && latlon.y > minLatLon.y && latlon.y < maxLatLon.y) {
+        result.first = static_cast<int>(i);
+        result.second = static_cast<int>(j);
+        return result;
+      }
+    }
+  }
+
+  result.first = -1;
+  result.second = -1;
+  return result;
+}
+
 
 void Framework::SetMapSelectionListeners(TActivateMapSelectionFn const & activator,
                                          TDeactivateMapSelectionFn const & deactivator)

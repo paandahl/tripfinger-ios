@@ -145,6 +145,8 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 + (BOOL)coordinateExists:(CLLocationCoordinate2D)coord;
 + (NSInteger)nameToCategoryId:(NSString * __nonnull)name;
 + (void)displayPlacePage:(NSArray<UIView *> * __nonnull)views;
++ (void)bookmarkAdded;
++ (void)bookmarkRemoved;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
