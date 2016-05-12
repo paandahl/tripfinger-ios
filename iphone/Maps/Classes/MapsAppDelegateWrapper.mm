@@ -20,6 +20,10 @@
   [[MapsAppDelegate theApp].mapViewController.controlsManager showPlacePageWithEntityFullscreen:entity];
 }
 
++ (void)openSearch {
+  [[MapsAppDelegate theApp].mapViewController.controlsManager openSearch];
+}
+
 + (void)openMapSearchWithQuery:(NSString*)query {
   [[MapsAppDelegate theApp].mapViewController.controlsManager openMapSearchWithQuery:query];
 }

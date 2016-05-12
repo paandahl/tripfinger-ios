@@ -7,7 +7,6 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   var noElementsLabel = UILabel()
   var listingStack: [Listing]?
   let session: Session
-  let searchDelegate: SearchViewControllerDelegate
   var cardWidth: CGFloat!
   var cardHeight: CGFloat!
 //  var filterBox: FilterBox!
@@ -18,9 +17,8 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   var orignalFrontCardFrame: CGRect!
   var backCardView: ListingCardView!
   
-  init(session: Session, searchDelegate: SearchViewControllerDelegate) {
+  init(session: Session) {
     self.session = session
-    self.searchDelegate = searchDelegate
     super.init(nibName: nil, bundle: nil)
   }
   

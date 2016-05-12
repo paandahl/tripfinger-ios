@@ -40,6 +40,7 @@
 - (void)showPlacePage:(place_page::Info const &)info;
 - (void)showPlacePageWithEntity:(TripfingerEntity*)entity;
 - (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity;
+- (void)openSearch;
 - (void)openMapSearchWithQuery:(NSString*)query;
 
 #pragma mark - MWMNavigationDashboardManager

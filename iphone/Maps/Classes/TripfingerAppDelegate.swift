@@ -177,7 +177,7 @@ class MyNavigationController: UINavigationController {
     
   public class func displayPlacePage(views: [UIView]) {
     let searchDelegate = TripfingerAppDelegate.navigationController.viewControllers[0] as! RegionController
-    let detailController = DetailController(session: session, searchDelegate: searchDelegate, placePageViews: views)
+    let detailController = DetailController(session: session, placePageViews: views)
     if viewControllers.count > 0 {
       let newViewControllers = TripfingerAppDelegate.viewControllers + [detailController]
       TripfingerAppDelegate.navigationController.setViewControllers(newViewControllers, animated: true)

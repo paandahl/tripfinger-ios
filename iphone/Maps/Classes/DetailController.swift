@@ -9,14 +9,12 @@ class SuperScrollView: UIScrollView {
 class DetailController: UIViewController {
   
   let session: Session
-  let searchDelegate: SearchViewControllerDelegate
 
   let scrollView = SuperScrollView()
   let placePageViews: [UIView]
   
-  init(session: Session, searchDelegate: SearchViewControllerDelegate, placePageViews: [UIView]) {
+  init(session: Session, placePageViews: [UIView]) {
     self.session = session
-    self.searchDelegate = searchDelegate
     scrollView.canCancelContentTouches = true
     self.placePageViews = placePageViews
     super.init(nibName: nil, bundle: nil)
@@ -64,12 +62,9 @@ class DetailController: UIViewController {
 
   
   func navigateToSearch() {
-    let nav = UINavigationController()
-    let regionId = session.currentRegion?.getId()
-    let countryId = session.currentCountry?.getId()
-    let searchController = SearchController(delegate: searchDelegate, regionId: regionId, countryId: countryId)
-    nav.viewControllers = [searchController]
-    presentViewController(nav, animated: true, completion: nil)
+    let vc = MapsAppDelegateWrapper.getMapViewController()
+    navigationController!.pushViewController(vc, animated: true)
+    MapsAppDelegateWrapper.openSearch()
   }
   
   func navigateToMap() {

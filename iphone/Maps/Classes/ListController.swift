@@ -6,10 +6,10 @@ class ListController: GuideItemController {
   let categoryDescription: GuideText
   var listings: [Listing]?
   
-  init(session: Session, searchDelegate: SearchViewControllerDelegate, grouped: Bool, categoryDescription: GuideText) {
+  init(session: Session, grouped: Bool, categoryDescription: GuideText) {
     self.displayGrouped = grouped
     self.categoryDescription = categoryDescription
-    super.init(session: session, searchDelegate: searchDelegate)
+    super.init(session: session)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -165,7 +165,7 @@ extension ListController {
   func navigateToSubCategory(object: AnyObject) {
     let subCatDesc = object as! GuideText
     session.currentSubCategory = Listing.SubCategory(rawValue: subCatDesc.item.subCategory)!
-    let listingsController = ListingsController(session: session, searchDelegate: searchDelegate, categoryDescription: subCatDesc)
+    let listingsController = ListingsController(session: session, categoryDescription: subCatDesc)
     listingsController.edgesForExtendedLayout = .None // offset from navigation bar
     print("parentView: \(parentViewController)")
     parentViewController!.navigationController!.pushViewController(listingsController, animated: true)

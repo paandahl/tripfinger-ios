@@ -3,31 +3,29 @@ import Foundation
 class ListingsController: UIViewController {
   
   let session: Session
-  let searchDelegate: SearchViewControllerDelegate
   let displayMode: DisplayMode
   let container = UIView()
   let listController: ListController
   var swipeController: SwipeController?
   
-  init(session: Session, searchDelegate: SearchViewControllerDelegate, categoryDescription: GuideText) {
+  init(session: Session, categoryDescription: GuideText) {
     self.session = session
-    self.searchDelegate = searchDelegate
     
     if session.currentSubCategory != nil {
       displayMode = DisplayMode.DIRECT_LIST
-      listController = ListController(session: session, searchDelegate: searchDelegate, grouped: false, categoryDescription: categoryDescription)
+      listController = ListController(session: session, grouped: false, categoryDescription: categoryDescription)
     } else {
       switch session.currentCategory {
       case Listing.Category.ATTRACTIONS:
         displayMode = DisplayMode.WITH_SWIPER
-        listController = ListController(session: session, searchDelegate: searchDelegate, grouped: false, categoryDescription: categoryDescription)
-        swipeController = SwipeController(session: session, searchDelegate: searchDelegate)
+        listController = ListController(session: session, grouped: false, categoryDescription: categoryDescription)
+        swipeController = SwipeController(session: session)
       case Listing.Category.TRANSPORTATION:
         displayMode = DisplayMode.GROUPED_LIST
-        listController = ListController(session: session, searchDelegate: searchDelegate, grouped: true, categoryDescription: categoryDescription)
+        listController = ListController(session: session, grouped: true, categoryDescription: categoryDescription)
       default:
         displayMode = DisplayMode.DIRECT_LIST
-        listController = ListController(session: session, searchDelegate: searchDelegate, grouped: false, categoryDescription: categoryDescription)
+        listController = ListController(session: session, grouped: false, categoryDescription: categoryDescription)
       }
     }
     
@@ -117,12 +115,9 @@ class ListingsController: UIViewController {
   }
   
   func navigateToSearch() {
-    let nav = UINavigationController()
-    let regionId = session.currentRegion?.getId()
-    let countryId = session.currentCountry?.getId()
-    let searchController = SearchController(delegate: searchDelegate, regionId: regionId, countryId: countryId)
-    nav.viewControllers = [searchController]
-    presentViewController(nav, animated: true, completion: nil)
+    let vc = MapsAppDelegateWrapper.getMapViewController()
+    navigationController!.pushViewController(vc, animated: true)
+    MapsAppDelegateWrapper.openSearch()
   }
   
   func navigateToMap() {

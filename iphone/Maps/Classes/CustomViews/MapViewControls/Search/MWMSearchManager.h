@@ -29,6 +29,8 @@ typedef NS_ENUM(NSUInteger, MWMSearchManagerState)
 @property (nonatomic) MWMSearchManagerState state;
 
 @property (nonnull, nonatomic, readonly) UIView * view;
+@property (nonatomic) BOOL initedFromGuide;
+
 
 - (nullable instancetype)init __attribute__((unavailable("init is not available")));
 - (nullable instancetype)initWithParentView:(nonnull UIViewController *)viewController

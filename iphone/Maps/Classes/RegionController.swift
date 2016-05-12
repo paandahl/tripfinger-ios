@@ -12,15 +12,6 @@ class RegionController: GuideItemController {
   let refreshControl = UIRefreshControl()
   var countryLists = [(String, List<Region>)]()
   
-  init(session: Session) {
-    super.init(session: session, searchDelegate: nil)
-    self.searchDelegate = self
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
-  }
-
   override func viewDidLoad() {
     super.viewDidLoad()
     
@@ -258,7 +249,7 @@ extension RegionController {
 }
 
 // MARK: - Navigation
-extension RegionController: SearchViewControllerDelegate {
+extension RegionController {
   
   func navigateToRegion(object: AnyObject) {
     guideItemExpanded = false
@@ -277,7 +268,7 @@ extension RegionController: SearchViewControllerDelegate {
     session.currentCategory = Listing.Category(rawValue: categoryDescription.item.category)!
     print("set curent category to: \(session.currentCategory)")
     
-    let listingsController = ListingsController(session: session, searchDelegate: self, categoryDescription: categoryDescription)
+    let listingsController = ListingsController(session: session, categoryDescription: categoryDescription)
     listingsController.edgesForExtendedLayout = .None // offset from navigation bar
     navigationController!.pushViewController(listingsController, animated: true)
     session.changeSection(categoryDescription, failure: navigationFailure) {

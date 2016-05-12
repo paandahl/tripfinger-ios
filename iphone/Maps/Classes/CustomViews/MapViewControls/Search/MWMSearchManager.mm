@@ -54,6 +54,7 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
     self.parentViewController = viewController;
     self.parentView = viewController.view;
     self.state = MWMSearchManagerStateHidden;
+    self.initedFromGuide = NO;
   }
   return self;
 }
@@ -76,7 +77,6 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 - (void)endSearch
 {
-  NSLog(@"ENDED SEARCH BEFORE IT BEGAN");
   GetFramework().CancelInteractiveSearch();
   if (self.state != MWMSearchManagerStateHidden)
     self.state = MWMSearchManagerStateDefault;
@@ -184,6 +184,7 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 - (void)processSearchWithResult:(search::Result const &)result query:(search::QuerySaver::TSearchRequest const &)query
 {
+  self.initedFromGuide = NO;
   auto & f = GetFramework();
   f.SaveSearchQuery(query);
   MapsAppDelegate * a = MapsAppDelegate.theApp;
@@ -383,6 +384,10 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
   case MWMSearchManagerStateHidden:
     [Statistics logEvent:kStatSearchEnteredState withParameters:@{kStatName : kStatClose}];
     [self changeToHiddenState];
+    if (self.initedFromGuide) {
+      [self.parentViewController.navigationController popViewControllerAnimated:YES];
+    }
+    self.initedFromGuide = NO;
     break;
   case MWMSearchManagerStateDefault:
     [Statistics logEvent:kStatSearchEnteredState withParameters:@{kStatName : kStatOpen}];
@@ -393,6 +398,7 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
     [self changeToTableSearchState];
     break;
   case MWMSearchManagerStateMapSearch:
+    self.initedFromGuide = NO;
     [Statistics logEvent:kStatSearchEnteredState withParameters:@{kStatName : kStatMapSearch}];
     if (oldState == MWMSearchManagerStateHidden) {
       self.tableViewController.tripfingerSearch = YES;

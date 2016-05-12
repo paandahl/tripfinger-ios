@@ -3,18 +3,8 @@ import MBProgressHUD
 
 class GuideItemController: TableController {
   
-  weak var searchDelegate: SearchViewControllerDelegate!
   var contextSwitched = false
   var guideItemExpanded = false
-
-  init(session: Session, searchDelegate: SearchViewControllerDelegate!) {
-    self.searchDelegate = searchDelegate
-    super.init(session: session)
-  }
-  
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -132,7 +122,7 @@ extension GuideItemController {
     print("Navigation to section")
     let section = object as! GuideText
     
-    let sectionController = SectionController(session: session, searchDelegate: searchDelegate)
+    let sectionController = SectionController(session: session)
     sectionController.edgesForExtendedLayout = .None // offset from navigation bar
     sectionController.navigationItem.title = title
     sectionController.guideItemExpanded = true
@@ -144,12 +134,9 @@ extension GuideItemController {
   }
 
   func navigateToSearch() {
-    let nav = UINavigationController()
-    let regionId = session.currentRegion?.getId()
-    let countryId = session.currentCountry?.getId()
-    let searchController = SearchController(delegate: searchDelegate, regionId: regionId, countryId: countryId)
-    nav.viewControllers = [searchController]
-    presentViewController(nav, animated: true, completion: nil)
+    let vc = MapsAppDelegateWrapper.getMapViewController()
+    navigationController!.pushViewController(vc, animated: true)
+    MapsAppDelegateWrapper.openSearch()
   }
   
   func navigateToMap() {
