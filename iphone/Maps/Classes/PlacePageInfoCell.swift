@@ -36,11 +36,11 @@ class PlacePageInfoCell: UITableViewCell {
     
     myImageView.contentMode = UIViewContentMode.ScaleAspectFill
     myImageView.image = UIImage(named: "placeholder-712")
-    if tripfingerEntity.url != nil {
+    if tripfingerEntity.url != "" {
       
       let alignment = UIDevice.currentDevice().orientation
       print("adding picture for portrait: \(alignment.isPortrait)")
-      if tripfingerEntity.offline! {
+      if tripfingerEntity.offline {
         print("offline url: \(tripfingerEntity.getFileUrl())")
         myImageView.image = UIImage(data: NSData(contentsOfURL: tripfingerEntity.getFileUrl())!)
       }
@@ -100,14 +100,14 @@ class PlacePageInfoCell: UITableViewCell {
 
     var bottomElement = descriptionText
     
-    if let price = tripfingerEntity.price {
+    if tripfingerEntity.price != "" {
       contentView.addSubview(priceLabel)
       contentView.addSubview(priceText)
       priceLabel.text = "Price"
       priceLabel.font = UIFont.boldSystemFontOfSize(16)
       priceText.scrollEnabled = false
       priceText.font = UIFont.systemFontOfSize(16)
-      priceText.text = price
+      priceText.text = tripfingerEntity.price
       priceText.sizeToFit()
       views = ["description": descriptionText, "priceLabel": priceLabel, "priceText": priceText]
       contentView.addConstraints("V:[description]-0-[priceLabel]-10-[priceText]", forViews: views)
@@ -116,14 +116,14 @@ class PlacePageInfoCell: UITableViewCell {
       bottomElement = priceText
     }
     
-    if let directions = tripfingerEntity.directions {
+    if tripfingerEntity.directions != "" {
       contentView.addSubview(directionsLabel)
       contentView.addSubview(directionsText)
       directionsLabel.text = "Directions"
       directionsLabel.font = UIFont.boldSystemFontOfSize(16)
       directionsText.scrollEnabled = false
       directionsText.font = UIFont.systemFontOfSize(16)
-      directionsText.text = directions
+      directionsText.text = tripfingerEntity.directions
       let dirSize = directionsText.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
 
       print("directionsText height: \(directionsText.height)")

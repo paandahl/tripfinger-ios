@@ -127,6 +127,7 @@ SWIFT_CLASS("_TtC10Tripfinger16TripfingerEntity")
 @property (nonatomic, copy) NSString * __null_unspecified license;
 @property (nonatomic, copy) NSString * __null_unspecified artist;
 @property (nonatomic, copy) NSString * __null_unspecified originalUrl;
+@property (nonatomic) BOOL offline;
 @property (nonatomic) BOOL liked;
 - (NSURL * __nonnull)getFileUrl;- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
@@ -139,9 +140,9 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 - (UIWindow * __nonnull)applicationLaunched:(UIApplication * __nonnull)application delegate:(id <UIApplicationDelegate> __nonnull)delegate didFinishLaunchingWithOptions:(NSDictionary * __nullable)launchOptions;
 + (NSArray<TripfingerEntity *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight zoomLevel:(NSInteger)zoomLevel;
 + (NSArray<TripfingerEntity *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight category:(NSInteger)category;
-+ (TripfingerEntity * __nonnull)getPoiById:(int32_t)id;
-+ (TripfingerEntity * __nonnull)getListingById:(int32_t)id;
++ (TripfingerEntity * __nonnull)getListingById:(NSString * __nonnull)listingId;
 + (TripfingerEntity * __nonnull)getListingByCoordinate:(CLLocationCoordinate2D)coord;
++ (NSArray<TripfingerEntity *> * __nonnull)poiSearch:(NSString * __nonnull)query;
 + (BOOL)coordinateExists:(CLLocationCoordinate2D)coord;
 + (NSInteger)nameToCategoryId:(NSString * __nonnull)name;
 + (void)displayPlacePage:(NSArray<UIView *> * __nonnull)views;

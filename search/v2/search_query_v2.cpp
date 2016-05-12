@@ -49,6 +49,21 @@ void SearchQueryV2::Search(Results & res, size_t resCount)
 
   Geocoder::TResultList results;
   m_geocoder.GoEverywhere(results);
+
+  vector<TripfingerMark> tfMarks = m_poiSearchFn(m_query);
+  for (const auto& tfMark : tfMarks) {
+    Geocoder::TResult result;
+    result.first = FeatureID(tfMark);
+    PreRankingInfo rankingInfo;
+    rankingInfo.m_distanceToPivot = 5;
+    rankingInfo.m_startToken = 0;
+    rankingInfo.m_endToken = 1;
+    rankingInfo.m_rank = 10;
+    rankingInfo.m_searchType = SearchModel::SearchType::SEARCH_TYPE_POI;
+    result.second = rankingInfo;
+    results.push_back(result);
+  }
+
   AddPreResults1(results);
 
   FlushResults(params, res, false /* allMWMs */, resCount, false /* oldHouseSearch */);
@@ -81,7 +96,11 @@ void SearchQueryV2::AddPreResults1(Geocoder::TResultList & results)
   {
     auto const & id = result.first;
     auto const & info = result.second;
-    AddPreResult1(id.m_mwmId, id.m_index, info.m_distanceToPivot /* priority */, info);
+    if (id.IsTripfinger()) {
+      AddPreResult1(id, info.m_distanceToPivot /* priority */, info);
+    } else {
+      AddPreResult1(id.m_mwmId, id.m_index, info.m_distanceToPivot /* priority */, info);
+    }
   }
 }
 }  // namespace v2

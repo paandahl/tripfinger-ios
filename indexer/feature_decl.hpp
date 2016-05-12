@@ -20,6 +20,43 @@ enum EGeomType
 
 string DebugPrint(feature::EGeomType type);
 
+struct TripfingerMarkParams
+{
+  m2::PointD topLeft;
+  m2::PointD botRight;
+  int zoomLevel;
+  int category = 0;
+};
+
+class TripfingerMark
+{
+public:
+  m2::PointD mercator;
+  string name;
+
+  uint32_t type;
+
+  string phone;
+  string address;
+  string website;
+  string email;
+
+  string content;
+  string price;
+  string openingHours;
+  string directions;
+
+  string url;
+  string imageDescription;
+  string license;
+  string artist;
+  string originalUrl;
+
+  bool offline = false;
+  bool liked = false;
+};
+
+
 struct FeatureID
 {
   static char const * const kInvalidFileName;
@@ -27,10 +64,13 @@ struct FeatureID
 
   MwmSet::MwmId m_mwmId;
   uint32_t m_index;
-  //mutable string tripfingerId = "";
+  shared_ptr<TripfingerMark> tripfingerMark = nullptr;
 
   FeatureID() : m_index(0) {}
   FeatureID(MwmSet::MwmId const & mwmId, uint32_t index) : m_mwmId(mwmId), m_index(index) {}
+  FeatureID(TripfingerMark const & mark) : m_mwmId(MwmSet::MwmId()), m_index(0) {
+    tripfingerMark = make_shared<TripfingerMark>(mark);
+  }
 
   bool IsValid() const {
     if (m_mwmId.IsAlive()) {
@@ -41,11 +81,18 @@ struct FeatureID
   }
 
   bool IsTripfinger() const {
-    return (m_index / 1000) == 789;
+    return tripfingerMark != nullptr;
   }
 
   inline bool operator<(FeatureID const & r) const
   {
+    if (IsTripfinger() && r.IsTripfinger()) {
+      return tripfingerMark->name < r.tripfingerMark->name;
+    } else if (IsTripfinger()) {
+      return false;
+    } else if (r.IsTripfinger()) {
+      return true;
+    }
     if (m_mwmId == r.m_mwmId)
       return m_index < r.m_index;
     else
@@ -54,7 +101,7 @@ struct FeatureID
 
   inline bool operator==(FeatureID const & r) const
   {
-    return (m_mwmId == r.m_mwmId && m_index == r.m_index);
+    return (m_mwmId == r.m_mwmId && m_index == r.m_index && m_index != 0);
   }
 
   inline bool operator!=(FeatureID const & r) const { return !(*this == r); }

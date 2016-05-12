@@ -77,61 +77,67 @@ class MyNavigationController: UINavigationController {
 
     let topRight = CLLocationCoordinate2DMake(topLeft.latitude, bottomRight.longitude)
     let bottomLeft = CLLocationCoordinate2DMake(bottomRight.latitude, topLeft.longitude)
-    let pois = DatabaseService.getPois(bottomLeft, topRight: topRight, zoomLevel: 15) //, category: session.currentCategory)
+    let listings = DatabaseService.getPois(bottomLeft, topRight: topRight, zoomLevel: 15)
 
-    var annotations = [TripfingerEntity]()
-
-    for poi in pois {
-      let annotation = TripfingerEntity(poi: poi)
-      annotations.append(annotation)
+    var entities = [TripfingerEntity]()
+    for listing in listings {
+      let entity = TripfingerEntity(listing: listing)
+      entities.append(entity)
     }
 
-    print("Fetched \(annotations.count) annotations. botLeft: \(bottomLeft), topRight: \(topRight)")
-
-    return annotations;
+    print("Fetched \(entities.count) entities. botLeft: \(bottomLeft), topRight: \(topRight)")
+    return entities;
   }
   
   public class func getPoisForArea(topLeft: CLLocationCoordinate2D, bottomRight: CLLocationCoordinate2D, category: Int) -> [TripfingerEntity] {
     
     let topRight = CLLocationCoordinate2DMake(topLeft.latitude, bottomRight.longitude)
     let bottomLeft = CLLocationCoordinate2DMake(bottomRight.latitude, topLeft.longitude)
-    let pois = DatabaseService.getPois(bottomLeft, topRight: topRight, category: category)
+    let listings = DatabaseService.getPois(bottomLeft, topRight: topRight, category: category)
     
-    var annotations = [TripfingerEntity]()
-    
-    for poi in pois {
-      let annotation = TripfingerEntity(poi: poi)
-      annotations.append(annotation)
+    var entities = [TripfingerEntity]()
+    for listing in listings {
+      let entity = TripfingerEntity(listing: listing)
+      entities.append(entity)
     }
     
-    print("Searched \(annotations.count) annotations. botLeft: \(bottomLeft), topRight: \(topRight)")
+    print("Cat-fetched \(entities.count) entities. botLeft: \(bottomLeft), topRight: \(topRight)")    
+    return entities;
+  }
+  
+  public class func poiSearch(query: String) -> [TripfingerEntity] {
+    let semaphore = dispatch_semaphore_create(0)
+    let searchService = SearchService()
+    var entities = [TripfingerEntity]()
+    searchService.search(query) { results in
+      for poi in results {
+        if let cat = Listing.Category(rawValue: poi.category) {
+          let entity = TripfingerEntity(poi: poi)
+          entities.append(entity)
+        }
+      }
+      dispatch_semaphore_signal(semaphore)
+    }
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
     
-    return annotations;
+    return entities
   }
 
-  public class func getPoiById(id: Int32) -> TripfingerEntity {
-    let listingId = TripfingerEntity.idMap[id]!
-    let listing = DatabaseService.getListingWithId(listingId)
-    let annotation = TripfingerEntity()
-    annotation.name = listing?.item().name
-    annotation.lat = listing!.listing.latitude
-    annotation.lon = listing!.listing.longitude
-    annotation.type = Int32(Listing.SubCategory(rawValue: listing!.item().subCategory)!.osmType)
-    return annotation
-  }
-
-  public class func getListingById(id: Int32) -> TripfingerEntity {
-    let listingId = TripfingerEntity.idMap[id]!
-    let listing = DatabaseService.getListingWithId(listingId)!
-    session.currentListing = listing
-    return TripfingerEntity(listing: listing)
+  public class func getListingById(listingId: String) -> TripfingerEntity {
+    let semaphore = dispatch_semaphore_create(0)
+    var retListing: Listing! = nil
+    ContentService.getListingWithId(listingId, failure: {fatalError("connection issue while fetching listing")}) { listing in
+      retListing = listing
+    }
+    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
+    session.currentListing = retListing
+    return TripfingerEntity(listing: retListing)
   }
   
   public class func getListingByCoordinate(coord: CLLocationCoordinate2D) -> TripfingerEntity {
     let listing = DatabaseService.getListingByCoordinate(coord)
     session.currentListing = listing
     let entity = TripfingerEntity(listing: listing!)
-    entity.putInIdMap(listing!.item().id)
     return entity
   }
 

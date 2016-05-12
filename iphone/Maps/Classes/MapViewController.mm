@@ -231,12 +231,6 @@ NSString * const kReportSegue = @"Map2ReportSegue";
   return tripfingerVector;
 }
 
-- (TripfingerMark)poiByIdFetcher:(uint32_t)id
-{
-  TripfingerEntity *entity = [TripfingerAppDelegate getPoiById:id ];
-  return [MapViewController entityToMark:entity];
-}
-
 - (TripfingerMark)poiByCoordFetcher:(ms::LatLon)coord
 {
   CLLocationCoordinate2D clCoord = CLLocationCoordinate2DMake(coord.lat, coord.lon);
@@ -252,21 +246,86 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 
 - (int)categoryChecker:(string)name
 {
-  NSString *catName = [NSString stringWithCString:name.c_str() encoding:[NSString defaultCStringEncoding]];
+  NSString* catName = [NSString stringWithCString:name.c_str() encoding:[NSString defaultCStringEncoding]];
   return [TripfingerAppDelegate nameToCategoryId:catName ];
+}
+
+- (vector<TripfingerMark>)poiSearch:(string)query
+{
+  NSString* queryString = [NSString stringWithUTF8String:query.c_str()];
+  NSArray* tfEntities = [TripfingerAppDelegate poiSearch:queryString];
+  
+  vector<TripfingerMark> tripfingerVector;
+  for (id tfEntity in tfEntities) {
+    TripfingerMark mark = [MapViewController entityToMark:tfEntity];
+    tripfingerVector.push_back(mark);
+  }
+  return tripfingerVector;
 }
 
 
 + (TripfingerMark)entityToMark:(TripfingerEntity*)entity
 {
   TripfingerMark mark = {};
-  mark.name = std::string([entity.name UTF8String]);
-  ms::LatLon latlon(entity.lat, entity.lon);
-  mark.mercator = MercatorBounds::FromLatLon(latlon);
-  mark.identifier = entity.identifier;
+  mark.mercator = MercatorBounds::FromLatLon(entity.lat, entity.lon);
+  mark.name = [entity.name UTF8String];
+
   mark.type = entity.type;
+  
+  mark.phone = [entity.phone UTF8String];
+  mark.address = [entity.address UTF8String];
+  mark.website = [entity.website UTF8String];
+  mark.email = [entity.email UTF8String];
+
+  mark.content = [entity.content UTF8String];
+  mark.price = [entity.price UTF8String];
+  mark.openingHours = [entity.openingHours UTF8String];
+  mark.directions = [entity.directions UTF8String];
+
+  mark.url = [entity.url UTF8String];
+  mark.imageDescription = [entity.imageDescription UTF8String];
+  mark.license = [entity.license UTF8String];
+  mark.artist = [entity.artist UTF8String];
+  mark.originalUrl = [entity.originalUrl UTF8String];
+
+  mark.offline = entity.offline;
+  mark.liked = entity.liked;
+  
   return mark;
 }
+
++ (TripfingerEntity*)markToEntity:(TripfingerMark)mark
+{
+  TripfingerEntity* entity = [[TripfingerEntity alloc] init];
+  ms::LatLon latLon = MercatorBounds::ToLatLon(mark.mercator);
+  entity.lat = latLon.lat;
+  entity.lon = latLon.lon;
+  entity.name = [NSString stringWithUTF8String:mark.name.c_str()];
+  
+  entity.type = mark.type;
+  
+  entity.phone = [NSString stringWithUTF8String:mark.phone.c_str()];
+  entity.address = [NSString stringWithUTF8String:mark.address.c_str()];
+  entity.website = [NSString stringWithUTF8String:mark.website.c_str()];
+  entity.email = [NSString stringWithUTF8String:mark.email.c_str()];
+
+  entity.content = [NSString stringWithUTF8String:mark.content.c_str()];
+  entity.price = [NSString stringWithUTF8String:mark.price.c_str()];
+  entity.openingHours = [NSString stringWithUTF8String:mark.openingHours.c_str()];
+  entity.directions = [NSString stringWithUTF8String:mark.directions.c_str()];
+
+  entity.url = [NSString stringWithUTF8String:mark.url.c_str()];
+  entity.imageDescription = [NSString stringWithUTF8String:mark.imageDescription.c_str()];
+  entity.license = [NSString stringWithUTF8String:mark.license.c_str()];
+  entity.artist = [NSString stringWithUTF8String:mark.artist.c_str()];
+  entity.originalUrl = [NSString stringWithUTF8String:mark.originalUrl.c_str()];
+
+  entity.offline = mark.offline;
+  entity.liked = mark.liked;
+  
+  return entity;
+}
+
 
 - (void)onMapObjectDeselected:(bool)switchFullScreenMode
 {
@@ -280,12 +339,16 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 - (void)onMapObjectSelected:(place_page::Info const &)info
 {
   self.controlsManager.hidden = NO;
-  NSLog(@"Id selected: %n", info.tripfingerId);
-  if (info.tripfingerId == 0) {
-    [self.controlsManager showPlacePage:info];
+  if (info.GetID().IsTripfinger()) {
+    TripfingerMark mark = *info.GetID().tripfingerMark;
+    if (!mark.offline) {
+      NSLog(@"Opening online item in guide directly");
+    } else {
+      TripfingerEntity *entity = [MapViewController markToEntity:mark];
+      [self.controlsManager showPlacePageWithEntity:entity];
+    }
   } else {
-    TripfingerEntity *entity = [TripfingerAppDelegate getListingById:info.tripfingerId ];
-    [self.controlsManager showPlacePageWithEntity:entity];
+    [self.controlsManager showPlacePage:info];
   }
 }
 
@@ -591,19 +654,15 @@ NSString * const kReportSegue = @"Map2ReportSegue";
   });
 
   using PoiSupplierFnT = vector<TripfingerMark> (*)(id, SEL, TripfingerMarkParams);
-  using PoiByIdFetcherFnT = TripfingerMark (*)(id, SEL, uint32_t);
   using PoiByCoordFetcherFnT = TripfingerMark (*)(id, SEL, ms::LatLon);
   using CoordinateCheckerFnT = bool (*)(id, SEL, ms::LatLon);
   using CategoryCheckerFnT = int (*)(id, SEL, string);
+  using PoiSearchFnT = vector<TripfingerMark> (*)(id, SEL, string);
   
   SEL poiSupplierSelector = @selector(poiSupplier:);
   PoiSupplierFnT poiSupplierFn = (PoiSupplierFnT)[self methodForSelector:poiSupplierSelector];
   f.SetPoiSupplierFunction(bind(poiSupplierFn, self, poiSupplierSelector, _1));
   
-  SEL poiByIdFetcherSelector = @selector(poiByIdFetcher:);
-  PoiByIdFetcherFnT poiByIdFetcherFn = (PoiByIdFetcherFnT)[self methodForSelector:poiByIdFetcherSelector];
-  f.SetPoiByIdFetcherFunction(bind(poiByIdFetcherFn, self, poiByIdFetcherSelector, _1));
-
   SEL poiByCoordFetcherSelector = @selector(poiByCoordFetcher:);
   PoiByCoordFetcherFnT poiByCoordFetcherFn = (PoiByCoordFetcherFnT)[self methodForSelector:poiByCoordFetcherSelector];
   f.SetPoiByCoordFetcherFunction(bind(poiByCoordFetcherFn, self, poiByCoordFetcherSelector, _1));
@@ -615,6 +674,10 @@ NSString * const kReportSegue = @"Map2ReportSegue";
   SEL categoryCheckerSelector = @selector(categoryChecker:);
   CategoryCheckerFnT categoryCheckerFn = (CategoryCheckerFnT)[self methodForSelector:categoryCheckerSelector];
   f.SetCategoryCheckerFn(bind(categoryCheckerFn, self, categoryCheckerSelector, _1));
+
+  SEL poiSearchSelector = @selector(poiSearch:);
+  PoiSearchFnT poiSearchFn = (PoiSearchFnT)[self methodForSelector:poiSearchSelector];
+  f.SetPoiSearchFn(bind(poiSearchFn, self, poiSearchSelector, _1));
 
   m_predictor = [[LocationPredictor alloc] initWithObserver:self];
   self.forceRoutingStateChange = ForceRoutingStateChangeNone;

@@ -589,21 +589,31 @@ class PreResult2Maker
   void LoadFeature(FeatureID const & id, FeatureType & f, m2::PointD & center, string & name,
                    string & country)
   {
-    if (m_pFV.get() == 0 || m_pFV->GetId() != id.m_mwmId)
-      m_pFV.reset(new Index::FeaturesLoaderGuard(m_query.m_index, id.m_mwmId));
+    if (id.IsTripfinger()) {
+      unique_ptr<FeatureType> ft = make_unique<SelfBakedFeatureType>(*id.tripfingerMark);
+      ft->SetID(id);
 
-    m_pFV->GetFeatureByIndex(id.m_index, f);
-    f.SetID(id);
+      center = feature::GetCenter(*ft);
+      name = id.tripfingerMark->name;
+      country = m_query.m_countryCheckerFn(center);
 
-    center = feature::GetCenter(f);
+    } else {
+      if (m_pFV.get() == 0 || m_pFV->GetId() != id.m_mwmId)
+        m_pFV.reset(new Index::FeaturesLoaderGuard(m_query.m_index, id.m_mwmId));
 
-    m_query.GetBestMatchName(f, name);
+      m_pFV->GetFeatureByIndex(id.m_index, f);
+      f.SetID(id);
 
-    // country (region) name is a file name if feature isn't from World.mwm
-    if (m_pFV->IsWorld())
-      country.clear();
-    else
-      country = m_pFV->GetCountryFileName();
+      center = feature::GetCenter(f);
+
+      m_query.GetBestMatchName(f, name);
+
+      // country (region) name is a file name if feature isn't from World.mwm
+      if (m_pFV->IsWorld())
+        country.clear();
+      else
+        country = m_pFV->GetCountryFileName();
+    }
   }
 
   void InitRankingInfo(FeatureType const & ft, m2::PointD const & center,
@@ -668,18 +678,27 @@ public:
 
   unique_ptr<impl::PreResult2> operator()(impl::PreResult1 const & res1)
   {
-    FeatureType ft;
+    unique_ptr<FeatureType> ft;
+    if (res1.GetID().IsTripfinger()) {
+      ft = make_unique<SelfBakedFeatureType>(*res1.GetID().tripfingerMark);
+    } else {
+      ft = make_unique<FeatureType>();
+    }
     m2::PointD center;
     string name;
     string country;
 
-    LoadFeature(res1.GetID(), ft, center, name, country);
+    LoadFeature(res1.GetID(), *ft, center, name, country);
 
-    auto res2 = make_unique<impl::PreResult2>(ft, &res1, center, m_query.GetPosition() /* pivot */,
+    if (!res1.GetID().IsTripfinger() && m_query.m_coordinateCheckerFn(MercatorBounds::ToLatLon(center))) {
+      return nullptr;
+    }
+
+    auto res2 = make_unique<impl::PreResult2>(*ft, &res1, center, m_query.GetPosition() /* pivot */,
                                               name, country);
 
     search::v2::RankingInfo info;
-    InitRankingInfo(ft, center, res1, info);
+    InitRankingInfo(*ft, center, res1, info);
     info.m_rank = NormalizeRank(info.m_rank, info.m_searchType, center, country);
     res2->SetRankingInfo(move(info));
 
@@ -730,6 +749,8 @@ void Query::MakePreResult2(v2::Geocoder::Params const & params, vector<T> & cont
     minstd_rand engine;
     shuffle(b, e, engine);
   }
+  LOG(LINFO, ("Before PreResults2, number: ", m_results.size()));
+
   theSet.insert(m_results.begin(), m_results.begin() + min(m_results.size(), kPreResultsCount));
 
   if (!m_viewportSearch)
@@ -742,6 +763,7 @@ void Query::MakePreResult2(v2::Geocoder::Params const & params, vector<T> & cont
 
   ClearResults();
 
+  LOG(LINFO, ("PreResults2, set: ", theSet.size()));
   // Makes PreResult2 vector.
   impl::PreResult2Maker maker(*this, params);
   for (auto const & r : theSet)
@@ -894,6 +916,14 @@ void Query::AddPreResult1(MwmSet::MwmId const & mwmId, uint32_t featureId, doubl
   FeatureID id(mwmId, featureId);
   m_results.emplace_back(id, priority, viewportId, info);
 }
+
+void Query::AddPreResult1(FeatureID const & mwmId, double priority,
+                          v2::PreRankingInfo const & info, ViewportID viewportId /* = DEFAULT_V */)
+{
+  FeatureID id(*mwmId.tripfingerMark);
+  m_results.emplace_back(id, priority, viewportId, info);
+}
+
 
 namespace impl
 {

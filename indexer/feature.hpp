@@ -372,22 +372,6 @@ private:
 };
 
 /// Feature created from Tripfinger code, instead of loaded from file
-struct TripfingerMarkParams
-{
-  m2::PointD topLeft;
-  m2::PointD botRight;
-  int zoomLevel;
-  int category = 0;
-};
-
-class TripfingerMark
-{
-public:
-  uint32_t type;
-  string name;
-  m2::PointD mercator;
-  uint32_t identifier;
-};
 
 class SelfBakedFeatureType : public FeatureType
 {

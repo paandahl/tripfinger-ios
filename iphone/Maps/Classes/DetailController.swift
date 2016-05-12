@@ -76,7 +76,6 @@ class DetailController: UIViewController {
     let vc = MapsAppDelegateWrapper.getMapViewController()
     navigationController!.pushViewController(vc, animated: true)
     let entity = TripfingerEntity(listing: session.currentListing)
-    entity.putInIdMap(session.currentListing.item().id)
     MapsAppDelegateWrapper.selectListing(entity)
   }
 }

@@ -127,9 +127,6 @@ class JsonParserService {
     if json["subRegions"].array != nil {
       region.listing.item.subRegions.appendContentsOf(parseRegionTreesFromJson(json["subRegions"]))
     }
-    if json["simplePOIs"].array != nil {
-      region.listing.item.simplePois.appendContentsOf(parseSimplePois(json["simplePOIs"]))
-    }
     return region
   }
   

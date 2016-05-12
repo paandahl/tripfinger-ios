@@ -34,7 +34,8 @@
 }
 
 + (void)selectListing:(TripfingerEntity *)entity {
-  FeatureID fid(MwmSet::MwmId(), entity.identifier);
+  TripfingerMark mark = [MapViewController entityToMark:entity];
+  FeatureID fid(mark);
   search::Result::Metadata metadata;
   m2::PointD centre(entity.lat, entity.lon);
   search::Result searchResult(fid, centre, "Harooo", "Adreees", "Typeee", entity.type, metadata);

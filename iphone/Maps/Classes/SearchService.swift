@@ -36,38 +36,26 @@ class SearchService: NSObject {
 
     onlineResults = List<SimplePOI>()
     databaseResults = List<SimplePOI>()
-    skobblerResults = [SimplePOI]()
     
-    let handleSearchResults = {
+    let handleSearchResults = { (results: List<SimplePOI>) in
       dispatch_async(dispatch_get_main_queue()) {
         var searchResults = [SimplePOI]()
-        searchResults.appendContentsOf(self.onlineResults)
-        searchResults.appendContentsOf(self.databaseResults)
-        searchResults.appendContentsOf(self.skobblerResults)
-        handler(searchResults)        
+        searchResults.appendContentsOf(results)
+        handler(searchResults)
       }
     }
 
     // Online search (regions and attractions)
     if NetworkUtil.connectedToNetwork() {
       onlineSearchRequest = OnlineSearch.search(query) { searchResults in
-        self.onlineResults = searchResults
-        handleSearchResults()
+        handleSearchResults(searchResults)
+      }
+    } else {
+      // Database search (regions, attractions and simplePois)
+      DatabaseService.search(query) { results in
+        handleSearchResults(results)
       }
     }
-    
-    // Database search (regions, attractions and simplePois)
-    DatabaseService.search(query) { results in
-      self.databaseResults = results
-      handleSearchResults()
-    }
-    
-    // Skobbler search (cities and street names)
-//    skobblerSearch.search(query) { results in
-//      self.skobblerResults.appendContentsOf(results)
-//      handleSearchResults()
-//      
-//    }
   }
 }
 

@@ -677,8 +677,7 @@ void Framework::FillFeatureInfo(FeatureID const & fid, place_page::Info & info) 
   }
 
   if (fid.IsTripfinger()) {
-    TripfingerMark mark = m_poiByIdFetcherFn(fid.m_index);
-    SelfBakedFeatureType ft(mark);
+    SelfBakedFeatureType ft(*fid.tripfingerMark);
     ft.SetID(fid);
     FillInfoFromFeatureType(ft, info);
   }
@@ -1073,7 +1072,7 @@ void Framework::UpdateUserViewportChanged()
       vector<TripfingerMark> tfMarks = m_poiSupplierFn(params);
       search::Results results;
       for (const auto& tfMark : tfMarks) {
-        FeatureID fid(MwmSet::MwmId(), tfMark.identifier);
+        FeatureID fid(tfMark);
         search::Result::Metadata metadata;
         search::Result result(fid, tfMark.mercator, "Harooo", "Adreees", "Typeee", tfMark.type, metadata);
         results.AddResult(move(result));
@@ -1245,9 +1244,14 @@ void Framework::InitSearchEngine()
     search::Engine::Params params;
     params.m_locale = languages::GetCurrentOrig();
     params.m_numThreads = 1;
+    unique_ptr<search::SearchQueryFactory> queryFactory = make_unique<search::SearchQueryFactory>();
+    queryFactory->m_poiSearchFn = bind(&Framework::PoiSearch, this, _1);
+    queryFactory->m_coordinateCheckerFn = bind(&Framework::CheckIfCoordinateIsTripfingered, this, _1);
+    queryFactory->m_countryCheckerFn = bind(&Framework::GetCountryIndex, this, _1);
+
     m_searchEngine.reset(new search::Engine(const_cast<Index &>(m_model.GetIndex()),
                                             GetDefaultCategories(), *m_infoGetter,
-                                            make_unique<search::SearchQueryFactory>(), params));
+                                            move(queryFactory), params));
   }
   catch (RootException const & e)
   {
@@ -1792,15 +1796,14 @@ void Framework::ForEachFeatureAtPoint(TFeatureTypeFn && fn, m2::PointD const & m
 
 unique_ptr<FeatureType> Framework::GetFeatureAtPoint(m2::PointD const & mercator) const
 {
-//  ms::LatLon latlon = MercatorBounds::ToLatLon(mercator);
-//  if (m_coordinateCheckerFn(latlon)) {
-//    TripfingerMark mark = m_poiByCoordFetcherFn(latlon);
-//    int tfIdentifier = mark.identifier;
-//    FeatureID fid(MwmSet::MwmId(), tfIdentifier);
-//    unique_ptr<FeatureType> ft(new SelfBakedFeatureType(mark));
-//    ft->SetID(fid);
-//    return ft;
-//  }
+  ms::LatLon latlon = MercatorBounds::ToLatLon(mercator);
+  if (m_coordinateCheckerFn(latlon)) {
+    TripfingerMark mark = m_poiByCoordFetcherFn(latlon);
+    unique_ptr<FeatureType> ft = make_unique<SelfBakedFeatureType>(mark);
+    FeatureID fid(mark);
+    ft->SetID(fid);
+    return ft;
+  }
   unique_ptr<FeatureType> poi, line, area;
   uint32_t const coastlineType = classif().GetCoastType();
   ForEachFeatureAtPoint([&, coastlineType](FeatureType & ft)
@@ -1839,8 +1842,7 @@ unique_ptr<FeatureType> Framework::GetFeatureByID(FeatureID const & fid, bool pa
 
   // check for tripfinger prefix
   if (fid.IsTripfinger()) {
-    TripfingerMark mark = m_poiByIdFetcherFn(fid.m_index);
-    unique_ptr<FeatureType> ft(new SelfBakedFeatureType(mark));
+    unique_ptr<FeatureType> ft = make_unique<SelfBakedFeatureType>(*fid.tripfingerMark);
     return ft;
   } else {
     unique_ptr<FeatureType> feature(new FeatureType);
@@ -1919,8 +1921,12 @@ void Framework::SetMapSelectionListeners(TActivateMapSelectionFn const & activat
 }
 
 
-vector<TripfingerMark> Framework::GetTripfingerMarks(TripfingerMarkParams params) {
-return m_poiSupplierFn(params);
+vector<TripfingerMark> Framework::PoiSearch(string query) {
+  return m_poiSearchFn(query);
+}
+
+bool Framework::CheckIfCoordinateIsTripfingered(ms::LatLon const & coord) {
+  return m_coordinateCheckerFn(coord);
 }
 
 void Framework::ActivateMapSelection(bool needAnimation, df::SelectionShape::ESelectedObject selectionType,

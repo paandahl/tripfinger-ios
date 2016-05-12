@@ -192,33 +192,17 @@ class DatabaseService {
     return attraction
   }
   
-  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int) -> List<SimplePOI> {
+  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int) -> [Listing] {
     let realm = getRealm()
-    let attractions = realm.objects(Listing).filter("listing.latitude > \(bottomLeft.latitude) and listing.latitude < \(topRight.latitude) and listing.longitude > \(bottomLeft.longitude)  and listing.longitude < \(topRight.longitude)")
-    //and listing.item.category = \(category.rawValue)")
-//    let simplePois = realm.objects(SimplePOI).filter("latitude > \(bottomLeft.latitude) and latitude < \(topRight.latitude) and longitude > \(bottomLeft.longitude)  and longitude < \(topRight.longitude)")
-
-    let results = List<SimplePOI>()
-    for attraction in attractions {
-      let poi = SimplePOI(listing: attraction.listing)
-      results.append(poi)
-    }
-//    results.appendContentsOf(simplePois)
-    return results
+    let listings = realm.objects(Listing).filter("listing.latitude > \(bottomLeft.latitude) and listing.latitude < \(topRight.latitude) and listing.longitude > \(bottomLeft.longitude)  and listing.longitude < \(topRight.longitude)")
+    return Array(listings)
   }
   
-  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, category: Int) -> List<SimplePOI> {
+  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, category: Int) -> [Listing] {
     let realm = getRealm()
-    let attractions = realm.objects(Listing).filter("listing.latitude > \(bottomLeft.latitude) and listing.latitude < \(topRight.latitude) and listing.longitude > \(bottomLeft.longitude)  and listing.longitude < \(topRight.longitude) and listing.item.category = \(category)")
-
-    let results = List<SimplePOI>()
-    for attraction in attractions {
-      let poi = SimplePOI(listing: attraction.listing)
-      results.append(poi)
-    }
-    return results
-  }
-  
+    let listings = realm.objects(Listing).filter("listing.latitude > \(bottomLeft.latitude) and listing.latitude < \(topRight.latitude) and listing.longitude > \(bottomLeft.longitude)  and listing.longitude < \(topRight.longitude) and listing.item.category = \(category)")
+    return Array(listings)
+  }  
   
   class func search(query: String, callback: List<SimplePOI> -> ()) {
     dispatch_async(dispatch_get_main_queue()) {
@@ -231,13 +215,7 @@ class DatabaseService {
         let poi = SimplePOI(listing: listing)
         results.append(poi)
       }
-      
-      let pois = realm.objects(SimplePOI).filter("name contains[c] '\(query)'")
-      print("got \(pois.count) pois")
-      for poi in pois {
-        results.append(poi)
-      }
-
+    
       callback(results)
     }
   }

@@ -67,6 +67,13 @@ struct PreRankingInfo;
 class Query : public my::Cancellable
 {
 public:
+  using TPoiSearchFn = function<vector<TripfingerMark> (string const &)>;
+  using TCoordinateCheckerFn = function<bool (ms::LatLon const &)>;
+  using TCountryCheckerFn = function<string (m2::PointD const &)>;
+  TPoiSearchFn m_poiSearchFn;
+  TCoordinateCheckerFn m_coordinateCheckerFn;
+  TCountryCheckerFn m_countryCheckerFn;
+
   // Maximum result candidates count for each viewport/criteria.
   static size_t const kPreResultsCount = 200;
 
@@ -161,6 +168,9 @@ protected:
   void ClearCache(size_t ind);
 
   void AddPreResult1(MwmSet::MwmId const & mwmId, uint32_t featureId, double priority,
+                     v2::PreRankingInfo const & info, ViewportID viewportId = DEFAULT_V);
+
+  void AddPreResult1(FeatureID const & mwmId, double priority,
                      v2::PreRankingInfo const & info, ViewportID viewportId = DEFAULT_V);
 
   template <class T>

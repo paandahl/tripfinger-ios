@@ -87,9 +87,7 @@ void TileInfo::ReadFeatures(MapDataProvider const & model)
     for (int i = 0; i < size; i++) {
       TripfingerMark tripfingerMark = tripfingerMarks[i];
       SelfBakedFeatureType tripfingerFeature(tripfingerMark);
-//            tripfingerFeature.Make(tripfingerMark);
-      FeatureID fid(id, tripfingerMark.identifier);
-//            LOG(LINFO, ("MADE SELFBAKED TYPE with id", (uint32_t)tripfingerMark.identifier));
+      FeatureID fid(tripfingerMark);
       tripfingerFeature.SetID(fid);
       tripfingerFeature.ParseTypes();
       drawer.operator()(tripfingerFeature);
