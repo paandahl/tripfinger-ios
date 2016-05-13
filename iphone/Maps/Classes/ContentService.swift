@@ -169,7 +169,7 @@ class ContentService {
       }}, failure: failure)
   }
   
-  class func getListingWithId(attractionId: String, failure: () -> (), handler: Listing -> ()) {
+  class func getListingWithId(attractionId: String, failure: () -> (), withNotes: Bool = true, handler: Listing -> ()) {
     if let attraction = DatabaseService.getListingWithId(attractionId) {
       handler(attraction)
       return
@@ -179,11 +179,15 @@ class ContentService {
       
       let attraction = JsonParserService.parseListing(json)
       
-      dispatch_async(dispatch_get_main_queue()) {
-        if let notes = DatabaseService.getListingNotes(attraction.item().id) {
-          attraction.listing.notes = notes
+      if withNotes {
+        dispatch_async(dispatch_get_main_queue()) {
+          if let notes = DatabaseService.getListingNotes(attraction.item().id) {
+            attraction.listing.notes = notes
+          }
+          
+          handler(attraction)
         }
-        
+      } else {
         handler(attraction)
       }
     }, failure: failure)

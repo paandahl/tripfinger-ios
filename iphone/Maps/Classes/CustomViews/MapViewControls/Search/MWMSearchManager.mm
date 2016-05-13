@@ -15,6 +15,8 @@
 #include "storage/storage_helpers.hpp"
 
 #include "Framework.h"
+#import "SwiftBridge.h"
+#import "DataConverter.h"
 
 extern NSString * const kAlohalyticsTapEventKey;
 extern NSString * const kSearchStateWillChangeNotification = @"SearchStateWillChangeNotification";
@@ -182,22 +184,50 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
   self.state = MWMSearchManagerStateHidden;
 }
 
-- (void)processSearchWithResult:(search::Result const &)result query:(search::QuerySaver::TSearchRequest const &)query
+- (void)processSearchWithResult:(search::Result &)result query:(search::QuerySaver::TSearchRequest const &)query
 {
+  BOOL onlineFetchedTripfingerItem = result.GetFeatureID().IsTripfinger()
+      && !result.GetFeatureID().tripfingerMark->offline;
+  if (self.initedFromGuide && onlineFetchedTripfingerItem) {
+    
+    TripfingerEntity * entity = [DataConverter markToEntity:*result.GetFeatureID().tripfingerMark];
+    if (![TripfingerAppDelegate isListingOffline:entity.tripfingerId]) {
+      void(^fail)() = ^() {
+        NSLog(@"bbb");
+      };
+      void(^stop)() = ^() {
+        NSLog(@"ccc");
+      };
+      [TripfingerAppDelegate selectedSearchResult:entity failure:fail stopSpinner:stop];
+    }
+  } else {
+    if (onlineFetchedTripfingerItem) {
+      NSString * tripfingerId = @(result.GetFeatureID().tripfingerMark->tripfingerId.c_str());
+      if ([TripfingerAppDelegate isListingOffline:tripfingerId]) {
+        TripfingerEntity * fullEntity = [TripfingerAppDelegate getOfflineListingById:tripfingerId];
+        TripfingerMark mark = [DataConverter entityToMark:fullEntity];
+        result.GetMutableFeatureID().tripfingerMark = make_shared<TripfingerMark>(mark);
+      } else {
+        TripfingerEntity * fullEntity = [TripfingerAppDelegate getOnlineListingById:tripfingerId];
+        TripfingerMark mark = [DataConverter entityToMark:fullEntity];
+        result.GetMutableFeatureID().tripfingerMark = make_shared<TripfingerMark>(mark);
+      }
+    }
+    auto & f = GetFramework();
+    f.SaveSearchQuery(query);
+    MapsAppDelegate * a = MapsAppDelegate.theApp;
+    MWMRoutingPlaneMode const m = a.routingPlaneMode;
+    MWMRoutePoint const p = {result.GetFeatureCenter(), @(result.GetString().c_str())};
+    if (m == MWMRoutingPlaneModeSearchSource)
+      [self.delegate buildRouteFrom:p];
+    else if (m == MWMRoutingPlaneModeSearchDestination)
+      [self.delegate buildRouteTo:p];
+    else
+      f.ShowSearchResult(result);
+    if (!IPAD && a.routingPlaneMode != MWMRoutingPlaneModeNone)
+      a.routingPlaneMode = MWMRoutingPlaneModePlacePage;
+  }
   self.initedFromGuide = NO;
-  auto & f = GetFramework();
-  f.SaveSearchQuery(query);
-  MapsAppDelegate * a = MapsAppDelegate.theApp;
-  MWMRoutingPlaneMode const m = a.routingPlaneMode;
-  MWMRoutePoint const p = {result.GetFeatureCenter(), @(result.GetString().c_str())};
-  if (m == MWMRoutingPlaneModeSearchSource)
-    [self.delegate buildRouteFrom:p];
-  else if (m == MWMRoutingPlaneModeSearchDestination)
-     [self.delegate buildRouteTo:p];
-  else
-    f.ShowSearchResult(result);
-  if (!IPAD && a.routingPlaneMode != MWMRoutingPlaneModeNone)
-    a.routingPlaneMode = MWMRoutingPlaneModePlacePage;
   self.state = MWMSearchManagerStateHidden;
 }
 

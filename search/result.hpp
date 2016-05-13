@@ -72,6 +72,7 @@ public:
   /// Feature id in mwm.
   /// @precondition GetResultType() == RESULT_FEATURE
   FeatureID const & GetFeatureID() const;
+  FeatureID & GetMutableFeatureID();
 
   /// Center point of a feature.
   /// @precondition HasPoint() == true

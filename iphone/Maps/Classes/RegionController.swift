@@ -255,7 +255,7 @@ extension RegionController {
     guideItemExpanded = false
     let region = object as! Region
     
-    let regionController = constructRegionController()
+    let regionController = RegionController.constructRegionController(session)
     navigationController!.pushViewController(regionController, animated: true)
     
     session.changeRegion(region, failure: navigationFailure) {
@@ -275,65 +275,35 @@ extension RegionController {
       listingsController.updateUI()
     }
   }
-  
-  func selectedSearchResult(searchResult: SimplePOI, failure: () -> (), stopSpinner: () -> ()) {
-    let toRegion = { (handler: (UINavigationController, [UIViewController]) -> ()) in
-      stopSpinner()
-      self.dismissViewControllerAnimated(true) {
-
-        let nav = self.navigationController!
-        for viewController in nav.viewControllers {
-          if let regionController = viewController as? RegionController {
-            regionController.contextSwitched = true
-          }
-        }
-
-        nav.popToRootViewControllerAnimated(false)
-        let currentListing = self.session.currentRegion.listing
-        var viewControllers = [nav.viewControllers.first!]
-        if self.session.currentRegion.item().category > Region.Category.COUNTRY.rawValue {
-          viewControllers.append(self.constructRegionController(currentListing.country))
-        }
-        if self.session.currentRegion.item().category > Region.Category.SUB_REGION.rawValue {
-          if self.session.currentRegion.listing.subRegion != nil {
-            viewControllers.append(self.constructRegionController(currentListing.subRegion))
-          }
-        }
-        if self.session.currentRegion.item().category > Region.Category.CITY.rawValue {
-          viewControllers.append(self.constructRegionController(currentListing.city))
-        }
-        viewControllers.append(self.constructRegionController())
-
-        handler(nav, viewControllers)
-      }
-    }
-
-    if searchResult.isListing() {
-      ContentService.getListingWithId(searchResult.listingId, failure: failure) { listing in
-        self.session.loadRegionFromId(listing.item().parent, failure: failure ) {
-          toRegion { nav, viewControllers in
-            self.session.currentListing = listing
-            let entity = TripfingerEntity(listing: listing)
-            TripfingerAppDelegate.viewControllers = viewControllers
-            MapsAppDelegateWrapper.openPlacePage(entity)
-          }
-        }
-      }
-    } else {
-      session.loadRegionFromId(searchResult.listingId, failure: failure) {
-        toRegion { nav, viewControllers in
-          nav.setViewControllers(viewControllers, animated: true)
-        }
-      }
-    }
-  }
-  
-  private func constructRegionController(title: String? = nil) -> RegionController {
+    
+  class func constructRegionController(session: Session, title: String? = nil) -> RegionController {
     let regionController = RegionController(session: session)
     regionController.edgesForExtendedLayout = .None // offset from navigation bar
     regionController.navigationItem.title = title
     return regionController
   }
+    
+//  func selectedSearchResult(searchResult: SimplePOI, failure: () -> (), stopSpinner: () -> ()) {
+//    if searchResult.isListing() {
+//      ContentService.getListingWithId(searchResult.listingId, failure: failure) { listing in
+//        self.session.loadRegionFromId(listing.item().parent, failure: failure ) {
+//          self.moveToRegion(stopSpinner) { nav, viewControllers in
+//            self.session.currentListing = listing
+//            let entity = TripfingerEntity(listing: listing)
+//            TripfingerAppDelegate.viewControllers = viewControllers
+//            MapsAppDelegateWrapper.openPlacePage(entity)
+//          }
+//        }
+//      }
+//    } else {
+//      session.loadRegionFromId(searchResult.listingId, failure: failure) {
+//        self.moveToRegion(stopSpinner) { nav, viewControllers in
+//          nav.setViewControllers(viewControllers, animated: true)
+//        }
+//      }
+//    }
+//  }
+
   
   //extension RootController: SearchViewControllerDelegate {
   //  func selectedSearchResult(searchResult: SimplePOI) {

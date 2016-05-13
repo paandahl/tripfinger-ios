@@ -13,6 +13,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		2502337D1CD36896005F9943 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2502337C1CD36896005F9943 /* DetailController.swift */; };
 		2502337F1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2502337E1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm */; };
+		251B291B1CE5AFD100B454C3 /* DataConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 251B291A1CE5AFD100B454C3 /* DataConverter.mm */; };
 		2571ADED1CD882F000CF2EFF /* TripfingerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */; };
 		2571ADEF1CD8966100CF2EFF /* PlacePageInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */; };
 		2581DC0C1CACF8AB0086285E /* TripfingerAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */; };
@@ -939,6 +940,8 @@
 		2502337C1CD36896005F9943 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		2502337E1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMiPhoneFullscreenPlacePage.mm; sourceTree = "<group>"; };
 		250233801CD36C00005F9943 /* MWMiPhoneFullscreenPlacePage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMiPhoneFullscreenPlacePage.h; sourceTree = "<group>"; };
+		251B291A1CE5AFD100B454C3 /* DataConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DataConverter.mm; sourceTree = "<group>"; };
+		251B291C1CE5AFE700B454C3 /* DataConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConverter.h; sourceTree = "<group>"; };
 		2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerEntity.swift; sourceTree = "<group>"; };
 		2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacePageInfoCell.swift; sourceTree = "<group>"; };
 		2581DC071CACD8900086285E /* MAPS.ME-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAPS.ME-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -1896,8 +1899,7 @@
 				F626D52D1C3E6CAA00C17D15 /* MWMTableViewCell.mm */,
 				46F26CD610F623BA00ECCA39 /* EAGLView.h */,
 				46F26CD710F623BA00ECCA39 /* EAGLView.mm */,
-				2581DC0D1CAD29510086285E /* MapsAppDelegateWrapper.h */,
-				2581DC0E1CAD299C0086285E /* MapsAppDelegateWrapper.mm */,
+				251B29191CE5AFA100B454C3 /* Bridging code */,
 				1D3623240D0F684500981E51 /* MapsAppDelegate.h */,
 				1D3623250D0F684500981E51 /* MapsAppDelegate.mm */,
 				F613FA741AB330AF002394D4 /* MapViewController */,
@@ -1930,6 +1932,17 @@
 				2502337E1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm */,
 			);
 			name = iPhoneFullscreen;
+			sourceTree = "<group>";
+		};
+		251B29191CE5AFA100B454C3 /* Bridging code */ = {
+			isa = PBXGroup;
+			children = (
+				2581DC0D1CAD29510086285E /* MapsAppDelegateWrapper.h */,
+				2581DC0E1CAD299C0086285E /* MapsAppDelegateWrapper.mm */,
+				251B291C1CE5AFE700B454C3 /* DataConverter.h */,
+				251B291A1CE5AFD100B454C3 /* DataConverter.mm */,
+			);
+			name = "Bridging code";
 			sourceTree = "<group>";
 		};
 		2581DC0A1CACF8930086285E /* Tripfinger */ = {
@@ -4025,7 +4038,7 @@
 		};
 		FA3A60E715AD5BBD00F40D20 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -4033,7 +4046,7 @@
 			name = "Run Script";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
 			shellScript = ". run-script-for-target.sh";
 		};
@@ -4176,6 +4189,7 @@
 				2581DC551CAE31700086285E /* SimplePOI.swift in Sources */,
 				2581DC861CAE31CD0086285E /* String+AttributedString.swift in Sources */,
 				F6D409FA1B319BD70041730F /* ContextViews.mm in Sources */,
+				251B291B1CE5AFD100B454C3 /* DataConverter.mm in Sources */,
 				342CC5F11C2D7730005F3FE5 /* MWMAuthorizationLoginViewController.mm in Sources */,
 				347FD8851C60B2CE002FB65E /* MWMOpeningHoursTimeSelectorTableViewCell.mm in Sources */,
 				34EB84581C073DF70004689F /* MWMOpeningHoursEditorViewController.mm in Sources */,

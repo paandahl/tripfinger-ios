@@ -2,6 +2,7 @@
 #import "MapsAppDelegate.h"
 #import "MapViewController.h"
 #import "MWMMapViewControlsManager.h"
+#import "DataConverter.h"
 
 #include "Framework.h"
 #include "geometry/mercator.hpp"
@@ -38,7 +39,7 @@
 }
 
 + (void)selectListing:(TripfingerEntity *)entity {
-  TripfingerMark mark = [MapViewController entityToMark:entity];
+  TripfingerMark mark = [DataConverter entityToMark:entity];
   FeatureID fid(mark);
   search::Result::Metadata metadata;
   m2::PointD centre(entity.lat, entity.lon);
@@ -57,7 +58,7 @@
 + (void)deleteBookmark:(TripfingerEntity *)entity {
   Framework & f = GetFramework();
   
-  TripfingerMark mark = [MapViewController entityToMark:entity];
+  TripfingerMark mark = [DataConverter entityToMark:entity];
   BookmarkAndCategory bookmarkAndCat = f.FindBookmark(&mark);
   BookmarkCategory* bookmarkCat = f.GetBookmarkManager().GetBmCategory(bookmarkAndCat.first);
   BookmarkCategory::Guard guard(*bookmarkCat);

@@ -11,6 +11,7 @@ import Foundation
   var name: String!
   
   var type: Int32 = 0
+  var tripfingerId = ""
   
   var phone = ""
   var address = ""
@@ -37,6 +38,7 @@ import Foundation
     super.init()
     self.offline = false
     self.name = poi.name
+    self.tripfingerId = poi.listingId
     self.lat = poi.latitude
     self.lon = poi.longitude
     self.type = Int32(Listing.SubCategory(rawValue: poi.subCategory)!.osmType)
@@ -45,6 +47,7 @@ import Foundation
   init(listing: Listing) {
     self.offline = listing.item().offline
     self.name = listing.item().name
+    self.tripfingerId = listing.item().id
     self.lat = listing.listing.latitude
     self.lon = listing.listing.longitude
     self.type = Int32(Listing.SubCategory(rawValue: listing.item().subCategory)!.osmType)

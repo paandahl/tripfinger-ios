@@ -123,16 +123,28 @@ class MyNavigationController: UINavigationController {
     return entities
   }
 
-  public class func getListingById(listingId: String) -> TripfingerEntity {
+  public class func getOfflineListingById(listingId: String) -> TripfingerEntity {
+    let listing = DatabaseService.getListingWithId(listingId)!
+    session.currentListing = listing
+    return TripfingerEntity(listing: listing)
+  }
+
+  public class func getOnlineListingById(listingId: String) -> TripfingerEntity {
     let semaphore = dispatch_semaphore_create(0)
     var retListing: Listing! = nil
-    ContentService.getListingWithId(listingId, failure: {fatalError("connection issue while fetching listing")}) { listing in
+    ContentService.getListingWithId(listingId, failure: {fatalError("connection issue while fetching listing")}, withNotes: false) { listing in
       retListing = listing
+      dispatch_semaphore_signal(semaphore)
     }
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
     session.currentListing = retListing
     return TripfingerEntity(listing: retListing)
   }
+  
+  public class func isListingOffline(listingId: String) -> Bool {
+    return DatabaseService.getListingWithId(listingId) != nil
+  }
+
   
   public class func getListingByCoordinate(coord: CLLocationCoordinate2D) -> TripfingerEntity {
     let listing = DatabaseService.getListingByCoordinate(coord)
@@ -176,7 +188,6 @@ class MyNavigationController: UINavigationController {
   static var viewControllers = [UIViewController]()
     
   public class func displayPlacePage(views: [UIView]) {
-    let searchDelegate = TripfingerAppDelegate.navigationController.viewControllers[0] as! RegionController
     let detailController = DetailController(session: session, placePageViews: views)
     if viewControllers.count > 0 {
       let newViewControllers = TripfingerAppDelegate.viewControllers + [detailController]
@@ -202,9 +213,48 @@ class MyNavigationController: UINavigationController {
     DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, listing: session.currentListing)
   }
   
-//  public class func getImageViewCell() -> UIView {
-//    
-//  }
+  class func moveToRegion(stopSpinner: () -> (), handler: (UINavigationController, [UIViewController]) -> ()) {
+    let session = TripfingerAppDelegate.session
+    stopSpinner()
+    
+    let nav = TripfingerAppDelegate.navigationController
+    for viewController in nav.viewControllers {
+      if let regionController = viewController as? RegionController {
+        regionController.contextSwitched = true
+      }
+    }
+    
+    nav.popToRootViewControllerAnimated(false)
+    let currentListing = session.currentRegion.listing
+    var viewControllers = [nav.viewControllers.first!]
+    if session.currentRegion.item().category > Region.Category.COUNTRY.rawValue {
+      viewControllers.append(RegionController.constructRegionController(session, title: currentListing.country))
+    }
+    if session.currentRegion.item().category > Region.Category.SUB_REGION.rawValue {
+      if session.currentRegion.listing.subRegion != nil {
+        viewControllers.append(RegionController.constructRegionController(session, title: currentListing.subRegion))
+      }
+    }
+    if TripfingerAppDelegate.session.currentRegion.item().category > Region.Category.CITY.rawValue {
+      viewControllers.append(RegionController.constructRegionController(session, title: currentListing.city))
+    }
+    viewControllers.append(RegionController.constructRegionController(session))
+    
+    handler(nav, viewControllers)
+  }
+  
+  class func selectedSearchResult(searchResult: TripfingerEntity, failure: () -> (), stopSpinner: () -> ()) {
+    ContentService.getListingWithId(searchResult.tripfingerId, failure: failure) { listing in
+      TripfingerAppDelegate.session.loadRegionFromId(listing.item().parent, failure: failure ) {
+        TripfingerAppDelegate.moveToRegion(stopSpinner) { nav, viewControllers in
+          TripfingerAppDelegate.session.currentListing = listing
+          let entity = TripfingerEntity(listing: listing)
+          TripfingerAppDelegate.viewControllers = viewControllers
+          MapsAppDelegateWrapper.openPlacePage(entity)
+        }
+      }
+    }
+  }
 
   enum AppMode {
     case TEST

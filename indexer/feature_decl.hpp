@@ -35,6 +35,7 @@ public:
   string name;
 
   uint32_t type;
+  string tripfingerId;
 
   string phone;
   string address;

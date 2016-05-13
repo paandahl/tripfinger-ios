@@ -251,7 +251,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
   }
   else
   {
-    search::Result const & result = [self searchResultForIndexPath:indexPath];
+    search::Result & result = [self searchResultForIndexPath:indexPath];
     if (cellType == MWMSearchTableCellTypeSuggestion)
     {
       NSString * suggestionString = @(result.GetSuggestionString());

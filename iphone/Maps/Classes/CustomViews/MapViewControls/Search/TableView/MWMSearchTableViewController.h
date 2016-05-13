@@ -16,7 +16,7 @@ namespace search
 
 @property (nonatomic) MWMSearchManagerState state;
 
-- (void)processSearchWithResult:(search::Result const &)result
+- (void)processSearchWithResult:(search::Result &)result
                           query:(search::QuerySaver::TSearchRequest const &)query;
 
 @end

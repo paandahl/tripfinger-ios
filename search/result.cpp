@@ -71,6 +71,11 @@ FeatureID const & Result::GetFeatureID() const
   return m_id;
 }
 
+FeatureID & Result::GetMutableFeatureID()
+{
+  return m_id;
+}
+
 m2::PointD Result::GetFeatureCenter() const
 {
   ASSERT(HasPoint(), ());

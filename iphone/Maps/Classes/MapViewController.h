@@ -43,8 +43,6 @@ namespace search { struct AddressInfo; }
 - (void)refreshAd;
 
 - (void)initialize;
-+ (TripfingerMark)entityToMark:(TripfingerEntity*)entity;
-
 
 @property (nonatomic) MTRGNativeAppwallAd * appWallAd;
 @property (nonatomic, readonly) BOOL isAppWallAdActive;

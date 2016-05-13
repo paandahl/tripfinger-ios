@@ -113,6 +113,7 @@ SWIFT_CLASS("_TtC10Tripfinger16TripfingerEntity")
 @property (nonatomic) double lon;
 @property (nonatomic) int32_t identifier;
 @property (nonatomic) int32_t type;
+@property (nonatomic, copy) NSString * __null_unspecified tripfingerId;
 @property (nonatomic, copy) NSString * __null_unspecified name;
 @property (nonatomic, copy) NSString * __null_unspecified phone;
 @property (nonatomic, copy) NSString * __null_unspecified address;
@@ -140,7 +141,9 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 - (UIWindow * __nonnull)applicationLaunched:(UIApplication * __nonnull)application delegate:(id <UIApplicationDelegate> __nonnull)delegate didFinishLaunchingWithOptions:(NSDictionary * __nullable)launchOptions;
 + (NSArray<TripfingerEntity *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight zoomLevel:(NSInteger)zoomLevel;
 + (NSArray<TripfingerEntity *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight category:(NSInteger)category;
-+ (TripfingerEntity * __nonnull)getListingById:(NSString * __nonnull)listingId;
++ (TripfingerEntity * __nonnull)getOnlineListingById:(NSString * __nonnull)listingId;
++ (TripfingerEntity * __nonnull)getOfflineListingById:(NSString * __nonnull)listingId;
++ (BOOL)isListingOffline:(NSString * __nonnull)listingId;
 + (TripfingerEntity * __nonnull)getListingByCoordinate:(CLLocationCoordinate2D)coord;
 + (NSArray<TripfingerEntity *> * __nonnull)poiSearch:(NSString * __nonnull)query;
 + (BOOL)coordinateExists:(CLLocationCoordinate2D)coord;
@@ -148,6 +151,7 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 + (void)displayPlacePage:(NSArray<UIView *> * __nonnull)views;
 + (void)bookmarkAdded;
 + (void)bookmarkRemoved;
++ (void)selectedSearchResult:(TripfingerEntity * __nonnull)searchResult failure:(void (^ __nonnull)(void))failure stopSpinner:(void (^ __nonnull)(void))stopSpinner;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
