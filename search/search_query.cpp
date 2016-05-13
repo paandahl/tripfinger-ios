@@ -590,10 +590,9 @@ class PreResult2Maker
                    string & country)
   {
     if (id.IsTripfinger()) {
-      unique_ptr<FeatureType> ft = make_unique<SelfBakedFeatureType>(*id.tripfingerMark);
-      ft->SetID(id);
+      f.SetID(id);
 
-      center = feature::GetCenter(*ft);
+      center = feature::GetCenter(f);
       name = id.tripfingerMark->name;
       country = m_query.m_countryCheckerFn(center);
 
@@ -749,7 +748,6 @@ void Query::MakePreResult2(v2::Geocoder::Params const & params, vector<T> & cont
     minstd_rand engine;
     shuffle(b, e, engine);
   }
-  LOG(LINFO, ("Before PreResults2, number: ", m_results.size()));
 
   theSet.insert(m_results.begin(), m_results.begin() + min(m_results.size(), kPreResultsCount));
 
@@ -763,7 +761,6 @@ void Query::MakePreResult2(v2::Geocoder::Params const & params, vector<T> & cont
 
   ClearResults();
 
-  LOG(LINFO, ("PreResults2, set: ", theSet.size()));
   // Makes PreResult2 vector.
   impl::PreResult2Maker maker(*this, params);
   for (auto const & r : theSet)

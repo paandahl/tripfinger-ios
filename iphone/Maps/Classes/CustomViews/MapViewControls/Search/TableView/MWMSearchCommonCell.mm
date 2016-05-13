@@ -43,6 +43,8 @@
     else
       [self clearInfo];
 
+    UILabel * closedLabel = [self.closedView viewWithTag:1234];
+    closedLabel.text = @"Closed";
     switch (result.IsOpenNow())
     {
       case osm::Unknown:
@@ -53,6 +55,10 @@
       case osm::No:
         self.closedView.hidden = NO;
         break;
+    }
+    if (result.GetFeatureID().IsTripfinger()) {
+      self.closedView.hidden = NO;
+      closedLabel.text = @"Guide";
     }
     if (result.HasPoint())
     {
