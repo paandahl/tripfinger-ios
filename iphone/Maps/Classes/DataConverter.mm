@@ -1,5 +1,6 @@
 #import "DataConverter.h"
 #include "geometry/mercator.hpp"
+#include "search/v2/search_model.hpp"
 
 @implementation DataConverter
 
@@ -9,6 +10,7 @@
   mark.mercator = MercatorBounds::FromLatLon(entity.lat, entity.lon);
   mark.name = [entity.name UTF8String];
   
+  mark.category = entity.category;
   mark.type = entity.type;
   mark.tripfingerId = [entity.tripfingerId UTF8String];
   
@@ -28,6 +30,11 @@
   mark.artist = [entity.artist UTF8String];
   mark.originalUrl = [entity.originalUrl UTF8String];
   
+  if (entity.category == 130) {
+    mark.searchType = search::v2::SearchModel::SearchType::SEARCH_TYPE_COUNTRY;
+  } else {
+    mark.searchType = search::v2::SearchModel::SearchType::SEARCH_TYPE_POI;
+  }
   mark.offline = entity.offline;
   mark.liked = entity.liked;
   
@@ -42,6 +49,7 @@
   entity.lon = latLon.lon;
   entity.name = [NSString stringWithUTF8String:mark.name.c_str()];
   
+  entity.category = mark.category;
   entity.type = mark.type;
   entity.tripfingerId = [NSString stringWithUTF8String:mark.tripfingerId.c_str()];
   

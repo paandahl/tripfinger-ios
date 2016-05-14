@@ -105,13 +105,13 @@ class MyNavigationController: UINavigationController {
     return entities;
   }
   
-  public class func poiSearch(query: String) -> [TripfingerEntity] {
+  public class func poiSearch(query: String, includeRegions: Bool) -> [TripfingerEntity] {
     let semaphore = dispatch_semaphore_create(0)
     let searchService = SearchService()
     var entities = [TripfingerEntity]()
     searchService.search(query) { results in
       for poi in results {
-        if let cat = Listing.Category(rawValue: poi.category) {
+        if includeRegions || Listing.Category(rawValue: poi.category) != nil {
           let entity = TripfingerEntity(poi: poi)
           entities.append(entity)
         }
@@ -242,15 +242,23 @@ class MyNavigationController: UINavigationController {
     
     handler(nav, viewControllers)
   }
-  
+
   class func selectedSearchResult(searchResult: TripfingerEntity, failure: () -> (), stopSpinner: () -> ()) {
-    ContentService.getListingWithId(searchResult.tripfingerId, failure: failure) { listing in
-      TripfingerAppDelegate.session.loadRegionFromId(listing.item().parent, failure: failure ) {
+    if searchResult.isListing() {
+      ContentService.getListingWithId(searchResult.tripfingerId, failure: failure) { listing in
+        TripfingerAppDelegate.session.loadRegionFromId(listing.item().parent, failure: failure ) {
+          TripfingerAppDelegate.moveToRegion(stopSpinner) { nav, viewControllers in
+            TripfingerAppDelegate.session.currentListing = listing
+            let entity = TripfingerEntity(listing: listing)
+            TripfingerAppDelegate.viewControllers = viewControllers
+            MapsAppDelegateWrapper.openPlacePage(entity)
+          }
+        }
+      }
+    } else {
+      session.loadRegionFromId(searchResult.tripfingerId, failure: failure) {
         TripfingerAppDelegate.moveToRegion(stopSpinner) { nav, viewControllers in
-          TripfingerAppDelegate.session.currentListing = listing
-          let entity = TripfingerEntity(listing: listing)
-          TripfingerAppDelegate.viewControllers = viewControllers
-          MapsAppDelegateWrapper.openPlacePage(entity)
+          nav.setViewControllers(viewControllers, animated: true)
         }
       }
     }

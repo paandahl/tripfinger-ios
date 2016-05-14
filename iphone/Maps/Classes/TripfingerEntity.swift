@@ -11,6 +11,7 @@ import Foundation
   var name: String!
   
   var type: Int32 = 0
+  var category: Int = 0
   var tripfingerId = ""
   
   var phone = ""
@@ -41,10 +42,16 @@ import Foundation
     self.tripfingerId = poi.listingId
     self.lat = poi.latitude
     self.lon = poi.longitude
-    self.type = Int32(Listing.SubCategory(rawValue: poi.subCategory)!.osmType)
+    self.category = poi.category
+    if poi.isListing() {
+      self.type = Int32(Listing.SubCategory(rawValue: poi.subCategory)!.osmType)
+    } else {
+      self.type = Int32(Region.Category(rawValue: poi.category)!.osmType)
+    }
   }
   
   init(listing: Listing) {
+    self.category = listing.item().category
     self.offline = listing.item().offline
     self.name = listing.item().name
     self.tripfingerId = listing.item().id
@@ -72,6 +79,20 @@ import Foundation
     if let notes = listing.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED  {
       self.liked = true
     }
+  }
+  
+  init(region: Region) {
+    self.category = region.item().category
+    self.offline = region.item().offline
+    self.name = region.item().name
+    self.tripfingerId = region.item().id
+    self.lat = region.listing.latitude
+    self.lon = region.listing.longitude
+    self.type = Int32(Region.Category(rawValue: region.item().category)!.osmType)
+  }
+  
+  func isListing() -> Bool {
+    return String(self.category).hasPrefix("2")
   }
 
   func getFileUrl() -> NSURL {

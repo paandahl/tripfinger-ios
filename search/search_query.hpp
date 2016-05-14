@@ -7,6 +7,7 @@
 #include "search/suggest.hpp"
 #include "search/v2/geocoder.hpp"
 #include "search/v2/rank_table_cache.hpp"
+#include "search/params.hpp"
 
 #include "indexer/ftypes_matcher.hpp"
 #include "indexer/index.hpp"
@@ -67,7 +68,7 @@ struct PreRankingInfo;
 class Query : public my::Cancellable
 {
 public:
-  using TPoiSearchFn = function<vector<TripfingerMark> (string const &)>;
+  using TPoiSearchFn = function<vector<TripfingerMark> (search::TripfingerSearchParams const &)>;
   using TCoordinateCheckerFn = function<bool (ms::LatLon const &)>;
   using TCountryCheckerFn = function<string (m2::PointD const &)>;
   TPoiSearchFn m_poiSearchFn;
@@ -85,7 +86,7 @@ public:
 
   inline void SupportOldFormat(bool b) { m_supportOldFormat = b; }
 
-  void Init(bool viewportSearch);
+  void Init(bool viewportSearch, bool includeTripfingerRegions);
 
   /// @param[in]  forceUpdate Pass true (default) to recache feature's ids even
   /// if viewport is a part of the old cached rect.
@@ -269,8 +270,11 @@ protected:
 
   using TQueueCompare = TCompare<impl::PreResult1>;
   using TQueue = my::limited_priority_queue<impl::PreResult1, TQueueCompare>;
+  set<string> m_tripfingerRegions;
+  bool m_includesTripfingerRegions = false;
 
-  /// @name Intermediate result queues sorted by different criterias.
+
+    /// @name Intermediate result queues sorted by different criterias.
   //@{
 public:
   enum

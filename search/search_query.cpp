@@ -381,13 +381,14 @@ void Query::ClearCache(size_t ind)
   m_viewport[ind].MakeEmpty();
 }
 
-void Query::Init(bool viewportSearch)
+void Query::Init(bool viewportSearch, bool includeTripfingerRegions)
 {
   Reset();
 
   m_tokens.clear();
   m_prefix.clear();
   m_viewportSearch = viewportSearch;
+  m_includesTripfingerRegions = includeTripfingerRegions;
 
   ClearResults();
 }
@@ -691,6 +692,9 @@ public:
 
     if (!res1.GetID().IsTripfinger() && m_query.m_coordinateCheckerFn(MercatorBounds::ToLatLon(center))) {
       return nullptr;
+    } else if (!res1.GetID().IsTripfinger() && res1.GetInfo().m_searchType > 3
+        && m_query.m_tripfingerRegions.find(name) != m_query.m_tripfingerRegions.end()) {
+      return nullptr;
     }
 
     auto res2 = make_unique<impl::PreResult2>(*ft, &res1, center, m_query.GetPosition() /* pivot */,
@@ -699,6 +703,11 @@ public:
     search::v2::RankingInfo info;
     InitRankingInfo(*ft, center, res1, info);
     info.m_rank = NormalizeRank(info.m_rank, info.m_searchType, center, country);
+    if (res1.GetID().IsTripfinger()) {
+      info.m_rank = 255;
+      info.m_nameScore = v2::NAME_SCORE_FULL_MATCH;
+      info.m_nameCoverage = 1000;
+    }
     res2->SetRankingInfo(move(info));
 
     return res2;

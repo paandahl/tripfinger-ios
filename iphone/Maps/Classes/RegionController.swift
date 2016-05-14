@@ -282,28 +282,6 @@ extension RegionController {
     regionController.navigationItem.title = title
     return regionController
   }
-    
-//  func selectedSearchResult(searchResult: SimplePOI, failure: () -> (), stopSpinner: () -> ()) {
-//    if searchResult.isListing() {
-//      ContentService.getListingWithId(searchResult.listingId, failure: failure) { listing in
-//        self.session.loadRegionFromId(listing.item().parent, failure: failure ) {
-//          self.moveToRegion(stopSpinner) { nav, viewControllers in
-//            self.session.currentListing = listing
-//            let entity = TripfingerEntity(listing: listing)
-//            TripfingerAppDelegate.viewControllers = viewControllers
-//            MapsAppDelegateWrapper.openPlacePage(entity)
-//          }
-//        }
-//      }
-//    } else {
-//      session.loadRegionFromId(searchResult.listingId, failure: failure) {
-//        self.moveToRegion(stopSpinner) { nav, viewControllers in
-//          nav.setViewControllers(viewControllers, animated: true)
-//        }
-//      }
-//    }
-//  }
-
   
   //extension RootController: SearchViewControllerDelegate {
   //  func selectedSearchResult(searchResult: SimplePOI) {

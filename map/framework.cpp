@@ -1921,8 +1921,8 @@ void Framework::SetMapSelectionListeners(TActivateMapSelectionFn const & activat
 }
 
 
-vector<TripfingerMark> Framework::PoiSearch(string query) {
-  return m_poiSearchFn(query);
+vector<TripfingerMark> Framework::PoiSearch(search::TripfingerSearchParams params) {
+  return m_poiSearchFn(params);
 }
 
 bool Framework::CheckIfCoordinateIsTripfingered(ms::LatLon const & coord) {

@@ -16,6 +16,11 @@ namespace search
   using TOnStarted = function<void()>;
   using TOnResults = function<void (Results const &)>;
 
+  struct TripfingerSearchParams {
+    string query;
+    bool includeRegions;
+  };
+
   class SearchParams
   {
   public:
@@ -56,6 +61,7 @@ namespace search
 
     string m_query;
     string m_inputLocale;
+    bool m_includeTripfingerRegions = false;
 
     double m_lat, m_lon;
 

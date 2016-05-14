@@ -44,6 +44,7 @@
 #include "platform/local_country_file_utils.hpp"
 #include "platform/platform.hpp"
 #include "platform/settings.hpp"
+#include "search/params.hpp"
 
 // If you have a "missing header error" here, then please run configure.sh script in the root repo folder.
 #import "../../../private.h"
@@ -248,13 +249,14 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 - (int)categoryChecker:(string)name
 {
   NSString* catName = [NSString stringWithCString:name.c_str() encoding:[NSString defaultCStringEncoding]];
-  return [TripfingerAppDelegate nameToCategoryId:catName ];
+  return [TripfingerAppDelegate nameToCategoryId:catName];
 }
 
-- (vector<TripfingerMark>)poiSearch:(string)query
+- (vector<TripfingerMark>)poiSearch:(search::TripfingerSearchParams)params
 {
-  NSString* queryString = [NSString stringWithUTF8String:query.c_str()];
-  NSArray* tfEntities = [TripfingerAppDelegate poiSearch:queryString];
+  NSString* queryString = [NSString stringWithUTF8String:params.query.c_str()];
+  BOOL includeRegions = params.includeRegions;
+  NSArray* tfEntities = [TripfingerAppDelegate poiSearch:queryString includeRegions:includeRegions];
   
   vector<TripfingerMark> tripfingerVector;
   for (id tfEntity in tfEntities) {
@@ -590,7 +592,7 @@ NSString * const kReportSegue = @"Map2ReportSegue";
   using PoiByCoordFetcherFnT = TripfingerMark (*)(id, SEL, ms::LatLon);
   using CoordinateCheckerFnT = bool (*)(id, SEL, ms::LatLon);
   using CategoryCheckerFnT = int (*)(id, SEL, string);
-  using PoiSearchFnT = vector<TripfingerMark> (*)(id, SEL, string);
+  using PoiSearchFnT = vector<TripfingerMark> (*)(id, SEL, search::TripfingerSearchParams);
   
   SEL poiSupplierSelector = @selector(poiSupplier:);
   PoiSupplierFnT poiSupplierFn = (PoiSupplierFnT)[self methodForSelector:poiSupplierSelector];

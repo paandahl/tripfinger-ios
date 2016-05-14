@@ -16,7 +16,7 @@ namespace search
 class SearchQueryFactory
 {
 public:
-  using TPoiSearchFn = function<vector<TripfingerMark> (string const &)>;
+  using TPoiSearchFn = function<vector<TripfingerMark> (search::TripfingerSearchParams const &)>;
   using TPoiByIdFetcherFn = function<TripfingerMark (uint32_t id)>;
   using TCoordinateCheckerFn = function<bool (ms::LatLon const &)>;
   using TCountryCheckerFn = function<string (m2::PointD const &)>;

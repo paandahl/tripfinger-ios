@@ -16,6 +16,8 @@ namespace search
 
 @property (nonatomic) MWMSearchManagerState state;
 
+@property (nonatomic) BOOL initedFromGuide;
+
 - (void)processSearchWithResult:(search::Result &)result
                           query:(search::QuerySaver::TSearchRequest const &)query;
 

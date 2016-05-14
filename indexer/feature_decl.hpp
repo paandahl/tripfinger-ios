@@ -5,6 +5,7 @@
 #include "std/cstdint.hpp"
 #include "std/string.hpp"
 #include "std/utility.hpp"
+#include "search/v2/search_model.hpp"
 
 namespace feature
 {
@@ -34,6 +35,7 @@ public:
   m2::PointD mercator;
   string name;
 
+  int category;
   uint32_t type;
   string tripfingerId;
 
@@ -53,6 +55,7 @@ public:
   string artist;
   string originalUrl;
 
+  search::v2::SearchModel::SearchType searchType;
   bool offline = false;
   bool liked = false;
 };

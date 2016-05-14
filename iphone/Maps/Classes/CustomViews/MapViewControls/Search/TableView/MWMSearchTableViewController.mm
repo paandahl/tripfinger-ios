@@ -332,6 +332,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
 
     if (!_searchOnMap)
     {
+      searchParams.m_includeTripfingerRegions = self.delegate.initedFromGuide;
       f.Search(searchParams);
     }
     else

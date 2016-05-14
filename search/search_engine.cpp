@@ -283,7 +283,7 @@ void Engine::DoSearch(SearchParams const & params, m2::RectD const & viewport,
   bool const viewportSearch = params.GetMode() == Mode::Viewport;
 
   // Initialize query processor.
-  processor.Init(viewportSearch);
+  processor.Init(viewportSearch, params.m_includeTripfingerRegions);
   handle->Attach(processor);
   MY_SCOPE_GUARD(detach, [&handle] { handle->Detach(); });
 

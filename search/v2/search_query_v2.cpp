@@ -8,6 +8,7 @@
 #include "geometry/rect2d.hpp"
 
 #include "base/macros.hpp"
+#include "params.hpp"
 
 namespace search
 {
@@ -50,7 +51,11 @@ void SearchQueryV2::Search(Results & res, size_t resCount)
   Geocoder::TResultList results;
   m_geocoder.GoEverywhere(results);
 
-  vector<TripfingerMark> tfMarks = m_poiSearchFn(m_query);
+  search::TripfingerSearchParams tfSearchParams;
+  tfSearchParams.query = m_query;
+  tfSearchParams.includeRegions = m_includesTripfingerRegions;
+  vector<TripfingerMark> tfMarks = m_poiSearchFn(tfSearchParams);
+
   for (const auto& tfMark : tfMarks) {
     Geocoder::TResult result;
     result.first = FeatureID(tfMark);
@@ -59,9 +64,12 @@ void SearchQueryV2::Search(Results & res, size_t resCount)
     rankingInfo.m_startToken = 0;
     rankingInfo.m_endToken = 1;
     rankingInfo.m_rank = 10;
-    rankingInfo.m_searchType = SearchModel::SearchType::SEARCH_TYPE_POI;
+    rankingInfo.m_searchType = tfMark.searchType;
     result.second = rankingInfo;
     results.push_back(result);
+    if (std::to_string(tfMark.category)[0] == '1') {
+      m_tripfingerRegions.insert(tfMark.name);
+    }
   }
 
   AddPreResults1(results);

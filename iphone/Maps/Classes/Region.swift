@@ -30,7 +30,17 @@ class Region: Object {
     case SUB_REGION = 150
     case CITY = 160
     case NEIGHBOURHOOD = 170
+    
+    var osmType: Int {
+      switch self {
+      case .COUNTRY:
+        return 4252 // country
+      default:
+        return 4124 // city
+      }
+    }
   }
+  
   
   override static func ignoredProperties() -> [String] {
     return ["offline", "mapCountry", "mapPackage"]

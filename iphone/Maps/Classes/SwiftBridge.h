@@ -113,6 +113,7 @@ SWIFT_CLASS("_TtC10Tripfinger16TripfingerEntity")
 @property (nonatomic) double lon;
 @property (nonatomic) int32_t identifier;
 @property (nonatomic) int32_t type;
+@property (nonatomic) NSInteger category;
 @property (nonatomic, copy) NSString * __null_unspecified tripfingerId;
 @property (nonatomic, copy) NSString * __null_unspecified name;
 @property (nonatomic, copy) NSString * __null_unspecified phone;
@@ -145,7 +146,7 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 + (TripfingerEntity * __nonnull)getOfflineListingById:(NSString * __nonnull)listingId;
 + (BOOL)isListingOffline:(NSString * __nonnull)listingId;
 + (TripfingerEntity * __nonnull)getListingByCoordinate:(CLLocationCoordinate2D)coord;
-+ (NSArray<TripfingerEntity *> * __nonnull)poiSearch:(NSString * __nonnull)query;
++ (NSArray<TripfingerEntity *> * __nonnull)poiSearch:(NSString * __nonnull)query includeRegions:(BOOL)includeRegions;
 + (BOOL)coordinateExists:(CLLocationCoordinate2D)coord;
 + (NSInteger)nameToCategoryId:(NSString * __nonnull)name;
 + (void)displayPlacePage:(NSArray<UIView *> * __nonnull)views;
