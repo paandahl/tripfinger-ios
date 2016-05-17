@@ -75,12 +75,11 @@ class RegionController: GuideItemController {
   }
   
   override func downloadClicked() {
-    let nav = UINavigationController()
-    let vc = DownloadController()
-    vc.country = session.currentCountry
-    vc.city = session.currentCity
-    nav.viewControllers = [vc]
-    view.window!.rootViewController!.presentViewController(nav, animated: true, completion: nil)
+    if let mwmRegionId = session.currentCountry.mwmRegionId {
+      MapsAppDelegateWrapper.openDownloads(mwmRegionId, navigationController: navigationController)
+    } else {
+      MapsAppDelegateWrapper.openDownloads(session.currentCountry.getName(), navigationController: navigationController)
+    }
   }
   
   func loadCountryLists() {

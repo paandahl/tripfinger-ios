@@ -75,4 +75,20 @@
   return entity;
 }
 
++ (storage::NodeAttrs)getNodeAttrs:(string)mwmRegionId
+{
+  storage::NodeAttrs nodeAttrs;
+  nodeAttrs.m_downloadingMwmCounter = 0;
+  NSString* realCountryId = [@(mwmRegionId.c_str()) substringFromIndex:5];
+  NSInteger downloadStatus = [TripfingerAppDelegate downloadStatus:realCountryId];
+  nodeAttrs.m_status = static_cast<storage::NodeStatus>(downloadStatus);
+  if (nodeAttrs.m_status == storage::NodeStatus::NotDownloaded) {
+    nodeAttrs.m_nodeLocalName = "Download guide";
+  } else {
+    nodeAttrs.m_nodeLocalName = "Guide content";
+  }
+  nodeAttrs.m_mwmSize = 0;
+  return nodeAttrs;
+}
+
 @end

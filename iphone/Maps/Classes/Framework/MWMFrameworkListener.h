@@ -14,5 +14,6 @@
 + (instancetype)alloc __attribute__((unavailable("call +listener instead")));
 + (instancetype)allocWithZone:(struct _NSZone *)zone __attribute__((unavailable("call +listener instead")));
 + (instancetype)new __attribute__((unavailable("call +listener instead")));
++ (void)updateDownloadProgress:(string)countryId progress:(TLocalAndRemoteSize)progress;
 
 @end

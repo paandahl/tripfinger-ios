@@ -12,10 +12,13 @@
 #import "MWMStorage.h"
 #import "Statistics.h"
 #import "UIColor+MapsMeColor.h"
+#import "DataConverter.h"
 
 #include "Framework.h"
+#import "SwiftBridge.h"
 
 #include "storage/index.hpp"
+#include <boost/algorithm/string/predicate.hpp>
 
 extern NSString * const kCountryCellIdentifier = @"MWMMapDownloaderTableViewCell";
 extern NSString * const kSubplaceCellIdentifier = @"MWMMapDownloaderSubplaceTableViewCell";
@@ -187,7 +190,15 @@ using namespace storage;
   auto const & s = GetFramework().Storage();
   NodeAttrs nodeAttrs;
   m_actionSheetId = [self.dataSource countryIdForIndexPath:indexPath].UTF8String;
-  s.GetNodeAttrs(m_actionSheetId, nodeAttrs);
+  if (boost::starts_with(m_actionSheetId, "guide")) {
+    nodeAttrs = [DataConverter getNodeAttrs:m_actionSheetId];
+    nodeAttrs.m_nodeLocalName = "Download guide";
+    CountryIdAndName parentInfo;
+    parentInfo.m_localName = "";
+    nodeAttrs.m_parentInfo.push_back(parentInfo);
+  } else {
+    s.GetNodeAttrs(m_actionSheetId, nodeAttrs);
+  }
   BOOL const needsUpdate = (nodeAttrs.m_status == NodeStatus::OnDiskOutOfDate);
   BOOL const isDownloaded = (needsUpdate || nodeAttrs.m_status == NodeStatus::OnDisk);
   NSString * title = @(nodeAttrs.m_nodeLocalName.c_str());
@@ -195,8 +206,13 @@ using namespace storage;
   NSString * message = (self.dataSource.isParentRoot || isMultiParent)
                            ? nil
                            : @(nodeAttrs.m_parentInfo[0].m_localName.c_str());
-  NSString * downloadActionTitle = [NSString
-      stringWithFormat:@"%@, %@", kDownloadActionTitle, formattedSize(nodeAttrs.m_mwmSize)];
+  NSString * downloadActionTitle;
+  if (boost::starts_with(m_actionSheetId, "guide")) {
+    downloadActionTitle = @"Download guide";
+  } else {
+    downloadActionTitle = [NSString
+       stringWithFormat:@"%@, %@", kDownloadActionTitle, formattedSize(nodeAttrs.m_mwmSize)];
+  }
   if (isIOS7)
   {
     UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:title
@@ -516,6 +532,22 @@ using namespace storage;
 
 - (void)downloadNode:(storage::TCountryId const &)countryId
 {
+  if (boost::starts_with(countryId, "guide")) {
+    NSString* realCountryId = @(countryId.substr(5).c_str());
+    void(^updateProgress)(NSString* countryId, double progress) = ^(NSString* countryId, double progress) {
+      TLocalAndRemoteSize prog;
+      prog.first = progress * 1000;
+      prog.second = 1000;
+      string countryIdCpp = [countryId UTF8String];
+      string fullId = "guide" + countryIdCpp;
+      [MWMFrameworkListener updateDownloadProgress:fullId progress:prog];
+    };
+
+    [TripfingerAppDelegate downloadCountry:realCountryId progressHandler:updateProgress];
+    [self configAllMapsView];
+    [self reloadData];
+    return;
+  }
   [Statistics logEvent:kStatDownloaderMapAction
         withParameters:@{
           kStatAction : kStatDownload,
@@ -576,6 +608,13 @@ using namespace storage;
 
 - (void)cancelNode:(storage::TCountryId const &)countryId
 {
+  if (boost::starts_with(countryId, "guide")) {
+    NSString* realCountryId = [@(countryId.c_str()) substringFromIndex:5];
+    [TripfingerAppDelegate cancelDownload:realCountryId];
+    [self configAllMapsView];
+    [self reloadData];
+    return;
+  }
   [Statistics logEvent:kStatDownloaderDownloadCancel withParameters:@{kStatFrom : kStatDownloader}];
   self.skipCountryEventProcessing = YES;
   [MWMStorage cancelDownloadNode:countryId];

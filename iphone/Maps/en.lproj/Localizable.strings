@@ -697,7 +697,7 @@
 "downloader_downloaded_subtitle" = "Downloaded";
 
 /* Downloaded maps category */
-"downloader_available_maps" = "Available";
+"downloader_available_maps" = "Available maps";
 
 /* Country queued for download */
 "downloader_queued" = "queued";

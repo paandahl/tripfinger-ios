@@ -92,7 +92,7 @@ Storage::Storage(string const & pathToCountriesFile /* = COUNTRIES_FILE */, stri
   : m_downloader(new HttpMapFilesDownloader()), m_currentSlotId(0), m_dataDir(dataDir),
     m_downloadMapOnTheMap(nullptr)
 {
-  SetLocale(languages::GetCurrentTwine());
+  SetLocale("en");
   LoadCountriesFile(pathToCountriesFile, m_dataDir);
 }
 

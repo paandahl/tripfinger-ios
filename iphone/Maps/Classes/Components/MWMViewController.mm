@@ -30,7 +30,7 @@
 - (void)viewDidLoad
 {
   [super viewDidLoad];
-  [self.navigationController.navigationBar setTranslucent:NO];
+//  [self.navigationController.navigationBar setTranslucent:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated

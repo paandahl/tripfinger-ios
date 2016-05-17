@@ -2,7 +2,9 @@
 #import "MapsAppDelegate.h"
 #import "MapViewController.h"
 #import "MWMMapViewControlsManager.h"
+#import "MWMBaseMapDownloaderViewController.h"
 #import "DataConverter.h"
+#import "MWMFrameworkListener.h"
 
 #include "Framework.h"
 #include "geometry/mercator.hpp"
@@ -27,6 +29,13 @@
 
 + (void)openMapSearchWithQuery:(NSString*)query {
   [[MapsAppDelegate theApp].mapViewController.controlsManager openMapSearchWithQuery:query];
+}
+
++ (void)openDownloads:(NSString*)countryId navigationController:(UINavigationController*)navigationController {
+  UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Mapsme" bundle: nil];
+  MWMBaseMapDownloaderViewController * vc = [storyboard instantiateViewControllerWithIdentifier:@"MWMBaseMapDownloaderViewController"];
+  vc.parentCountryId = countryId;
+  [navigationController pushViewController:vc animated:YES];
 }
 
 + (void)navigateToRect:(CLLocationCoordinate2D)botLeft topRight:(CLLocationCoordinate2D)topRight {

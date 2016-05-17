@@ -3,8 +3,10 @@
 #import "MWMMapDownloaderTableViewCell.h"
 #import "NSString+Categories.h"
 #import "UIFont+MapsMeFonts.h"
+#import "DataConverter.h"
 
 #include "Framework.h"
+#import "SwiftBridge.h"
 
 namespace
 {
@@ -78,7 +80,11 @@ namespace
                                     selectedAttrs:kSelectedTitleAttrs
                                   unselectedAttrs:kUnselectedTitleAttrs];
   BOOL const haveDownloadingCountries = nodeAttrs.m_downloadingMwmCounter != 0;
-  self.downloadSize.text = formattedSize(haveDownloadingCountries ? nodeAttrs.m_downloadingMwmSize : nodeAttrs.m_mwmSize);
+  if (nodeAttrs.m_mwmSize == 0) {
+    self.downloadSize.text = @"";
+  } else {
+    self.downloadSize.text = formattedSize(haveDownloadingCountries ? nodeAttrs.m_downloadingMwmSize : nodeAttrs.m_mwmSize);
+  }
 }
 
 - (void)configProgress:(const storage::NodeAttrs &)nodeAttrs
@@ -129,7 +135,11 @@ namespace
   if (countryId != m_countryId)
     return;
   storage::NodeAttrs nodeAttrs;
-  GetFramework().Storage().GetNodeAttrs(m_countryId, nodeAttrs);
+  if (boost::starts_with(countryId, "guide")) {
+    nodeAttrs = [DataConverter getNodeAttrs:countryId];
+  } else {
+    GetFramework().Storage().GetNodeAttrs(m_countryId, nodeAttrs);
+  }
   [self config:nodeAttrs];
 }
 
@@ -145,7 +155,11 @@ namespace
 - (void)progressButtonPressed:(nonnull MWMCircularProgress *)progress
 {
   storage::NodeAttrs nodeAttrs;
-  GetFramework().Storage().GetNodeAttrs(m_countryId, nodeAttrs);
+  if (boost::starts_with(m_countryId, "guide")) {
+    nodeAttrs = [DataConverter getNodeAttrs:m_countryId];
+  } else {
+    GetFramework().Storage().GetNodeAttrs(m_countryId, nodeAttrs);
+  }
   switch (nodeAttrs.m_status)
   {
     case NodeStatus::NotDownloaded:
@@ -177,7 +191,11 @@ namespace
   self.searchQuery = query;
   m_countryId = countryId.UTF8String;
   storage::NodeAttrs nodeAttrs;
-  GetFramework().Storage().GetNodeAttrs(m_countryId, nodeAttrs);
+  if ([countryId hasPrefix:@"guide"]) {
+    nodeAttrs = [DataConverter getNodeAttrs:[countryId UTF8String]];
+  } else {
+    GetFramework().Storage().GetNodeAttrs(m_countryId, nodeAttrs);
+  }
   [self config:nodeAttrs];
 }
 

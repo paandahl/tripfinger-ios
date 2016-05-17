@@ -31,6 +31,16 @@ extension NSURL {
     } catch _ {}
   }
   
+  class func moveFile(sourceDir: NSURL, destinationDir: NSURL) {
+    let fileManager = NSFileManager.defaultManager()    
+    do {
+      try fileManager.moveItemAtPath(sourceDir.path!, toPath: destinationDir.path!)
+    }
+    catch let error as NSError {
+      fatalError("Ooops! Something went wrong: \(error)")
+    }
+  }
+  
   class func appendToDirectory(baseDir: NSURL, pathElement: String) -> NSURL {
     let folderPath = baseDir.URLByAppendingPathComponent(pathElement)
     do {

@@ -99,11 +99,15 @@ class NetworkUtil {
 //  }
 
   
-  class func saveDataFromUrl(url: String, destinationPath: NSURL, dispatchGroup: dispatch_group_t? = nil, retryTimes: Int = 100, progressHandler: (Float -> ())? = nil) {
+  class func saveDataFromUrl(url: String, destinationPath: NSURL, var parameters: [String: String] = Dictionary<String, String>(), appendPass: Bool = true, dispatchGroup: dispatch_group_t? = nil, retryTimes: Int = 100, progressHandler: (Float -> ())? = nil, finishedHandler: (() -> ())? = nil) -> Request {
+    if appendPass {
+      parameters["pass"] = "plJR86!!"
+    }
+
     let nsUrl = NSURL(string: url)!
     
     NSURL.deleteFile(destinationPath)
-    let request = alamoFireManager.download(.GET, nsUrl) { temporaryUrl, response in
+    let request = alamoFireManager.download(.GET, nsUrl, parameters: parameters) { temporaryUrl, response in
       return destinationPath
     }
     
@@ -130,8 +134,13 @@ class NetworkUtil {
         
         if let error = error {
           if retryTimes > 0 && error.code < 400 {
-            print("Status code was \(error.code), retrying download of: \(url)")
-            saveDataFromUrl(url, destinationPath: destinationPath, dispatchGroup: dispatchGroup, retryTimes: retryTimes - 1)
+            if error.code == -999 {
+              print("Download was cancelled")
+            } else {
+              print("Error was: \(error)")
+              print("Status code was \(error.code), retrying download of: \(url)")
+              saveDataFromUrl(url, destinationPath: destinationPath, parameters: parameters, appendPass: appendPass, dispatchGroup: dispatchGroup, retryTimes: retryTimes - 1, progressHandler: progressHandler, finishedHandler: finishedHandler)
+            }
             if let dispatchGroup = dispatchGroup {
               dispatch_group_leave(dispatchGroup)
               print("dispatch_group_leave: \(url)")
@@ -147,7 +156,11 @@ class NetworkUtil {
             dispatch_group_leave(dispatchGroup)
             print("dispatch_group_leave: \(url)")
           }
+          if let finishedHandler = finishedHandler {
+            finishedHandler()
+          }
         }
     }
+    return request
   }
 }

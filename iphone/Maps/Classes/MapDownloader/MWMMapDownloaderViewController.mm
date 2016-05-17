@@ -39,6 +39,7 @@ using namespace storage;
 - (void)viewDidLoad
 {
   [super viewDidLoad];
+  self.automaticallyAdjustsScrollViewInsets = NO;
   self.searchBar.placeholder = L(@"downloader_search_field_hint");
   [self setupSearchParams];
 }

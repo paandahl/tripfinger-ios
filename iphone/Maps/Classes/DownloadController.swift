@@ -104,16 +104,16 @@ class DownloadController: UIViewController {
       let failure = {
         self.nameLabel.text = "Connection failed."
       }
-      DownloadService.downloadCountry(country.getName(), progressHandler: {
-        progress in
-
-        self.progressView.progress = progress
-        
-        }, failure: failure, finishedHandler: {
-          
-          self.nameLabel.text = "\(self.country.getName()) has finished downloading."
-          self.deleteButton.hidden = false
-      })
+//      DownloadService.downloadCountry(country.getName(), progressHandler: {
+//        progress in
+//
+////        self.progressView.progress = progress
+//        
+//        }, failure: failure, finishedHandler: {
+//          
+//          self.nameLabel.text = "\(self.country.getName()) has finished downloading."
+//          self.deleteButton.hidden = false
+//      })
     }
     else {
 //      nameLabel.text = "Downloading \(city.getName())."
@@ -149,4 +149,10 @@ class DownloadController: UIViewController {
     }
     downloadRegion()
   }
+}
+
+enum DownloadStatus {
+  case NOT_DOWNLOADED
+  case DOWNLOADING
+  case DOWNLOADED
 }

@@ -5,6 +5,7 @@ class Region: Object {
   
   // composition (instead of inheritance - for Realm-purposes)
   dynamic var listing: GuideListing!
+  dynamic var mwmRegionId: String!
   
   // radius
   var radius: Int?

@@ -51,7 +51,8 @@ class MyNavigationController: UINavigationController {
       let failure = {
         fatalError("Connection failed")
       }
-      DownloadService.downloadCountry("Brunei", progressHandler: { progress in }, failure: failure) {
+      let region = Region.constructRegion("Brunei")
+      DownloadService.downloadCountry(region, progressHandler: { progress in }, failure: failure) {
         print("Brunei download finished")
         regionController.loadCountryLists() // remove online countries from list
         regionController.tableView.accessibilityValue = "bruneiReady"
@@ -263,7 +264,37 @@ class MyNavigationController: UINavigationController {
       }
     }
   }
+  
+  class func isCountryDownloaded(countryName: String) -> Bool {
+    return DownloadService.isCountryDownloaded(countryName)
+  }
+  
+  // TODO: Add downloading-status
+  class func downloadStatus(mwmCountryId: String) -> Int {
+    if DownloadService.isCountryDownloaded(mwmCountryId) {
+      return 5;
+    } else if DownloadService.isCountryDownloading(mwmCountryId) {
+      return 1;
+    } else { // NotDownloaded
+      return 6;
+    }
+  }
 
+  class func downloadCountry(mwmCountryId: String, progressHandler: (String, Double) -> ()) {
+    print("Downloading country: \(mwmCountryId)")
+    DownloadService.downloadCountry(session.currentRegion, progressHandler: {prog in
+      progressHandler(mwmCountryId, prog)
+      }, failure: {}, finishedHandler: {})
+  }
+  
+  class func cancelDownload(mwmRegionId: String) {
+    DownloadService.cancelDownload(mwmRegionId)
+  }
+
+  class func deleteCountry(mwmCountryId: String) {
+    print("Deleting country: \(mwmCountryId)")
+  }
+  
   enum AppMode {
     case TEST
     case BETA

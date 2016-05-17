@@ -2,8 +2,10 @@
 #import "MWMMapDownloaderDefaultDataSource.h"
 #import "MWMStorage.h"
 #import "Statistics.h"
+#import "DataConverter.h"
 
 #include "Framework.h"
+#import "SwiftBridge.h"
 
 extern NSString * const kCountryCellIdentifier;
 extern NSString * const kSubplaceCellIdentifier;
@@ -66,7 +68,17 @@ using namespace storage;
   auto const & s = GetFramework().Storage();
   TCountriesVec downloadedChildren;
   TCountriesVec availableChildren;
+  NSLog(@"Getting children for parent: %@", @(m_parentId.c_str()));
   s.GetChildrenInGroups(m_parentId, downloadedChildren, availableChildren);
+  if (downloadedChildren.empty() && availableChildren.empty()) {
+    NodeAttrs nodeAttrs;
+    s.GetNodeAttrs(m_parentId, nodeAttrs);
+    if (nodeAttrs.m_status == NodeStatus::NotDownloaded) {
+      availableChildren.push_back(m_parentId);
+    } else {
+      downloadedChildren.push_back(m_parentId);
+    }
+  }
   [self configAvailableSections:availableChildren];
   [self configDownloadedSection:downloadedChildren];
 }
@@ -109,9 +121,19 @@ using namespace storage;
 
 - (void)configAvailableSections:(TCountriesVec const &)availableChildren
 {
-  NSMutableSet<NSString *> * indexSet = [NSMutableSet setWithCapacity:availableChildren.size()];
-  NSMutableDictionary<NSString *, NSMutableArray<NSString *> *> * availableCountries = [@{} mutableCopy];
   BOOL const isParentRoot = self.isParentRoot;
+  NSInteger indexSize = self.isParentRoot ? availableChildren.size() : availableChildren.size() + 1;
+  NSMutableSet<NSString *> * indexSet = [NSMutableSet setWithCapacity:indexSize];
+  NSMutableDictionary<NSString *, NSMutableArray<NSString *> *> * availableCountries = [@{} mutableCopy];
+  NSInteger downloadStatus = [TripfingerAppDelegate downloadStatus:@(m_parentId.c_str())];
+  NodeStatus nodeStatus = static_cast<NodeStatus>(downloadStatus);
+  if (!self.isParentRoot && nodeStatus == NodeStatus::NotDownloaded) {
+    NSString * guideIndex = @"Available guide";
+    [indexSet addObject:guideIndex];
+    NSMutableArray<NSString *> * guideArray = [@[] mutableCopy];
+    [guideArray addObject:[@"guide" stringByAppendingString:self.parentCountryId]];
+    availableCountries[guideIndex] = guideArray;
+  }
   auto const & s = GetFramework().Storage();
   for (auto const & countryId : availableChildren)
   {
@@ -138,7 +160,17 @@ using namespace storage;
   NSMutableArray<NSString *> * downloadedCountries = [@[] mutableCopy];
   for (auto const & countryId : downloadedChildren)
     [downloadedCountries addObject:@(countryId.c_str())];
-  self.downloadedCountries = [downloadedCountries sortedArrayUsingComparator:compareLocalNames];
+  NSInteger downloadStatus = [TripfingerAppDelegate downloadStatus:@(m_parentId.c_str())];
+  NodeStatus nodeStatus = static_cast<NodeStatus>(downloadStatus);
+  NSLog(@"Download status for guide: %ld", downloadStatus);
+  if (!self.isParentRoot && nodeStatus != NodeStatus::NotDownloaded) {
+    downloadedCountries = [NSMutableArray arrayWithArray:[downloadedCountries sortedArrayUsingComparator:compareLocalNames]];
+    NSLog(@"Adding guide to downloaded section");
+    [downloadedCountries insertObject:[@"guide" stringByAppendingString:self.parentCountryId] atIndex:0];
+    self.downloadedCountries = downloadedCountries;
+  } else {
+    self.downloadedCountries = [downloadedCountries sortedArrayUsingComparator:compareLocalNames];
+  }
 }
 
 #pragma mark - UITableViewDataSource
@@ -188,8 +220,14 @@ using namespace storage;
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
   NodeAttrs nodeAttrs;
-  GetFramework().Storage().GetNodeAttrs([self countryIdForIndexPath:indexPath].UTF8String, nodeAttrs);
-  NodeStatus const status = nodeAttrs.m_status;
+  string countryId = [self countryIdForIndexPath:indexPath].UTF8String;
+  NodeStatus status;
+  if (boost::starts_with(countryId, "guide")) {
+    nodeAttrs = [DataConverter getNodeAttrs:countryId];
+  } else {
+    GetFramework().Storage().GetNodeAttrs(countryId, nodeAttrs);
+  }
+  status = nodeAttrs.m_status;
   return (status == NodeStatus::OnDisk || status == NodeStatus::OnDiskOutOfDate || nodeAttrs.m_localMwmCounter != 0);
 }
 
@@ -218,9 +256,9 @@ using namespace storage;
   TCountriesVec children;
   s.GetChildren([self countryIdForIndexPath:indexPath].UTF8String, children);
   BOOL const haveChildren = !children.empty();
-  if (haveChildren)
-    return kLargeCountryCellIdentifier;
-  return self.isParentRoot ? kCountryCellIdentifier : kPlaceCellIdentifier;
+//  if (haveChildren)
+//    return kLargeCountryCellIdentifier;
+  return self.isParentRoot ? kLargeCountryCellIdentifier : kPlaceCellIdentifier;
 }
 
 #pragma mark - Properties

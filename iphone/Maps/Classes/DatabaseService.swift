@@ -114,7 +114,11 @@ class DatabaseService {
   class func getCountry(countryName: String) -> Region! {
     return getRealm().objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue) and listing.item.name = '\(countryName)'").first
   }
-  
+
+  class func getCountryWithMwmId(mwmRegionId: String) -> Region! {
+    return getRealm().objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue) and mwmRegionId = '\(mwmRegionId)'").first
+  }
+
   class func getSubRegionOrCity(countryName: String, itemName: String) -> Region! {
     return getRealm().objects(Region).filter("(listing.item.category = \(Region.Category.CITY.rawValue) or listing.item.category = \(Region.Category.SUB_REGION.rawValue)) and listing.country = '\(countryName)' and listing.item.name = '\(itemName)'").first
   }
@@ -265,7 +269,9 @@ class DatabaseService {
   
   class func deleteCountry(name: String) {
     let country = getCountry(name)
-    deleteRegion(country)
+    if let country = country {
+      deleteRegion(country)
+    }
   }
 
   class func getCitiesInCountry(country: String) -> Results<Region> {
@@ -289,5 +295,51 @@ class DatabaseService {
       coordinateSet.insert(TripfingerAppDelegate.coordinateToInt(CLLocationCoordinate2DMake(listing.listing.latitude, listing.listing.longitude)))
     }
     return coordinateSet
+  }
+  
+  class func addDownloadMarker(mwmRegionId: String) {
+    let realm = getRealm()
+    try! realm.write {
+      let marker = DownloadMarker()
+      marker.country = mwmRegionId
+      marker.timeAdded = NSDate().timeIntervalSince1970
+      realm.add(marker)
+    }
+  }
+  
+  class func removeDownloadMarker(mwmRegionId: String) {
+    let realm = getRealm()
+    let marker = realm.objects(DownloadMarker).filter("country = \"\(mwmRegionId)\"").first
+    try! realm.write {
+      if let marker = marker {
+        realm.delete(marker)        
+      }
+    }
+  }
+  
+  class func hasDownloadMarker(mwmRegionId: String) -> Bool {
+    let realm = getRealm()
+    let markers = realm.objects(DownloadMarker).filter("country = \"\(mwmRegionId)\"")
+    return markers.count > 0
+  }
+  
+  class func isDownloadMarkerCancelled(mwmRegionId: String) -> Bool {
+    let realm = getRealm()
+    let marker = realm.objects(DownloadMarker).filter("country = \"\(mwmRegionId)\"").first
+    if let marker = marker {
+      return marker.cancelled
+    } else {
+      return true
+    }
+  }
+  
+  class func setCancelledOnDownloadMarker(mwmRegionId: String) {
+    let realm = getRealm()
+    let marker = realm.objects(DownloadMarker).filter("country = \"\(mwmRegionId)\"").first
+    try! realm.write {
+      if let marker = marker {
+        marker.cancelled = true
+      }
+    }
   }
 }

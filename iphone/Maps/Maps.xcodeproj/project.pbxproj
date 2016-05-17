@@ -13,6 +13,7 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		2502337D1CD36896005F9943 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2502337C1CD36896005F9943 /* DetailController.swift */; };
 		2502337F1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2502337E1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm */; };
+		2510A3F91CE8E7AD00E3B654 /* DownloadMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510A3F81CE8E7AC00E3B654 /* DownloadMarker.swift */; };
 		251B291B1CE5AFD100B454C3 /* DataConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 251B291A1CE5AFD100B454C3 /* DataConverter.mm */; };
 		2571ADED1CD882F000CF2EFF /* TripfingerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */; };
 		2571ADEF1CD8966100CF2EFF /* PlacePageInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */; };
@@ -940,6 +941,7 @@
 		2502337C1CD36896005F9943 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		2502337E1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMiPhoneFullscreenPlacePage.mm; sourceTree = "<group>"; };
 		250233801CD36C00005F9943 /* MWMiPhoneFullscreenPlacePage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMiPhoneFullscreenPlacePage.h; sourceTree = "<group>"; };
+		2510A3F81CE8E7AC00E3B654 /* DownloadMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadMarker.swift; sourceTree = "<group>"; };
 		251B291A1CE5AFD100B454C3 /* DataConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DataConverter.mm; sourceTree = "<group>"; };
 		251B291C1CE5AFE700B454C3 /* DataConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConverter.h; sourceTree = "<group>"; };
 		2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerEntity.swift; sourceTree = "<group>"; };
@@ -2009,6 +2011,7 @@
 		2581DC431CAE31660086285E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2510A3F81CE8E7AC00E3B654 /* DownloadMarker.swift */,
 				2581DC441CAE31700086285E /* GuideItem.swift */,
 				2581DC451CAE31700086285E /* GuideItemImage.swift */,
 				2581DC461CAE31700086285E /* GuideListing.swift */,
@@ -4038,7 +4041,7 @@
 		};
 		FA3A60E715AD5BBD00F40D20 /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -4046,7 +4049,7 @@
 			name = "Run Script";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/bash;
 			shellScript = ". run-script-for-target.sh";
 		};
@@ -4250,6 +4253,7 @@
 				341F99E11C6B1165001C67B8 /* MWMMapDownloaderTableViewCell.mm in Sources */,
 				2581DC361CAE31490086285E /* LicenseController.swift in Sources */,
 				34BC72241B0DECAE0012A34B /* MWMMapViewControlsManager.mm in Sources */,
+				2510A3F91CE8E7AD00E3B654 /* DownloadMarker.swift in Sources */,
 				2581DC141CAE30E10086285E /* RegionController.swift in Sources */,
 				F6B2E61F1C3D5F31005562DF /* MWMNightModeController.mm in Sources */,
 				2581DC381CAE31490086285E /* SectionController.swift in Sources */,
