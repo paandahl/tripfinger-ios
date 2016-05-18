@@ -114,6 +114,7 @@ class DownloadService {
           dispatch_async(dispatch_get_main_queue()) {
             progressHandler(1.0)
           }
+          cleanupDownload(region, taskHandle: taskHandle, jsonPath: jsonPath)
           dispatch_async(dispatch_get_main_queue(), finishedHandler)
         }
     }
