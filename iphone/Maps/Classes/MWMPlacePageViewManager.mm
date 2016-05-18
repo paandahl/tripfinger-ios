@@ -83,8 +83,9 @@ extern NSString * const kBookmarksChangedNotification;
 
 - (void)showPlacePageWithEntity:(TripfingerEntity*)entity
 {
+  TripfingerEntity * freshEntity = [TripfingerAppDelegate getOfflineListingById:entity.tripfingerId];
   [[MapsAppDelegate theApp].locationManager start:self];
-  self.entity = [[MWMPlacePageEntity alloc] initWithEntity:entity];
+  self.entity = [[MWMPlacePageEntity alloc] initWithEntity:freshEntity];
   if (IPAD)
     [self setPlacePageForiPad];
   else
@@ -307,7 +308,9 @@ extern NSString * const kBookmarksChangedNotification;
                                                     object:nil
                                                   userInfo:nil];
   [self updateDistance];
-  [TripfingerAppDelegate bookmarkAdded];
+  if (self.entity.isTripfinger) {
+    [TripfingerAppDelegate bookmarkAdded:self.entity.tripfingerEntity.tripfingerId];
+  }  
 }
 
 - (void)removeBookmark
@@ -331,7 +334,9 @@ extern NSString * const kBookmarksChangedNotification;
                                                     object:nil
                                                   userInfo:nil];
   [self updateDistance];
-  [TripfingerAppDelegate bookmarkRemoved];
+  if (self.entity.isTripfinger) {
+    [TripfingerAppDelegate bookmarkRemoved:self.entity.tripfingerEntity.tripfingerId];
+  }
 }
 
 - (void)reloadBookmark

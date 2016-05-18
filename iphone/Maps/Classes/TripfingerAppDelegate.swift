@@ -206,12 +206,14 @@ class MyNavigationController: UINavigationController {
     TripfingerAppDelegate.navigationController.pushViewController(licenseController, animated: true)
   }
 
-  class func bookmarkAdded() {
-    DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, listing: session.currentListing)
+  class func bookmarkAdded(listingId: String) {
+    let listing = DatabaseService.getListingWithId(listingId)!
+    DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, listing: listing, addNativeMarks: false)
   }
   
-  class func bookmarkRemoved() {
-    DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, listing: session.currentListing)
+  class func bookmarkRemoved(listingId: String) {
+    let listing = DatabaseService.getListingWithId(listingId)!
+    DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, listing: listing, addNativeMarks: false)
   }
   
   class func moveToRegion(stopSpinner: () -> (), handler: (UINavigationController, [UIViewController]) -> ()) {

@@ -2,6 +2,7 @@
 #import "MWMPlacePageEntity.h"
 #import "MWMPlacePageViewManager.h"
 #import "MapViewController.h"
+#import "DataConverter.h"
 
 #include "Framework.h"
 
@@ -49,6 +50,7 @@ void initFieldsMap()
   MWMPlacePageCellTypeValueMap m_values;
   place_page::Info m_info;
   m2::PointD m_tripfingerMercator;
+  BookmarkAndCategory m_tripfingerBac;
 }
 
 - (instancetype)initWithInfo:(const place_page::Info &)info
@@ -92,6 +94,8 @@ void initFieldsMap()
     _isHTMLDescription = NO;
     
     m_tripfingerMercator = MercatorBounds::FromLatLon(self.tripfingerEntity.lat, self.tripfingerEntity.lon);
+    TripfingerMark mark = [DataConverter entityToMark:self.tripfingerEntity];
+    m_tripfingerBac = GetFramework().FindBookmark(&mark);
   }
   return self;
 }
@@ -283,12 +287,20 @@ void initFieldsMap()
 
 - (void)setBac:(BookmarkAndCategory)bac
 {
-  m_info.m_bac = bac;
+  if ([self isTripfinger]) {
+    m_tripfingerBac = bac;
+  } else {
+    m_info.m_bac = bac;
+  }
 }
 
 - (BookmarkAndCategory)bac
 {
-  return m_info.GetBookmarkAndCategory();
+  if ([self isTripfinger]) {
+    return m_tripfingerBac;
+  } else {
+    return m_info.GetBookmarkAndCategory();
+  }
 }
 
 - (NSString *)bookmarkCategory
