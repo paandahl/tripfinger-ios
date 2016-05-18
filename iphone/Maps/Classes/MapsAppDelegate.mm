@@ -601,7 +601,7 @@ using namespace osm_auth_ios;
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-  NSLog(@"applicationDidBecomeActive");
+  [TripfingerAppDelegate applicationDidBecomeActive:application];
 
   if (application.applicationState == UIApplicationStateBackground)
     return;

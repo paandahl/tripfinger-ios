@@ -140,6 +140,7 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 + (NSString * __nonnull)serverUrl;
 + (void)setServerUrl:(NSString * __nonnull)value;
 - (UIWindow * __nonnull)applicationLaunched:(UIApplication * __nonnull)application delegate:(id <UIApplicationDelegate> __nonnull)delegate didFinishLaunchingWithOptions:(NSDictionary * __nullable)launchOptions;
++ (void)applicationDidBecomeActive:(UIApplication * __nonnull)application;
 + (NSArray<TripfingerEntity *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight zoomLevel:(NSInteger)zoomLevel;
 + (NSArray<TripfingerEntity *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight category:(NSInteger)category;
 + (TripfingerEntity * __nonnull)getOnlineListingById:(NSString * __nonnull)listingId;
@@ -155,7 +156,7 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 + (void)selectedSearchResult:(TripfingerEntity * __nonnull)searchResult failure:(void (^ __nonnull)(void))failure stopSpinner:(void (^ __nonnull)(void))stopSpinner;
 + (BOOL)isCountryDownloaded:(NSString * __nonnull)countryName;
 + (NSInteger)downloadStatus:(NSString * __nonnull)mwmCountryId;
-+ (void)downloadCountry:(NSString * __nonnull)mwmCountryId progressHandler:(void (^ __nonnull)(NSString * __nonnull, double))progressHandler;
++ (void)downloadCountry:(NSString * __nonnull)mwmCountryId;
 + (void)cancelDownload:(NSString * __nonnull)mwmRegionId;
 + (void)deleteCountry:(NSString * __nonnull)mwmCountryId;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;

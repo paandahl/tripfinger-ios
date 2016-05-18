@@ -66,7 +66,12 @@ class MyNavigationController: UINavigationController {
     print("fetched coordinateSet: ")
     print(TripfingerAppDelegate.coordinateSet)
 
+    DownloadService.resumeDownloads()
+
     return window
+  }
+  
+  public class func applicationDidBecomeActive(application: UIApplication) {
   }
   
   public class func getPoisForArea(topLeft: CLLocationCoordinate2D, bottomRight: CLLocationCoordinate2D, zoomLevel: Int) -> [TripfingerEntity] {
@@ -281,9 +286,9 @@ class MyNavigationController: UINavigationController {
     }
   }
 
-  class func downloadCountry(mwmCountryId: String, progressHandler: (String, Double) -> ()) {
+  class func downloadCountry(mwmCountryId: String) {
     DownloadService.downloadCountry(mwmCountryId, progressHandler: {prog in
-      progressHandler(mwmCountryId, prog)
+      MapsAppDelegateWrapper.updateDownloadProgress(prog, forMwmRegion: mwmCountryId)
       }, failure: {}, finishedHandler: {})
   }
   

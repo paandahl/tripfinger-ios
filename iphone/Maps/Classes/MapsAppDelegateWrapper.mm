@@ -38,6 +38,15 @@
   [navigationController pushViewController:vc animated:YES];
 }
 
++ (void)updateDownloadProgress:(double)progress forMwmRegion:(NSString*)mwmRegionId {
+  TLocalAndRemoteSize prog;
+  prog.first = progress * 1000;
+  prog.second = 1000;
+  string countryIdCpp = [mwmRegionId UTF8String];
+  string fullId = "guide" + countryIdCpp;
+  [MWMFrameworkListener updateDownloadProgress:fullId progress:prog];
+}
+
 + (void)navigateToRect:(CLLocationCoordinate2D)botLeft topRight:(CLLocationCoordinate2D)topRight {
   
   m2::PointD mercBotLeft = MercatorBounds::FromLatLon(botLeft.latitude, botLeft.longitude);

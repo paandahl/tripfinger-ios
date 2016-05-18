@@ -75,11 +75,11 @@ class DatabaseService {
 
     print("Saving region")
     SyncManager.run_async_throws {
-      print("Saving region2")
       let realm = getRealm()
       let existing = getRegionWithId(region.getId(), writeRealm: realm)
-      if existing != nil {
-        throw Error.RuntimeError("Reagion with id \(region.getId()) already exists in db.")
+      if let existing = existing {
+        deleteRegion(existing)
+        throw Error.RuntimeError("Replacing region: \(region.getId()) in db.")
       }
       
       // Add to the Realm inside a transaction
@@ -303,6 +303,9 @@ class DatabaseService {
   }
   
   class func addDownloadMarker(mwmRegionId: String) {
+    if hasDownloadMarker(mwmRegionId) {
+      return
+    }
     let realm = getRealm()
     try! realm.write {
       let marker = DownloadMarker()
@@ -346,5 +349,10 @@ class DatabaseService {
         marker.cancelled = true
       }
     }
+  }
+  
+  class func getCountriesWithDownloadMarkers() -> Results<DownloadMarker> {
+    let realm = getRealm()
+    return realm.objects(DownloadMarker)
   }
 }

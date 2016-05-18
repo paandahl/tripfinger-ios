@@ -43,13 +43,28 @@ class DownloadService {
       path.URLByAppendingPathComponent(cityName)
     }
     NSURL.deleteFolder(path)
-    
+  }
+  
+  class func resumeDownloads() {
+    let countriesToResume = DatabaseService.getCountriesWithDownloadMarkers()
+    for countryToResume in countriesToResume {
+      downloadCountry(countryToResume.country, progressHandler: { progress in
+        MapsAppDelegateWrapper.updateDownloadProgress(progress, forMwmRegion: countryToResume.country)
+        }, failure: {}, finishedHandler: {})
+    }
   }
   
   class func downloadCountry(mwmRegionId: String, progressHandler: Double -> (), failure: () -> (), finishedHandler: () -> ()) {
     
     DatabaseService.addDownloadMarker(mwmRegionId)
-    UIApplication.sharedApplication().idleTimerDisabled = true
+    let application = UIApplication.sharedApplication()
+    application.idleTimerDisabled = true
+    var taskHandle = UIBackgroundTaskInvalid
+    taskHandle = application.beginBackgroundTaskWithExpirationHandler {
+      print("expiration handler called")
+      application.endBackgroundTask(taskHandle)
+      taskHandle = UIBackgroundTaskInvalid
+    }
 
     ContentService.getCountryWithName(mwmRegionId, failure: {}) { region in
       let countryPath = NSURL.createDirectory(.LibraryDirectory, withPath: region.getName())
@@ -59,44 +74,56 @@ class DownloadService {
         parameters["onlyPublished"] = "false"
       }
       let jsonPath = countryPath.URLByAppendingPathComponent(region.getName() + ".json")
-      NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, parameters: parameters) {
-        let jsonData = NSData(contentsOfURL: jsonPath)!
-        let json = JSON(data: jsonData)
-        let region = JsonParserService.parseRegionTreeFromJson(json)
-        let imageList = fetchImageList(region, path: countryPath)
-        var counter = 0.0
-        splitImageListAndDownload(imageList, progressHandler: { requests in
-          counter += 1
-          dispatch_async(dispatch_get_main_queue()) {
-            if DatabaseService.isDownloadMarkerCancelled(region.mwmRegionId ?? region.getName()) {
-              for request in requests {
-                request.cancel()
-              }
-              deleteCountry(region.getName())
-              DatabaseService.removeDownloadMarker(region.mwmRegionId ?? region.getName())
-              UIApplication.sharedApplication().idleTimerDisabled = false
-              return
-            }
-            let progress = Double(counter / Double(imageList.count))
-            progressHandler(progress)
-          }
-          }) {
-            if DatabaseService.isDownloadMarkerCancelled(region.mwmRegionId ?? region.getName()) {
-              return
-            }
-            print("Finished image downloads")
-            try! DatabaseService.saveRegion(region) { _ in
-              print("Persisted region to database")
-              dispatch_async(dispatch_get_main_queue()) {
-                progressHandler(1.0)
-              }
-              DatabaseService.removeDownloadMarker(region.mwmRegionId ?? region.getName())
-              UIApplication.sharedApplication().idleTimerDisabled = false
-              dispatch_async(dispatch_get_main_queue(), finishedHandler)
-            }
+      if NSURL.fileExists(jsonPath) {
+        processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, finishedHandler: finishedHandler)
+      } else {
+        NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, parameters: parameters) {
+          processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, finishedHandler: finishedHandler)
         }
       }
     }
+  }
+  
+  private class func processDownload(jsonPath: NSURL, countryPath: NSURL, taskHandle: UIBackgroundTaskIdentifier, progressHandler: Double -> (), finishedHandler: () -> ()) {
+    let jsonData = NSData(contentsOfURL: jsonPath)!
+    let json = JSON(data: jsonData)
+    let region = JsonParserService.parseRegionTreeFromJson(json)
+    let imageList = fetchImageList(region, path: countryPath)
+    var counter = 0.0
+    splitImageListAndDownload(imageList, progressHandler: { requests in
+      counter += 1
+      dispatch_async(dispatch_get_main_queue()) {
+        if DatabaseService.isDownloadMarkerCancelled(region.mwmRegionId ?? region.getName()) {
+          for request in requests {
+            request.cancel()
+          }
+          deleteCountry(region.getName())
+          cleanupDownload(region, taskHandle: taskHandle, jsonPath: jsonPath)
+          return
+        }
+        let progress = Double(counter / Double(imageList.count))
+        progressHandler(progress)
+      }
+      }) {
+        if DatabaseService.isDownloadMarkerCancelled(region.mwmRegionId ?? region.getName()) {
+          return
+        }
+        print("Finished image downloads")
+        try! DatabaseService.saveRegion(region) { _ in
+          print("Persisted region to database")
+          dispatch_async(dispatch_get_main_queue()) {
+            progressHandler(1.0)
+          }
+          dispatch_async(dispatch_get_main_queue(), finishedHandler)
+        }
+    }
+  }
+  
+  private class func cleanupDownload(region: Region, taskHandle: UIBackgroundTaskIdentifier, jsonPath: NSURL) {
+    DatabaseService.removeDownloadMarker(region.mwmRegionId ?? region.getName())
+    UIApplication.sharedApplication().idleTimerDisabled = false
+    UIApplication.sharedApplication().endBackgroundTask(taskHandle)
+    NSURL.deleteFile(jsonPath)
   }
   
   class func splitImageListAndDownload(imageList: [(String, NSURL)], progressHandler: ([Request]) -> (), finishedHandler: () -> ()) {
@@ -104,6 +131,7 @@ class DownloadService {
     let dispatchGroup = dispatch_group_create()
     for (url, destinationPath) in imageList {
       if NSURL.fileExists(destinationPath) {
+        progressHandler(requestList)
         continue
       }
       let imageUrl = gcsImagesUrl + url
@@ -113,9 +141,6 @@ class DownloadService {
       requestList.append(request)
     }
     dispatch_group_notify(dispatchGroup, dispatch_get_main_queue(), finishedHandler)
-  }
-  
-  class func resumeDownloadsIfNecessary() {
   }
   
   class func fetchImageList(region: Region, path: NSURL) -> [(String, NSURL)] {

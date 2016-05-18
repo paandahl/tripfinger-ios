@@ -13,6 +13,7 @@
 #import "Statistics.h"
 #import "UIColor+MapsMeColor.h"
 #import "DataConverter.h"
+#import "MapsAppDelegateWrapper.h"
 
 #include "Framework.h"
 #import "SwiftBridge.h"
@@ -540,16 +541,7 @@ using namespace storage;
 {
   if (boost::starts_with(countryId, "guide")) {
     NSString* realCountryId = @(countryId.substr(5).c_str());
-    void(^updateProgress)(NSString* countryId, double progress) = ^(NSString* countryId, double progress) {
-      TLocalAndRemoteSize prog;
-      prog.first = progress * 1000;
-      prog.second = 1000;
-      string countryIdCpp = [countryId UTF8String];
-      string fullId = "guide" + countryIdCpp;
-      [MWMFrameworkListener updateDownloadProgress:fullId progress:prog];
-    };
-
-    [TripfingerAppDelegate downloadCountry:realCountryId progressHandler:updateProgress];
+    [TripfingerAppDelegate downloadCountry:realCountryId];
     [self configAllMapsView];
     [self reloadData];
     return;
