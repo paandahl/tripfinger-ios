@@ -105,7 +105,11 @@ struct FeatureID
 
   inline bool operator==(FeatureID const & r) const
   {
-    return (m_mwmId == r.m_mwmId && m_index == r.m_index && m_index != 0);
+    if (IsTripfinger() && r.IsTripfinger()) {
+      return tripfingerMark->name == r.tripfingerMark->name;
+    } else {
+      return (m_mwmId == r.m_mwmId && m_index == r.m_index);
+    }
   }
 
   inline bool operator!=(FeatureID const & r) const { return !(*this == r); }
