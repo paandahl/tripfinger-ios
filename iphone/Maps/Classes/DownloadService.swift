@@ -24,10 +24,6 @@ class DownloadService {
     return DatabaseService.getCountry(countryName) != nil
   }
 
-  class func isCountryDownloadedWithMwmId(mwmRegionId: String) -> Bool {
-    return DatabaseService.getCountryWithMwmId(mwmRegionId) != nil
-  }
-
   class func isCountryDownloading(mwmRegionId: String) -> Bool {
     return DatabaseService.hasDownloadMarker(mwmRegionId) && !DatabaseService.isDownloadMarkerCancelled(mwmRegionId)
   }
@@ -50,53 +46,55 @@ class DownloadService {
     
   }
   
-  class func downloadCountry(region: Region, progressHandler: Double -> (), failure: () -> (), finishedHandler: () -> ()) {
+  class func downloadCountry(mwmRegionId: String, progressHandler: Double -> (), failure: () -> (), finishedHandler: () -> ()) {
     
-    DatabaseService.addDownloadMarker(region.mwmRegionId ?? region.getName())
+    DatabaseService.addDownloadMarker(mwmRegionId)
     UIApplication.sharedApplication().idleTimerDisabled = true
 
-    let countryPath = NSURL.createDirectory(.LibraryDirectory, withPath: region.getName())
-    let url = TripfingerAppDelegate.serverUrl + "/download_country/\(region.getName())"
-    var parameters = [String: String]()
-    if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.RELEASE {
-      parameters["onlyPublished"] = "false"
-    }
-    let jsonPath = countryPath.URLByAppendingPathComponent(region.getName() + ".json")
-    NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, parameters: parameters) {
-      let jsonData = NSData(contentsOfURL: jsonPath)!
-      let json = JSON(data: jsonData)
-      let region = JsonParserService.parseRegionTreeFromJson(json)
-      let imageList = fetchImageList(region, path: countryPath)
-      var counter = 0.0
-      splitImageListAndDownload(imageList, progressHandler: { requests in
-        counter += 1
-        dispatch_async(dispatch_get_main_queue()) {
-          if DatabaseService.isDownloadMarkerCancelled(region.mwmRegionId ?? region.getName()) {
-            for request in requests {
-              request.cancel()
+    ContentService.getCountryWithName(mwmRegionId, failure: {}) { region in
+      let countryPath = NSURL.createDirectory(.LibraryDirectory, withPath: region.getName())
+      let url = TripfingerAppDelegate.serverUrl + "/download_country/\(region.getName())"
+      var parameters = [String: String]()
+      if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.RELEASE {
+        parameters["onlyPublished"] = "false"
+      }
+      let jsonPath = countryPath.URLByAppendingPathComponent(region.getName() + ".json")
+      NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, parameters: parameters) {
+        let jsonData = NSData(contentsOfURL: jsonPath)!
+        let json = JSON(data: jsonData)
+        let region = JsonParserService.parseRegionTreeFromJson(json)
+        let imageList = fetchImageList(region, path: countryPath)
+        var counter = 0.0
+        splitImageListAndDownload(imageList, progressHandler: { requests in
+          counter += 1
+          dispatch_async(dispatch_get_main_queue()) {
+            if DatabaseService.isDownloadMarkerCancelled(region.mwmRegionId ?? region.getName()) {
+              for request in requests {
+                request.cancel()
+              }
+              deleteCountry(region.getName())
+              DatabaseService.removeDownloadMarker(region.mwmRegionId ?? region.getName())
+              UIApplication.sharedApplication().idleTimerDisabled = false
+              return
             }
-            deleteCountry(region.getName())
-            DatabaseService.removeDownloadMarker(region.mwmRegionId ?? region.getName())
-            UIApplication.sharedApplication().idleTimerDisabled = false
-            return
+            let progress = Double(counter / Double(imageList.count))
+            progressHandler(progress)
           }
-          let progress = Double(counter / Double(imageList.count))
-          progressHandler(progress)
+          }) {
+            if DatabaseService.isDownloadMarkerCancelled(region.mwmRegionId ?? region.getName()) {
+              return
+            }
+            print("Finished image downloads")
+            try! DatabaseService.saveRegion(region) { _ in
+              print("Persisted region to database")
+              dispatch_async(dispatch_get_main_queue()) {
+                progressHandler(1.0)
+              }
+              DatabaseService.removeDownloadMarker(region.mwmRegionId ?? region.getName())
+              UIApplication.sharedApplication().idleTimerDisabled = false
+              dispatch_async(dispatch_get_main_queue(), finishedHandler)
+            }
         }
-        }) {
-          if DatabaseService.isDownloadMarkerCancelled(region.mwmRegionId ?? region.getName()) {
-            return
-          }
-          print("Finished image downloads")
-          try! DatabaseService.saveRegion(region) { _ in
-            print("Persisted region to database")
-            dispatch_async(dispatch_get_main_queue()) {
-              progressHandler(1.0)
-            }
-            DatabaseService.removeDownloadMarker(region.mwmRegionId ?? region.getName())
-            UIApplication.sharedApplication().idleTimerDisabled = false
-            dispatch_async(dispatch_get_main_queue(), finishedHandler)
-          }
       }
     }
   }

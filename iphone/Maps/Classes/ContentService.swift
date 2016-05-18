@@ -131,6 +131,21 @@ class ContentService {
       }}, failure: failure)
   }
   
+  class func getCountryWithName(name: String, failure: () -> (), handler: Region -> ()) {
+    var parameters = [String: String]()
+    if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.RELEASE {
+      parameters["onlyPublished"] = "false"
+    }
+    
+    NetworkUtil.getJsonFromUrl(TripfingerAppDelegate.serverUrl + "/countries/\(name)", parameters: parameters, success: {
+      json in
+      
+      let region = JsonParserService.parseRegion(json)
+      dispatch_async(dispatch_get_main_queue()) {
+        handler(region)
+      }}, failure: failure)
+  }
+  
   class func getRegionWithId(regionId: String, failure: () -> (), handler: Region -> ()) {
     if let region = DatabaseService.getRegionWithId(regionId) {
       handler(region)

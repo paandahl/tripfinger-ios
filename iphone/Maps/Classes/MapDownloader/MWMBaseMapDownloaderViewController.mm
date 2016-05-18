@@ -192,7 +192,7 @@ using namespace storage;
   m_actionSheetId = [self.dataSource countryIdForIndexPath:indexPath].UTF8String;
   if (boost::starts_with(m_actionSheetId, "guide")) {
     nodeAttrs = [DataConverter getNodeAttrs:m_actionSheetId];
-    nodeAttrs.m_nodeLocalName = "Download guide";
+    nodeAttrs.m_nodeLocalName = "Guide";
     CountryIdAndName parentInfo;
     parentInfo.m_localName = "";
     nodeAttrs.m_parentInfo.push_back(parentInfo);
@@ -206,13 +206,6 @@ using namespace storage;
   NSString * message = (self.dataSource.isParentRoot || isMultiParent)
                            ? nil
                            : @(nodeAttrs.m_parentInfo[0].m_localName.c_str());
-  NSString * downloadActionTitle;
-  if (boost::starts_with(m_actionSheetId, "guide")) {
-    downloadActionTitle = @"Download guide";
-  } else {
-    downloadActionTitle = [NSString
-       stringWithFormat:@"%@, %@", kDownloadActionTitle, formattedSize(nodeAttrs.m_mwmSize)];
-  }
   if (isIOS7)
   {
     UIActionSheet * actionSheet = [[UIActionSheet alloc] initWithTitle:title
@@ -230,7 +223,7 @@ using namespace storage;
     }
     else
     {
-      [actionSheet addButtonWithTitle:downloadActionTitle];
+      [actionSheet addButtonWithTitle:kDownloadActionTitle];
     }
     if (!IPAD)
     {
@@ -268,7 +261,13 @@ using namespace storage;
                                         }];
         [alertController addAction:updateAction];
       }
-      UIAlertAction * deleteAction = [UIAlertAction actionWithTitle:kDeleteActionTitle
+      NSString * deleteActionTitle;
+      if (boost::starts_with(m_actionSheetId, "guide")) {
+        deleteActionTitle = @"Delete guide content";
+      } else {
+        deleteActionTitle = kDeleteActionTitle;
+      }
+      UIAlertAction * deleteAction = [UIAlertAction actionWithTitle:deleteActionTitle
                                                               style:UIAlertActionStyleDestructive
                                                             handler:^(UIAlertAction * action)
                                       {
@@ -278,6 +277,13 @@ using namespace storage;
     }
     else
     {
+      NSString * downloadActionTitle;
+      if (boost::starts_with(m_actionSheetId, "guide")) {
+        downloadActionTitle = @"Download guide";
+      } else {
+        downloadActionTitle = [NSString
+                               stringWithFormat:@"%@, %@", kDownloadActionTitle, formattedSize(nodeAttrs.m_mwmSize)];
+      }
       UIAlertAction * downloadAction = [UIAlertAction actionWithTitle:downloadActionTitle
                                                                 style:UIAlertActionStyleDefault
                                                               handler:^(UIAlertAction * action)
@@ -593,6 +599,13 @@ using namespace storage;
 
 - (void)deleteNode:(storage::TCountryId const &)countryId
 {
+  if (boost::starts_with(countryId, "guide")) {
+    NSString* realCountryId = [@(countryId.c_str()) substringFromIndex:5];
+    [TripfingerAppDelegate deleteCountry:realCountryId];
+    [self configAllMapsView];
+    [self reloadData];
+    return;
+  }
   [Statistics logEvent:kStatDownloaderMapAction
         withParameters:@{
           kStatAction : kStatDelete,

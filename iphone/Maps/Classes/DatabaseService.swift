@@ -116,7 +116,12 @@ class DatabaseService {
   }
 
   class func getCountryWithMwmId(mwmRegionId: String) -> Region! {
-    return getRealm().objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue) and mwmRegionId = '\(mwmRegionId)'").first
+    let region = getRealm().objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue) and mwmRegionId = '\(mwmRegionId)'").first
+    if let region = region {
+      return region
+    } else {
+      return getCountry(mwmRegionId)
+    }
   }
 
   class func getSubRegionOrCity(countryName: String, itemName: String) -> Region! {
