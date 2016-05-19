@@ -16,6 +16,7 @@ class PlacePageInfoCell: UITableViewCell {
     self.myWidth = width
     super.init(style: .Default, reuseIdentifier: nil)
     
+    contentView.clipsToBounds = true
     selectionStyle = .None
     
     contentView.addSubview(myImageView)
@@ -92,7 +93,7 @@ class PlacePageInfoCell: UITableViewCell {
     let fixedWidth = myWidth - 10
     let newSize = descriptionText.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
     
-    let contentHeight = newSize.height - 10 // last paragraphs margin
+    let contentHeight = Int(newSize.height + 1) - 10 // last paragraphs margin
     print("htmlContent width: \(fixedWidth) height: \(contentHeight)")
     views = ["description": descriptionText, "image": myImageView]
     contentView.addConstraints("V:[image]-5-[description(\(contentHeight))]", forViews: views)

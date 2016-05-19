@@ -117,7 +117,7 @@ extern NSString * const kBookmarksChangedNotification;
 
 - (void)rotateToOrientation:(UIInterfaceOrientation)orientation
 {
-  if (!self.placePage)
+  if (!self.placePage || [self.placePage isKindOfClass:[MWMiPhoneFullscreenPlacePage class]])
     return;
 
   if (IPAD)
