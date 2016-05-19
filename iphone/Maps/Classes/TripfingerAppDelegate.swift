@@ -159,19 +159,20 @@ class MyNavigationController: UINavigationController {
   }
 
   public class func coordinateToInt(coord: CLLocationCoordinate2D) -> Int64 {
-    let latInt = Int64((coord.latitude * 1000000) + 0.5)
-    let lonInt = Int64((coord.longitude * 1000000) + 0.5)
+    let latInt = Int64(abs(coord.latitude * 1000000) + 0.5)
+    let lonInt = Int64(abs(coord.longitude * 1000000) + 0.5)
+    print("lonInt \(lonInt)")
     let sign: Int64
-    if latInt >= 0 && lonInt >= 0 {
+    if coord.latitude >= 0 && coord.longitude >= 0 {
       sign = 1
-    } else if latInt >= 0 {
+    } else if coord.latitude >= 0 {
       sign = 2
-    } else if lonInt >= 0 {
+    } else if coord.longitude >= 0 {
       sign = 3
     } else {
       sign = 4
     }
-    return (sign * 100000000000000000) + (abs(latInt) * 100000000) + abs(lonInt)
+    return (sign * 100000000000000000) + (latInt * 100000000) + lonInt
   }
   
   public class func coordinateExists(coord: CLLocationCoordinate2D) -> Bool {

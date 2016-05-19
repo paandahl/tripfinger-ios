@@ -83,34 +83,4 @@ class SearchServiceTest: XCTestCase {
     waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
     NetworkUtil.simulateOffline = false
   }
-  
-  func testOfflineSearchForPoi() {
-    NetworkUtil.simulateOffline = true
-    let exp = expectationWithDescription("offlineSearchForPoi")
-    var fulfilled = false
-    DatabaseServiceTest.insertBrunei { _ in
-      SearchServiceTest.searchService.search("nyonya") { searchResults in
-        for searchResult in searchResults {
-          print("Found result: \(searchResult.name), \(searchResult.location)")
-          print(fulfilled)
-          if searchResult.name == "Nyonya Restaurant" {
-            
-            SyncManager.synchronized(self) {
-              if !fulfilled {
-                fulfilled = true
-                print("fullfilled was set to true")
-                SearchServiceTest.searchService.cancelSearch {
-                  print("expfulfill")
-                  exp.fulfill()
-                }
-              }
-            }
-            break
-          }
-        }
-      }
-    }
-    waitForExpectationsWithTimeout(15) { error in XCTAssertNil(error, "Error") }
-    NetworkUtil.simulateOffline = false
-  }
 }
