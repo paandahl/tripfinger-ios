@@ -123,6 +123,7 @@ class ListingsController: UIViewController {
   func navigateToMap() {
     let vc = MapsAppDelegateWrapper.getMapViewController()
     navigationController!.pushViewController(vc, animated: true)
+    FrameworkService.navigateToRegionOnMap(session.currentRegion)
     MapsAppDelegateWrapper.openMapSearchWithQuery(session.currentCategory.entityName)
   }
   

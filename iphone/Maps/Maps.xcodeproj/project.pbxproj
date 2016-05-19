@@ -15,6 +15,7 @@
 		2502337F1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2502337E1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm */; };
 		2510A3F91CE8E7AD00E3B654 /* DownloadMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510A3F81CE8E7AC00E3B654 /* DownloadMarker.swift */; };
 		251B291B1CE5AFD100B454C3 /* DataConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 251B291A1CE5AFD100B454C3 /* DataConverter.mm */; };
+		25533E231CEDED78004C7956 /* FrameworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25533E221CEDED78004C7956 /* FrameworkService.swift */; };
 		2571ADED1CD882F000CF2EFF /* TripfingerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */; };
 		2571ADEF1CD8966100CF2EFF /* PlacePageInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */; };
 		2581DC0C1CACF8AB0086285E /* TripfingerAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */; };
@@ -943,6 +944,7 @@
 		2510A3F81CE8E7AC00E3B654 /* DownloadMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadMarker.swift; sourceTree = "<group>"; };
 		251B291A1CE5AFD100B454C3 /* DataConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DataConverter.mm; sourceTree = "<group>"; };
 		251B291C1CE5AFE700B454C3 /* DataConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConverter.h; sourceTree = "<group>"; };
+		25533E221CEDED78004C7956 /* FrameworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkService.swift; sourceTree = "<group>"; };
 		2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerEntity.swift; sourceTree = "<group>"; };
 		2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacePageInfoCell.swift; sourceTree = "<group>"; };
 		2581DC071CACD8900086285E /* MAPS.ME-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAPS.ME-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -2009,6 +2011,7 @@
 			isa = PBXGroup;
 			children = (
 				2510A3F81CE8E7AC00E3B654 /* DownloadMarker.swift */,
+				25533E221CEDED78004C7956 /* FrameworkService.swift */,
 				2581DC441CAE31700086285E /* GuideItem.swift */,
 				2581DC451CAE31700086285E /* GuideItemImage.swift */,
 				2581DC461CAE31700086285E /* GuideListing.swift */,
@@ -4186,6 +4189,7 @@
 				FA29FDAA141E77F8004ADF66 /* Preferences.mm in Sources */,
 				F6588E371B15D87A00EE1E58 /* MWMBookmarkColorCell.mm in Sources */,
 				2581DC551CAE31700086285E /* SimplePOI.swift in Sources */,
+				25533E231CEDED78004C7956 /* FrameworkService.swift in Sources */,
 				2581DC861CAE31CD0086285E /* String+AttributedString.swift in Sources */,
 				F6D409FA1B319BD70041730F /* ContextViews.mm in Sources */,
 				251B291B1CE5AFD100B454C3 /* DataConverter.mm in Sources */,
