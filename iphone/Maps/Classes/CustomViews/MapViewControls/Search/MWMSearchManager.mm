@@ -188,18 +188,16 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 {
   BOOL onlineFetchedTripfingerItem = result.GetFeatureID().IsTripfinger()
       && !result.GetFeatureID().tripfingerMark->offline;
-  if (self.initedFromGuide && onlineFetchedTripfingerItem) {
-    
+  if (self.initedFromGuide && result.GetFeatureID().IsTripfinger()) {
     TripfingerEntity * entity = [DataConverter markToEntity:*result.GetFeatureID().tripfingerMark];
-    if (![TripfingerAppDelegate isListingOffline:entity.tripfingerId]) {
-      void(^fail)() = ^() {
-        NSLog(@"bbb");
-      };
-      void(^stop)() = ^() {
-        NSLog(@"ccc");
-      };
-      [TripfingerAppDelegate selectedSearchResult:entity failure:fail stopSpinner:stop];
-    }
+    void(^fail)() = ^() {
+      NSLog(@"bbb");
+    };
+    void(^stop)() = ^() {
+      NSLog(@"ccc");
+    };
+    self.parentViewController.navigationController.navigationBarHidden = NO;
+    [TripfingerAppDelegate selectedSearchResult:entity failure:fail stopSpinner:stop];
   } else {
     if (onlineFetchedTripfingerItem) {
       NSString * tripfingerId = @(result.GetFeatureID().tripfingerMark->tripfingerId.c_str());
@@ -227,8 +225,8 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
     if (!IPAD && a.routingPlaneMode != MWMRoutingPlaneModeNone)
       a.routingPlaneMode = MWMRoutingPlaneModePlacePage;
   }
-  self.initedFromGuide = NO;
   self.state = MWMSearchManagerStateHidden;
+  self.initedFromGuide = NO;
 }
 
 #pragma mark - MWMFrameworkStorageObserver
