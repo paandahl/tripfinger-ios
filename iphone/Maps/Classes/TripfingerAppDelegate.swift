@@ -277,10 +277,10 @@ class MyNavigationController: UINavigationController {
   
   // TODO: Add downloading-status
   class func downloadStatus(mwmCountryId: String) -> Int {
-    if DownloadService.isCountryDownloaded(mwmCountryId) {
-      return 5;
-    } else if DownloadService.isCountryDownloading(mwmCountryId) {
+    if DownloadService.isCountryDownloading(mwmCountryId) {
       return 1;
+    } else if DownloadService.isCountryDownloaded(mwmCountryId) {
+      return 5;
     } else { // NotDownloaded
       return 6;
     }
@@ -289,7 +289,11 @@ class MyNavigationController: UINavigationController {
   class func downloadCountry(mwmCountryId: String) {
     DownloadService.downloadCountry(mwmCountryId, progressHandler: {prog in
       MapsAppDelegateWrapper.updateDownloadProgress(prog, forMwmRegion: mwmCountryId)
-      }, failure: {}, finishedHandler: {})
+      }, failure: {}) {
+        let region = DatabaseService.getCountryWithMwmId(mwmCountryId)
+        session.currentCountry = region
+        session.currentRegion = region
+    }
   }
   
   class func cancelDownload(mwmRegionId: String) {

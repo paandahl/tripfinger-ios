@@ -79,7 +79,7 @@ class DatabaseService {
       let existing = getRegionWithId(region.getId(), writeRealm: realm)
       if let existing = existing {
         deleteRegion(existing)
-        throw Error.RuntimeError("Replacing region: \(region.getId()) in db.")
+        print("Replacing region: \(region.getId()) in db.")
       }
       
       // Add to the Realm inside a transaction

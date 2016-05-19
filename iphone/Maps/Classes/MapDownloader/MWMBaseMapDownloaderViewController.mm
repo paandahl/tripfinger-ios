@@ -191,16 +191,19 @@ using namespace storage;
   auto const & s = GetFramework().Storage();
   NodeAttrs nodeAttrs;
   m_actionSheetId = [self.dataSource countryIdForIndexPath:indexPath].UTF8String;
+  BOOL needsUpdate;
   if (boost::starts_with(m_actionSheetId, "guide")) {
     nodeAttrs = [DataConverter getNodeAttrs:m_actionSheetId];
     nodeAttrs.m_nodeLocalName = "Guide";
     CountryIdAndName parentInfo;
     parentInfo.m_localName = "";
     nodeAttrs.m_parentInfo.push_back(parentInfo);
+    needsUpdate = (nodeAttrs.m_status == NodeStatus::OnDisk);
   } else {
     s.GetNodeAttrs(m_actionSheetId, nodeAttrs);
+    needsUpdate = (nodeAttrs.m_status == NodeStatus::OnDiskOutOfDate);
   }
-  BOOL const needsUpdate = (nodeAttrs.m_status == NodeStatus::OnDiskOutOfDate);
+  
   BOOL const isDownloaded = (needsUpdate || nodeAttrs.m_status == NodeStatus::OnDisk);
   NSString * title = @(nodeAttrs.m_nodeLocalName.c_str());
   BOOL const isMultiParent = (nodeAttrs.m_parentInfo.size() > 1);
@@ -576,6 +579,13 @@ using namespace storage;
 
 - (void)updateNode:(storage::TCountryId const &)countryId
 {
+  if (boost::starts_with(countryId, "guide")) {
+    NSString* realCountryId = @(countryId.substr(5).c_str());
+    [TripfingerAppDelegate downloadCountry:realCountryId];
+    [self configAllMapsView];
+    [self reloadData];
+    return;
+  }
   [Statistics logEvent:kStatDownloaderMapAction
         withParameters:@{
           kStatAction : kStatUpdate,
