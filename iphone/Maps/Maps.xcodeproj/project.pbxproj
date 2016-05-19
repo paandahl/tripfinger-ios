@@ -38,7 +38,6 @@
 		2581DC371CAE31490086285E /* ListingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC321CAE31490086285E /* ListingsController.swift */; };
 		2581DC381CAE31490086285E /* SectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC331CAE31490086285E /* SectionController.swift */; };
 		2581DC391CAE31490086285E /* SwipeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC341CAE31490086285E /* SwipeController.swift */; };
-		2581DC3F1CAE315F0086285E /* DownloadController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC3B1CAE315F0086285E /* DownloadController.swift */; };
 		2581DC401CAE315F0086285E /* FilterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC3C1CAE315F0086285E /* FilterController.swift */; };
 		2581DC4D1CAE31700086285E /* GuideItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC441CAE31700086285E /* GuideItem.swift */; };
 		2581DC4E1CAE31700086285E /* GuideItemImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC451CAE31700086285E /* GuideItemImage.swift */; };
@@ -969,7 +968,6 @@
 		2581DC321CAE31490086285E /* ListingsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingsController.swift; sourceTree = "<group>"; };
 		2581DC331CAE31490086285E /* SectionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionController.swift; sourceTree = "<group>"; };
 		2581DC341CAE31490086285E /* SwipeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeController.swift; sourceTree = "<group>"; };
-		2581DC3B1CAE315F0086285E /* DownloadController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadController.swift; sourceTree = "<group>"; };
 		2581DC3C1CAE315F0086285E /* FilterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterController.swift; sourceTree = "<group>"; };
 		2581DC441CAE31700086285E /* GuideItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItem.swift; sourceTree = "<group>"; };
 		2581DC451CAE31700086285E /* GuideItemImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemImage.swift; sourceTree = "<group>"; };
@@ -2002,7 +2000,6 @@
 		2581DC3A1CAE31550086285E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				2581DC3B1CAE315F0086285E /* DownloadController.swift */,
 				2581DC3C1CAE315F0086285E /* FilterController.swift */,
 			);
 			name = Controllers;
@@ -4139,7 +4136,6 @@
 				34479C7C1C60C6130065D261 /* MWMFrameworkListener.mm in Sources */,
 				3485C0121B85C20E00F7712D /* MWMSearchTableViewController.mm in Sources */,
 				F64D9C9F1C899C350063FA30 /* MWMEditorViralAlert.mm in Sources */,
-				2581DC3F1CAE315F0086285E /* DownloadController.swift in Sources */,
 				34CFFE8B1B7DE6FD009D0C9F /* MWMSearchManager.mm in Sources */,
 				34ABA62C1C2D57D500FE1BEC /* MWMInputPasswordValidator.mm in Sources */,
 				34ABA6161C2D185C00FE1BEC /* MWMAuthorizationOSMLoginViewController.mm in Sources */,
