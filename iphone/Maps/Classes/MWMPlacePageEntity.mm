@@ -89,7 +89,6 @@ void initFieldsMap()
 //    [self setMetaField:gMetaFieldsMap[Metadata::FMD_CUISINE] value:string("Bakst")];
 
     self.bookmarkTitle = entity.name;
-    self.bookmarkCategory = entity.address;
     self.bookmarkDescription = nil;
     _isHTMLDescription = NO;
     
