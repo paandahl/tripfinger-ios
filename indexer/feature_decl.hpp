@@ -91,7 +91,7 @@ struct FeatureID
   inline bool operator<(FeatureID const & r) const
   {
     if (IsTripfinger() && r.IsTripfinger()) {
-      return tripfingerMark->name < r.tripfingerMark->name;
+      return tripfingerMark->tripfingerId < r.tripfingerMark->tripfingerId;
     } else if (IsTripfinger()) {
       return false;
     } else if (r.IsTripfinger()) {
@@ -106,7 +106,7 @@ struct FeatureID
   inline bool operator==(FeatureID const & r) const
   {
     if (IsTripfinger() && r.IsTripfinger()) {
-      return tripfingerMark->name == r.tripfingerMark->name;
+      return tripfingerMark->tripfingerId == r.tripfingerMark->tripfingerId;
     } else {
       return (m_mwmId == r.m_mwmId && m_index == r.m_index);
     }
