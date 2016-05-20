@@ -19,6 +19,7 @@ class PlacePageInfoCell: UITableViewCell {
     contentView.clipsToBounds = true
     selectionStyle = .None
     
+    descriptionText.editable = false
     contentView.addSubview(myImageView)
     contentView.addSubview(descriptionText)
     let imageHeight = width * 0.75

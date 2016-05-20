@@ -254,7 +254,11 @@ using namespace storage;
 {
   auto const & s = GetFramework().Storage();
   TCountriesVec children;
-  s.GetChildren([self countryIdForIndexPath:indexPath].UTF8String, children);
+  string countryId = [self countryIdForIndexPath:indexPath].UTF8String;
+  if (boost::starts_with(countryId, "guide")) {
+    countryId = countryId.substr(5);
+  }
+  s.GetChildren(countryId, children);
   BOOL const haveChildren = !children.empty();
 //  if (haveChildren)
 //    return kLargeCountryCellIdentifier;

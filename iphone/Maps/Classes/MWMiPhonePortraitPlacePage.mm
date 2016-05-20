@@ -30,6 +30,7 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
 @property (nonatomic) CGPoint targetPoint;
 @property (nonatomic) CGFloat panVelocity;
 @property (nonatomic) BOOL isHover;
+@property (nonatomic) NSInteger heightMultiplier;
 
 @end
 
@@ -37,6 +38,7 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
 
 - (void)configure
 {
+  _heightMultiplier = 8;
   [super configure];
   self.basePlacePageView.featureTable.scrollEnabled = NO;
   CGSize const size = UIScreen.mainScreen.bounds.size;
@@ -44,7 +46,7 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
   CGFloat const height = MAX(size.width, size.height);
   UIView * ppv = self.extendedPlacePageView;
   [self determineIfIsHover];
-  ppv.frame = CGRectMake(0., height, width, 4 * height);
+  ppv.frame = CGRectMake(0., height, width, _heightMultiplier * height);
   _targetPoint = ppv.center;
   self.actionBar.width = width;
   self.actionBar.center = {width / 2, height + self.actionBar.height / 2};
@@ -164,7 +166,7 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
   CGFloat const width = isLandscape ? size.height : size.width;
   CGFloat const height = isLandscape ? size.width : size.height;
   CGFloat const h = height - (self.topPlacePageHeight);
-  return {width / 2, (height * 2) + h};
+  return {width / 2, (height * (_heightMultiplier / 2)) + h};
 }
 
 - (CGPoint)getOpenTargetPoint
@@ -173,14 +175,14 @@ typedef NS_ENUM(NSUInteger, MWMiPhonePortraitPlacePageState)
   BOOL const isLandscape = size.width > size.height;
   CGFloat const width = isLandscape ? size.height : size.width;
   CGFloat const height = isLandscape ? size.width : size.height;
-  return {width / 2, (height * 2) + self.topY};
+  return {width / 2, (height * (_heightMultiplier / 2)) + self.topY};
 }
 
 - (CGPoint)getHoverTargetPoint
 {
   CGSize const size = UIScreen.mainScreen.bounds.size;
   CGFloat const height = size.height;
-  return {size.width / 2, (height * 2) + height / 4};
+  return {size.width / 2, (height * (_heightMultiplier / 2)) + height / 4};
 }
 
 - (CGFloat)topY
