@@ -152,12 +152,12 @@ string GetPreferred()
 
 string GetCurrentOrig()
 {
-  vector<string> arr;
-  GetSystemPreferred(arr);
-  if (arr.empty())
-    return "en";
-  else
-    return arr[0];
+  return "en";
+//  vector<string> arr;
+//  GetSystemPreferred(arr);
+//  if (arr.empty())
+//  else
+//    return arr[0];
 }
 
 string Normalize(string const & lang)
