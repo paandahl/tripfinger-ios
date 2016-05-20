@@ -30,6 +30,7 @@ extern NSString * const kTTSStatusWasChangedNotification;
 @property (weak, nonatomic) MWMCircularProgress * activeRouteTypeButton;
 
 @property (weak, nonatomic) UIView * ownerView;
+@property (weak, nonatomic) UIViewController * parentViewController;
 
 @property (nonatomic) MWMNavigationDashboardEntity * entity;
 //@property (nonatomic) MWMLanesPanel * lanesPanel;
@@ -41,13 +42,14 @@ extern NSString * const kTTSStatusWasChangedNotification;
 
 @implementation MWMNavigationDashboardManager
 
-- (instancetype)initWithParentView:(UIView *)view delegate:(id<MWMNavigationDashboardManagerProtocol, MWMRoutePreviewDataSource>)delegate
+- (instancetype)initWithParentView:(UIView *)view andController:(UIViewController*)vc delegate:(id<MWMNavigationDashboardManagerProtocol, MWMRoutePreviewDataSource>)delegate
 {
   self = [super init];
   if (self)
   {
     _ownerView = view;
     _delegate = delegate;
+    _parentViewController = vc;
     BOOL const isPortrait = _ownerView.width < _ownerView.height;
     if (IPAD)
     {
@@ -312,6 +314,8 @@ extern NSString * const kTTSStatusWasChangedNotification;
 
 - (void)hideState
 {
+  UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+  self.parentViewController.navigationController.navigationBarHidden = UIDeviceOrientationIsLandscape(orientation);
   [self.routePreview remove];
   [self.navigationDashboard remove];
   [self removePanel:self.nextTurnPanel];
@@ -320,6 +324,7 @@ extern NSString * const kTTSStatusWasChangedNotification;
 
 - (void)showStatePrepare
 {
+  self.parentViewController.navigationController.navigationBarHidden = YES;
   [self.routePreview addToView:self.ownerView];
   [self.routePreview statePrepare];
   [self setupActualRoute];

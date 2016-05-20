@@ -445,7 +445,7 @@ using namespace osm_auth_ios;
 {
   auto const lambda = [finishCallback](osm::Editor::UploadResult result) { finishCallback(result); };
   osm::Editor::Instance().UploadChanges(keySecret.first, keySecret.second,
-                                        {{"created_by", string("MAPS.ME " OMIM_OS_NAME " ") + AppInfo.sharedInfo.bundleVersion.UTF8String},
+                                        {{"created_by", string("Tripfinger " OMIM_OS_NAME " ") + AppInfo.sharedInfo.bundleVersion.UTF8String},
                                          {"bundle_id", NSBundle.mainBundle.bundleIdentifier.UTF8String}}, lambda);
 }
 

@@ -281,7 +281,8 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 - (void)changeToHiddenState
 {
-  self.parentViewController.navigationController.navigationBarHidden = NO;
+  UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+  self.parentViewController.navigationController.navigationBarHidden = UIDeviceOrientationIsLandscape(orientation);
   [self endSearch];
   [self.tabbedController resetSelectedTab];
   self.tableViewController = nil;

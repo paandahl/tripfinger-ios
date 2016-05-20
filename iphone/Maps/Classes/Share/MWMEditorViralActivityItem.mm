@@ -18,12 +18,11 @@
       [activityType isEqualToString:@"com.facebook.Facebook.ShareExtension"] ||
       [activityType.lowercaseString rangeOfString:@"facebook"].length)
   {
-    NSString * url = [NSString stringWithFormat:@"http://maps.me/fb-editor-v1?lang=%@",
-                      @(languages::GetCurrentNorm().c_str())];
+    NSString * url = @"http://www.tripfinger.com";
     return [NSURL URLWithString:url];
   }
 
-  NSString * mapsmeURL = @"http://maps.me/im_get";
+  NSString * mapsmeURL = @"http://www.tripfinger.com";
   if ([activityType isEqualToString:UIActivityTypePostToTwitter] || [activityType isEqualToString:UIActivityTypeMail])
     return [NSString stringWithFormat:@"%@ %@", L(@"whatsnew_editor_message_1"), mapsmeURL];
 

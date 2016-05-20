@@ -8,7 +8,7 @@
 
 NSString * httpGe0Url(NSString * shortUrl)
 {
-  return [shortUrl stringByReplacingCharactersInRange:NSMakeRange(0, 6) withString:@"http://ge0.me/"];
+  return [shortUrl stringByReplacingCharactersInRange:NSMakeRange(0, 6) withString:@"http://www.tripfinger.com/"];
 }
 
 @interface MWMShareLocationActivityItem ()

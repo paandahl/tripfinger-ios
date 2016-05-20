@@ -10,7 +10,7 @@ int main(int argc, char * argv[])
 #ifdef MWM_LOG_TO_FILE
   my::SetLogMessageFn(LogMessageFile);
 #endif
-  LOG(LINFO, ("maps.me started, detected CPU cores:", GetPlatform().CpuCores()));
+  LOG(LINFO, ("Tripfinger started, detected CPU cores:", GetPlatform().CpuCores()));
 
   int retVal;
   @autoreleasepool

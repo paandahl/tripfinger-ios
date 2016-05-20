@@ -22,7 +22,7 @@
 
 @end
 
-static NSString * const kiOSEmail = @"ios@maps.me";
+static NSString * const kiOSEmail = @"support@tripfinger.com";
 extern NSString * const kLocaleUsedInSupportEmails = @"en_gb";
 extern NSString * const kAlohalyticsTapEventKey;
 extern NSDictionary * const deviceNames = @{@"x86_64" : @"Simulator",
@@ -233,12 +233,12 @@ extern NSDictionary * const deviceNames = @{@"x86_64" : @"Simulator",
   NSString * locale = [[NSLocale currentLocale] objectForKey:NSLocaleCountryCode];
   NSString * country = [[NSLocale localeWithLocaleIdentifier:kLocaleUsedInSupportEmails] displayNameForKey:NSLocaleCountryCode value:locale];
   NSString * bundleVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
-  NSString * text = [NSString stringWithFormat:@"\n\n\n\n- %@ (%@)\n- MAPS.ME %@\n- %@/%@", device, [UIDevice currentDevice].systemVersion, bundleVersion, language, country];
+  NSString * text = [NSString stringWithFormat:@"\n\n\n\n- %@ (%@)\n- Tripfinger %@\n- %@/%@", device, [UIDevice currentDevice].systemVersion, bundleVersion, language, country];
   if ([MFMailComposeViewController canSendMail])
   {
     MFMailComposeViewController * vc = [[MFMailComposeViewController alloc] init];
     vc.mailComposeDelegate = self;
-    [vc setSubject:@"MAPS.ME"];
+    [vc setSubject:@"Tripfinger"];
     [vc setToRecipients:@[kiOSEmail]];
     [vc setMessageBody:text isHTML:NO];
     [self presentViewController:vc animated:YES completion:nil];

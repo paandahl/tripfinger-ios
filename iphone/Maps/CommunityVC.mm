@@ -71,12 +71,12 @@ extern NSString * const kAlohalyticsTapEventKey;
   if ([itemId isEqualToString:@"Facebook"])
   {
     [Alohalytics logEvent:kAlohalyticsTapEventKey withValue:@"likeOnFb"];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://facebook.com/MapsWithMe"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://facebook.com/tripfinger"]];
   }
   else if ([itemId isEqualToString:@"Twitter"])
   {
     [Alohalytics logEvent:kAlohalyticsTapEventKey withValue:@"followOnTwitter"];
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/MAPS_ME"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://twitter.com/tripfinger"]];
   }
   else if ([itemId isEqualToString:@"Contact"])
   {
@@ -93,12 +93,12 @@ extern NSString * const kAlohalyticsTapEventKey;
 
 - (void)contact
 {
-  [self sendEmailWithText:nil subject:@"MAPS.ME" toRecipient:@"ios@maps.me"];
+  [self sendEmailWithText:nil subject:@"Tripfinger" toRecipient:@"support@tripfinger.com"];
 }
 
 - (void)subscribe
 {
-  [self sendEmailWithText:L(@"subscribe_me_body") subject:L(@"subscribe_me_subject") toRecipient:@"subscribe@maps.me"];
+  [self sendEmailWithText:L(@"subscribe_me_body") subject:L(@"subscribe_me_subject") toRecipient:@"subscribe@tripfinger.com"];
 }
 
 - (void)sendEmailWithText:(NSString *)text subject:(NSString *)subject toRecipient:(NSString *)email

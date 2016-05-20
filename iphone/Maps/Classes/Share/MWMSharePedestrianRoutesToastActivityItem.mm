@@ -25,8 +25,7 @@
       [activityType isEqualToString:@"com.facebook.Facebook.ShareExtension"] ||
       [activityType.lowercaseString rangeOfString:@"facebook"].length)
   {
-    NSString * url = [NSString stringWithFormat:@"http://maps.me/fb-pedestrian?lang=%@",
-                      @(languages::GetCurrentNorm().c_str())];
+    NSString * url = @"http://www.tripfinger.com";
     return [NSURL URLWithString:url];
   }
   if ([UIActivityTypeMessage isEqualToString:activityType])

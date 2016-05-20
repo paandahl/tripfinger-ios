@@ -6,10 +6,10 @@
 #import "3party/Alohalytics/src/alohalytics_objc.h"
 
 static NSString * const kFacebookAlertNibName = @"MWMFacebookAlert";
-static NSString * const kFacebookAppName = @"https://fb.me/958251974218933";
-static NSString * const kFacebookURL = @"http://www.facebook.com/MapsWithMe";
-static NSString * const kFacebookScheme = @"fb://profile/111923085594432";
-static NSString * const kFacebookAlertPreviewImage = @"http://maps.me/images/fb_app_invite_banner.png";
+static NSString * const kFacebookAppName = @"http://www.facebook.com/tripfinger";
+static NSString * const kFacebookURL = @"http://www.facebook.com/tripfinger";
+static NSString * const kFacebookScheme = @"http://www.facebook.com/tripfinger";
+static NSString * const kFacebookAlertPreviewImage = @"http://www.tripfinger.com/img/finger_thumbsup.png";
 static NSString * const kFacebookInviteEventName = @"facebookInviteEvent";
 extern NSString * const kUDAlreadySharedKey;
 

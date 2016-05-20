@@ -15,7 +15,7 @@ extern NSDictionary * const deviceNames;
 extern NSString * const kLocaleUsedInSupportEmails;
 extern NSString * const kRateAlertEventName = @"rateAlertEvent";
 static NSString * const kRateAlertNibName = @"MWMRateAlert";
-static NSString * const kRateEmail = @"rating@maps.me";
+static NSString * const kRateEmail = @"support@tripfinger.com";
 
 static NSString * const kStatisticsEvent = @"Rate Alert";
 
@@ -165,7 +165,7 @@ static NSString * const kStatisticsEvent = @"Rate Alert";
                                             displayNameForKey:NSLocaleCountryCode
                                                         value:locale];
     NSString * bundleVersion = AppInfo.sharedInfo.bundleVersion;
-    NSString * text = [NSString stringWithFormat:@"\n\n\n\n- %@ (%@)\n- MAPS.ME %@\n- %@/%@", device,
+    NSString * text = [NSString stringWithFormat:@"\n\n\n\n- %@ (%@)\n- Tripfinger %@\n- %@/%@", device,
                                                               [UIDevice currentDevice].systemVersion,
                                                               bundleVersion,
                                                               language,

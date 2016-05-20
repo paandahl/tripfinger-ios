@@ -50,7 +50,7 @@
 "get_it_now" = "Get it now";
 
 /* Text to show occasionaly with a proposal to Like our program on Facebook */
-"share_on_facebook_text" = "Thank you for using MAPS.ME! Do you like the app? Tell your friends about it! This is the best thanks you could give us.";
+"share_on_facebook_text" = "Thank you for using Tripfinger! Do you like the app? Tell your friends about it! This is the best thanks you could give us.";
 
 /* Settings/Downloader - size string, only strings different from English should be translated */
 "kb" = "kB";
@@ -150,9 +150,9 @@
 /* Button text for the button under the country_status_download_failed message */
 "try_again" = "Try Again";
 
-"app_name" = "MAPS.ME";
+"app_name" = "Tripfinger";
 
-"about_menu_title" = "About MAPS.ME";
+"about_menu_title" = "About Tripfinger";
 
 "downloading_touch_to_cancel" = "Downloading %d%%, touch to cancel";
 
@@ -170,7 +170,7 @@
 
 "external_storage_is_not_available" = "SD card/USB storage with downloaded maps is not available";
 
-"disconnect_usb_cable" = "Please disconnect USB cable or insert memory card to use MAPS.ME";
+"disconnect_usb_cable" = "Please disconnect USB cable or insert memory card to use Tripfinger";
 
 "not_enough_free_space_on_sdcard" = "Please free some space on SD card/USB storage first in order to use the app";
 
@@ -216,7 +216,7 @@
 "advise_update_maps" = "Update available for these maps:";
 
 /* Show popup notification in Pro version that Lite can be deleted */
-"suggest_uninstall_lite" = "You don't need MAPS.ME Lite any more, so you can uninstall it.";
+"suggest_uninstall_lite" = "Tripfinger Lite does not exist.";
 
 /* Show popup notification on top of the map when country was downloaded. */
 "download_country_success" = "%@ downloaded successfully";
@@ -264,10 +264,10 @@
 "set" = "Set";
 
 /* Text hint in Bookmarks dialog when no any bookmarks are added */
-"bookmarks_usage_hint" = "You have no bookmarks yet.\nTap on any place on the map to add a bookmark.\nBookmarks from other sources can also be imported and displayed in MAPS.ME. Open KML/KMZ file with saved bookmarks from e-mail, Dropbox or weblink.";
+"bookmarks_usage_hint" = "You have no bookmarks yet.\nTap on any place on the map to add a bookmark.\nBookmarks from other sources can also be imported and displayed in Tripfinger. Open KML/KMZ file with saved bookmarks from e-mail, Dropbox or weblink.";
 
 /* Text hint in Bookmarks dialog when at least one bookmark is added */
-"bookmarks_usage_hint_import_only" = "Bookmarks from other sources can be imported and displayed in MAPS.ME. Open KML/KMZ file with saved bookmarks from mail, Dropbox or weblink.";
+"bookmarks_usage_hint_import_only" = "Bookmarks from other sources can be imported and displayed in Tripfinger. Open KML/KMZ file with saved bookmarks from mail, Dropbox or weblink.";
 
 /* Settings button in system menu */
 "settings" = "Settings";
@@ -359,10 +359,10 @@
 "share_by_email" = "Share by email";
 
 /* Email Subject when sharing bookmarks category */
-"share_bookmarks_email_subject" = "Shared MAPS.ME bookmarks";
+"share_bookmarks_email_subject" = "Shared Tripfinger bookmarks";
 
 /* Email text when sharing bookmarks category */
-"share_bookmarks_email_body" = "Greetings,\n\nAttached are my bookmarks from MAPS.ME offline maps. Please open it if you have MAPS.ME installed. If not, download the app for your iOS or Android device following this link: http://maps.me/get?kmz\n\nEnjoy traveling with MAPS.ME!";
+"share_bookmarks_email_body" = "Greetings,\n\nAttached are my bookmarks from Tripfinger offline maps. Please open it if you have Tripfinger installed. If not, download the app for your iOS device from the App Store.\n\nEnjoy traveling with Tripfinger!";
 
 /* message title of loading file */
 "load_kmz_title" = "Loading Bookmarks";
@@ -392,25 +392,25 @@
 "downloading_is_active" = "Country download is in progress now.";
 
 /* Message that will be shown in alert view, when we ask user to leave review on App Store */
-"appStore_message" = "Hope you enjoy using MAPS.ME! If so, please rate or review the app at the App Store. It takes less than a minute but can really help us. Thanks for your support!";
+"appStore_message" = "Hope you enjoy using Tripfinger! If so, please rate or review the app at the App Store. It takes less than a minute but can really help us. Thanks for your support!";
 
 /* No, thanks */
 "no_thanks" = "No, thanks";
 
 /* Share one specific bookmark using SMS, %1$@ contains ge0:// and %2$@ http://ge0.me link. @NOTE non-ascii symbols in the link will make 70 bytes sms instead of 140 */
-"bookmark_share_sms" = "Hey, check out my pin at MAPS.ME! %1$@ or %2$@ Don't have offline maps installed? Download here: http://maps.me/get";
+"bookmark_share_sms" = "Hey, check out my pin at Tripfinger! %1$@ or %2$@ Don't have offline maps installed? Download from App Store.";
 
 /* Share my position using SMS, %1$@ contains ge0:// and %2$@ http://ge0.me link WITHOUT NAME. @NOTE non-ascii symbols in the link will make 70 bytes sms instead of 140 */
-"my_position_share_sms" = "Hey, check out my current location at MAPS.ME! %1$@ or %2$@ Don't have offline maps? Download here: http://maps.me/get";
+"my_position_share_sms" = "Hey, check out my current location at Tripfinger! %1$@ or %2$@ Don't have offline maps? Download from App Store.";
 
 /* Subject for emailed bookmark */
-"bookmark_share_email_subject" = "Hey, check out my pin at MAPS.ME map!";
+"bookmark_share_email_subject" = "Hey, check out my pin at Tripfinger map!";
 
 /* Share one specific bookmark using EMail, %1$@ is bookmark's name, %2$@ is ge0:// link and %3$@ http://ge0.me */
-"bookmark_share_email" = "Hi,\n\nI pinned: %1$@ at MAPS.ME, world offline maps. Click this link %2$@ or this one %3$@ to see the place on the map.\n\nThanks.";
+"bookmark_share_email" = "Hi,\n\nI pinned: %1$@ at Tripfinger, world offline maps. Click this link %2$@ or this one %3$@ to see the place on the map.\n\nThanks.";
 
 /* Subject for emailed position */
-"my_position_share_email_subject" = "Hey, check out my current location at MAPS.ME map!";
+"my_position_share_email_subject" = "Hey, check out my current location at Tripfinger map!";
 
 /* Share my position using EMail, %1$@ is ge0:// and %2$@ is http://ge0.me link WITHOUT NAME */
 "my_position_share_email" = "Hi,\n\nI'm here now: %1$@. Click this link %2$@ or this one %3$@ to see the place on the map.\n\nThanks.";
@@ -595,16 +595,16 @@
 "download_map_notification" = "Download the map of the place where you are";
 
 /* text of notification */
-"pro_version_is_free_today" = "Full version of MAPS.ME is free today! Download now and tell your friends.";
+"pro_version_is_free_today" = "Full version of Tripfinger is free today! Download now and tell your friends.";
 
 /* Dialog for transferring maps from lite to pro. */
-"move_lite_maps_to_pro" = "We are transferring your downloaded maps from MAPS.ME Lite to MAPS.ME. It may take a few minutes.";
+"move_lite_maps_to_pro" = "There is not Tripfinger Lite.";
 
 /* Message to display when maps moved. */
-"move_lite_maps_to_pro_ok" = "Your downloaded maps are successfully transferred to MAPS.ME.";
+"move_lite_maps_to_pro_ok" = "Your downloaded maps are successfully transferred to Tripfinger.";
 
 /* Message to display when maps move failed. */
-"move_lite_maps_to_pro_failed" = "Your maps failed to transfer. Please delete MAPS.ME Lite and download the maps again.";
+"move_lite_maps_to_pro_failed" = "Your maps failed to transfer. Please delete Tripfinger Lite and download the maps again.";
 
 /* Text in menu */
 "settings_and_more" = "Settings & More";
@@ -616,7 +616,7 @@
 "blog" = "Blog";
 
 /* Text in menu */
-"maps_me_community" = "MAPS.ME Community";
+"maps_me_community" = "Tripfinger Community";
 
 /* Text in menu */
 "like_on_facebook" = "Like on Facebook";
@@ -646,7 +646,7 @@
 "tell_friends" = "Tell a Friend";
 
 /* Share with friends: sharing text */
-"tell_friends_text" = "Hi! Install Maps.me!";
+"tell_friends_text" = "Hi! Install Tripfinger!";
 
 /* Text in menu */
 "help" = "Help";
@@ -658,16 +658,16 @@
 "report_a_bug" = "Report a bug";
 
 /* Email subject */
-"subscribe_me_subject" = "Please subscribe me to the MAPS.ME newsletter";
+"subscribe_me_subject" = "Please subscribe me to the Tripfinger newsletter";
 
 /* Email body */
 "subscribe_me_body" = "I want to be the first to learn about latest news updates and promotions. I can cancel my subscription at any time.";
 
 /* About short text (below logo) */
-"about_description" = "Joined efforts of Mail.Ru Group and OpenStreetMap make the most useful application for travelers!";
+"about_description" = "Tripfinger makes the most useful travel application!";
 
 /* About text */
-"about_text" = "MAPS.ME offers the fastest offline maps of all the cities, all countries of the world. Travel with full confidence: wherever you are, MAPS.ME helps to locate yourself on the map, find the nearest restaurant, hotel, bank, gas station etc. It doesn’t require internet connection.\n\nWe are always working on new features and would love to hear from you on how you think we could improve MAPS.ME. If you have any problems with the app, don't hesitate to contact us at support@maps.me. We respond to every request!\n\nDo you like MAPS.ME and want to support us? There are some simple and absolutely free ways:\n\n- post a review at your App Market\n- like our Facebook page http://www.facebook.com/mapswithme\n- or just tell about MAPS.ME to your mom, friends and colleagues :)\n\nThank you for being with us. We appreciate your support very much!\n\nP.S. We take map data from OpenStreetMap, a mapping project similar to Wikipedia, which allows users to create and edit maps. If you see something is missing or wrong on the map, you can correct the maps directly at http://openstreetmap.org, and your changes will appear in MAPS.ME app with the next version release.";
+"about_text" = "Tripfinger offers the best offline guides and maps for budget travellers and backpackers. Travel with full confidence: wherever you are, Tripfinger helps to locate yourself on the map, find the nearest restaurant, hotel, bank, gas station etc. It doesn’t require internet connection.\n\nWe are always working on new features and would love to hear from you on how you think we could improve Tripfinger. If you have any problems with the app, don't hesitate to contact us at support@tripfinger.com. We respond to every request!\n\nDo you like Tripfinger and want to support us? There are some simple and absolutely free ways:\n\n- post a review at your App Market\n- like our Facebook page http://www.facebook.com/tripfinger\n- or just tell about Tripfinger to your mom, friends and colleagues :)\n\nThank you for being with us. We appreciate your support very much!\n\nP.S. We take map data from OpenStreetMap, a mapping project similar to Wikipedia, which allows users to create and edit maps. If you see something is missing or wrong on the map, you can correct the maps directly at http://openstreetmap.org.";
 
 /* Alert text */
 "email_error_body" = "The email client has not been set up. Please configure it or use any other way to contact us at %@";
@@ -685,7 +685,7 @@
 "routing_map_outdated" = "Please update the map to create a route";
 
 /* Update maps suggestion */
-"routing_update_maps" = "The new version of MAPS.ME allows creating routes from your current position to a destination point. Please update maps to use this feature.";
+"routing_update_maps" = "The new version of Tripfinger allows creating routes from your current position to a destination point. Please update maps to use this feature.";
 
 /* Update all button text */
 "downloader_update_all_button" = "Update All";
@@ -713,7 +713,7 @@
 "downloader_search_results" = "Found";
 
 /* Disclaimer message */
-"routing_disclaimer" = "Creating routes in MAPS.ME app, please keep in mind the following:\n\n  - Suggested routes can be considered as recommendations only.\n - Road conditions, traffic rules and signs have higher priority than navigation advice.\n - The map may be incorrect or outdated, and routes may not be created the best possible way.\n\n  Be safe on roads and take care of yourself!";
+"routing_disclaimer" = "Creating routes in Tripfinger app, please keep in mind the following:\n\n  - Suggested routes can be considered as recommendations only.\n - Road conditions, traffic rules and signs have higher priority than navigation advice.\n - The map may be incorrect or outdated, and routes may not be created the best possible way.\n\n  Be safe on roads and take care of yourself!";
 
 /* Outdated maps category */
 "downloader_outdated_maps" = "Outdated";
@@ -749,7 +749,7 @@
 "routing_failed_route_not_found" = "There is no route found between the selected origin and destination. Please select a different start or end point.";
 
 /* InternalError */
-"routing_failed_internal_error" = "Internal error occurred. Please try to delete and download the map again. If problem persist please contact us at support@maps.me.";
+"routing_failed_internal_error" = "Internal error occurred. Please try to delete and download the map again. If problem persist please contact us at support@tripfinger.com.";
 
 /* Context menu item for downloader. */
 "downloader_download_map_and_routing" = "Download Map + Routing";
@@ -796,10 +796,10 @@
 "rating_just_rated" = "I’ve just rated your app";
 
 /* Text for rating dialog */
-"rating_user_since" = "I’ve been MAPS.ME user since %@";
+"rating_user_since" = "I’ve been Tripfinger user since %@";
 
 /* Text for rating dialog */
-"rating_do_like_maps" = "Do you like MAPS.ME?";
+"rating_do_like_maps" = "Do you like Tripfinger?";
 
 /* Text for rating dialog */
 "rating_tap_star" = "Tap a star to rate our app.";
@@ -823,7 +823,7 @@
 "routing_download_map" = "Get map";
 
 /* Text for routing error dialog */
-"routing_download_map_and_routing" = "Download updated map and routing data to get all MAPS.ME features.";
+"routing_download_map_and_routing" = "Download updated map and routing data to get all Tripfinger features.";
 
 /* Text for routing error dialog */
 "routing_get_routing_data" = "Get routing data";
@@ -1016,7 +1016,7 @@
 
 "rate_alert_title" = "Like the app?";
 
-"rate_alert_default_message" = "Thank you for using MAPS.ME. Please rate the app. Your feedback helps us improve our product.";
+"rate_alert_default_message" = "Thank you for using Tripfinger. Please rate the app. Your feedback helps us improve our product.";
 
 "rate_alert_five_star_message" = "Hooray! We love you, too!";
 
@@ -1132,7 +1132,7 @@
 
 "editor_report_problem_duplicate_place_title" = "Duplicated place";
 
-"first_launch_congrats_title" = "MAPS.ME is ready to use";
+"first_launch_congrats_title" = "Tripfinger is ready to use";
 
 "first_launch_congrats_text" = "Search and navigate everywhere in the world offline, free of charge.";
 
@@ -1330,7 +1330,7 @@
 
 "whatsnew_editor_message_1" = "Add new places to the map, and edit existing ones directly from the app.";
 
-"whatsnew_editor_message_2" = "* MAPS.ME uses OpenStreetMap community data.";
+"whatsnew_editor_message_2" = "* Tripfinger uses OpenStreetMap community data.";
 
 "onboarding_offline_navigation_title" = "You will never get lost again";
 
@@ -1340,7 +1340,7 @@
 
 "onboarding_offline_navigation_message_2" = "Plan optimal car and pedestrian routes.";
 
-"onboarding_offline_maps_title" = "MAPS.ME — use the maps of the entire world without an internet connection";
+"onboarding_offline_maps_title" = "Tripfinger — use the maps of the entire world without an internet connection";
 
 "onboarding_offline_maps_message" = "Download the maps for the desired area once, and use the navigation and search functions without an internet connection.";
 
@@ -1350,7 +1350,7 @@
 
 "onboarding_location_title" = "Help us find you";
 
-"onboarding_location_message" = "In order for you to use navigation and the other app functions, MAPS.ME needs access to your geoposition.";
+"onboarding_location_message" = "In order for you to use navigation and the other app functions, Tripfinger needs access to your geoposition.";
 
 "dialog_incorrect_feature_position" = "Change location";
 
@@ -1360,7 +1360,7 @@
 
 "no_migration_during_navigation" = "Updating is not allowed during navigation.";
 
-"editor_sharing_title" = "I improved the MAPS.ME maps";
+"editor_sharing_title" = "I improved the Tripfinger maps";
 
 "editor_comment_will_be_sent" = "We will make sure to send your comments to the map editors.";
 

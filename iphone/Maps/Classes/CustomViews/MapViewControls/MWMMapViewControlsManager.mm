@@ -72,7 +72,7 @@ extern NSString * const kAlohalyticsTapEventKey;
   self.zoomButtons = [[MWMZoomButtons alloc] initWithParentView:controller.view];
   self.menuController = [[MWMBottomMenuViewController alloc] initWithParentController:controller delegate:self];
   self.placePageManager = [[MWMPlacePageViewManager alloc] initWithViewController:controller delegate:self];
-  self.navigationManager = [[MWMNavigationDashboardManager alloc] initWithParentView:controller.view delegate:self];
+  self.navigationManager = [[MWMNavigationDashboardManager alloc] initWithParentView:controller.view andController:controller delegate:self];
   self.searchManager = [[MWMSearchManager alloc] initWithParentView:controller delegate:self];
   self.hidden = NO;
   self.zoomHidden = NO;
@@ -720,7 +720,9 @@ extern NSString * const kAlohalyticsTapEventKey;
   self.menuState = _menuState;
   EAGLView * glView = (EAGLView *)self.ownerController.view;
   glView.widgetsManager.fullScreen = hidden;
-  self.ownerController.navigationController.navigationBarHidden = hidden;
+  BOOL navMode = self.navigationManager.state != MWMNavigationDashboardStateHidden;
+  BOOL isLandScape = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation);
+  self.ownerController.navigationController.navigationBarHidden = navMode || isLandScape || hidden;
 }
 
 - (void)setZoomHidden:(BOOL)zoomHidden
