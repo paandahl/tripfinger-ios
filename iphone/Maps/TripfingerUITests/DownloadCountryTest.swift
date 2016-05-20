@@ -15,6 +15,7 @@ class DownloadCountryTest: XCTestCase {
     super.tearDown()
   }
   
+  
   func testDownloadBrunei() {
     let app = XCUIApplication()
     let exists = NSPredicate(format: "exists == 1")
@@ -31,15 +32,15 @@ class DownloadCountryTest: XCTestCase {
     waitForExpectationsWithTimeout(60, handler: nil)
     downloadButton.tap()
     
-    let downloadLabel = app.staticTexts["Download Brunei:"]
-    expectationForPredicate(exists, evaluatedWithObject: downloadLabel, handler: nil)
-    waitForExpectationsWithTimeout(60, handler: nil)
-    
-    downloadButton = app.buttons["Download"]
-    downloadButton.tap()
+    tapWhenHittable(app.tables.staticTexts["Download guide"])
+    app.sheets["Guide"].collectionViews.buttons["Download guide"].tap()
 
-    downloadButton = app.buttons["Delete"]
-    expectationForPredicate(hittable, evaluatedWithObject: downloadButton, handler: nil)
+    sleep(5)
+    
+    tapWhenHittable(app.tables.staticTexts["Guide content"])
+    let deleteButton = app.sheets["Guide"].collectionViews.buttons["Delete guide content"]
+
+    expectationForPredicate(hittable, evaluatedWithObject: deleteButton, handler: nil)
     waitForExpectationsWithTimeout(600, handler: nil)
 
   }

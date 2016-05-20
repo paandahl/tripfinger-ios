@@ -60,13 +60,13 @@ class MyNavigationController: UINavigationController {
     } else if NSProcessInfo.processInfo().arguments.contains("OFFLINE") {
       print("Simulating offline mode")
       NetworkUtil.simulateOffline = true
+    } else {
+      DownloadService.resumeDownloads()      
     }
     
     TripfingerAppDelegate.coordinateSet = DatabaseService.getCoordinateSet()
     print("fetched coordinateSet: ")
     print(TripfingerAppDelegate.coordinateSet)
-
-    DownloadService.resumeDownloads()
 
     return window
   }
