@@ -97,6 +97,8 @@ static NSString * const kPlacePageActionBarNibName = @"PlacePageActionBar";
   self.routeLabel.hidden = NO;
   self.apiBackButton.hidden = YES;
   self.apiBackLabel.hidden = YES;
+  self.shareButton.hidden = YES;
+  self.shareLabel.hidden = YES;
 }
 
 - (void)twoButtons
@@ -105,6 +107,8 @@ static NSString * const kPlacePageActionBarNibName = @"PlacePageActionBar";
   self.routeLabel.hidden = YES;
   self.apiBackButton.hidden = YES;
   self.apiBackLabel.hidden = YES;
+  self.shareButton.hidden = YES;
+  self.shareLabel.hidden = YES;
 }
 
 - (void)allButtons
@@ -175,17 +179,17 @@ static NSString * const kPlacePageActionBarNibName = @"PlacePageActionBar";
   }
   else if (entity.isMyPosition)
   {
-    CGFloat const boxWidth = 2 * buttonWidth;
-    CGFloat const leftOffset = (actualWidth - boxWidth) / 3.;
+    CGFloat const boxWidth = 1 * buttonWidth;
+    CGFloat const leftOffset = (actualWidth - boxWidth) / 2.;
     self.shareButton.minX = leftOffset;
     self.bookmarkButton.minX = actualWidth - leftOffset - buttonWidth;
   }
   else
   {
-    CGFloat const boxWidth = 3 * buttonWidth;
-    CGFloat const leftOffset = (actualWidth - boxWidth) / 4.;
-    self.shareButton.minX = leftOffset;
-    self.bookmarkButton.minX = self.shareButton.maxX + leftOffset;
+    CGFloat const boxWidth = 2 * buttonWidth;
+    CGFloat const leftOffset = (actualWidth - boxWidth) / 3.;
+//    self.shareButton.minX = leftOffset;
+    self.bookmarkButton.minX = leftOffset;
     self.routeButton.minX = self.bookmarkButton.maxX + leftOffset;
   }
   self.apiBackLabel.minX = self.apiBackButton.minX;
