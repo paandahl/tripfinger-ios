@@ -161,7 +161,6 @@ class MyNavigationController: UINavigationController {
   public class func coordinateToInt(coord: CLLocationCoordinate2D) -> Int64 {
     let latInt = Int64(abs(coord.latitude * 1000000) + 0.5)
     let lonInt = Int64(abs(coord.longitude * 1000000) + 0.5)
-    print("lonInt \(lonInt)")
     let sign: Int64
     if coord.latitude >= 0 && coord.longitude >= 0 {
       sign = 1

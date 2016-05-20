@@ -1074,7 +1074,7 @@ void Framework::UpdateUserViewportChanged()
       for (const auto& tfMark : tfMarks) {
         FeatureID fid(tfMark);
         search::Result::Metadata metadata;
-        search::Result result(fid, tfMark.mercator, "Harooo", "Adreees", "Typeee", tfMark.type, metadata);
+        search::Result result(fid, tfMark.mercator, tfMark.name, "Adreees", "Typeee", tfMark.type, metadata);
         results.AddResult(move(result));
       }
       m_lastInteractiveSearchParams.m_onResults(results);
