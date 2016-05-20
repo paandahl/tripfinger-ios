@@ -169,6 +169,7 @@ class Session {
   // listings (swipe and list view)
   var listingsFromRegion: String?
   var listingsFromCategory: Listing.Category?
+  var listingsFromSubCategory: Listing.SubCategory?
   var currentCategory = Listing.Category.ATTRACTIONS
   var currentSubCategory: Listing.SubCategory?
   var currentListings = List<Listing>()
@@ -182,7 +183,7 @@ class Session {
         handler()
       }
     } else {
-      if listingsFromRegion != currentRegion?.item().name || listingsFromCategory != currentCategory {
+      if listingsFromRegion != currentRegion?.item().name || listingsFromCategory != currentCategory || listingsFromSubCategory != currentSubCategory {
         print("Reloading listings")
         let promise = Promise<Void, NoError>()
         listingsFuture = promise.future
@@ -190,7 +191,8 @@ class Session {
           self.listingsFuture = nil
           failure()
         }
-        ContentService.getCascadingListingsForRegion(self.currentRegion, withCategory: currentCategory, failure: failureHandler) {
+        let category = currentSubCategory != nil ? currentSubCategory!.rawValue : currentCategory.rawValue
+        ContentService.getCascadingListingsForRegion(self.currentRegion, withCategory: category, failure: failureHandler) {
           listings in
           
           self.listingsFromCategory = self.currentCategory

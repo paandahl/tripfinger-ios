@@ -208,7 +208,7 @@ class ContentService {
     }, failure: failure)
   }
     
-  class func getCascadingListingsForRegion(region: Region?, withCategory category: Listing.Category? = nil, failure: () -> (), handler: List<Listing> -> ()) {
+  class func getCascadingListingsForRegion(region: Region?, withCategory category: Int? = nil, failure: () -> (), handler: List<Listing> -> ()) {
     
     if !NetworkUtil.connectedToNetwork() || (region != nil && region!.item().offline) {
       print("fetching offline attractions")
@@ -242,7 +242,7 @@ class ContentService {
       }
       
       if let category = category {
-        parameters["categoryId"] = String(category.rawValue)
+        parameters["categoryId"] = String(category)
       }
       
       if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.RELEASE {

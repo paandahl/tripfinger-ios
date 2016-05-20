@@ -142,7 +142,7 @@ class DatabaseService {
     return getRealm().objects(Listing).filter(predicate)
   }
   
-  class func getCascadingListingsForRegion(region: Region?, category: Listing.Category? = nil) -> List<Listing> {
+  class func getCascadingListingsForRegion(region: Region?, category: Int? = nil) -> List<Listing> {
     var predicate: NSPredicate!
     var listings: Results<Listing>!
     if let region = region {
@@ -164,8 +164,14 @@ class DatabaseService {
       listings = getRealm().objects(Listing)
     }
     if let category = category {
-      print("Filtering by category: \(category.rawValue)")
-      let categoryPredicate = NSPredicate(format: "listing.item.category = %d", category.rawValue)
+      let categoryPredicate: NSPredicate
+      if (String(category).characters.count == 3) {
+        print("Filtering by category: \(category)")
+        categoryPredicate = NSPredicate(format: "listing.item.category = %d", category)
+      } else {
+        print("Filtering by subcategory: \(category)")
+        categoryPredicate = NSPredicate(format: "listing.item.subCategory = %d", category)
+      }
       listings = listings.filter(categoryPredicate)
     }
     let list = List<Listing>()
