@@ -110,9 +110,9 @@ class PlacePageInfoCell: UITableViewCell {
       priceText.scrollEnabled = false
       priceText.font = UIFont.systemFontOfSize(16)
       priceText.text = tripfingerEntity.price
-      priceText.sizeToFit()
+      let priceSize = priceText.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
       views = ["description": descriptionText, "priceLabel": priceLabel, "priceText": priceText]
-      contentView.addConstraints("V:[description]-0-[priceLabel]-10-[priceText]", forViews: views)
+      contentView.addConstraints("V:[description]-0-[priceLabel]-10-[priceText(\(priceSize.height))]", forViews: views)
       contentView.addConstraints("H:|-9-[priceLabel]-5-|", forViews: views)
       contentView.addConstraints("H:|-5-[priceText]-5-|", forViews: views)
       bottomElement = priceText
