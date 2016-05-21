@@ -9,6 +9,8 @@
 #import "MWMRouteHelperPanelsDrawer.h"
 #import "MWMRoutePreview.h"
 #import "MWMTextToSpeech.h"
+#import "MapViewController.h"
+#import "MWMMapViewControlsManager.h"
 #import "Statistics.h"
 
 static NSString * const kRoutePreviewXibName = @"MWMRoutePreview";
@@ -314,8 +316,6 @@ extern NSString * const kTTSStatusWasChangedNotification;
 
 - (void)hideState
 {
-  UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-  self.parentViewController.navigationController.navigationBarHidden = UIDeviceOrientationIsLandscape(orientation);
   [self.routePreview remove];
   [self.navigationDashboard remove];
   [self removePanel:self.nextTurnPanel];
@@ -434,6 +434,9 @@ extern NSString * const kTTSStatusWasChangedNotification;
     break;
   }
   _state = state;
+  if (state == MWMNavigationDashboardStateHidden) {
+    [[MapsAppDelegate theApp].mapViewController.controlsManager setNavBarHidden:NO];
+  }
   [self.delegate updateStatusBarStyle];
 }
 

@@ -42,6 +42,7 @@
 - (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity;
 - (void)openSearch;
 - (void)openMapSearchWithQuery:(NSString*)query;
+- (void)setNavBarHidden:(BOOL)hidden;
 
 #pragma mark - MWMNavigationDashboardManager
 

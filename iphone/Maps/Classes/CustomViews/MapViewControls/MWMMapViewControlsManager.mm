@@ -713,6 +713,7 @@ extern NSString * const kAlohalyticsTapEventKey;
 
 - (void)setHidden:(BOOL)hidden
 {
+  NSLog(@"setHidden");
   if (_hidden == hidden)
     return;
   _hidden = hidden;
@@ -720,10 +721,20 @@ extern NSString * const kAlohalyticsTapEventKey;
   self.menuState = _menuState;
   EAGLView * glView = (EAGLView *)self.ownerController.view;
   glView.widgetsManager.fullScreen = hidden;
+  [self setNavBarHidden:hidden];
+}
+
+- (void)setNavBarHidden:(BOOL)hidden {
   BOOL navMode = self.navigationManager.state != MWMNavigationDashboardStateHidden;
   BOOL isLandScape = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation);
-  self.ownerController.navigationController.navigationBarHidden = navMode || isLandScape || hidden;
+  BOOL mapSearch = self.searchManager.state == MWMSearchManagerStateMapSearch;
+  NSLog(@"navMode: %@", navMode ? @"true" : @"false");
+  NSLog(@"isLandscape: %@", isLandScape ? @"true" : @"false");
+  NSLog(@"mapSearch: %@", mapSearch ? @"true" : @"false");
+  NSLog(@"hidden: %@", hidden ? @"true" : @"false");
+  self.ownerController.navigationController.navigationBarHidden = navMode || isLandScape || mapSearch || hidden;
 }
+
 
 - (void)setZoomHidden:(BOOL)zoomHidden
 {
