@@ -167,26 +167,26 @@ using namespace osm_auth_ios;
   [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
 }
 
-- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-{
-  NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken");
-
-  PFInstallation * currentInstallation = [PFInstallation currentInstallation];
-  [currentInstallation setDeviceTokenFromData:deviceToken];
-  AppInfo * appInfo = [AppInfo sharedInfo];
-  NSUUID * advertisingId = appInfo.advertisingId;
-  if (advertisingId)
-    [currentInstallation setObject:advertisingId.UUIDString forKey:kIOSIDFA];
-  [currentInstallation setObject:appInfo.countryCode forKey:@(kCountryCodeKey.c_str())];
-  [currentInstallation setObject:appInfo.uniqueId forKey:@(kUniqueIdKey.c_str())];
-  NSString * languageId = appInfo.languageId;
-  if (languageId)
-    [currentInstallation setObject:languageId forKey:@(kLanguageKey.c_str())];
-  [currentInstallation setObject:appInfo.bundleVersion forKey:kBundleVersion];
-  [currentInstallation saveInBackground];
-
-  [Alohalytics logEvent:kPushDeviceTokenLogEvent withValue:currentInstallation.deviceToken];
-}
+//- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+//{
+//  NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken");
+//
+//  PFInstallation * currentInstallation = [PFInstallation currentInstallation];
+//  [currentInstallation setDeviceTokenFromData:deviceToken];
+//  AppInfo * appInfo = [AppInfo sharedInfo];
+//  NSUUID * advertisingId = appInfo.advertisingId;
+//  if (advertisingId)
+//    [currentInstallation setObject:advertisingId.UUIDString forKey:kIOSIDFA];
+//  [currentInstallation setObject:appInfo.countryCode forKey:@(kCountryCodeKey.c_str())];
+//  [currentInstallation setObject:appInfo.uniqueId forKey:@(kUniqueIdKey.c_str())];
+//  NSString * languageId = appInfo.languageId;
+//  if (languageId)
+//    [currentInstallation setObject:languageId forKey:@(kLanguageKey.c_str())];
+//  [currentInstallation setObject:appInfo.bundleVersion forKey:kBundleVersion];
+//  [currentInstallation saveInBackground];
+//
+//  [Alohalytics logEvent:kPushDeviceTokenLogEvent withValue:currentInstallation.deviceToken];
+//}
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
