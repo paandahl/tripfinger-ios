@@ -26,11 +26,12 @@ class SearchOnlineTest: XCTestCase {
     let app = XCUIApplication()
     app.navigationBars["Countries"].buttons["Search"].tap()
     
-    var tripfingerSearchNavigationBar = app.navigationBars["Tripfinger.Search"]
-    var searchField = tripfingerSearchNavigationBar.searchFields.element
+    
+    var searchField = XCUIApplication().textFields["Search"]
+    searchField.tap()
     searchField.typeText("Brunei")
-
-    let bruneiRow = app.tables.cells.containingType(.StaticText, identifier:"Country").staticTexts["Brunei"]
+    
+    let bruneiRow = app.tables.cells.containingType(.StaticText, identifier:"Country 255").staticTexts["Brunei"]
     expectationForPredicate(hittable, evaluatedWithObject: bruneiRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     bruneiRow.tap()
@@ -39,10 +40,7 @@ class SearchOnlineTest: XCTestCase {
     
     // attraction search from guide
     app.navigationBars["Bandar"].buttons["Search"].tap()
-    tripfingerSearchNavigationBar = app.navigationBars["Tripfinger.Search"]
-    searchField = tripfingerSearchNavigationBar.searchFields.element
-    waitUntilHittable(searchField)
-    searchField.tap()
+    
     searchField.typeText("Bang Pae")
     
     let bangPaeRow = app.tables.staticTexts["Bang Pae Waterfall"]

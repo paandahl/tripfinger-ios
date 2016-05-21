@@ -20,7 +20,7 @@ class SwipeViewOnlineTest: XCTestCase {
     super.tearDown()
   }
   
-  func testSwipeOnBangkokAndViewOnMap() {
+  func testSwipeOnBangkok() {
     tapWhenHittable(app.tables.staticTexts["Thailand"])
     tapWhenHittable(app.tables.staticTexts["Bangkok"])
     waitUntilExists(app.tables.staticTexts["Silom"])
@@ -30,7 +30,7 @@ class SwipeViewOnlineTest: XCTestCase {
     let frontCard = app.otherElements.elementMatchingType(.Other, identifier: "frontCard")
     frontCard.swipeRight()
 
-    app.navigationBars["Attractions"].buttons["Map"].tap()
+//    app.navigationBars["Attractions"].buttons["Map"].tap()
     
 //    let mapView = app.otherElements.elementMatchingType(.Other, identifier: "mapView")
 //    waitUntilHittable(mapView)
