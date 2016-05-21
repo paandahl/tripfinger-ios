@@ -340,16 +340,7 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 - (UIViewController *)topController
 {
-  if (self.state == MWMSearchManagerStateHidden || GetFramework().Storage().HaveDownloadedCountries())
-  {
-    return self.tabbedController;
-  }
-  else
-  {
-    if (!self.downloadController)
-      self.downloadController = [[MWMSearchDownloadViewController alloc] initWithDelegate:self];
-    return self.downloadController;
-  }
+  return self.tabbedController;
 }
 
 - (void)setDownloadController:(MWMSearchDownloadViewController *)downloadController
