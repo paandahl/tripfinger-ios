@@ -167,18 +167,7 @@ class GuideItemCell: UITableViewCell {
       description = content      
     }
     
-    let encodedData = description.dataUsingEncoding(NSUTF8StringEncoding)!
-    let options : [String: AnyObject] = [
-      NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-      NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding,
-    ]
-    let attributedString = try! NSMutableAttributedString(data: encodedData, options: options, documentAttributes: nil)
-    attributedString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(17.0), range: NSMakeRange(0, attributedString.length))
-    let style = NSMutableParagraphStyle()
-    style.lineSpacing = 5
-    style.paragraphSpacing = 20
-    attributedString.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, attributedString.length))
-    content.attributedText = attributedString
+    content.attributedText = description.attributedString(17.0)
     content.sizeToFit()
     content.scrollEnabled = false
     content.setContentOffset(CGPointZero, animated: true)
