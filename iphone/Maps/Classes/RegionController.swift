@@ -95,21 +95,21 @@ class RegionController: GuideItemController {
   
   private func makeCountryLists(countries: [Region]) -> [(String, List<Region>)] {
     var countryLists = [(String, List<Region>)]()
-    let betaList = List<Region>()
+    var betaCountries = [(Region, List<Region>)]()
     for country in countries {
+      var countryList = getCountryList(country.listing.worldArea, countryLists: countryLists)
+      if countryList == nil {
+        countryList = List<Region>()
+        countryLists.append((country.listing.worldArea, countryList!))
+      }
       if country.item().status == 0 {
-        betaList.append(country)
+        betaCountries.append((country, countryList!))
       } else {
-        var countryList = getCountryList(country.listing.worldArea, countryLists: countryLists)
-        if countryList == nil {
-          countryList = List<Region>()
-          countryLists.append((country.listing.worldArea, countryList!))
-        }
         countryList!.append(country)
       }
     }
-    if betaList.count > 0 {
-      countryLists.append(("Unfinished test-content", betaList))
+    for (country, list) in betaCountries {
+      list.append(country)
     }
     return countryLists
   }  
@@ -207,12 +207,14 @@ extension RegionController {
       let cell = tableView.dequeueReusableCellWithIdentifier(section.cellIdentifier, forIndexPath: indexPath)
       if let cell = cell as? TextMessageCell {
         cell.setTextMessage("You are offline. Go online to view and download countries.")
-        
       } else if cell.reuseIdentifier == TableCellIdentifiers.loadingCell {
         let indicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
         indicator.startAnimating()
-      } else if indexPath.row < section.elements.count {
+      } else if let cell = cell as? RightDetailCell where indexPath.row < section.elements.count {
         cell.textLabel!.text = section.elements[indexPath.row].0
+        if let region = section.elements[indexPath.row].1 as? Region {
+          cell.unfinishedLabel.hidden = region.item().status == 1
+        }
       } else {
         // this is just for the application not to hang when we have race conditions
         // f.ex. you navigate to a region, the cell count is calculated, but before
@@ -222,6 +224,48 @@ extension RegionController {
       }
       
       return cell
+    }
+  }
+  
+  func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    let title = tableSections[section].title
+    if session.currentRegion == nil && title != nil && !title!.containsString("Unfinished") {
+      let view = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 160))
+      let libPath = NSURL.getDirectory(.LibraryDirectory)
+      let imagePath = libPath.URLByAppendingPathComponent(title! + ".jpeg")
+      let image = UIImageView(frame: CGRectMake(0, 0, tableView.frame.size.width, 150))
+      image.contentMode = .ScaleAspectFill
+      image.clipsToBounds = true
+      if NSURL.fileExists(imagePath) {
+        image.image = UIImage(data: NSData(contentsOfURL: imagePath)!)
+      } else {
+        var imageUrl = DownloadService.gcsImagesUrl + title! + ".jpeg"
+        imageUrl = imageUrl.stringByReplacingOccurrencesOfString(" ", withString: "%20")
+        NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: imagePath) {
+          image.image = UIImage(data: NSData(contentsOfURL: imagePath)!)
+        }
+      }
+      let label = UILabel(frame: CGRectMake(10, 120, tableView.frame.size.width, 18))
+      label.font = UIFont.boldSystemFontOfSize(18)
+      label.textColor = UIColor.lightGrayColor()
+      label.shadowColor = UIColor.blackColor()
+      label.shadowOffset = CGSizeMake(0, 1)
+      label.layer.shadowOpacity = 0.5
+      let string = tableSections[section].title
+      label.text = string
+      view.addSubview(image)
+      view.addSubview(label)
+      return view;
+    } else {
+      return nil
+    }
+  }
+  
+  func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    if session.currentRegion == nil && !tableSections[section].title!.containsString("Unfinished") {
+      return 160
+    } else {
+      return 0
     }
   }
 }
