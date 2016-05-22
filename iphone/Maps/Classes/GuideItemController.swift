@@ -113,6 +113,25 @@ extension GuideItemController: GuideItemContainerDelegate {
   }
   
   func populateTableSections() {}
+  
+  func jumpToRegion(regionId: String) {
+    let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+    loadingNotification.mode = MBProgressHUDMode.Indeterminate
+    loadingNotification.labelText = "Loading"
+    let failure = {
+      MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+      let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+      loadingNotification.mode = MBProgressHUDMode.CustomView
+      loadingNotification.labelText = "Connection failed"
+      let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
+      dispatch_after(delayTime, dispatch_get_main_queue()) {
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+      }
+    }
+    TripfingerAppDelegate.jumpToRegion(regionId, failure: failure) {
+      MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+    }
+  }
 }
 
 // MARK: - Navigation

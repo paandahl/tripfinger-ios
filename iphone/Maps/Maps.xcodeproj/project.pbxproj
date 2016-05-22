@@ -1941,14 +1941,14 @@
 		2581DC101CAE30C30086285E /* Guide */ = {
 			isa = PBXGroup;
 			children = (
-				2581DC151CAE30E70086285E /* GuideItemController.swift */,
 				2502337C1CD36896005F9943 /* DetailController.swift */,
+				2581DC151CAE30E70086285E /* GuideItemController.swift */,
 				2581DC311CAE31490086285E /* LicenseController.swift */,
+				2581DC111CAE30D50086285E /* ListController.swift */,
 				2581DC321CAE31490086285E /* ListingsController.swift */,
+				2581DC131CAE30E10086285E /* RegionController.swift */,
 				2581DC331CAE31490086285E /* SectionController.swift */,
 				2581DC341CAE31490086285E /* SwipeController.swift */,
-				2581DC111CAE30D50086285E /* ListController.swift */,
-				2581DC131CAE30E10086285E /* RegionController.swift */,
 			);
 			name = Guide;
 			sourceTree = "<group>";

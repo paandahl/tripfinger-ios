@@ -252,20 +252,28 @@ class MyNavigationController: UINavigationController {
 
   class func selectedSearchResult(searchResult: TripfingerEntity, failure: () -> (), stopSpinner: () -> ()) {
     if searchResult.isListing() {
-      ContentService.getListingWithId(searchResult.tripfingerId, failure: failure) { listing in
-        TripfingerAppDelegate.session.loadRegionFromId(listing.item().parent, failure: failure ) {
-          TripfingerAppDelegate.moveToRegion(stopSpinner) { nav, viewControllers in
-            TripfingerAppDelegate.session.currentListing = listing
-            let entity = TripfingerEntity(listing: listing)
-            TripfingerAppDelegate.viewControllers = viewControllers
-            MapsAppDelegateWrapper.openPlacePage(entity)
-          }
-        }
-      }
+      jumpToListing(searchResult.tripfingerId, failure: failure, stopSpinner: stopSpinner)
     } else {
-      session.loadRegionFromId(searchResult.tripfingerId, failure: failure) {
+      jumpToRegion(searchResult.tripfingerId, failure: failure, stopSpinner: stopSpinner)
+    }
+  }
+  
+  class func jumpToRegion(regionId: String, failure: () -> (), stopSpinner: () -> ()) {
+    session.loadRegionFromId(regionId, failure: failure) {
+      TripfingerAppDelegate.moveToRegion(stopSpinner) { nav, viewControllers in
+        nav.setViewControllers(viewControllers, animated: true)
+      }
+    }
+  }
+  
+  class func jumpToListing(listingId: String, failure: () -> (), stopSpinner: () -> ()) {
+    ContentService.getListingWithId(listingId, failure: failure) { listing in
+      TripfingerAppDelegate.session.loadRegionFromId(listing.item().parent, failure: failure ) {
         TripfingerAppDelegate.moveToRegion(stopSpinner) { nav, viewControllers in
-          nav.setViewControllers(viewControllers, animated: true)
+          session.currentListing = listing
+          let entity = TripfingerEntity(listing: listing)
+          TripfingerAppDelegate.viewControllers = viewControllers
+          MapsAppDelegateWrapper.openPlacePage(entity)
         }
       }
     }

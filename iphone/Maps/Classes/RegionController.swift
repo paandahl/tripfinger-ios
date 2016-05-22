@@ -53,27 +53,6 @@ class RegionController: GuideItemController {
     refreshControl.endRefreshing()
   }
   
-  override func viewWillDisappear(animated: Bool) {
-    print("view will dissappear")
-    if let navigationController = navigationController where
-      navigationController.viewControllers.indexOf(self) == nil && !contextSwitched {
-        print("moving back in hierarchy")
-        guideItemExpanded = false
-        let parentRegionController = navigationController.viewControllers.last as! RegionController
-        let failure = {
-          fatalError("Moved back but couldn't fetch parent. We're stranded.")
-        }
-        session.moveBackInHierarchy(failure) {
-          print("new currentREgion: \(self.session.currentRegion?.getName())")
-          if parentRegionController.tableSections.count == 0 {
-            dispatch_async(dispatch_get_main_queue()) {
-              parentRegionController.updateUI()
-            }
-          }
-        }
-    }
-  }
-  
   override func downloadClicked() {
     if let mwmRegionId = session.currentCountry.mwmRegionId {
       MapsAppDelegateWrapper.openDownloads(mwmRegionId, navigationController: navigationController)

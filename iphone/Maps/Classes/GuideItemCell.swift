@@ -4,6 +4,7 @@ protocol GuideItemContainerDelegate: class {
   func readMoreClicked()
   func licenseClicked()
   func downloadClicked()
+  func jumpToRegion(regionId: String)
 }
 
 class GuideItemCell: UITableViewCell {
@@ -171,6 +172,7 @@ class GuideItemCell: UITableViewCell {
     content.sizeToFit()
     content.scrollEnabled = false
     content.setContentOffset(CGPointZero, animated: true)
+    content.delegate = self
     
     setNeedsUpdateConstraints()
   }
@@ -178,5 +180,17 @@ class GuideItemCell: UITableViewCell {
   func navigateToLicense() {
     print("licenseClicked")
     delegate.licenseClicked()
+  }
+}
+
+extension GuideItemCell: UITextViewDelegate {
+  
+  func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+    if URL.scheme == "region" {
+      let regionId = URL.host!
+      delegate.jumpToRegion(regionId)
+      return false
+    }
+    return true
   }
 }
