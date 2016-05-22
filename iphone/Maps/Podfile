@@ -1,14 +1,14 @@
 # Uncomment this line to define a global platform for your project
 platform :ios, '8.0'
 
-target 'MAPS.ME' do
+target 'Tripfinger' do
 use_frameworks!
 
 pod "MDCSwipeToChoose"
 pod 'Alamofire', '3.1.4'
 pod 'RealmSwift', '0.98.6'
 pod 'MBProgressHUD', '0.9.2'
-pod 'BrightFutures'
+pod 'BrightFutures', '3.3.0'
 
 end
 
