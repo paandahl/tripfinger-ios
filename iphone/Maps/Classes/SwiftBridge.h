@@ -162,8 +162,15 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+SWIFT_PROTOCOL("_TtP10Tripfinger25PlacePageInfoCellDelegate_")
+@protocol PlacePageInfoCellDelegate
+- (void)navigatedToRegion;
+@end
+
+
 SWIFT_CLASS("_TtC10Tripfinger17PlacePageInfoCell")
 @interface PlacePageInfoCell : UITableViewCell
+@property (nonatomic, strong) id <PlacePageInfoCellDelegate> __nullable delegate;
 @property (nonatomic) BOOL contentSet;
 @property (nonatomic, readonly, strong) UIImageView * __nonnull myImageView;
 @property (nonatomic, readonly, strong) UITextView * __nonnull descriptionText;

@@ -7,5 +7,6 @@
 - (void)updateStatusBarStyle;
 - (void)apiBack;
 - (void)placePageDidClose;
+- (void)navigatedToGuide;
 
 @end

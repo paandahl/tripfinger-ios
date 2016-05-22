@@ -101,6 +101,10 @@ extern NSString * const kBookmarksChangedNotification;
   [self configPlacePage];
 }
 
+- (void)navigatedToGuide {
+  [self.delegate navigatedToGuide];
+}
+
 
 #pragma mark - Layout
 

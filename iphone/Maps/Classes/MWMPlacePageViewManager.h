@@ -23,6 +23,7 @@
 - (BOOL)hasPlacePage;
 - (void)dismissPlacePage;
 - (void)hidePlacePage;
+- (void)navigatedToGuide;
 - (void)buildRoute;
 - (void)routeFrom;
 - (void)routeTo;

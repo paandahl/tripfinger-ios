@@ -1,7 +1,12 @@
 import Foundation
 
+@objc protocol PlacePageInfoCellDelegate {
+  func navigatedToRegion();
+}
+
 class PlacePageInfoCell: UITableViewCell {
   
+  var delegate: PlacePageInfoCellDelegate?
   var contentSet = false
   let myImageView = UIImageView()
   let licenseButton = UIButton()
@@ -67,29 +72,11 @@ class PlacePageInfoCell: UITableViewCell {
     contentView.addConstraints("V:[license]-20-[description]", forViews: views)
     contentView.addConstraints("H:[license]-20-|", forViews: views)
     
-    let encodedData = tripfingerEntity.content.dataUsingEncoding(NSUTF8StringEncoding)!
-    let style = NSMutableParagraphStyle()
-    style.lineSpacing = 5
-    style.paragraphSpacing = 10
-    let options : [String: AnyObject] = [
-      NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-      NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding,
-    ]
-    let attributes : [String: AnyObject] = [
-      NSFontAttributeName: UIFont.systemFontOfSize(17.0),
-      NSForegroundColorAttributeName: UIColor.blackColor(),
-      NSParagraphStyleAttributeName: style
-    ]
-    let attributedString = try! NSMutableAttributedString(data: encodedData, options: options, documentAttributes: nil)
-    attributedString.setAttributes(attributes, range: NSMakeRange(0, attributedString.length))
-
-
-    print(tripfingerEntity.content)
-
-    descriptionText.attributedText = attributedString
+    descriptionText.attributedText = tripfingerEntity.content.attributedString(17.0)
     descriptionText.sizeToFit()
     descriptionText.scrollEnabled = false
     descriptionText.setContentOffset(CGPointZero, animated: true)
+    descriptionText.delegate = self
     
     let fixedWidth = myWidth - 10
     let newSize = descriptionText.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
@@ -176,5 +163,20 @@ class PlacePageInfoCell: UITableViewCell {
   
   func navigateToLicense() {
     TripfingerAppDelegate.navigateToLicense()
+  }
+}
+
+extension PlacePageInfoCell: UITextViewDelegate {
+  func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+    if URL.scheme == "region" {
+      let regionId = URL.host!
+      TripfingerAppDelegate.navigationController.navigationBarHidden = false
+      TripfingerAppDelegate.jumpToRegion(regionId, failure: {fatalError("Failzed45")}, stopSpinner: {})
+      if let delegate = delegate {
+        delegate.navigatedToRegion()
+      }
+      return false
+    }
+    return true
   }
 }

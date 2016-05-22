@@ -379,6 +379,11 @@ extern NSString * const kAlohalyticsTapEventKey;
     [self.navigationManager showHelperPanels];
 }
 
+- (void)navigatedToGuide {
+  self.searchManager.state = MWMSearchManagerStateHidden;
+  self.navigationManager.state = MWMNavigationDashboardStateHidden;
+}
+
 - (void)addPlacePageViews:(NSArray *)views
 {
   UIView * ownerView = self.ownerController.view;
@@ -728,10 +733,6 @@ extern NSString * const kAlohalyticsTapEventKey;
   BOOL navMode = self.navigationManager.state != MWMNavigationDashboardStateHidden;
   BOOL isLandScape = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation);
   BOOL mapSearch = self.searchManager.state == MWMSearchManagerStateMapSearch;
-  NSLog(@"navMode: %@", navMode ? @"true" : @"false");
-  NSLog(@"isLandscape: %@", isLandScape ? @"true" : @"false");
-  NSLog(@"mapSearch: %@", mapSearch ? @"true" : @"false");
-  NSLog(@"hidden: %@", hidden ? @"true" : @"false");
   self.ownerController.navigationController.navigationBarHidden = navMode || isLandScape || mapSearch || hidden;
 }
 
