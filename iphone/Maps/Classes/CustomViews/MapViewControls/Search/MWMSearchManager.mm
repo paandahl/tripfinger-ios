@@ -167,6 +167,7 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
   self.searchTextField.text = text;
   NSString * inputLocale = locale ? locale : self.searchTextField.textInputMode.primaryLanguage;
   [self.tableViewController searchText:text forInputLocale:inputLocale];
+  self.state = MWMSearchManagerStateMapSearch;
 }
 
 - (void)tapMyPositionFromHistory
