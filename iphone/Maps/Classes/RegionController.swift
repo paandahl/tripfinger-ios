@@ -262,7 +262,7 @@ extension RegionController {
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    if session.currentRegion == nil && !tableSections[section].title!.containsString("Unfinished") {
+    if session.currentRegion == nil {
       return 160
     } else {
       return 0
