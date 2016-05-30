@@ -59,7 +59,7 @@ class DatabaseService {
       } else {
         let guideListingNotes = GuideListingNotes()
         guideListingNotes.likedState = likedState
-        guideListingNotes.attractionId = listing.item().id
+        guideListingNotes.attractionId = listing.item().uuid
         realm.add(guideListingNotes)
         listing.listing.notes = guideListingNotes
       }
@@ -97,7 +97,7 @@ class DatabaseService {
     let regions = writeRealm != nil ? writeRealm.objects(Region) : getRealm().objects(Region)
 
     for region in regions {
-      if region.listing.item.id == regionId {
+      if region.listing.item.uuid == regionId {
         region.item().offline = true
         return region
       }
@@ -154,7 +154,7 @@ class DatabaseService {
       case Region.Category.CITY.rawValue:
         predicate = NSPredicate(format: "listing.country = %@ and listing.city = %@", region.listing.country, region.item().name)
       case Region.Category.NEIGHBOURHOOD.rawValue:
-        predicate = NSPredicate(format: "listing.item.parent = %@", region.item().id)
+        predicate = NSPredicate(format: "listing.item.parent = %@", region.item().uuid)
       default:
         try! { throw Error.RuntimeError("Cascade not supported for type: \(region.item().category)") }()
       }
@@ -184,7 +184,7 @@ class DatabaseService {
   }
 
   class func getListingWithId(attractionId: String) -> Listing? {
-    let predicate = NSPredicate(format: "listing.item.id = %@", attractionId)
+    let predicate = NSPredicate(format: "listing.item.uuid = %@", attractionId)
     let attractions = getRealm().objects(Listing).filter(predicate)
     print("got \(attractions.count) attractions with id \(attractionId)")
     if attractions.count == 1 {
@@ -294,7 +294,7 @@ class DatabaseService {
   }
   
   class func getGuideTextWithId(region: Region, guideTextId: String) -> GuideText {
-    let predicate = NSPredicate(format: "item.id = %@", guideTextId)
+    let predicate = NSPredicate(format: "item.uuid = %@", guideTextId)
     let guideTexts = getRealm().objects(GuideText).filter(predicate)
     return guideTexts[0]
   }

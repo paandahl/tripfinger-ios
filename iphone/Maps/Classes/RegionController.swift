@@ -213,7 +213,7 @@ extension RegionController {
       } else if let cell = cell as? RightDetailCell where indexPath.row < section.elements.count {
         cell.textLabel!.text = section.elements[indexPath.row].0
         if let region = section.elements[indexPath.row].1 as? Region {
-          cell.unfinishedLabel.hidden = region.item().status == 1
+          cell.unfinishedLabel.hidden = region.item().status == 10
         }
       } else {
         // this is just for the application not to hang when we have race conditions

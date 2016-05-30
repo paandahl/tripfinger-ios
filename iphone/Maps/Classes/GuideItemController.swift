@@ -70,10 +70,9 @@ class GuideItemController: TableController {
   
   func backButtonAction(viewController: UIViewController) {
     print("back button action")
-    if let navigationController = navigationController where
-      navigationController.viewControllers.indexOf(viewController) == nil && !contextSwitched {
+    if TripfingerAppDelegate.navigationController.viewControllers.indexOf(viewController) == nil && !contextSwitched {
         guideItemExpanded = false
-        let parentViewController = navigationController.viewControllers.last as? GuideItemController
+        let parentViewController = TripfingerAppDelegate.navigationController.viewControllers.last as? GuideItemController
         let failure = {
           fatalError("we're stranded")
         }

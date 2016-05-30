@@ -7,7 +7,9 @@ class OnlineSearch {
     
     var parameters = [String: String]()
     if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.RELEASE {
-      parameters["onlyPublished"] = "false"
+      parameters["fetchType"] = "STAGED_OR_PUBLISHED"
+    } else {
+      parameters["fetchType"] = "ONLY_PUBLISHED"
     }
     
     let req = NetworkUtil.getJsonFromUrl(TripfingerAppDelegate.serverUrl + "/search/\(fullSearchString)", parameters: parameters, success: {

@@ -71,7 +71,9 @@ class DownloadService {
       let url = TripfingerAppDelegate.serverUrl + "/download_country/\(region.getName())"
       var parameters = [String: String]()
       if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.RELEASE {
-        parameters["onlyPublished"] = "false"
+        parameters["fetchType"] = "STAGED_OR_PUBLISHED"
+      } else {
+        parameters["fetchType"] = "ONLY_PUBLISHED"
       }
       let jsonPath = countryPath.URLByAppendingPathComponent(region.getName() + ".json")
       if NSURL.fileExists(jsonPath) {

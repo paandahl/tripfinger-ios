@@ -54,7 +54,7 @@ import Foundation
     self.category = listing.item().category
     self.offline = listing.item().offline
     self.name = listing.item().name
-    self.tripfingerId = listing.item().id
+    self.tripfingerId = listing.item().uuid
     self.lat = listing.listing.latitude
     self.lon = listing.listing.longitude
     self.type = Int32(Listing.SubCategory(rawValue: listing.item().subCategory)!.osmType)
@@ -85,7 +85,7 @@ import Foundation
     self.category = region.item().category
     self.offline = region.item().offline
     self.name = region.item().name
-    self.tripfingerId = region.item().id
+    self.tripfingerId = region.item().uuid
     self.lat = region.listing.latitude
     self.lon = region.listing.longitude
     self.type = Int32(Region.Category(rawValue: region.item().category)!.osmType)

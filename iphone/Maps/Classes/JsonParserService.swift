@@ -9,13 +9,13 @@ class JsonParserService {
   
   class func parseGuideItem(guideItem: GuideItem, withJson json: JSON) -> GuideItem {
     guideItem.name = json["name"].string
-    guideItem.id = json["id"].string
+    guideItem.versionId = json["id"].string
     guideItem.uuid = json["uuid"].string!
     guideItem.content = json["description"].string
     guideItem.category = json["category"].int!
     guideItem.subCategory = json["subCategory"].int!
     guideItem.status = json["status"].int!
-    guideItem.parent = json["parent"].string
+    guideItem.parent = json["parentUuid"].string
     guideItem.textLicense = json["textLicense"].string
     guideItem.offline = false
     guideItem.loadStatus = GuideItem.LoadStatus.FULLY_LOADED
@@ -104,7 +104,7 @@ class JsonParserService {
     simplePoi.location = json["location"].string
     simplePoi.latitude = json["latitude"].double!
     simplePoi.longitude = json["longitude"].double!
-    simplePoi.listingId = json["listingId"].string!
+    simplePoi.listingId = json["id"].string!
     return simplePoi
   }
   

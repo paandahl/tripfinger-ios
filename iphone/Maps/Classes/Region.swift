@@ -102,7 +102,7 @@ class Region: Object {
 extension Region: GuideItemHolder {
   
   func getId() -> String! {
-    return listing.item.id
+    return listing.item.uuid
   }
   
   func getName() -> String {

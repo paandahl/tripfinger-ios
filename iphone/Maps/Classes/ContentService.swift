@@ -33,7 +33,13 @@ class ContentService {
   
   
   class func getCountries(failure: () -> (), handler: [Region] -> ()) {
-    let parameters = ["onlyPublished": "false"]
+    var parameters = [String: String]()
+    if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.RELEASE {
+      parameters["fetchType"] = "STAGED_OR_PUBLISHED"
+    } else {
+      parameters["fetchType"] = "ONLY_PUBLISHED"
+    }
+
     NetworkUtil.getJsonFromUrl(TripfingerAppDelegate.serverUrl + "/countries", parameters: parameters, success: {
       json in
       
@@ -47,7 +53,7 @@ class ContentService {
   }
   
   class func getGuideTextsForGuideItem(guideItem: GuideItem, failure: () -> (), handler: (guideTexts: [GuideText]) -> ()) {
-    let id = String(guideItem.id!)
+    let id = String(guideItem.uuid!)
     NetworkUtil.getJsonFromUrl(TripfingerAppDelegate.serverUrl + "/regions/\(id)/guideTexts", success: {
       json in
       
@@ -117,7 +123,9 @@ class ContentService {
     
     var parameters = [String: String]()
     if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.RELEASE {
-      parameters["onlyPublished"] = "false"
+      parameters["fetchType"] = "STAGED_OR_PUBLISHED"
+    } else {
+      parameters["fetchType"] = "ONLY_PUBLISHED"
     }
     
     NetworkUtil.getJsonFromUrl(url, parameters: parameters, success: {
@@ -134,7 +142,9 @@ class ContentService {
   class func getCountryWithName(name: String, failure: () -> (), handler: Region -> ()) {
     var parameters = [String: String]()
     if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.RELEASE {
-      parameters["onlyPublished"] = "false"
+      parameters["fetchType"] = "STAGED_OR_PUBLISHED"
+    } else {
+      parameters["fetchType"] = "ONLY_PUBLISHED"
     }
     
     NetworkUtil.getJsonFromUrl(TripfingerAppDelegate.serverUrl + "/countries/\(name)", parameters: parameters, success: {
@@ -154,7 +164,9 @@ class ContentService {
     
     var parameters = [String: String]()
     if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.RELEASE {
-      parameters["onlyPublished"] = "false"
+      parameters["fetchType"] = "STAGED_OR_PUBLISHED"
+    } else {
+      parameters["fetchType"] = "ONLY_PUBLISHED"
     }
     
     NetworkUtil.getJsonFromUrl(TripfingerAppDelegate.serverUrl + "/regions/\(regionId)", parameters: parameters, success: {
@@ -196,7 +208,7 @@ class ContentService {
       
       if withNotes {
         dispatch_async(dispatch_get_main_queue()) {
-          if let notes = DatabaseService.getListingNotes(attraction.item().id) {
+          if let notes = DatabaseService.getListingNotes(attraction.item().uuid) {
             attraction.listing.notes = notes
           }
           
@@ -235,7 +247,7 @@ class ContentService {
         default:
           try! { throw Error.RuntimeError("Region category not recognized: \(region.item().category)") }()
         }
-        url = TripfingerAppDelegate.serverUrl + "/regions/\(region.listing.item.id)/attractions"
+        url = TripfingerAppDelegate.serverUrl + "/regions/\(region.listing.item.uuid)/attractions"
         
       } else {
         url = TripfingerAppDelegate.serverUrl + "/attractions"
@@ -246,7 +258,9 @@ class ContentService {
       }
       
       if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.RELEASE {
-        parameters["onlyPublished"] = "false"
+        parameters["fetchType"] = "STAGED_OR_PUBLISHED"
+      } else {
+        parameters["fetchType"] = "ONLY_PUBLISHED"
       }
       
       NetworkUtil.getJsonFromUrl(url, parameters: parameters, success: {
@@ -255,7 +269,7 @@ class ContentService {
         dispatch_async(dispatch_get_main_queue()) {
           let listings = JsonParserService.parseListings(json)
           for listing in listings {
-            if let notes = DatabaseService.getListingNotes(listing.item().id) {
+            if let notes = DatabaseService.getListingNotes(listing.item().uuid) {
               listing.listing.notes = notes
             }
           }
