@@ -77,6 +77,7 @@
 		2581DCAD1CAF917D0086285E /* SearchServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCAB1CAF917D0086285E /* SearchServiceTest.swift */; };
 		2581DCAE1CAF917D0086285E /* OnlineSearchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */; };
 		25B563641CFCAE5000E82351 /* UnitTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B563631CFCAE5000E82351 /* UnitTestUtils.swift */; };
+		25B563661CFF584E00E82351 /* StringUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B563651CFF584D00E82351 /* StringUtilsTest.swift */; };
 		25D378F21CAFD13400552633 /* thailand.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D378F11CAFD13400552633 /* thailand.json */; };
 		25D378F41CAFD13900552633 /* brunei-download.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D378F31CAFD13900552633 /* brunei-download.json */; };
 		25D378F61CAFD49500552633 /* SyncManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D378F51CAFD49500552633 /* SyncManagerTest.swift */; };
@@ -1010,6 +1011,7 @@
 		2581DCAB1CAF917D0086285E /* SearchServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchServiceTest.swift; sourceTree = "<group>"; };
 		2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineSearchTest.swift; sourceTree = "<group>"; };
 		25B563631CFCAE5000E82351 /* UnitTestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTestUtils.swift; sourceTree = "<group>"; };
+		25B563651CFF584D00E82351 /* StringUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtilsTest.swift; sourceTree = "<group>"; };
 		25D378F11CAFD13400552633 /* thailand.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = thailand.json; sourceTree = "<group>"; };
 		25D378F31CAFD13900552633 /* brunei-download.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "brunei-download.json"; sourceTree = "<group>"; };
 		25D378F51CAFD49500552633 /* SyncManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTest.swift; sourceTree = "<group>"; };
@@ -2053,6 +2055,7 @@
 				2581DCA21CAF915E0086285E /* DownloadServiceTest.swift */,
 				2581DCA31CAF915E0086285E /* JsonParserServiceTest.swift */,
 				2581DCA41CAF915E0086285E /* NetworkUtilTest.swift */,
+				25B563651CFF584D00E82351 /* StringUtilsTest.swift */,
 				25D378F51CAFD49500552633 /* SyncManagerTest.swift */,
 				25D378F01CAFD12600552633 /* Supporting Files */,
 				25B563631CFCAE5000E82351 /* UnitTestUtils.swift */,
@@ -4308,6 +4311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25B563661CFF584E00E82351 /* StringUtilsTest.swift in Sources */,
 				25E477C01CC8AB5A008C668E /* AppDelegateTest.swift in Sources */,
 				2581DCAD1CAF917D0086285E /* SearchServiceTest.swift in Sources */,
 				2581DCA91CAF915E0086285E /* NetworkUtilTest.swift in Sources */,
