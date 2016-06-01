@@ -128,11 +128,12 @@ class GuideItemCell: UITableViewCell {
     for paragraph in paragraphs {
       let views = ["previousP": previousP, "P": paragraph]
       let pSize = paragraph.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
-      let pHeight = Int(pSize.height - 20 + 1) // last paragraphs margin
+      let pHeight = Int(pSize.height - 25 + 1) // last paragraphs margin
 
       contentView.addConstraints("V:[previousP]-0-[P(\(pHeight))]", forViews: views)
       contentView.addConstraints("H:|-10-[P]-10-|", forViews: views)
       paragraph.hidden = false
+      paragraph.textContainerInset = UIEdgeInsetsZero
       previousP = paragraph
     }
     let views = ["lastP": paragraphs.count > 0 ? paragraphs[paragraphs.count - 1] : firstParagraph]
@@ -186,7 +187,7 @@ class GuideItemCell: UITableViewCell {
     }
 
     var first = true;
-    for paragraphText in description.splitInParagraphs() {
+    for paragraphText in description.splitInParagraphs(8) {
       let paragraph = first ? firstParagraph : UITextView()
       paragraph.linkTextAttributes[NSForegroundColorAttributeName] = UIColor.blackColor()
       paragraph.editable = false
@@ -195,7 +196,7 @@ class GuideItemCell: UITableViewCell {
         paragraph.hidden = true
       }
       
-      paragraph.attributedText = paragraphText.attributedString(17.0, paragraphSpacing: 10)
+      paragraph.attributedText = paragraphText.attributedString(17.0, paragraphSpacing: 20)
       paragraph.sizeToFit()
       paragraph.scrollEnabled = false
       paragraph.setContentOffset(CGPointZero, animated: true)

@@ -2,16 +2,28 @@ import Foundation
 
 extension String {
   
-  func splitInParagraphs() -> [String] {
+  func splitInParagraphs(threshhold: Int = 1) -> [String] {
     var paragraphs = [String]()
     var paragraphStart = self.startIndex
     var paragraphEnd = self.rangeOfString("</p>")
+    var i = 0;
+    var grouping = ""
     while paragraphEnd != nil {
+      i += 1
       let paragraphRange = Range<String.Index>(start: paragraphStart, end: paragraphEnd!.endIndex)
-      paragraphs.append(self.substringWithRange(paragraphRange))
+      grouping.appendContentsOf(self.substringWithRange(paragraphRange))
       paragraphStart = paragraphEnd!.endIndex
+      
       let restOfTextRange = Range<String.Index>(start: paragraphEnd!.endIndex, end: self.endIndex)
       paragraphEnd = self.rangeOfString("</p>", range: restOfTextRange)
+      if i == threshhold {
+        paragraphs.append(grouping)
+        grouping = ""
+        i = 0;
+      }
+    }
+    if grouping != "" {
+      paragraphs.append(grouping)
     }
     return paragraphs
   }
