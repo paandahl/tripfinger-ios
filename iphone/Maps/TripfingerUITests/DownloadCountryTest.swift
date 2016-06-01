@@ -23,11 +23,9 @@ class DownloadCountryTest: XCTestCase {
     let notHittable = NSPredicate(format: "hittable == 0")
     
     let bruneiRow = app.tables.staticTexts["Brunei"]
-    expectationForPredicate(exists, evaluatedWithObject: bruneiRow, handler: nil)
-    waitForExpectationsWithTimeout(60, handler: nil)
-    bruneiRow.tap()
+    tapWhenHittable(bruneiRow, parent: app.tables.element)
     
-    var downloadButton = app.buttons["Download"]
+    let downloadButton = app.buttons["Download"]
     expectationForPredicate(exists, evaluatedWithObject: downloadButton, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     downloadButton.tap()

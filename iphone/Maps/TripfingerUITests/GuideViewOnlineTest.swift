@@ -31,7 +31,7 @@ class GuideViewOnlineTest: XCTestCase {
 
     print(app.tables.staticTexts["Bangkok"].hittable)
     let understandRow = app.tables.staticTexts["Introduction"]
-    scrollToElement(understandRow, container: app.tables.element)
+    scrollToElement(understandRow)
     understandRow.tap()
     
     let historyRow = app.tables.staticTexts["See"]
@@ -42,12 +42,12 @@ class GuideViewOnlineTest: XCTestCase {
     backButton.tap()
 
     let chiangMaiRow = app.tables.staticTexts["Chiang Mai"]
-    app.tables.element.scrollToElement(chiangMaiRow)
+    scrollToElement(chiangMaiRow)
 
     print("count4 \(app.tables.staticTexts.count)")
     
     let bangkokRow = app.tables.staticTexts["Bangkok"]
-    app.tables.element.scrollToElement(bangkokRow)
+    scrollToElement(bangkokRow)
     bangkokRow.tap()
     
     print("TAPPED THE KOK")
@@ -55,7 +55,7 @@ class GuideViewOnlineTest: XCTestCase {
     let silomRow = app.tables.staticTexts["Silom"]
     expectationForPredicate(exists, evaluatedWithObject: silomRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
-    app.tables.element.scrollToElement(silomRow)
+    scrollToElement(silomRow)
     silomRow.tap()
 
     backButton = app.navigationBars["Silom"].buttons["Bangkok"]
@@ -78,13 +78,13 @@ class GuideViewOnlineTest: XCTestCase {
     expectationForPredicate(exists, evaluatedWithObject: chiangMaiRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     let koSamuiRow = app.tables.staticTexts["Ko Samui"]
-    app.tables.element.scrollToElement(koSamuiRow)
+    scrollToElement(koSamuiRow)
     koSamuiRow.tap()
 
     let chawengRow = app.tables.staticTexts["Chaweng"]
     expectationForPredicate(exists, evaluatedWithObject: chawengRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
-    app.tables.element.scrollToElement(chawengRow)
+    scrollToElement(chawengRow)
     chawengRow.tap()
     
     backButton = app.navigationBars["Chaweng"].buttons["Ko Samui"]

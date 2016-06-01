@@ -1,31 +1,47 @@
 {
+  "mwmRegionId":null,
   "radius":null,
   "polygonCoordinates":null,
   "guideSections":[
                    {
-                   "order":0,
+                   "order":1,
                    "guideSections":[
                    
                    ],
                    "categoryDescriptions":null,
-                   "id":"text-brunei-history",
+                   "id":"66550f0c-944d-40cd-9552-246ed51c0d5a",
                    "uuid":"a008ebdb-b42e-4fbc-a989-3e0b4654ad7b",
+                   "slug":null,
                    "name":"History",
                    "alternativeName":null,
+                   "originalName":null,
                    "category":0,
                    "subCategory":0,
-                   "status":1,
+                   "status":0,
+                   "parent":{
+                   "raw":{
+                   "parentKey":null,
+                   "kind":"GuideItem",
+                   "appId":null,
+                   "id":0,
+                   "name":"region-brunei"
+                   }
+                   },
+                   "parentUuid":"364c60a0-be0a-4c89-9a7a-a6213e5527ce",
+                   "checkupDate":null,
                    "description":"\u003cp\u003eBrunei has a history.\u003c/p\u003e",
                    "textLicense":null,
+                   "editorialComment":null,
+                   "hasBeenPublished":false,
+                   "unique":false,
                    "images":[
                    
                    ],
                    "imagesNotFoundOnImport":[
                    
                    ],
-                   "parentAsString":null,
-                   "entityType":"guidetext",
-                   "parent":"region-brunei"
+                   "changeState":0,
+                   "entityType":"guidetext"
                    }
                    ],
   "categoryDescriptions":[
@@ -38,54 +54,34 @@
                                            
                                            ],
                                            "categoryDescriptions":null,
-                                           "id":"text-brunei-history-pistory5",
+                                           "id":"1148a451-41e7-4348-9dc9-7413e6a7a6f5",
                                            "uuid":"746c5e39-68a7-49e0-8fbc-0356a3068a42",
+                                           "slug":null,
                                            "name":"Pistory",
                                            "alternativeName":null,
+                                           "originalName":null,
                                            "category":0,
                                            "subCategory":0,
-                                           "status":1,
+                                           "status":0,
+                                           "parent":null,
+                                           "parentUuid":"a5381a37-4676-4dc1-a809-a2b17b761e2c",
+                                           "checkupDate":null,
                                            "description":null,
                                            "textLicense":null,
+                                           "editorialComment":null,
+                                           "hasBeenPublished":false,
+                                           "unique":false,
                                            "images":[
                                            
                                            ],
                                            "imagesNotFoundOnImport":[
                                            
                                            ],
-                                           "parentAsString":null,
-                                           "entityType":"guidetext",
-                                           "parent":"text-brunei-230"
+                                           "changeState":0,
+                                           "entityType":"guidetext"
                                            }
                                            ],
                           "categoryDescriptions":[
-                                                  {
-                                                  "order":1,
-                                                  "guideSections":[
-                                                  
-                                                  ],
-                                                  "categoryDescriptions":[
-                                                  
-                                                  ],
-                                                  "id":"text-brunei-23007",
-                                                  "uuid":"03161888-1007-416f-95f4-6bfccb0b085a",
-                                                  "name":"2300",
-                                                  "alternativeName":null,
-                                                  "category":230,
-                                                  "subCategory":2300,
-                                                  "status":1,
-                                                  "description":null,
-                                                  "textLicense":null,
-                                                  "images":[
-                                                  
-                                                  ],
-                                                  "imagesNotFoundOnImport":[
-                                                  
-                                                  ],
-                                                  "parentAsString":null,
-                                                  "entityType":"guidetext",
-                                                  "parent":"region-brunei"
-                                                  },
                                                   {
                                                   "order":2,
                                                   "guideSections":[
@@ -94,71 +90,158 @@
                                                   "categoryDescriptions":[
                                                   
                                                   ],
-                                                  "id":"text-brunei-23104",
-                                                  "uuid":"45801506-dcd0-46f3-867e-c5bfc2569664",
-                                                  "name":"2310",
+                                                  "id":"048cf43b-a33a-483f-b792-95aa9053713c",
+                                                  "uuid":"03161888-1007-416f-95f4-6bfccb0b085a",
+                                                  "slug":null,
+                                                  "name":"2300",
                                                   "alternativeName":null,
+                                                  "originalName":null,
                                                   "category":230,
-                                                  "subCategory":2310,
-                                                  "status":1,
+                                                  "subCategory":2300,
+                                                  "status":0,
+                                                  "parent":{
+                                                  "raw":{
+                                                  "parentKey":null,
+                                                  "kind":"GuideItem",
+                                                  "appId":null,
+                                                  "id":0,
+                                                  "name":"region-brunei"
+                                                  }
+                                                  },
+                                                  "parentUuid":"364c60a0-be0a-4c89-9a7a-a6213e5527ce",
+                                                  "checkupDate":null,
                                                   "description":null,
                                                   "textLicense":null,
+                                                  "editorialComment":null,
+                                                  "hasBeenPublished":false,
+                                                  "unique":false,
                                                   "images":[
                                                   
                                                   ],
                                                   "imagesNotFoundOnImport":[
                                                   
                                                   ],
-                                                  "parentAsString":null,
-                                                  "entityType":"guidetext",
-                                                  "parent":"region-brunei"
+                                                  "changeState":0,
+                                                  "entityType":"guidetext"
+                                                  },
+                                                  {
+                                                  "order":4,
+                                                  "guideSections":[
+                                                  
+                                                  ],
+                                                  "categoryDescriptions":[
+                                                  
+                                                  ],
+                                                  "id":"f815a856-3f38-4caf-b88f-2c052f118d06",
+                                                  "uuid":"45801506-dcd0-46f3-867e-c5bfc2569664",
+                                                  "slug":null,
+                                                  "name":"2310",
+                                                  "alternativeName":null,
+                                                  "originalName":null,
+                                                  "category":230,
+                                                  "subCategory":2310,
+                                                  "status":0,
+                                                  "parent":{
+                                                  "raw":{
+                                                  "parentKey":null,
+                                                  "kind":"GuideItem",
+                                                  "appId":null,
+                                                  "id":0,
+                                                  "name":"region-brunei"
+                                                  }
+                                                  },
+                                                  "parentUuid":"364c60a0-be0a-4c89-9a7a-a6213e5527ce",
+                                                  "checkupDate":null,
+                                                  "description":null,
+                                                  "textLicense":null,
+                                                  "editorialComment":null,
+                                                  "hasBeenPublished":false,
+                                                  "unique":false,
+                                                  "images":[
+                                                  
+                                                  ],
+                                                  "imagesNotFoundOnImport":[
+                                                  
+                                                  ],
+                                                  "changeState":0,
+                                                  "entityType":"guidetext"
                                                   }
                                                   ],
-                          "id":"text-brunei-230",
+                          "id":"9fc80bbf-e594-499e-a9d3-d4404828922a",
                           "uuid":"a5381a37-4676-4dc1-a809-a2b17b761e2c",
+                          "slug":null,
                           "name":"230",
                           "alternativeName":null,
+                          "originalName":null,
                           "category":230,
                           "subCategory":0,
-                          "status":1,
+                          "status":0,
+                          "parent":{
+                          "raw":{
+                          "parentKey":null,
+                          "kind":"GuideItem",
+                          "appId":null,
+                          "id":0,
+                          "name":"region-brunei"
+                          }
+                          },
+                          "parentUuid":"364c60a0-be0a-4c89-9a7a-a6213e5527ce",
+                          "checkupDate":null,
                           "description":"\u003cp\u003eBrunei has some transportation.\u003c/p\u003e",
                           "textLicense":null,
+                          "editorialComment":null,
+                          "hasBeenPublished":false,
+                          "unique":false,
                           "images":[
                           
                           ],
                           "imagesNotFoundOnImport":[
                           
                           ],
-                          "parentAsString":null,
-                          "entityType":"guidetext",
-                          "parent":"region-brunei"
+                          "changeState":0,
+                          "entityType":"guidetext"
                           },
                           {
-                          "order":1,
+                          "order":3,
                           "guideSections":[
                           
                           ],
                           "categoryDescriptions":[
                           
                           ],
-                          "id":"text-brunei-260",
+                          "id":"0f41cf9d-5ad9-4fbf-87f4-69515f9f038f",
                           "uuid":"787b2546-2fcc-45bc-9f1a-38c31194d332",
+                          "slug":null,
                           "name":"260",
                           "alternativeName":null,
+                          "originalName":null,
                           "category":260,
                           "subCategory":0,
-                          "status":1,
+                          "status":0,
+                          "parent":{
+                          "raw":{
+                          "parentKey":null,
+                          "kind":"GuideItem",
+                          "appId":null,
+                          "id":0,
+                          "name":"region-brunei"
+                          }
+                          },
+                          "parentUuid":"364c60a0-be0a-4c89-9a7a-a6213e5527ce",
+                          "checkupDate":null,
                           "description":null,
                           "textLicense":null,
+                          "editorialComment":null,
+                          "hasBeenPublished":false,
+                          "unique":false,
                           "images":[
                           
                           ],
                           "imagesNotFoundOnImport":[
                           
                           ],
-                          "parentAsString":null,
-                          "entityType":"guidetext",
-                          "parent":"region-brunei"
+                          "changeState":0,
+                          "entityType":"guidetext"
                           }
                           ],
   "attractions":[
@@ -185,20 +268,36 @@
                  "region":null,
                  "subRegion":null,
                  "city":null,
-                 "id":"attraction-ulu-temburong-national-park",
+                 "id":"9093413f-40bc-4dec-a0db-691bcf61aa20",
                  "uuid":"6edbbda2-31b2-4cc0-b32a-db978ed80303",
+                 "slug":null,
                  "name":"Ulu Temburong National Park",
                  "alternativeName":null,
+                 "originalName":null,
                  "category":210,
                  "subCategory":2145,
                  "status":0,
+                 "parent":{
+                 "raw":{
+                 "parentKey":null,
+                 "kind":"GuideItem",
+                 "appId":null,
+                 "id":0,
+                 "name":"region-brunei"
+                 }
+                 },
+                 "parentUuid":"364c60a0-be0a-4c89-9a7a-a6213e5527ce",
+                 "checkupDate":null,
                  "description":"\u003cp\u003eHave alook at the Bruneian rainforest.\u003c/p\u003e",
                  "textLicense":null,
+                 "editorialComment":null,
+                 "hasBeenPublished":false,
+                 "unique":false,
                  "images":[
                            {
                            "url":"ecd22ca8-48d3-448e-8cbb-3cac815eda78",
                            "description":null,
-                           "creationDate":"Feb 7, 2016 2:59:01 AM",
+                           "creationDate":"2016-02-07T02:59:01.000Z",
                            "license":null,
                            "artist":null,
                            "originalUrl":null
@@ -207,13 +306,13 @@
                  "imagesNotFoundOnImport":[
                  
                  ],
-                 "parentAsString":null,
-                 "entityType":"listing",
-                 "parent":"region-brunei"
+                 "changeState":0,
+                 "entityType":"listing"
                  }
                  ],
   "subRegions":[
                 {
+                "mwmRegionId":null,
                 "radius":null,
                 "polygonCoordinates":null,
                 "guideSections":[
@@ -234,44 +333,116 @@
                                                                 "categoryDescriptions":[
                                                                 
                                                                 ],
-                                                                "id":"text-bandar-2300",
-                                                                "uuid":"4cf52ae6-9410-4852-a187-c8205f569af0",
-                                                                "name":"2300",
+                                                                "id":"be0c4396-a7fe-4941-ba14-d6e3f73f7cd0",
+                                                                "uuid":"2c7e114d-1aef-4cc1-903c-2a25b77c6923",
+                                                                "slug":null,
+                                                                "name":"2320",
                                                                 "alternativeName":null,
+                                                                "originalName":null,
                                                                 "category":230,
-                                                                "subCategory":2300,
-                                                                "status":1,
+                                                                "subCategory":2320,
+                                                                "status":0,
+                                                                "parent":{
+                                                                "raw":{
+                                                                "parentKey":null,
+                                                                "kind":"GuideItem",
+                                                                "appId":null,
+                                                                "id":0,
+                                                                "name":"region-bandar"
+                                                                }
+                                                                },
+                                                                "parentUuid":"ded2269d-3fa8-4453-9661-a2a2f51fdbec",
+                                                                "checkupDate":null,
                                                                 "description":null,
                                                                 "textLicense":null,
+                                                                "editorialComment":null,
+                                                                "hasBeenPublished":false,
+                                                                "unique":false,
                                                                 "images":[
                                                                 
                                                                 ],
                                                                 "imagesNotFoundOnImport":[
                                                                 
                                                                 ],
-                                                                "parentAsString":null,
-                                                                "entityType":"guidetext",
-                                                                "parent":"region-bandar"
+                                                                "changeState":0,
+                                                                "entityType":"guidetext"
+                                                                },
+                                                                {
+                                                                "order":0,
+                                                                "guideSections":[
+                                                                
+                                                                ],
+                                                                "categoryDescriptions":[
+                                                                
+                                                                ],
+                                                                "id":"d3540ddf-7ba5-42a4-9f34-110186a4ecad",
+                                                                "uuid":"4cf52ae6-9410-4852-a187-c8205f569af0",
+                                                                "slug":null,
+                                                                "name":"2300",
+                                                                "alternativeName":null,
+                                                                "originalName":null,
+                                                                "category":230,
+                                                                "subCategory":2300,
+                                                                "status":0,
+                                                                "parent":{
+                                                                "raw":{
+                                                                "parentKey":null,
+                                                                "kind":"GuideItem",
+                                                                "appId":null,
+                                                                "id":0,
+                                                                "name":"region-bandar"
+                                                                }
+                                                                },
+                                                                "parentUuid":"ded2269d-3fa8-4453-9661-a2a2f51fdbec",
+                                                                "checkupDate":null,
+                                                                "description":null,
+                                                                "textLicense":null,
+                                                                "editorialComment":null,
+                                                                "hasBeenPublished":false,
+                                                                "unique":false,
+                                                                "images":[
+                                                                
+                                                                ],
+                                                                "imagesNotFoundOnImport":[
+                                                                
+                                                                ],
+                                                                "changeState":0,
+                                                                "entityType":"guidetext"
                                                                 }
                                                                 ],
-                                        "id":"text-bandar-230",
+                                        "id":"ef393901-bfcd-42c2-bf07-a38a9e5db88d",
                                         "uuid":"faea7500-d9d7-4611-9487-cd37ca947712",
+                                        "slug":null,
                                         "name":"230",
                                         "alternativeName":null,
+                                        "originalName":null,
                                         "category":230,
                                         "subCategory":0,
-                                        "status":1,
+                                        "status":0,
+                                        "parent":{
+                                        "raw":{
+                                        "parentKey":null,
+                                        "kind":"GuideItem",
+                                        "appId":null,
+                                        "id":0,
+                                        "name":"region-bandar"
+                                        }
+                                        },
+                                        "parentUuid":"ded2269d-3fa8-4453-9661-a2a2f51fdbec",
+                                        "checkupDate":null,
                                         "description":null,
                                         "textLicense":null,
+                                        "editorialComment":null,
+                                        "hasBeenPublished":false,
+                                        "unique":false,
                                         "images":[
                                         
                                         ],
                                         "imagesNotFoundOnImport":[
                                         
                                         ],
-                                        "parentAsString":null,
-                                        "entityType":"guidetext",
-                                        "parent":"region-bandar"
+                                        "changeState":0,
+                                        "entityType":"guidetext"
                                         }
                                         ],
                 "attractions":[
@@ -298,20 +469,36 @@
                                "region":null,
                                "subRegion":null,
                                "city":"Bandar",
-                               "id":"attraction-brunei-international-airport",
+                               "id":"00207863-cae7-46b0-9e89-a92ae2b50569",
                                "uuid":"14d32612-813b-422a-bbd5-d9c0c1d3ef87",
+                               "slug":null,
                                "name":"Brunei International Airport",
                                "alternativeName":null,
+                               "originalName":null,
                                "category":230,
                                "subCategory":2300,
                                "status":0,
+                               "parent":{
+                               "raw":{
+                               "parentKey":null,
+                               "kind":"GuideItem",
+                               "appId":null,
+                               "id":0,
+                               "name":"region-bandar"
+                               }
+                               },
+                               "parentUuid":"ded2269d-3fa8-4453-9661-a2a2f51fdbec",
+                               "checkupDate":null,
                                "description":"\u003cp\u003eBrunei airport is not so big.\u003c/p\u003e",
                                "textLicense":"Wiki-license.",
+                               "editorialComment":null,
+                               "hasBeenPublished":false,
+                               "unique":false,
                                "images":[
                                          {
                                          "url":"ce6eadc4-1ba0-49de-a212-c19be3b3d3e5",
                                          "description":null,
-                                         "creationDate":"Feb 29, 2016 8:14:56 AM",
+                                         "creationDate":"2016-02-29T08:14:56.000Z",
                                          "license":null,
                                          "artist":null,
                                          "originalUrl":null
@@ -320,9 +507,8 @@
                                "imagesNotFoundOnImport":[
                                
                                ],
-                               "parentAsString":null,
-                               "entityType":"listing",
-                               "parent":"region-bandar"
+                               "changeState":0,
+                               "entityType":"listing"
                                },
                                {
                                "url":null,
@@ -347,20 +533,36 @@
                                "region":null,
                                "subRegion":null,
                                "city":"Bandar",
-                               "id":"attraction-kaizen-sushi",
+                               "id":"49923399-e4c0-46a7-aac4-261ae09ce96d",
                                "uuid":"f79bb8fd-b63b-4e59-a4a0-fdc0f721497c",
+                               "slug":null,
                                "name":"Kaizen Sushi",
                                "alternativeName":null,
+                               "originalName":null,
                                "category":250,
                                "subCategory":2510,
                                "status":0,
+                               "parent":{
+                               "raw":{
+                               "parentKey":null,
+                               "kind":"GuideItem",
+                               "appId":null,
+                               "id":0,
+                               "name":"region-bandar"
+                               }
+                               },
+                               "parentUuid":"ded2269d-3fa8-4453-9661-a2a2f51fdbec",
+                               "checkupDate":null,
                                "description":"\u003cp\u003eSushi place, with raw fish.\u003c/p\u003e",
                                "textLicense":null,
+                               "editorialComment":null,
+                               "hasBeenPublished":false,
+                               "unique":false,
                                "images":[
                                          {
                                          "url":"2c1f14b2-3e51-41b1-963b-b0b55adea6ad",
                                          "description":null,
-                                         "creationDate":"Feb 29, 2016 10:16:17 AM",
+                                         "creationDate":"2016-02-29T10:16:17.568Z",
                                          "license":null,
                                          "artist":null,
                                          "originalUrl":null
@@ -369,9 +571,8 @@
                                "imagesNotFoundOnImport":[
                                
                                ],
-                               "parentAsString":null,
-                               "entityType":"listing",
-                               "parent":"region-bandar"
+                               "changeState":0,
+                               "entityType":"listing"
                                },
                                {
                                "url":null,
@@ -396,20 +597,36 @@
                                "region":null,
                                "subRegion":null,
                                "city":"Bandar",
-                               "id":"attraction-thien-thien",
+                               "id":"5b4fb1f2-0345-4636-b34a-c9bdda91e5c3",
                                "uuid":"c1d32966-b88c-438e-8d17-d910e6afb9fc",
+                               "slug":null,
                                "name":"Thien Thien",
                                "alternativeName":null,
+                               "originalName":null,
                                "category":250,
                                "subCategory":2510,
                                "status":0,
+                               "parent":{
+                               "raw":{
+                               "parentKey":null,
+                               "kind":"GuideItem",
+                               "appId":null,
+                               "id":0,
+                               "name":"region-bandar"
+                               }
+                               },
+                               "parentUuid":"ded2269d-3fa8-4453-9661-a2a2f51fdbec",
+                               "checkupDate":null,
                                "description":"\u003cp\u003eCheap chicken.\u003c/p\u003e",
                                "textLicense":null,
+                               "editorialComment":null,
+                               "hasBeenPublished":false,
+                               "unique":false,
                                "images":[
                                          {
                                          "url":"8bacbdf7-23e4-4ee1-8098-11d2aee881d6",
                                          "description":null,
-                                         "creationDate":"Feb 29, 2016 8:49:31 AM",
+                                         "creationDate":"2016-02-29T08:49:31.297Z",
                                          "license":null,
                                          "artist":null,
                                          "originalUrl":null
@@ -418,13 +635,77 @@
                                "imagesNotFoundOnImport":[
                                
                                ],
-                               "parentAsString":null,
-                               "entityType":"listing",
-                               "parent":"region-bandar"
+                               "changeState":0,
+                               "entityType":"listing"
+                               },
+                               {
+                               "url":null,
+                               "email":null,
+                               "address":null,
+                               "directions":null,
+                               "phone":null,
+                               "phoneextra":null,
+                               "tollfree":null,
+                               "price":null,
+                               "checkin":null,
+                               "checkout":null,
+                               "openingHours":null,
+                               "tags":[
+                               
+                               ],
+                               "longitude":114.928301,
+                               "latitude":4.944146,
+                               "continent":"Asia",
+                               "worldArea":"South East Asia",
+                               "country":"Brunei",
+                               "region":null,
+                               "subRegion":null,
+                               "city":"Bandar",
+                               "id":"cbd26dda-6f3b-4716-b736-39849de1cdd2",
+                               "uuid":"69b71879-fd2a-44f4-bc4c-c226e35c0af8",
+                               "slug":null,
+                               "name":"Bus station",
+                               "alternativeName":null,
+                               "originalName":null,
+                               "category":230,
+                               "subCategory":2320,
+                               "status":0,
+                               "parent":{
+                               "raw":{
+                               "parentKey":null,
+                               "kind":"GuideItem",
+                               "appId":null,
+                               "id":0,
+                               "name":"region-bandar"
+                               }
+                               },
+                               "parentUuid":"ded2269d-3fa8-4453-9661-a2a2f51fdbec",
+                               "checkupDate":null,
+                               "description":"\u003cp\u003eThe bus station is not so massive.\u003c/p\u003e",
+                               "textLicense":null,
+                               "editorialComment":null,
+                               "hasBeenPublished":false,
+                               "unique":false,
+                               "images":[
+                                         {
+                                         "url":"12142963-715d-4ee6-a7c7-dd43fa8b1fcc",
+                                         "description":null,
+                                         "creationDate":"2016-05-20T14:54:26.000Z",
+                                         "license":null,
+                                         "artist":null,
+                                         "originalUrl":null
+                                         }
+                                         ],
+                               "imagesNotFoundOnImport":[
+                               
+                               ],
+                               "changeState":0,
+                               "entityType":"listing"
                                }
                                ],
                 "subRegions":[
                               {
+                              "mwmRegionId":null,
                               "radius":null,
                               "polygonCoordinates":null,
                               "guideSections":[
@@ -448,24 +729,39 @@
                               "region":null,
                               "subRegion":null,
                               "city":"Bandar",
-                              "id":"region-melabau",
+                              "id":"a0fd959a-a0ca-4315-97c0-26563c1b5d50",
                               "uuid":"08f399b0-235c-41b2-8905-4af0fea8d508",
+                              "slug":null,
                               "name":"Melabau",
                               "alternativeName":null,
+                              "originalName":null,
                               "category":170,
                               "subCategory":0,
                               "status":0,
+                              "parent":{
+                              "raw":{
+                              "parentKey":null,
+                              "kind":"GuideItem",
+                              "appId":null,
+                              "id":0,
+                              "name":"region-bandar"
+                              }
+                              },
+                              "parentUuid":"ded2269d-3fa8-4453-9661-a2a2f51fdbec",
+                              "checkupDate":null,
                               "description":null,
                               "textLicense":null,
+                              "editorialComment":null,
+                              "hasBeenPublished":false,
+                              "unique":false,
                               "images":[
                               
                               ],
                               "imagesNotFoundOnImport":[
                               
                               ],
-                              "parentAsString":null,
-                              "entityType":"region",
-                              "parent":"region-bandar"
+                              "changeState":0,
+                              "entityType":"region"
                               }
                               ],
                 "simplePOIs":null,
@@ -477,50 +773,42 @@
                 "region":null,
                 "subRegion":null,
                 "city":null,
-                "id":"region-bandar",
+                "id":"af7ae55d-12e2-469d-8d52-a168f13c3877",
                 "uuid":"ded2269d-3fa8-4453-9661-a2a2f51fdbec",
+                "slug":null,
                 "name":"Bandar",
                 "alternativeName":null,
+                "originalName":null,
                 "category":160,
                 "subCategory":0,
                 "status":0,
+                "parent":{
+                "raw":{
+                "parentKey":null,
+                "kind":"GuideItem",
+                "appId":null,
+                "id":0,
+                "name":"region-brunei"
+                }
+                },
+                "parentUuid":"364c60a0-be0a-4c89-9a7a-a6213e5527ce",
+                "checkupDate":null,
                 "description":"\u003cp\u003eBandar is the capital of Brunei\u003c/p\u003e",
                 "textLicense":null,
+                "editorialComment":null,
+                "hasBeenPublished":false,
+                "unique":false,
                 "images":[
                 
                 ],
                 "imagesNotFoundOnImport":[
                 
                 ],
-                "parentAsString":null,
-                "entityType":"region",
-                "parent":"region-brunei"
+                "changeState":0,
+                "entityType":"region"
                 }
                 ],
-  "simplePOIs":[
-                {
-                "id":"8340104801669914322",
-                "listingId":"simple",
-                "name":"KFC",
-                "latitude":4.893803,
-                "longitude":114.848742,
-                "category":250,
-                "subCategory":2510,
-                "country":"Brunei",
-                "location":""
-                },
-                {
-                "id":"-1421773907518991892",
-                "listingId":"simple",
-                "name":"Nyonya Restaurant",
-                "latitude":4.909687,
-                "longitude":114.913737,
-                "category":250,
-                "subCategory":2510,
-                "country":"Brunei",
-                "location":""
-                }
-                ],
+  "simplePOIs":null,
   "longitude":114.620571,
   "latitude":4.502128,
   "continent":"Asia",
@@ -529,23 +817,38 @@
   "region":null,
   "subRegion":null,
   "city":null,
-  "id":"region-brunei",
+  "id":"b6f980f6-327e-4cbb-8043-d86ebe54269b",
   "uuid":"364c60a0-be0a-4c89-9a7a-a6213e5527ce",
+  "slug":null,
   "name":"Brunei",
   "alternativeName":null,
+  "originalName":null,
   "category":130,
   "subCategory":0,
   "status":0,
+  "parent":{
+    "raw":{
+      "parentKey":null,
+      "kind":"GuideItem",
+      "appId":null,
+      "id":0,
+      "name":"region-south-east-asia"
+    }
+  },
+  "parentUuid":"9e5a00c9-185d-4777-b8b7-a749b433b5de",
+  "checkupDate":null,
   "description":"\u003cp\u003eThis is a simple placeholder article for testing purposes. Don\u0027t edit.\u003c/p\u003e",
   "textLicense":null,
+  "editorialComment":null,
+  "hasBeenPublished":false,
+  "unique":false,
   "images":[
   
   ],
   "imagesNotFoundOnImport":[
   
   ],
-  "parentAsString":null,
-  "entityType":"region",
-  "parent":"region-south-east-asia"
+  "changeState":0,
+  "entityType":"region"
   
 }

@@ -5,10 +5,11 @@ import RealmSwift
 
 class ContentServiceTest: XCTestCase {
   
-  let brusselsId = "region-brussels"
+  let brusselsId = "9488f6bc-17c9-48d1-acf3-675a2cbf6948"
   
   override func setUp() {
     super.setUp()
+    TripfingerAppDelegate.mode = .TEST
     continueAfterFailure = false
   }
   
@@ -20,7 +21,7 @@ class ContentServiceTest: XCTestCase {
     let guideItem = GuideItem()
     let readyExpectation = expectationWithDescription("ready")
     
-    guideItem.id = brusselsId
+    guideItem.uuid = brusselsId
     ContentService.getGuideTextsForGuideItem(guideItem, failure: {fatalError("EX1")}) {
       guideTexts in
       
@@ -56,21 +57,6 @@ class ContentServiceTest: XCTestCase {
     }
     
     waitForExpectationsWithTimeout(15, handler: { error in
-      XCTAssertNil(error, "Error")
-    })
-  }
-
-  
-  func testGetFullRegion() {
-    let readyExpectation = expectationWithDescription("ready")
-    
-    ContentService.getFullRegionTree(brusselsId, failure: {fatalError("EX2")}) {
-      region in
-      
-      readyExpectation.fulfill()
-    }
-    
-    waitForExpectationsWithTimeout(30, handler: { error in
       XCTAssertNil(error, "Error")
     })
   }

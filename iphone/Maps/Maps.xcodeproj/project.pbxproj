@@ -69,7 +69,6 @@
 		2581DC851CAE31CD0086285E /* UIView+AddConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC781CAE31CD0086285E /* UIView+AddConstraints.swift */; };
 		2581DC861CAE31CD0086285E /* String+AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC791CAE31CD0086285E /* String+AttributedString.swift */; };
 		2581DC8A1CAE3B650086285E /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC891CAE3B650086285E /* SwiftyJSON.swift */; };
-		2581DC951CAF91150086285E /* TripfingerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC941CAF91150086285E /* TripfingerTests.swift */; };
 		2581DCA51CAF915E0086285E /* ContentServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA01CAF915E0086285E /* ContentServiceTest.swift */; };
 		2581DCA61CAF915E0086285E /* DatabaseServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA11CAF915E0086285E /* DatabaseServiceTest.swift */; };
 		2581DCA71CAF915E0086285E /* DownloadServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA21CAF915E0086285E /* DownloadServiceTest.swift */; };
@@ -77,6 +76,7 @@
 		2581DCA91CAF915E0086285E /* NetworkUtilTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA41CAF915E0086285E /* NetworkUtilTest.swift */; };
 		2581DCAD1CAF917D0086285E /* SearchServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCAB1CAF917D0086285E /* SearchServiceTest.swift */; };
 		2581DCAE1CAF917D0086285E /* OnlineSearchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */; };
+		25B563641CFCAE5000E82351 /* UnitTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B563631CFCAE5000E82351 /* UnitTestUtils.swift */; };
 		25D378F21CAFD13400552633 /* thailand.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D378F11CAFD13400552633 /* thailand.json */; };
 		25D378F41CAFD13900552633 /* brunei-download.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D378F31CAFD13900552633 /* brunei-download.json */; };
 		25D378F61CAFD49500552633 /* SyncManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D378F51CAFD49500552633 /* SyncManagerTest.swift */; };
@@ -1001,7 +1001,6 @@
 		2581DC891CAE3B650086285E /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2581DC8D1CAE4D670086285E /* SwiftBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftBridge.h; sourceTree = "<group>"; };
 		2581DC921CAF91150086285E /* TripfingerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripfingerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2581DC941CAF91150086285E /* TripfingerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripfingerTests.swift; sourceTree = "<group>"; };
 		2581DC961CAF91150086285E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2581DCA01CAF915E0086285E /* ContentServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentServiceTest.swift; sourceTree = "<group>"; };
 		2581DCA11CAF915E0086285E /* DatabaseServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseServiceTest.swift; sourceTree = "<group>"; };
@@ -1010,6 +1009,7 @@
 		2581DCA41CAF915E0086285E /* NetworkUtilTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkUtilTest.swift; sourceTree = "<group>"; };
 		2581DCAB1CAF917D0086285E /* SearchServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchServiceTest.swift; sourceTree = "<group>"; };
 		2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineSearchTest.swift; sourceTree = "<group>"; };
+		25B563631CFCAE5000E82351 /* UnitTestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTestUtils.swift; sourceTree = "<group>"; };
 		25D378F11CAFD13400552633 /* thailand.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = thailand.json; sourceTree = "<group>"; };
 		25D378F31CAFD13900552633 /* brunei-download.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "brunei-download.json"; sourceTree = "<group>"; };
 		25D378F51CAFD49500552633 /* SyncManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTest.swift; sourceTree = "<group>"; };
@@ -2053,9 +2053,9 @@
 				2581DCA21CAF915E0086285E /* DownloadServiceTest.swift */,
 				2581DCA31CAF915E0086285E /* JsonParserServiceTest.swift */,
 				2581DCA41CAF915E0086285E /* NetworkUtilTest.swift */,
-				2581DC941CAF91150086285E /* TripfingerTests.swift */,
 				25D378F51CAFD49500552633 /* SyncManagerTest.swift */,
 				25D378F01CAFD12600552633 /* Supporting Files */,
+				25B563631CFCAE5000E82351 /* UnitTestUtils.swift */,
 			);
 			path = TripfingerTests;
 			sourceTree = "<group>";
@@ -4313,9 +4313,9 @@
 				2581DCA91CAF915E0086285E /* NetworkUtilTest.swift in Sources */,
 				2581DCA61CAF915E0086285E /* DatabaseServiceTest.swift in Sources */,
 				25D378F61CAFD49500552633 /* SyncManagerTest.swift in Sources */,
+				25B563641CFCAE5000E82351 /* UnitTestUtils.swift in Sources */,
 				2581DCA71CAF915E0086285E /* DownloadServiceTest.swift in Sources */,
 				2581DCAE1CAF917D0086285E /* OnlineSearchTest.swift in Sources */,
-				2581DC951CAF91150086285E /* TripfingerTests.swift in Sources */,
 				2581DCA51CAF915E0086285E /* ContentServiceTest.swift in Sources */,
 				2581DCA81CAF915E0086285E /* JsonParserServiceTest.swift in Sources */,
 			);
@@ -4645,7 +4645,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
@@ -4681,7 +4681,7 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -4719,7 +4719,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -4754,7 +4754,7 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
@@ -4789,7 +4789,7 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -4822,7 +4822,7 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -4848,7 +4848,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
@@ -4872,7 +4872,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -4898,7 +4898,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -4922,7 +4922,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
@@ -4946,7 +4946,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -4969,7 +4969,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -5574,7 +5574,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				BUNDLE_IDENTIFIER = no.tripfinger;
+				BUNDLE_IDENTIFIER = com.tripfinger;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -5602,8 +5602,8 @@
 					"-Wno-unused-local-typedef",
 					"-Wimplicit-retain-self",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
-				PRODUCT_NAME = "Tripfinger dbg";
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger;
+				PRODUCT_NAME = Tripfinger;
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
@@ -5853,7 +5853,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				BUNDLE_IDENTIFIER = com.tripfinger;
+				BUNDLE_IDENTIFIER = no.tripfinger;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -5874,12 +5874,13 @@
 				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-Wall",
 					"-Wno-unused-local-typedef",
 					"-Wimplicit-retain-self",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
+				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PRODUCT_NAME = Tripfinger;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
