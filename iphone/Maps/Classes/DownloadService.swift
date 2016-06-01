@@ -160,11 +160,6 @@ class DownloadService {
   class func fetchImageList(guideItem: GuideItem, path: NSURL) -> [(String, NSURL)] {
     var imageList = [(String, NSURL)]()
     for image in guideItem.images {
-      if image.url.containsString("7f60f843-83a6-4f6d-9f49-cb4ccb29d1de") {
-        print("invalid imageref on \(guideItem.name), uuid: \(guideItem.uuid)")
-      } else if image.url.containsString("3befbb12-0786-4e0a-b890-e44ed93ee078") {
-        print("invalid imageref on \(guideItem.name), uuid: \(guideItem.uuid)")        
-      }
       let destinationPath = path.URLByAppendingPathComponent(image.url)
       imageList.append((image.url, destinationPath))
       image.url = getLocalPartOfFileUrl(destinationPath)
