@@ -49,9 +49,7 @@ class GuideViewOnlineTest: XCTestCase {
     let bangkokRow = app.tables.staticTexts["Bangkok"]
     scrollToElement(bangkokRow)
     bangkokRow.tap()
-    
-    print("TAPPED THE KOK")
-    
+        
     let silomRow = app.tables.staticTexts["Silom"]
     expectationForPredicate(exists, evaluatedWithObject: silomRow, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)

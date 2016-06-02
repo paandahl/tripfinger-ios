@@ -226,7 +226,7 @@ class MyNavigationController: UINavigationController {
     
     let nav = TripfingerAppDelegate.navigationController
     for viewController in nav.viewControllers {
-      if let regionController = viewController as? RegionController {
+      if let regionController = viewController as? GuideItemController {
         regionController.contextSwitched = true
       }
     }

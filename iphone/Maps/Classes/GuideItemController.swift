@@ -22,8 +22,16 @@ class GuideItemController: TableController {
     tableView.tableFooterView = UIView.init(frame: CGRectZero)
     
     updateUI()
+    
+//    let gestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
+//    gestureRecognizer.cancelsTouchesInView = false
+//    view.addGestureRecognizer(gestureRecognizer)
   }
-  
+
+  func handleTap(recognizer: UIGestureRecognizer) {
+    print("tapped: \(recognizer.locationInView(view))")
+  }
+
   override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
     return UIInterfaceOrientationMask.Portrait
   }
@@ -69,8 +77,8 @@ class GuideItemController: TableController {
 //  }
   
   func backButtonAction(viewController: UIViewController) {
-    print("back button action")
     if TripfingerAppDelegate.navigationController.viewControllers.indexOf(viewController) == nil && !contextSwitched {
+      print("back button action")
         guideItemExpanded = false
         let parentViewController = TripfingerAppDelegate.navigationController.viewControllers.last as? GuideItemController
         let failure = {

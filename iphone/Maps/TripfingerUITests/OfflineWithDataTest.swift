@@ -40,9 +40,24 @@ class OfflineWithDataTest: XCTestCase {
     tapWhenHittable(app.navigationBars["Bandar"].buttons["Brunei"])
     tapWhenHittable(app.tables.staticTexts["Transportation"])
     tapWhenHittable(app.tables.staticTexts["Airports"])
+    sleep(1)
     XCTAssertEqual(1, app.tables.cells.count)
     tapWhenHittable(app.navigationBars["Airports"].buttons["Transportation"])
     tapWhenHittable(app.navigationBars["Transportation"].buttons["Brunei"])
+    
+    // try to click a link
+    tapWhenHittable(app.buttons["Read more"])
+    let tableCoord = XCUIApplication().tables.element.coordinateWithNormalizedOffset(CGVector(dx: 0, dy: 0))
+    var linkCoord = tableCoord.coordinateWithOffset(CGVector(dx: 65.0, dy: 118.0))
+    linkCoord.pressForDuration(1)
+    tapWhenHittable(app.navigationBars["Bandar"].buttons["Brunei"])
+    
+    tapWhenHittable(app.buttons["Read more"])
+    tapWhenHittable(app.tables.staticTexts["History"])
+    linkCoord = tableCoord.coordinateWithOffset(CGVector(dx: 36.5, dy: 63.5))
+    linkCoord.pressForDuration(1)
+    tapWhenHittable(app.navigationBars["Bandar"].buttons["Brunei"])
+
 
     // do some swiping
     tapWhenHittable(app.tables.staticTexts["Attractions"])
