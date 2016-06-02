@@ -1,5 +1,6 @@
 import Foundation
 import RealmSwift
+import SwiftyJSON
 
 class JsonParserService {
   

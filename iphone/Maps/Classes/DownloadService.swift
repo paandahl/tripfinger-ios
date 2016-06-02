@@ -2,6 +2,7 @@ import Foundation
 import Alamofire
 import RealmSwift
 import BrightFutures
+import SwiftyJSON
 
 class DownloadService {
   

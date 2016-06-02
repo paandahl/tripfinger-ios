@@ -2,6 +2,7 @@ import Foundation
 import RealmSwift
 import Alamofire
 import CoreLocation
+import SwiftyJSON
 
 typealias ContentLoaded = (guideItem: GuideItem) -> ()
 

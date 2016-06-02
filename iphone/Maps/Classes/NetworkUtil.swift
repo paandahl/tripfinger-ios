@@ -1,5 +1,6 @@
 import SystemConfiguration
 import Alamofire
+import SwiftyJSON
 
 class NetworkUtil {
 

@@ -17,8 +17,9 @@ class PlacePageInfoCell: UITableViewCell {
   let directionsText = UITextView()
   let myWidth: CGFloat
 
-  init(width: CGFloat) {
-    self.myWidth = width
+  @objc(initWidth:)
+  init(myWidth: CGFloat) {
+    self.myWidth = myWidth
     super.init(style: .Default, reuseIdentifier: nil)
     
     contentView.clipsToBounds = true
@@ -32,7 +33,8 @@ class PlacePageInfoCell: UITableViewCell {
     contentView.addConstraints("V:|-0-[image(\(imageHeight))]", forViews: ["image": myImageView])
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  @objc(initWithCoder:)
+  override required init?(coder aDecoder: NSCoder) {
       fatalError("init(coder:) has not been implemented ")
   }
   

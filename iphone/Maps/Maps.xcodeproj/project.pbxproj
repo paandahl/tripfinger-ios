@@ -68,7 +68,6 @@
 		2581DC841CAE31CD0086285E /* UITableView+ReloadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC771CAE31CD0086285E /* UITableView+ReloadData.swift */; };
 		2581DC851CAE31CD0086285E /* UIView+AddConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC781CAE31CD0086285E /* UIView+AddConstraints.swift */; };
 		2581DC861CAE31CD0086285E /* String+AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC791CAE31CD0086285E /* String+AttributedString.swift */; };
-		2581DC8A1CAE3B650086285E /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC891CAE3B650086285E /* SwiftyJSON.swift */; };
 		2581DCA51CAF915E0086285E /* ContentServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA01CAF915E0086285E /* ContentServiceTest.swift */; };
 		2581DCA61CAF915E0086285E /* DatabaseServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA11CAF915E0086285E /* DatabaseServiceTest.swift */; };
 		2581DCA71CAF915E0086285E /* DownloadServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA21CAF915E0086285E /* DownloadServiceTest.swift */; };
@@ -78,6 +77,7 @@
 		2581DCAE1CAF917D0086285E /* OnlineSearchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */; };
 		25B563641CFCAE5000E82351 /* UnitTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B563631CFCAE5000E82351 /* UnitTestUtils.swift */; };
 		25B563661CFF584E00E82351 /* StringUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B563651CFF584D00E82351 /* StringUtilsTest.swift */; };
+		25D27B5C1D009ED500F7AA91 /* UniqueIdentifierService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D27B5B1D009ED500F7AA91 /* UniqueIdentifierService.swift */; };
 		25D378F21CAFD13400552633 /* thailand.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D378F11CAFD13400552633 /* thailand.json */; };
 		25D378F41CAFD13900552633 /* brunei-download.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D378F31CAFD13900552633 /* brunei-download.json */; };
 		25D378F61CAFD49500552633 /* SyncManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D378F51CAFD49500552633 /* SyncManagerTest.swift */; };
@@ -999,7 +999,6 @@
 		2581DC771CAE31CD0086285E /* UITableView+ReloadData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+ReloadData.swift"; sourceTree = "<group>"; };
 		2581DC781CAE31CD0086285E /* UIView+AddConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AddConstraints.swift"; sourceTree = "<group>"; };
 		2581DC791CAE31CD0086285E /* String+AttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+AttributedString.swift"; sourceTree = "<group>"; };
-		2581DC891CAE3B650086285E /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2581DC8D1CAE4D670086285E /* SwiftBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftBridge.h; sourceTree = "<group>"; };
 		2581DC921CAF91150086285E /* TripfingerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripfingerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2581DC961CAF91150086285E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1012,6 +1011,7 @@
 		2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineSearchTest.swift; sourceTree = "<group>"; };
 		25B563631CFCAE5000E82351 /* UnitTestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTestUtils.swift; sourceTree = "<group>"; };
 		25B563651CFF584D00E82351 /* StringUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtilsTest.swift; sourceTree = "<group>"; };
+		25D27B5B1D009ED500F7AA91 /* UniqueIdentifierService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniqueIdentifierService.swift; sourceTree = "<group>"; };
 		25D378F11CAFD13400552633 /* thailand.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = thailand.json; sourceTree = "<group>"; };
 		25D378F31CAFD13900552633 /* brunei-download.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "brunei-download.json"; sourceTree = "<group>"; };
 		25D378F51CAFD49500552633 /* SyncManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTest.swift; sourceTree = "<group>"; };
@@ -1928,7 +1928,6 @@
 			isa = PBXGroup;
 			children = (
 				2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */,
-				2581DC891CAE3B650086285E /* SwiftyJSON.swift */,
 				2581DC3A1CAE31550086285E /* Controllers */,
 				2581DC101CAE30C30086285E /* Guide */,
 				2581DC431CAE31660086285E /* Model */,
@@ -2034,13 +2033,14 @@
 				2581DC6F1CAE31CD0086285E /* NetworkUtil.swift */,
 				2581DC701CAE31CD0086285E /* NSBundle+BundlePath.swift */,
 				2581DC711CAE31CD0086285E /* NSURL+GetDirectory.swift */,
+				2581DC791CAE31CD0086285E /* String+AttributedString.swift */,
 				2581DC731CAE31CD0086285E /* SyncManager.swift */,
 				2581DC741CAE31CD0086285E /* UIImage+ColourInit.swift */,
 				2581DC751CAE31CD0086285E /* UIImageView+DownloadImage.swift */,
 				2581DC761CAE31CD0086285E /* UINib+RegisterNib.swift */,
 				2581DC771CAE31CD0086285E /* UITableView+ReloadData.swift */,
 				2581DC781CAE31CD0086285E /* UIView+AddConstraints.swift */,
-				2581DC791CAE31CD0086285E /* String+AttributedString.swift */,
+				25D27B5B1D009ED500F7AA91 /* UniqueIdentifierService.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -4146,7 +4146,6 @@
 				2581DC841CAE31CD0086285E /* UITableView+ReloadData.swift in Sources */,
 				F64A37D01B9EE24C00180464 /* MWMRouteHelperPanelsDrawer.mm in Sources */,
 				341138801C15B50B002E3B3E /* MWMOpeningHoursModel.mm in Sources */,
-				2581DC8A1CAE3B650086285E /* SwiftyJSON.swift in Sources */,
 				340F24631B14910500F874CD /* RouteState.mm in Sources */,
 				F6830F111B85F6B900C42AAE /* MWMLanesPanel.mm in Sources */,
 				9747264318323080006B7CB7 /* UIKitCategories.mm in Sources */,
@@ -4236,6 +4235,7 @@
 				2581DC141CAE30E10086285E /* RegionController.swift in Sources */,
 				F6B2E61F1C3D5F31005562DF /* MWMNightModeController.mm in Sources */,
 				2581DC381CAE31490086285E /* SectionController.swift in Sources */,
+				25D27B5C1D009ED500F7AA91 /* UniqueIdentifierService.swift in Sources */,
 				F6BD33791B62400E00F2CE18 /* MWMNavigationDashboard.mm in Sources */,
 				F60F02E91C904F40003A0AF6 /* MWMReportBaseController.mm in Sources */,
 				F6BD1D201CA412920047B8E8 /* MWMOsmAuthAlert.mm in Sources */,
