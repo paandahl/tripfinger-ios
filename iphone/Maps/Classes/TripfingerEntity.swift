@@ -32,6 +32,8 @@ import Foundation
   
   var offline = false
   var liked = false
+  
+  override init() {}
     
   init(poi: SimplePOI) {
     super.init()

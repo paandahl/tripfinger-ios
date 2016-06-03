@@ -17,9 +17,8 @@ class PlacePageInfoCell: UITableViewCell {
   let directionsText = UITextView()
   let myWidth: CGFloat
 
-  @objc(initWidth:)
-  init(myWidth: CGFloat) {
-    self.myWidth = myWidth
+  init(width: CGFloat) {
+    self.myWidth = width
     super.init(style: .Default, reuseIdentifier: nil)
     
     contentView.clipsToBounds = true

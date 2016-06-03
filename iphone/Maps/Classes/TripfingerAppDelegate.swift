@@ -24,6 +24,8 @@ class MyNavigationController: UINavigationController {
 
   public func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
     
+    print("myuuid: \(UniqueIdentifierService.uniqueIdentifier())")
+    
     if NSProcessInfo.processInfo().arguments.contains("TEST") {
       print("Switching to test mode")
       TripfingerAppDelegate.mode = AppMode.TEST
