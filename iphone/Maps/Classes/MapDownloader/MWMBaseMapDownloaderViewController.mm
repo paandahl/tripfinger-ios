@@ -199,6 +199,16 @@ using namespace storage;
     parentInfo.m_localName = "";
     nodeAttrs.m_parentInfo.push_back(parentInfo);
     needsUpdate = (nodeAttrs.m_status == NodeStatus::OnDisk);
+    if (nodeAttrs.m_status == NodeStatus::NotDownloaded) {
+      NSString* realCountryId = [@(m_actionSheetId.c_str()) substringFromIndex:5];
+      void(^downloadStarted)() = ^() {
+        [self configAllMapsView];
+        [self reloadData];
+      };
+
+      [TripfingerAppDelegate purchaseCountry:realCountryId downloadCallBack:downloadStarted];
+      return;
+    }
   } else {
     s.GetNodeAttrs(m_actionSheetId, nodeAttrs);
     needsUpdate = (nodeAttrs.m_status == NodeStatus::OnDiskOutOfDate);

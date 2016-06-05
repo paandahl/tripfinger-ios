@@ -16,6 +16,7 @@
 		2510A3F91CE8E7AD00E3B654 /* DownloadMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510A3F81CE8E7AC00E3B654 /* DownloadMarker.swift */; };
 		251B291B1CE5AFD100B454C3 /* DataConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 251B291A1CE5AFD100B454C3 /* DataConverter.mm */; };
 		25533E231CEDED78004C7956 /* FrameworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25533E221CEDED78004C7956 /* FrameworkService.swift */; };
+		256570A61D03F3FE006DE901 /* PurchaseCountryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256570A51D03F3FD006DE901 /* PurchaseCountryVC.swift */; };
 		2571ADED1CD882F000CF2EFF /* TripfingerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */; };
 		2571ADEF1CD8966100CF2EFF /* PlacePageInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */; };
 		2581DC0C1CACF8AB0086285E /* TripfingerAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */; };
@@ -78,6 +79,9 @@
 		25B563641CFCAE5000E82351 /* UnitTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B563631CFCAE5000E82351 /* UnitTestUtils.swift */; };
 		25B563661CFF584E00E82351 /* StringUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B563651CFF584D00E82351 /* StringUtilsTest.swift */; };
 		25D27B5C1D009ED500F7AA91 /* UniqueIdentifierService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D27B5B1D009ED500F7AA91 /* UniqueIdentifierService.swift */; };
+		25D27B5E1D01B6AD00F7AA91 /* FirstCountryDownloadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D27B5D1D01B6AD00F7AA91 /* FirstCountryDownloadView.xib */; };
+		25D27B601D01B76D00F7AA91 /* FirstCountryDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D27B5F1D01B76D00F7AA91 /* FirstCountryDownloadView.swift */; };
+		25D27B621D01C09000F7AA91 /* PurchasesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D27B611D01C08F00F7AA91 /* PurchasesService.swift */; };
 		25D378F21CAFD13400552633 /* thailand.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D378F11CAFD13400552633 /* thailand.json */; };
 		25D378F41CAFD13900552633 /* brunei-download.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D378F31CAFD13900552633 /* brunei-download.json */; };
 		25D378F61CAFD49500552633 /* SyncManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D378F51CAFD49500552633 /* SyncManagerTest.swift */; };
@@ -944,6 +948,7 @@
 		251B291A1CE5AFD100B454C3 /* DataConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DataConverter.mm; sourceTree = "<group>"; };
 		251B291C1CE5AFE700B454C3 /* DataConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConverter.h; sourceTree = "<group>"; };
 		25533E221CEDED78004C7956 /* FrameworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkService.swift; sourceTree = "<group>"; };
+		256570A51D03F3FD006DE901 /* PurchaseCountryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseCountryVC.swift; sourceTree = "<group>"; };
 		2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerEntity.swift; sourceTree = "<group>"; };
 		2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacePageInfoCell.swift; sourceTree = "<group>"; };
 		2581DC071CACD8900086285E /* Tripfinger-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tripfinger-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -1012,6 +1017,9 @@
 		25B563631CFCAE5000E82351 /* UnitTestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTestUtils.swift; sourceTree = "<group>"; };
 		25B563651CFF584D00E82351 /* StringUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtilsTest.swift; sourceTree = "<group>"; };
 		25D27B5B1D009ED500F7AA91 /* UniqueIdentifierService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniqueIdentifierService.swift; sourceTree = "<group>"; };
+		25D27B5D1D01B6AD00F7AA91 /* FirstCountryDownloadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstCountryDownloadView.xib; sourceTree = "<group>"; };
+		25D27B5F1D01B76D00F7AA91 /* FirstCountryDownloadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstCountryDownloadView.swift; sourceTree = "<group>"; };
+		25D27B611D01C08F00F7AA91 /* PurchasesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchasesService.swift; sourceTree = "<group>"; };
 		25D378F11CAFD13400552633 /* thailand.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = thailand.json; sourceTree = "<group>"; };
 		25D378F31CAFD13900552633 /* brunei-download.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "brunei-download.json"; sourceTree = "<group>"; };
 		25D378F51CAFD49500552633 /* SyncManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTest.swift; sourceTree = "<group>"; };
@@ -1924,9 +1932,22 @@
 			name = "Bridging code";
 			sourceTree = "<group>";
 		};
+		256570A71D040125006DE901 /* Purchases */ = {
+			isa = PBXGroup;
+			children = (
+				25D27B5D1D01B6AD00F7AA91 /* FirstCountryDownloadView.xib */,
+				25D27B5F1D01B76D00F7AA91 /* FirstCountryDownloadView.swift */,
+				256570A51D03F3FD006DE901 /* PurchaseCountryVC.swift */,
+				25D27B611D01C08F00F7AA91 /* PurchasesService.swift */,
+				25D27B5B1D009ED500F7AA91 /* UniqueIdentifierService.swift */,
+			);
+			name = Purchases;
+			sourceTree = "<group>";
+		};
 		2581DC0A1CACF8930086285E /* Tripfinger */ = {
 			isa = PBXGroup;
 			children = (
+				256570A71D040125006DE901 /* Purchases */,
 				2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */,
 				2581DC3A1CAE31550086285E /* Controllers */,
 				2581DC101CAE30C30086285E /* Guide */,
@@ -1959,18 +1980,11 @@
 			isa = PBXGroup;
 			children = (
 				2581DC1A1CAE31340086285E /* AnnotationCalloutView.swift */,
-				2581DC1B1CAE31340086285E /* FilterBox.swift */,
-				2581DC1C1CAE31340086285E /* FilterBox.xib */,
-				2581DC1D1CAE31340086285E /* GuideItemCell.swift */,
+				25D27B641D01C43000F7AA91 /* Guide */,
 				2581DC1E1CAE31340086285E /* ImageLabelView.swift */,
-				2581DC1F1CAE31340086285E /* ListingCardView.swift */,
-				2581DC201CAE31340086285E /* ListingCell.swift */,
-				2581DC211CAE31340086285E /* LoadingCell.xib */,
-				2581DC221CAE31340086285E /* RightDetailCell.swift */,
-				2581DC231CAE31340086285E /* TableSection.swift */,
 				2581DC241CAE31340086285E /* TextMessageCell.swift */,
-				2581DC181CAE311B0086285E /* TableController.swift */,
 				2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */,
+				25D27B631D01C3C700F7AA91 /* Purchases */,
 			);
 			name = "UI Components";
 			sourceTree = "<group>";
@@ -2005,12 +2019,12 @@
 		2581DC561CAE31800086285E /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				2581DC611CAE31A30086285E /* Search */,
 				2581DC571CAE31890086285E /* AnnotationService.swift */,
 				2581DC581CAE31890086285E /* ContentService.swift */,
 				2581DC591CAE31890086285E /* DatabaseService.swift */,
 				2581DC5A1CAE31890086285E /* DownloadService.swift */,
 				2581DC5B1CAE31890086285E /* JsonParserService.swift */,
+				2581DC611CAE31A30086285E /* Search */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -2040,7 +2054,6 @@
 				2581DC761CAE31CD0086285E /* UINib+RegisterNib.swift */,
 				2581DC771CAE31CD0086285E /* UITableView+ReloadData.swift */,
 				2581DC781CAE31CD0086285E /* UIView+AddConstraints.swift */,
-				25D27B5B1D009ED500F7AA91 /* UniqueIdentifierService.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -2070,6 +2083,29 @@
 				2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */,
 			);
 			name = Search;
+			sourceTree = "<group>";
+		};
+		25D27B631D01C3C700F7AA91 /* Purchases */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Purchases;
+			sourceTree = "<group>";
+		};
+		25D27B641D01C43000F7AA91 /* Guide */ = {
+			isa = PBXGroup;
+			children = (
+				2581DC231CAE31340086285E /* TableSection.swift */,
+				2581DC181CAE311B0086285E /* TableController.swift */,
+				2581DC211CAE31340086285E /* LoadingCell.xib */,
+				2581DC1F1CAE31340086285E /* ListingCardView.swift */,
+				2581DC1B1CAE31340086285E /* FilterBox.swift */,
+				2581DC1C1CAE31340086285E /* FilterBox.xib */,
+				2581DC1D1CAE31340086285E /* GuideItemCell.swift */,
+				2581DC201CAE31340086285E /* ListingCell.swift */,
+				2581DC221CAE31340086285E /* RightDetailCell.swift */,
+			);
+			name = Guide;
 			sourceTree = "<group>";
 		};
 		25D378F01CAFD12600552633 /* Supporting Files */ = {
@@ -3743,6 +3779,7 @@
 				34CFFE8D1B7DE71C009D0C9F /* MWMSearchView.xib in Resources */,
 				3401CD711C3C0C420028C6F8 /* MWMEditorNameTableViewCell.xib in Resources */,
 				347FD8751C60B2CE002FB65E /* MWMOpeningHoursClosedSpanTableViewCell.xib in Resources */,
+				25D27B5E1D01B6AD00F7AA91 /* FirstCountryDownloadView.xib in Resources */,
 				34F9FB891C438ADB00F71201 /* MWMStreetEditorCommonTableViewCell.xib in Resources */,
 				6B9978351C89A316003B8AA0 /* editor.config in Resources */,
 				F6588E381B15D87A00EE1E58 /* MWMBookmarkColorCell.xib in Resources */,
@@ -4066,6 +4103,7 @@
 				341522BF1B666A550077AA8F /* MWMAPIBarView.mm in Sources */,
 				349A35831B53E967009677EE /* MWMDownloadMapRequest.mm in Sources */,
 				2581DC521CAE31700086285E /* Listing.swift in Sources */,
+				25D27B621D01C09000F7AA91 /* PurchasesService.swift in Sources */,
 				349C26B51BB02C6F0005DF2F /* MWMBottomMenuViewController.mm in Sources */,
 				2502337D1CD36896005F9943 /* DetailController.swift in Sources */,
 				3438CDF41B85F1170051AA78 /* MWMConsole.mm in Sources */,
@@ -4201,6 +4239,7 @@
 				34B82AD61B84746E00180497 /* MWMSearchSuggestionCell.mm in Sources */,
 				F6C641B01C15BBE6008FCAF3 /* MWMRecentTrackSettingsController.mm in Sources */,
 				341F99F11C6B4288001C67B8 /* MWMMapDownloaderSearchDataSource.mm in Sources */,
+				25D27B601D01B76D00F7AA91 /* FirstCountryDownloadView.swift in Sources */,
 				F6588E2F1B15D2BC00EE1E58 /* MWMBookmarkColorViewController.mm in Sources */,
 				34BC1E561C2ADBD3009BBF51 /* MWMOpeningHoursCommon.mm in Sources */,
 				F653CE161C71F60200A453F1 /* MWMAddPlaceNavigationBar.mm in Sources */,
@@ -4211,6 +4250,7 @@
 				FA054612155C465E001F4E37 /* SelectSetVC.mm in Sources */,
 				FAA614B8155F16950031C345 /* AddSetVC.mm in Sources */,
 				34ABA6301C2D58F300FE1BEC /* MWMInputEmailValidator.mm in Sources */,
+				256570A61D03F3FE006DE901 /* PurchaseCountryVC.swift in Sources */,
 				34CC4C121B82120700E44C1F /* MWMSearchTabbedViewLayout.mm in Sources */,
 				2581DC5D1CAE31890086285E /* ContentService.swift in Sources */,
 				FAAEA7D5161D8D3100CCD661 /* BookmarksRootVC.mm in Sources */,

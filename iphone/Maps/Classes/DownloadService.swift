@@ -55,7 +55,7 @@ class DownloadService {
     }
   }
   
-  class func downloadCountry(mwmRegionId: String, progressHandler: Double -> (), failure: () -> (), finishedHandler: () -> ()) {
+  class func downloadCountry(mwmRegionId: String, receipt: String? = nil, progressHandler: Double -> (), failure: () -> (), finishedHandler: () -> ()) {
     
     DatabaseService.addDownloadMarker(mwmRegionId)
     let application = UIApplication.sharedApplication()
@@ -69,15 +69,28 @@ class DownloadService {
 
     ContentService.getCountryWithName(mwmRegionId, failure: {}) { region in
       let countryPath = NSURL.createDirectory(.LibraryDirectory, withPath: region.getName())
-      let url = TripfingerAppDelegate.serverUrl + "/download_country/\(region.getName())"
+      var url: String
+      if let _ = receipt {
+        url = TripfingerAppDelegate.serverUrl + "/download_purchased_country/\(region.getName())"
+      } else {
+        let deviceUuid = UniqueIdentifierService.uniqueIdentifier()
+        url = TripfingerAppDelegate.serverUrl + "/download_first_country/\(region.getName())/\(deviceUuid)"
+      }
       var parameters = [String: String]()
       parameters["fetchType"] = ContentService.getFetchType()
       let jsonPath = countryPath.URLByAppendingPathComponent(region.getName() + ".json")
       if NSURL.fileExists(jsonPath) {
         processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, finishedHandler: finishedHandler)
       } else {
-        NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, parameters: parameters) {
-          processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, finishedHandler: finishedHandler)
+        if let receipt = receipt {
+          url += "?fetchType=\(ContentService.getFetchType())"
+          NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, parameters: parameters, method: .POST, body: receipt) {
+            processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, finishedHandler: finishedHandler)
+          }          
+        } else {
+          NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, parameters: parameters) {
+            processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, finishedHandler: finishedHandler)
+        }
         }
       }
     }

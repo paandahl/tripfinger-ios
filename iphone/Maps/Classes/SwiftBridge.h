@@ -164,6 +164,8 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 + (void)downloadCountry:(NSString * __nonnull)mwmCountryId;
 + (void)cancelDownload:(NSString * __nonnull)mwmRegionId;
 + (void)deleteCountry:(NSString * __nonnull)mwmCountryId;
++ (void)purchaseCountry:(NSString * _Nonnull)mwmCountryId downloadCallBack:(void (^ _Nonnull)(void))downloadCallBack;
+
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 

@@ -116,6 +116,7 @@ class ContentService {
       }}, failure: failure)
   }
   
+  // Can fetch a country by name or mwmRegionId
   class func getCountryWithName(name: String, failure: () -> (), handler: Region -> ()) {
     var parameters = [String: String]()
     parameters["fetchType"] = getFetchType()
@@ -248,37 +249,7 @@ class ContentService {
         }}, failure: failure)
     }
   }
-  
-  class func getJsonFromPost(var url: String, body: String, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
     
-    print("Fetching POST URL: \(url)")
-    
-    if appendPass {
-      url += "?pass=plJR86!!"
-    }
-    let nsUrl = NSURL(string: url)!
-    let request = NSMutableURLRequest(URL: nsUrl)
-    request.HTTPMethod = "POST"
-    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-    request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-    
-    Alamofire.request(request).validate(statusCode: 200..<300).responseJSON {
-      response in
-      
-      if response.result.isSuccess {
-        let json = JSON(data: response.data!)
-        success(json: json)
-      }
-      else {
-        print("Failure fetching url: \(url)")
-        print(response.result.error)
-        if let failure = failure {
-          dispatch_async(dispatch_get_main_queue(), failure)
-        }
-      }
-    }
-  }
-  
   
   class func getJsonStringFromUrl(url: String, var parameters: [String: String] = Dictionary<String, String>(), appendPass: Bool = true, success: (json: String) -> (), failure: (() -> ())? = nil) {
     print("Fetching URL: \(url)")

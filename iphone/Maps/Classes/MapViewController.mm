@@ -444,7 +444,7 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 
   [self updateStatusBarStyle];
   GetFramework().InvalidateRendering();
-  //[self showWelcomeScreenIfNeeded];
+  [self showWelcomeScreenIfNeeded];
   //[self showViralAlertIfNeeded];
 }
 
@@ -477,7 +477,7 @@ NSString * const kReportSegue = @"Map2ReportSegue";
     return;
 
   Class<MWMWelcomeControllerProtocol> whatsNewClass = [MWMWhatsNewDownloaderEditorController class];
-  BOOL const isFirstSession = [Alohalytics isFirstSession];
+  BOOL const isFirstSession = YES;
   Class<MWMWelcomeControllerProtocol> welcomeClass = isFirstSession ? [MWMFirstLaunchController class] : whatsNewClass;
 
   NSUserDefaults * ud = [NSUserDefaults standardUserDefaults];

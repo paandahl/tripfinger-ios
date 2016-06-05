@@ -69,6 +69,37 @@ class NetworkUtil {
     return request
   }
   
+  class func getJsonFromPost(var url: String, body: String, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
+    
+    print("Fetching POST URL: \(url)")
+    
+    if appendPass {
+      url += "?pass=plJR86!!"
+    }
+    let nsUrl = NSURL(string: url)!
+    let request = NSMutableURLRequest(URL: nsUrl)
+    request.HTTPMethod = "POST"
+    request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+    request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+    
+    Alamofire.request(request).validate(statusCode: 200..<300).responseJSON {
+      response in
+      
+      if response.result.isSuccess {
+        let json = JSON(data: response.data!)
+        success(json: json)
+      }
+      else {
+        print("Failure fetching url: \(url)")
+        print(response.result.error)
+        if let failure = failure {
+          dispatch_async(dispatch_get_main_queue(), failure)
+        }
+      }
+    }
+  }
+
+  
 //  class func downloadFile(url: String, destinationPath: NSURL, progressHandler: (Float -> ())?, finishedHandler: (() -> ())?) {
 //    Alamofire.request(.GET, url)
 //      .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
@@ -100,17 +131,23 @@ class NetworkUtil {
 //  }
 
   
-  class func saveDataFromUrl(url: String, destinationPath: NSURL, var parameters: [String: String] = Dictionary<String, String>(), appendPass: Bool = true, dispatchGroup: dispatch_group_t? = nil, retryTimes: Int = 100, progressHandler: (Float -> ())? = nil, finishedHandler: (() -> ())? = nil) -> Request {
-    if appendPass {
+  class func saveDataFromUrl(var url: String, destinationPath: NSURL, var parameters: [String: String] = Dictionary<String, String>(), appendPass: Bool = true, dispatchGroup: dispatch_group_t? = nil, retryTimes: Int = 100, method: Alamofire.Method = .GET, body: String? = nil, progressHandler: (Float -> ())? = nil, finishedHandler: (() -> ())? = nil) -> Request {
+    if appendPass && method == .POST {
+      url += "&pass=plJR86!!"
+    } else if appendPass {
       parameters["pass"] = "plJR86!!"
     }
 
     let nsUrl = NSURL(string: url)!
     
     NSURL.deleteFile(destinationPath)
-    let request = alamoFireManager.download(.GET, nsUrl, parameters: parameters) { temporaryUrl, response in
+    let request = alamoFireManager.download(method, nsUrl, parameters: parameters) { temporaryUrl, response in
       return destinationPath
     }
+    if let body = body {
+      parameters["body"] = body
+    }
+
     
     if let dispatchGroup = dispatchGroup {
       dispatch_group_enter(dispatchGroup)

@@ -14,11 +14,7 @@ class RegionController: GuideItemController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-    let colorImage = UIImage(withColor: UIColor.primary(), frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 64))
-    navigationController!.navigationBar.setBackgroundImage(colorImage, forBarMetrics: .Default)
-    navigationController!.navigationBar.translucent = true
-    
+        
     if session.currentRegion == nil && countryLists.count == 0 {
       refreshControl.addTarget(self, action: "reffo", forControlEvents: .ValueChanged)
       tableView.addSubview(refreshControl)
@@ -46,9 +42,7 @@ class RegionController: GuideItemController {
       }
       
       populateTableSections()
-      tableView.reloadData {
-        self.tableView.contentOffset = CGPointZero
-      }
+      tableView.reloadData {}
     }
     refreshControl.endRefreshing()
   }
@@ -291,7 +285,6 @@ extension RegionController {
     print("set curent category to: \(session.currentCategory)")
     
     let listingsController = ListingsController(session: session, categoryDescription: categoryDescription)
-    listingsController.edgesForExtendedLayout = .None // offset from navigation bar
     navigationController!.pushViewController(listingsController, animated: true)
     session.changeSection(categoryDescription, failure: navigationFailure) {
       listingsController.updateUI()
@@ -300,7 +293,6 @@ extension RegionController {
     
   class func constructRegionController(session: Session, title: String? = nil) -> RegionController {
     let regionController = RegionController(session: session)
-    regionController.edgesForExtendedLayout = .None // offset from navigation bar
     regionController.navigationItem.title = title
     return regionController
   }

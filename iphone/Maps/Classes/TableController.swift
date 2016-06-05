@@ -2,6 +2,7 @@ import Foundation
 
 class TableController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
+  var adjustedInsets = false
   var session: Session!
   weak var tableView : UITableView!
   
@@ -35,6 +36,15 @@ class TableController: UIViewController, UITableViewDelegate, UITableViewDataSou
     UINib.registerClass(ListingCell.self, reuseIdentifier: TableCellIdentifiers.listingCell, forTableView: tableView)
     UINib.registerClass(TextMessageCell.self, reuseIdentifier: TableCellIdentifiers.textMessageCell, forTableView: tableView)
     UINib.registerNib(TableCellIdentifiers.loadingCell, forTableView: tableView)
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    automaticallyAdjustsScrollViewInsets = true
+  }
+  
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
   }
   
   func numberOfSectionsInTableView(tableView: UITableView) -> Int {

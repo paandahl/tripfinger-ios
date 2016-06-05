@@ -23,7 +23,12 @@ class MyNavigationController: UINavigationController {
   static let navigationController = MyNavigationController()
 
   public func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
-    
+
+    TripfingerAppDelegate.styleNavigationBar(TripfingerAppDelegate.navigationController.navigationBar)
+
+//    let colorImage = UIImage(withColor: UIColor.primary(), frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 64))
+//    TripfingerAppDelegate.navigationController.navigationBar.setBackgroundImage(colorImage, forBarMetrics: .Default)
+//    TripfingerAppDelegate.navigationController.navigationBar.translucent = true
     print("myuuid: \(UniqueIdentifierService.uniqueIdentifier())")
     
     if NSProcessInfo.processInfo().arguments.contains("TEST") {
@@ -44,7 +49,6 @@ class MyNavigationController: UINavigationController {
     window.makeKeyAndVisible()
     TripfingerAppDelegate.navigationController.automaticallyAdjustsScrollViewInsets = false
     let regionController = RegionController(session: TripfingerAppDelegate.session)
-    regionController.edgesForExtendedLayout = .None // offset from navigation bar
     TripfingerAppDelegate.navigationController.viewControllers = [regionController]
     window.rootViewController = TripfingerAppDelegate.navigationController
 
@@ -71,6 +75,13 @@ class MyNavigationController: UINavigationController {
     print(TripfingerAppDelegate.coordinateSet)
 
     return window
+  }
+  
+  class func styleNavigationBar(bar: UINavigationBar) {
+    let colorImage = UIImage(withColor: UIColor.primary(), frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 64))
+    bar.setBackgroundImage(colorImage, forBarMetrics: .Default)
+    bar.translucent = true
+    bar.tintColor = UIColor.white()
   }
   
   public class func applicationDidBecomeActive(application: UIApplication) {
@@ -297,13 +308,6 @@ class MyNavigationController: UINavigationController {
   }
 
   class func downloadCountry(mwmCountryId: String) {
-    DownloadService.downloadCountry(mwmCountryId, progressHandler: {prog in
-      MapsAppDelegateWrapper.updateDownloadProgress(prog, forMwmRegion: mwmCountryId)
-      }, failure: {}) {
-        let region = DatabaseService.getCountryWithMwmId(mwmCountryId)
-        session.currentCountry = region
-        session.currentRegion = region
-    }
   }
   
   class func cancelDownload(mwmRegionId: String) {
@@ -313,6 +317,12 @@ class MyNavigationController: UINavigationController {
   class func deleteCountry(mwmCountryId: String) {
     let region = DatabaseService.getCountryWithMwmId(mwmCountryId)
     DownloadService.deleteCountry(region.getName())
+  }
+  
+  class func purchaseCountry(mwmCountryId: String, downloadCallBack: () -> ()) {
+    ContentService.getCountryWithName(mwmCountryId, failure: {fatalError("fail86")}) { region in
+      PurchasesService.purchaseCountry(region)
+    }
   }
   
   enum AppMode {

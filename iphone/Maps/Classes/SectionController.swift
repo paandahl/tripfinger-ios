@@ -8,9 +8,7 @@ class SectionController: GuideItemController {
       navigationItem.title = session.currentItem.name
       
       populateTableSections()
-      tableView.reloadData {
-        self.tableView.contentOffset = CGPointZero
-      }
+      tableView.reloadData {}
     }
   }
 }

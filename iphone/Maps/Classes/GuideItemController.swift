@@ -10,7 +10,6 @@ class GuideItemController: TableController {
     super.viewDidLoad()
     print("view.translatesAutoresizingMaskIntoConstraints: \(view.translatesAutoresizingMaskIntoConstraints)")
     
-    automaticallyAdjustsScrollViewInsets = false
     let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
     mapButton.accessibilityLabel = "Map"
     let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
@@ -55,9 +54,7 @@ class GuideItemController: TableController {
       navigationItem.title = session.currentItem.name
       
       populateTableSections()
-      tableView.reloadData {
-        self.tableView.contentOffset = CGPointZero
-      }
+      tableView.reloadData {}
     }
   }
   
