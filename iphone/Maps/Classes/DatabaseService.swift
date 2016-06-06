@@ -174,7 +174,7 @@ class DatabaseService {
     }
     let list = List<Listing>()
     for attraction in listings {
-      if attraction.item().images.count > 0 && attraction.listing.latitude != 0 && attraction.listing.longitude != 0 {
+      if attraction.listing.latitude != 0 && attraction.listing.longitude != 0 {
         list.append(attraction)
       }
     }

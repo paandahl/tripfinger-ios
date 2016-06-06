@@ -24,13 +24,9 @@ class RegionController: GuideItemController {
     
     dispatch_async(dispatch_get_main_queue()) {
       MapsAppDelegateWrapper.getMapViewController().view.layoutSubviews()
-    }
-    
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateUI),
-                                                     name: DownloadService.TFDownloadNotification,
-                                                     object: nil)
+    }    
   }
-  
+    
   func reffo() {
     loadCountryLists()
   }
@@ -289,6 +285,7 @@ extension RegionController {
     print("set curent category to: \(session.currentCategory)")
     
     let listingsController = ListingsController(session: session, categoryDescription: categoryDescription)
+    listingsController.edgesForExtendedLayout = .None
     navigationController!.pushViewController(listingsController, animated: true)
     session.changeSection(categoryDescription, failure: navigationFailure) { _ in
       listingsController.updateUI()

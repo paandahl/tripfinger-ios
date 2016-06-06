@@ -137,7 +137,7 @@ class JsonParserService {
     let listings = List<Listing>()
     for json in jsonArray.array! {
       let listing = parseListing(json)
-      if listing.listing.latitude != 0.0 && listing.listing.longitude != 0.0 && listing.item().images.count > 0 {
+      if listing.listing.latitude != 0.0 && listing.listing.longitude != 0.0 {
         listings.append(listing)
       }
     }

@@ -62,7 +62,9 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     session.loadListings(failure) {
       var newStack = [Listing]()
       for listing in self.session.currentListings {
-        if listing.listing.notes == nil || listing.listing.notes!.likedState == GuideListingNotes.LikedState.NOT_YET_LIKED_OR_SWIPED {
+        let listingNotes = listing.listing.notes
+        let notYetSwiped = GuideListingNotes.LikedState.NOT_YET_LIKED_OR_SWIPED
+        if (listingNotes == nil || listingNotes!.likedState == notYetSwiped) && listing.item().images.count > 0 {
           newStack.append(listing)
         }
       }

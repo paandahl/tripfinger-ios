@@ -3,6 +3,7 @@ import MBProgressHUD
 
 class GuideItemController: TableController {
   
+  var newContentDownloaded = false
   var contextSwitched = false
   var guideItemExpanded = false
   
@@ -22,6 +23,10 @@ class GuideItemController: TableController {
     
     updateUI()
     
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(newRegionDownloaded),
+                                                     name: DownloadService.TFDownloadNotification,
+                                                     object: nil)
+    
 //    let gestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
 //    gestureRecognizer.cancelsTouchesInView = false
 //    view.addGestureRecognizer(gestureRecognizer)
@@ -33,6 +38,14 @@ class GuideItemController: TableController {
 
   override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
     return UIInterfaceOrientationMask.Portrait
+  }
+  
+  func newRegionDownloaded() {
+    if self == TripfingerAppDelegate.navigationController.topViewController {
+      updateUI()
+    } else {
+      newContentDownloaded = true      
+    }
   }
   
   func navigationFailure() {
@@ -85,7 +98,8 @@ class GuideItemController: TableController {
           // sometimes we will get a ListingsController, but it's not possible to move to sections by search,
           // so it will note be necessary to update UI upon moving back
           print("loadedNew: \(loadedNew)")
-          if let parentViewController = parentViewController where loadedNew {
+          if let parentViewController = parentViewController where parentViewController.newContentDownloaded || loadedNew {
+            parentViewController.newContentDownloaded = false
             dispatch_async(dispatch_get_main_queue()) {
               print("calling updateUI on parent")
               parentViewController.updateUI()

@@ -27,9 +27,6 @@ class PlacePageInfoCell: UITableViewCell {
     descriptionText.editable = false
     contentView.addSubview(myImageView)
     contentView.addSubview(descriptionText)
-    let imageHeight = width * 0.75
-    contentView.addConstraints("H:|-0-[image]-0-|", forViews: ["image": myImageView])
-    contentView.addConstraints("V:|-0-[image(\(imageHeight))]", forViews: ["image": myImageView])
   }
 
   @objc(initWithCoder:)
@@ -44,6 +41,7 @@ class PlacePageInfoCell: UITableViewCell {
     
     myImageView.contentMode = UIViewContentMode.ScaleAspectFill
     myImageView.image = UIImage(named: "placeholder-712")
+    let imageHeight: Int
     if tripfingerEntity.url != "" {
       
       let alignment = UIDevice.currentDevice().orientation
@@ -56,12 +54,15 @@ class PlacePageInfoCell: UITableViewCell {
         let imageUrl = DownloadService.gcsImagesUrl + tripfingerEntity.url + "-712x534"
         try! myImageView.loadImageWithUrl(imageUrl)
       }
+      imageHeight = Int(myWidth * 0.75)
     }
     else {
+      imageHeight = 45
       print("No image")
-      let blankImage = UIImage(withColor: UIColor.lightGrayColor(), size: CGSizeMake(200, 200))
-      myImageView.image = textToImage("This is a draft without image.", inImage: blankImage, atPoint: CGPointMake(50, 100))
     }
+    
+    contentView.addConstraints("H:|-0-[image]-0-|", forViews: ["image": myImageView])
+    contentView.addConstraints("V:|-0-[image(\(imageHeight))]", forViews: ["image": myImageView])
     
     licenseButton.setTitle("Content license", forState: .Normal)
     licenseButton.titleLabel!.font = UIFont.systemFontOfSize(12.0)
