@@ -16,7 +16,7 @@ class RegionController: GuideItemController {
     super.viewDidLoad()
         
     if session.currentRegion == nil && countryLists.count == 0 {
-      refreshControl.addTarget(self, action: "reffo", forControlEvents: .ValueChanged)
+      refreshControl.addTarget(self, action: #selector(reffo), forControlEvents: .ValueChanged)
       tableView.addSubview(refreshControl)
       loadCountryLists()
     }
@@ -25,6 +25,10 @@ class RegionController: GuideItemController {
     dispatch_async(dispatch_get_main_queue()) {
       MapsAppDelegateWrapper.getMapViewController().view.layoutSubviews()
     }
+    
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(updateUI),
+                                                     name: DownloadService.TFDownloadNotification,
+                                                     object: nil)
   }
   
   func reffo() {
@@ -59,7 +63,7 @@ class RegionController: GuideItemController {
     print("loading country lists")
     if NetworkUtil.connectedToNetwork() {
       let failure = { () -> () in
-        NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(2), target: self, selector: "loadCountryLists", userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(2), target: self, selector: #selector(RegionController.loadCountryLists), userInfo: nil, repeats: false)
       }
       ContentService.getCountries(failure) {
         countries in
@@ -274,7 +278,7 @@ extension RegionController {
     let regionController = RegionController.constructRegionController(session)
     navigationController!.pushViewController(regionController, animated: true)
     
-    session.changeRegion(region, failure: navigationFailure) {
+    session.changeRegion(region, failure: navigationFailure) { _ in
       regionController.updateUI()
     }
   }
@@ -286,7 +290,7 @@ extension RegionController {
     
     let listingsController = ListingsController(session: session, categoryDescription: categoryDescription)
     navigationController!.pushViewController(listingsController, animated: true)
-    session.changeSection(categoryDescription, failure: navigationFailure) {
+    session.changeSection(categoryDescription, failure: navigationFailure) { _ in
       listingsController.updateUI()
     }
   }

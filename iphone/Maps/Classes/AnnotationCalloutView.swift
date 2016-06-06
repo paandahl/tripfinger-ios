@@ -28,7 +28,7 @@ class AnnotationCalloutView : UIView {
     
     detailButton = UIButton(type: .System)
     detailButton.setTitle("Details", forState: .Normal)
-    detailButton.addTarget(self, action: "detailButtonClicked", forControlEvents: .TouchUpInside)
+    detailButton.addTarget(self, action: #selector(detailButtonClicked), forControlEvents: .TouchUpInside)
     detailButton.sizeToFit()
     addSubview(detailButton)
     
@@ -37,11 +37,11 @@ class AnnotationCalloutView : UIView {
     addConstraints("V:|-5-[title]-5-|", forViews: views)
     addConstraints("V:|-5-[detail]-5-|", forViews: views)
     
-    let leftSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
+    let leftSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
     leftSwipeRecognizer.delegate = self
     leftSwipeRecognizer.direction = UISwipeGestureRecognizerDirection.Left
     addGestureRecognizer(leftSwipeRecognizer)
-    let rightSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: "handleSwipe:")
+    let rightSwipeRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
     rightSwipeRecognizer.delegate = self
     addGestureRecognizer(rightSwipeRecognizer)
 

@@ -10,9 +10,9 @@ class GuideItemController: TableController {
     super.viewDidLoad()
     print("view.translatesAutoresizingMaskIntoConstraints: \(view.translatesAutoresizingMaskIntoConstraints)")
     
-    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
+    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: #selector(GuideItemController.navigateToMap))
     mapButton.accessibilityLabel = "Map"
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
+    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(GuideItemController.navigateToSearch))
     navigationItem.rightBarButtonItems = [searchButton, mapButton]
     
     tableView.rowHeight = UITableViewAutomaticDimension
@@ -81,10 +81,11 @@ class GuideItemController: TableController {
         let failure = {
           fatalError("we're stranded")
         }
-        session.moveBackInHierarchy(failure) {
+        session.moveBackInHierarchy(failure) { loadedNew in
           // sometimes we will get a ListingsController, but it's not possible to move to sections by search,
           // so it will note be necessary to update UI upon moving back
-          if let parentViewController = parentViewController {
+          print("loadedNew: \(loadedNew)")
+          if let parentViewController = parentViewController where loadedNew {
             dispatch_async(dispatch_get_main_queue()) {
               print("calling updateUI on parent")
               parentViewController.updateUI()
@@ -151,7 +152,7 @@ extension GuideItemController {
     sectionController.guideItemExpanded = true
     navigationController!.pushViewController(sectionController, animated: true)
     
-    session.changeSection(section, failure: navigationFailure) {
+    session.changeSection(section, failure: navigationFailure) { _ in
       sectionController.updateUI()
     }
   }

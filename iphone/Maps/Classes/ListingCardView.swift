@@ -37,7 +37,7 @@ class ListingCardView: MDCSwipeToChooseView {
     
     constructInformationView()
     
-    let singleTap = UITapGestureRecognizer(target: self, action: "imageClick:")
+    let singleTap = UITapGestureRecognizer(target: self, action: #selector(imageClick(_:)))
     singleTap.numberOfTapsRequired = 1;
     singleTap.numberOfTouchesRequired = 1;
     imageView.addGestureRecognizer(singleTap)

@@ -67,7 +67,7 @@ class PlacePageInfoCell: UITableViewCell {
     licenseButton.titleLabel!.font = UIFont.systemFontOfSize(12.0)
     licenseButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
     licenseButton.sizeToFit()
-    licenseButton.addTarget(self, action: "navigateToLicense", forControlEvents: .TouchUpInside)
+    licenseButton.addTarget(self, action: #selector(navigateToLicense), forControlEvents: .TouchUpInside)
     contentView.addSubview(licenseButton)
     var views = ["description": descriptionText, "image": myImageView, "license": licenseButton]
     contentView.addConstraints("V:[license]-20-[description]", forViews: views)

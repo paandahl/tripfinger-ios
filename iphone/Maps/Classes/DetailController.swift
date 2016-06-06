@@ -26,10 +26,10 @@ class DetailController: UIViewController {
 
   override func viewDidLoad() {
     var barButtons = [UIBarButtonItem]()
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
+    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(navigateToSearch))
     barButtons.append(searchButton)
     navigationItem.title = session.currentListing.listing.item.name
-    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
+    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: #selector(navigateToMap))
     mapButton.accessibilityLabel = "Map"
     if session.currentListing.item().offline {
       barButtons.append(mapButton)

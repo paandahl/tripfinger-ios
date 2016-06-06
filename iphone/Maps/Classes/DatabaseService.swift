@@ -22,7 +22,6 @@ class DatabaseService {
           mainThreadRealm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "MemoryRealm\(testCounter)"))
         }
         else {
-          print("got disk realm")
           mainThreadRealm = try! Realm()
         }
       }
@@ -35,7 +34,6 @@ class DatabaseService {
         return try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "MemoryRealm\(testCounter)"))
       }
       else {
-        print("got disk realm")
         return try! Realm()
       }
     }

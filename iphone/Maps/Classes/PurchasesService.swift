@@ -125,15 +125,11 @@ class PurchasesService: NSObject {
     }
   }
   
-  public class func proceedWithDownload(country: Region, receipt: String? = nil) {
+  class func proceedWithDownload(country: Region, receipt: String? = nil) {
     let mwmRegionId = country.mwmRegionId ?? country.getName()
     DownloadService.downloadCountry(mwmRegionId, receipt: receipt, progressHandler: {prog in
       MapsAppDelegateWrapper.updateDownloadProgress(prog, forMwmRegion: mwmRegionId)
-    }, failure: {fatalError("error pba78")}) {
-      let region = DatabaseService.getCountryWithMwmId(mwmRegionId)
-      TripfingerAppDelegate.session.currentCountry = region
-      TripfingerAppDelegate.session.currentRegion = region
-    }
+    }, failure: {fatalError("error pba78")}) {}
   }
 
   private class func getFirstPurchase(deviceUuid: String, handler: String? -> ()) {

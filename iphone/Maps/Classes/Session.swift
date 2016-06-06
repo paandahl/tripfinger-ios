@@ -36,13 +36,13 @@ class Session {
     ContentService.getRegionWithId(regionId, failure: failure) {
       region in
       
-      self.changeRegion(region, failure: failure) {
+      self.changeRegion(region, failure: failure) { _ in
         handler()        
       }
     }
   }
   
-  func moveBackInHierarchy(failure: () -> (), handler: () -> ()) {
+  func moveBackInHierarchy(failure: () -> (), handler: (loadedNew: Bool) -> ()) {
     
     if currentSection != nil && sectionStack.count > 0 {
       currentSection = nil
@@ -119,7 +119,7 @@ class Session {
   
   /* The handler is only necessary if you pass a region that might need unwrapping.
   */
-  func changeRegion(region: Region!, failure: () -> (), handler: (() -> ())! = nil) {
+  func changeRegion(region: Region!, failure: () -> (), handler: ((loadedNew: Bool) -> ())! = nil) {
     
     setRegionVars(region)
     sectionStack = [GuideText]()
@@ -129,7 +129,7 @@ class Session {
     loadRegionIfNecessary(region, failure: failure, handler: handler)
   }
   
-  private func loadRegionIfNecessary(region: Region!, failure: () -> (), handler: (() -> ())! = nil) {
+  private func loadRegionIfNecessary(region: Region!, failure: () -> (), handler: ((loadedNew: Bool) -> ())! = nil) {
     if region != nil && region.listing.item.loadStatus != GuideItem.LoadStatus.FULLY_LOADED {
       ContentService.getRegionFromListing(region.listing, failure: failure) {
         region in
@@ -137,16 +137,16 @@ class Session {
         self.currentRegion = region
         self.currentItem = region.listing.item
         print("Setting region \(region.getName()) with category: \(region.item().category)")
-        handler()
+        handler(loadedNew: true)
       }
     } else {
       if handler != nil {
-        handler()
+        handler(loadedNew: false)
       }
     }
   }
   
-  func changeSection(section: GuideText, failure: () -> (), handler: (() -> ())) {
+  func changeSection(section: GuideText, failure: () -> (), handler: ((loadedNew: Bool) -> ())) {
     if currentSection != nil {
       sectionStack.append(currentSection)
     }
@@ -158,11 +158,11 @@ class Session {
         
         self.currentSection = section
         self.currentItem = section.item
-        handler()
+        handler(loadedNew: true)
       }
     }
     else {
-      handler()
+      handler(loadedNew: false)
     }
   }
   

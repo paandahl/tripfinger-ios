@@ -35,7 +35,7 @@ class ListController: GuideItemController {
     listings = nil
     self.tableView.reloadData()
     let failure = { () -> () in
-      NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(2), target: self, selector: "loadListings", userInfo: nil, repeats: false)
+      NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(2), target: self, selector: #selector(ListController.loadListings), userInfo: nil, repeats: false)
     }
     session.loadListings(failure) {
       
@@ -169,7 +169,7 @@ extension ListController {
     listingsController.edgesForExtendedLayout = .None // offset from navigation bar
     print("parentView: \(parentViewController)")
     parentViewController!.navigationController!.pushViewController(listingsController, animated: true)
-    session.changeSection(subCatDesc, failure: navigationFailure) {
+    session.changeSection(subCatDesc, failure: navigationFailure) { _ in
       listingsController.updateUI()
     }
   }

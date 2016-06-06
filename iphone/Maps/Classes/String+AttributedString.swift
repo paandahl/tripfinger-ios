@@ -10,11 +10,11 @@ extension String {
     var grouping = ""
     while paragraphEnd != nil {
       i += 1
-      let paragraphRange = Range<String.Index>(start: paragraphStart, end: paragraphEnd!.endIndex)
+      let paragraphRange = paragraphStart ..< paragraphEnd!.endIndex
       grouping.appendContentsOf(self.substringWithRange(paragraphRange))
       paragraphStart = paragraphEnd!.endIndex
       
-      let restOfTextRange = Range<String.Index>(start: paragraphEnd!.endIndex, end: self.endIndex)
+      let restOfTextRange = paragraphEnd!.endIndex ..< self.endIndex
       paragraphEnd = self.rangeOfString("</p>", range: restOfTextRange)
       if i == threshhold {
         paragraphs.append(grouping)

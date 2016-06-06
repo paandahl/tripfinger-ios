@@ -46,15 +46,15 @@ class GuideItemCell: UITableViewCell {
     licenseButton.titleLabel!.font = UIFont.systemFontOfSize(12.0)
     licenseButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
     licenseButton.sizeToFit()
-    licenseButton.addTarget(self, action: "navigateToLicense", forControlEvents: .TouchUpInside)
+    licenseButton.addTarget(self, action: #selector(navigateToLicense), forControlEvents: .TouchUpInside)
     contentView.addSubview(licenseButton)
     
     firstParagraph.linkTextAttributes[NSForegroundColorAttributeName] = UIColor.blackColor()
     firstParagraph.editable = false
     contentView.addSubview(firstParagraph)
 
-    readMoreButton.addTarget(self, action: "readMore", forControlEvents: .TouchUpInside)
-    downloadButton.addTarget(self, action: "openDownloadCountry", forControlEvents: .TouchUpInside)
+    readMoreButton.addTarget(self, action: #selector(readMore), forControlEvents: .TouchUpInside)
+    downloadButton.addTarget(self, action: #selector(openDownloadCountry), forControlEvents: .TouchUpInside)
   }
 
   required init?(coder aDecoder: NSCoder) {

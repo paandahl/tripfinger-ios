@@ -38,9 +38,9 @@ class ListingsController: UIViewController {
   
   override func viewDidLoad() {
     var barButtons = [UIBarButtonItem]()
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
+    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(ListingsController.navigateToSearch))
     barButtons.append(searchButton)
-    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
+    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: #selector(ListingsController.navigateToMap))
     mapButton.accessibilityLabel = "Map"
     let downloaded = DownloadService.isCountryDownloaded(session.currentCountry.getName())
     if downloaded {
@@ -65,7 +65,7 @@ class ListingsController: UIViewController {
     segmentedControl.selectedSegmentIndex = 0
     segmentedControl.tintColor = UIColor.darkGrayColor()
     segmentedControl.backgroundColor = UIColor.whiteColor()
-    segmentedControl.addTarget(self, action: "segmentedControllerChanged:", forControlEvents: .ValueChanged)
+    segmentedControl.addTarget(self, action: #selector(ListingsController.segmentedControllerChanged(_:)), forControlEvents: .ValueChanged)
     
     let views = ["segmented": segmentedControl, "container": container]
     if displayMode == DisplayMode.WITH_SWIPER {

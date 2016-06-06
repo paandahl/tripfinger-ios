@@ -42,14 +42,14 @@ class ListingCell: UITableViewCell {
       contentView.addConstraints("H:[heart]-20-|", forViews: views)
       contentView.addConstraints("H:|-20-[desc(300)]", forViews: views)
       
-      let imageClick = UITapGestureRecognizer(target: self, action: "imageClick:")
+      let imageClick = UITapGestureRecognizer(target: self, action: #selector(ListingCell.imageClick(_:)))
       imageClick.numberOfTapsRequired = 1;
       imageClick.numberOfTouchesRequired = 1;
       mainImage.addGestureRecognizer(imageClick)
       mainImage.userInteractionEnabled = true
 
       heartImage.image = UIImage(named: "heart-24")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-      let heartClick = UITapGestureRecognizer(target: self, action: "heartClick")
+      let heartClick = UITapGestureRecognizer(target: self, action: #selector(ListingCell.heartClick))
       heartClick.numberOfTapsRequired = 1;
       heartClick.numberOfTouchesRequired = 1;
       heartImage.addGestureRecognizer(heartClick)

@@ -15,7 +15,6 @@ class PurchaseCountryVC: FirstCountryDownloadView {
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(paymentFailed),
                                                      name: PurchasesService.TFPurchaseFailedNotification,
                                                      object: nil)
-
   }
   
   required init?(coder aDecoder: NSCoder) {

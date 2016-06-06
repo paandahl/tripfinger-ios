@@ -60,7 +60,7 @@ class LicenseController: UIViewController {
       view.addSubview(imageUrlTitle)
       if image.originalUrl != nil && image.originalUrl != "" {
         imageUrlButton.setTitle("Click here", forState: .Normal)
-        imageUrlButton.addTarget(self, action: "navigateToImage", forControlEvents: .TouchUpInside)
+        imageUrlButton.addTarget(self, action: #selector(navigateToImage), forControlEvents: .TouchUpInside)
       } else {
         imageUrlButton.setTitle("None", forState: .Normal)
         imageUrlButton.enabled = false

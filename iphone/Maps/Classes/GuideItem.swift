@@ -55,7 +55,7 @@ class GuideItem: Object {
   }
 
   // temporary data to make things easier
-  var loadStatus = LoadStatus.CONTENT_NOT_LOADED
+  var loadStatus = LoadStatus.FULLY_LOADED
   var offline = true
   
   enum LoadStatus {

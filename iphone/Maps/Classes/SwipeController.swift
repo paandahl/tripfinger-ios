@@ -214,7 +214,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     button.frame = CGRectMake(ChooseListingButtonHorizontalPadding, CGRectGetMaxY(self.backCardView.frame) + ChooseListingButtonVerticalPadding, image.size.width, image.size.height)
     button.setImage(image, forState: UIControlState.Normal)
     button.tintColor = UIColor(red: 247.0/255.0, green: 91.0/255.0, blue: 37.0/255.0, alpha: 1.0)
-    button.addTarget(self, action: "nopeFrontCardView", forControlEvents: UIControlEvents.TouchUpInside)
+    button.addTarget(self, action: #selector(SwipeController.nopeFrontCardView), forControlEvents: UIControlEvents.TouchUpInside)
     self.view.addSubview(button)
   }
   
@@ -224,7 +224,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     button.frame = CGRectMake(CGRectGetMaxX(self.view.frame) - image.size.width - ChooseListingButtonHorizontalPadding, CGRectGetMaxY(self.backCardView.frame) + ChooseListingButtonVerticalPadding, image.size.width, image.size.height)
     button.setImage(image, forState:UIControlState.Normal)
     button.tintColor = UIColor(red: 29.0/255.0, green: 245.0/255.0, blue: 106.0/255.0, alpha: 1.0)
-    button.addTarget(self, action: "likeFrontCardView", forControlEvents: UIControlEvents.TouchUpInside)
+    button.addTarget(self, action: #selector(SwipeController.likeFrontCardView), forControlEvents: UIControlEvents.TouchUpInside)
     self.view.addSubview(button)
     
   }

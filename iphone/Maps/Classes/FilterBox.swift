@@ -24,7 +24,7 @@ class FilterBox: UIView {
     filterControls.layer.borderColor = UIColor.darkGrayColor().CGColor
     filterControls.layer.borderWidth = 0.5;
     
-    let singleTap = UITapGestureRecognizer(target: self, action: "filterClick")
+    let singleTap = UITapGestureRecognizer(target: self, action: #selector(filterClick))
     singleTap.numberOfTapsRequired = 1;
     singleTap.numberOfTouchesRequired = 1;
     filterControls.addGestureRecognizer(singleTap)

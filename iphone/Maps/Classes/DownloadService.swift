@@ -6,6 +6,8 @@ import SwiftyJSON
 
 class DownloadService {
   
+  static let TFDownloadNotification = "TFDownloadNotification"
+  
   static var downloadPath: String!
   static let gcsMapsUrl = "https://storage.googleapis.com/tripfinger-maps/"
   static let gcsImagesUrl = "https://storage.googleapis.com/tripfinger-images/"
@@ -82,15 +84,20 @@ class DownloadService {
       if NSURL.fileExists(jsonPath) {
         processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, finishedHandler: finishedHandler)
       } else {
-        if let receipt = receipt {
+        var method = Alamofire.Method.GET
+        if receipt != nil {
           url += "?fetchType=\(ContentService.getFetchType())"
-          NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, parameters: parameters, method: .POST, body: receipt) {
-            processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, finishedHandler: finishedHandler)
-          }          
-        } else {
-          NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, parameters: parameters) {
-            processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, finishedHandler: finishedHandler)
+          method = .POST
         }
+
+        NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, parameters: parameters, method: method, body: receipt) {
+          processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler) {
+            let region = DatabaseService.getCountryWithMwmId(mwmRegionId)
+            TripfingerAppDelegate.session.currentCountry = region
+            TripfingerAppDelegate.session.currentRegion = region
+            NSNotificationCenter.defaultCenter().postNotificationName(DownloadService.TFDownloadNotification, object: mwmRegionId)
+            finishedHandler()
+          }
         }
       }
     }
