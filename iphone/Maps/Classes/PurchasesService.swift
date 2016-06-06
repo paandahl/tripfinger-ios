@@ -125,7 +125,7 @@ class PurchasesService: NSObject {
     }
   }
   
-  private class func proceedWithDownload(country: Region, receipt: String? = nil) {
+  public class func proceedWithDownload(country: Region, receipt: String? = nil) {
     let mwmRegionId = country.mwmRegionId ?? country.getName()
     DownloadService.downloadCountry(mwmRegionId, receipt: receipt, progressHandler: {prog in
       MapsAppDelegateWrapper.updateDownloadProgress(prog, forMwmRegion: mwmRegionId)

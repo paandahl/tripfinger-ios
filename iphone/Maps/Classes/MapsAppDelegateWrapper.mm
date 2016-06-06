@@ -44,6 +44,7 @@
   prog.second = 1000;
   string countryIdCpp = [mwmRegionId UTF8String];
   string fullId = "guide" + countryIdCpp;
+  NSLog(@"Updating download progress");
   [MWMFrameworkListener updateDownloadProgress:fullId progress:prog];
 }
 

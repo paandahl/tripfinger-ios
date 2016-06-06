@@ -206,7 +206,7 @@ using namespace storage;
         [self reloadData];
       };
 
-      [TripfingerAppDelegate purchaseCountry:realCountryId downloadCallBack:downloadStarted];
+      [TripfingerAppDelegate purchaseCountry:realCountryId downloadStarted:downloadStarted];
       return;
     }
   } else {
@@ -552,13 +552,6 @@ using namespace storage;
 
 - (void)downloadNode:(storage::TCountryId const &)countryId
 {
-  if (boost::starts_with(countryId, "guide")) {
-    NSString* realCountryId = @(countryId.substr(5).c_str());
-    [TripfingerAppDelegate downloadCountry:realCountryId];
-    [self configAllMapsView];
-    [self reloadData];
-    return;
-  }
   [Statistics logEvent:kStatDownloaderMapAction
         withParameters:@{
           kStatAction : kStatDownload,
@@ -591,7 +584,12 @@ using namespace storage;
 {
   if (boost::starts_with(countryId, "guide")) {
     NSString* realCountryId = @(countryId.substr(5).c_str());
-    [TripfingerAppDelegate downloadCountry:realCountryId];
+    void(^downloadStarted)() = ^() {
+      [self configAllMapsView];
+      [self reloadData];
+    };
+    
+    [TripfingerAppDelegate updateCountry:realCountryId downloadStarted:downloadStarted];
     [self configAllMapsView];
     [self reloadData];
     return;

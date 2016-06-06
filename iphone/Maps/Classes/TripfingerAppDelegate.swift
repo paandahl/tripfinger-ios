@@ -307,7 +307,11 @@ class MyNavigationController: UINavigationController {
     }
   }
 
-  class func downloadCountry(mwmCountryId: String) {
+  class func updateCountry(mwmCountryId: String, downloadStarted: () -> ()) {
+    ContentService.getCountryWithName(mwmCountryId, failure: {fatalError("fail86")}) { region in
+      PurchasesService.proceedWithDownload(region)
+      downloadStarted()
+    }
   }
   
   class func cancelDownload(mwmRegionId: String) {
@@ -319,9 +323,10 @@ class MyNavigationController: UINavigationController {
     DownloadService.deleteCountry(region.getName())
   }
   
-  class func purchaseCountry(mwmCountryId: String, downloadCallBack: () -> ()) {
+  class func purchaseCountry(mwmCountryId: String, downloadStarted: () -> ()) {
     ContentService.getCountryWithName(mwmCountryId, failure: {fatalError("fail86")}) { region in
       PurchasesService.purchaseCountry(region)
+      downloadStarted()
     }
   }
   

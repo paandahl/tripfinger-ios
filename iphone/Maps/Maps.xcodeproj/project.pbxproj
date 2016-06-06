@@ -1947,8 +1947,8 @@
 		2581DC0A1CACF8930086285E /* Tripfinger */ = {
 			isa = PBXGroup;
 			children = (
-				256570A71D040125006DE901 /* Purchases */,
 				2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */,
+				256570A71D040125006DE901 /* Purchases */,
 				2581DC3A1CAE31550086285E /* Controllers */,
 				2581DC101CAE30C30086285E /* Guide */,
 				2581DC431CAE31660086285E /* Model */,
