@@ -1,7 +1,7 @@
 import Foundation
 
 @objc protocol PlacePageInfoCellDelegate {
-  func navigatedToRegion();
+  func navigatedToGuide();
 }
 
 class PlacePageInfoCell: UITableViewCell {
@@ -170,15 +170,18 @@ class PlacePageInfoCell: UITableViewCell {
 
 extension PlacePageInfoCell: UITextViewDelegate {
   func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-    if URL.scheme == "region" {
-      let regionId = URL.host!
+    if URL.host == "www.tripfinger.com" {
       TripfingerAppDelegate.navigationController.navigationBarHidden = false
-      TripfingerAppDelegate.jumpToRegion(regionId, failure: {fatalError("Failzed45")}, stopSpinner: {})
       if let delegate = delegate {
-        delegate.navigatedToRegion()
+        delegate.navigatedToGuide()
+      }
+      if URL.path!.containsString("/l/") {
+        TripfingerAppDelegate.jumpToListingWithUrlPath(URL.path!, failure: {fatalError("Failzed45")}, finishedHandler: {})
+      } else {
+        TripfingerAppDelegate.jumpToRegionWithUrlPath(URL.path!, failure: {fatalError("Failzed45")}, finishedHandler: {})
       }
       return false
-    }
+    }    
     return true
   }
 }

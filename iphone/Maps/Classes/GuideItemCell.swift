@@ -5,6 +5,7 @@ protocol GuideItemContainerDelegate: class {
   func licenseClicked()
   func downloadClicked()
   func jumpToRegion(path: String)
+  func jumpToListing(path: String)
 }
 
 class GuideItemCell: UITableViewCell {
@@ -219,10 +220,12 @@ class GuideItemCell: UITableViewCell {
 extension GuideItemCell: UITextViewDelegate {
   
   func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-    print("clicked on url with host: \(URL.host)")
     if URL.host == "www.tripfinger.com" {
-      print("jumping to url with path: \(URL.path!)")
-      delegate.jumpToRegion(URL.path!)
+      if URL.path!.containsString("/l/") {
+        delegate.jumpToListing(URL.path!)
+      } else {
+        delegate.jumpToRegion(URL.path!)
+      }
       return false
     }
     return true

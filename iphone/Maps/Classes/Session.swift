@@ -124,6 +124,7 @@ class Session {
     setRegionVars(region)
     sectionStack = [GuideText]()
     currentSection = nil
+    currentSubCategory = nil
     currentRegion = region
     currentItem = region != nil ? region.listing.item : nil
     loadRegionIfNecessary(region, failure: failure, handler: handler)

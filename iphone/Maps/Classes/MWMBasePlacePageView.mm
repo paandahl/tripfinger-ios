@@ -526,12 +526,13 @@ enum class AttributePosition
     return ppic;
   }
   else {
-    return [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];    
+    return [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
   }
 }
 
-- (void)navigatedToRegion {
+- (void)navigatedToGuide {
   [self.ownerPlacePage.manager navigatedToGuide];
+  NSLog(@"dismissing place page");
   [self.ownerPlacePage.manager dismissPlacePage];
 }
 

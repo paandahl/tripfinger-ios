@@ -192,6 +192,18 @@ class DatabaseService {
       return nil
     }
   }
+  class func getListingWithSlug(slug: String) -> Listing? {
+    let predicate = NSPredicate(format: "listing.item.slug = %@", slug)
+    let listings = getRealm().objects(Listing).filter(predicate)
+    print("got \(listings.count) attractions with id \(slug)")
+    if listings.count == 1 {
+      return listings[0]
+    }
+    else {
+      return nil
+    }
+  }
+
   
   class func getListingByCoordinate(coord: CLLocationCoordinate2D) -> Listing? {
     let realm = getRealm()

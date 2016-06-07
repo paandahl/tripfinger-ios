@@ -12,6 +12,7 @@ class JsonParserService {
     guideItem.name = json["name"].string
     guideItem.versionId = json["id"].string
     guideItem.uuid = json["uuid"].string!
+    guideItem.slug = json["slug"].string
     guideItem.content = json["description"].string
     guideItem.category = json["category"].int!
     guideItem.subCategory = json["subCategory"].int!

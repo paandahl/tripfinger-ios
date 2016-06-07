@@ -118,6 +118,10 @@ class ContentService {
   
   // Can fetch a country by name or mwmRegionId
   class func getCountryWithName(name: String, failure: () -> (), handler: Region -> ()) {
+    if let region = DatabaseService.getCountry(name) {
+      handler(region)
+      return
+    }
     var parameters = [String: String]()
     parameters["fetchType"] = getFetchType()
     
@@ -131,6 +135,10 @@ class ContentService {
   }
   
   class func getSubRegionWithName(subRegionName: String, countryName: String, failure: () -> (), handler: Region -> ()) {
+    if let region = DatabaseService.getSubRegionOrCity(countryName, itemName: subRegionName) {
+      handler(region)
+      return
+    }
     var parameters = [String: String]()
     parameters["fetchType"] = getFetchType()
     
@@ -144,6 +152,10 @@ class ContentService {
   }
 
   class func getCityWithName(cityName: String, countryName: String, failure: () -> (), handler: Region -> ()) {
+    if let region = DatabaseService.getCity(countryName, cityName: cityName) {
+      handler(region)
+      return
+    }
     var parameters = [String: String]()
     parameters["fetchType"] = getFetchType()
     
@@ -218,6 +230,30 @@ class ContentService {
         handler(attraction)
       }
     }, failure: failure)
+  }
+  
+  class func getListingWithSlug(slug: String, failure: () -> (), withNotes: Bool = true, handler: Listing -> ()) {
+    if let listing = DatabaseService.getListingWithSlug(slug) {
+      handler(listing)
+      return
+    }
+    NetworkUtil.getJsonFromUrl(TripfingerAppDelegate.serverUrl + "/attractions/\(slug)", success: {
+      json in
+      
+      let attraction = JsonParserService.parseListing(json)
+      
+      if withNotes {
+        dispatch_async(dispatch_get_main_queue()) {
+          if let notes = DatabaseService.getListingNotes(attraction.item().uuid) {
+            attraction.listing.notes = notes
+          }
+          
+          handler(attraction)
+        }
+      } else {
+        handler(attraction)
+      }
+      }, failure: failure)
   }
     
   class func getCascadingListingsForRegion(region: Region?, withCategory category: Int? = nil, failure: () -> (), handler: List<Listing> -> ()) {

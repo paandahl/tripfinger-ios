@@ -171,7 +171,7 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 
 SWIFT_PROTOCOL("_TtP10Tripfinger25PlacePageInfoCellDelegate_")
 @protocol PlacePageInfoCellDelegate
-- (void)navigatedToRegion;
+- (void)navigatedToGuide;
 @end
 
 

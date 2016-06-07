@@ -86,27 +86,34 @@ class GuideItemController: TableController {
 //    cell.textLabel?.text = nil
 //  }
   
-  func backButtonAction(viewController: UIViewController) {
-    if TripfingerAppDelegate.navigationController.viewControllers.indexOf(viewController) == nil && !contextSwitched {
+  override func willMoveToParentViewController(parent: UIViewController?) {
+    if parent != nil {
+      return
+    }
+    print("navigating back")
+    if !contextSwitched {
       print("back button action")
-        guideItemExpanded = false
-        let parentViewController = TripfingerAppDelegate.navigationController.viewControllers.last as? GuideItemController
-        let failure = {
-          fatalError("we're stranded")
-        }
-        session.moveBackInHierarchy(failure) { loadedNew in
-          // sometimes we will get a ListingsController, but it's not possible to move to sections by search,
-          // so it will note be necessary to update UI upon moving back
-          print("loadedNew: \(loadedNew)")
-          if let parentViewController = parentViewController where parentViewController.newContentDownloaded || loadedNew {
-            parentViewController.newContentDownloaded = false
-            dispatch_async(dispatch_get_main_queue()) {
-              print("calling updateUI on parent")
-              parentViewController.updateUI()
-            }
+      guideItemExpanded = false
+      let failure = {
+        fatalError("we're stranded")
+      }
+      session.moveBackInHierarchy(failure) { loadedNew in
+        // sometimes we will get a ListingsController, but it's not possible to move to sections by search,
+        // so it will note be necessary to update UI upon moving back
+        print("loadedNew: \(loadedNew)")
+        if self.newContentDownloaded || loadedNew {
+          self.newContentDownloaded = false
+          dispatch_async(dispatch_get_main_queue()) {
+            print("calling updateUI on parent")
+            let newController = TripfingerAppDelegate.navigationController.viewControllers.last as! GuideItemController
+            newController.updateUI()
           }
         }
+      }
     }
+  }
+  
+  func backButtonAction(viewController: UIViewController) {
   }
   
   func downloadClicked() {}
@@ -134,22 +141,13 @@ extension GuideItemController: GuideItemContainerDelegate {
   func populateTableSections() {}
   
   func jumpToRegion(path: String) {
-    let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-    loadingNotification.mode = MBProgressHUDMode.Indeterminate
-    loadingNotification.labelText = "Loading"
-    let failure = {
-      MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-      let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-      loadingNotification.mode = MBProgressHUDMode.CustomView
-      loadingNotification.labelText = "Connection failed"
-      let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
-      dispatch_after(delayTime, dispatch_get_main_queue()) {
-        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-      }
-    }
-    TripfingerAppDelegate.jumpToRegionWithUrlPath(path, failure: failure) {
-      MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-    }
+    showLoadingHud()
+    TripfingerAppDelegate.jumpToRegionWithUrlPath(path, failure: showErrorHud, finishedHandler: hideHuds)
+  }
+  
+  func jumpToListing(path: String) {
+    showLoadingHud()
+    TripfingerAppDelegate.jumpToListingWithUrlPath(path, failure: showErrorHud, finishedHandler: hideHuds)
   }
 }
 
@@ -161,7 +159,6 @@ extension GuideItemController {
     let section = object as! GuideText
     
     let sectionController = SectionController(session: session)
-    sectionController.edgesForExtendedLayout = .None // offset from navigation bar
     sectionController.navigationItem.title = title
     sectionController.guideItemExpanded = true
     navigationController!.pushViewController(sectionController, animated: true)

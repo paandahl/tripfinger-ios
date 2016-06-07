@@ -265,24 +265,19 @@ class MyNavigationController: UINavigationController {
 
   class func selectedSearchResult(searchResult: TripfingerEntity, failure: () -> (), stopSpinner: () -> ()) {
     if searchResult.isListing() {
-      jumpToListing(searchResult.tripfingerId, failure: failure, stopSpinner: stopSpinner)
+      jumpToListing(searchResult.tripfingerId, failure: failure, finishedHandler: stopSpinner)
     } else {
-      jumpToRegion(searchResult.tripfingerId, failure: failure, stopSpinner: stopSpinner)
+      jumpToRegion(searchResult.tripfingerId, failure: failure, finishedHandler: stopSpinner)
     }
   }
   
-  class func jumpToRegionWithUrlPath(path: String, failure: () -> (), stopSpinner: () -> ()) {
-
+  class func changeToRegionWithUrlPath(path: String, failure: () -> (), finishedHandler: (UINavigationController, [UIViewController]) -> ()) {
     let handler = { region in
       session.changeRegion(region, failure: failure) { _ in
-        TripfingerAppDelegate.moveToRegion(stopSpinner) { nav, viewControllers in
-          nav.setViewControllers(viewControllers, animated: true)
+        TripfingerAppDelegate.moveToRegion({}) { nav, viewControllers in
+          finishedHandler(nav, viewControllers)
         }
       }
-    }
-    
-    let failure = {
-      fatalError("errror 200nx")
     }
     
     let urlParts = path.characters.split{$0 == "/"}.map(String.init)
@@ -292,36 +287,62 @@ class MyNavigationController: UINavigationController {
     }
     if regionNames.count == 1 {
       let countryName = regionNames[0]
-      print("Jumping to country: \(countryName)")
       ContentService.getCountryWithName(countryName, failure: failure, handler: handler)
     } else if regionNames.count == 2 {
       let countryName = regionNames[0]
       let subRegionName = regionNames[1]
-      print("Jumping to region: \(subRegionName)")
       ContentService.getSubRegionWithName(subRegionName, countryName: countryName, failure: failure, handler: handler)
     } else if regionNames.count == 3 {
       let countryName = regionNames[0]
       let cityName = regionNames[2]
-      print("Jumping to city: \(cityName)")
       ContentService.getCityWithName(cityName, countryName: countryName, failure: failure, handler: handler)
     } else {
       fatalError("Path \(path) resulted in too many parts: \(regionNames.count)")
     }
   }
-
   
-  class func jumpToRegion(regionId: String, failure: () -> (), stopSpinner: () -> ()) {
+  class func jumpToRegionWithUrlPath(path: String, failure: () -> (), finishedHandler: () -> ()) {
+    let failure = {
+      fatalError("errror 200nx")
+    }
+
+    changeToRegionWithUrlPath(path, failure: failure) { nav, viewControllers in
+      nav.setViewControllers(viewControllers, animated: true)
+      finishedHandler()
+    }
+  }
+
+  class func jumpToListingWithUrlPath(path: String, failure: () -> (), finishedHandler: () -> ()) {
+    
+    let failure = {
+      fatalError("error juzy89")
+    }
+    
+    let listingPartStart = path.rangeOfString("/l/")
+    let regionPath = path.substringToIndex(listingPartStart!.startIndex)
+    changeToRegionWithUrlPath(regionPath, failure: failure) { nav, viewControllers in
+      let listingSlug = path.substringFromIndex(listingPartStart!.endIndex)
+      ContentService.getListingWithSlug(listingSlug, failure: failure) { listing in
+        session.currentListing = listing
+        let entity = TripfingerEntity(listing: listing)
+        TripfingerAppDelegate.viewControllers = viewControllers
+        MapsAppDelegateWrapper.openPlacePage(entity)        
+      }
+    }
+  }
+  
+  class func jumpToRegion(regionId: String, failure: () -> (), finishedHandler: () -> ()) {
     session.loadRegionFromId(regionId, failure: failure) {
-      TripfingerAppDelegate.moveToRegion(stopSpinner) { nav, viewControllers in
+      TripfingerAppDelegate.moveToRegion(finishedHandler) { nav, viewControllers in
         nav.setViewControllers(viewControllers, animated: true)
       }
     }
   }
   
-  class func jumpToListing(listingId: String, failure: () -> (), stopSpinner: () -> ()) {
+  class func jumpToListing(listingId: String, failure: () -> (), finishedHandler: () -> ()) {
     ContentService.getListingWithId(listingId, failure: failure) { listing in
       TripfingerAppDelegate.session.loadRegionFromId(listing.item().parent, failure: failure ) {
-        TripfingerAppDelegate.moveToRegion(stopSpinner) { nav, viewControllers in
+        TripfingerAppDelegate.moveToRegion(finishedHandler) { nav, viewControllers in
           session.currentListing = listing
           let entity = TripfingerEntity(listing: listing)
           TripfingerAppDelegate.viewControllers = viewControllers
