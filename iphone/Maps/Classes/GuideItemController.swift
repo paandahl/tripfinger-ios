@@ -133,7 +133,7 @@ extension GuideItemController: GuideItemContainerDelegate {
   
   func populateTableSections() {}
   
-  func jumpToRegion(regionId: String) {
+  func jumpToRegion(path: String) {
     let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
     loadingNotification.mode = MBProgressHUDMode.Indeterminate
     loadingNotification.labelText = "Loading"
@@ -147,7 +147,7 @@ extension GuideItemController: GuideItemContainerDelegate {
         MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
       }
     }
-    TripfingerAppDelegate.jumpToRegion(regionId, failure: failure) {
+    TripfingerAppDelegate.jumpToRegionWithUrlPath(path, failure: failure) {
       MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
     }
   }

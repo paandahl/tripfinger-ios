@@ -130,6 +130,32 @@ class ContentService {
       }}, failure: failure)
   }
   
+  class func getSubRegionWithName(subRegionName: String, countryName: String, failure: () -> (), handler: Region -> ()) {
+    var parameters = [String: String]()
+    parameters["fetchType"] = getFetchType()
+    
+    NetworkUtil.getJsonFromUrl(TripfingerAppDelegate.serverUrl + "/subRegions/\(countryName)/\(subRegionName)", parameters: parameters, success: {
+      json in
+      
+      let region = JsonParserService.parseRegion(json)
+      dispatch_async(dispatch_get_main_queue()) {
+        handler(region)
+      }}, failure: failure)
+  }
+
+  class func getCityWithName(cityName: String, countryName: String, failure: () -> (), handler: Region -> ()) {
+    var parameters = [String: String]()
+    parameters["fetchType"] = getFetchType()
+    
+    NetworkUtil.getJsonFromUrl(TripfingerAppDelegate.serverUrl + "/cities/\(countryName)/\(cityName)", parameters: parameters, success: {
+      json in
+      
+      let region = JsonParserService.parseRegion(json)
+      dispatch_async(dispatch_get_main_queue()) {
+        handler(region)
+      }}, failure: failure)
+  }
+  
   class func getRegionWithId(regionId: String, failure: () -> (), handler: Region -> ()) {
     if let region = DatabaseService.getRegionWithId(regionId) {
       handler(region)

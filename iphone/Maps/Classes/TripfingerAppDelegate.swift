@@ -271,6 +271,45 @@ class MyNavigationController: UINavigationController {
     }
   }
   
+  class func jumpToRegionWithUrlPath(path: String, failure: () -> (), stopSpinner: () -> ()) {
+
+    let handler = { region in
+      session.changeRegion(region, failure: failure) { _ in
+        TripfingerAppDelegate.moveToRegion(stopSpinner) { nav, viewControllers in
+          nav.setViewControllers(viewControllers, animated: true)
+        }
+      }
+    }
+    
+    let failure = {
+      fatalError("errror 200nx")
+    }
+    
+    let urlParts = path.characters.split{$0 == "/"}.map(String.init)
+    var regionNames = [String]()
+    for urlPart in urlParts {
+      regionNames.append(urlPart.stringByReplacingOccurrencesOfString("_", withString: " "))
+    }
+    if regionNames.count == 1 {
+      let countryName = regionNames[0]
+      print("Jumping to country: \(countryName)")
+      ContentService.getCountryWithName(countryName, failure: failure, handler: handler)
+    } else if regionNames.count == 2 {
+      let countryName = regionNames[0]
+      let subRegionName = regionNames[1]
+      print("Jumping to region: \(subRegionName)")
+      ContentService.getSubRegionWithName(subRegionName, countryName: countryName, failure: failure, handler: handler)
+    } else if regionNames.count == 3 {
+      let countryName = regionNames[0]
+      let cityName = regionNames[2]
+      print("Jumping to city: \(cityName)")
+      ContentService.getCityWithName(cityName, countryName: countryName, failure: failure, handler: handler)
+    } else {
+      fatalError("Path \(path) resulted in too many parts: \(regionNames.count)")
+    }
+  }
+
+  
   class func jumpToRegion(regionId: String, failure: () -> (), stopSpinner: () -> ()) {
     session.loadRegionFromId(regionId, failure: failure) {
       TripfingerAppDelegate.moveToRegion(stopSpinner) { nav, viewControllers in

@@ -4,7 +4,7 @@ protocol GuideItemContainerDelegate: class {
   func readMoreClicked()
   func licenseClicked()
   func downloadClicked()
-  func jumpToRegion(regionId: String)
+  func jumpToRegion(path: String)
 }
 
 class GuideItemCell: UITableViewCell {
@@ -219,9 +219,10 @@ class GuideItemCell: UITableViewCell {
 extension GuideItemCell: UITextViewDelegate {
   
   func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-    if URL.scheme == "region" {
-      let regionId = URL.host!
-      delegate.jumpToRegion(regionId)
+    print("clicked on url with host: \(URL.host)")
+    if URL.host == "www.tripfinger.com" {
+      print("jumping to url with path: \(URL.path!)")
+      delegate.jumpToRegion(URL.path!)
       return false
     }
     return true

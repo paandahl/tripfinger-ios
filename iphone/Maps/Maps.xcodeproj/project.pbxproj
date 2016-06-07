@@ -1984,7 +1984,6 @@
 				2581DC1E1CAE31340086285E /* ImageLabelView.swift */,
 				2581DC241CAE31340086285E /* TextMessageCell.swift */,
 				2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */,
-				25D27B631D01C3C700F7AA91 /* Purchases */,
 			);
 			name = "UI Components";
 			sourceTree = "<group>";
@@ -2085,25 +2084,18 @@
 			name = Search;
 			sourceTree = "<group>";
 		};
-		25D27B631D01C3C700F7AA91 /* Purchases */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Purchases;
-			sourceTree = "<group>";
-		};
 		25D27B641D01C43000F7AA91 /* Guide */ = {
 			isa = PBXGroup;
 			children = (
-				2581DC231CAE31340086285E /* TableSection.swift */,
-				2581DC181CAE311B0086285E /* TableController.swift */,
-				2581DC211CAE31340086285E /* LoadingCell.xib */,
-				2581DC1F1CAE31340086285E /* ListingCardView.swift */,
 				2581DC1B1CAE31340086285E /* FilterBox.swift */,
 				2581DC1C1CAE31340086285E /* FilterBox.xib */,
 				2581DC1D1CAE31340086285E /* GuideItemCell.swift */,
+				2581DC1F1CAE31340086285E /* ListingCardView.swift */,
 				2581DC201CAE31340086285E /* ListingCell.swift */,
+				2581DC211CAE31340086285E /* LoadingCell.xib */,
 				2581DC221CAE31340086285E /* RightDetailCell.swift */,
+				2581DC181CAE311B0086285E /* TableController.swift */,
+				2581DC231CAE31340086285E /* TableSection.swift */,
 			);
 			name = Guide;
 			sourceTree = "<group>";
