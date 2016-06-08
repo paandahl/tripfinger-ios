@@ -213,7 +213,10 @@ class ContentService {
       handler(attraction)
       return
     }
-    NetworkUtil.getJsonFromUrl(TripfingerAppDelegate.serverUrl + "/attractions/\(attractionId)", success: {
+    var parameters = [String: String]()
+    parameters["fetchType"] = getFetchType()
+
+    NetworkUtil.getJsonFromUrl(TripfingerAppDelegate.serverUrl + "/attractions/\(attractionId)", parameters: parameters, success: {
       json in
       
       let attraction = JsonParserService.parseListing(json)
@@ -237,7 +240,11 @@ class ContentService {
       handler(listing)
       return
     }
-    NetworkUtil.getJsonFromUrl(TripfingerAppDelegate.serverUrl + "/attractions/\(slug)", success: {
+    
+    var parameters = [String: String]()
+    parameters["fetchType"] = getFetchType()
+
+    NetworkUtil.getJsonFromUrl(TripfingerAppDelegate.serverUrl + "/attractions/\(slug)", parameters: parameters, success: {
       json in
       
       let attraction = JsonParserService.parseListing(json)

@@ -57,10 +57,14 @@ class MyNavigationController: UINavigationController {
       let failure = {
         fatalError("Connection failed")
       }
-      DownloadService.downloadCountry("Brunei", progressHandler: { progress in }, failure: failure) {
-        print("Brunei download finished")
-        regionController.loadCountryLists() // remove online countries from list
-        regionController.tableView.accessibilityValue = "bruneiReady"
+      ContentService.getCountryWithName("Brunei", failure: failure) { brunei in
+        PurchasesService.makeCountryFirst(brunei) {
+          DownloadService.downloadCountry("Brunei", progressHandler: { progress in }, failure: failure) {
+            print("Brunei download finished")
+            regionController.loadCountryLists() // remove online countries from list
+            regionController.tableView.accessibilityValue = "bruneiReady"
+          }
+        }
       }
       NetworkUtil.simulateOffline = true
     } else if NSProcessInfo.processInfo().arguments.contains("OFFLINE") {

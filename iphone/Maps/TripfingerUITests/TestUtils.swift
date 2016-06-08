@@ -28,7 +28,7 @@ extension XCTestCase {
   }
 
   func scrollDown( times: Int = 1) {
-    let topScreenPoint = mainWindow().coordinateWithNormalizedOffset(CGVector(dx: 0.5, dy: 0.05))
+    let topScreenPoint = mainWindow().coordinateWithNormalizedOffset(CGVector(dx: 0.5, dy: 0.10))
     let bottomScreenPoint = mainWindow().coordinateWithNormalizedOffset(CGVector(dx: 0.5, dy: 0.90))
     for _ in 0..<times {
       bottomScreenPoint.pressForDuration(0, thenDragToCoordinate: topScreenPoint)
@@ -36,7 +36,7 @@ extension XCTestCase {
   }
   
   func scrollUp(times: Int = 1) {
-    let topScreenPoint = mainWindow().coordinateWithNormalizedOffset(CGVector(dx: 0.5, dy: 0.05))
+    let topScreenPoint = mainWindow().coordinateWithNormalizedOffset(CGVector(dx: 0.5, dy: 0.10))
     let bottomScreenPoint = mainWindow().coordinateWithNormalizedOffset(CGVector(dx: 0.5, dy: 0.90))
     for _ in 0..<times {
       topScreenPoint.pressForDuration(0, thenDragToCoordinate: bottomScreenPoint)
@@ -48,7 +48,7 @@ extension XCTestCase {
     return CGRectContainsRect(XCUIApplication().windows.elementBoundByIndex(0).frame, element.frame)
   }
   
-  internal func scrollToElement(element: XCUIElement, threshold: Int = 10) {
+  internal func scrollToElement(element: XCUIElement, threshold: Int = 5) {
     waitUntilExists(element)
     var iteration = 0
     

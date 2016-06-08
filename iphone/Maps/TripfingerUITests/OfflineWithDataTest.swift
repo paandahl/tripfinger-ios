@@ -23,6 +23,9 @@ class OfflineWithDataTest: XCTestCase {
     expectationForPredicate(bruneiDownloaded, evaluatedWithObject: table, handler: nil)
     waitForExpectationsWithTimeout(1200, handler: nil)
     
+    sleep(1)
+    XCTAssertEqual(1, app.tables.cells.count)
+    
     tapWhenHittable(app.tables.staticTexts["Brunei"])
     
     sleep(2)
@@ -46,16 +49,15 @@ class OfflineWithDataTest: XCTestCase {
     tapWhenHittable(app.navigationBars["Transportation"].buttons["Brunei"])
     
     // try to click a link
-    tapWhenHittable(app.buttons["Read more"])
     let tableCoord = XCUIApplication().tables.element.coordinateWithNormalizedOffset(CGVector(dx: 0, dy: 0))
-    var linkCoord = tableCoord.coordinateWithOffset(CGVector(dx: 65.0, dy: 118.0))
-    linkCoord.pressForDuration(1)
+    var linkCoord = tableCoord.coordinateWithOffset(CGVector(dx: 65.0, dy: (118.0 + 64)))
+    linkCoord.pressForDuration(0.2)
     tapWhenHittable(app.navigationBars["Bandar"].buttons["Brunei"])
     
     tapWhenHittable(app.buttons["Read more"])
     tapWhenHittable(app.tables.staticTexts["History"])
-    linkCoord = tableCoord.coordinateWithOffset(CGVector(dx: 36.5, dy: 63.5))
-    linkCoord.pressForDuration(1)
+    linkCoord = tableCoord.coordinateWithOffset(CGVector(dx: 36.5, dy: (63.5 + 64)))
+    linkCoord.pressForDuration(0.2)
     tapWhenHittable(app.navigationBars["Bandar"].buttons["Brunei"])
 
 

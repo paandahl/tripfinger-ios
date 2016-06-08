@@ -99,7 +99,7 @@ class PurchasesService: NSObject {
     }
   }
   
-  private class func makeCountryFirst(country: Region, complete: () -> ()) {
+  class func makeCountryFirst(country: Region, complete: () -> ()) {
     let deviceUuid = UniqueIdentifierService.uniqueIdentifier()
     let url = TripfingerAppDelegate.serverUrl + "/products/first_country/\(deviceUuid)/\(country.getId())"
     NetworkUtil.getJsonFromPost(url, body: "543gfdg3t23fevwef3tg", success: { json in
@@ -129,7 +129,9 @@ class PurchasesService: NSObject {
     let mwmRegionId = country.mwmRegionId ?? country.getName()
     DownloadService.downloadCountry(mwmRegionId, receipt: receipt, progressHandler: {prog in
       MapsAppDelegateWrapper.updateDownloadProgress(prog, forMwmRegion: mwmRegionId)
-    }, failure: {fatalError("error pba78")}) {}
+    }, failure: {fatalError("error pba78")}) {
+      MapsAppDelegateWrapper.updateDownloadState(mwmRegionId)
+    }
   }
 
   private class func getFirstPurchase(deviceUuid: String, handler: String? -> ()) {

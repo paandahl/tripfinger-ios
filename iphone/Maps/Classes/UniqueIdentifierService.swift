@@ -4,8 +4,17 @@ import KeychainSwift
 class UniqueIdentifierService {
   
   static let key = "tfUniqueId"
+  static var testId: String?
   
   class func uniqueIdentifier() -> String {
+    if TripfingerAppDelegate.mode == TripfingerAppDelegate.AppMode.TEST {
+      if let testId = testId {
+        return testId
+      } else {
+        testId = "test" + NSUUID().UUIDString
+        return testId!
+      }
+    }
     let keychain = KeychainSwift()
     var id = keychain.get(key)
     if id == nil {

@@ -27,9 +27,9 @@ class GuideItemController: TableController {
                                                      name: DownloadService.TFDownloadNotification,
                                                      object: nil)
     
-//    let gestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
-//    gestureRecognizer.cancelsTouchesInView = false
-//    view.addGestureRecognizer(gestureRecognizer)
+    let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+    gestureRecognizer.cancelsTouchesInView = false
+    view.addGestureRecognizer(gestureRecognizer)
   }
 
   func handleTap(recognizer: UIGestureRecognizer) {

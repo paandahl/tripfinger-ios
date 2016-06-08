@@ -1,5 +1,6 @@
 import XCTest
 import BrightFutures
+import SwiftyJSON
 import Result
 @testable import Tripfinger
 

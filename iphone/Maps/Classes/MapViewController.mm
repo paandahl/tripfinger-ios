@@ -444,7 +444,7 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 
   [self updateStatusBarStyle];
   GetFramework().InvalidateRendering();
-  [self showWelcomeScreenIfNeeded];
+  //[self showWelcomeScreenIfNeeded];
   //[self showViralAlertIfNeeded];
 }
 
@@ -756,6 +756,9 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 
 - (void)processCountryEvent:(TCountryId const &)countryId
 {
+  if (boost::starts_with(countryId, "guide")) {
+    return;
+  }
   NodeStatuses nodeStatuses{};
   GetFramework().Storage().GetNodeStatuses(countryId, nodeStatuses);
   if (nodeStatuses.m_status != NodeStatus::Error)

@@ -93,8 +93,10 @@ class DownloadService {
         NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, parameters: parameters, method: method, body: receipt) {
           processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler) {
             let region = DatabaseService.getCountryWithMwmId(mwmRegionId)
-            TripfingerAppDelegate.session.currentCountry = region
-            TripfingerAppDelegate.session.currentRegion = region
+            if TripfingerAppDelegate.session.currentCountry != nil {
+              TripfingerAppDelegate.session.currentCountry = region
+              TripfingerAppDelegate.session.currentRegion = region
+            }
             NSNotificationCenter.defaultCenter().postNotificationName(DownloadService.TFDownloadNotification, object: mwmRegionId)
             finishedHandler()
           }

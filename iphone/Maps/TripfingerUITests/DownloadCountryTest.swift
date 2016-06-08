@@ -31,8 +31,8 @@ class DownloadCountryTest: XCTestCase {
     downloadButton.tap()
     
     tapWhenHittable(app.tables.staticTexts["Download guide"])
-    app.sheets["Guide"].collectionViews.buttons["Download guide"].tap()
-
+    app.buttons["Confirm"].tap()
+    
     sleep(5)
     
     tapWhenHittable(app.tables.staticTexts["Guide content"])

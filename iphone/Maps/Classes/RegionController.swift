@@ -17,7 +17,9 @@ class RegionController: GuideItemController {
         
     if session.currentRegion == nil && countryLists.count == 0 {
       refreshControl.addTarget(self, action: #selector(reffo), forControlEvents: .ValueChanged)
-      tableView.addSubview(refreshControl)
+      if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.TEST {
+        tableView.addSubview(refreshControl)        
+      }
       loadCountryLists()
     }
     updateUI()
