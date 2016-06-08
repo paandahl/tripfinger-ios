@@ -96,6 +96,7 @@ class PlacePageInfoCell: UITableViewCell {
       contentView.addSubview(priceText)
       priceLabel.text = "Price"
       priceLabel.font = UIFont.boldSystemFontOfSize(16)
+      priceText.editable = false
       priceText.scrollEnabled = false
       priceText.font = UIFont.systemFontOfSize(16)
       priceText.text = tripfingerEntity.price
@@ -112,9 +113,11 @@ class PlacePageInfoCell: UITableViewCell {
       contentView.addSubview(directionsText)
       directionsLabel.text = "Directions"
       directionsLabel.font = UIFont.boldSystemFontOfSize(16)
+      directionsText.editable = false
       directionsText.scrollEnabled = false
-      directionsText.font = UIFont.systemFontOfSize(16)
-      directionsText.text = tripfingerEntity.directions
+      directionsText.attributedText = tripfingerEntity.directions.attributedString(16.0)
+      directionsText.sizeToFit()
+      directionsText.delegate = self
       let dirSize = directionsText.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
 
       print("directionsText height: \(directionsText.height)")

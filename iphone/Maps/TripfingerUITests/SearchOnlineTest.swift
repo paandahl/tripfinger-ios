@@ -27,7 +27,7 @@ class SearchOnlineTest: XCTestCase {
     app.navigationBars["Countries"].buttons["Search"].tap()
     
     
-    var searchField = XCUIApplication().textFields["Search"]
+    let searchField = XCUIApplication().textFields["Search"]
     searchField.tap()
     searchField.typeText("Brunei")
     

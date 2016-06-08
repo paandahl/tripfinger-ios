@@ -55,7 +55,7 @@ extension XCTestCase {
     while !elementIsWithinWindow(element) {
       guard iteration < threshold else { break }
       scrollDown()
-      iteration++
+      iteration += 1
     }
     
     if !elementIsWithinWindow(element) { scrollDown(threshold) }
@@ -63,7 +63,7 @@ extension XCTestCase {
     while !elementIsWithinWindow(element) {
       guard iteration > 0 else { break }
       scrollUp()
-      iteration--
+      iteration -= 1
     }
   }
   
