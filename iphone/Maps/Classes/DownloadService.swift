@@ -78,28 +78,17 @@ class DownloadService {
         let deviceUuid = UniqueIdentifierService.uniqueIdentifier()
         url = TripfingerAppDelegate.serverUrl + "/download_first_country/\(region.getName())/\(deviceUuid)"
       }
-      var parameters = [String: String]()
-      parameters["fetchType"] = ContentService.getFetchType()
       let jsonPath = countryPath.URLByAppendingPathComponent(region.getName() + ".json")
       if NSURL.fileExists(jsonPath) {
         processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, finishedHandler: finishedHandler)
       } else {
         var method = Alamofire.Method.GET
         if receipt != nil {
-          url += "?fetchType=\(ContentService.getFetchType())"
           method = .POST
         }
 
-        NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, parameters: parameters, method: method, body: receipt) {
-          processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler) {
-            let region = DatabaseService.getCountryWithMwmId(mwmRegionId)
-            if TripfingerAppDelegate.session.currentCountry != nil {
-              TripfingerAppDelegate.session.currentCountry = region
-              TripfingerAppDelegate.session.currentRegion = region
-            }
-            NSNotificationCenter.defaultCenter().postNotificationName(DownloadService.TFDownloadNotification, object: mwmRegionId)
-            finishedHandler()
-          }
+        NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, method: method, body: receipt) {
+          processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, finishedHandler: finishedHandler)
         }
       }
     }

@@ -3,13 +3,22 @@ import Foundation
 class ListController: GuideItemController {
   
   let displayGrouped: Bool
+  let regionId: String
+  let countryMwmId: String
+  let regionLicense: String?
+  let mapNavigator: MapNavigator
   let categoryDescription: GuideText
   var listings: [Listing]?
   
-  init(session: Session, grouped: Bool, categoryDescription: GuideText) {
+  init(regionId: String, countryMwmId: String, grouped: Bool, categoryDescription: GuideText, regionLicense: String?, mapNavigator: MapNavigator) {
+    self.regionId = regionId
+    self.countryMwmId = countryMwmId
+    self.regionLicense = regionLicense
+    self.mapNavigator = mapNavigator
     self.displayGrouped = grouped
     self.categoryDescription = categoryDescription
-    super.init(session: session)
+    super.init(guideItem: categoryDescription.item)
+    addObserver(DatabaseService.TFCountrySavedNotification, selector: #selector(countryDownloaded(_:)))    
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -18,14 +27,13 @@ class ListController: GuideItemController {
   
   override func viewDidLoad() {
 
+    view.backgroundColor = UIColor.whiteColor()
     super.viewDidLoad()
-    if !displayGrouped && session.currentRegion != nil {
+    if !displayGrouped {
       loadListings()
     } else {
       populateTableSections()
-    }
-    
-    print("arriving at ListController sectionStack had: \(session.sectionStack.count)")
+    }    
   }
   
   /*
@@ -35,13 +43,14 @@ class ListController: GuideItemController {
     listings = nil
     self.tableView.reloadData()
     let failure = { () -> () in
-      NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(2), target: self, selector: #selector(ListController.loadListings), userInfo: nil, repeats: false)
+      self.delay(2, selector: #selector(self.loadListings))
     }
-    session.loadListings(failure) {
-      
+    let subCatValue = categoryDescription.item.subCategory
+    let category = subCatValue != 0 ? subCatValue : categoryDescription.item.category
+    ContentService.getCascadingListingsForRegion(regionId, withCategory: category, failure: failure) { listings in
       var likedListings = [Listing]()
       var notLikedListings = [Listing]()
-      for attraction in self.session.currentListings {
+      for attraction in listings {
         if attraction.listing.notes?.likedState == GuideListingNotes.LikedState.LIKED {
           likedListings.append(attraction)
         }
@@ -53,7 +62,7 @@ class ListController: GuideItemController {
       listings.appendContentsOf(likedListings)
       listings.appendContentsOf(notLikedListings)
       self.listings = listings
-
+      
       SyncManager.run_async {
         dispatch_async(dispatch_get_main_queue()) {
           self.populateTableSections()
@@ -63,11 +72,11 @@ class ListController: GuideItemController {
     }
   }
   
+  
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if segue.identifier == "showFilter" {
       let navigationController = segue.destinationViewController as! UINavigationController
       let filterController = navigationController.viewControllers[0] as! FilterController
-      filterController.session = session
       filterController.delegate = self
     }
   }
@@ -90,10 +99,9 @@ extension ListController {
     
     if guideItemExpanded {
       let section = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToSection)
-      for guideSection in session.currentItem.guideSections {
+      for guideSection in categoryDescription.item.guideSections {
         section.elements.append((title: guideSection.item.name, value: guideSection))
       }
-      print("displaying guideSections for \(session.currentItem.name): \(session.currentItem.guideSections)")
       tableSections.append(section)
     }
 
@@ -102,10 +110,8 @@ extension ListController {
       for subCatDesc in categoryDescription.item.categoryDescriptions {
         section.elements.append((title: "", value: subCatDesc))
       }
-      print("displayedGroup, added \(section.elements.count)")
       tableSections.append(section)
     } else if let listings = listings {
-      print("listings")
       let liked = TableSection(title: "Listings", cellIdentifier: TableCellIdentifiers.likedCell, handler: nil)
       let notLiked = TableSection(title: "", cellIdentifier: TableCellIdentifiers.listingCell, handler: nil)
       for listing in listings {
@@ -164,37 +170,32 @@ extension ListController {
   
   func navigateToSubCategory(object: AnyObject) {
     let subCatDesc = object as! GuideText
-    session.currentSubCategory = Listing.SubCategory(rawValue: subCatDesc.item.subCategory)!
-    let listingsController = ListingsController(session: session, categoryDescription: subCatDesc)
-    listingsController.edgesForExtendedLayout = .None // offset from navigation bar
-    print("parentView: \(parentViewController)")
+    let listingsController = ListingsController(regionId: regionId, countryMwmId: countryMwmId, categoryDescription: subCatDesc, regionLicense: regionLicense, mapNavigator: mapNavigator)
     parentViewController!.navigationController!.pushViewController(listingsController, animated: true)
-    session.changeSection(subCatDesc, failure: navigationFailure) { _ in
-      listingsController.updateUI()
-    }
   }
   
-  override func viewWillDisappear(animated: Bool) {}
-  
-  func parentViewWillDisappear(viewController: UIViewController) {
-    if let navigationController = navigationController where
-      navigationController.viewControllers.indexOf(viewController) == nil && !contextSwitched {
-        if categoryDescription.item.subCategory != 0 {
-          session.currentSubCategory = nil
-        } else {
-          session.currentCategory = Listing.Category.ATTRACTIONS
-        }
+  func navigateToSection(object: AnyObject) {
+    let section = object as! GuideText
+    let sectionController = SectionController(section: section, regionLicense: regionLicense, mapNavigator: mapNavigator)
+    navigationController!.pushViewController(sectionController, animated: true)
+  }
+
+  func countryDownloaded(notification: NSNotification) {
+    if tableView != nil {
+      let countryName = notification.object as! String
+      let country = DatabaseService.getCountry(countryName)
+      if country.getDownloadId() == countryMwmId {
+        loadListings()
+      }
     }
-    super.backButtonAction(viewController)
   }
 }
 
 extension ListController: ListingCellContainer {
   
   func showDetail(listing: Listing) {
-    self.session.currentListing = listing
     let entity = TripfingerEntity(listing: listing)
-    MapsAppDelegateWrapper.openPlacePage(entity)
+    MapsAppDelegateWrapper.openPlacePage(entity, withCountryMwmId: countryMwmId)
   }
 }
 

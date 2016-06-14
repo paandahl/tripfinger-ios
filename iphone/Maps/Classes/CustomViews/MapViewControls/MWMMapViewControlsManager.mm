@@ -194,8 +194,8 @@ extern NSString * const kAlohalyticsTapEventKey;
   [self refreshHelperPanels:UIInterfaceOrientationIsLandscape(self.ownerController.interfaceOrientation)];
 }
 
-- (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity {
-  [self.placePageManager showPlacePageWithEntityFullscreen:entity];
+- (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity withCountryMwmId:(NSString*)countryMwmId {
+  [self.placePageManager showPlacePageWithEntityFullscreen:entity withCountryMwmId:countryMwmId];
   [self refreshHelperPanels:UIInterfaceOrientationIsLandscape(self.ownerController.interfaceOrientation)];
 }
 

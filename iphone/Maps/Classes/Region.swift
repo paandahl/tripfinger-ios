@@ -15,6 +15,14 @@ class Region: Object {
   
   let listings = List<Listing>()
   
+  func getDownloadId() -> String {
+    if let mwmRegionId = mwmRegionId {
+      return mwmRegionId
+    } else {
+      return getName()
+    }
+  }
+  
   func getCategory() -> Category {
     return Category(rawValue: item().category)!
   }
@@ -51,52 +59,18 @@ class Region: Object {
     return listing.item
   }
   
-  class func constructRegion(name: String, parent: Region) -> Region {
-    var country: String! = nil
-    if parent.item().category > Category.CONTINENT.rawValue {
-      country = parent.listing.country != nil ? parent.listing.country : parent.item().name
-    }
-    var subRegion: String! = nil
-    if parent.item().category == Category.SUB_REGION.rawValue {
-      subRegion = parent.item().name
-    }
-    else if parent.item().category == Category.COUNTRY.rawValue {
-      subRegion = parent.listing.subRegion != nil ? parent.listing.subRegion : "city"
-    }
-    var city: String! = nil
-    if parent.item().category > Category.SUB_REGION.rawValue {
-      city = parent.listing.city != nil ? parent.listing.city : parent.item().name
-    }
-    return constructRegion(name, country: country, subRegion: subRegion, city: city)
-  }
-  
-  class func constructRegion(name: String! = nil, country: String! = nil, subRegion: String! = nil, city: String! = nil, fromSearchResult: Bool = false) -> Region {
+  class func constructRegion(name: String! = nil) -> Region {
     let region = Region()
     region.listing = GuideListing()
     region.listing.item = GuideItem()
     region.listing.item.name = name
     region.listing.item.loadStatus = GuideItem.LoadStatus.CONTENT_NOT_LOADED
-    region.item().category = fromSearchResult ? 0 : Category.COUNTRY.rawValue
-    if country != nil {
-      region.listing.country = country
-      region.item().category = Category.SUB_REGION.rawValue
-    }
-    if subRegion != nil {
-      if subRegion != "city" {
-        region.listing.subRegion = subRegion
-      }
-      else {
-        region.listing.subRegion = nil
-      }
-      region.item().category = Category.CITY.rawValue
-    }
-    if city != nil {
-      region.listing.city = city
-      region.item().category = Category.NEIGHBOURHOOD.rawValue
-    }
     return region
   }
   
+  func getSlug() -> String {
+    return getName().stringByReplacingOccurrencesOfString(" ", withString: "_")
+  }
 }
 
 extension Region: GuideItemHolder {

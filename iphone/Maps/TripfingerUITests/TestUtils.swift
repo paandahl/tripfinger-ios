@@ -28,7 +28,7 @@ extension XCTestCase {
   }
 
   func scrollDown( times: Int = 1) {
-    let topScreenPoint = mainWindow().coordinateWithNormalizedOffset(CGVector(dx: 0.5, dy: 0.10))
+    let topScreenPoint = mainWindow().coordinateWithNormalizedOffset(CGVector(dx: 0.5, dy: 0.20))
     let bottomScreenPoint = mainWindow().coordinateWithNormalizedOffset(CGVector(dx: 0.5, dy: 0.90))
     for _ in 0..<times {
       bottomScreenPoint.pressForDuration(0, thenDragToCoordinate: topScreenPoint)
@@ -36,7 +36,7 @@ extension XCTestCase {
   }
   
   func scrollUp(times: Int = 1) {
-    let topScreenPoint = mainWindow().coordinateWithNormalizedOffset(CGVector(dx: 0.5, dy: 0.10))
+    let topScreenPoint = mainWindow().coordinateWithNormalizedOffset(CGVector(dx: 0.5, dy: 0.20))
     let bottomScreenPoint = mainWindow().coordinateWithNormalizedOffset(CGVector(dx: 0.5, dy: 0.90))
     for _ in 0..<times {
       topScreenPoint.pressForDuration(0, thenDragToCoordinate: bottomScreenPoint)

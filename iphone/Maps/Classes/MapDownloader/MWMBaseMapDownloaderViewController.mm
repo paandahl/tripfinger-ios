@@ -86,8 +86,6 @@ using namespace storage;
   self.navBarBackground = [navBar backgroundImageForBarMetrics:UIBarMetricsDefault];
   self.navBarShadow = navBar.shadowImage;
   UIColor * searchBarColor = [UIColor primary];
-  [navBar setBackgroundImage:[UIImage imageWithColor:searchBarColor]
-               forBarMetrics:UIBarMetricsDefault];
   navBar.shadowImage = [[UIImage alloc] init];
   [MWMFrameworkListener addObserver:self];
 }
@@ -96,7 +94,6 @@ using namespace storage;
 {
   [super viewWillDisappear:animated];
   UINavigationBar * navBar = [UINavigationBar appearance];
-  [navBar setBackgroundImage:self.navBarBackground forBarMetrics:UIBarMetricsDefault];
   navBar.shadowImage = self.navBarShadow;
   [MWMFrameworkListener removeObserver:self];
   [self notifyParentController];

@@ -7,7 +7,6 @@ protocol FilterControllerDelegate: class {
 class FilterController: UITableViewController {
   
   var delegate: FilterControllerDelegate!
-  var session: Session!
   var selectedCell: UITableViewCell!
   
   @IBAction func close() {
@@ -19,10 +18,10 @@ class FilterController: UITableViewController {
   }
   
   override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-    if indexPath.section == 1 && indexPath.row == Listing.Category.allValues.indexOf(session.currentCategory) {
-      cell.selected = true
-      selectedCell = cell
-    }
+//    if indexPath.section == 1 && indexPath.row == Listing.Category.allValues.indexOf(session.currentCategory) {
+//      cell.selected = true
+//      selectedCell = cell
+//    }
   }
   
   override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
@@ -89,7 +88,7 @@ extension FilterController {
     case 0:
       return
     case 1:
-      session.currentCategory = Listing.Category.allValues[indexPath.row]
+//      session.currentCategory = Listing.Category.allValues[indexPath.row]
       selectedCell.selected = false
     case 2:
       return

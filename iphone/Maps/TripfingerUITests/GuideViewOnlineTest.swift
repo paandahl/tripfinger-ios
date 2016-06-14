@@ -29,7 +29,6 @@ class GuideViewOnlineTest: XCTestCase {
     waitForExpectationsWithTimeout(60, handler: nil)
     readMoreButton.tap()
 
-    print(app.tables.staticTexts["Bangkok"].hittable)
     let understandRow = app.tables.staticTexts["Introduction"]
     scrollToElement(understandRow)
     understandRow.tap()

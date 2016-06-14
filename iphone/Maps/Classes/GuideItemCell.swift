@@ -149,7 +149,7 @@ class GuideItemCell: UITableViewCell {
     delegate.downloadClicked()
   }
   
-  func setContentFromGuideItem(guideItem: GuideItem) {    
+  func setContentFromGuideItem(guideItem: GuideItem) {
     contentImage.image = UIImage(named: "placeholder-712")
     if guideItem.images.count > 0 {
       

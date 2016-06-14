@@ -39,7 +39,7 @@
 - (void)dismissPlacePage;
 - (void)showPlacePage:(place_page::Info const &)info;
 - (void)showPlacePageWithEntity:(TripfingerEntity*)entity;
-- (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity;
+- (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity withCountryMwmId:(NSString*)countryMwmId;
 - (void)openSearch;
 - (void)openMapSearchWithQuery:(NSString*)query;
 - (void)setNavBarHidden:(BOOL)hidden;

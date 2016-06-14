@@ -155,7 +155,7 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 + (NSArray<TripfingerEntity *> * __nonnull)poiSearch:(NSString * __nonnull)query includeRegions:(BOOL)includeRegions;
 + (BOOL)coordinateExists:(CLLocationCoordinate2D)coord;
 + (NSInteger)nameToCategoryId:(NSString * __nonnull)name;
-+ (void)displayPlacePage:(NSArray<UIView *> * __nonnull)views;
++ (void)displayPlacePage:(NSArray<UIView *> * __nonnull)views entity:(TripfingerEntity * __nonnull)entity countryMwmId:(NSString * __nonnull)countryMwmId;
 + (void)bookmarkAdded:(NSString * __nonnull)listingId;
 + (void)bookmarkRemoved:(NSString * __nonnull)listingId;
 + (void)selectedSearchResult:(TripfingerEntity * __nonnull)searchResult failure:(void (^ __nonnull)(void))failure stopSpinner:(void (^ __nonnull)(void))stopSpinner;

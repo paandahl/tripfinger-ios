@@ -46,6 +46,7 @@ class GuideItem: Object {
           categoryDescription!.item.category = category.rawValue
           categoryDescription!.item.name = category.entityName
           categoryDescription!.item.content = nil
+          categoryDescription!.item.offline = offline
           categoryDescription!.item.loadStatus = GuideItem.LoadStatus.FULLY_LOADED
           allCategoryDescriptions.append(categoryDescription!)
         }

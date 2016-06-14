@@ -34,19 +34,21 @@ class NetworkUtil {
   }
 
   
-  class func getJsonFromUrl(var url: String, var parameters: [String: String] = Dictionary<String, String>(), method: Alamofire.Method = .GET, appendPass: Bool = true, success: (json: JSON) -> (), failure: () -> ()) -> Request {
-    if appendPass {
+  class func getJsonFromUrl(url: String, parameters: [String: String]? = nil, method: Alamofire.Method = .GET, appendParams: Bool = true, failure: () -> (), success: (json: JSON) -> ()) -> Request {
+    var parameters = parameters ?? Dictionary<String, String>()
+    if appendParams {
+      parameters["fetchType"] = getFetchType()
       parameters["pass"] = "plJR86!!"
     }
     
-    url = url.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!
+    let escapedUrl = url.stringByAddingPercentEncodingWithAllowedCharacters(.URLQueryAllowedCharacterSet())!
     
-    print("Fetching URL: \(url)")
+    print("Fetching URL: \(escapedUrl)")
     if parameters.count > 1 {
       print("Params: \(parameters)")
     }
     
-    let request = alamoFireManager.request(method, url, parameters: parameters)
+    let request = alamoFireManager.request(method, escapedUrl, parameters: parameters)
 
     let backgroundQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
     
@@ -69,14 +71,11 @@ class NetworkUtil {
     return request
   }
   
-  class func getJsonFromPost(var url: String, body: String, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
+  class func getJsonFromPost(url: String, body: String, appendPass: Bool = true, success: (json: JSON) -> (), failure: (() -> ())? = nil) {
     
-    print("Fetching POST URL: \(url)")
-    
-    if appendPass {
-      url += "?pass=plJR86!!"
-    }
-    let nsUrl = NSURL(string: url)!
+    let fullUrl = appendPass ? url + "?pass=plJR86!!" : url
+    print("Fetching POST URL: \(fullUrl)")
+    let nsUrl = NSURL(string: fullUrl)!
     let request = NSMutableURLRequest(URL: nsUrl)
     request.HTTPMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -90,7 +89,7 @@ class NetworkUtil {
         success(json: json)
       }
       else {
-        print("Failure fetching url: \(url)")
+        print("Failure fetching url: \(fullUrl)")
         print(response.result.error)
         if let failure = failure {
           dispatch_async(dispatch_get_main_queue(), failure)
@@ -99,62 +98,33 @@ class NetworkUtil {
     }
   }
 
-  
-//  class func downloadFile(url: String, destinationPath: NSURL, progressHandler: (Float -> ())?, finishedHandler: (() -> ())?) {
-//    Alamofire.request(.GET, url)
-//      .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
-//        
-//        if let progressHandler = progressHandler {
-//          let progress = Float(totalBytesRead) / Float(totalBytesExpectedToRead)
-//          
-//          dispatch_async(dispatch_get_main_queue()) {
-//            progressHandler(progress)
-//          }
-//        }
-//      }
-//      .responseData { response in
-//        
-//        print("Writing file to disk: \(destinationPath.absoluteString)")
-//        if response.result.isSuccess {
-//          let result = response.data?.writeToURL(destinationPath, atomically: true)
-//          if !result! {
-//            print("ERROR: Writing file failed")
-//          }
-//          if let finishedHandler = finishedHandler {
-//            finishedHandler()
-//          }
-//        }
-//        else {
-//          print("ERROR: Downloading file failed")
-//        }
-//    }
-//  }
-
-  
-  class func saveDataFromUrl(var url: String, destinationPath: NSURL, var parameters: [String: String] = Dictionary<String, String>(), appendPass: Bool = true, dispatchGroup: dispatch_group_t? = nil, retryTimes: Int = 100, method: Alamofire.Method = .GET, body: String? = nil, progressHandler: (Float -> ())? = nil, finishedHandler: (() -> ())? = nil) -> Request {
-    if appendPass && method == .POST {
-      url += "&pass=plJR86!!"
-    } else if appendPass {
-      parameters["pass"] = "plJR86!!"
+  class func saveDataFromUrl(url: String, destinationPath: NSURL, parameters: [String: String]? = nil, appendParams: Bool = true, dispatchGroup: dispatch_group_t? = nil, retryTimes: Int = 100, method: Alamofire.Method = .GET, body: String? = nil, progressHandler: (Float -> ())? = nil, finishedHandler: (() -> ())? = nil) -> Request {
+    var fullUrl = url
+    var fullParameters = parameters ?? Dictionary<String, String>()
+    if appendParams && method == .POST {
+      fullUrl += "?pass=plJR86!!&fetchType=" + getFetchType()
+    } else if appendParams {
+      fullParameters["pass"] = "plJR86!!"
+      fullParameters["fetchType"] = getFetchType()
     }
 
-    let nsUrl = NSURL(string: url)!
+    let nsUrl = NSURL(string: fullUrl)!
     
     NSURL.deleteFile(destinationPath)
-    let request = alamoFireManager.download(method, nsUrl, parameters: parameters) { temporaryUrl, response in
+    let request = alamoFireManager.download(method, nsUrl, parameters: fullParameters) { temporaryUrl, response in
       return destinationPath
     }
     if let body = body {
-      parameters["body"] = body
+      fullParameters["body"] = body
     }
 
     
     if let dispatchGroup = dispatchGroup {
       dispatch_group_enter(dispatchGroup)
-      print("dispatch_group_enter: \(url)")
+      print("dispatch_group_enter: \(fullUrl)")
     }
 
-    print("downloading file: \(url)")
+    print("downloading file: \(fullUrl)")
 
     request.validate(statusCode: 200..<300)
       .progress { bytesRead, totalBytesRead, totalBytesExpectedToRead in
@@ -177,7 +147,7 @@ class NetworkUtil {
             } else {
               print("Error was: \(error)")
               print("Status code was \(error.code), retrying download of: \(url)")
-              saveDataFromUrl(url, destinationPath: destinationPath, parameters: parameters, appendPass: appendPass, dispatchGroup: dispatchGroup, retryTimes: retryTimes - 1, progressHandler: progressHandler, finishedHandler: finishedHandler)
+              saveDataFromUrl(url, destinationPath: destinationPath, parameters: parameters, appendParams: appendParams, dispatchGroup: dispatchGroup, retryTimes: retryTimes - 1, progressHandler: progressHandler, finishedHandler: finishedHandler)
             }
             if let dispatchGroup = dispatchGroup {
               dispatch_group_leave(dispatchGroup)
@@ -200,5 +170,16 @@ class NetworkUtil {
         }
     }
     return request
+  }
+  
+  private class func getFetchType() -> String {
+    switch TripfingerAppDelegate.mode {
+    case .RELEASE:
+      return "ONLY_PUBLISHED"
+    case .BETA:
+      return "STAGED_OR_PUBLISHED"
+    case .TEST:
+      return "NEWEST"
+    }
   }
 }

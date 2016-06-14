@@ -65,15 +65,15 @@ class ContentServiceTest: XCTestCase {
   func testGetCascadingListingsForRegion() {
     let exp = expectationWithDescription("ready")
     DatabaseServiceTest.insertBrunei { brunei in
-      ContentService.getCascadingListingsForRegion(brunei, withCategory: Listing.Category.ATTRACTIONS.rawValue, failure: {fatalError("EX3")}) { listings in
+      ContentService.getCascadingListingsForRegion(brunei.getId(), withCategory: Listing.Category.ATTRACTIONS.rawValue, failure: {fatalError("EX3")}) { listings in
         XCTAssertEqual(1, listings.count)
         XCTAssertEqual(1, brunei.item().subRegions.count)
         let bandar = brunei.item().subRegions[0]
-        ContentService.getCascadingListingsForRegion(bandar, withCategory: Listing.Category.ATTRACTIONS.rawValue, failure: {fatalError("EX4")}) { listings in
+        ContentService.getCascadingListingsForRegion(bandar.getId(), withCategory: Listing.Category.ATTRACTIONS.rawValue, failure: {fatalError("EX4")}) { listings in
           XCTAssertEqual(0, listings.count)
           XCTAssertEqual(1, bandar.item().subRegions.count)
           let malabau = bandar.item().subRegions[0]
-          ContentService.getCascadingListingsForRegion(malabau, withCategory: Listing.Category.ATTRACTIONS.rawValue, failure: {fatalError("EX10")}) { listings in
+          ContentService.getCascadingListingsForRegion(malabau.getId(), withCategory: Listing.Category.ATTRACTIONS.rawValue, failure: {fatalError("EX10")}) { listings in
             XCTAssertEqual(0, listings.count)
             exp.fulfill()
           }

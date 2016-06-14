@@ -2,8 +2,7 @@ import UIKit
 import Alamofire
 import CoreLocation
 
-class MyNavigationController: UINavigationController {
-  
+class MyNavigationController: UINavigationController {  
   override func supportedInterfaceOrientations() -> UInt {
     let className = String(topViewController!.dynamicType)
     if className == "MapViewController" {
@@ -18,17 +17,12 @@ class MyNavigationController: UINavigationController {
   
   static var serverUrl = "https://1-3-dot-tripfinger-server.appspot.com"
   static var mode = AppMode.BETA
-  static var session: Session!
   static var coordinateSet = Set<Int64>()
   static let navigationController = MyNavigationController()
 
   public func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
 
     TripfingerAppDelegate.styleNavigationBar(TripfingerAppDelegate.navigationController.navigationBar)
-
-//    let colorImage = UIImage(withColor: UIColor.primary(), frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 64))
-//    TripfingerAppDelegate.navigationController.navigationBar.setBackgroundImage(colorImage, forBarMetrics: .Default)
-//    TripfingerAppDelegate.navigationController.navigationBar.translucent = true
     print("myuuid: \(UniqueIdentifierService.uniqueIdentifier())")
     
     if NSProcessInfo.processInfo().arguments.contains("TEST") {
@@ -41,27 +35,21 @@ class MyNavigationController: UINavigationController {
     configuration.timeoutIntervalForResource = 60 * 60 * 48
     NetworkUtil.alamoFireManager = Alamofire.Manager(configuration: configuration)
 
-    TripfingerAppDelegate.session = Session()
-
-    print("didFinishLaunchingWithOptions!!")
     let window = UIWindow(frame: UIScreen.mainScreen().bounds)
     window.backgroundColor = UIColor.whiteColor()
     window.makeKeyAndVisible()
     TripfingerAppDelegate.navigationController.automaticallyAdjustsScrollViewInsets = false
-    let regionController = RegionController(session: TripfingerAppDelegate.session)
+    let regionController = CountryListController()
     TripfingerAppDelegate.navigationController.viewControllers = [regionController]
     window.rootViewController = TripfingerAppDelegate.navigationController
 
     if NSProcessInfo.processInfo().arguments.contains("OFFLINEMAP") {
-      print("Installing test-map before offline-mode")
       let failure = {
         fatalError("Connection failed")
       }
       ContentService.getCountryWithName("Brunei", failure: failure) { brunei in
         PurchasesService.makeCountryFirst(brunei) {
           DownloadService.downloadCountry("Brunei", progressHandler: { progress in }, failure: failure) {
-            print("Brunei download finished")
-            regionController.loadCountryLists() // remove online countries from list
             regionController.tableView.accessibilityValue = "bruneiReady"
           }
         }
@@ -147,7 +135,6 @@ class MyNavigationController: UINavigationController {
 
   public class func getOfflineListingById(listingId: String) -> TripfingerEntity {
     let listing = DatabaseService.getListingWithId(listingId)!
-    session.currentListing = listing
     return TripfingerEntity(listing: listing)
   }
 
@@ -159,7 +146,6 @@ class MyNavigationController: UINavigationController {
       dispatch_semaphore_signal(semaphore)
     }
     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER)
-    session.currentListing = retListing
     return TripfingerEntity(listing: retListing)
   }
   
@@ -170,7 +156,6 @@ class MyNavigationController: UINavigationController {
   
   public class func getListingByCoordinate(coord: CLLocationCoordinate2D) -> TripfingerEntity {
     let listing = DatabaseService.getListingByCoordinate(coord)
-    session.currentListing = listing
     let entity = TripfingerEntity(listing: listing!)
     return entity
   }
@@ -209,8 +194,8 @@ class MyNavigationController: UINavigationController {
   
   static var viewControllers = [UIViewController]()
     
-  public class func displayPlacePage(views: [UIView]) {
-    let detailController = DetailController(session: session, placePageViews: views)
+  public class func displayPlacePage(views: [UIView], entity: TripfingerEntity, countryMwmId: String) {
+    let detailController = DetailController(entity: entity, countryDownloadId: countryMwmId, placePageViews: views)
     if viewControllers.count > 0 {
       let newViewControllers = TripfingerAppDelegate.viewControllers + [detailController]
       TripfingerAppDelegate.navigationController.setViewControllers(newViewControllers, animated: true)
@@ -218,13 +203,6 @@ class MyNavigationController: UINavigationController {
     } else {
       TripfingerAppDelegate.navigationController.pushViewController(detailController, animated: true)
     }
-  }
-  
-  class func navigateToLicense() { // for listings from map
-    let licenseController: UIViewController
-    licenseController = LicenseController(textItem: session.currentListing.item(), imageItem: session.currentListing.item())
-    licenseController.edgesForExtendedLayout = .None // offset from navigation bar
-    TripfingerAppDelegate.navigationController.pushViewController(licenseController, animated: true)
   }
 
   class func bookmarkAdded(listingId: String) {
@@ -236,9 +214,18 @@ class MyNavigationController: UINavigationController {
     let listing = DatabaseService.getListingWithId(listingId)!
     DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, listing: listing, addNativeMarks: false)
   }
-  
-  class func moveToRegion(stopSpinner: () -> (), handler: (UINavigationController, [UIViewController]) -> ()) {
-    let session = TripfingerAppDelegate.session
+
+  class func moveToRegion(region: Region, stopSpinner: () -> (), handler: (String, UINavigationController, [UIViewController]) -> ()) {
+    if region.getCategory() == Region.Category.COUNTRY {
+      moveToRegion(region, countryMwmId: region.getDownloadId(), stopSpinner: stopSpinner, handler: handler)
+    } else {
+      ContentService.getCountryWithName(region.listing.country!, failure: { fatalError("errorPrk") }) { country in
+        moveToRegion(region, countryMwmId: country.getDownloadId(), stopSpinner: stopSpinner, handler: handler)
+      }
+    }
+  }
+
+  class func moveToRegion(region: Region, countryMwmId: String, stopSpinner: () -> (), handler: (String, UINavigationController, [UIViewController]) -> ()) {
     stopSpinner()
     
     let nav = TripfingerAppDelegate.navigationController
@@ -249,22 +236,26 @@ class MyNavigationController: UINavigationController {
     }
     
     nav.popToRootViewControllerAnimated(false)
-    let currentListing = session.currentRegion.listing
+    let regionListing = region.listing
     var viewControllers = [nav.viewControllers.first!]
-    if session.currentRegion.item().category > Region.Category.COUNTRY.rawValue {
-      viewControllers.append(RegionController.constructRegionController(session, title: currentListing.country))
+    if region.item().category > Region.Category.COUNTRY.rawValue {
+      let regionController = RegionController(region: Region.constructRegion(regionListing.country), countryMwmId: countryMwmId)
+      viewControllers.append(regionController)
     }
-    if session.currentRegion.item().category > Region.Category.SUB_REGION.rawValue {
-      if session.currentRegion.listing.subRegion != nil {
-        viewControllers.append(RegionController.constructRegionController(session, title: currentListing.subRegion))
+    if region.item().category > Region.Category.SUB_REGION.rawValue {
+      if region.listing.subRegion != nil {
+        let regionController = RegionController(region: Region.constructRegion(regionListing.subRegion), countryMwmId: countryMwmId)
+        viewControllers.append(regionController)
       }
     }
-    if TripfingerAppDelegate.session.currentRegion.item().category > Region.Category.CITY.rawValue {
-      viewControllers.append(RegionController.constructRegionController(session, title: currentListing.city))
+    if region.item().category > Region.Category.CITY.rawValue {
+      let regionController = RegionController(region: Region.constructRegion(regionListing.city), countryMwmId: countryMwmId)
+      viewControllers.append(regionController)
     }
-    viewControllers.append(RegionController.constructRegionController(session))
+    let regionController = RegionController(region: region, countryMwmId: countryMwmId)
+    viewControllers.append(regionController)
     
-    handler(nav, viewControllers)
+    handler(countryMwmId, nav, viewControllers)
   }
 
   class func selectedSearchResult(searchResult: TripfingerEntity, failure: () -> (), stopSpinner: () -> ()) {
@@ -275,12 +266,10 @@ class MyNavigationController: UINavigationController {
     }
   }
   
-  class func changeToRegionWithUrlPath(path: String, failure: () -> (), finishedHandler: (UINavigationController, [UIViewController]) -> ()) {
+  class func changeToRegionWithUrlPath(path: String, failure: () -> (), finishedHandler: (String, UINavigationController, [UIViewController]) -> ()) {
     let handler = { region in
-      session.changeRegion(region, failure: failure) { _ in
-        TripfingerAppDelegate.moveToRegion({}) { nav, viewControllers in
-          finishedHandler(nav, viewControllers)
-        }
+      TripfingerAppDelegate.moveToRegion(region, stopSpinner: {}) { countryMwmId, nav, viewControllers in
+        finishedHandler(countryMwmId, nav, viewControllers)
       }
     }
     
@@ -310,9 +299,10 @@ class MyNavigationController: UINavigationController {
       fatalError("errror 200nx")
     }
 
-    changeToRegionWithUrlPath(path, failure: failure) { nav, viewControllers in
-      nav.setViewControllers(viewControllers, animated: true)
+    changeToRegionWithUrlPath(path, failure: failure) { country, nav, viewControllers in
+      nav.view.userInteractionEnabled = true
       finishedHandler()
+      nav.setViewControllers(viewControllers, animated: true)
     }
   }
 
@@ -324,20 +314,19 @@ class MyNavigationController: UINavigationController {
     
     let listingPartStart = path.rangeOfString("/l/")
     let regionPath = path.substringToIndex(listingPartStart!.startIndex)
-    changeToRegionWithUrlPath(regionPath, failure: failure) { nav, viewControllers in
+    changeToRegionWithUrlPath(regionPath, failure: failure) { countryMwmId, nav, viewControllers in
       let listingSlug = path.substringFromIndex(listingPartStart!.endIndex)
       ContentService.getListingWithSlug(listingSlug, failure: failure) { listing in
-        session.currentListing = listing
         let entity = TripfingerEntity(listing: listing)
         TripfingerAppDelegate.viewControllers = viewControllers
-        MapsAppDelegateWrapper.openPlacePage(entity)        
+        MapsAppDelegateWrapper.openPlacePage(entity, withCountryMwmId: countryMwmId)
       }
     }
   }
   
   class func jumpToRegion(regionId: String, failure: () -> (), finishedHandler: () -> ()) {
-    session.loadRegionFromId(regionId, failure: failure) {
-      TripfingerAppDelegate.moveToRegion(finishedHandler) { nav, viewControllers in
+    ContentService.getRegionWithId(regionId, failure: failure) { region in
+      TripfingerAppDelegate.moveToRegion(region, stopSpinner: finishedHandler) { country, nav, viewControllers in
         nav.setViewControllers(viewControllers, animated: true)
       }
     }
@@ -345,12 +334,11 @@ class MyNavigationController: UINavigationController {
   
   class func jumpToListing(listingId: String, failure: () -> (), finishedHandler: () -> ()) {
     ContentService.getListingWithId(listingId, failure: failure) { listing in
-      TripfingerAppDelegate.session.loadRegionFromId(listing.item().parent, failure: failure ) {
-        TripfingerAppDelegate.moveToRegion(finishedHandler) { nav, viewControllers in
-          session.currentListing = listing
+      ContentService.getRegionWithId(listing.item().parent, failure: failure) { region in
+        TripfingerAppDelegate.moveToRegion(region, stopSpinner: finishedHandler) { countryMwmId, nav, viewControllers in
           let entity = TripfingerEntity(listing: listing)
           TripfingerAppDelegate.viewControllers = viewControllers
-          MapsAppDelegateWrapper.openPlacePage(entity)
+          MapsAppDelegateWrapper.openPlacePage(entity, withCountryMwmId: countryMwmId)
         }
       }
     }

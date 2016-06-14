@@ -19,4 +19,8 @@ extension GuideText: GuideItemHolder {
   func getName() -> String {
     return item.name!
   }
+  
+  func getCategory() -> Listing.Category {
+    return Listing.Category(rawValue: item.category)!
+  }
 }

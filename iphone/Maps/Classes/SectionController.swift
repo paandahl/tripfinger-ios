@@ -2,14 +2,38 @@ import RealmSwift
 
 class SectionController: GuideItemController {
   
-  override func updateUI() {
-    // if nil, we are in offline mode, changeRegion returned immediately, and viewdidload will trigger this method
-    if let tableView = tableView {
-      navigationItem.title = session.currentItem.name
-      
-      populateTableSections()
-      tableView.reloadData {}
+  let mapNavigator: MapNavigator
+  var section: GuideText
+  let regionLicense: String?
+  
+  init(section: GuideText, regionLicense: String?, mapNavigator: MapNavigator) {
+    self.section = section
+    self.regionLicense = regionLicense
+    self.mapNavigator = mapNavigator
+    super.init(guideItem: section.item)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    navigationItem.title = section.getName()
+
+    guideItemExpanded = true
+    if section.item.loadStatus != GuideItem.LoadStatus.FULLY_LOADED {
+      ContentService.getGuideTextWithId(section.getId(), failure: showErrorHud) { section in
+        self.section = section
+        self.updateUI()
+      }
     }
+  }
+  
+  override func updateUI() {
+    populateTableSections()
+    tableView.reloadData {}
   }
 }
 
@@ -18,19 +42,19 @@ extension SectionController {
   
   override func populateTableSections() {
     tableSections = [TableSection]()
-    if session.currentSection.item.content != nil {
+    if section.item.content != nil {
       let section = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell, handler: nil)
       section.elements.append(("", ""))
       tableSections.append(section)
     }
     
     if guideItemExpanded {
-      let section = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToSection)
+      let textsSection = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToSection)
       
-      for guideSection in session.currentItem.guideSections {
-        section.elements.append((title: guideSection.item.name, value: guideSection))
+      for guideSection in section.item.guideSections {
+        textsSection.elements.append((title: guideSection.item.name, value: guideSection))
       }
-      tableSections.append(section)
+      tableSections.append(textsSection)
     }
   }
 
@@ -41,7 +65,7 @@ extension SectionController {
     if section.cellIdentifier == TableCellIdentifiers.guideItemCell {
       let cell = GuideItemCell()
       cell.delegate = self
-      cell.setContentFromGuideItem(session.currentItem)
+      cell.setContentFromGuideItem(self.section.item)
       if (guideItemExpanded) {
         cell.expand()
       }
@@ -59,5 +83,24 @@ extension SectionController {
       }
       return cell
     }
+  }
+
+  override func licenseClicked() {
+    if section.item.textLicense == nil || section.item.textLicense == "" {
+      let licenseController = LicenseController(textLicense: regionLicense, imageItem: section.item)
+      navigationController!.pushViewController(licenseController, animated: true)
+    } else {
+      super.licenseClicked()
+    }
+  }
+  
+  func navigateToSection(object: AnyObject) {
+    let section = object as! GuideText
+    let sectionController = SectionController(section: section, regionLicense: regionLicense, mapNavigator: mapNavigator)
+    navigationController!.pushViewController(sectionController, animated: true)
+  }
+  
+  override func navigateToMap() {
+    mapNavigator.navigateToMap()
   }
 }

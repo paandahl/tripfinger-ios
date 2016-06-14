@@ -19,8 +19,8 @@
   return (UIViewController*)[MapsAppDelegate theApp].mapViewController;
 }
 
-+ (void)openPlacePage:(TripfingerEntity *)entity {
-  [[MapsAppDelegate theApp].mapViewController.controlsManager showPlacePageWithEntityFullscreen:entity];
++ (void)openPlacePage:(TripfingerEntity *)entity withCountryMwmId:(NSString*)countryMwmId {
+  [[MapsAppDelegate theApp].mapViewController.controlsManager showPlacePageWithEntityFullscreen:entity withCountryMwmId:countryMwmId];
 }
 
 + (void)openSearch {

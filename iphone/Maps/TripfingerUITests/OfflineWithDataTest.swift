@@ -49,6 +49,7 @@ class OfflineWithDataTest: XCTestCase {
     tapWhenHittable(app.navigationBars["Transportation"].buttons["Brunei"])
     
     // try to click a link
+    scrollUp(2)
     let tableCoord = XCUIApplication().tables.element.coordinateWithNormalizedOffset(CGVector(dx: 0, dy: 0))
     var linkCoord = tableCoord.coordinateWithOffset(CGVector(dx: 65.0, dy: (118.0 + 64)))
     linkCoord.pressForDuration(0.2)

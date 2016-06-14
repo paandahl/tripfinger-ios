@@ -37,14 +37,14 @@ class PurchasesService: NSObject {
   
   private func fetchProductIdentifiers() {
     let url = TripfingerAppDelegate.serverUrl + "/products"
-    NetworkUtil.getJsonFromUrl(url, success: { json in
+    NetworkUtil.getJsonFromUrl(url, failure: { fatalError("error xu67") }) { json in
       self.productIdentifiers = [String: ProductIdentifier]()
       for productJson in json.array! {
         let regionUuid = productJson["regionUuid"].string!
         self.productIdentifiers![regionUuid] = productJson["itunesProductId"].string!
       }
       self.fetchItunesProducts()
-      }, failure: { fatalError("error xu67") })
+    }
   }
   
   private func fetchItunesProducts() {
@@ -139,11 +139,11 @@ class PurchasesService: NSObject {
     let failure = {
       fatalError("Couldn't get the purchase thang")
     }
-    NetworkUtil.getJsonFromUrl(url, success: { json in
+    NetworkUtil.getJsonFromUrl(url, failure: failure) { json in
       print(json)
       let countryUuid = json["productLine"]["regionUuid"].string
       handler(countryUuid)
-      }, failure: failure)
+    }
   }
 }
 

@@ -17,6 +17,9 @@ class UniqueIdentifierService {
     }
     let keychain = KeychainSwift()
     var id = keychain.get(key)
+    if keychain.lastResultCode != noErr {
+      fatalError("keychain returned error: \(keychain.lastResultCode)")
+    }
     if id == nil {
       id = NSUUID().UUIDString
       keychain.set(id!, forKey: key)

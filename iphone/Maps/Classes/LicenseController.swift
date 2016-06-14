@@ -14,15 +14,23 @@ class LicenseController: UIViewController {
   let noteHeader = UILabel()
   let noteText = UITextView()
   
-  let textItem: GuideItem
-  let imageItem: GuideItem
+  let textLicense: String?
+  let imageEntity: TripfingerEntity
   
-  init(textItem: GuideItem, imageItem: GuideItem) {
-    self.textItem = textItem
-    self.imageItem = imageItem
+  init(textLicense: String?, imageItem: GuideItem) {
+    self.textLicense = textLicense
+    self.imageEntity = TripfingerEntity(guideItem: imageItem)
     super.init(nibName: nil, bundle: nil)
+    edgesForExtendedLayout = .None
   }
-  
+
+  init(textLicense: String?, imageEntity: TripfingerEntity) {
+    self.textLicense = textLicense
+    self.imageEntity = imageEntity
+    super.init(nibName: nil, bundle: nil)
+    edgesForExtendedLayout = .None
+  }
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -36,21 +44,20 @@ class LicenseController: UIViewController {
     imageLicenseHeader.font = UIFont.boldSystemFontOfSize(17.0)
     view.addSubview(imageLicenseHeader)
 
-    if imageItem.images.count > 0 {
-      let image = imageItem.images[0]
+    if imageEntity.url != "" {
       imageLicenseHeader.text = "Image rights"
       imageLicenseHeader.font = UIFont.boldSystemFontOfSize(16.0)
       view.addSubview(imageLicenseHeader)
       imageLicenseTitle.text = "License:"
       imageLicenseTitle.font = UIFont.boldSystemFontOfSize(14.0)
       view.addSubview(imageLicenseTitle)
-      imageLicenseText.text = image.license
+      imageLicenseText.text = imageEntity.license
       imageLicenseText.font = UIFont.systemFontOfSize(14.0)
       view.addSubview(imageLicenseText)
       imageArtistTitle.text = "Artist:"
       imageArtistTitle.font = UIFont.boldSystemFontOfSize(14.0)
       view.addSubview(imageArtistTitle)
-      imageArtistText.text = image.artist
+      imageArtistText.text = imageEntity.artist
       imageArtistText.font = UIFont.systemFontOfSize(14.0)
       imageArtistText.lineBreakMode = .ByWordWrapping
       imageArtistText.numberOfLines = 2
@@ -58,7 +65,7 @@ class LicenseController: UIViewController {
       imageUrlTitle.text = "Link:"
       imageUrlTitle.font = UIFont.boldSystemFontOfSize(14.0)
       view.addSubview(imageUrlTitle)
-      if image.originalUrl != nil && image.originalUrl != "" {
+      if imageEntity.originalUrl != "" {
         imageUrlButton.setTitle("Click here", forState: .Normal)
         imageUrlButton.addTarget(self, action: #selector(navigateToImage), forControlEvents: .TouchUpInside)
       } else {
@@ -89,7 +96,7 @@ class LicenseController: UIViewController {
       view.addConstraints("V:|-20-[txtLicenseH]", forViews: ["txtLicenseH": textLicenseHeader])
     }
     
-    if let textLicense = textItem.textLicense {
+    if let textLicense = textLicense {
       let encodedData = textLicense.dataUsingEncoding(NSUTF8StringEncoding)!
       let options : [String: AnyObject] = [
         NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
@@ -133,7 +140,7 @@ class LicenseController: UIViewController {
 
   
   func navigateToImage() {
-    let urlString = imageItem.images[0].originalUrl!
+    let urlString = imageEntity.originalUrl
     let url = NSURL(string: urlString)
     if let url = url {
       UIApplication.sharedApplication().openURL(url)

@@ -3,21 +3,29 @@ import MBProgressHUD
 
 class GuideItemController: TableController {
   
+  let guideItem: GuideItem
   var newContentDownloaded = false
   var contextSwitched = false
   var guideItemExpanded = false
   
+  init(guideItem: GuideItem) {
+    self.guideItem = guideItem
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    print("view.translatesAutoresizingMaskIntoConstraints: \(view.translatesAutoresizingMaskIntoConstraints)")
     
-    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: #selector(GuideItemController.navigateToMap))
+    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: #selector(navigateToMap))
     mapButton.accessibilityLabel = "Map"
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(GuideItemController.navigateToSearch))
+    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(navigateToSearch))
     navigationItem.rightBarButtonItems = [searchButton, mapButton]
     
-    tableView.rowHeight = UITableViewAutomaticDimension
-    tableView.estimatedRowHeight = 44.0;
     tableView.tableHeaderView = UIView.init(frame: CGRectMake(0.0, 0.0, tableView.bounds.size.width, 0.01))
     tableView.tableFooterView = UIView.init(frame: CGRectZero)
     
@@ -62,13 +70,8 @@ class GuideItemController: TableController {
 
   
   func updateUI() {
-    // if nil, we are in offline mode, changeRegion returned immediately, and viewdidload will trigger this method
-    if let tableView = tableView {
-      navigationItem.title = session.currentItem.name
-      
-      populateTableSections()
-      tableView.reloadData {}
-    }
+    populateTableSections()
+    tableView.reloadData {}
   }
   
   override func viewWillDisappear(animated: Bool) {
@@ -87,30 +90,33 @@ class GuideItemController: TableController {
 //  }
   
   override func willMoveToParentViewController(parent: UIViewController?) {
-    if parent != nil {
-      return
-    }
-    print("navigating back")
-    if !contextSwitched {
-      print("back button action")
-      guideItemExpanded = false
-      let failure = {
-        fatalError("we're stranded")
-      }
-      session.moveBackInHierarchy(failure) { loadedNew in
-        // sometimes we will get a ListingsController, but it's not possible to move to sections by search,
-        // so it will note be necessary to update UI upon moving back
-        print("loadedNew: \(loadedNew)")
-        if self.newContentDownloaded || loadedNew {
-          self.newContentDownloaded = false
-          dispatch_async(dispatch_get_main_queue()) {
-            print("calling updateUI on parent")
-            let newController = TripfingerAppDelegate.navigationController.viewControllers.last as! GuideItemController
-            newController.updateUI()
-          }
-        }
-      }
-    }
+//    if parent != nil {
+//      return
+//    }
+//    print("navigating back")
+//    if !contextSwitched {
+//      print("back button action")
+//      guideItemExpanded = false
+//      let failure = {
+//        fatalError("we're stranded")
+//      }
+//      session.moveBackInHierarchy(failure) { loadedNew in
+//        // sometimes we will get a ListingsController, but it's not possible to move to sections by search,
+//        // so it will note be necessary to update UI upon moving back
+//        print("loadedNew: \(loadedNew)")
+//        let count = TripfingerAppDelegate.navigationController.viewControllers.count
+//        let newController = TripfingerAppDelegate.navigationController.viewControllers[count - 2] as! GuideItemController
+//        print("newController title: \(newController.navigationItem.title)")
+//        print("newContentDownloaded: \(newController.newContentDownloaded)")
+//        if newController.newContentDownloaded || loadedNew {
+//          newController.newContentDownloaded = false
+//          dispatch_async(dispatch_get_main_queue()) {
+//            print("calling updateUI on parent")
+//            newController.updateUI()
+//          }
+//        }
+//      }
+//    }
   }
   
   func backButtonAction(viewController: UIViewController) {
@@ -128,13 +134,7 @@ extension GuideItemController: GuideItemContainerDelegate {
   }
   
   func licenseClicked() {
-    let licenseController: UIViewController
-    if session.currentItem.textLicense == nil || session.currentItem.textLicense == "" && session.currentSection != nil {
-      licenseController = LicenseController(textItem: session.currentRegion.item(), imageItem: session.currentItem)
-    } else {
-      licenseController = LicenseController(textItem: session.currentItem, imageItem: session.currentItem)
-    }
-    licenseController.edgesForExtendedLayout = .None // offset from navigation bar
+    let licenseController = LicenseController(textLicense: guideItem.textLicense, imageItem: guideItem)
     navigationController!.pushViewController(licenseController, animated: true)
   }
   
@@ -154,20 +154,6 @@ extension GuideItemController: GuideItemContainerDelegate {
 // MARK: - Navigation
 extension GuideItemController {
   
-  func navigateToSection(object: AnyObject) {
-    print("Navigation to section")
-    let section = object as! GuideText
-    
-    let sectionController = SectionController(session: session)
-    sectionController.navigationItem.title = title
-    sectionController.guideItemExpanded = true
-    navigationController!.pushViewController(sectionController, animated: true)
-    
-    session.changeSection(section, failure: navigationFailure) { _ in
-      sectionController.updateUI()
-    }
-  }
-
   func navigateToSearch() {
     let vc = MapsAppDelegateWrapper.getMapViewController()
     navigationController!.pushViewController(vc, animated: true)
@@ -175,11 +161,6 @@ extension GuideItemController {
   }
   
   func navigateToMap() {
-    let vc = MapsAppDelegateWrapper.getMapViewController()
-    navigationController!.pushViewController(vc, animated: true)
-    
-    if let region = self.session.currentRegion {
-      FrameworkService.navigateToRegionOnMap(region)
-    }
+    preconditionFailure("Navigate to map must be overridden.")
   }
 }

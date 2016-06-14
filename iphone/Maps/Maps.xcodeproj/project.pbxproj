@@ -16,6 +16,7 @@
 		2510A3F91CE8E7AD00E3B654 /* DownloadMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510A3F81CE8E7AC00E3B654 /* DownloadMarker.swift */; };
 		251B291B1CE5AFD100B454C3 /* DataConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 251B291A1CE5AFD100B454C3 /* DataConverter.mm */; };
 		25533E231CEDED78004C7956 /* FrameworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25533E221CEDED78004C7956 /* FrameworkService.swift */; };
+		2561718B1D0ABF56008C6386 /* ListingsParentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2561718A1D0ABF56008C6386 /* ListingsParentController.swift */; };
 		256570A61D03F3FE006DE901 /* PurchaseCountryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256570A51D03F3FD006DE901 /* PurchaseCountryVC.swift */; };
 		256570A91D06A888006DE901 /* UIViewController+Huds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256570A81D06A887006DE901 /* UIViewController+Huds.swift */; };
 		2571ADED1CD882F000CF2EFF /* TripfingerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */; };
@@ -26,7 +27,6 @@
 		2581DC141CAE30E10086285E /* RegionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC131CAE30E10086285E /* RegionController.swift */; };
 		2581DC161CAE30E70086285E /* GuideItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC151CAE30E70086285E /* GuideItemController.swift */; };
 		2581DC191CAE311C0086285E /* TableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC181CAE311B0086285E /* TableController.swift */; };
-		2581DC251CAE31340086285E /* AnnotationCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC1A1CAE31340086285E /* AnnotationCalloutView.swift */; };
 		2581DC261CAE31340086285E /* FilterBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC1B1CAE31340086285E /* FilterBox.swift */; };
 		2581DC271CAE31340086285E /* FilterBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2581DC1C1CAE31340086285E /* FilterBox.xib */; };
 		2581DC281CAE31340086285E /* GuideItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC1D1CAE31340086285E /* GuideItemCell.swift */; };
@@ -94,6 +94,8 @@
 		25D379161CAFD4F500552633 /* SearchOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D3790E1CAFD4F500552633 /* SearchOnlineTest.swift */; };
 		25D379171CAFD4F500552633 /* SwipeViewOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D3790F1CAFD4F500552633 /* SwipeViewOnlineTest.swift */; };
 		25D379181CAFD4F500552633 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D379101CAFD4F500552633 /* TestUtils.swift */; };
+		25DABC121D094C7300D0A839 /* Array+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DABC111D094C7300D0A839 /* Array+Utils.swift */; };
+		25DABC141D095FEC00D0A839 /* CountryListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DABC131D095FEC00D0A839 /* CountryListController.swift */; };
 		25E477C01CC8AB5A008C668E /* AppDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E477BF1CC8AB5A008C668E /* AppDelegateTest.swift */; };
 		288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
 		2C204603AB8E663420A3FAC7 /* Pods_Tripfinger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2F0D0D53254DEA4AF799A7A /* Pods_Tripfinger.framework */; };
@@ -949,6 +951,7 @@
 		251B291A1CE5AFD100B454C3 /* DataConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DataConverter.mm; sourceTree = "<group>"; };
 		251B291C1CE5AFE700B454C3 /* DataConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConverter.h; sourceTree = "<group>"; };
 		25533E221CEDED78004C7956 /* FrameworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkService.swift; sourceTree = "<group>"; };
+		2561718A1D0ABF56008C6386 /* ListingsParentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingsParentController.swift; sourceTree = "<group>"; };
 		256570A51D03F3FD006DE901 /* PurchaseCountryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseCountryVC.swift; sourceTree = "<group>"; };
 		256570A81D06A887006DE901 /* UIViewController+Huds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Huds.swift"; sourceTree = "<group>"; };
 		2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerEntity.swift; sourceTree = "<group>"; };
@@ -961,7 +964,6 @@
 		2581DC131CAE30E10086285E /* RegionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionController.swift; sourceTree = "<group>"; };
 		2581DC151CAE30E70086285E /* GuideItemController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemController.swift; sourceTree = "<group>"; };
 		2581DC181CAE311B0086285E /* TableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableController.swift; sourceTree = "<group>"; };
-		2581DC1A1CAE31340086285E /* AnnotationCalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationCalloutView.swift; sourceTree = "<group>"; };
 		2581DC1B1CAE31340086285E /* FilterBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterBox.swift; sourceTree = "<group>"; };
 		2581DC1C1CAE31340086285E /* FilterBox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterBox.xib; sourceTree = "<group>"; };
 		2581DC1D1CAE31340086285E /* GuideItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemCell.swift; sourceTree = "<group>"; };
@@ -1035,6 +1037,8 @@
 		25D3790E1CAFD4F500552633 /* SearchOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOnlineTest.swift; sourceTree = "<group>"; };
 		25D3790F1CAFD4F500552633 /* SwipeViewOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeViewOnlineTest.swift; sourceTree = "<group>"; };
 		25D379101CAFD4F500552633 /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		25DABC111D094C7300D0A839 /* Array+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Utils.swift"; sourceTree = "<group>"; };
+		25DABC131D095FEC00D0A839 /* CountryListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryListController.swift; sourceTree = "<group>"; };
 		25E477BF1CC8AB5A008C668E /* AppDelegateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateTest.swift; sourceTree = "<group>"; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AB4B0D9B1048005BE974 /* Maps_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Maps_Prefix.pch; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -1966,14 +1970,12 @@
 		2581DC101CAE30C30086285E /* Guide */ = {
 			isa = PBXGroup;
 			children = (
-				2502337C1CD36896005F9943 /* DetailController.swift */,
+				25DABC151D09914400D0A839 /* Listings */,
+				25DABC131D095FEC00D0A839 /* CountryListController.swift */,
 				2581DC151CAE30E70086285E /* GuideItemController.swift */,
 				2581DC311CAE31490086285E /* LicenseController.swift */,
-				2581DC111CAE30D50086285E /* ListController.swift */,
-				2581DC321CAE31490086285E /* ListingsController.swift */,
 				2581DC131CAE30E10086285E /* RegionController.swift */,
 				2581DC331CAE31490086285E /* SectionController.swift */,
-				2581DC341CAE31490086285E /* SwipeController.swift */,
 			);
 			name = Guide;
 			sourceTree = "<group>";
@@ -1981,7 +1983,6 @@
 		2581DC171CAE30FC0086285E /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
-				2581DC1A1CAE31340086285E /* AnnotationCalloutView.swift */,
 				25D27B641D01C43000F7AA91 /* Guide */,
 				2581DC1E1CAE31340086285E /* ImageLabelView.swift */,
 				2581DC241CAE31340086285E /* TextMessageCell.swift */,
@@ -2042,6 +2043,7 @@
 		2581DC6B1CAE31C00086285E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				25DABC111D094C7300D0A839 /* Array+Utils.swift */,
 				2581DC6C1CAE31CD0086285E /* BridgingHeader.h */,
 				2581DC6D1CAE31CD0086285E /* DataManager.swift */,
 				2581DC6E1CAE31CD0086285E /* ErrorHandler.swift */,
@@ -2127,6 +2129,18 @@
 				25D378FF1CAFD4C100552633 /* Info.plist */,
 			);
 			path = TripfingerUITests;
+			sourceTree = "<group>";
+		};
+		25DABC151D09914400D0A839 /* Listings */ = {
+			isa = PBXGroup;
+			children = (
+				2561718A1D0ABF56008C6386 /* ListingsParentController.swift */,
+				2502337C1CD36896005F9943 /* DetailController.swift */,
+				2581DC321CAE31490086285E /* ListingsController.swift */,
+				2581DC111CAE30D50086285E /* ListController.swift */,
+				2581DC341CAE31490086285E /* SwipeController.swift */,
+			);
+			name = Listings;
 			sourceTree = "<group>";
 		};
 		29B97314FDCFA39411CA2CEA /* Maps */ = {
@@ -4090,6 +4104,7 @@
 				34F45E8E1B96E88100AC93F8 /* MWMSearchTabButtonsView.mm in Sources */,
 				342FDDE51C6C9071000038A0 /* MWMMapDownloaderDataSource.mm in Sources */,
 				347FD86B1C60B2CE002FB65E /* MWMOpeningHoursAddScheduleTableViewCell.mm in Sources */,
+				25DABC121D094C7300D0A839 /* Array+Utils.swift in Sources */,
 				34CD81BB1C91C24D007D2A60 /* MWMWelcomeController.mm in Sources */,
 				F6C934401AE64E4200DDC624 /* MWMSpringAnimation.mm in Sources */,
 				34B82ACA1B8465C100180497 /* MWMSearchCategoryCell.mm in Sources */,
@@ -4169,6 +4184,7 @@
 				34C9BD091C6DBCDA000DC38D /* MWMNavigationController.mm in Sources */,
 				3406FA151C6E0C3300E9FAD2 /* MWMMapDownloadDialog.mm in Sources */,
 				34C9BD021C6DB693000DC38D /* MWMTableViewController.mm in Sources */,
+				25DABC141D095FEC00D0A839 /* CountryListController.swift in Sources */,
 				34CD81D71C92D96F007D2A60 /* MWMFirstLaunchController.mm in Sources */,
 				F63BA3711BCD5B520044C504 /* MWMTTSLanguageViewController.mm in Sources */,
 				F64DA8021C524BDE00330E9E /* UISwitch+RuntimeAttributes.m in Sources */,
@@ -4277,6 +4293,7 @@
 				347FD8891C60B2CE002FB65E /* MWMOpeningHoursTimeSpanTableViewCell.mm in Sources */,
 				2571ADED1CD882F000CF2EFF /* TripfingerEntity.swift in Sources */,
 				34CD81C31C91C281007D2A60 /* MWMWhatsNewNightModeController.mm in Sources */,
+				2561718B1D0ABF56008C6386 /* ListingsParentController.swift in Sources */,
 				974D041D1977DE430081D0A7 /* LocalNotificationManager.mm in Sources */,
 				97C98522186AE3CF00AF7E9E /* AppInfo.mm in Sources */,
 				F6A750B91BE8C74400981B41 /* MWMSearchHistoryMyPositionCell.mm in Sources */,
@@ -4297,7 +4314,6 @@
 				CB252D6F16FF82C9001E41E9 /* Statistics.mm in Sources */,
 				342AF0E01BE24E9A0016F3AE /* MWMMapDownloaderViewController.mm in Sources */,
 				341F99DD1C6B1165001C67B8 /* MWMMapDownloaderSubplaceTableViewCell.mm in Sources */,
-				2581DC251CAE31340086285E /* AnnotationCalloutView.swift in Sources */,
 				6BA0BCD11B74DDBA00CC9969 /* MWMCustomFacebookEvents.mm in Sources */,
 				978F9244183B660F000D6C7C /* SwitchCell.mm in Sources */,
 				342AD7721B53D32F00E0B997 /* UIView+RuntimeAttributes.mm in Sources */,
@@ -5628,6 +5644,7 @@
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = YES;
+				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/PushNotifications",
@@ -5636,6 +5653,7 @@
 					"$(PROJECT_DIR)/MyTracker",
 					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
 				);
+				GCC_OPTIMIZATION_LEVEL = 0;
 				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -5650,6 +5668,7 @@
 				PROVISIONING_PROFILE = "";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
 			};

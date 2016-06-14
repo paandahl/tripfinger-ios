@@ -683,8 +683,6 @@ using namespace osm_auth_ios;
 
 + (void)customizeAppearanceForNavigationBar:(UINavigationBar *)navigationBar
 {
-  navigationBar.tintColor = [UIColor whiteColor];
-  navigationBar.barTintColor = [UIColor whiteColor];
   navigationBar.titleTextAttributes = [self navigationBarTextAttributes];
 }
 

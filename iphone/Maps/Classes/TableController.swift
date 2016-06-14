@@ -3,7 +3,6 @@ import Foundation
 class TableController: UIViewController, UITableViewDelegate, UITableViewDataSource {
   
   var adjustedInsets = false
-  var session: Session!
   weak var tableView : UITableView!
   
   struct TableCellIdentifiers {
@@ -15,18 +14,10 @@ class TableController: UIViewController, UITableViewDelegate, UITableViewDataSou
     static let loadingCell = "LoadingCell"
   }
   
-  init(session: Session) {
-    self.session = session
-    super.init(nibName: nil, bundle: nil)
-  }
-  
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
   var tableSections = [TableSection]()
   
   override func loadView() { // *
+    print("loading view for tableController")
     view = UITableView(frame: CGRectZero, style: .Grouped)
     tableView = self.view as! UITableView
     tableView.delegate = self
@@ -41,6 +32,8 @@ class TableController: UIViewController, UITableViewDelegate, UITableViewDataSou
   override func viewDidLoad() {
     super.viewDidLoad()
     automaticallyAdjustsScrollViewInsets = true
+    tableView.rowHeight = UITableViewAutomaticDimension
+    tableView.estimatedRowHeight = 44.0;
   }
   
   override func viewDidLayoutSubviews() {

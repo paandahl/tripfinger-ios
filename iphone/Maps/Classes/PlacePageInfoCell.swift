@@ -7,6 +7,7 @@ import Foundation
 class PlacePageInfoCell: UITableViewCell {
   
   var delegate: PlacePageInfoCellDelegate?
+  var entity: TripfingerEntity!
   var contentSet = false
   let myImageView = UIImageView()
   let licenseButton = UIButton()
@@ -30,7 +31,7 @@ class PlacePageInfoCell: UITableViewCell {
   }
 
   @objc(initWithCoder:)
-  override required init?(coder aDecoder: NSCoder) {
+  required init?(coder aDecoder: NSCoder) {
       fatalError("init(coder:) has not been implemented ")
   }
   
@@ -38,6 +39,7 @@ class PlacePageInfoCell: UITableViewCell {
     if contentSet {
       return
     }
+    self.entity = tripfingerEntity
     
     myImageView.contentMode = UIViewContentMode.ScaleAspectFill
     myImageView.image = UIImage(named: "placeholder-712")
@@ -167,7 +169,9 @@ class PlacePageInfoCell: UITableViewCell {
 //  }
   
   func navigateToLicense() {
-    TripfingerAppDelegate.navigateToLicense()
+    let licenseController = LicenseController(textLicense: entity.textLicense, imageEntity: entity)
+    licenseController.edgesForExtendedLayout = .None // offset from navigation bar
+    TripfingerAppDelegate.navigationController.pushViewController(licenseController, animated: true)
   }
 }
 

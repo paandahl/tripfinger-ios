@@ -15,7 +15,7 @@ extension UIImageView {
     let session = NSURLSession.sharedSession()
     let downloadTask = session.dataTaskWithURL(url) {
       [weak self] data, response, error in
-      
+            
       if error == nil && data != nil,
         let image = UIImage(data: data!) {
           dispatch_async(dispatch_get_main_queue()) {

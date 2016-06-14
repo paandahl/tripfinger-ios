@@ -20,7 +20,6 @@ class DownloadCountryTest: XCTestCase {
     let app = XCUIApplication()
     let exists = NSPredicate(format: "exists == 1")
     let hittable = NSPredicate(format: "hittable == 1")
-    let notHittable = NSPredicate(format: "hittable == 0")
     
     let bruneiRow = app.tables.staticTexts["Brunei"]
     tapWhenHittable(bruneiRow, parent: app.tables.element)

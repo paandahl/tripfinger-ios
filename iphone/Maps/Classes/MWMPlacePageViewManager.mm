@@ -35,6 +35,7 @@ extern NSString * const kBookmarksChangedNotification;
 @property (nonatomic, readwrite) MWMPlacePageEntity * entity;
 @property (nonatomic) MWMPlacePage * placePage;
 @property (nonatomic) MWMDirectionView * directionView;
+@property (nonatomic, readwrite) NSString * countryMwmId;
 @property (nonatomic, readwrite) bool fullscreenInProgress;
 
 @property (weak, nonatomic) id<MWMPlacePageViewManagerProtocol> delegate;
@@ -93,8 +94,9 @@ extern NSString * const kBookmarksChangedNotification;
   [self configPlacePage];
 }
 
-- (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity
+- (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity withCountryMwmId:(NSString*)countryMwmId
 {
+  self.countryMwmId = countryMwmId;
   self.fullscreenInProgress = YES;
   self.entity = [[MWMPlacePageEntity alloc] initWithEntity:entity];
   self.placePage = [[MWMiPhoneFullscreenPlacePage alloc] initWithManager:self];
@@ -207,7 +209,7 @@ extern NSString * const kBookmarksChangedNotification;
 - (void)addSubviews:(NSArray *)views withNavigationController:(UINavigationController *)controller
 {
   if (self.fullscreenInProgress) {
-    [TripfingerAppDelegate displayPlacePage:views];
+    [TripfingerAppDelegate displayPlacePage:views entity:_entity.tripfingerEntity countryMwmId:self.countryMwmId];
     self.fullscreenInProgress = NO;
   } else {
     if (controller)

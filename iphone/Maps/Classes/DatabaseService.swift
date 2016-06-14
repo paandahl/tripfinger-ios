@@ -4,6 +4,11 @@ import CoreLocation
 
 class DatabaseService {
   
+  static let TFCountrySavedNotification = "TFCountrySavedNotification"
+  static let TFCountryUpdatingNotification = "TFCountryUpdatingNotification"
+  static let TFCountryDeletedNotification = "TFCountryDeletedNotification"
+
+  
   static var testMode = false
   static var testCounter = 0
   static var mainThreadRealm: Realm!
@@ -76,7 +81,13 @@ class DatabaseService {
       let realm = getRealm()
       let existing = getRegionWithId(region.getId(), writeRealm: realm)
       if let existing = existing {
-        deleteRegion(existing)
+        if existing.getCategory() == Region.Category.COUNTRY {
+          let countryName = existing.getName()
+          dispatch_sync(dispatch_get_main_queue()) {
+            NSNotificationCenter.defaultCenter().postNotificationName(TFCountryUpdatingNotification, object: countryName)
+          }
+        }
+        deleteRegion(existing, notification: false)
         print("Replacing region: \(region.getId()) in db.")
       }
       
@@ -85,6 +96,12 @@ class DatabaseService {
         realm.add(region)
       }
       region.item().offline = true
+      if region.getCategory() == Region.Category.COUNTRY {
+        let countryName = region.getName()
+        dispatch_sync(dispatch_get_main_queue()) {
+          NSNotificationCenter.defaultCenter().postNotificationName(TFCountrySavedNotification, object: countryName)
+        }
+      }
       if let callback = callback {
         callback(region)
       }
@@ -93,16 +110,17 @@ class DatabaseService {
   
   class func getRegionWithId(regionId: String, writeRealm: Realm! = nil) -> Region? {
     let regions = writeRealm != nil ? writeRealm.objects(Region) : getRealm().objects(Region)
-
-    for region in regions {
-      if region.listing.item.uuid == regionId {
-        region.item().offline = true
-        return region
-      }
-    }
-    return nil
+    return regions.filter("listing.item.uuid = '\(regionId)'").first
   }
-    
+
+  class func getRegionWithSlug(slug: String) -> Region! {
+    return getRealm().objects(Region).filter("listing.item.slug = '\(slug)'").first
+  }
+
+  class func getGuideItemWithId(uuid: String) -> GuideItem! {
+    return getRealm().objects(GuideItem).filter("uuid = '\(uuid)'").first
+  }
+
   class func getCountries() -> Results<Region> {
     let realm = getRealm()
     realm.refresh()
@@ -148,9 +166,9 @@ class DatabaseService {
       case Region.Category.COUNTRY.rawValue:
         predicate = NSPredicate(format: "listing.country = %@", region.item().name)
       case Region.Category.SUB_REGION.rawValue:
-        predicate = NSPredicate(format: "listing.country = %@ and listing.subRegion = %@", region.listing.country, region.item().name)
+        predicate = NSPredicate(format: "listing.country = %@ and listing.subRegion = %@", region.listing.country!, region.item().name)
       case Region.Category.CITY.rawValue:
-        predicate = NSPredicate(format: "listing.country = %@ and listing.city = %@", region.listing.country, region.item().name)
+        predicate = NSPredicate(format: "listing.country = %@ and listing.city = %@", region.listing.country!, region.item().name)
       case Region.Category.NEIGHBOURHOOD.rawValue:
         predicate = NSPredicate(format: "listing.item.parent = %@", region.item().uuid)
       default:
@@ -263,8 +281,11 @@ class DatabaseService {
     }
   }
   
-  class func deleteRegion(region: Region) {
+  class func deleteRegion(region: Region, notification: Bool = true) {
     
+    if notification && region.getCategory() == Region.Category.COUNTRY {
+      NSNotificationCenter.defaultCenter().postNotificationName(TFCountryDeletedNotification, object: region.getName())
+    }
     for subRegion in region.item().subRegions {
       deleteRegion(subRegion)
     }
@@ -303,10 +324,9 @@ class DatabaseService {
     return getRealm().objects(Region).filter("listing.item.parent = \"\(parentId)\"")
   }
   
-  class func getGuideTextWithId(region: Region, guideTextId: String) -> GuideText {
+  class func getGuideTextWithId(guideTextId: String) -> GuideText? {
     let predicate = NSPredicate(format: "item.uuid = %@", guideTextId)
-    let guideTexts = getRealm().objects(GuideText).filter(predicate)
-    return guideTexts[0]
+    return getRealm().objects(GuideText).filter(predicate).first
   }
   
   class func getCoordinateSet() -> Set<Int64> {
