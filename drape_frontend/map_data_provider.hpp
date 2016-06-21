@@ -22,7 +22,7 @@ public:
   using TUpdateCurrentCountryFn = function<void (m2::PointD const &, int)>;
   using TCoordinateCheckerFn = function<bool (ms::LatLon coord)>;
 
-  typedef function<vector<TripfingerMark>(TripfingerMarkParams)> TPoiSupplierCallback;
+  typedef function<vector<TripfingerMark>(TripfingerMarkParams&)> TPoiSupplierCallback;
 
   TPoiSupplierCallback m_poiSupplierCallback;
 

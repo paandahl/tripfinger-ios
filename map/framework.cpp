@@ -1073,25 +1073,33 @@ void Framework::UpdateUserViewportChanged()
 
 void Framework::TripfingerSearch(search::SearchParams const & params, int & tfCategory) {
   m2::RectD const viewport = GetCurrentViewport();
-  search::SearchParams const & rParams = m_lastInteractiveSearchParams;
-  if (QueryMayBeSkipped(rParams, viewport)) {
+  if (QueryMayBeSkipped(m_lastInteractiveSearchParams, viewport)) {
     return;
   }
-  TripfingerMarkParams tfMarkParams;
+  m_lastQueryParams = m_lastInteractiveSearchParams;
+  m_lastQueryViewport = viewport;
+
+  shared_ptr<TripfingerMarkParams> tfMarkParams = make_shared<TripfingerMarkParams>();
   ms::LatLon topLeftCoord = MercatorBounds::ToLatLon(viewport.LeftTop());
   ms::LatLon botRightCoord = MercatorBounds::ToLatLon(viewport.RightBottom());
-  tfMarkParams.topLeft = m2::PointD(topLeftCoord.lat, topLeftCoord.lon);
-  tfMarkParams.botRight = m2::PointD(botRightCoord.lat, botRightCoord.lon);
-  tfMarkParams.category = tfCategory;
-  vector<TripfingerMark> tfMarks = m_poiSupplierFn(tfMarkParams);
-  search::Results results;
-  for (const auto& tfMark : tfMarks) {
-    FeatureID fid(tfMark);
-    search::Result::Metadata metadata;
-    search::Result result(fid, tfMark.mercator, tfMark.name, "Adreees", "Typeee", tfMark.type, metadata);
-    results.AddResult(move(result));
+  tfMarkParams->topLeft = m2::PointD(topLeftCoord.lat, topLeftCoord.lon);
+  tfMarkParams->botRight = m2::PointD(botRightCoord.lat, botRightCoord.lon);
+  tfMarkParams->category = tfCategory;
+  if (m_lastTfMarkParams != nullptr) {
+    m_lastTfMarkParams->cancelled = true;
   }
-  m_lastInteractiveSearchParams.m_onResults(results);
+  tfMarkParams->callback = [&] (vector<TripfingerMark> tfMarks) {
+    search::Results results;
+    for (const auto& tfMark : tfMarks) {
+      FeatureID fid(tfMark);
+      search::Result::Metadata metadata;
+      search::Result result(fid, tfMark.mercator, tfMark.name, "Adreees", "Typeee", tfMark.type, metadata);
+      results.AddResult(move(result));
+    }
+    m_lastInteractiveSearchParams.m_onResults(results);
+  };
+  m_lastTfMarkParams = tfMarkParams;
+  m_asyncPoiSupplierFn(tfMarkParams);
 }
 
 bool Framework::Search(search::SearchParams const & params)
