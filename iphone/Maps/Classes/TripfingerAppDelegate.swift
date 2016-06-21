@@ -24,10 +24,16 @@ class MyNavigationController: UINavigationController {
 
     TripfingerAppDelegate.styleNavigationBar(TripfingerAppDelegate.navigationController.navigationBar)
     print("myuuid: \(UniqueIdentifierService.uniqueIdentifier())")
-    
+        
     if NSProcessInfo.processInfo().arguments.contains("TEST") {
       print("Switching to test mode")
       TripfingerAppDelegate.mode = AppMode.TEST
+    } else {
+      let testMode = NSUserDefaults.standardUserDefaults().boolForKey("enableTestMode")
+      if testMode {
+        print("Switching to draft mode")
+        TripfingerAppDelegate.mode = AppMode.DRAFT
+      }
     }
 
     let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -384,6 +390,7 @@ class MyNavigationController: UINavigationController {
   
   enum AppMode {
     case TEST
+    case DRAFT
     case BETA
     case RELEASE
   }

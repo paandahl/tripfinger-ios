@@ -178,6 +178,8 @@ class NetworkUtil {
       return "ONLY_PUBLISHED"
     case .BETA:
       return "STAGED_OR_PUBLISHED"
+    case .DRAFT:
+      fallthrough
     case .TEST:
       return "NEWEST"
     }

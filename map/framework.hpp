@@ -422,6 +422,7 @@ public:
 
   void UpdateUserViewportChanged();
 
+  void TripfingerSearch(search::SearchParams const & params, int & tfCategory);
   /// Call this function before entering search GUI.
   /// While it's loading, we can cache features in viewport.
   bool Search(search::SearchParams const & params);
