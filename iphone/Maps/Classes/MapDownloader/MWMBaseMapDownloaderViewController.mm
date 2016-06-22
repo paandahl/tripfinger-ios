@@ -94,6 +94,7 @@ using namespace storage;
 {
   [super viewWillDisappear:animated];
   UINavigationBar * navBar = [UINavigationBar appearance];
+  [navBar setBackgroundImage:self.navBarBackground forBarMetrics:UIBarMetricsDefault];
   navBar.shadowImage = self.navBarShadow;
   [MWMFrameworkListener removeObserver:self];
   [self notifyParentController];

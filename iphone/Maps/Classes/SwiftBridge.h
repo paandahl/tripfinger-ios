@@ -161,6 +161,7 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 + (void)selectedSearchResult:(TripfingerEntity * __nonnull)searchResult failure:(void (^ __nonnull)(void))failure stopSpinner:(void (^ __nonnull)(void))stopSpinner;
 + (BOOL)isCountryDownloaded:(NSString * __nonnull)countryName;
 + (NSInteger)downloadStatus:(NSString * __nonnull)mwmCountryId;
++ (NSInteger)countrySize:(NSString * __nonnull)mwmCountryId;
 + (void)updateCountry:(NSString * _Nonnull)mwmCountryId downloadStarted:(void (^ _Nonnull)(void))downloadStarted;
 + (void)cancelDownload:(NSString * __nonnull)mwmRegionId;
 + (void)deleteCountry:(NSString * __nonnull)mwmCountryId;

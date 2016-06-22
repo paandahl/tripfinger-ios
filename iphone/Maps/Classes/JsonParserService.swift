@@ -80,6 +80,9 @@ class JsonParserService {
   class func parseRegion(json: JSON, fetchChildren: Bool = true) -> Region {
     let region = Region()
     region.mwmRegionId = json["mwmRegionId"].string
+    region.draftSizeInBytes.value = json["draftSizeInBytes"].int64
+    region.stagedSizeInBytes.value = json["stagedSizeInBytes"].int64
+    region.publishedSizeInBytes.value = json["publishedSizeInBytes"].int64
     region.listing = parseGuideListing(json)
     region.listing.item = parseGuideItem(json)
     
@@ -122,6 +125,9 @@ class JsonParserService {
   class func parseRegionTreeFromJson(json: JSON) -> Region {
     let region = Region()
     region.mwmRegionId = json["mwmRegionId"].string
+    region.draftSizeInBytes.value = json["draftSizeInBytes"].int64
+    region.stagedSizeInBytes.value = json["stagedSizeInBytes"].int64
+    region.publishedSizeInBytes.value = json["publishedSizeInBytes"].int64
     region.listing = parseGuideListing(json)
     region.listing.item.guideSections = parseSectionTreeFromJson(json["guideSections"])
     region.listing.item.categoryDescriptions = parseSectionTreeFromJson(json["categoryDescriptions"])

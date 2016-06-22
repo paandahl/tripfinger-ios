@@ -26,6 +26,9 @@ class GuideItemCell: UITableViewCell {
   var readMoreButtonMarginConstraint: NSLayoutConstraint!
   weak var delegate: GuideItemContainerDelegate!
   
+  var countryName: String?
+  var countryDownloadId: String!
+  
   init() {
     super.init(style: .Default, reuseIdentifier: nil)
     
@@ -56,6 +59,8 @@ class GuideItemCell: UITableViewCell {
 
     readMoreButton.addTarget(self, action: #selector(readMore), forControlEvents: .TouchUpInside)
     downloadButton.addTarget(self, action: #selector(openDownloadCountry), forControlEvents: .TouchUpInside)
+    
+    addObserver(DownloadService.TFDownloadStartedNotification, selector: #selector(countryStateChanged))
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -149,7 +154,16 @@ class GuideItemCell: UITableViewCell {
     delegate.downloadClicked()
   }
   
+  func setContentFromRegion(region: Region) {
+    if region.item().category == Region.Category.COUNTRY.rawValue {
+      countryName = region.getName()
+      countryDownloadId = region.getDownloadId()
+    }
+    setContentFromGuideItem(region.item())
+  }
+  
   func setContentFromGuideItem(guideItem: GuideItem) {
+
     contentImage.image = UIImage(named: "placeholder-712")
     if guideItem.images.count > 0 {
       
@@ -167,20 +181,9 @@ class GuideItemCell: UITableViewCell {
     }
     else {
       contentImage.hidden = true
-//      contentImage.removeFromSuperview()
-//      contentView.addSubview(contentImage)
     }
-    
-    // download button
-    if guideItem.category == Region.Category.COUNTRY.rawValue {
-      let downloaded = DownloadService.isCountryDownloaded(guideItem.name)
-      let title = downloaded ? "Downloaded" : "Download"
-      downloadButton.setTitle(title, forState: .Normal)
-      downloadView.hidden = false
-      print("displaying downloadButton")
-    } else {
-      downloadView.hidden = true
-    }
+
+    updateDownloadButton()
     
     var description = ""
     if let content = guideItem.content {
@@ -211,9 +214,29 @@ class GuideItemCell: UITableViewCell {
     setNeedsUpdateConstraints()
   }
   
+  func updateDownloadButton() {
+    if let countryName = countryName {
+      let title: String
+      if DownloadService.isCountryDownloaded(countryName) {
+        title = "Downloaded"
+      } else if DownloadService.isCountryDownloading(countryDownloadId) {
+        title = "Downloading"
+      } else {
+        title = "Download"
+      }
+      downloadButton.setTitle(title, forState: .Normal)
+      downloadView.hidden = false
+    } else {
+      downloadView.hidden = true
+    }
+  }
+  
   func navigateToLicense() {
-    print("licenseClicked")
     delegate.licenseClicked()
+  }
+  
+  func countryStateChanged() {
+    updateDownloadButton()
   }
 }
 

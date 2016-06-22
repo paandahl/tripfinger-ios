@@ -6,6 +6,7 @@ class DatabaseService {
   
   static let TFCountrySavedNotification = "TFCountrySavedNotification"
   static let TFCountryUpdatingNotification = "TFCountryUpdatingNotification"
+  static let TFCountryDeletingNotification = "TFCountryDeletingNotification"
   static let TFCountryDeletedNotification = "TFCountryDeletedNotification"
 
   
@@ -283,8 +284,10 @@ class DatabaseService {
   
   class func deleteRegion(region: Region, notification: Bool = true) {
     
-    if notification && region.getCategory() == Region.Category.COUNTRY {
-      NSNotificationCenter.defaultCenter().postNotificationName(TFCountryDeletedNotification, object: region.getName())
+    let regionCategory = region.getCategory()
+    let regionName = region.getName()
+    if notification && regionCategory == Region.Category.COUNTRY {
+      NSNotificationCenter.defaultCenter().postNotificationName(TFCountryDeletingNotification, object: regionName)
     }
     for subRegion in region.item().subRegions {
       deleteRegion(subRegion)
@@ -306,6 +309,9 @@ class DatabaseService {
     let realm = getRealm()
     try! realm.write {
       realm.delete(region)
+    }
+    if notification && regionCategory == Region.Category.COUNTRY {
+      NSNotificationCenter.defaultCenter().postNotificationName(TFCountryDeletedNotification, object: regionName)
     }
   }
   

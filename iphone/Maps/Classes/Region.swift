@@ -6,7 +6,21 @@ class Region: Object {
   // composition (instead of inheritance - for Realm-purposes)
   dynamic var listing: GuideListing!
   dynamic var mwmRegionId: String!
+  let draftSizeInBytes = RealmOptional<Int64>()
+  let stagedSizeInBytes = RealmOptional<Int64>()
+  let publishedSizeInBytes = RealmOptional<Int64>()
   
+  func getSizeInBytes() -> Int64 {
+    switch TripfingerAppDelegate.mode {
+    case .RELEASE:
+      return publishedSizeInBytes.value!
+    case .BETA:
+      return stagedSizeInBytes.value!
+    default:
+      return draftSizeInBytes.value!      
+    }
+  }
+
   // radius
   var radius: Int?
   

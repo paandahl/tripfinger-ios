@@ -70,25 +70,27 @@ class PurchasesService: NSObject {
     dispatch_group_leave(dispatchGroup)
   }
   
-  class func purchaseCountry(country: Region) {
+  class func purchaseCountry(country: Region, downloadStarted: () -> ()) {
     getFirstPurchase(UniqueIdentifierService.uniqueIdentifier()) { firstCountryUuid in
       guard let firstCountryUuid = firstCountryUuid else {
-        openFirstCountryController(country)
+        openFirstCountryController(country, downloadStarted: downloadStarted)
         return
       }
       if firstCountryUuid == country.getId() {
         proceedWithDownload(country)
+        downloadStarted()
       } else {
-        openPurchaseController(country)
+        openPurchaseController(country, downloadStarted: downloadStarted)
       }
     }
   }
   
-  private class func openFirstCountryController(country: Region) {
+  private class func openFirstCountryController(country: Region, downloadStarted: () -> ()) {
     let firstCountryController = FirstCountryDownloadView(country: country) {
       makeCountryFirst(country) {
         TripfingerAppDelegate.navigationController.dismissViewControllerAnimated(true, completion: nil)
         proceedWithDownload(country)
+        downloadStarted()
       }
     }
     dispatch_async(dispatch_get_main_queue()) {
@@ -107,7 +109,7 @@ class PurchasesService: NSObject {
       }, failure: { fatalError("fail fesv3") })
   }
   
-  private class func openPurchaseController(country: Region) {
+  private class func openPurchaseController(country: Region, downloadStarted: () -> ()) {
     print("purchaseController")
     let purchaseInstance = PurchasesService()
     purchaseInstance.initPurchasing(country.getId()) { product in
@@ -115,6 +117,7 @@ class PurchasesService: NSObject {
         TripfingerAppDelegate.navigationController.dismissViewControllerAnimated(true, completion: nil)
         proceedWithDownload(country, receipt: "XZBDSF252-FA23SDFS-SFSGSZZ67")
         purchaseInstance.dispatchGroup = nil // mainly to keep instance alive
+        downloadStarted()
       }
       dispatch_async(dispatch_get_main_queue()) {
         let modalNav = UINavigationController()

@@ -1,8 +1,7 @@
 import Foundation
 import MBProgressHUD
 
-extension UIViewController {
-  
+extension UIView {
   func addObserver(name: String, selector: Selector) {
     NSNotificationCenter.defaultCenter().addObserver(self, selector: selector, name: name, object: nil)
   }
@@ -10,7 +9,18 @@ extension UIViewController {
   func delay(delay: Double, selector: Selector) {
     NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(delay), target: self, selector: selector, userInfo: nil, repeats: false)
   }
+}
+
+extension UIViewController {
+
+  func addObserver(name: String, selector: Selector) {
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: selector, name: name, object: nil)
+  }
   
+  func delay(delay: Double, selector: Selector) {
+    NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(delay), target: self, selector: selector, userInfo: nil, repeats: false)
+  }
+
   func showLoadingHud() {
     print("disabling user interac")
     self.navigationController!.view.userInteractionEnabled = false

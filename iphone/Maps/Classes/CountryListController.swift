@@ -5,6 +5,7 @@ class CountryListController: TableController {
   
   let refreshControl = UIRefreshControl()
   var countryLists = [(String, List<Region>)]()
+  var worldAreaImageSet = Set<String>()
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -124,11 +125,14 @@ class CountryListController: TableController {
     image.clipsToBounds = true
     if NSURL.fileExists(imagePath) {
       image.image = UIImage(data: NSData(contentsOfURL: imagePath)!)
-    } else {
+    } else if !worldAreaImageSet.contains(title!) {
+      worldAreaImageSet.insert(title!)
       var imageUrl = DownloadService.gcsImagesUrl + title! + ".jpeg"
       imageUrl = imageUrl.stringByReplacingOccurrencesOfString(" ", withString: "%20")
       NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: imagePath) {
-        image.image = UIImage(data: NSData(contentsOfURL: imagePath)!)
+        dispatch_async(dispatch_get_main_queue()) {
+          image.image = UIImage(data: NSData(contentsOfURL: imagePath)!)          
+        }
       }
     }
     let label = UILabel(frame: CGRectMake(10, 120, tableView.frame.size.width, 18))
@@ -182,6 +186,7 @@ class CountryListController: TableController {
   }
   
   func countryInvalidated() {
-    countryLists = [(String, List<Region>)]()
+    countryLists = makeCountryLists(Array(DatabaseService.getCountries()))
+    loadCountryLists()
   }
 }

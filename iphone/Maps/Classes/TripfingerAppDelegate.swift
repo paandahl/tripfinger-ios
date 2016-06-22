@@ -356,13 +356,39 @@ class MyNavigationController: UINavigationController {
   
   // TODO: Add downloading-status
   class func downloadStatus(mwmCountryId: String) -> Int {
-    if DownloadService.isCountryDownloading(mwmCountryId) {
-      return 1;
-    } else if DownloadService.isCountryDownloaded(mwmCountryId) {
-      return 5;
-    } else { // NotDownloaded
-      return 6;
+    
+    var foundCountry = false
+    let countryListController = TripfingerAppDelegate.navigationController.viewControllers[0] as! CountryListController
+    for (_, countryList) in countryListController.countryLists {
+      for country in countryList {
+        if country.getDownloadId() == mwmCountryId {
+          foundCountry = true
+        }
+      }
     }
+    if !foundCountry {
+      return 0
+    }
+    
+    if DownloadService.isCountryDownloading(mwmCountryId) {
+      return 1
+    } else if DownloadService.isCountryDownloaded(mwmCountryId) {
+      return 5
+    } else { // NotDownloaded
+      return 6
+    }
+  }
+  
+  class func countrySize(mwmCountryId: String) -> Int64 {
+    let countryListController = TripfingerAppDelegate.navigationController.viewControllers[0] as! CountryListController
+    for (_, countryList) in countryListController.countryLists {
+      for country in countryList {
+        if country.getDownloadId() == mwmCountryId {
+          return country.getSizeInBytes()
+        }
+      }
+    }
+    fatalError("Did not find size for country: \(mwmCountryId)")
   }
 
   class func updateCountry(mwmCountryId: String, downloadStarted: () -> ()) {
@@ -382,9 +408,14 @@ class MyNavigationController: UINavigationController {
   }
   
   class func purchaseCountry(mwmCountryId: String, downloadStarted: () -> ()) {
+    TripfingerAppDelegate.navigationController.viewControllers.last!.showLoadingHud()
     ContentService.getCountryWithName(mwmCountryId, failure: {fatalError("fail86")}) { region in
-      PurchasesService.purchaseCountry(region)
-      downloadStarted()
+      PurchasesService.purchaseCountry(region) {
+        dispatch_async(dispatch_get_main_queue()) {
+          TripfingerAppDelegate.navigationController.viewControllers.last!.hideHuds()
+          downloadStarted()
+        }
+      }
     }
   }
   

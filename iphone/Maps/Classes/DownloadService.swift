@@ -6,7 +6,7 @@ import SwiftyJSON
 
 class DownloadService {
   
-  static let TFDownloadNotification = "TFDownloadNotification"
+  static let TFDownloadStartedNotification = "TFDownloadStartedNotification"
   
   static var downloadPath: String!
   static let gcsMapsUrl = "https://storage.googleapis.com/tripfinger-maps/"
@@ -57,6 +57,23 @@ class DownloadService {
     }
   }
   
+  class func checkIfDeviceHasEnoughFreeSpaceForRegion(region: Region) -> Bool {
+    let freeSpace = FileUtils.deviceRemainingFreeSpaceInBytes()
+    let regionSize = region.getSizeInBytes()
+    print("regionSize: \(regionSize)")
+    if freeSpace < Int64(regionSize) {
+      let alertController = UIAlertController(title: "Not enough disk space", message: "Free up space on your device by deleting something, and try again.", preferredStyle: .Alert)
+      let defaultAction = UIAlertAction(title: "OK", style: .Default) { alertAction in
+        TripfingerAppDelegate.navigationController.dismissViewControllerAnimated(true, completion: nil)
+      }
+      alertController.addAction(defaultAction)
+      TripfingerAppDelegate.navigationController.presentViewController(alertController, animated: true, completion: nil)
+      return false;
+    } else {
+      return true;
+    }
+  }
+  
   class func downloadCountry(mwmRegionId: String, receipt: String? = nil, progressHandler: Double -> (), failure: () -> (), finishedHandler: () -> ()) {
     
     DatabaseService.addDownloadMarker(mwmRegionId)
@@ -64,13 +81,23 @@ class DownloadService {
     application.idleTimerDisabled = true
     var taskHandle = UIBackgroundTaskInvalid
     taskHandle = application.beginBackgroundTaskWithExpirationHandler {
-      print("expiration handler called")
       application.endBackgroundTask(taskHandle)
       taskHandle = UIBackgroundTaskInvalid
     }
+    dispatch_async(dispatch_get_main_queue()) {
+      NSNotificationCenter.defaultCenter().postNotificationName(TFDownloadStartedNotification, object: mwmRegionId)      
+    }
 
     ContentService.getCountryWithName(mwmRegionId, failure: {}) { region in
+      
       let countryPath = NSURL.createDirectory(.LibraryDirectory, withPath: region.getName())
+      let jsonPath = countryPath.URLByAppendingPathComponent(region.getName() + ".json")
+      if (!checkIfDeviceHasEnoughFreeSpaceForRegion(region)) {
+        cleanupDownload(region, taskHandle: taskHandle, jsonPath: jsonPath)
+        finishedHandler()
+        return
+      }
+      
       var url: String
       if let _ = receipt {
         url = TripfingerAppDelegate.serverUrl + "/download_purchased_country/\(region.getName())"
@@ -78,7 +105,6 @@ class DownloadService {
         let deviceUuid = UniqueIdentifierService.uniqueIdentifier()
         url = TripfingerAppDelegate.serverUrl + "/download_first_country/\(region.getName())/\(deviceUuid)"
       }
-      let jsonPath = countryPath.URLByAppendingPathComponent(region.getName() + ".json")
       if NSURL.fileExists(jsonPath) {
         processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, finishedHandler: finishedHandler)
       } else {
@@ -104,9 +130,7 @@ class DownloadService {
       counter += 1
       dispatch_async(dispatch_get_main_queue()) {
         if DatabaseService.isDownloadMarkerCancelled(region.mwmRegionId ?? region.getName()) {
-          for request in requests {
-            request.cancel()
-          }
+          requests.forEach { $0.cancel() }
           deleteCountry(region.getName())
           cleanupDownload(region, taskHandle: taskHandle, jsonPath: jsonPath)
           return

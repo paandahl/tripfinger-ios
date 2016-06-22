@@ -20,7 +20,7 @@ class RegionController: GuideItemController, MapNavigator {
     super.init(guideItem: region.item())
     navigationItem.title = region.getName()
     addObserver(DatabaseService.TFCountryUpdatingNotification, selector: #selector(countryBeingDeleted(_:)))
-    addObserver(DatabaseService.TFCountryDeletedNotification, selector: #selector(countryBeingDeleted(_:)))
+    addObserver(DatabaseService.TFCountryDeletingNotification, selector: #selector(countryBeingDeleted(_:)))
     addObserver(DatabaseService.TFCountrySavedNotification, selector: #selector(countryDownloaded(_:)))
   }
   
@@ -116,7 +116,7 @@ extension RegionController {
     if section.cellIdentifier == TableCellIdentifiers.guideItemCell {
       let cell = GuideItemCell()
       cell.delegate = self
-      cell.setContentFromGuideItem(region.item())
+      cell.setContentFromRegion(region)
       if (guideItemExpanded) {
         cell.expand()
       }
