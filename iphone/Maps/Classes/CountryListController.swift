@@ -131,7 +131,7 @@ class CountryListController: TableController {
       imageUrl = imageUrl.stringByReplacingOccurrencesOfString(" ", withString: "%20")
       NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: imagePath) {
         dispatch_async(dispatch_get_main_queue()) {
-          image.image = UIImage(data: NSData(contentsOfURL: imagePath)!)          
+          tableView.reloadData()
         }
       }
     }

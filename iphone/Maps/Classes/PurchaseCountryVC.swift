@@ -5,9 +5,9 @@ class PurchaseCountryVC: FirstCountryDownloadView {
   
   let product: SKProduct
   
-  init(country: Region, product: SKProduct, downloadHandler: () -> ()) {
+  init(country: Region, product: SKProduct, cancelHandler: () -> (), downloadHandler: () -> ()) {
     self.product = product
-    super.init(country: country, downloadHandler: downloadHandler)
+    super.init(country: country, cancelHandler: cancelHandler, downloadHandler: downloadHandler)
     
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(downloadCountry),
                                                      name: PurchasesService.TFPurchaseNotification,

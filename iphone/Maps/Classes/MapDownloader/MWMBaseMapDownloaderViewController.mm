@@ -82,20 +82,20 @@ using namespace storage;
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  UINavigationBar * navBar = [UINavigationBar appearance];
-  self.navBarBackground = [navBar backgroundImageForBarMetrics:UIBarMetricsDefault];
-  self.navBarShadow = navBar.shadowImage;
-  UIColor * searchBarColor = [UIColor primary];
-  navBar.shadowImage = [[UIImage alloc] init];
+//  UINavigationBar * navBar = [UINavigationBar appearance];
+  //self.navBarBackground = [navBar backgroundImageForBarMetrics:UIBarMetricsDefault];
+  //self.navBarShadow = navBar.shadowImage;
+  //UIColor * searchBarColor = [UIColor primary];
+  //navBar.shadowImage = [[UIImage alloc] init];
   [MWMFrameworkListener addObserver:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
   [super viewWillDisappear:animated];
-  UINavigationBar * navBar = [UINavigationBar appearance];
-  [navBar setBackgroundImage:self.navBarBackground forBarMetrics:UIBarMetricsDefault];
-  navBar.shadowImage = self.navBarShadow;
+  //UINavigationBar * navBar = [UINavigationBar appearance];
+  //[navBar setBackgroundImage:self.navBarBackground forBarMetrics:UIBarMetricsDefault];
+  //navBar.shadowImage = self.navBarShadow;
   [MWMFrameworkListener removeObserver:self];
   [self notifyParentController];
 }

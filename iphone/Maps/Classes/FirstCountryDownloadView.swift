@@ -9,10 +9,12 @@ class FirstCountryDownloadView: UIViewController {
  
   let country: Region
   let downloadHandler: () -> ()
+  let cancelHandler: () -> ()
 
-  init(country: Region, downloadHandler: () -> ()) {
+  init(country: Region, cancelHandler: () -> (), downloadHandler: () -> ()) {
     self.country = country
     self.downloadHandler = downloadHandler
+    self.cancelHandler = cancelHandler
     super.init(nibName: "FirstCountryDownloadView", bundle: nil)
   }
   
@@ -20,7 +22,7 @@ class FirstCountryDownloadView: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
-  override func viewDidLoad() {
+  override func viewDidLoad() {    
     navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: #selector(cancel))
     image.image = UIImage(named: "img_search_no_maps");
     alertTitle.text = "Ready to download your first guide";
@@ -34,6 +36,7 @@ class FirstCountryDownloadView: UIViewController {
   }
   
   func cancel() {
-    dismissViewControllerAnimated(true, completion: nil)
+    TripfingerAppDelegate.navigationController.dismissViewControllerAnimated(true, completion: nil)
+    cancelHandler()
   }
 }

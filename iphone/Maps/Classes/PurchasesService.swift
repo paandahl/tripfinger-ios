@@ -20,7 +20,7 @@ class PurchasesService: NSObject {
   
   private var dispatchGroup: dispatch_group_t!
   
-  private func initPurchasing(regionUuid: String, callback: SKProduct -> ()) {
+  private func initPurchasing(regionUuid: String, callback: (product: SKProduct, purchased: Bool) -> ()) {
     print("Initializing PurchasesService")
     SKPaymentQueue.defaultQueue().addTransactionObserver(self)
     dispatchGroup = dispatch_group_create()
@@ -30,8 +30,11 @@ class PurchasesService: NSObject {
     fetchProductIdentifiers()
     dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) {
       let productId = self.productIdentifiers![regionUuid]!
+      print("Purchases:")
+      print(self.purchasedProductIdentifiers)
+      let purchased = self.purchasedProductIdentifiers!.contains(productId)
       let product = self.products![productId]!
-      callback(product)
+      callback(product: product, purchased: purchased)
     }
   }
   
@@ -86,7 +89,7 @@ class PurchasesService: NSObject {
   }
   
   private class func openFirstCountryController(country: Region, downloadStarted: () -> ()) {
-    let firstCountryController = FirstCountryDownloadView(country: country) {
+    let firstCountryController = FirstCountryDownloadView(country: country, cancelHandler: downloadStarted) {
       makeCountryFirst(country) {
         TripfingerAppDelegate.navigationController.dismissViewControllerAnimated(true, completion: nil)
         proceedWithDownload(country)
@@ -96,8 +99,8 @@ class PurchasesService: NSObject {
     dispatch_async(dispatch_get_main_queue()) {
       let modalNav = UINavigationController()
       modalNav.viewControllers = [firstCountryController]
-      TripfingerAppDelegate.styleNavigationBar(modalNav.navigationBar)
       TripfingerAppDelegate.navigationController.presentViewController(modalNav, animated: true, completion: nil)
+      TripfingerAppDelegate.styleNavigationBar(modalNav.navigationBar)
     }
   }
   
@@ -112,18 +115,23 @@ class PurchasesService: NSObject {
   private class func openPurchaseController(country: Region, downloadStarted: () -> ()) {
     print("purchaseController")
     let purchaseInstance = PurchasesService()
-    purchaseInstance.initPurchasing(country.getId()) { product in
-      let purchaseController = PurchaseCountryVC(country: country, product: product) {
-        TripfingerAppDelegate.navigationController.dismissViewControllerAnimated(true, completion: nil)
+    purchaseInstance.initPurchasing(country.getId()) { product, purchased in
+      if purchased {
         proceedWithDownload(country, receipt: "XZBDSF252-FA23SDFS-SFSGSZZ67")
-        purchaseInstance.dispatchGroup = nil // mainly to keep instance alive
         downloadStarted()
-      }
-      dispatch_async(dispatch_get_main_queue()) {
-        let modalNav = UINavigationController()
-        modalNav.viewControllers = [purchaseController]
-        TripfingerAppDelegate.styleNavigationBar(modalNav.navigationBar)
-        TripfingerAppDelegate.navigationController.presentViewController(modalNav, animated: true, completion: nil)
+      } else {
+        let purchaseController = PurchaseCountryVC(country: country, product: product, cancelHandler: downloadStarted) {
+          TripfingerAppDelegate.navigationController.dismissViewControllerAnimated(true, completion: nil)
+          proceedWithDownload(country, receipt: "XZBDSF252-FA23SDFS-SFSGSZZ67")
+          purchaseInstance.dispatchGroup = nil // mainly to keep instance alive
+          downloadStarted()
+        }
+        dispatch_async(dispatch_get_main_queue()) {
+          let modalNav = UINavigationController()
+          TripfingerAppDelegate.styleNavigationBar(modalNav.navigationBar)
+          modalNav.viewControllers = [purchaseController]
+          TripfingerAppDelegate.navigationController.presentViewController(modalNav, animated: true, completion: nil)
+        }
       }
     }
   }
@@ -196,6 +204,10 @@ extension PurchasesService: SKPaymentTransactionObserver {
   
   private func completeTransaction(transaction: SKPaymentTransaction) {
     print("completeTransaction...")
+    let keychain = KeychainSwift()
+    purchasedProductIdentifiers!.insert(transaction.payment.productIdentifier)
+    keychain.set(purchasedProductIdentifiers!.joinWithSeparator(","), forKey: PurchasesService.keychainKey)
+
     deliverPurchaseNotificationForIdentifier(transaction.payment.productIdentifier)
     SKPaymentQueue.defaultQueue().finishTransaction(transaction)
   }
@@ -211,6 +223,7 @@ extension PurchasesService: SKPaymentTransactionObserver {
   }
   
   func paymentQueueRestoreCompletedTransactionsFinished(queue: SKPaymentQueue) {
+    print("paymentQueueRestoreCompletedTransactionsFinished")
     purchasedProductIdentifiers = Set<ProductIdentifier>()
     for transaction in queue.transactions {
       if let productIdentifier = transaction.originalTransaction?.payment.productIdentifier {
