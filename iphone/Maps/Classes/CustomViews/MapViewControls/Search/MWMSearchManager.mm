@@ -197,7 +197,6 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
     void(^stop)() = ^() {
       NSLog(@"ccc");
     };
-    self.parentViewController.navigationController.navigationBarHidden = NO;
     [TripfingerAppDelegate selectedSearchResult:entity failure:fail stopSpinner:stop];
   } else {
     if (onlineFetchedTripfingerItem) {
@@ -282,8 +281,6 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 - (void)changeToHiddenState
 {
-  UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-  self.parentViewController.navigationController.navigationBarHidden = UIDeviceOrientationIsLandscape(orientation);
   [self endSearch];
   [self.tabbedController resetSelectedTab];
   self.tableViewController = nil;
@@ -293,7 +290,6 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 - (void)changeToDefaultState
 {
-  self.parentViewController.navigationController.navigationBarHidden = YES;
   self.view.alpha = 1.;
   [self updateTopController];
   [self.navigationController popToRootViewControllerAnimated:NO];

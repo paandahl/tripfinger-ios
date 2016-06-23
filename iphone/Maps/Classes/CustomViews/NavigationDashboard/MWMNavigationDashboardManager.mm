@@ -434,9 +434,9 @@ extern NSString * const kTTSStatusWasChangedNotification;
     break;
   }
   _state = state;
-  if (state == MWMNavigationDashboardStateHidden) {
-    [[MapsAppDelegate theApp].mapViewController.controlsManager setNavBarHidden:NO];
-  }
+  bool hidden = (state != MWMNavigationDashboardStateHidden);
+  NSLog(@"Setting nav bar hidden: %@", hidden ? @"true" : @"false");
+  [[MapsAppDelegate theApp].mapViewController.controlsManager setNavBarHidden:hidden];
   [self.delegate updateStatusBarStyle];
 }
 

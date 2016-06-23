@@ -466,6 +466,8 @@ NSString * const kReportSegue = @"Map2ReportSegue";
   [self refreshAd];
 
   [self updateStatusBarStyle];
+  
+  [self.controlsManager setNavBarHidden:NO];
   GetFramework().InvalidateRendering();
   //[self showWelcomeScreenIfNeeded];
   //[self showViralAlertIfNeeded];
@@ -666,8 +668,11 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 
 - (void)openMapsDownloader
 {
+  
+  NSLog(@"Opening maps downloader");
   [Alohalytics logEvent:kAlohalyticsTapEventKey withValue:@"downloader"];
   [self performSegueWithIdentifier:kDownloaderSegue sender:self];
+  self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)openEditor
@@ -909,6 +914,7 @@ NSString * const kReportSegue = @"Map2ReportSegue";
                      countries:(storage::TCountriesVec const &)countries
                        okBlock:(TMWMVoidBlock)okBlock
 {
+  NSLog(@"Presenting download alert");
   if (countries.size())
     [self.alertController presentDownloaderAlertWithCountries:countries code:code okBlock:okBlock];
   else

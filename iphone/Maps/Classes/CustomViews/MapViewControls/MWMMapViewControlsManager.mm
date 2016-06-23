@@ -238,6 +238,8 @@ extern NSString * const kAlohalyticsTapEventKey;
       self.leftBound = self.topBound = 0.0;
     }
   }
+  bool navBarHidden = (state != MWMSearchManagerStateHidden);
+  [self setNavBarHidden:navBarHidden];
   [self.ownerController setNeedsStatusBarAppearanceUpdate];
   if (!IPAD || (state != MWMSearchManagerStateDefault && state != MWMSearchManagerStateHidden))
     return;
@@ -718,7 +720,7 @@ extern NSString * const kAlohalyticsTapEventKey;
 
 - (void)setHidden:(BOOL)hidden
 {
-  NSLog(@"setHidden");
+  NSLog(@"setHidden: %@", hidden ? @"true" : @"false");
   if (_hidden == hidden)
     return;
   _hidden = hidden;
