@@ -271,65 +271,7 @@ class MyNavigationController: UINavigationController {
       jumpToRegion(searchResult.tripfingerId, failure: failure, finishedHandler: stopSpinner)
     }
   }
-  
-  class func changeToRegionWithUrlPath(path: String, failure: () -> (), finishedHandler: (String, UINavigationController, [UIViewController]) -> ()) {
-    let handler = { region in
-      TripfingerAppDelegate.moveToRegion(region, stopSpinner: {}) { countryMwmId, nav, viewControllers in
-        finishedHandler(countryMwmId, nav, viewControllers)
-      }
-    }
-    
-    let urlParts = path.characters.split{$0 == "/"}.map(String.init)
-    var regionNames = [String]()
-    for urlPart in urlParts {
-      regionNames.append(urlPart.stringByReplacingOccurrencesOfString("_", withString: " "))
-    }
-    if regionNames.count == 1 {
-      let countryName = regionNames[0]
-      ContentService.getCountryWithName(countryName, failure: failure, handler: handler)
-    } else if regionNames.count == 2 {
-      let countryName = regionNames[0]
-      let subRegionName = regionNames[1]
-      ContentService.getSubRegionWithName(subRegionName, countryName: countryName, failure: failure, handler: handler)
-    } else if regionNames.count == 3 {
-      let countryName = regionNames[0]
-      let cityName = regionNames[2]
-      ContentService.getCityWithName(cityName, countryName: countryName, failure: failure, handler: handler)
-    } else {
-      fatalError("Path \(path) resulted in too many parts: \(regionNames.count)")
-    }
-  }
-  
-  class func jumpToRegionWithUrlPath(path: String, failure: () -> (), finishedHandler: () -> ()) {
-    let failure = {
-      fatalError("errror 200nx")
-    }
-
-    changeToRegionWithUrlPath(path, failure: failure) { country, nav, viewControllers in
-      nav.view.userInteractionEnabled = true
-      finishedHandler()
-      nav.setViewControllers(viewControllers, animated: true)
-    }
-  }
-
-  class func jumpToListingWithUrlPath(path: String, failure: () -> (), finishedHandler: () -> ()) {
-    
-    let failure = {
-      fatalError("error juzy89")
-    }
-    
-    let listingPartStart = path.rangeOfString("/l/")
-    let regionPath = path.substringToIndex(listingPartStart!.startIndex)
-    changeToRegionWithUrlPath(regionPath, failure: failure) { countryMwmId, nav, viewControllers in
-      let listingSlug = path.substringFromIndex(listingPartStart!.endIndex)
-      ContentService.getListingWithSlug(listingSlug, failure: failure) { listing in
-        let entity = TripfingerEntity(listing: listing)
-        TripfingerAppDelegate.viewControllers = viewControllers
-        MapsAppDelegateWrapper.openPlacePage(entity, withCountryMwmId: countryMwmId)
-      }
-    }
-  }
-  
+      
   class func jumpToRegion(regionId: String, failure: () -> (), finishedHandler: () -> ()) {
     ContentService.getRegionWithId(regionId, failure: failure) { region in
       TripfingerAppDelegate.moveToRegion(region, stopSpinner: finishedHandler) { country, nav, viewControllers in

@@ -81,12 +81,12 @@ extension GuideItemController: GuideItemContainerDelegate {
   
   func jumpToRegion(path: String) {
     showLoadingHud()
-    TripfingerAppDelegate.jumpToRegionWithUrlPath(path, failure: showErrorHud, finishedHandler: hideHuds)
+    GuideItemController.navigateToRegionWithUrlPath(path, failure: showErrorHud, finishedHandler: hideHuds)
   }
   
   func jumpToListing(path: String) {
     showLoadingHud()
-    TripfingerAppDelegate.jumpToListingWithUrlPath(path, failure: showErrorHud, finishedHandler: hideHuds)
+    GuideItemController.navigateToListingWithUrlPath(path, failure: showErrorHud, finishedHandler: hideHuds)
   }
 }
 
@@ -102,4 +102,62 @@ extension GuideItemController {
   func navigateToMap() {
     preconditionFailure("Navigate to map must be overridden.")
   }
+  
+  class func navigateToRegionWithUrlPath(path: String, failure: () -> (), finishedHandler: () -> ()) {
+    getRegionWithUrlPath(path, failure: failure) { region in
+      getCountryForRegion(region, failure: failure) { country in
+        let regionController = RegionController(region: region, countryMwmId: country.getDownloadId())
+        TripfingerAppDelegate.navigationController.pushViewController(regionController, animated: true)
+        finishedHandler()
+      }
+    }
+  }
+  
+  class func navigateToListingWithUrlPath(path: String, failure: () -> (), finishedHandler: () -> ()) {
+    let listingPartStart = path.rangeOfString("/l/")
+    let regionPath = path.substringToIndex(listingPartStart!.startIndex)
+    let listingSlug = path.substringFromIndex(listingPartStart!.endIndex)
+    getRegionWithUrlPath(regionPath, failure: failure) { region in
+      getCountryForRegion(region, failure: failure) { country in
+        ContentService.getListingWithSlug(listingSlug, failure: failure) { listing in
+          let entity = TripfingerEntity(listing: listing)
+          MapsAppDelegateWrapper.openPlacePage(entity, withCountryMwmId: country.getDownloadId())
+          finishedHandler()
+        }
+      }
+    }
+  }
+  
+  class func getCountryForRegion(region: Region, failure: () -> (), handler: Region -> ()) {
+    if region.getCategory() == Region.Category.COUNTRY {
+      handler(region)
+    } else {
+      ContentService.getCountryWithName(region.listing.country!, failure: failure) { country in
+        handler(country)
+      }
+    }
+  }
+  
+  class func getRegionWithUrlPath(path: String, failure: () -> (), finishedHandler: Region -> ()) {
+    let urlParts = path.characters.split{$0 == "/"}.map(String.init)
+    var regionNames = [String]()
+    for urlPart in urlParts {
+      regionNames.append(urlPart.stringByReplacingOccurrencesOfString("_", withString: " "))
+    }
+    if regionNames.count == 1 {
+      let countryName = regionNames[0]
+      ContentService.getCountryWithName(countryName, failure: failure, handler: finishedHandler)
+    } else if regionNames.count == 2 {
+      let countryName = regionNames[0]
+      let subRegionName = regionNames[1]
+      ContentService.getSubRegionWithName(subRegionName, countryName: countryName, failure: failure, handler: finishedHandler)
+    } else if regionNames.count == 3 {
+      let countryName = regionNames[0]
+      let cityName = regionNames[2]
+      ContentService.getCityWithName(cityName, countryName: countryName, failure: failure, handler: finishedHandler)
+    } else {
+      fatalError("Path \(path) resulted in too many parts: \(regionNames.count)")
+    }
+  }
+
 }

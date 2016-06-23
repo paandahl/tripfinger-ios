@@ -183,9 +183,9 @@ extension PlacePageInfoCell: UITextViewDelegate {
         delegate.navigatedToGuide()
       }
       if URL.path!.containsString("/l/") {
-        TripfingerAppDelegate.jumpToListingWithUrlPath(URL.path!, failure: {fatalError("Failzed45")}, finishedHandler: {})
+        GuideItemController.navigateToListingWithUrlPath(URL.path!, failure: {fatalError("Failzed45")}, finishedHandler: {})
       } else {
-        TripfingerAppDelegate.jumpToRegionWithUrlPath(URL.path!, failure: {fatalError("Failzed45")}, finishedHandler: {})
+        GuideItemController.navigateToRegionWithUrlPath(URL.path!, failure: {fatalError("Failzed45")}, finishedHandler: {})
       }
       return false
     }    
