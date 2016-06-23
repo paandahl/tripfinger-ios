@@ -238,8 +238,8 @@ extern NSString * const kAlohalyticsTapEventKey;
       self.leftBound = self.topBound = 0.0;
     }
   }
-  bool navBarHidden = (state != MWMSearchManagerStateHidden);
-  [self setNavBarHidden:navBarHidden];
+  NSLog(@"search state was: %lu", state);
+  [self setNavBarHidden:NO]; // the checks are in the method itself, so we send a NO not to interfere
   [self.ownerController setNeedsStatusBarAppearanceUpdate];
   if (!IPAD || (state != MWMSearchManagerStateDefault && state != MWMSearchManagerStateHidden))
     return;
@@ -734,8 +734,10 @@ extern NSString * const kAlohalyticsTapEventKey;
 - (void)setNavBarHidden:(BOOL)hidden {
   BOOL navMode = self.navigationManager.state != MWMNavigationDashboardStateHidden;
   BOOL isLandScape = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation);
-  BOOL mapSearch = self.searchManager.state == MWMSearchManagerStateMapSearch;
-  self.ownerController.navigationController.navigationBarHidden = navMode || isLandScape || mapSearch || hidden;
+  BOOL searchHidingBar = self.searchManager.state != MWMSearchManagerStateHidden;
+  bool navBarHidden = navMode || isLandScape || searchHidingBar || hidden;
+  NSLog(@"Setting navbar hidden: %@", navBarHidden ? @"true" : @"false");
+  self.ownerController.navigationController.navigationBarHidden = navBarHidden;
 }
 
 

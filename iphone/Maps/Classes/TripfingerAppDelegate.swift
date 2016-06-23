@@ -268,6 +268,7 @@ class MyNavigationController: UINavigationController {
   }
 
   class func selectedSearchResult(searchResult: TripfingerEntity, failure: () -> (), stopSpinner: () -> ()) {
+    TripfingerAppDelegate.navigationController.navigationBarHidden = false
     if searchResult.isListing() {
       jumpToListing(searchResult.tripfingerId, failure: failure, finishedHandler: stopSpinner)
     } else {
