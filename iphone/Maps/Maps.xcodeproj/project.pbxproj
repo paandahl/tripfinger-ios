@@ -84,6 +84,8 @@
 		25D27B5E1D01B6AD00F7AA91 /* FirstCountryDownloadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D27B5D1D01B6AD00F7AA91 /* FirstCountryDownloadView.xib */; };
 		25D27B601D01B76D00F7AA91 /* FirstCountryDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D27B5F1D01B76D00F7AA91 /* FirstCountryDownloadView.swift */; };
 		25D27B621D01C09000F7AA91 /* PurchasesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D27B611D01C08F00F7AA91 /* PurchasesService.swift */; };
+		25D2A2EF1D1C2BDF00B83C35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25D2A2EE1D1C2BDF00B83C35 /* GoogleService-Info.plist */; };
+		25D2A2F11D1C33F400B83C35 /* tripfinger-server-957d80c6ea80.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D2A2F01D1C33F400B83C35 /* tripfinger-server-957d80c6ea80.json */; };
 		25D378F21CAFD13400552633 /* thailand.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D378F11CAFD13400552633 /* thailand.json */; };
 		25D378F41CAFD13900552633 /* brunei-download.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D378F31CAFD13900552633 /* brunei-download.json */; };
 		25D378F61CAFD49500552633 /* SyncManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D378F51CAFD49500552633 /* SyncManagerTest.swift */; };
@@ -99,7 +101,6 @@
 		25DABC141D095FEC00D0A839 /* CountryListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DABC131D095FEC00D0A839 /* CountryListController.swift */; };
 		25E477C01CC8AB5A008C668E /* AppDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E477BF1CC8AB5A008C668E /* AppDelegateTest.swift */; };
 		288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
-		2C204603AB8E663420A3FAC7 /* Pods_Tripfinger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C2F0D0D53254DEA4AF799A7A /* Pods_Tripfinger.framework */; };
 		3400A6811CA29D7D003DA0EC /* NSString+Categories.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3400A6801CA29D7D003DA0EC /* NSString+Categories.mm */; };
 		3400A6821CA29D7D003DA0EC /* NSString+Categories.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3400A6801CA29D7D003DA0EC /* NSString+Categories.mm */; };
 		3401CD671C3C03A80028C6F8 /* MWMEditorTextTableViewCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3401CD651C3C03A80028C6F8 /* MWMEditorTextTableViewCell.mm */; };
@@ -375,6 +376,7 @@
 		34F9FB921C43AF2400F71201 /* MWMStreetEditorEditTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34F9FB8F1C43AF2400F71201 /* MWMStreetEditorEditTableViewCell.xib */; };
 		34F9FB931C43AF2400F71201 /* MWMStreetEditorEditTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34F9FB8F1C43AF2400F71201 /* MWMStreetEditorEditTableViewCell.xib */; };
 		34FE4C451BCC013500066718 /* MWMMapWidgets.mm in Sources */ = {isa = PBXBuildFile; fileRef = 34FE4C441BCC013500066718 /* MWMMapWidgets.mm */; };
+		3AEEEDADCFF4171D77F3D9AB /* Pods_Tripfinger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 238C7BF3F6196FE2FBD6DD40 /* Pods_Tripfinger.framework */; };
 		4519503A1B7A3E070085DA05 /* patterns.txt in Resources */ = {isa = PBXBuildFile; fileRef = 451950391B7A3E070085DA05 /* patterns.txt */; };
 		452FCA3B1B6A3DF7007019AB /* colors.txt in Resources */ = {isa = PBXBuildFile; fileRef = 452FCA3A1B6A3DF7007019AB /* colors.txt */; };
 		46F26C7310F61FD600ECCA39 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F26C7210F61FD600ECCA39 /* OpenGLES.framework */; };
@@ -940,11 +942,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		083A28646AC9FFF435D93765 /* Pods-MAPS.ME.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.adhoc.xcconfig"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* MapsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapsAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* MapsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = MapsAppDelegate.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		238C7BF3F6196FE2FBD6DD40 /* Pods_Tripfinger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripfinger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2502337C1CD36896005F9943 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		2502337E1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMiPhoneFullscreenPlacePage.mm; sourceTree = "<group>"; };
 		250233801CD36C00005F9943 /* MWMiPhoneFullscreenPlacePage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMiPhoneFullscreenPlacePage.h; sourceTree = "<group>"; };
@@ -1026,6 +1028,8 @@
 		25D27B5D1D01B6AD00F7AA91 /* FirstCountryDownloadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstCountryDownloadView.xib; sourceTree = "<group>"; };
 		25D27B5F1D01B76D00F7AA91 /* FirstCountryDownloadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstCountryDownloadView.swift; sourceTree = "<group>"; };
 		25D27B611D01C08F00F7AA91 /* PurchasesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchasesService.swift; sourceTree = "<group>"; };
+		25D2A2EE1D1C2BDF00B83C35 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		25D2A2F01D1C33F400B83C35 /* tripfinger-server-957d80c6ea80.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "tripfinger-server-957d80c6ea80.json"; sourceTree = "<group>"; };
 		25D378F11CAFD13400552633 /* thailand.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = thailand.json; sourceTree = "<group>"; };
 		25D378F31CAFD13900552633 /* brunei-download.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "brunei-download.json"; sourceTree = "<group>"; };
 		25D378F51CAFD49500552633 /* SyncManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTest.swift; sourceTree = "<group>"; };
@@ -1369,6 +1373,7 @@
 		34F9FB8F1C43AF2400F71201 /* MWMStreetEditorEditTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MWMStreetEditorEditTableViewCell.xib; sourceTree = "<group>"; };
 		34FE4C431BCC013500066718 /* MWMMapWidgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMMapWidgets.h; sourceTree = "<group>"; };
 		34FE4C441BCC013500066718 /* MWMMapWidgets.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMMapWidgets.mm; sourceTree = "<group>"; };
+		3ADE5E1E196F8C63BEAF3D5F /* Pods-Tripfinger.production full.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.production full.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.production full.xcconfig"; sourceTree = "<group>"; };
 		451950391B7A3E070085DA05 /* patterns.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = patterns.txt; path = ../../data/patterns.txt; sourceTree = "<group>"; };
 		452FCA3A1B6A3DF7007019AB /* colors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = colors.txt; path = ../../data/colors.txt; sourceTree = "<group>"; };
 		454040681AD2D8D2007A9B12 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -1379,7 +1384,6 @@
 		46F26CD710F623BA00ECCA39 /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = EAGLView.mm; sourceTree = "<group>"; };
 		46F26D1E10F626CB00ECCA39 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		46F8A2EB10EB63040045521A /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MapViewController.h; sourceTree = "<group>"; };
-		48463EEC30786F3EADE8301C /* Pods-MAPS.ME.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.release.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.release.xcconfig"; sourceTree = "<group>"; };
 		4A00DBDE1AB704C400113624 /* drules_proto_dark.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; name = drules_proto_dark.bin; path = ../../data/drules_proto_dark.bin; sourceTree = "<group>"; };
 		4A23D1561B8B4DD700D4EB6F /* drules_proto_clear.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; name = drules_proto_clear.bin; path = ../../data/drules_proto_clear.bin; sourceTree = "<group>"; };
 		4A23D1571B8B4DD700D4EB6F /* resources-6plus_clear */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-6plus_clear"; path = "../../data/resources-6plus_clear"; sourceTree = "<group>"; };
@@ -1387,6 +1391,7 @@
 		4A23D1591B8B4DD700D4EB6F /* resources-xhdpi_clear */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-xhdpi_clear"; path = "../../data/resources-xhdpi_clear"; sourceTree = "<group>"; };
 		4A23D15A1B8B4DD700D4EB6F /* resources-xxhdpi_clear */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-xxhdpi_clear"; path = "../../data/resources-xxhdpi_clear"; sourceTree = "<group>"; };
 		4A300ED31C6DCFD400140018 /* countries-strings */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "countries-strings"; path = "../../data/countries-strings"; sourceTree = "<group>"; };
+		4A79B9FC79BF7CA731409B73 /* Pods-Tripfinger.simulator release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.simulator release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.simulator release.xcconfig"; sourceTree = "<group>"; };
 		4A7D89C11B2EBF3B00AC843E /* resources-6plus_dark */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-6plus_dark"; path = "../../data/resources-6plus_dark"; sourceTree = "<group>"; };
 		4A7D89C21B2EBF3B00AC843E /* resources-mdpi_dark */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-mdpi_dark"; path = "../../data/resources-mdpi_dark"; sourceTree = "<group>"; };
 		4A7D89C31B2EBF3B00AC843E /* resources-xhdpi_dark */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-xhdpi_dark"; path = "../../data/resources-xhdpi_dark"; sourceTree = "<group>"; };
@@ -1394,7 +1399,6 @@
 		5605022E1B6211E100169CAD /* sound-strings */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "sound-strings"; path = "../../data/sound-strings"; sourceTree = "<group>"; };
 		560634F01B78804C00F3D670 /* MWMTextToSpeech.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMTextToSpeech.h; sourceTree = "<group>"; };
 		560634F11B78806100F3D670 /* MWMTextToSpeech.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMTextToSpeech.mm; sourceTree = "<group>"; };
-		5B40FF37F639DA95F25CFE23 /* Pods-MAPS.ME.simulator.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.simulator.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.simulator.xcconfig"; sourceTree = "<group>"; };
 		671182DE1C7F0DD400CB8177 /* countries_obsolete.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = countries_obsolete.txt; path = ../../data/countries_obsolete.txt; sourceTree = "<group>"; };
 		671182DF1C7F0DD400CB8177 /* packed_polygons_obsolete.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; name = packed_polygons_obsolete.bin; path = ../../data/packed_polygons_obsolete.bin; sourceTree = "<group>"; };
 		671182E01C7F0DD400CB8177 /* WorldCoasts_obsolete.mwm */ = {isa = PBXFileReference; lastKnownFileType = file; name = WorldCoasts_obsolete.mwm; path = ../../data/WorldCoasts_obsolete.mwm; sourceTree = "<group>"; };
@@ -1431,9 +1435,6 @@
 		6B9978341C89A316003B8AA0 /* editor.config */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = editor.config; path = ../../data/editor.config; sourceTree = "<group>"; };
 		6BA0BCCF1B74DDBA00CC9969 /* MWMCustomFacebookEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMCustomFacebookEvents.h; sourceTree = "<group>"; };
 		6BA0BCD01B74DDBA00CC9969 /* MWMCustomFacebookEvents.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMCustomFacebookEvents.mm; sourceTree = "<group>"; };
-		7B6E363A378AF516C9FA8576 /* Pods_MAPS_ME.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MAPS_ME.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		80C02D461403AF26C702260F /* Pods-MAPS.ME.production full.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.production full.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.production full.xcconfig"; sourceTree = "<group>"; };
-		8326C6DFDF9C33F01FC52E54 /* Pods-Tripfinger.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.adhoc.xcconfig"; sourceTree = "<group>"; };
 		845C891E1C78748000940D7F /* me.maps.enterprise.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = me.maps.enterprise.entitlements; sourceTree = "<group>"; };
 		845C89291C8981CE00940D7F /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		845C892B1C8981CE00940D7F /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
@@ -1441,7 +1442,9 @@
 		845C89321C8983F300940D7F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		845C89331C8983F300940D7F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		845C89341C8983F300940D7F /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		8B1AE6DB806B9B9C714AE10D /* Pods-Tripfinger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.debug.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MAPSME.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MAPSME.plist; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		8F8FF55BE4C7D95695116482 /* Pods-Tripfinger.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.adhoc.xcconfig"; sourceTree = "<group>"; };
 		972CDCC51887F1B7006641CA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		974386DB19373EA400FD5659 /* ToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastView.h; sourceTree = "<group>"; };
 		974386DC19373EA400FD5659 /* ToastView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ToastView.mm; sourceTree = "<group>"; };
@@ -1503,15 +1506,14 @@
 		B08AA8D81A26299A00810B1C /* TimeUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeUtils.h; path = Categories/TimeUtils.h; sourceTree = "<group>"; };
 		B08AA8D91A26299A00810B1C /* TimeUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TimeUtils.mm; path = Categories/TimeUtils.mm; sourceTree = "<group>"; };
 		B0DFE6301A1B78A200B6C35E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/LocalNotifications.plist; sourceTree = "<group>"; };
-		C2F0D0D53254DEA4AF799A7A /* Pods_Tripfinger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripfinger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C5198AC459AB3AA175F6EB97 /* Pods-MAPS.ME.simulator release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.simulator release.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.simulator release.xcconfig"; sourceTree = "<group>"; };
+		B454AEACBFC0EB1C53C688C8 /* Pods-Tripfinger.simulator.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.simulator.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.simulator.xcconfig"; sourceTree = "<group>"; };
 		CB252D6B16FF82C8001E41E9 /* Statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Statistics.h; sourceTree = "<group>"; };
 		CB252D6C16FF82C8001E41E9 /* Statistics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Statistics.mm; sourceTree = "<group>"; };
-		CDCA75F59E51BB52ECFB2C91 /* Pods-MAPS.ME.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.debug.xcconfig"; sourceTree = "<group>"; };
 		ED48BBB317C267F5003E7E92 /* ColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPickerView.h; sourceTree = "<group>"; };
 		ED48BBB417C267F5003E7E92 /* ColorPickerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ColorPickerView.mm; sourceTree = "<group>"; };
 		ED48BBB817C2B1E2003E7E92 /* CircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleView.h; sourceTree = "<group>"; };
 		ED48BBB917C2B1E2003E7E92 /* CircleView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CircleView.mm; sourceTree = "<group>"; };
+		ED7F34AEED8C05B66B96C292 /* Pods-Tripfinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.release.xcconfig"; sourceTree = "<group>"; };
 		EE026F0511D6AC0D00645242 /* classificator.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = classificator.txt; path = ../../data/classificator.txt; sourceTree = SOURCE_ROOT; };
 		EE164810135CEE49003B8A3E /* 06_code2000.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = 06_code2000.ttf; path = ../../data/06_code2000.ttf; sourceTree = SOURCE_ROOT; };
 		EE583CBA12F773F00042CBE3 /* unicode_blocks.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = unicode_blocks.txt; path = ../../data/unicode_blocks.txt; sourceTree = "<group>"; };
@@ -1771,7 +1773,7 @@
 				46F26C7310F61FD600ECCA39 /* OpenGLES.framework in Frameworks */,
 				845C892C1C8981CE00940D7F /* HockeySDK.framework in Frameworks */,
 				EEB7E22211E9079400080A68 /* CoreLocation.framework in Frameworks */,
-				2C204603AB8E663420A3FAC7 /* Pods_Tripfinger.framework in Frameworks */,
+				3AEEEDADCFF4171D77F3D9AB /* Pods_Tripfinger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2163,8 +2165,9 @@
 				FA065FC61286143F00FEA989 /* External Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				25D2A2EE1D1C2BDF00B83C35 /* GoogleService-Info.plist */,
 				8D1107310486CEB800E47090 /* MAPSME.plist */,
-				D30F007A28658400A04F8959 /* Pods */,
+				88AE3BFA5748CC94272F9C8F /* Pods */,
 			);
 			indentWidth = 2;
 			name = Maps;
@@ -2183,6 +2186,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				25D2A2F01D1C33F400B83C35 /* tripfinger-server-957d80c6ea80.json */,
 				6B653B931C7F2DE4007BEFC5 /* cuisine-strings */,
 				4A300ED31C6DCFD400140018 /* countries-strings */,
 				347274711B0F4EB300756B37 /* Entitlements */,
@@ -2273,8 +2277,7 @@
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765070DF74369002DB57D /* CoreGraphics.framework */,
 				FA87151A12B1518F00592DAF /* SystemConfiguration.framework */,
-				7B6E363A378AF516C9FA8576 /* Pods_MAPS_ME.framework */,
-				C2F0D0D53254DEA4AF799A7A /* Pods_Tripfinger.framework */,
+				238C7BF3F6196FE2FBD6DD40 /* Pods_Tripfinger.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2889,6 +2892,19 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		88AE3BFA5748CC94272F9C8F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B454AEACBFC0EB1C53C688C8 /* Pods-Tripfinger.simulator.xcconfig */,
+				4A79B9FC79BF7CA731409B73 /* Pods-Tripfinger.simulator release.xcconfig */,
+				8B1AE6DB806B9B9C714AE10D /* Pods-Tripfinger.debug.xcconfig */,
+				8F8FF55BE4C7D95695116482 /* Pods-Tripfinger.adhoc.xcconfig */,
+				ED7F34AEED8C05B66B96C292 /* Pods-Tripfinger.release.xcconfig */,
+				3ADE5E1E196F8C63BEAF3D5F /* Pods-Tripfinger.production full.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		974726401832306C006B7CB7 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -2969,20 +2985,6 @@
 				F6EE7BC11B78A1AB00FF6500 /* FlurryWatch.h */,
 			);
 			path = Statistics;
-			sourceTree = "<group>";
-		};
-		D30F007A28658400A04F8959 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				5B40FF37F639DA95F25CFE23 /* Pods-MAPS.ME.simulator.xcconfig */,
-				C5198AC459AB3AA175F6EB97 /* Pods-MAPS.ME.simulator release.xcconfig */,
-				CDCA75F59E51BB52ECFB2C91 /* Pods-MAPS.ME.debug.xcconfig */,
-				083A28646AC9FFF435D93765 /* Pods-MAPS.ME.adhoc.xcconfig */,
-				48463EEC30786F3EADE8301C /* Pods-MAPS.ME.release.xcconfig */,
-				80C02D461403AF26C702260F /* Pods-MAPS.ME.production full.xcconfig */,
-				8326C6DFDF9C33F01FC52E54 /* Pods-Tripfinger.adhoc.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		F607C18B1C047FCA00B53A87 /* Segue */ = {
@@ -3542,14 +3544,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Tripfinger" */;
 			buildPhases = (
-				038F3781796A7A37D5C47484 /* Check Pods Manifest.lock */,
+				31A6653A1B45AEE727D82748 /* [CP] Check Pods Manifest.lock */,
 				FA3A60E715AD5BBD00F40D20 /* Run Script */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 				F6D434721AD2AB97007C7728 /* Embed App Extensions */,
-				A09E6597B2E1EBD435608BBC /* Embed Pods Frameworks */,
-				65A883D0952D96D3002AA800 /* Copy Pods Resources */,
+				EA405FFB24E9CC65F55D550D /* [CP] Embed Pods Frameworks */,
+				35DD017651455C8BBF781647 /* [CP] Copy Pods Resources */,
+				25D2A2F21D1C343A00B83C35 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3800,6 +3803,7 @@
 				4A00DBDF1AB704C400113624 /* drules_proto_dark.bin in Resources */,
 				4A23D15D1B8B4DD700D4EB6F /* resources-mdpi_clear in Resources */,
 				F6FE2C111B03A016009814AA /* PlacePageNavigationBar.xib in Resources */,
+				25D2A2EF1D1C2BDF00B83C35 /* GoogleService-Info.plist in Resources */,
 				F61579361AC2CEB60032D8E9 /* MWMRateAlert.xib in Resources */,
 				845C891F1C78748000940D7F /* me.maps.enterprise.entitlements in Resources */,
 				347FD8791C60B2CE002FB65E /* MWMOpeningHoursDaysSelectorTableViewCell.xib in Resources */,
@@ -3816,6 +3820,7 @@
 				4A23D15B1B8B4DD700D4EB6F /* drules_proto_clear.bin in Resources */,
 				F623DA6B1C9C2731006A3436 /* opening_hours_how_to_edit.html in Resources */,
 				341C2A5B1B720B8A00AD41A1 /* MWMAPIBarView.xib in Resources */,
+				25D2A2F11D1C33F400B83C35 /* tripfinger-server-957d80c6ea80.json in Resources */,
 				34B82AC51B84608600180497 /* MWMSearchHistoryClearCell.xib in Resources */,
 				F653CE181C71F62400A453F1 /* MWMAddPlaceNavigationBar.xib in Resources */,
 				F6BB6CC01BB17D7000DF1DF2 /* MWMRoutePointCell.xib in Resources */,
@@ -4010,20 +4015,18 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		038F3781796A7A37D5C47484 /* Check Pods Manifest.lock */ = {
+		25D2A2F21D1C343A00B83C35 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
+			shellScript = "# Replace this path with the path to the key you just downloaded\nJSON_FILE=tripfinger-server-957d80c6ea80.json\n\n# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:163920719343:ios:a752924711055d3a\n\ndefaults write com.google.SymbolUpload version -integer 1   # creates file if it does not exist\nJSON=$(cat \"${JSON_FILE}\")\n/usr/bin/plutil -replace \"app_${GOOGLE_APP_ID//:/_}\" -json \"${JSON}\" \"$HOME/Library/Preferences/com.google.SymbolUpload.plist\"\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym";
 		};
 		25D378EF1CAFBD1300552633 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -4038,14 +4041,29 @@
 			shellPath = /bin/bash;
 			shellScript = ". run-script-for-target.sh";
 		};
-		65A883D0952D96D3002AA800 /* Copy Pods Resources */ = {
+		31A6653A1B45AEE727D82748 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		35DD017651455C8BBF781647 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -4053,14 +4071,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A09E6597B2E1EBD435608BBC /* Embed Pods Frameworks */ = {
+		EA405FFB24E9CC65F55D550D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -5353,7 +5371,7 @@
 		};
 		FAAB411A149BA83500C245B1 /* Simulator */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8326C6DFDF9C33F01FC52E54 /* Pods-Tripfinger.adhoc.xcconfig */;
+			baseConfigurationReference = B454AEACBFC0EB1C53C688C8 /* Pods-Tripfinger.simulator.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -5365,7 +5383,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5379,11 +5397,7 @@
 				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_CFLAGS = (
-					"-Wall",
-					"-Wno-unused-local-typedef",
-					"-Wimplicit-retain-self",
-				);
+				OTHER_CFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
@@ -5490,7 +5504,7 @@
 		};
 		FAAB411C149BA84700C245B1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8326C6DFDF9C33F01FC52E54 /* Pods-Tripfinger.adhoc.xcconfig */;
+			baseConfigurationReference = 8B1AE6DB806B9B9C714AE10D /* Pods-Tripfinger.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -5501,7 +5515,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5515,11 +5529,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = (
-					"-Wall",
-					"-Wno-unused-local-typedef",
-					"-Wimplicit-retain-self",
-				);
+				OTHER_CFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
@@ -5632,7 +5642,7 @@
 		};
 		FAAB411E149BA85500C245B1 /* AdHoc */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8326C6DFDF9C33F01FC52E54 /* Pods-Tripfinger.adhoc.xcconfig */;
+			baseConfigurationReference = 8F8FF55BE4C7D95695116482 /* Pods-Tripfinger.adhoc.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -5645,7 +5655,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = YES;
 				ENABLE_TESTABILITY = YES;
@@ -5662,11 +5672,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_CFLAGS = (
-					"-Wall",
-					"-Wno-unused-local-typedef",
-					"-Wimplicit-retain-self",
-				);
+				OTHER_CFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger;
 				PRODUCT_NAME = Tripfinger;
 				PROVISIONING_PROFILE = "";
@@ -5780,7 +5786,7 @@
 		};
 		FAAB4120149BA86000C245B1 /* Production Full */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8326C6DFDF9C33F01FC52E54 /* Pods-Tripfinger.adhoc.xcconfig */;
+			baseConfigurationReference = 3ADE5E1E196F8C63BEAF3D5F /* Pods-Tripfinger.production full.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -5792,7 +5798,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5805,11 +5811,7 @@
 				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_CFLAGS = (
-					"-Wall",
-					"-Wno-unused-local-typedef",
-					"-Wimplicit-retain-self",
-				);
+				OTHER_CFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
@@ -5918,7 +5920,7 @@
 		};
 		FABB561F149CD957006969C0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8326C6DFDF9C33F01FC52E54 /* Pods-Tripfinger.adhoc.xcconfig */;
+			baseConfigurationReference = ED7F34AEED8C05B66B96C292 /* Pods-Tripfinger.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -5930,7 +5932,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -5945,11 +5947,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = (
-					"-Wall",
-					"-Wno-unused-local-typedef",
-					"-Wimplicit-retain-self",
-				);
+				OTHER_CFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PRODUCT_NAME = Tripfinger;
 				PROVISIONING_PROFILE = "";
@@ -6058,7 +6056,7 @@
 		};
 		FACFE54515F8F35600CE8B20 /* Simulator Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8326C6DFDF9C33F01FC52E54 /* Pods-Tripfinger.adhoc.xcconfig */;
+			baseConfigurationReference = 4A79B9FC79BF7CA731409B73 /* Pods-Tripfinger.simulator release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -6068,7 +6066,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -6081,11 +6079,7 @@
 				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_CFLAGS = (
-					"-Wall",
-					"-Wno-unused-local-typedef",
-					"-Wimplicit-retain-self",
-				);
+				OTHER_CFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";

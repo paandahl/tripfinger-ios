@@ -1,4 +1,5 @@
 import RealmSwift
+import Firebase
 
 class SectionController: GuideItemController {
   
@@ -96,6 +97,10 @@ extension SectionController {
     let section = object as! GuideText
     let sectionController = SectionController(section: section, mapNavigator: mapNavigator)
     navigationController!.pushViewController(sectionController, animated: true)
+    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+      kFIRParameterContentType: "section",
+      kFIRParameterItemID: section.getName() + "(\(section.getId()))"
+      ])
   }
   
   override func navigateToMap() {

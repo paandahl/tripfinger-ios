@@ -9,6 +9,7 @@
 #import "MWMSearchTabButtonsView.h"
 #import "MWMSearchTableViewController.h"
 #import "Statistics.h"
+#import <Firebase/Firebase.h>
 
 #import "3party/Alohalytics/src/alohalytics_objc.h"
 
@@ -163,6 +164,7 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 - (void)searchText:(NSString *)text forInputLocale:(NSString *)locale
 {
+  [FIRAnalytics logEventWithName:kFIREventSearch parameters:@{kFIRParameterSearchTerm:text}];
   [self beginSearch];
   self.searchTextField.text = text;
   NSString * inputLocale = locale ? locale : self.searchTextField.textInputMode.primaryLanguage;
@@ -198,6 +200,11 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
       NSLog(@"ccc");
     };
     [TripfingerAppDelegate selectedSearchResult:entity failure:fail stopSpinner:stop];
+    [FIRAnalytics logEventWithName:kFIREventSelectContent parameters:@{
+                                                                       kFIRParameterContentType: @"search_result",
+                                                                       kFIRParameterItemID: entity.name
+                                                                       }];
+
   } else {
     if (onlineFetchedTripfingerItem) {
       NSString * tripfingerId = @(result.GetFeatureID().tripfingerMark->tripfingerId.c_str());

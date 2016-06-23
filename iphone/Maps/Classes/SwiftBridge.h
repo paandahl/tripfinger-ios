@@ -93,7 +93,6 @@ typedef int swift_int4  __attribute__((__ext_vector_type__(4)));
 #endif
 #if defined(__has_feature) && __has_feature(modules)
 @import UIKit;
-@import RealmSwift;
 @import CoreGraphics;
 @import Foundation;
 @import MDCSwipeToChoose;

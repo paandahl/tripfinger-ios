@@ -1,6 +1,7 @@
 import Foundation
 import StoreKit
 import KeychainSwift
+import Firebase
 
 public typealias ProductIdentifier = String
 public typealias ProductsRequestCompletionHandler = (success: Bool, products: [SKProduct]?) -> ()
@@ -91,6 +92,9 @@ class PurchasesService: NSObject {
   private class func openFirstCountryController(country: Region, downloadStarted: () -> ()) {
     let firstCountryController = FirstCountryDownloadView(country: country, cancelHandler: downloadStarted) {
       makeCountryFirst(country) {
+        FIRAnalytics.logEventWithName("first_download", parameters: [
+          "country": country.getName()
+          ])
         TripfingerAppDelegate.navigationController.dismissViewControllerAnimated(true, completion: nil)
         proceedWithDownload(country)
         downloadStarted()

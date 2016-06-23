@@ -1,5 +1,6 @@
 import RealmSwift
 import MBProgressHUD
+import Firebase
 
 class GuideItemController: TableController {
   
@@ -110,6 +111,10 @@ extension GuideItemController {
         TripfingerAppDelegate.navigationController.pushViewController(regionController, animated: true)
         finishedHandler()
       }
+      FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+        kFIRParameterContentType: "region",
+        kFIRParameterItemID: region.getName()
+        ])
     }
   }
   
@@ -123,6 +128,10 @@ extension GuideItemController {
           let entity = TripfingerEntity(listing: listing)
           MapsAppDelegateWrapper.openPlacePage(entity, withCountryMwmId: country.getDownloadId())
           finishedHandler()
+          FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+            kFIRParameterContentType: "listing",
+            kFIRParameterItemID: listing.item().name
+            ])
         }
       }
     }

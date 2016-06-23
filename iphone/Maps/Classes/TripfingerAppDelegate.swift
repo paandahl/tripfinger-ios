@@ -1,6 +1,7 @@
 import UIKit
 import Alamofire
 import CoreLocation
+import Firebase
 
 class MyNavigationController: UINavigationController {  
   override func supportedInterfaceOrientations() -> UInt {
@@ -24,6 +25,8 @@ class MyNavigationController: UINavigationController {
 
     TripfingerAppDelegate.styleNavigationBar(TripfingerAppDelegate.navigationController.navigationBar)
     print("myuuid: \(UniqueIdentifierService.uniqueIdentifier())")
+    
+    FIRApp.configure()
         
     if NSProcessInfo.processInfo().arguments.contains("TEST") {
       print("Switching to test mode")
@@ -277,6 +280,10 @@ class MyNavigationController: UINavigationController {
       TripfingerAppDelegate.moveToRegion(region, stopSpinner: finishedHandler) { country, nav, viewControllers in
         nav.setViewControllers(viewControllers, animated: true)
       }
+      FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+        kFIRParameterContentType: "region",
+        kFIRParameterItemID: region.getName()
+        ])
     }
   }
   
@@ -289,6 +296,10 @@ class MyNavigationController: UINavigationController {
           MapsAppDelegateWrapper.openPlacePage(entity, withCountryMwmId: countryMwmId)
         }
       }
+      FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+        kFIRParameterContentType: "listing",
+        kFIRParameterItemID: listing.item().name
+        ])
     }
   }
   

@@ -1,5 +1,6 @@
 import RealmSwift
 import MBProgressHUD
+import Firebase
 
 protocol MapNavigator {
   func navigateToMap()
@@ -153,18 +154,30 @@ extension RegionController {
     let region = object as! Region
     let regionController = RegionController(region: region, countryMwmId: countryMwmId)
     navigationController!.pushViewController(regionController, animated: true)
+    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+      kFIRParameterContentType: "region",
+      kFIRParameterItemID: region.getName()
+      ])
   }
   
   func navigateToCategory(object: AnyObject) {
     let categoryDescription = object as! GuideText
     let listingsController = ListingsController(regionId: region.getId(), countryMwmId: countryMwmId, categoryDescription: categoryDescription, regionLicense: region.item().textLicense, mapNavigator: self)
-    navigationController!.pushViewController(listingsController, animated: true)    
+    navigationController!.pushViewController(listingsController, animated: true)
+    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+      kFIRParameterContentType: "category",
+      kFIRParameterItemID: region.getName() + ": " + categoryDescription.getCategory().entityName
+      ])
   }
   
   func navigateToSection(object: AnyObject) {
     let section = object as! GuideText
     let sectionController = SectionController(section: section, mapNavigator: self)
     navigationController!.pushViewController(sectionController, animated: true)
+    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+      kFIRParameterContentType: "section",
+      kFIRParameterItemID: region.getName() + ": " + section.getName()
+      ])
   }
   
   override func navigateToMap() {

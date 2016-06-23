@@ -1,5 +1,6 @@
 import Foundation
-
+import RealmSwift
+import Firebase
 
 class CountryListController: TableController {
   
@@ -172,6 +173,10 @@ class CountryListController: TableController {
     let region = object as! Region
     let regionController = RegionController(region: region)
     navigationController!.pushViewController(regionController, animated: true)
+    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+      kFIRParameterContentType: "region",
+      kFIRParameterItemID: region.getName()
+      ])
   }
   
   func navigateToMap() {

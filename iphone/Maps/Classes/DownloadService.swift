@@ -3,6 +3,7 @@ import Alamofire
 import RealmSwift
 import BrightFutures
 import SwiftyJSON
+import Firebase
 
 class DownloadService {
   
@@ -75,6 +76,10 @@ class DownloadService {
   }
   
   class func downloadCountry(mwmRegionId: String, receipt: String? = nil, progressHandler: Double -> (), failure: () -> (), finishedHandler: () -> ()) {
+    
+    FIRAnalytics.logEventWithName("download_country", parameters: [
+      "name": mwmRegionId
+      ])
     
     DatabaseService.addDownloadMarker(mwmRegionId)
     let application = UIApplication.sharedApplication()

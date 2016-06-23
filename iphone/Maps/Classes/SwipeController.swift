@@ -1,6 +1,7 @@
 import UIKit
 import MDCSwipeToChoose
 import RealmSwift
+import Firebase
 
 class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   
@@ -262,6 +263,10 @@ extension SwipeController: ListingCardContainer {
   func showDetail(listing: Listing) {
     let entity = TripfingerEntity(listing: listing)
     MapsAppDelegateWrapper.openPlacePage(entity, withCountryMwmId: countryMwmId)
+    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+      kFIRParameterContentType: "listing",
+      kFIRParameterItemID: listing.item().name
+      ])
   }
 }
 
