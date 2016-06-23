@@ -36,7 +36,6 @@ extension String {
       NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding,
     ]
     let attributedString = try! NSMutableAttributedString(data: encodedData, options: options, documentAttributes: nil)
-//    attributedString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(16.0), range: NSMakeRange(0, attributedString.length))
     let style = NSMutableParagraphStyle()
     style.lineSpacing = 5
     style.paragraphSpacing = paragraphSpacing

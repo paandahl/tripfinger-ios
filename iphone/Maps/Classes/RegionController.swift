@@ -163,7 +163,7 @@ extension RegionController {
   
   func navigateToSection(object: AnyObject) {
     let section = object as! GuideText
-    let sectionController = SectionController(section: section, regionLicense: region.item().textLicense, mapNavigator: self)
+    let sectionController = SectionController(section: section, mapNavigator: self)
     navigationController!.pushViewController(sectionController, animated: true)
   }
   

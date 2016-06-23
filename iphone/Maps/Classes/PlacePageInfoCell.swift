@@ -169,7 +169,7 @@ class PlacePageInfoCell: UITableViewCell {
 //  }
   
   func navigateToLicense() {
-    let licenseController = LicenseController(textLicense: entity.textLicense, imageEntity: entity)
+    let licenseController = LicenseController(entity: entity)
     licenseController.edgesForExtendedLayout = .None // offset from navigation bar
     TripfingerAppDelegate.navigationController.pushViewController(licenseController, animated: true)
   }

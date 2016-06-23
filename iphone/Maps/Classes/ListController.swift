@@ -176,7 +176,7 @@ extension ListController {
   
   func navigateToSection(object: AnyObject) {
     let section = object as! GuideText
-    let sectionController = SectionController(section: section, regionLicense: regionLicense, mapNavigator: mapNavigator)
+    let sectionController = SectionController(section: section, mapNavigator: mapNavigator)
     navigationController!.pushViewController(sectionController, animated: true)
   }
 

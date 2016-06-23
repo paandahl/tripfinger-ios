@@ -73,7 +73,7 @@ extension GuideItemController: GuideItemContainerDelegate {
   }
   
   func licenseClicked() {
-    let licenseController = LicenseController(textLicense: guideItem.textLicense, imageItem: guideItem)
+    let licenseController = LicenseController(guideItem: guideItem)
     navigationController!.pushViewController(licenseController, animated: true)
   }
   

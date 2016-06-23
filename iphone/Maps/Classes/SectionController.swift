@@ -4,11 +4,9 @@ class SectionController: GuideItemController {
   
   let mapNavigator: MapNavigator
   var section: GuideText
-  let regionLicense: String?
   
-  init(section: GuideText, regionLicense: String?, mapNavigator: MapNavigator) {
+  init(section: GuideText, mapNavigator: MapNavigator) {
     self.section = section
-    self.regionLicense = regionLicense
     self.mapNavigator = mapNavigator
     super.init(guideItem: section.item)
   }
@@ -87,7 +85,7 @@ extension SectionController {
 
   override func licenseClicked() {
     if section.item.textLicense == nil || section.item.textLicense == "" {
-      let licenseController = LicenseController(textLicense: regionLicense, imageItem: section.item)
+      let licenseController = LicenseController(guideItem: section.item)
       navigationController!.pushViewController(licenseController, animated: true)
     } else {
       super.licenseClicked()
@@ -96,7 +94,7 @@ extension SectionController {
   
   func navigateToSection(object: AnyObject) {
     let section = object as! GuideText
-    let sectionController = SectionController(section: section, regionLicense: regionLicense, mapNavigator: mapNavigator)
+    let sectionController = SectionController(section: section, mapNavigator: mapNavigator)
     navigationController!.pushViewController(sectionController, animated: true)
   }
   
