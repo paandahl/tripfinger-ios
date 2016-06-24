@@ -111,7 +111,11 @@ class ListingsController: ListingsParentController {
       return
     }
     mapNavigator.navigateToMap()
-    MapsAppDelegateWrapper.openMapSearchWithQuery(categoryDescription.getCategory().entityName)
+    if categoryDescription.getCategory() == Listing.Category.ACCOMMODATION {
+      MapsAppDelegateWrapper.openMapSearchWithQuery("Hotel")
+    } else {
+      MapsAppDelegateWrapper.openMapSearchWithQuery(categoryDescription.getCategory().entityName)
+    }
   }
   
   func updateUI() {
