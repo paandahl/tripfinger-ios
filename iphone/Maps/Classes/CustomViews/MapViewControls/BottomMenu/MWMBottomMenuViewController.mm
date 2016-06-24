@@ -35,7 +35,6 @@ static CGFloat const kLayoutThreshold = 420.0;
 
 typedef NS_ENUM(NSUInteger, MWMBottomMenuViewCell)
 {
-  MWMBottomMenuViewCellAddPlace,
   MWMBottomMenuViewCellDownload,
   MWMBottomMenuViewCellSettings,
   MWMBottomMenuViewCellShare,
@@ -278,16 +277,16 @@ typedef NS_ENUM(NSUInteger, MWMBottomMenuViewCell)
                                                 forIndexPath:indexPath];
   switch (indexPath.item)
   {
-  case MWMBottomMenuViewCellAddPlace:
-  {
-    BOOL const isEnabled = self.controller.controlsManager.navigationState == MWMNavigationDashboardStateHidden &&
-                            version::IsSingleMwm(GetFramework().Storage().GetCurrentDataVersion());
-    [cell configureWithImageName:@"ic_add_place"
-                           label:L(@"placepage_add_place_button")
-                      badgeCount:0
-                       isEnabled:isEnabled];
-    break;
-  }
+//  case MWMBottomMenuViewCellAddPlace:
+//  {
+//    BOOL const isEnabled = self.controller.controlsManager.navigationState == MWMNavigationDashboardStateHidden &&
+//                            version::IsSingleMwm(GetFramework().Storage().GetCurrentDataVersion());
+//    [cell configureWithImageName:@"ic_add_place"
+//                           label:L(@"placepage_add_place_button")
+//                      badgeCount:0
+//                       isEnabled:isEnabled];
+//    break;
+//  }
   case MWMBottomMenuViewCellDownload:
   {
     auto & s = GetFramework().Storage();
@@ -328,9 +327,9 @@ typedef NS_ENUM(NSUInteger, MWMBottomMenuViewCell)
     return;
   switch (indexPath.item)
   {
-  case MWMBottomMenuViewCellAddPlace:
-    [self menuActionAddPlace];
-    break;
+//  case MWMBottomMenuViewCellAddPlace:
+//    [self menuActionAddPlace];
+//    break;
   case MWMBottomMenuViewCellDownload:
     [self menuActionDownloadMaps];
     break;

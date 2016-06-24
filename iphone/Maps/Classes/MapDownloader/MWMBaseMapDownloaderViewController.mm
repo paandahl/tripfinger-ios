@@ -82,22 +82,20 @@ using namespace storage;
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  UINavigationBar * navBar = [UINavigationBar appearance];
-  self.navBarBackground = [navBar backgroundImageForBarMetrics:UIBarMetricsDefault];
-  self.navBarShadow = navBar.shadowImage;
-  UIColor * searchBarColor = [UIColor primary];
-  [navBar setBackgroundImage:[UIImage imageWithColor:searchBarColor]
-               forBarMetrics:UIBarMetricsDefault];
-  navBar.shadowImage = [[UIImage alloc] init];
+//  UINavigationBar * navBar = [UINavigationBar appearance];
+  //self.navBarBackground = [navBar backgroundImageForBarMetrics:UIBarMetricsDefault];
+  //self.navBarShadow = navBar.shadowImage;
+  //UIColor * searchBarColor = [UIColor primary];
+  //navBar.shadowImage = [[UIImage alloc] init];
   [MWMFrameworkListener addObserver:self];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
   [super viewWillDisappear:animated];
-  UINavigationBar * navBar = [UINavigationBar appearance];
-  [navBar setBackgroundImage:self.navBarBackground forBarMetrics:UIBarMetricsDefault];
-  navBar.shadowImage = self.navBarShadow;
+  //UINavigationBar * navBar = [UINavigationBar appearance];
+  //[navBar setBackgroundImage:self.navBarBackground forBarMetrics:UIBarMetricsDefault];
+  //navBar.shadowImage = self.navBarShadow;
   [MWMFrameworkListener removeObserver:self];
   [self notifyParentController];
 }
@@ -199,6 +197,16 @@ using namespace storage;
     parentInfo.m_localName = "";
     nodeAttrs.m_parentInfo.push_back(parentInfo);
     needsUpdate = (nodeAttrs.m_status == NodeStatus::OnDisk);
+    if (nodeAttrs.m_status == NodeStatus::NotDownloaded) {
+      NSString* realCountryId = [@(m_actionSheetId.c_str()) substringFromIndex:5];
+      void(^downloadStarted)() = ^() {
+        [self configAllMapsView];
+        [self reloadData];
+      };
+
+      [TripfingerAppDelegate purchaseCountry:realCountryId downloadStarted:downloadStarted];
+      return;
+    }
   } else {
     s.GetNodeAttrs(m_actionSheetId, nodeAttrs);
     needsUpdate = (nodeAttrs.m_status == NodeStatus::OnDiskOutOfDate);
@@ -542,13 +550,6 @@ using namespace storage;
 
 - (void)downloadNode:(storage::TCountryId const &)countryId
 {
-  if (boost::starts_with(countryId, "guide")) {
-    NSString* realCountryId = @(countryId.substr(5).c_str());
-    [TripfingerAppDelegate downloadCountry:realCountryId];
-    [self configAllMapsView];
-    [self reloadData];
-    return;
-  }
   [Statistics logEvent:kStatDownloaderMapAction
         withParameters:@{
           kStatAction : kStatDownload,
@@ -581,7 +582,12 @@ using namespace storage;
 {
   if (boost::starts_with(countryId, "guide")) {
     NSString* realCountryId = @(countryId.substr(5).c_str());
-    [TripfingerAppDelegate downloadCountry:realCountryId];
+    void(^downloadStarted)() = ^() {
+      [self configAllMapsView];
+      [self reloadData];
+    };
+    
+    [TripfingerAppDelegate updateCountry:realCountryId downloadStarted:downloadStarted];
     [self configAllMapsView];
     [self reloadData];
     return;

@@ -71,7 +71,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>22</string>
+	<string>29</string>
 	<key>Fabric</key>
 	<dict>
 		<key>APIKey</key>
@@ -89,7 +89,7 @@
 	<key>FacebookAppID</key>
 	<string>185237551520383</string>
 	<key>FacebookDisplayName</key>
-	<string>MapsWithMe, offline maps</string>
+	<string>Tripfinger, travel guide</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>

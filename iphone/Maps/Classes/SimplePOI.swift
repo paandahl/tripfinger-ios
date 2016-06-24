@@ -15,7 +15,7 @@ class SimplePOI: Object {
     
     latitude = listing.latitude
     longitude = listing.longitude
-    listingId = listing.item.id
+    listingId = listing.item.uuid
     notes = listing.notes
   }
 

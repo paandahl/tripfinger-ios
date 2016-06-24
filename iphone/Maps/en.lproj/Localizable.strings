@@ -306,10 +306,10 @@
 "search_mode_viewport" = "On the Screen";
 
 /* Search Suggestion */
-"food" = "Food";
+"food" = "Food and drinks";
 
 /* Search Suggestion */
-"transport" = "Transport";
+"transport" = "Transportation";
 
 /* Search Suggestion */
 "fuel" = "Gas";
@@ -318,12 +318,12 @@
 "parking" = "Parking";
 
 /* Search Suggestion */
-"shop" = "Shop";
+"shop" = "Shopping";
 
 "hotel" = "Hotel";
 
 /* Search Suggestion */
-"tourism" = "Sights";
+"tourism" = "Attractions";
 
 /* Search Suggestion */
 "entertainment" = "Entertainment";

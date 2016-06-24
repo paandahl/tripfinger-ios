@@ -1,7 +1,13 @@
 import Foundation
 
+@objc protocol PlacePageInfoCellDelegate {
+  func navigatedToGuide();
+}
+
 class PlacePageInfoCell: UITableViewCell {
   
+  var delegate: PlacePageInfoCellDelegate?
+  var entity: TripfingerEntity!
   var contentSet = false
   let myImageView = UIImageView()
   let licenseButton = UIButton()
@@ -22,11 +28,9 @@ class PlacePageInfoCell: UITableViewCell {
     descriptionText.editable = false
     contentView.addSubview(myImageView)
     contentView.addSubview(descriptionText)
-    let imageHeight = width * 0.75
-    contentView.addConstraints("H:|-0-[image]-0-|", forViews: ["image": myImageView])
-    contentView.addConstraints("V:|-0-[image(\(imageHeight))]", forViews: ["image": myImageView])
   }
 
+  @objc(initWithCoder:)
   required init?(coder aDecoder: NSCoder) {
       fatalError("init(coder:) has not been implemented ")
   }
@@ -35,9 +39,11 @@ class PlacePageInfoCell: UITableViewCell {
     if contentSet {
       return
     }
+    self.entity = tripfingerEntity
     
     myImageView.contentMode = UIViewContentMode.ScaleAspectFill
     myImageView.image = UIImage(named: "placeholder-712")
+    let imageHeight: Int
     if tripfingerEntity.url != "" {
       
       let alignment = UIDevice.currentDevice().orientation
@@ -50,46 +56,31 @@ class PlacePageInfoCell: UITableViewCell {
         let imageUrl = DownloadService.gcsImagesUrl + tripfingerEntity.url + "-712x534"
         try! myImageView.loadImageWithUrl(imageUrl)
       }
+      imageHeight = Int(myWidth * 0.75)
     }
     else {
+      imageHeight = 45
       print("No image")
-      let blankImage = UIImage(withColor: UIColor.lightGrayColor(), size: CGSizeMake(200, 200))
-      myImageView.image = textToImage("This is a draft without image.", inImage: blankImage, atPoint: CGPointMake(50, 100))
     }
+    
+    contentView.addConstraints("H:|-0-[image]-0-|", forViews: ["image": myImageView])
+    contentView.addConstraints("V:|-0-[image(\(imageHeight))]", forViews: ["image": myImageView])
     
     licenseButton.setTitle("Content license", forState: .Normal)
     licenseButton.titleLabel!.font = UIFont.systemFontOfSize(12.0)
     licenseButton.setTitleColor(UIColor.lightGrayColor(), forState: .Normal)
     licenseButton.sizeToFit()
-    licenseButton.addTarget(self, action: "navigateToLicense", forControlEvents: .TouchUpInside)
+    licenseButton.addTarget(self, action: #selector(navigateToLicense), forControlEvents: .TouchUpInside)
     contentView.addSubview(licenseButton)
     var views = ["description": descriptionText, "image": myImageView, "license": licenseButton]
     contentView.addConstraints("V:[license]-20-[description]", forViews: views)
     contentView.addConstraints("H:[license]-20-|", forViews: views)
     
-    let encodedData = tripfingerEntity.content.dataUsingEncoding(NSUTF8StringEncoding)!
-    let style = NSMutableParagraphStyle()
-    style.lineSpacing = 5
-    style.paragraphSpacing = 10
-    let options : [String: AnyObject] = [
-      NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType,
-      NSCharacterEncodingDocumentAttribute: NSUTF8StringEncoding,
-    ]
-    let attributes : [String: AnyObject] = [
-      NSFontAttributeName: UIFont.systemFontOfSize(17.0),
-      NSForegroundColorAttributeName: UIColor.blackColor(),
-      NSParagraphStyleAttributeName: style
-    ]
-    let attributedString = try! NSMutableAttributedString(data: encodedData, options: options, documentAttributes: nil)
-    attributedString.setAttributes(attributes, range: NSMakeRange(0, attributedString.length))
-
-
-    print(tripfingerEntity.content)
-
-    descriptionText.attributedText = attributedString
+    descriptionText.attributedText = tripfingerEntity.content.attributedString(17.0)
     descriptionText.sizeToFit()
     descriptionText.scrollEnabled = false
     descriptionText.setContentOffset(CGPointZero, animated: true)
+    descriptionText.delegate = self
     
     let fixedWidth = myWidth - 10
     let newSize = descriptionText.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
@@ -107,6 +98,7 @@ class PlacePageInfoCell: UITableViewCell {
       contentView.addSubview(priceText)
       priceLabel.text = "Price"
       priceLabel.font = UIFont.boldSystemFontOfSize(16)
+      priceText.editable = false
       priceText.scrollEnabled = false
       priceText.font = UIFont.systemFontOfSize(16)
       priceText.text = tripfingerEntity.price
@@ -123,9 +115,11 @@ class PlacePageInfoCell: UITableViewCell {
       contentView.addSubview(directionsText)
       directionsLabel.text = "Directions"
       directionsLabel.font = UIFont.boldSystemFontOfSize(16)
+      directionsText.editable = false
       directionsText.scrollEnabled = false
-      directionsText.font = UIFont.systemFontOfSize(16)
-      directionsText.text = tripfingerEntity.directions
+      directionsText.attributedText = tripfingerEntity.directions.attributedString(16.0)
+      directionsText.sizeToFit()
+      directionsText.delegate = self
       let dirSize = directionsText.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.max))
 
       print("directionsText height: \(directionsText.height)")
@@ -175,6 +169,26 @@ class PlacePageInfoCell: UITableViewCell {
 //  }
   
   func navigateToLicense() {
-    TripfingerAppDelegate.navigateToLicense()
+    let licenseController = LicenseController(entity: entity)
+    licenseController.edgesForExtendedLayout = .None // offset from navigation bar
+    TripfingerAppDelegate.navigationController.pushViewController(licenseController, animated: true)
+  }
+}
+
+extension PlacePageInfoCell: UITextViewDelegate {
+  func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+    if URL.host == "www.tripfinger.com" {
+      TripfingerAppDelegate.navigationController.navigationBarHidden = false
+      if let delegate = delegate {
+        delegate.navigatedToGuide()
+      }
+      if URL.path!.containsString("/l/") {
+        GuideItemController.navigateToListingWithUrlPath(URL.path!, failure: {fatalError("Failzed45")}, finishedHandler: {})
+      } else {
+        GuideItemController.navigateToRegionWithUrlPath(URL.path!, failure: {fatalError("Failzed45")}, finishedHandler: {})
+      }
+      return false
+    }    
+    return true
   }
 }

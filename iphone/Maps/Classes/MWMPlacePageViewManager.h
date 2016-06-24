@@ -17,12 +17,13 @@
                               delegate:(id<MWMPlacePageViewManagerProtocol>)delegate;
 - (void)showPlacePage:(place_page::Info const &)info;
 - (void)showPlacePageWithEntity:(TripfingerEntity*)entity;
-- (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity;
+- (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity withCountryMwmId:(NSString*)countryMwmId;
 - (void)refreshPlacePage;
 - (void)mwm_refreshUI;
 - (BOOL)hasPlacePage;
 - (void)dismissPlacePage;
 - (void)hidePlacePage;
+- (void)navigatedToGuide;
 - (void)buildRoute;
 - (void)routeFrom;
 - (void)routeTo;

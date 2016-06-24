@@ -6,6 +6,7 @@ class OnlineSearchTest: XCTestCase {
   
   override func setUp() {
     super.setUp()
+    TripfingerAppDelegate.mode = .TEST
     continueAfterFailure = false
   }
   

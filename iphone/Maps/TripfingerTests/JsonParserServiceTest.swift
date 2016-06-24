@@ -1,5 +1,6 @@
 import XCTest
 import RealmSwift
+import SwiftyJSON
 @testable import Tripfinger
 
 class JsonParserServiceTest: XCTestCase {

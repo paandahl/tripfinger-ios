@@ -27,7 +27,7 @@ class Listing: Object {
 //    case EXPLORE_CITY = 210
 //    case ACTIVITY_HIKE_DAYTRIP = 220
     case TRANSPORTATION = 230
-    case ACCOMODATION = 240
+    case ACCOMMODATION = 240
     case FOOD_OR_DRINK = 250
     case SHOPPING = 260
     case INFORMATION = 270
@@ -35,7 +35,7 @@ class Listing: Object {
     static let entityMap = [
       "Attractions": ATTRACTIONS,
       "Transportation": TRANSPORTATION,
-      "Accomodation": ACCOMODATION,
+      "Accomodation": ACCOMMODATION,
       "Food and drinks": FOOD_OR_DRINK,
       "Shopping": SHOPPING,
       "Information": INFORMATION
@@ -47,8 +47,8 @@ class Listing: Object {
         return "Attractions"
       case .TRANSPORTATION:
         return "Transportation"
-      case .ACCOMODATION:
-        return "Accomodation"
+      case .ACCOMMODATION:
+        return "Accommodation"
       case .FOOD_OR_DRINK:
         return "Food and drinks"
       case .SHOPPING:
@@ -58,7 +58,7 @@ class Listing: Object {
       }
     }
     
-    static let allValues = [ATTRACTIONS, TRANSPORTATION, ACCOMODATION,
+    static let allValues = [ATTRACTIONS, TRANSPORTATION, ACCOMMODATION,
       FOOD_OR_DRINK, SHOPPING, INFORMATION]
   }
   

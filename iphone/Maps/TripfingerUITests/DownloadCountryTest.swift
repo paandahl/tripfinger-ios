@@ -20,21 +20,18 @@ class DownloadCountryTest: XCTestCase {
     let app = XCUIApplication()
     let exists = NSPredicate(format: "exists == 1")
     let hittable = NSPredicate(format: "hittable == 1")
-    let notHittable = NSPredicate(format: "hittable == 0")
     
     let bruneiRow = app.tables.staticTexts["Brunei"]
-    expectationForPredicate(exists, evaluatedWithObject: bruneiRow, handler: nil)
-    waitForExpectationsWithTimeout(60, handler: nil)
-    bruneiRow.tap()
+    tapWhenHittable(bruneiRow, parent: app.tables.element)
     
-    var downloadButton = app.buttons["Download"]
+    let downloadButton = app.buttons["Download"]
     expectationForPredicate(exists, evaluatedWithObject: downloadButton, handler: nil)
     waitForExpectationsWithTimeout(60, handler: nil)
     downloadButton.tap()
     
     tapWhenHittable(app.tables.staticTexts["Download guide"])
-    app.sheets["Guide"].collectionViews.buttons["Download guide"].tap()
-
+    app.buttons["Confirm"].tap()
+    
     sleep(5)
     
     tapWhenHittable(app.tables.staticTexts["Guide content"])

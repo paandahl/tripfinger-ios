@@ -23,6 +23,9 @@ class OfflineWithDataTest: XCTestCase {
     expectationForPredicate(bruneiDownloaded, evaluatedWithObject: table, handler: nil)
     waitForExpectationsWithTimeout(1200, handler: nil)
     
+    sleep(1)
+    XCTAssertEqual(1, app.tables.cells.count)
+    
     tapWhenHittable(app.tables.staticTexts["Brunei"])
     
     sleep(2)
@@ -40,9 +43,24 @@ class OfflineWithDataTest: XCTestCase {
     tapWhenHittable(app.navigationBars["Bandar"].buttons["Brunei"])
     tapWhenHittable(app.tables.staticTexts["Transportation"])
     tapWhenHittable(app.tables.staticTexts["Airports"])
+    sleep(1)
     XCTAssertEqual(1, app.tables.cells.count)
     tapWhenHittable(app.navigationBars["Airports"].buttons["Transportation"])
     tapWhenHittable(app.navigationBars["Transportation"].buttons["Brunei"])
+    
+    // try to click a link
+    scrollUp(2)
+    let tableCoord = XCUIApplication().tables.element.coordinateWithNormalizedOffset(CGVector(dx: 0, dy: 0))
+    var linkCoord = tableCoord.coordinateWithOffset(CGVector(dx: 65.0, dy: (118.0 + 64)))
+    linkCoord.pressForDuration(0.2)
+    tapWhenHittable(app.navigationBars["Bandar"].buttons["Brunei"])
+    
+    tapWhenHittable(app.tables.staticTexts["History"])
+    linkCoord = tableCoord.coordinateWithOffset(CGVector(dx: 36.5, dy: (63.5 + 64)))
+    linkCoord.pressForDuration(0.2)
+    tapWhenHittable(app.navigationBars["Bandar"].buttons["History"])
+    tapWhenHittable(app.navigationBars["History"].buttons["Brunei"])
+
 
     // do some swiping
     tapWhenHittable(app.tables.staticTexts["Attractions"])

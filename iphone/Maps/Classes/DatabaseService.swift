@@ -4,6 +4,12 @@ import CoreLocation
 
 class DatabaseService {
   
+  static let TFCountrySavedNotification = "TFCountrySavedNotification"
+  static let TFCountryUpdatingNotification = "TFCountryUpdatingNotification"
+  static let TFCountryDeletingNotification = "TFCountryDeletingNotification"
+  static let TFCountryDeletedNotification = "TFCountryDeletedNotification"
+
+  
   static var testMode = false
   static var testCounter = 0
   static var mainThreadRealm: Realm!
@@ -22,7 +28,6 @@ class DatabaseService {
           mainThreadRealm = try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "MemoryRealm\(testCounter)"))
         }
         else {
-          print("got disk realm")
           mainThreadRealm = try! Realm()
         }
       }
@@ -35,7 +40,6 @@ class DatabaseService {
         return try! Realm(configuration: Realm.Configuration(inMemoryIdentifier: "MemoryRealm\(testCounter)"))
       }
       else {
-        print("got disk realm")
         return try! Realm()
       }
     }
@@ -59,7 +63,7 @@ class DatabaseService {
       } else {
         let guideListingNotes = GuideListingNotes()
         guideListingNotes.likedState = likedState
-        guideListingNotes.attractionId = listing.item().id
+        guideListingNotes.attractionId = listing.item().uuid
         realm.add(guideListingNotes)
         listing.listing.notes = guideListingNotes
       }
@@ -78,7 +82,13 @@ class DatabaseService {
       let realm = getRealm()
       let existing = getRegionWithId(region.getId(), writeRealm: realm)
       if let existing = existing {
-        deleteRegion(existing)
+        if existing.getCategory() == Region.Category.COUNTRY {
+          let countryName = existing.getName()
+          dispatch_sync(dispatch_get_main_queue()) {
+            NSNotificationCenter.defaultCenter().postNotificationName(TFCountryUpdatingNotification, object: countryName)
+          }
+        }
+        deleteRegion(existing, notification: false)
         print("Replacing region: \(region.getId()) in db.")
       }
       
@@ -87,6 +97,12 @@ class DatabaseService {
         realm.add(region)
       }
       region.item().offline = true
+      if region.getCategory() == Region.Category.COUNTRY {
+        let countryName = region.getName()
+        dispatch_sync(dispatch_get_main_queue()) {
+          NSNotificationCenter.defaultCenter().postNotificationName(TFCountrySavedNotification, object: countryName)
+        }
+      }
       if let callback = callback {
         callback(region)
       }
@@ -95,16 +111,17 @@ class DatabaseService {
   
   class func getRegionWithId(regionId: String, writeRealm: Realm! = nil) -> Region? {
     let regions = writeRealm != nil ? writeRealm.objects(Region) : getRealm().objects(Region)
-
-    for region in regions {
-      if region.listing.item.id == regionId {
-        region.item().offline = true
-        return region
-      }
-    }
-    return nil
+    return regions.filter("listing.item.uuid = '\(regionId)'").first
   }
-    
+
+  class func getRegionWithSlug(slug: String) -> Region! {
+    return getRealm().objects(Region).filter("listing.item.slug = '\(slug)'").first
+  }
+
+  class func getGuideItemWithId(uuid: String) -> GuideItem! {
+    return getRealm().objects(GuideItem).filter("uuid = '\(uuid)'").first
+  }
+
   class func getCountries() -> Results<Region> {
     let realm = getRealm()
     realm.refresh()
@@ -150,11 +167,11 @@ class DatabaseService {
       case Region.Category.COUNTRY.rawValue:
         predicate = NSPredicate(format: "listing.country = %@", region.item().name)
       case Region.Category.SUB_REGION.rawValue:
-        predicate = NSPredicate(format: "listing.country = %@ and listing.subRegion = %@", region.listing.country, region.item().name)
+        predicate = NSPredicate(format: "listing.country = %@ and listing.subRegion = %@", region.listing.country!, region.item().name)
       case Region.Category.CITY.rawValue:
-        predicate = NSPredicate(format: "listing.country = %@ and listing.city = %@", region.listing.country, region.item().name)
+        predicate = NSPredicate(format: "listing.country = %@ and listing.city = %@", region.listing.country!, region.item().name)
       case Region.Category.NEIGHBOURHOOD.rawValue:
-        predicate = NSPredicate(format: "listing.item.parent = %@", region.item().id)
+        predicate = NSPredicate(format: "listing.item.parent = %@", region.item().uuid)
       default:
         try! { throw Error.RuntimeError("Cascade not supported for type: \(region.item().category)") }()
       }
@@ -176,7 +193,7 @@ class DatabaseService {
     }
     let list = List<Listing>()
     for attraction in listings {
-      if attraction.item().images.count > 0 && attraction.listing.latitude != 0 && attraction.listing.longitude != 0 {
+      if attraction.listing.latitude != 0 && attraction.listing.longitude != 0 {
         list.append(attraction)
       }
     }
@@ -184,7 +201,7 @@ class DatabaseService {
   }
 
   class func getListingWithId(attractionId: String) -> Listing? {
-    let predicate = NSPredicate(format: "listing.item.id = %@", attractionId)
+    let predicate = NSPredicate(format: "listing.item.uuid = %@", attractionId)
     let attractions = getRealm().objects(Listing).filter(predicate)
     print("got \(attractions.count) attractions with id \(attractionId)")
     if attractions.count == 1 {
@@ -194,6 +211,18 @@ class DatabaseService {
       return nil
     }
   }
+  class func getListingWithSlug(slug: String) -> Listing? {
+    let predicate = NSPredicate(format: "listing.item.slug = %@", slug)
+    let listings = getRealm().objects(Listing).filter(predicate)
+    print("got \(listings.count) attractions with id \(slug)")
+    if listings.count == 1 {
+      return listings[0]
+    }
+    else {
+      return nil
+    }
+  }
+
   
   class func getListingByCoordinate(coord: CLLocationCoordinate2D) -> Listing? {
     let realm = getRealm()
@@ -253,8 +282,13 @@ class DatabaseService {
     }
   }
   
-  class func deleteRegion(region: Region) {
+  class func deleteRegion(region: Region, notification: Bool = true) {
     
+    let regionCategory = region.getCategory()
+    let regionName = region.getName()
+    if notification && regionCategory == Region.Category.COUNTRY {
+      NSNotificationCenter.defaultCenter().postNotificationName(TFCountryDeletingNotification, object: regionName)
+    }
     for subRegion in region.item().subRegions {
       deleteRegion(subRegion)
     }
@@ -276,6 +310,9 @@ class DatabaseService {
     try! realm.write {
       realm.delete(region)
     }
+    if notification && regionCategory == Region.Category.COUNTRY {
+      NSNotificationCenter.defaultCenter().postNotificationName(TFCountryDeletedNotification, object: regionName)
+    }
   }
   
   class func deleteCountry(name: String) {
@@ -293,10 +330,9 @@ class DatabaseService {
     return getRealm().objects(Region).filter("listing.item.parent = \"\(parentId)\"")
   }
   
-  class func getGuideTextWithId(region: Region, guideTextId: String) -> GuideText {
-    let predicate = NSPredicate(format: "item.id = %@", guideTextId)
-    let guideTexts = getRealm().objects(GuideText).filter(predicate)
-    return guideTexts[0]
+  class func getGuideTextWithId(guideTextId: String) -> GuideText? {
+    let predicate = NSPredicate(format: "item.uuid = %@", guideTextId)
+    return getRealm().objects(GuideText).filter(predicate).first
   }
   
   class func getCoordinateSet() -> Set<Int64> {

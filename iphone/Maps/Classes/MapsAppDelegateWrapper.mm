@@ -19,8 +19,8 @@
   return (UIViewController*)[MapsAppDelegate theApp].mapViewController;
 }
 
-+ (void)openPlacePage:(TripfingerEntity *)entity {
-  [[MapsAppDelegate theApp].mapViewController.controlsManager showPlacePageWithEntityFullscreen:entity];
++ (void)openPlacePage:(TripfingerEntity *)entity withCountryMwmId:(NSString*)countryMwmId {
+  [[MapsAppDelegate theApp].mapViewController.controlsManager showPlacePageWithEntityFullscreen:entity withCountryMwmId:countryMwmId];
 }
 
 + (void)openSearch {
@@ -46,6 +46,13 @@
   string fullId = "guide" + countryIdCpp;
   [MWMFrameworkListener updateDownloadProgress:fullId progress:prog];
 }
+
++ (void)updateDownloadState:(NSString*)mwmRegionId {
+  string countryIdCpp = [mwmRegionId UTF8String];
+  string fullId = "guide" + countryIdCpp;
+  [MWMFrameworkListener updateDownloadState:fullId];
+}
+
 
 + (void)navigateToRect:(CLLocationCoordinate2D)botLeft topRight:(CLLocationCoordinate2D)topRight {
   

@@ -1,5 +1,6 @@
 import Foundation
 import RealmSwift
+import SwiftyJSON
 
 class JsonParserService {
   
@@ -9,13 +10,14 @@ class JsonParserService {
   
   class func parseGuideItem(guideItem: GuideItem, withJson json: JSON) -> GuideItem {
     guideItem.name = json["name"].string
-    guideItem.id = json["id"].string
+    guideItem.versionId = json["id"].string
     guideItem.uuid = json["uuid"].string!
+    guideItem.slug = json["slug"].string
     guideItem.content = json["description"].string
     guideItem.category = json["category"].int!
     guideItem.subCategory = json["subCategory"].int!
     guideItem.status = json["status"].int!
-    guideItem.parent = json["parent"].string
+    guideItem.parent = json["parentUuid"].string
     guideItem.textLicense = json["textLicense"].string
     guideItem.offline = false
     guideItem.loadStatus = GuideItem.LoadStatus.FULLY_LOADED
@@ -78,6 +80,9 @@ class JsonParserService {
   class func parseRegion(json: JSON, fetchChildren: Bool = true) -> Region {
     let region = Region()
     region.mwmRegionId = json["mwmRegionId"].string
+    region.draftSizeInBytes.value = json["draftSizeInBytes"].int64
+    region.stagedSizeInBytes.value = json["stagedSizeInBytes"].int64
+    region.publishedSizeInBytes.value = json["publishedSizeInBytes"].int64
     region.listing = parseGuideListing(json)
     region.listing.item = parseGuideItem(json)
     
@@ -104,7 +109,7 @@ class JsonParserService {
     simplePoi.location = json["location"].string
     simplePoi.latitude = json["latitude"].double!
     simplePoi.longitude = json["longitude"].double!
-    simplePoi.listingId = json["listingId"].string!
+    simplePoi.listingId = json["id"].string!
     return simplePoi
   }
   
@@ -120,6 +125,9 @@ class JsonParserService {
   class func parseRegionTreeFromJson(json: JSON) -> Region {
     let region = Region()
     region.mwmRegionId = json["mwmRegionId"].string
+    region.draftSizeInBytes.value = json["draftSizeInBytes"].int64
+    region.stagedSizeInBytes.value = json["stagedSizeInBytes"].int64
+    region.publishedSizeInBytes.value = json["publishedSizeInBytes"].int64
     region.listing = parseGuideListing(json)
     region.listing.item.guideSections = parseSectionTreeFromJson(json["guideSections"])
     region.listing.item.categoryDescriptions = parseSectionTreeFromJson(json["categoryDescriptions"])
@@ -136,7 +144,7 @@ class JsonParserService {
     let listings = List<Listing>()
     for json in jsonArray.array! {
       let listing = parseListing(json)
-      if listing.listing.latitude != 0.0 && listing.listing.longitude != 0.0 && listing.item().images.count > 0 {
+      if listing.listing.latitude != 0.0 && listing.listing.longitude != 0.0 {
         listings.append(listing)
       }
     }

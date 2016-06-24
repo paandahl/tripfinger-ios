@@ -100,7 +100,7 @@ enum class AttributePosition
 };
 } // namespace
 
-@interface MWMBasePlacePageView () <MWMPlacePageOpeningHoursCellProtocol>
+@interface MWMBasePlacePageView () <MWMPlacePageOpeningHoursCellProtocol, PlacePageInfoCellDelegate>
 {
   vector<PlacePageSection> m_sections;
   map<PlacePageSection, vector<MWMPlacePageCellType>> m_cells;
@@ -521,11 +521,19 @@ enum class AttributePosition
 {
   NSString * reuseIdentifier = [self cellIdentifierForIndexPath:indexPath];
   if ([reuseIdentifier  isEqual: @"PlacePageTripfingerCell"]) {
-    return [[PlacePageInfoCell alloc] initWithWidth:placePageWidth()];
+    PlacePageInfoCell * ppic = [[PlacePageInfoCell alloc] initWithWidth:placePageWidth()];
+    ppic.delegate = self;
+    return ppic;
   }
   else {
-    return [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];    
+    return [tableView dequeueReusableCellWithIdentifier:reuseIdentifier];
   }
+}
+
+- (void)navigatedToGuide {
+  [self.ownerPlacePage.manager navigatedToGuide];
+  NSLog(@"dismissing place page");
+  [self.ownerPlacePage.manager dismissPlacePage];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section

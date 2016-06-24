@@ -9,6 +9,7 @@
 #import "MWMSearchTabButtonsView.h"
 #import "MWMSearchTableViewController.h"
 #import "Statistics.h"
+#import <Firebase/Firebase.h>
 
 #import "3party/Alohalytics/src/alohalytics_objc.h"
 
@@ -163,10 +164,12 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 - (void)searchText:(NSString *)text forInputLocale:(NSString *)locale
 {
+  [FIRAnalytics logEventWithName:kFIREventSearch parameters:@{kFIRParameterSearchTerm:text}];
   [self beginSearch];
   self.searchTextField.text = text;
   NSString * inputLocale = locale ? locale : self.searchTextField.textInputMode.primaryLanguage;
   [self.tableViewController searchText:text forInputLocale:inputLocale];
+  self.state = MWMSearchManagerStateMapSearch;
 }
 
 - (void)tapMyPositionFromHistory
@@ -196,8 +199,12 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
     void(^stop)() = ^() {
       NSLog(@"ccc");
     };
-    self.parentViewController.navigationController.navigationBarHidden = NO;
     [TripfingerAppDelegate selectedSearchResult:entity failure:fail stopSpinner:stop];
+    [FIRAnalytics logEventWithName:kFIREventSelectContent parameters:@{
+                                                                       kFIRParameterContentType: @"search_result",
+                                                                       kFIRParameterItemID: entity.name
+                                                                       }];
+
   } else {
     if (onlineFetchedTripfingerItem) {
       NSString * tripfingerId = @(result.GetFeatureID().tripfingerMark->tripfingerId.c_str());
@@ -281,8 +288,6 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 - (void)changeToHiddenState
 {
-  UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
-  self.parentViewController.navigationController.navigationBarHidden = UIDeviceOrientationIsLandscape(orientation);
   [self endSearch];
   [self.tabbedController resetSelectedTab];
   self.tableViewController = nil;
@@ -292,7 +297,6 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 
 - (void)changeToDefaultState
 {
-  self.parentViewController.navigationController.navigationBarHidden = YES;
   self.view.alpha = 1.;
   [self updateTopController];
   [self.navigationController popToRootViewControllerAnimated:NO];

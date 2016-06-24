@@ -10,19 +10,7 @@ class SearchService: NSObject {
   var databaseResults = List<SimplePOI>()
   var onlineResults = List<SimplePOI>()
   
-  required override init() {
-    print("initz")
-  }
-  
-  /*
-  * Location and proximity is used in offline street search, to limit workload
-  */
-  func setLocation(location: CLLocation, proximityInKm: Double) {
-//    skobblerSearch.setLocation(location, proximityInKm: proximityInKm)
-  }
-  
   func cancelSearch(callback: (() -> ())? = nil) {
-//    skobblerSearch.cancelSearch(callback)
     if let onlineSearchRequest = onlineSearchRequest {
       onlineSearchRequest.cancel()
     }
@@ -31,7 +19,7 @@ class SearchService: NSObject {
     }
   }
   
-  //TODO: Need to handle duplicates from online, database and skobbler search
+  //TODO: Need to handle duplicates from online search and database
   func search(query: String, handler: [SimplePOI] -> ()) {
 
     onlineResults = List<SimplePOI>()
@@ -51,7 +39,7 @@ class SearchService: NSObject {
         handleSearchResults(searchResults)
       }
     } else {
-      // Database search (regions, attractions and simplePois)
+      // Database search (regions, attractions)
       DatabaseService.search(query) { results in
         handleSearchResults(results)
       }

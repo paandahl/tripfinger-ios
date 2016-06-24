@@ -1,29 +1,45 @@
 import RealmSwift
 import MBProgressHUD
+import Firebase
 
 class GuideItemController: TableController {
   
+  let guideItem: GuideItem
   var contextSwitched = false
   var guideItemExpanded = false
   
+  init(guideItem: GuideItem) {
+    self.guideItem = guideItem
+    super.init(nibName: nil, bundle: nil)
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    print("view.translatesAutoresizingMaskIntoConstraints: \(view.translatesAutoresizingMaskIntoConstraints)")
     
-    automaticallyAdjustsScrollViewInsets = false
-    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
+    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: #selector(navigateToMap))
     mapButton.accessibilityLabel = "Map"
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
+    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(navigateToSearch))
     navigationItem.rightBarButtonItems = [searchButton, mapButton]
     
-    tableView.rowHeight = UITableViewAutomaticDimension
-    tableView.estimatedRowHeight = 44.0;
     tableView.tableHeaderView = UIView.init(frame: CGRectMake(0.0, 0.0, tableView.bounds.size.width, 0.01))
     tableView.tableFooterView = UIView.init(frame: CGRectZero)
     
     updateUI()
+    
+    let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
+    gestureRecognizer.cancelsTouchesInView = false
+    view.addGestureRecognizer(gestureRecognizer)
   }
-  
+
+  func handleTap(recognizer: UIGestureRecognizer) {
+    print("tapped: \(recognizer.locationInView(view))")
+  }
+
   override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
     return UIInterfaceOrientationMask.Portrait
   }
@@ -42,52 +58,8 @@ class GuideItemController: TableController {
 
   
   func updateUI() {
-    // if nil, we are in offline mode, changeRegion returned immediately, and viewdidload will trigger this method
-    if let tableView = tableView {
-      navigationItem.title = session.currentItem.name
-      
-      populateTableSections()
-      tableView.reloadData {
-        self.tableView.contentOffset = CGPointZero
-      }
-    }
-  }
-  
-  override func viewWillDisappear(animated: Bool) {
-    backButtonAction(self)
-  }
-  
-//  func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-//    print("will display: \(cell.textLabel?.text)")
-//  }
-//  
-//  func tableView(tableView: UITableView, didEndDisplayingCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-//    print("ended displaying: \(cell.textLabel?.accessibilityLabel)")
-//    cell.textLabel?.accessibilityLabel = nil
-//    cell.textLabel?.accessibilityIdentifier = nil
-//    cell.textLabel?.text = nil
-//  }
-  
-  func backButtonAction(viewController: UIViewController) {
-    print("back button action")
-    if let navigationController = navigationController where
-      navigationController.viewControllers.indexOf(viewController) == nil && !contextSwitched {
-        guideItemExpanded = false
-        let parentViewController = navigationController.viewControllers.last as? GuideItemController
-        let failure = {
-          fatalError("we're stranded")
-        }
-        session.moveBackInHierarchy(failure) {
-          // sometimes we will get a ListingsController, but it's not possible to move to sections by search,
-          // so it will note be necessary to update UI upon moving back
-          if let parentViewController = parentViewController {
-            dispatch_async(dispatch_get_main_queue()) {
-              print("calling updateUI on parent")
-              parentViewController.updateUI()
-            }
-          }
-        }
-    }
+    populateTableSections()
+    tableView.reloadData {}
   }
   
   func downloadClicked() {}
@@ -102,37 +74,26 @@ extension GuideItemController: GuideItemContainerDelegate {
   }
   
   func licenseClicked() {
-    let licenseController: UIViewController
-    if session.currentItem.textLicense == nil || session.currentItem.textLicense == "" && session.currentSection != nil {
-      licenseController = LicenseController(textItem: session.currentRegion.item(), imageItem: session.currentItem)
-    } else {
-      licenseController = LicenseController(textItem: session.currentItem, imageItem: session.currentItem)
-    }
-    licenseController.edgesForExtendedLayout = .None // offset from navigation bar
+    let licenseController = LicenseController(guideItem: guideItem)
     navigationController!.pushViewController(licenseController, animated: true)
   }
   
   func populateTableSections() {}
+  
+  func jumpToRegion(path: String) {
+    showLoadingHud()
+    GuideItemController.navigateToRegionWithUrlPath(path, failure: showErrorHud, finishedHandler: hideHuds)
+  }
+  
+  func jumpToListing(path: String) {
+    showLoadingHud()
+    GuideItemController.navigateToListingWithUrlPath(path, failure: showErrorHud, finishedHandler: hideHuds)
+  }
 }
 
 // MARK: - Navigation
 extension GuideItemController {
   
-  func navigateToSection(object: AnyObject) {
-    print("Navigation to section")
-    let section = object as! GuideText
-    
-    let sectionController = SectionController(session: session)
-    sectionController.edgesForExtendedLayout = .None // offset from navigation bar
-    sectionController.navigationItem.title = title
-    sectionController.guideItemExpanded = true
-    navigationController!.pushViewController(sectionController, animated: true)
-    
-    session.changeSection(section, failure: navigationFailure) {
-      sectionController.updateUI()
-    }
-  }
-
   func navigateToSearch() {
     let vc = MapsAppDelegateWrapper.getMapViewController()
     navigationController!.pushViewController(vc, animated: true)
@@ -140,11 +101,72 @@ extension GuideItemController {
   }
   
   func navigateToMap() {
-    let vc = MapsAppDelegateWrapper.getMapViewController()
-    navigationController!.pushViewController(vc, animated: true)
-    
-    if let region = self.session.currentRegion {
-      FrameworkService.navigateToRegionOnMap(region)
+    preconditionFailure("Navigate to map must be overridden.")
+  }
+  
+  class func navigateToRegionWithUrlPath(path: String, failure: () -> (), finishedHandler: () -> ()) {
+    getRegionWithUrlPath(path, failure: failure) { region in
+      getCountryForRegion(region, failure: failure) { country in
+        let regionController = RegionController(region: region, countryMwmId: country.getDownloadId())
+        TripfingerAppDelegate.navigationController.pushViewController(regionController, animated: true)
+        finishedHandler()
+      }
+      FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+        kFIRParameterContentType: "region",
+        kFIRParameterItemID: region.getName()
+        ])
     }
   }
+  
+  class func navigateToListingWithUrlPath(path: String, failure: () -> (), finishedHandler: () -> ()) {
+    let listingPartStart = path.rangeOfString("/l/")
+    let regionPath = path.substringToIndex(listingPartStart!.startIndex)
+    let listingSlug = path.substringFromIndex(listingPartStart!.endIndex)
+    getRegionWithUrlPath(regionPath, failure: failure) { region in
+      getCountryForRegion(region, failure: failure) { country in
+        ContentService.getListingWithSlug(listingSlug, failure: failure) { listing in
+          let entity = TripfingerEntity(listing: listing)
+          MapsAppDelegateWrapper.openPlacePage(entity, withCountryMwmId: country.getDownloadId())
+          finishedHandler()
+          FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+            kFIRParameterContentType: "listing",
+            kFIRParameterItemID: listing.item().name
+            ])
+        }
+      }
+    }
+  }
+  
+  class func getCountryForRegion(region: Region, failure: () -> (), handler: Region -> ()) {
+    if region.getCategory() == Region.Category.COUNTRY {
+      handler(region)
+    } else {
+      ContentService.getCountryWithName(region.listing.country!, failure: failure) { country in
+        handler(country)
+      }
+    }
+  }
+  
+  class func getRegionWithUrlPath(path: String, failure: () -> (), finishedHandler: Region -> ()) {
+    let urlParts = path.characters.split{$0 == "/"}.map(String.init)
+    var regionNames = [String]()
+    for urlPart in urlParts {
+      regionNames.append(urlPart.stringByReplacingOccurrencesOfString("_", withString: " "))
+    }
+    if regionNames.count == 1 {
+      let countryName = regionNames[0]
+      ContentService.getCountryWithName(countryName, failure: failure, handler: finishedHandler)
+    } else if regionNames.count == 2 {
+      let countryName = regionNames[0]
+      let subRegionName = regionNames[1]
+      ContentService.getSubRegionWithName(subRegionName, countryName: countryName, failure: failure, handler: finishedHandler)
+    } else if regionNames.count == 3 {
+      let countryName = regionNames[0]
+      let cityName = regionNames[2]
+      ContentService.getCityWithName(cityName, countryName: countryName, failure: failure, handler: finishedHandler)
+    } else {
+      fatalError("Path \(path) resulted in too many parts: \(regionNames.count)")
+    }
+  }
+
 }

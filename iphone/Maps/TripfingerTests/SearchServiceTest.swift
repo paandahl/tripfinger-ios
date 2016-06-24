@@ -18,8 +18,6 @@ class SearchServiceTest: XCTestCase {
     
     if SearchServiceTest.searchService == nil {
       SearchServiceTest.searchService = SearchService()
-      let location = CLLocation(latitude: 4.901522, longitude: 114.935343) // bandar seri begawan
-      SearchServiceTest.searchService.setLocation(location, proximityInKm: 100.0)
     }
     
     DatabaseService.startTestMode()

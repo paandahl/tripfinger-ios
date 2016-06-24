@@ -8,7 +8,7 @@ protocol GuideItemHolder: class {
 
 class GuideItem: Object {
   
-  dynamic var id: String!
+  dynamic var versionId: String!
   dynamic var uuid: String!
   dynamic var slug: String?
   dynamic var name: String!
@@ -46,6 +46,7 @@ class GuideItem: Object {
           categoryDescription!.item.category = category.rawValue
           categoryDescription!.item.name = category.entityName
           categoryDescription!.item.content = nil
+          categoryDescription!.item.offline = offline
           categoryDescription!.item.loadStatus = GuideItem.LoadStatus.FULLY_LOADED
           allCategoryDescriptions.append(categoryDescription!)
         }
@@ -55,7 +56,7 @@ class GuideItem: Object {
   }
 
   // temporary data to make things easier
-  var loadStatus = LoadStatus.CONTENT_NOT_LOADED
+  var loadStatus = LoadStatus.FULLY_LOADED
   var offline = true
   
   enum LoadStatus {

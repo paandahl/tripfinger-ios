@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DD4AC8322E4DF3472A1FCBC /* Pods_TripfingerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF333092A9B8D09DB6F8F3CD /* Pods_TripfingerTests.framework */; };
 		1D3623260D0F684500981E51 /* MapsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* MapsAppDelegate.mm */; };
 		1D60589B0D05DD56006BFB54 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.mm */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -16,6 +17,10 @@
 		2510A3F91CE8E7AD00E3B654 /* DownloadMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510A3F81CE8E7AC00E3B654 /* DownloadMarker.swift */; };
 		251B291B1CE5AFD100B454C3 /* DataConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 251B291A1CE5AFD100B454C3 /* DataConverter.mm */; };
 		25533E231CEDED78004C7956 /* FrameworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25533E221CEDED78004C7956 /* FrameworkService.swift */; };
+		2561718B1D0ABF56008C6386 /* ListingsParentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2561718A1D0ABF56008C6386 /* ListingsParentController.swift */; };
+		2561718D1D0FE4A5008C6386 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2561718C1D0FE4A5008C6386 /* Settings.bundle */; };
+		256570A61D03F3FE006DE901 /* PurchaseCountryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256570A51D03F3FD006DE901 /* PurchaseCountryVC.swift */; };
+		256570A91D06A888006DE901 /* UIViewController+Huds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256570A81D06A887006DE901 /* UIViewController+Huds.swift */; };
 		2571ADED1CD882F000CF2EFF /* TripfingerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */; };
 		2571ADEF1CD8966100CF2EFF /* PlacePageInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */; };
 		2581DC0C1CACF8AB0086285E /* TripfingerAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */; };
@@ -24,7 +29,6 @@
 		2581DC141CAE30E10086285E /* RegionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC131CAE30E10086285E /* RegionController.swift */; };
 		2581DC161CAE30E70086285E /* GuideItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC151CAE30E70086285E /* GuideItemController.swift */; };
 		2581DC191CAE311C0086285E /* TableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC181CAE311B0086285E /* TableController.swift */; };
-		2581DC251CAE31340086285E /* AnnotationCalloutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC1A1CAE31340086285E /* AnnotationCalloutView.swift */; };
 		2581DC261CAE31340086285E /* FilterBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC1B1CAE31340086285E /* FilterBox.swift */; };
 		2581DC271CAE31340086285E /* FilterBox.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2581DC1C1CAE31340086285E /* FilterBox.xib */; };
 		2581DC281CAE31340086285E /* GuideItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC1D1CAE31340086285E /* GuideItemCell.swift */; };
@@ -60,7 +64,7 @@
 		2581DC7B1CAE31CD0086285E /* ErrorHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC6E1CAE31CD0086285E /* ErrorHandler.swift */; };
 		2581DC7C1CAE31CD0086285E /* NetworkUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC6F1CAE31CD0086285E /* NetworkUtil.swift */; };
 		2581DC7D1CAE31CD0086285E /* NSBundle+BundlePath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC701CAE31CD0086285E /* NSBundle+BundlePath.swift */; };
-		2581DC7E1CAE31CD0086285E /* NSURL+GetDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC711CAE31CD0086285E /* NSURL+GetDirectory.swift */; };
+		2581DC7E1CAE31CD0086285E /* FileUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC711CAE31CD0086285E /* FileUtils.swift */; };
 		2581DC801CAE31CD0086285E /* SyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC731CAE31CD0086285E /* SyncManager.swift */; };
 		2581DC811CAE31CD0086285E /* UIImage+ColourInit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC741CAE31CD0086285E /* UIImage+ColourInit.swift */; };
 		2581DC821CAE31CD0086285E /* UIImageView+DownloadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC751CAE31CD0086285E /* UIImageView+DownloadImage.swift */; };
@@ -68,8 +72,6 @@
 		2581DC841CAE31CD0086285E /* UITableView+ReloadData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC771CAE31CD0086285E /* UITableView+ReloadData.swift */; };
 		2581DC851CAE31CD0086285E /* UIView+AddConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC781CAE31CD0086285E /* UIView+AddConstraints.swift */; };
 		2581DC861CAE31CD0086285E /* String+AttributedString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC791CAE31CD0086285E /* String+AttributedString.swift */; };
-		2581DC8A1CAE3B650086285E /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC891CAE3B650086285E /* SwiftyJSON.swift */; };
-		2581DC951CAF91150086285E /* TripfingerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC941CAF91150086285E /* TripfingerTests.swift */; };
 		2581DCA51CAF915E0086285E /* ContentServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA01CAF915E0086285E /* ContentServiceTest.swift */; };
 		2581DCA61CAF915E0086285E /* DatabaseServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA11CAF915E0086285E /* DatabaseServiceTest.swift */; };
 		2581DCA71CAF915E0086285E /* DownloadServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA21CAF915E0086285E /* DownloadServiceTest.swift */; };
@@ -77,6 +79,14 @@
 		2581DCA91CAF915E0086285E /* NetworkUtilTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA41CAF915E0086285E /* NetworkUtilTest.swift */; };
 		2581DCAD1CAF917D0086285E /* SearchServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCAB1CAF917D0086285E /* SearchServiceTest.swift */; };
 		2581DCAE1CAF917D0086285E /* OnlineSearchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */; };
+		25B563641CFCAE5000E82351 /* UnitTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B563631CFCAE5000E82351 /* UnitTestUtils.swift */; };
+		25B563661CFF584E00E82351 /* StringUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B563651CFF584D00E82351 /* StringUtilsTest.swift */; };
+		25D27B5C1D009ED500F7AA91 /* UniqueIdentifierService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D27B5B1D009ED500F7AA91 /* UniqueIdentifierService.swift */; };
+		25D27B5E1D01B6AD00F7AA91 /* FirstCountryDownloadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 25D27B5D1D01B6AD00F7AA91 /* FirstCountryDownloadView.xib */; };
+		25D27B601D01B76D00F7AA91 /* FirstCountryDownloadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D27B5F1D01B76D00F7AA91 /* FirstCountryDownloadView.swift */; };
+		25D27B621D01C09000F7AA91 /* PurchasesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D27B611D01C08F00F7AA91 /* PurchasesService.swift */; };
+		25D2A2EF1D1C2BDF00B83C35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 25D2A2EE1D1C2BDF00B83C35 /* GoogleService-Info.plist */; };
+		25D2A2F11D1C33F400B83C35 /* tripfinger-server-957d80c6ea80.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D2A2F01D1C33F400B83C35 /* tripfinger-server-957d80c6ea80.json */; };
 		25D378F21CAFD13400552633 /* thailand.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D378F11CAFD13400552633 /* thailand.json */; };
 		25D378F41CAFD13900552633 /* brunei-download.json in Resources */ = {isa = PBXBuildFile; fileRef = 25D378F31CAFD13900552633 /* brunei-download.json */; };
 		25D378F61CAFD49500552633 /* SyncManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D378F51CAFD49500552633 /* SyncManagerTest.swift */; };
@@ -88,6 +98,8 @@
 		25D379161CAFD4F500552633 /* SearchOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D3790E1CAFD4F500552633 /* SearchOnlineTest.swift */; };
 		25D379171CAFD4F500552633 /* SwipeViewOnlineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D3790F1CAFD4F500552633 /* SwipeViewOnlineTest.swift */; };
 		25D379181CAFD4F500552633 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D379101CAFD4F500552633 /* TestUtils.swift */; };
+		25DABC121D094C7300D0A839 /* Array+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DABC111D094C7300D0A839 /* Array+Utils.swift */; };
+		25DABC141D095FEC00D0A839 /* CountryListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DABC131D095FEC00D0A839 /* CountryListController.swift */; };
 		25E477C01CC8AB5A008C668E /* AppDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E477BF1CC8AB5A008C668E /* AppDelegateTest.swift */; };
 		288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
 		3400A6811CA29D7D003DA0EC /* NSString+Categories.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3400A6801CA29D7D003DA0EC /* NSString+Categories.mm */; };
@@ -365,6 +377,7 @@
 		34F9FB921C43AF2400F71201 /* MWMStreetEditorEditTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34F9FB8F1C43AF2400F71201 /* MWMStreetEditorEditTableViewCell.xib */; };
 		34F9FB931C43AF2400F71201 /* MWMStreetEditorEditTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34F9FB8F1C43AF2400F71201 /* MWMStreetEditorEditTableViewCell.xib */; };
 		34FE4C451BCC013500066718 /* MWMMapWidgets.mm in Sources */ = {isa = PBXBuildFile; fileRef = 34FE4C441BCC013500066718 /* MWMMapWidgets.mm */; };
+		3AEEEDADCFF4171D77F3D9AB /* Pods_Tripfinger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 238C7BF3F6196FE2FBD6DD40 /* Pods_Tripfinger.framework */; };
 		4519503A1B7A3E070085DA05 /* patterns.txt in Resources */ = {isa = PBXBuildFile; fileRef = 451950391B7A3E070085DA05 /* patterns.txt */; };
 		452FCA3B1B6A3DF7007019AB /* colors.txt in Resources */ = {isa = PBXBuildFile; fileRef = 452FCA3A1B6A3DF7007019AB /* colors.txt */; };
 		46F26C7310F61FD600ECCA39 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46F26C7210F61FD600ECCA39 /* OpenGLES.framework */; };
@@ -385,7 +398,6 @@
 		5605022F1B6211E100169CAD /* sound-strings in Resources */ = {isa = PBXBuildFile; fileRef = 5605022E1B6211E100169CAD /* sound-strings */; };
 		560634F21B78806100F3D670 /* MWMTextToSpeech.mm in Sources */ = {isa = PBXBuildFile; fileRef = 560634F11B78806100F3D670 /* MWMTextToSpeech.mm */; };
 		56C74C391C74A3BC00B71B9F /* MWMInputEmailValidator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 34ABA62F1C2D58F300FE1BEC /* MWMInputEmailValidator.mm */; };
-		56CA8DAE1C9C25B000949C04 /* MWMAddPlaceNavigationBar.xib in Resources */ = {isa = PBXBuildFile; fileRef = F653CE171C71F62400A453F1 /* MWMAddPlaceNavigationBar.xib */; };
 		56D545631C74A41900E3719C /* Framework.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 34479C751C60C6130065D261 /* Framework.cpp */; };
 		671182E11C7F0DD400CB8177 /* countries_obsolete.txt in Resources */ = {isa = PBXBuildFile; fileRef = 671182DE1C7F0DD400CB8177 /* countries_obsolete.txt */; };
 		671182E21C7F0DD400CB8177 /* packed_polygons_obsolete.bin in Resources */ = {isa = PBXBuildFile; fileRef = 671182DF1C7F0DD400CB8177 /* packed_polygons_obsolete.bin */; };
@@ -618,7 +630,6 @@
 		6741AA3C1BF340DE002C974C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6741AA3D1BF340DE002C974C /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6BC1E4B1ACBE96100EF0360 /* FBSDKCoreKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6741AA3E1BF340DE002C974C /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6BC1E4C1ACBE96100EF0360 /* FBSDKShareKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		6741AA3F1BF340DE002C974C /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C9864F186C5EDE00AF7E9E /* PassKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6741AA401BF340DE002C974C /* libFlurry_7.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6671C6A1BA2EFD500548008 /* libFlurry_7.1.0.a */; };
 		6741AA411BF340DE002C974C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00511051A1101FC00A61AA4 /* CoreMedia.framework */; };
 		6741AA421BF340DE002C974C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00511031A1101F600A61AA4 /* CoreData.framework */; };
@@ -724,7 +735,6 @@
 		B00511021A1101E000A61AA4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C98655186C734000AF7E9E /* AVFoundation.framework */; };
 		B00511041A1101F600A61AA4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00511031A1101F600A61AA4 /* CoreData.framework */; };
 		B00511061A1101FC00A61AA4 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00511051A1101FC00A61AA4 /* CoreMedia.framework */; };
-		B08AA8D51A25E58500810B1C /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C9864F186C5EDE00AF7E9E /* PassKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		B08AA8D61A25E58C00810B1C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C9864D186C5ED300AF7E9E /* Social.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		B08AA8DA1A26299A00810B1C /* TimeUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08AA8D91A26299A00810B1C /* TimeUtils.mm */; };
 		B0DFE6311A1B78A200B6C35E /* LocalNotifications.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0DFE62F1A1B78A200B6C35E /* LocalNotifications.plist */; };
@@ -753,7 +763,6 @@
 		F60F02E61C904E86003A0AF6 /* MWMReportProblemController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F60F02E01C904E08003A0AF6 /* MWMReportProblemController.mm */; };
 		F60F02E91C904F40003A0AF6 /* MWMReportBaseController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F60F02E81C904F40003A0AF6 /* MWMReportBaseController.mm */; };
 		F60F02EA1C904F40003A0AF6 /* MWMReportBaseController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F60F02E81C904F40003A0AF6 /* MWMReportBaseController.mm */; };
-		F60F4A8A3B3464BD12F9018F /* Pods_MAPS_ME.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B6E363A378AF516C9FA8576 /* Pods_MAPS_ME.framework */; };
 		F61579341AC2CE9A0032D8E9 /* MWMRateAlert.mm in Sources */ = {isa = PBXBuildFile; fileRef = F61579331AC2CE9A0032D8E9 /* MWMRateAlert.mm */; };
 		F61579361AC2CEB60032D8E9 /* MWMRateAlert.xib in Resources */ = {isa = PBXBuildFile; fileRef = F61579351AC2CEB60032D8E9 /* MWMRateAlert.xib */; };
 		F6172FA51BBD5A3E0081D325 /* MWMiPadRoutePreview.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6172FA41BBD5A3E0081D325 /* MWMiPadRoutePreview.xib */; };
@@ -932,11 +941,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		083A28646AC9FFF435D93765 /* Pods-MAPS.ME.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.adhoc.xcconfig"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* MapsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapsAppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* MapsAppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = MapsAppDelegate.mm; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		238C7BF3F6196FE2FBD6DD40 /* Pods_Tripfinger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripfinger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2502337C1CD36896005F9943 /* DetailController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailController.swift; sourceTree = "<group>"; };
 		2502337E1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMiPhoneFullscreenPlacePage.mm; sourceTree = "<group>"; };
 		250233801CD36C00005F9943 /* MWMiPhoneFullscreenPlacePage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMiPhoneFullscreenPlacePage.h; sourceTree = "<group>"; };
@@ -944,9 +953,13 @@
 		251B291A1CE5AFD100B454C3 /* DataConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DataConverter.mm; sourceTree = "<group>"; };
 		251B291C1CE5AFE700B454C3 /* DataConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConverter.h; sourceTree = "<group>"; };
 		25533E221CEDED78004C7956 /* FrameworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkService.swift; sourceTree = "<group>"; };
+		2561718A1D0ABF56008C6386 /* ListingsParentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingsParentController.swift; sourceTree = "<group>"; };
+		2561718C1D0FE4A5008C6386 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		256570A51D03F3FD006DE901 /* PurchaseCountryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseCountryVC.swift; sourceTree = "<group>"; };
+		256570A81D06A887006DE901 /* UIViewController+Huds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Huds.swift"; sourceTree = "<group>"; };
 		2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerEntity.swift; sourceTree = "<group>"; };
 		2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacePageInfoCell.swift; sourceTree = "<group>"; };
-		2581DC071CACD8900086285E /* MAPS.ME-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MAPS.ME-Bridging-Header.h"; sourceTree = "<group>"; };
+		2581DC071CACD8900086285E /* Tripfinger-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tripfinger-Bridging-Header.h"; sourceTree = "<group>"; };
 		2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerAppDelegate.swift; sourceTree = "<group>"; };
 		2581DC0D1CAD29510086285E /* MapsAppDelegateWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapsAppDelegateWrapper.h; sourceTree = "<group>"; };
 		2581DC0E1CAD299C0086285E /* MapsAppDelegateWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MapsAppDelegateWrapper.mm; sourceTree = "<group>"; };
@@ -954,7 +967,6 @@
 		2581DC131CAE30E10086285E /* RegionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegionController.swift; sourceTree = "<group>"; };
 		2581DC151CAE30E70086285E /* GuideItemController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemController.swift; sourceTree = "<group>"; };
 		2581DC181CAE311B0086285E /* TableController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableController.swift; sourceTree = "<group>"; };
-		2581DC1A1CAE31340086285E /* AnnotationCalloutView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnnotationCalloutView.swift; sourceTree = "<group>"; };
 		2581DC1B1CAE31340086285E /* FilterBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterBox.swift; sourceTree = "<group>"; };
 		2581DC1C1CAE31340086285E /* FilterBox.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FilterBox.xib; sourceTree = "<group>"; };
 		2581DC1D1CAE31340086285E /* GuideItemCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuideItemCell.swift; sourceTree = "<group>"; };
@@ -991,7 +1003,7 @@
 		2581DC6E1CAE31CD0086285E /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		2581DC6F1CAE31CD0086285E /* NetworkUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkUtil.swift; sourceTree = "<group>"; };
 		2581DC701CAE31CD0086285E /* NSBundle+BundlePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBundle+BundlePath.swift"; sourceTree = "<group>"; };
-		2581DC711CAE31CD0086285E /* NSURL+GetDirectory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSURL+GetDirectory.swift"; sourceTree = "<group>"; };
+		2581DC711CAE31CD0086285E /* FileUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileUtils.swift; sourceTree = "<group>"; };
 		2581DC731CAE31CD0086285E /* SyncManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManager.swift; sourceTree = "<group>"; };
 		2581DC741CAE31CD0086285E /* UIImage+ColourInit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImage+ColourInit.swift"; sourceTree = "<group>"; };
 		2581DC751CAE31CD0086285E /* UIImageView+DownloadImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+DownloadImage.swift"; sourceTree = "<group>"; };
@@ -999,10 +1011,8 @@
 		2581DC771CAE31CD0086285E /* UITableView+ReloadData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+ReloadData.swift"; sourceTree = "<group>"; };
 		2581DC781CAE31CD0086285E /* UIView+AddConstraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+AddConstraints.swift"; sourceTree = "<group>"; };
 		2581DC791CAE31CD0086285E /* String+AttributedString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+AttributedString.swift"; sourceTree = "<group>"; };
-		2581DC891CAE3B650086285E /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		2581DC8D1CAE4D670086285E /* SwiftBridge.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SwiftBridge.h; sourceTree = "<group>"; };
 		2581DC921CAF91150086285E /* TripfingerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TripfingerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2581DC941CAF91150086285E /* TripfingerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripfingerTests.swift; sourceTree = "<group>"; };
 		2581DC961CAF91150086285E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2581DCA01CAF915E0086285E /* ContentServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentServiceTest.swift; sourceTree = "<group>"; };
 		2581DCA11CAF915E0086285E /* DatabaseServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseServiceTest.swift; sourceTree = "<group>"; };
@@ -1011,6 +1021,14 @@
 		2581DCA41CAF915E0086285E /* NetworkUtilTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkUtilTest.swift; sourceTree = "<group>"; };
 		2581DCAB1CAF917D0086285E /* SearchServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchServiceTest.swift; sourceTree = "<group>"; };
 		2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineSearchTest.swift; sourceTree = "<group>"; };
+		25B563631CFCAE5000E82351 /* UnitTestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTestUtils.swift; sourceTree = "<group>"; };
+		25B563651CFF584D00E82351 /* StringUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtilsTest.swift; sourceTree = "<group>"; };
+		25D27B5B1D009ED500F7AA91 /* UniqueIdentifierService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniqueIdentifierService.swift; sourceTree = "<group>"; };
+		25D27B5D1D01B6AD00F7AA91 /* FirstCountryDownloadView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FirstCountryDownloadView.xib; sourceTree = "<group>"; };
+		25D27B5F1D01B76D00F7AA91 /* FirstCountryDownloadView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstCountryDownloadView.swift; sourceTree = "<group>"; };
+		25D27B611D01C08F00F7AA91 /* PurchasesService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchasesService.swift; sourceTree = "<group>"; };
+		25D2A2EE1D1C2BDF00B83C35 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		25D2A2F01D1C33F400B83C35 /* tripfinger-server-957d80c6ea80.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "tripfinger-server-957d80c6ea80.json"; sourceTree = "<group>"; };
 		25D378F11CAFD13400552633 /* thailand.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = thailand.json; sourceTree = "<group>"; };
 		25D378F31CAFD13900552633 /* brunei-download.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "brunei-download.json"; sourceTree = "<group>"; };
 		25D378F51CAFD49500552633 /* SyncManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncManagerTest.swift; sourceTree = "<group>"; };
@@ -1024,6 +1042,8 @@
 		25D3790E1CAFD4F500552633 /* SearchOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchOnlineTest.swift; sourceTree = "<group>"; };
 		25D3790F1CAFD4F500552633 /* SwipeViewOnlineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwipeViewOnlineTest.swift; sourceTree = "<group>"; };
 		25D379101CAFD4F500552633 /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		25DABC111D094C7300D0A839 /* Array+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Utils.swift"; sourceTree = "<group>"; };
+		25DABC131D095FEC00D0A839 /* CountryListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryListController.swift; sourceTree = "<group>"; };
 		25E477BF1CC8AB5A008C668E /* AppDelegateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateTest.swift; sourceTree = "<group>"; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AB4B0D9B1048005BE974 /* Maps_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Maps_Prefix.pch; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -1352,6 +1372,7 @@
 		34F9FB8F1C43AF2400F71201 /* MWMStreetEditorEditTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MWMStreetEditorEditTableViewCell.xib; sourceTree = "<group>"; };
 		34FE4C431BCC013500066718 /* MWMMapWidgets.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMMapWidgets.h; sourceTree = "<group>"; };
 		34FE4C441BCC013500066718 /* MWMMapWidgets.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMMapWidgets.mm; sourceTree = "<group>"; };
+		3ADE5E1E196F8C63BEAF3D5F /* Pods-Tripfinger.production full.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.production full.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.production full.xcconfig"; sourceTree = "<group>"; };
 		451950391B7A3E070085DA05 /* patterns.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = patterns.txt; path = ../../data/patterns.txt; sourceTree = "<group>"; };
 		452FCA3A1B6A3DF7007019AB /* colors.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = colors.txt; path = ../../data/colors.txt; sourceTree = "<group>"; };
 		454040681AD2D8D2007A9B12 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
@@ -1362,7 +1383,6 @@
 		46F26CD710F623BA00ECCA39 /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; lineEnding = 0; path = EAGLView.mm; sourceTree = "<group>"; };
 		46F26D1E10F626CB00ECCA39 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		46F8A2EB10EB63040045521A /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = MapViewController.h; sourceTree = "<group>"; };
-		48463EEC30786F3EADE8301C /* Pods-MAPS.ME.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.release.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.release.xcconfig"; sourceTree = "<group>"; };
 		4A00DBDE1AB704C400113624 /* drules_proto_dark.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; name = drules_proto_dark.bin; path = ../../data/drules_proto_dark.bin; sourceTree = "<group>"; };
 		4A23D1561B8B4DD700D4EB6F /* drules_proto_clear.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; name = drules_proto_clear.bin; path = ../../data/drules_proto_clear.bin; sourceTree = "<group>"; };
 		4A23D1571B8B4DD700D4EB6F /* resources-6plus_clear */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-6plus_clear"; path = "../../data/resources-6plus_clear"; sourceTree = "<group>"; };
@@ -1370,14 +1390,15 @@
 		4A23D1591B8B4DD700D4EB6F /* resources-xhdpi_clear */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-xhdpi_clear"; path = "../../data/resources-xhdpi_clear"; sourceTree = "<group>"; };
 		4A23D15A1B8B4DD700D4EB6F /* resources-xxhdpi_clear */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-xxhdpi_clear"; path = "../../data/resources-xxhdpi_clear"; sourceTree = "<group>"; };
 		4A300ED31C6DCFD400140018 /* countries-strings */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "countries-strings"; path = "../../data/countries-strings"; sourceTree = "<group>"; };
+		4A79B9FC79BF7CA731409B73 /* Pods-Tripfinger.simulator release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.simulator release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.simulator release.xcconfig"; sourceTree = "<group>"; };
 		4A7D89C11B2EBF3B00AC843E /* resources-6plus_dark */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-6plus_dark"; path = "../../data/resources-6plus_dark"; sourceTree = "<group>"; };
 		4A7D89C21B2EBF3B00AC843E /* resources-mdpi_dark */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-mdpi_dark"; path = "../../data/resources-mdpi_dark"; sourceTree = "<group>"; };
 		4A7D89C31B2EBF3B00AC843E /* resources-xhdpi_dark */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-xhdpi_dark"; path = "../../data/resources-xhdpi_dark"; sourceTree = "<group>"; };
 		4A7D89C41B2EBF3B00AC843E /* resources-xxhdpi_dark */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-xxhdpi_dark"; path = "../../data/resources-xxhdpi_dark"; sourceTree = "<group>"; };
+		4DFC0C1ADC034E571F3C119D /* Pods-TripfingerTests.simulator release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.simulator release.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.simulator release.xcconfig"; sourceTree = "<group>"; };
 		5605022E1B6211E100169CAD /* sound-strings */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "sound-strings"; path = "../../data/sound-strings"; sourceTree = "<group>"; };
 		560634F01B78804C00F3D670 /* MWMTextToSpeech.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMTextToSpeech.h; sourceTree = "<group>"; };
 		560634F11B78806100F3D670 /* MWMTextToSpeech.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMTextToSpeech.mm; sourceTree = "<group>"; };
-		5B40FF37F639DA95F25CFE23 /* Pods-MAPS.ME.simulator.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.simulator.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.simulator.xcconfig"; sourceTree = "<group>"; };
 		671182DE1C7F0DD400CB8177 /* countries_obsolete.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = countries_obsolete.txt; path = ../../data/countries_obsolete.txt; sourceTree = "<group>"; };
 		671182DF1C7F0DD400CB8177 /* packed_polygons_obsolete.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; name = packed_polygons_obsolete.bin; path = ../../data/packed_polygons_obsolete.bin; sourceTree = "<group>"; };
 		671182E01C7F0DD400CB8177 /* WorldCoasts_obsolete.mwm */ = {isa = PBXFileReference; lastKnownFileType = file; name = WorldCoasts_obsolete.mwm; path = ../../data/WorldCoasts_obsolete.mwm; sourceTree = "<group>"; };
@@ -1414,8 +1435,8 @@
 		6B9978341C89A316003B8AA0 /* editor.config */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = editor.config; path = ../../data/editor.config; sourceTree = "<group>"; };
 		6BA0BCCF1B74DDBA00CC9969 /* MWMCustomFacebookEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMCustomFacebookEvents.h; sourceTree = "<group>"; };
 		6BA0BCD01B74DDBA00CC9969 /* MWMCustomFacebookEvents.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMCustomFacebookEvents.mm; sourceTree = "<group>"; };
-		7B6E363A378AF516C9FA8576 /* Pods_MAPS_ME.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MAPS_ME.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		80C02D461403AF26C702260F /* Pods-MAPS.ME.production full.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.production full.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.production full.xcconfig"; sourceTree = "<group>"; };
+		72DABF35681188F725264B8E /* Pods-TripfingerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		82D351E25AFA767C2B79BF85 /* Pods-TripfingerTests.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.adhoc.xcconfig"; sourceTree = "<group>"; };
 		845C891E1C78748000940D7F /* me.maps.enterprise.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = me.maps.enterprise.entitlements; sourceTree = "<group>"; };
 		845C89291C8981CE00940D7F /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		845C892B1C8981CE00940D7F /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
@@ -1423,7 +1444,10 @@
 		845C89321C8983F300940D7F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		845C89331C8983F300940D7F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		845C89341C8983F300940D7F /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = System/Library/Frameworks/QuickLook.framework; sourceTree = SDKROOT; };
+		8B1AE6DB806B9B9C714AE10D /* Pods-Tripfinger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.debug.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MAPSME.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MAPSME.plist; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		8F8FF55BE4C7D95695116482 /* Pods-Tripfinger.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.adhoc.xcconfig"; sourceTree = "<group>"; };
+		9613B381E6921EB74EC0A795 /* Pods-TripfingerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.release.xcconfig"; sourceTree = "<group>"; };
 		972CDCC51887F1B7006641CA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		974386DB19373EA400FD5659 /* ToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastView.h; sourceTree = "<group>"; };
 		974386DC19373EA400FD5659 /* ToastView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ToastView.mm; sourceTree = "<group>"; };
@@ -1453,7 +1477,6 @@
 		97C98521186AE3CF00AF7E9E /* AppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInfo.h; sourceTree = "<group>"; };
 		97C9864B186C5EAA00AF7E9E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		97C9864D186C5ED300AF7E9E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		97C9864F186C5EDE00AF7E9E /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		97C98651186C5EF000AF7E9E /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		97C98653186C5F0500AF7E9E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		97C98655186C734000AF7E9E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1485,14 +1508,17 @@
 		B08AA8D81A26299A00810B1C /* TimeUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TimeUtils.h; path = Categories/TimeUtils.h; sourceTree = "<group>"; };
 		B08AA8D91A26299A00810B1C /* TimeUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TimeUtils.mm; path = Categories/TimeUtils.mm; sourceTree = "<group>"; };
 		B0DFE6301A1B78A200B6C35E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/LocalNotifications.plist; sourceTree = "<group>"; };
-		C5198AC459AB3AA175F6EB97 /* Pods-MAPS.ME.simulator release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.simulator release.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.simulator release.xcconfig"; sourceTree = "<group>"; };
+		B454AEACBFC0EB1C53C688C8 /* Pods-Tripfinger.simulator.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.simulator.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.simulator.xcconfig"; sourceTree = "<group>"; };
+		BE5CD3D8F377F8C33CF32638 /* Pods-TripfingerTests.production full.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.production full.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.production full.xcconfig"; sourceTree = "<group>"; };
+		C35087D1639E742675F1F30E /* Pods-TripfingerTests.simulator.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.simulator.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.simulator.xcconfig"; sourceTree = "<group>"; };
 		CB252D6B16FF82C8001E41E9 /* Statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Statistics.h; sourceTree = "<group>"; };
 		CB252D6C16FF82C8001E41E9 /* Statistics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Statistics.mm; sourceTree = "<group>"; };
-		CDCA75F59E51BB52ECFB2C91 /* Pods-MAPS.ME.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MAPS.ME.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME.debug.xcconfig"; sourceTree = "<group>"; };
+		DF333092A9B8D09DB6F8F3CD /* Pods_TripfingerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TripfingerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED48BBB317C267F5003E7E92 /* ColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPickerView.h; sourceTree = "<group>"; };
 		ED48BBB417C267F5003E7E92 /* ColorPickerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ColorPickerView.mm; sourceTree = "<group>"; };
 		ED48BBB817C2B1E2003E7E92 /* CircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleView.h; sourceTree = "<group>"; };
 		ED48BBB917C2B1E2003E7E92 /* CircleView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CircleView.mm; sourceTree = "<group>"; };
+		ED7F34AEED8C05B66B96C292 /* Pods-Tripfinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.release.xcconfig"; sourceTree = "<group>"; };
 		EE026F0511D6AC0D00645242 /* classificator.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = classificator.txt; path = ../../data/classificator.txt; sourceTree = SOURCE_ROOT; };
 		EE164810135CEE49003B8A3E /* 06_code2000.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = 06_code2000.ttf; path = ../../data/06_code2000.ttf; sourceTree = SOURCE_ROOT; };
 		EE583CBA12F773F00042CBE3 /* unicode_blocks.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = unicode_blocks.txt; path = ../../data/unicode_blocks.txt; sourceTree = "<group>"; };
@@ -1736,7 +1762,6 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				F6BC1E4D1ACBE96100EF0360 /* FBSDKCoreKit.framework in Frameworks */,
 				F6BC1E4E1ACBE96100EF0360 /* FBSDKShareKit.framework in Frameworks */,
-				B08AA8D51A25E58500810B1C /* PassKit.framework in Frameworks */,
 				F6671C6B1BA2EFD500548008 /* libFlurry_7.1.0.a in Frameworks */,
 				34921F6A1BFA0CDC00737D6E /* MyTargetSDKCorp.framework in Frameworks */,
 				B00511061A1101FC00A61AA4 /* CoreMedia.framework in Frameworks */,
@@ -1752,7 +1777,7 @@
 				46F26C7310F61FD600ECCA39 /* OpenGLES.framework in Frameworks */,
 				845C892C1C8981CE00940D7F /* HockeySDK.framework in Frameworks */,
 				EEB7E22211E9079400080A68 /* CoreLocation.framework in Frameworks */,
-				F60F4A8A3B3464BD12F9018F /* Pods_MAPS_ME.framework in Frameworks */,
+				3AEEEDADCFF4171D77F3D9AB /* Pods_Tripfinger.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1760,6 +1785,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DD4AC8322E4DF3472A1FCBC /* Pods_TripfingerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1823,7 +1849,6 @@
 				6741AA3C1BF340DE002C974C /* Foundation.framework in Frameworks */,
 				6741AA3D1BF340DE002C974C /* FBSDKCoreKit.framework in Frameworks */,
 				6741AA3E1BF340DE002C974C /* FBSDKShareKit.framework in Frameworks */,
-				6741AA3F1BF340DE002C974C /* PassKit.framework in Frameworks */,
 				6741AA401BF340DE002C974C /* libFlurry_7.1.0.a in Frameworks */,
 				6741AA411BF340DE002C974C /* CoreMedia.framework in Frameworks */,
 				674A7E2A1C0DA579003D48E1 /* libdrape.a in Frameworks */,
@@ -1885,7 +1910,7 @@
 				A3CC2CD31A1C723900B832E1 /* LocationPredictor.h */,
 				458287C21AD3BE2000BA8940 /* DownloadIndicatorProtocol.h */,
 				F6F9BD221AD3C3A600308C33 /* Macros.h */,
-				2581DC071CACD8900086285E /* MAPS.ME-Bridging-Header.h */,
+				2581DC071CACD8900086285E /* Tripfinger-Bridging-Header.h */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -1921,11 +1946,23 @@
 			name = "Bridging code";
 			sourceTree = "<group>";
 		};
+		256570A71D040125006DE901 /* Purchases */ = {
+			isa = PBXGroup;
+			children = (
+				25D27B5D1D01B6AD00F7AA91 /* FirstCountryDownloadView.xib */,
+				25D27B5F1D01B76D00F7AA91 /* FirstCountryDownloadView.swift */,
+				256570A51D03F3FD006DE901 /* PurchaseCountryVC.swift */,
+				25D27B611D01C08F00F7AA91 /* PurchasesService.swift */,
+				25D27B5B1D009ED500F7AA91 /* UniqueIdentifierService.swift */,
+			);
+			name = Purchases;
+			sourceTree = "<group>";
+		};
 		2581DC0A1CACF8930086285E /* Tripfinger */ = {
 			isa = PBXGroup;
 			children = (
 				2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */,
-				2581DC891CAE3B650086285E /* SwiftyJSON.swift */,
+				256570A71D040125006DE901 /* Purchases */,
 				2581DC3A1CAE31550086285E /* Controllers */,
 				2581DC101CAE30C30086285E /* Guide */,
 				2581DC431CAE31660086285E /* Model */,
@@ -1941,14 +1978,12 @@
 		2581DC101CAE30C30086285E /* Guide */ = {
 			isa = PBXGroup;
 			children = (
+				25DABC151D09914400D0A839 /* Listings */,
+				25DABC131D095FEC00D0A839 /* CountryListController.swift */,
 				2581DC151CAE30E70086285E /* GuideItemController.swift */,
-				2502337C1CD36896005F9943 /* DetailController.swift */,
 				2581DC311CAE31490086285E /* LicenseController.swift */,
-				2581DC321CAE31490086285E /* ListingsController.swift */,
-				2581DC331CAE31490086285E /* SectionController.swift */,
-				2581DC341CAE31490086285E /* SwipeController.swift */,
-				2581DC111CAE30D50086285E /* ListController.swift */,
 				2581DC131CAE30E10086285E /* RegionController.swift */,
+				2581DC331CAE31490086285E /* SectionController.swift */,
 			);
 			name = Guide;
 			sourceTree = "<group>";
@@ -1956,18 +1991,9 @@
 		2581DC171CAE30FC0086285E /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
-				2581DC1A1CAE31340086285E /* AnnotationCalloutView.swift */,
-				2581DC1B1CAE31340086285E /* FilterBox.swift */,
-				2581DC1C1CAE31340086285E /* FilterBox.xib */,
-				2581DC1D1CAE31340086285E /* GuideItemCell.swift */,
+				25D27B641D01C43000F7AA91 /* Guide */,
 				2581DC1E1CAE31340086285E /* ImageLabelView.swift */,
-				2581DC1F1CAE31340086285E /* ListingCardView.swift */,
-				2581DC201CAE31340086285E /* ListingCell.swift */,
-				2581DC211CAE31340086285E /* LoadingCell.xib */,
-				2581DC221CAE31340086285E /* RightDetailCell.swift */,
-				2581DC231CAE31340086285E /* TableSection.swift */,
 				2581DC241CAE31340086285E /* TextMessageCell.swift */,
-				2581DC181CAE311B0086285E /* TableController.swift */,
 				2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */,
 			);
 			name = "UI Components";
@@ -2003,12 +2029,12 @@
 		2581DC561CAE31800086285E /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				2581DC611CAE31A30086285E /* Search */,
 				2581DC571CAE31890086285E /* AnnotationService.swift */,
 				2581DC581CAE31890086285E /* ContentService.swift */,
 				2581DC591CAE31890086285E /* DatabaseService.swift */,
 				2581DC5A1CAE31890086285E /* DownloadService.swift */,
 				2581DC5B1CAE31890086285E /* JsonParserService.swift */,
+				2581DC611CAE31A30086285E /* Search */,
 			);
 			name = Service;
 			sourceTree = "<group>";
@@ -2025,19 +2051,21 @@
 		2581DC6B1CAE31C00086285E /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				25DABC111D094C7300D0A839 /* Array+Utils.swift */,
 				2581DC6C1CAE31CD0086285E /* BridgingHeader.h */,
 				2581DC6D1CAE31CD0086285E /* DataManager.swift */,
 				2581DC6E1CAE31CD0086285E /* ErrorHandler.swift */,
 				2581DC6F1CAE31CD0086285E /* NetworkUtil.swift */,
 				2581DC701CAE31CD0086285E /* NSBundle+BundlePath.swift */,
-				2581DC711CAE31CD0086285E /* NSURL+GetDirectory.swift */,
+				2581DC711CAE31CD0086285E /* FileUtils.swift */,
+				2581DC791CAE31CD0086285E /* String+AttributedString.swift */,
 				2581DC731CAE31CD0086285E /* SyncManager.swift */,
 				2581DC741CAE31CD0086285E /* UIImage+ColourInit.swift */,
 				2581DC751CAE31CD0086285E /* UIImageView+DownloadImage.swift */,
 				2581DC761CAE31CD0086285E /* UINib+RegisterNib.swift */,
 				2581DC771CAE31CD0086285E /* UITableView+ReloadData.swift */,
 				2581DC781CAE31CD0086285E /* UIView+AddConstraints.swift */,
-				2581DC791CAE31CD0086285E /* String+AttributedString.swift */,
+				256570A81D06A887006DE901 /* UIViewController+Huds.swift */,
 			);
 			name = Utils;
 			sourceTree = "<group>";
@@ -2052,9 +2080,10 @@
 				2581DCA21CAF915E0086285E /* DownloadServiceTest.swift */,
 				2581DCA31CAF915E0086285E /* JsonParserServiceTest.swift */,
 				2581DCA41CAF915E0086285E /* NetworkUtilTest.swift */,
-				2581DC941CAF91150086285E /* TripfingerTests.swift */,
+				25B563651CFF584D00E82351 /* StringUtilsTest.swift */,
 				25D378F51CAFD49500552633 /* SyncManagerTest.swift */,
 				25D378F01CAFD12600552633 /* Supporting Files */,
+				25B563631CFCAE5000E82351 /* UnitTestUtils.swift */,
 			);
 			path = TripfingerTests;
 			sourceTree = "<group>";
@@ -2066,6 +2095,22 @@
 				2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */,
 			);
 			name = Search;
+			sourceTree = "<group>";
+		};
+		25D27B641D01C43000F7AA91 /* Guide */ = {
+			isa = PBXGroup;
+			children = (
+				2581DC1B1CAE31340086285E /* FilterBox.swift */,
+				2581DC1C1CAE31340086285E /* FilterBox.xib */,
+				2581DC1D1CAE31340086285E /* GuideItemCell.swift */,
+				2581DC1F1CAE31340086285E /* ListingCardView.swift */,
+				2581DC201CAE31340086285E /* ListingCell.swift */,
+				2581DC211CAE31340086285E /* LoadingCell.xib */,
+				2581DC221CAE31340086285E /* RightDetailCell.swift */,
+				2581DC181CAE311B0086285E /* TableController.swift */,
+				2581DC231CAE31340086285E /* TableSection.swift */,
+			);
+			name = Guide;
 			sourceTree = "<group>";
 		};
 		25D378F01CAFD12600552633 /* Supporting Files */ = {
@@ -2094,6 +2139,18 @@
 			path = TripfingerUITests;
 			sourceTree = "<group>";
 		};
+		25DABC151D09914400D0A839 /* Listings */ = {
+			isa = PBXGroup;
+			children = (
+				2561718A1D0ABF56008C6386 /* ListingsParentController.swift */,
+				2502337C1CD36896005F9943 /* DetailController.swift */,
+				2581DC321CAE31490086285E /* ListingsController.swift */,
+				2581DC111CAE30D50086285E /* ListController.swift */,
+				2581DC341CAE31490086285E /* SwipeController.swift */,
+			);
+			name = Listings;
+			sourceTree = "<group>";
+		};
 		29B97314FDCFA39411CA2CEA /* Maps */ = {
 			isa = PBXGroup;
 			children = (
@@ -2112,8 +2169,9 @@
 				FA065FC61286143F00FEA989 /* External Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				25D2A2EE1D1C2BDF00B83C35 /* GoogleService-Info.plist */,
 				8D1107310486CEB800E47090 /* MAPSME.plist */,
-				D30F007A28658400A04F8959 /* Pods */,
+				88AE3BFA5748CC94272F9C8F /* Pods */,
 			);
 			indentWidth = 2;
 			name = Maps;
@@ -2132,6 +2190,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				25D2A2F01D1C33F400B83C35 /* tripfinger-server-957d80c6ea80.json */,
 				6B653B931C7F2DE4007BEFC5 /* cuisine-strings */,
 				4A300ED31C6DCFD400140018 /* countries-strings */,
 				347274711B0F4EB300756B37 /* Entitlements */,
@@ -2141,6 +2200,7 @@
 				5605022E1B6211E100169CAD /* sound-strings */,
 				347FDDA01BB59B4E00871410 /* Mapsme.storyboard */,
 				34B6CF5C1BBBFC6B009203C6 /* LaunchScreen.storyboard */,
+				2561718C1D0FE4A5008C6386 /* Settings.bundle */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -2205,7 +2265,6 @@
 				97C98655186C734000AF7E9E /* AVFoundation.framework */,
 				97C98653186C5F0500AF7E9E /* AudioToolbox.framework */,
 				97C98651186C5EF000AF7E9E /* iAd.framework */,
-				97C9864F186C5EDE00AF7E9E /* PassKit.framework */,
 				97C9864D186C5ED300AF7E9E /* Social.framework */,
 				97C9864B186C5EAA00AF7E9E /* MediaPlayer.framework */,
 				97719D471843B6F200BDD815 /* Security.framework */,
@@ -2221,7 +2280,8 @@
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
 				288765070DF74369002DB57D /* CoreGraphics.framework */,
 				FA87151A12B1518F00592DAF /* SystemConfiguration.framework */,
-				7B6E363A378AF516C9FA8576 /* Pods_MAPS_ME.framework */,
+				238C7BF3F6196FE2FBD6DD40 /* Pods_Tripfinger.framework */,
+				DF333092A9B8D09DB6F8F3CD /* Pods_TripfingerTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2836,6 +2896,25 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		88AE3BFA5748CC94272F9C8F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B454AEACBFC0EB1C53C688C8 /* Pods-Tripfinger.simulator.xcconfig */,
+				4A79B9FC79BF7CA731409B73 /* Pods-Tripfinger.simulator release.xcconfig */,
+				8B1AE6DB806B9B9C714AE10D /* Pods-Tripfinger.debug.xcconfig */,
+				8F8FF55BE4C7D95695116482 /* Pods-Tripfinger.adhoc.xcconfig */,
+				ED7F34AEED8C05B66B96C292 /* Pods-Tripfinger.release.xcconfig */,
+				3ADE5E1E196F8C63BEAF3D5F /* Pods-Tripfinger.production full.xcconfig */,
+				C35087D1639E742675F1F30E /* Pods-TripfingerTests.simulator.xcconfig */,
+				4DFC0C1ADC034E571F3C119D /* Pods-TripfingerTests.simulator release.xcconfig */,
+				72DABF35681188F725264B8E /* Pods-TripfingerTests.debug.xcconfig */,
+				82D351E25AFA767C2B79BF85 /* Pods-TripfingerTests.adhoc.xcconfig */,
+				9613B381E6921EB74EC0A795 /* Pods-TripfingerTests.release.xcconfig */,
+				BE5CD3D8F377F8C33CF32638 /* Pods-TripfingerTests.production full.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		974726401832306C006B7CB7 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
@@ -2916,19 +2995,6 @@
 				F6EE7BC11B78A1AB00FF6500 /* FlurryWatch.h */,
 			);
 			path = Statistics;
-			sourceTree = "<group>";
-		};
-		D30F007A28658400A04F8959 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				5B40FF37F639DA95F25CFE23 /* Pods-MAPS.ME.simulator.xcconfig */,
-				C5198AC459AB3AA175F6EB97 /* Pods-MAPS.ME.simulator release.xcconfig */,
-				CDCA75F59E51BB52ECFB2C91 /* Pods-MAPS.ME.debug.xcconfig */,
-				083A28646AC9FFF435D93765 /* Pods-MAPS.ME.adhoc.xcconfig */,
-				48463EEC30786F3EADE8301C /* Pods-MAPS.ME.release.xcconfig */,
-				80C02D461403AF26C702260F /* Pods-MAPS.ME.production full.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 		F607C18B1C047FCA00B53A87 /* Segue */ = {
@@ -3488,14 +3554,15 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "Tripfinger" */;
 			buildPhases = (
-				038F3781796A7A37D5C47484 /* Check Pods Manifest.lock */,
+				31A6653A1B45AEE727D82748 /* [CP] Check Pods Manifest.lock */,
 				FA3A60E715AD5BBD00F40D20 /* Run Script */,
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
 				1D60588F0D05DD3D006BFB54 /* Frameworks */,
 				F6D434721AD2AB97007C7728 /* Embed App Extensions */,
-				A09E6597B2E1EBD435608BBC /* Embed Pods Frameworks */,
-				65A883D0952D96D3002AA800 /* Copy Pods Resources */,
+				EA405FFB24E9CC65F55D550D /* [CP] Embed Pods Frameworks */,
+				35DD017651455C8BBF781647 /* [CP] Copy Pods Resources */,
+				25D2A2F21D1C343A00B83C35 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -3510,10 +3577,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2581DC991CAF91150086285E /* Build configuration list for PBXNativeTarget "TripfingerTests" */;
 			buildPhases = (
+				5E164D625B672932E4D4A5E4 /* [CP] Check Pods Manifest.lock */,
 				2581DC8E1CAF91150086285E /* Sources */,
 				2581DC8F1CAF91150086285E /* Frameworks */,
 				2581DC901CAF91150086285E /* Resources */,
 				25D378EF1CAFBD1300552633 /* ShellScript */,
+				A65236512DCF14E53F81A1D3 /* [CP] Embed Pods Frameworks */,
+				C62BC48C0051ECF0A90138E2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3569,7 +3639,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 0720;
 				LastUpgradeCheck = 0720;
-				ORGANIZATIONNAME = MapsWithMe;
+				ORGANIZATIONNAME = "Tripfinger AS";
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = BJFM9VPMT3;
@@ -3579,6 +3649,12 @@
 							};
 							com.apple.BackgroundModes = {
 								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.Wallet = {
+								enabled = 0;
 							};
 						};
 					};
@@ -3737,6 +3813,7 @@
 				34CFFE8D1B7DE71C009D0C9F /* MWMSearchView.xib in Resources */,
 				3401CD711C3C0C420028C6F8 /* MWMEditorNameTableViewCell.xib in Resources */,
 				347FD8751C60B2CE002FB65E /* MWMOpeningHoursClosedSpanTableViewCell.xib in Resources */,
+				25D27B5E1D01B6AD00F7AA91 /* FirstCountryDownloadView.xib in Resources */,
 				34F9FB891C438ADB00F71201 /* MWMStreetEditorCommonTableViewCell.xib in Resources */,
 				6B9978351C89A316003B8AA0 /* editor.config in Resources */,
 				F6588E381B15D87A00EE1E58 /* MWMBookmarkColorCell.xib in Resources */,
@@ -3745,6 +3822,7 @@
 				4A00DBDF1AB704C400113624 /* drules_proto_dark.bin in Resources */,
 				4A23D15D1B8B4DD700D4EB6F /* resources-mdpi_clear in Resources */,
 				F6FE2C111B03A016009814AA /* PlacePageNavigationBar.xib in Resources */,
+				25D2A2EF1D1C2BDF00B83C35 /* GoogleService-Info.plist in Resources */,
 				F61579361AC2CEB60032D8E9 /* MWMRateAlert.xib in Resources */,
 				845C891F1C78748000940D7F /* me.maps.enterprise.entitlements in Resources */,
 				347FD8791C60B2CE002FB65E /* MWMOpeningHoursDaysSelectorTableViewCell.xib in Resources */,
@@ -3761,6 +3839,7 @@
 				4A23D15B1B8B4DD700D4EB6F /* drules_proto_clear.bin in Resources */,
 				F623DA6B1C9C2731006A3436 /* opening_hours_how_to_edit.html in Resources */,
 				341C2A5B1B720B8A00AD41A1 /* MWMAPIBarView.xib in Resources */,
+				25D2A2F11D1C33F400B83C35 /* tripfinger-server-957d80c6ea80.json in Resources */,
 				34B82AC51B84608600180497 /* MWMSearchHistoryClearCell.xib in Resources */,
 				F653CE181C71F62400A453F1 /* MWMAddPlaceNavigationBar.xib in Resources */,
 				F6BB6CC01BB17D7000DF1DF2 /* MWMRoutePointCell.xib in Resources */,
@@ -3782,6 +3861,7 @@
 				F64F4B6F1B46A5380081A24A /* MWMDownloaderDialogCell.xib in Resources */,
 				3485C0131B85C20E00F7712D /* MWMSearchTableViewController.xib in Resources */,
 				F6ED13931B1EFA2F0095C6DE /* MWMBookmarkDescriptionViewController.xib in Resources */,
+				2561718D1D0FE4A5008C6386 /* Settings.bundle in Resources */,
 				4A23D15E1B8B4DD700D4EB6F /* resources-xhdpi_clear in Resources */,
 				F64F199A1AB81A00006EAF7E /* MWMAlertViewController.xib in Resources */,
 				F6588E331B15D73100EE1E58 /* MWMBookmarkColorViewController.xib in Resources */,
@@ -3828,7 +3908,6 @@
 				6741A94A1BF340DE002C974C /* resources-6plus_clear in Resources */,
 				6741A94B1BF340DE002C974C /* unicode_blocks.txt in Resources */,
 				6741A94C1BF340DE002C974C /* fonts_blacklist.txt in Resources */,
-				56CA8DAE1C9C25B000949C04 /* MWMAddPlaceNavigationBar.xib in Resources */,
 				3401CD721C3C0C420028C6F8 /* MWMEditorNameTableViewCell.xib in Resources */,
 				34CCFDE31C22A2EF00F28959 /* MWMPlacePageOpeningHoursCell.xib in Resources */,
 				6741A94D1BF340DE002C974C /* resources-xxhdpi_clear in Resources */,
@@ -3955,20 +4034,18 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		038F3781796A7A37D5C47484 /* Check Pods Manifest.lock */ = {
+		25D2A2F21D1C343A00B83C35 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
+			shellScript = "# Replace this path with the path to the key you just downloaded\nJSON_FILE=tripfinger-server-957d80c6ea80.json\n\n# Replace this with the GOOGLE_APP_ID from your GoogleService-Info.plist file\nGOOGLE_APP_ID=1:163920719343:ios:a752924711055d3a\n\ndefaults write com.google.SymbolUpload version -integer 1   # creates file if it does not exist\nJSON=$(cat \"${JSON_FILE}\")\n/usr/bin/plutil -replace \"app_${GOOGLE_APP_ID//:/_}\" -json \"${JSON}\" \"$HOME/Library/Preferences/com.google.SymbolUpload.plist\"\n\"${PODS_ROOT}\"/FirebaseCrash/upload-sym";
 		};
 		25D378EF1CAFBD1300552633 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3983,34 +4060,94 @@
 			shellPath = /bin/bash;
 			shellScript = ". run-script-for-target.sh";
 		};
-		65A883D0952D96D3002AA800 /* Copy Pods Resources */ = {
+		31A6653A1B45AEE727D82748 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME-resources.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		A09E6597B2E1EBD435608BBC /* Embed Pods Frameworks */ = {
+		35DD017651455C8BBF781647 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MAPS.ME/Pods-MAPS.ME-frameworks.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E164D625B672932E4D4A5E4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A65236512DCF14E53F81A1D3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C62BC48C0051ECF0A90138E2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EA405FFB24E9CC65F55D550D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FA3A60E715AD5BBD00F40D20 /* Run Script */ = {
@@ -4053,6 +4190,7 @@
 				34F45E8E1B96E88100AC93F8 /* MWMSearchTabButtonsView.mm in Sources */,
 				342FDDE51C6C9071000038A0 /* MWMMapDownloaderDataSource.mm in Sources */,
 				347FD86B1C60B2CE002FB65E /* MWMOpeningHoursAddScheduleTableViewCell.mm in Sources */,
+				25DABC121D094C7300D0A839 /* Array+Utils.swift in Sources */,
 				34CD81BB1C91C24D007D2A60 /* MWMWelcomeController.mm in Sources */,
 				F6C934401AE64E4200DDC624 /* MWMSpringAnimation.mm in Sources */,
 				34B82ACA1B8465C100180497 /* MWMSearchCategoryCell.mm in Sources */,
@@ -4061,6 +4199,7 @@
 				341522BF1B666A550077AA8F /* MWMAPIBarView.mm in Sources */,
 				349A35831B53E967009677EE /* MWMDownloadMapRequest.mm in Sources */,
 				2581DC521CAE31700086285E /* Listing.swift in Sources */,
+				25D27B621D01C09000F7AA91 /* PurchasesService.swift in Sources */,
 				349C26B51BB02C6F0005DF2F /* MWMBottomMenuViewController.mm in Sources */,
 				2502337D1CD36896005F9943 /* DetailController.swift in Sources */,
 				3438CDF41B85F1170051AA78 /* MWMConsole.mm in Sources */,
@@ -4124,13 +4263,14 @@
 				2581DC5C1CAE31890086285E /* AnnotationService.swift in Sources */,
 				F64F19991AB81A00006EAF7E /* MWMAlertViewController.mm in Sources */,
 				341223BB1BEB58FA007227E9 /* MWMBaseMapDownloaderViewController.mm in Sources */,
-				2581DC7E1CAE31CD0086285E /* NSURL+GetDirectory.swift in Sources */,
+				2581DC7E1CAE31CD0086285E /* FileUtils.swift in Sources */,
 				2581DC191CAE311C0086285E /* TableController.swift in Sources */,
 				2581DC541CAE31700086285E /* Session.swift in Sources */,
 				FAFCB63613366E78001A5C59 /* WebViewController.mm in Sources */,
 				34C9BD091C6DBCDA000DC38D /* MWMNavigationController.mm in Sources */,
 				3406FA151C6E0C3300E9FAD2 /* MWMMapDownloadDialog.mm in Sources */,
 				34C9BD021C6DB693000DC38D /* MWMTableViewController.mm in Sources */,
+				25DABC141D095FEC00D0A839 /* CountryListController.swift in Sources */,
 				34CD81D71C92D96F007D2A60 /* MWMFirstLaunchController.mm in Sources */,
 				F63BA3711BCD5B520044C504 /* MWMTTSLanguageViewController.mm in Sources */,
 				F64DA8021C524BDE00330E9E /* UISwitch+RuntimeAttributes.m in Sources */,
@@ -4141,7 +4281,6 @@
 				2581DC841CAE31CD0086285E /* UITableView+ReloadData.swift in Sources */,
 				F64A37D01B9EE24C00180464 /* MWMRouteHelperPanelsDrawer.mm in Sources */,
 				341138801C15B50B002E3B3E /* MWMOpeningHoursModel.mm in Sources */,
-				2581DC8A1CAE3B650086285E /* SwiftyJSON.swift in Sources */,
 				340F24631B14910500F874CD /* RouteState.mm in Sources */,
 				F6830F111B85F6B900C42AAE /* MWMLanesPanel.mm in Sources */,
 				9747264318323080006B7CB7 /* UIKitCategories.mm in Sources */,
@@ -4197,6 +4336,7 @@
 				34B82AD61B84746E00180497 /* MWMSearchSuggestionCell.mm in Sources */,
 				F6C641B01C15BBE6008FCAF3 /* MWMRecentTrackSettingsController.mm in Sources */,
 				341F99F11C6B4288001C67B8 /* MWMMapDownloaderSearchDataSource.mm in Sources */,
+				25D27B601D01B76D00F7AA91 /* FirstCountryDownloadView.swift in Sources */,
 				F6588E2F1B15D2BC00EE1E58 /* MWMBookmarkColorViewController.mm in Sources */,
 				34BC1E561C2ADBD3009BBF51 /* MWMOpeningHoursCommon.mm in Sources */,
 				F653CE161C71F60200A453F1 /* MWMAddPlaceNavigationBar.mm in Sources */,
@@ -4207,6 +4347,7 @@
 				FA054612155C465E001F4E37 /* SelectSetVC.mm in Sources */,
 				FAA614B8155F16950031C345 /* AddSetVC.mm in Sources */,
 				34ABA6301C2D58F300FE1BEC /* MWMInputEmailValidator.mm in Sources */,
+				256570A61D03F3FE006DE901 /* PurchaseCountryVC.swift in Sources */,
 				34CC4C121B82120700E44C1F /* MWMSearchTabbedViewLayout.mm in Sources */,
 				2581DC5D1CAE31890086285E /* ContentService.swift in Sources */,
 				FAAEA7D5161D8D3100CCD661 /* BookmarksRootVC.mm in Sources */,
@@ -4231,12 +4372,14 @@
 				2581DC141CAE30E10086285E /* RegionController.swift in Sources */,
 				F6B2E61F1C3D5F31005562DF /* MWMNightModeController.mm in Sources */,
 				2581DC381CAE31490086285E /* SectionController.swift in Sources */,
+				25D27B5C1D009ED500F7AA91 /* UniqueIdentifierService.swift in Sources */,
 				F6BD33791B62400E00F2CE18 /* MWMNavigationDashboard.mm in Sources */,
 				F60F02E91C904F40003A0AF6 /* MWMReportBaseController.mm in Sources */,
 				F6BD1D201CA412920047B8E8 /* MWMOsmAuthAlert.mm in Sources */,
 				347FD8891C60B2CE002FB65E /* MWMOpeningHoursTimeSpanTableViewCell.mm in Sources */,
 				2571ADED1CD882F000CF2EFF /* TripfingerEntity.swift in Sources */,
 				34CD81C31C91C281007D2A60 /* MWMWhatsNewNightModeController.mm in Sources */,
+				2561718B1D0ABF56008C6386 /* ListingsParentController.swift in Sources */,
 				974D041D1977DE430081D0A7 /* LocalNotificationManager.mm in Sources */,
 				97C98522186AE3CF00AF7E9E /* AppInfo.mm in Sources */,
 				F6A750B91BE8C74400981B41 /* MWMSearchHistoryMyPositionCell.mm in Sources */,
@@ -4246,6 +4389,7 @@
 				34ABA6241C2D551900FE1BEC /* MWMInputValidatorFactory.mm in Sources */,
 				34B82AE21B84AC5E00180497 /* MWMSearchCategoriesManager.mm in Sources */,
 				2581DC831CAE31CD0086285E /* UINib+RegisterNib.swift in Sources */,
+				256570A91D06A888006DE901 /* UIViewController+Huds.swift in Sources */,
 				34BC722A1B0DECAE0012A34B /* MWMZoomButtonsView.mm in Sources */,
 				34CE8A671C7740E100F4351A /* MWMStorage.mm in Sources */,
 				2581DC161CAE30E70086285E /* GuideItemController.swift in Sources */,
@@ -4256,7 +4400,6 @@
 				CB252D6F16FF82C9001E41E9 /* Statistics.mm in Sources */,
 				342AF0E01BE24E9A0016F3AE /* MWMMapDownloaderViewController.mm in Sources */,
 				341F99DD1C6B1165001C67B8 /* MWMMapDownloaderSubplaceTableViewCell.mm in Sources */,
-				2581DC251CAE31340086285E /* AnnotationCalloutView.swift in Sources */,
 				6BA0BCD11B74DDBA00CC9969 /* MWMCustomFacebookEvents.mm in Sources */,
 				978F9244183B660F000D6C7C /* SwitchCell.mm in Sources */,
 				342AD7721B53D32F00E0B997 /* UIView+RuntimeAttributes.mm in Sources */,
@@ -4306,14 +4449,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25B563661CFF584E00E82351 /* StringUtilsTest.swift in Sources */,
 				25E477C01CC8AB5A008C668E /* AppDelegateTest.swift in Sources */,
 				2581DCAD1CAF917D0086285E /* SearchServiceTest.swift in Sources */,
 				2581DCA91CAF915E0086285E /* NetworkUtilTest.swift in Sources */,
 				2581DCA61CAF915E0086285E /* DatabaseServiceTest.swift in Sources */,
 				25D378F61CAFD49500552633 /* SyncManagerTest.swift in Sources */,
+				25B563641CFCAE5000E82351 /* UnitTestUtils.swift in Sources */,
 				2581DCA71CAF915E0086285E /* DownloadServiceTest.swift in Sources */,
 				2581DCAE1CAF917D0086285E /* OnlineSearchTest.swift in Sources */,
-				2581DC951CAF91150086285E /* TripfingerTests.swift in Sources */,
 				2581DCA51CAF915E0086285E /* ContentServiceTest.swift in Sources */,
 				2581DCA81CAF915E0086285E /* JsonParserServiceTest.swift in Sources */,
 			);
@@ -4621,6 +4765,7 @@
 /* Begin XCBuildConfiguration section */
 		2581DC9A1CAF91150086285E /* Simulator */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C35087D1639E742675F1F30E /* Pods-TripfingerTests.simulator.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -4643,12 +4788,12 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -4661,6 +4806,7 @@
 		};
 		2581DC9B1CAF91150086285E /* Simulator Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DFC0C1ADC034E571F3C119D /* Pods-TripfingerTests.simulator release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -4679,10 +4825,11 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -4694,6 +4841,7 @@
 		};
 		2581DC9C1CAF91150086285E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 72DABF35681188F725264B8E /* Pods-TripfingerTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -4717,11 +4865,12 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -4734,6 +4883,7 @@
 		};
 		2581DC9D1CAF91150086285E /* AdHoc */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82D351E25AFA767C2B79BF85 /* Pods-TripfingerTests.adhoc.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -4752,10 +4902,13 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -4767,6 +4920,7 @@
 		};
 		2581DC9E1CAF91150086285E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9613B381E6921EB74EC0A795 /* Pods-TripfingerTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -4785,10 +4939,11 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -4800,6 +4955,7 @@
 		};
 		2581DC9F1CAF91150086285E /* Production Full */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE5CD3D8F377F8C33CF32638 /* Pods-TripfingerTests.production full.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -4818,10 +4974,11 @@
 				);
 				GCC_C_LANGUAGE_STANDARD = "compiler-default";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerTests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -4844,7 +5001,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
@@ -4868,7 +5025,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -4894,7 +5051,7 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -4918,9 +5075,10 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerUITests;
@@ -4941,7 +5099,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -4964,7 +5122,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = TripfingerUITests/Info.plist;
+				INFOPLIST_FILE = MAPSME.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
@@ -5249,7 +5407,94 @@
 					"-Wno-unused-local-typedef",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRODUCT_NAME = Tripfinger;
+				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = i386;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Simulator;
+		};
+		FAAB411A149BA83500C245B1 /* Simulator */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B454AEACBFC0EB1C53C688C8 /* Pods-Tripfinger.simulator.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				BUNDLE_IDENTIFIER = no.tripfinger;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				ENABLE_BITCODE = NO;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PushNotifications",
+					"$(PROJECT_DIR)/Statistics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/MyTracker",
+					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
+				);
+				INFOPLIST_FILE = MAPSME.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AdSupport\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"BrightFutures\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCrash\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"GoogleInterchangeUtilities\"",
+					"-framework",
+					"\"GoogleSymbolUtilities\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"KeychainSwift\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MDCSwipeToChoose\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"Result\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
 					"-lstats_client",
 					"-lmap",
 					"-lsearch",
@@ -5277,50 +5522,9 @@
 					"-loauthcpp",
 					"-leditor",
 				);
-				PRODUCT_NAME = Tripfinger;
-				SDKROOT = iphoneos;
-				STRIP_INSTALLED_PRODUCT = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = i386;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Simulator;
-		};
-		FAAB411A149BA83500C245B1 /* Simulator */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B40FF37F639DA95F25CFE23 /* Pods-MAPS.ME.simulator.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				BUNDLE_IDENTIFIER = no.tripfinger;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEAD_CODE_STRIPPING = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				ENABLE_TESTABILITY = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/PushNotifications",
-					"$(PROJECT_DIR)/Statistics",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/MyTracker",
-					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
-				);
-				INFOPLIST_FILE = MAPSME.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_CFLAGS = (
-					"-Wall",
-					"-Wno-unused-local-typedef",
-					"-Wimplicit-retain-self",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Classes/MAPS.ME-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -5386,7 +5590,92 @@
 					"-Wno-unused-local-typedef",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRODUCT_NAME = Tripfinger;
+				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		FAAB411C149BA84700C245B1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8B1AE6DB806B9B9C714AE10D /* Pods-Tripfinger.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				BUNDLE_IDENTIFIER = no.tripfinger;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PushNotifications",
+					"$(PROJECT_DIR)/Statistics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/MyTracker",
+					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
+				);
+				INFOPLIST_FILE = MAPSME.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AdSupport\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"BrightFutures\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCrash\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"GoogleInterchangeUtilities\"",
+					"-framework",
+					"\"GoogleSymbolUtilities\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"KeychainSwift\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MDCSwipeToChoose\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"Result\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
 					"-lstats_client",
 					"-lmap",
 					"-lsearch",
@@ -5414,48 +5703,9 @@
 					"-loauthcpp",
 					"-leditor",
 				);
-				PRODUCT_NAME = Tripfinger;
-				SDKROOT = iphoneos;
-				STRIP_INSTALLED_PRODUCT = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Debug;
-		};
-		FAAB411C149BA84700C245B1 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = CDCA75F59E51BB52ECFB2C91 /* Pods-MAPS.ME.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				BUNDLE_IDENTIFIER = no.tripfinger;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEAD_CODE_STRIPPING = NO;
-				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/PushNotifications",
-					"$(PROJECT_DIR)/Statistics",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/MyTracker",
-					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
-				);
-				INFOPLIST_FILE = MAPSME.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = (
-					"-Wall",
-					"-Wno-unused-local-typedef",
-					"-Wimplicit-retain-self",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Classes/MAPS.ME-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = i386;
@@ -5466,7 +5716,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				BUNDLE_IDENTIFIER = "com.my.maps-beta-enterprise";
+				BUNDLE_IDENTIFIER = no.tripfinger;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -5481,7 +5731,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 6.0;
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -5520,12 +5770,104 @@
 					"\"$(SRCROOT)/../../../omim-iphone-production-$(CURRENT_ARCH)/out/production\"",
 					"$(PROJECT_DIR)/Statistics",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wall",
 					"-Wno-unused-local-typedef",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRODUCT_NAME = Tripfinger;
+				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = NO;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = AdHoc;
+		};
+		FAAB411E149BA85500C245B1 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8F8FF55BE4C7D95695116482 /* Pods-Tripfinger.adhoc.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				BUNDLE_IDENTIFIER = com.tripfinger;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				ENABLE_BITCODE = NO;
+				ENABLE_NS_ASSERTIONS = YES;
+				ENABLE_TESTABILITY = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PushNotifications",
+					"$(PROJECT_DIR)/Statistics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/MyTracker",
+					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
+				);
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = MAPSME.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AdSupport\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"BrightFutures\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCrash\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"GoogleInterchangeUtilities\"",
+					"-framework",
+					"\"GoogleSymbolUtilities\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"KeychainSwift\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MDCSwipeToChoose\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"Result\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
 					"-lstats_client",
 					"-lmap",
 					"-lsearch",
@@ -5553,49 +5895,14 @@
 					"-loauthcpp",
 					"-leditor",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger;
 				PRODUCT_NAME = Tripfinger;
-				SDKROOT = iphoneos;
-				STRIP_INSTALLED_PRODUCT = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = AdHoc;
-		};
-		FAAB411E149BA85500C245B1 /* AdHoc */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 083A28646AC9FFF435D93765 /* Pods-MAPS.ME.adhoc.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				BUNDLE_IDENTIFIER = no.tripfinger;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEAD_CODE_STRIPPING = NO;
-				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/PushNotifications",
-					"$(PROJECT_DIR)/Statistics",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/MyTracker",
-					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
-				);
-				INFOPLIST_FILE = MAPSME.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_CFLAGS = (
-					"-Wall",
-					"-Wno-unused-local-typedef",
-					"-Wimplicit-retain-self",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Classes/MAPS.ME-Bridging-Header.h";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
+				VALIDATE_PRODUCT = NO;
 			};
 			name = AdHoc;
 		};
@@ -5662,7 +5969,93 @@
 					"-Wno-unused-local-typedef",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRODUCT_NAME = Tripfinger;
+				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Production Full";
+		};
+		FAAB4120149BA86000C245B1 /* Production Full */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3ADE5E1E196F8C63BEAF3D5F /* Pods-Tripfinger.production full.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				BUNDLE_IDENTIFIER = no.tripfinger;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.production.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PushNotifications",
+					"$(PROJECT_DIR)/Statistics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/MyTracker",
+					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
+				);
+				INFOPLIST_FILE = MAPSME.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AdSupport\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"BrightFutures\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCrash\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"GoogleInterchangeUtilities\"",
+					"-framework",
+					"\"GoogleSymbolUtilities\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"KeychainSwift\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MDCSwipeToChoose\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"Result\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
 					"-lstats_client",
 					"-lmap",
 					"-lsearch",
@@ -5690,48 +6083,9 @@
 					"-loauthcpp",
 					"-leditor",
 				);
-				PRODUCT_NAME = Tripfinger;
-				SDKROOT = iphoneos;
-				STRIP_INSTALLED_PRODUCT = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = "Production Full";
-		};
-		FAAB4120149BA86000C245B1 /* Production Full */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 80C02D461403AF26C702260F /* Pods-MAPS.ME.production full.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				BUNDLE_IDENTIFIER = no.tripfinger;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.production.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEAD_CODE_STRIPPING = NO;
-				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/PushNotifications",
-					"$(PROJECT_DIR)/Statistics",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/MyTracker",
-					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
-				);
-				INFOPLIST_FILE = MAPSME.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_CFLAGS = (
-					"-Wall",
-					"-Wno-unused-local-typedef",
-					"-Wimplicit-retain-self",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Classes/MAPS.ME-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Production Full";
@@ -5754,7 +6108,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 6.0;
 				ENABLE_BITCODE = NO;
@@ -5767,9 +6121,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Maps_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
+					OMIM_PRODUCTION,
 					RELEASE,
 					_RELEASE,
+					NDEBUG,
 					TARGET_OS_IPHONE,
 					"NS_BLOCK_ASSERTIONS=1",
 				);
@@ -5798,7 +6153,94 @@
 					"-Wno-unused-local-typedef",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRODUCT_NAME = Tripfinger;
+				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		FABB561F149CD957006969C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED7F34AEED8C05B66B96C292 /* Pods-Tripfinger.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				BUNDLE_IDENTIFIER = no.tripfinger;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PushNotifications",
+					"$(PROJECT_DIR)/Statistics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/MyTracker",
+					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
+				);
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = MAPSME.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AdSupport\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"BrightFutures\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCrash\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"GoogleInterchangeUtilities\"",
+					"-framework",
+					"\"GoogleSymbolUtilities\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"KeychainSwift\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MDCSwipeToChoose\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"Result\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
 					"-lstats_client",
 					"-lmap",
 					"-lsearch",
@@ -5826,47 +6268,10 @@
 					"-loauthcpp",
 					"-leditor",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PRODUCT_NAME = Tripfinger;
-				SDKROOT = iphoneos;
-				STRIP_INSTALLED_PRODUCT = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Release;
-		};
-		FABB561F149CD957006969C0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 48463EEC30786F3EADE8301C /* Pods-MAPS.ME.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEAD_CODE_STRIPPING = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/PushNotifications",
-					"$(PROJECT_DIR)/Statistics",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/MyTracker",
-					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
-				);
-				INFOPLIST_FILE = MAPSME.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_CFLAGS = (
-					"-Wall",
-					"-Wno-unused-local-typedef",
-					"-Wimplicit-retain-self",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Classes/MAPS.ME-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -5932,7 +6337,91 @@
 					"-Wno-unused-local-typedef",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRODUCT_NAME = Tripfinger;
+				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = i386;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Simulator Release";
+		};
+		FACFE54515F8F35600CE8B20 /* Simulator Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4A79B9FC79BF7CA731409B73 /* Pods-Tripfinger.simulator release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PushNotifications",
+					"$(PROJECT_DIR)/Statistics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/MyTracker",
+					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
+				);
+				INFOPLIST_FILE = MAPSME.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AdSupport\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"BrightFutures\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCrash\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"GoogleInterchangeUtilities\"",
+					"-framework",
+					"\"GoogleSymbolUtilities\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"KeychainSwift\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MDCSwipeToChoose\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"Result\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
 					"-lstats_client",
 					"-lmap",
 					"-lsearch",
@@ -5960,47 +6449,9 @@
 					"-loauthcpp",
 					"-leditor",
 				);
-				PRODUCT_NAME = Tripfinger;
-				SDKROOT = iphoneos;
-				STRIP_INSTALLED_PRODUCT = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALID_ARCHS = i386;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = "Simulator Release";
-		};
-		FACFE54515F8F35600CE8B20 /* Simulator Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = C5198AC459AB3AA175F6EB97 /* Pods-MAPS.ME.simulator release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEAD_CODE_STRIPPING = NO;
-				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/PushNotifications",
-					"$(PROJECT_DIR)/Statistics",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/MyTracker",
-					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
-				);
-				INFOPLIST_FILE = MAPSME.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_CFLAGS = (
-					"-Wall",
-					"-Wno-unused-local-typedef",
-					"-Wimplicit-retain-self",
-				);
 				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Classes/MAPS.ME-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Simulator Release";

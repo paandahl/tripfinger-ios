@@ -271,8 +271,11 @@ public:
   void SetMapSelectionListeners(TActivateMapSelectionFn const & activator,
                                 TDeactivateMapSelectionFn const & deactivator);
 
-  using TPoiSupplierFn = function<vector<TripfingerMark> (TripfingerMarkParams params)>;
+  using TPoiSupplierFn = function<vector<TripfingerMark> (TripfingerMarkParams & params)>;
   void SetPoiSupplierFunction(TPoiSupplierFn const & fn) { m_poiSupplierFn = fn; }
+
+  using TAsyncPoiSupplierFn = function<void (shared_ptr<TripfingerMarkParams> params)>;
+  void SetAsyncPoiSupplierFunction(TAsyncPoiSupplierFn const & fn) { m_asyncPoiSupplierFn = fn; }
 
   using TCoordinateCheckerFn = function<bool (ms::LatLon coord)>;
   void SetCoordinateCheckerFunction(TCoordinateCheckerFn const & fn) { m_coordinateCheckerFn = fn; }
@@ -316,6 +319,7 @@ private:
 
   TActivateMapSelectionFn m_activateMapSelectionFn;
   TDeactivateMapSelectionFn m_deactivateMapSelectionFn;
+  TAsyncPoiSupplierFn m_asyncPoiSupplierFn;
   TPoiSupplierFn m_poiSupplierFn;
   TPoiByCoordFetcherFn m_poiByCoordFetcherFn;
   TCoordinateCheckerFn m_coordinateCheckerFn;
@@ -405,6 +409,7 @@ private:
   // UI thread.
   search::SearchParams m_lastQueryParams;
   m2::RectD m_lastQueryViewport;
+  shared_ptr<TripfingerMarkParams> m_lastTfMarkParams;
 
   // A handle for the latest search query.
   weak_ptr<search::QueryHandle> m_lastQueryHandle;
@@ -422,6 +427,7 @@ public:
 
   void UpdateUserViewportChanged();
 
+  void TripfingerSearch(search::SearchParams const & params, int & tfCategory);
   /// Call this function before entering search GUI.
   /// While it's loading, we can cache features in viewport.
   bool Search(search::SearchParams const & params);

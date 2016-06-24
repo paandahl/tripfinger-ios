@@ -143,6 +143,17 @@ void loopWrappers(TObservers * observers, TLoopBlock block)
   });
 }
 
++ (void)updateDownloadState:(string)countryId
+{
+  dispatch_async(dispatch_get_main_queue(), ^{
+    MWMFrameworkListener * listener = [MWMFrameworkListener listener];
+    TObservers * observers = listener.storageObservers;
+    for (TStorageObserver observer in observers) {
+      [observer processCountryEvent:countryId];
+    }
+  });
+}
+
 + (void)updateDownloadProgress:(string)countryId progress:(TLocalAndRemoteSize)progress
 {
   dispatch_async(dispatch_get_main_queue(), ^{

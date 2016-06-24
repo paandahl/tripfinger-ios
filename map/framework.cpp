@@ -1061,29 +1061,45 @@ void Framework::UpdateUserViewportChanged()
   if (IsInteractiveSearchActive())
   {
     int tfCategory = m_categoryCheckerFn(m_lastInteractiveSearchParams.m_query);
+    (void)GetCurrentPosition(m_lastInteractiveSearchParams.m_lat,
+        m_lastInteractiveSearchParams.m_lon);
     if (tfCategory != 0) {
-      m2::RectD const viewport = GetCurrentViewport();
-      TripfingerMarkParams params;
-      ms::LatLon topLeftCoord = MercatorBounds::ToLatLon(viewport.LeftTop());
-      ms::LatLon botRightCoord = MercatorBounds::ToLatLon(viewport.RightBottom());
-      params.topLeft = m2::PointD(topLeftCoord.lat, topLeftCoord.lon);
-      params.botRight = m2::PointD(botRightCoord.lat, botRightCoord.lon);
-      params.category = tfCategory;
-      vector<TripfingerMark> tfMarks = m_poiSupplierFn(params);
-      search::Results results;
-      for (const auto& tfMark : tfMarks) {
-        FeatureID fid(tfMark);
-        search::Result::Metadata metadata;
-        search::Result result(fid, tfMark.mercator, tfMark.name, "Adreees", "Typeee", tfMark.type, metadata);
-        results.AddResult(move(result));
-      }
-      m_lastInteractiveSearchParams.m_onResults(results);
+      TripfingerSearch(m_lastInteractiveSearchParams, tfCategory);
     } else {
-      (void)GetCurrentPosition(m_lastInteractiveSearchParams.m_lat,
-                               m_lastInteractiveSearchParams.m_lon);
       Search(m_lastInteractiveSearchParams);
     }
   }
+}
+
+void Framework::TripfingerSearch(search::SearchParams const & params, int & tfCategory) {
+  m2::RectD const viewport = GetCurrentViewport();
+  if (QueryMayBeSkipped(m_lastInteractiveSearchParams, viewport)) {
+    return;
+  }
+  m_lastQueryParams = m_lastInteractiveSearchParams;
+  m_lastQueryViewport = viewport;
+
+  shared_ptr<TripfingerMarkParams> tfMarkParams = make_shared<TripfingerMarkParams>();
+  ms::LatLon topLeftCoord = MercatorBounds::ToLatLon(viewport.LeftTop());
+  ms::LatLon botRightCoord = MercatorBounds::ToLatLon(viewport.RightBottom());
+  tfMarkParams->topLeft = m2::PointD(topLeftCoord.lat, topLeftCoord.lon);
+  tfMarkParams->botRight = m2::PointD(botRightCoord.lat, botRightCoord.lon);
+  tfMarkParams->category = tfCategory;
+  if (m_lastTfMarkParams != nullptr) {
+    m_lastTfMarkParams->cancelled = true;
+  }
+  tfMarkParams->callback = [&] (vector<TripfingerMark> tfMarks) {
+    search::Results results;
+    for (const auto& tfMark : tfMarks) {
+      FeatureID fid(tfMark);
+      search::Result::Metadata metadata;
+      search::Result result(fid, tfMark.mercator, tfMark.name, "Adreees", "Typeee", tfMark.type, metadata);
+      results.AddResult(move(result));
+    }
+    m_lastInteractiveSearchParams.m_onResults(results);
+  };
+  m_lastTfMarkParams = tfMarkParams;
+  m_asyncPoiSupplierFn(tfMarkParams);
 }
 
 bool Framework::Search(search::SearchParams const & params)

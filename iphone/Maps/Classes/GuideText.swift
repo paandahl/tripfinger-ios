@@ -13,10 +13,14 @@ class GuideText: Object {
 extension GuideText: GuideItemHolder {
   
   func getId() -> String! {
-    return item.id
+    return item.uuid
   }
   
   func getName() -> String {
     return item.name!
+  }
+  
+  func getCategory() -> Listing.Category {
+    return Listing.Category(rawValue: item.category)!
   }
 }

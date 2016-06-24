@@ -5,10 +5,11 @@ import RealmSwift
 
 class ContentServiceTest: XCTestCase {
   
-  let brusselsId = "region-brussels"
+  let brusselsId = "9488f6bc-17c9-48d1-acf3-675a2cbf6948"
   
   override func setUp() {
     super.setUp()
+    TripfingerAppDelegate.mode = .TEST
     continueAfterFailure = false
   }
   
@@ -20,7 +21,7 @@ class ContentServiceTest: XCTestCase {
     let guideItem = GuideItem()
     let readyExpectation = expectationWithDescription("ready")
     
-    guideItem.id = brusselsId
+    guideItem.uuid = brusselsId
     ContentService.getGuideTextsForGuideItem(guideItem, failure: {fatalError("EX1")}) {
       guideTexts in
       
@@ -59,35 +60,20 @@ class ContentServiceTest: XCTestCase {
       XCTAssertNil(error, "Error")
     })
   }
-
-  
-  func testGetFullRegion() {
-    let readyExpectation = expectationWithDescription("ready")
-    
-    ContentService.getFullRegionTree(brusselsId, failure: {fatalError("EX2")}) {
-      region in
-      
-      readyExpectation.fulfill()
-    }
-    
-    waitForExpectationsWithTimeout(30, handler: { error in
-      XCTAssertNil(error, "Error")
-    })
-  }
   
   // check that category is filtered on also in offline mode
   func testGetCascadingListingsForRegion() {
     let exp = expectationWithDescription("ready")
     DatabaseServiceTest.insertBrunei { brunei in
-      ContentService.getCascadingListingsForRegion(brunei, withCategory: Listing.Category.ATTRACTIONS.rawValue, failure: {fatalError("EX3")}) { listings in
+      ContentService.getCascadingListingsForRegion(brunei.getId(), withCategory: Listing.Category.ATTRACTIONS.rawValue, failure: {fatalError("EX3")}) { listings in
         XCTAssertEqual(1, listings.count)
         XCTAssertEqual(1, brunei.item().subRegions.count)
         let bandar = brunei.item().subRegions[0]
-        ContentService.getCascadingListingsForRegion(bandar, withCategory: Listing.Category.ATTRACTIONS.rawValue, failure: {fatalError("EX4")}) { listings in
+        ContentService.getCascadingListingsForRegion(bandar.getId(), withCategory: Listing.Category.ATTRACTIONS.rawValue, failure: {fatalError("EX4")}) { listings in
           XCTAssertEqual(0, listings.count)
           XCTAssertEqual(1, bandar.item().subRegions.count)
           let malabau = bandar.item().subRegions[0]
-          ContentService.getCascadingListingsForRegion(malabau, withCategory: Listing.Category.ATTRACTIONS.rawValue, failure: {fatalError("EX10")}) { listings in
+          ContentService.getCascadingListingsForRegion(malabau.getId(), withCategory: Listing.Category.ATTRACTIONS.rawValue, failure: {fatalError("EX10")}) { listings in
             XCTAssertEqual(0, listings.count)
             exp.fulfill()
           }

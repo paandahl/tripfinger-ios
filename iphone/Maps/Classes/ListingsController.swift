@@ -1,35 +1,37 @@
 import Foundation
 
-class ListingsController: UIViewController {
+class ListingsController: ListingsParentController {
   
-  let session: Session
+  let categoryDescription: GuideText
+  let mapNavigator: MapNavigator
   let displayMode: DisplayMode
   let container = UIView()
   let listController: ListController
   var swipeController: SwipeController?
   
-  init(session: Session, categoryDescription: GuideText) {
-    self.session = session
-    
-    if session.currentSubCategory != nil {
+  init(regionId: String, countryMwmId: String, categoryDescription: GuideText, regionLicense: String?, mapNavigator: MapNavigator) {
+    self.categoryDescription = categoryDescription
+    self.mapNavigator = mapNavigator
+    if categoryDescription.item.subCategory != 0 {
       displayMode = DisplayMode.DIRECT_LIST
-      listController = ListController(session: session, grouped: false, categoryDescription: categoryDescription)
+      listController = ListController(regionId: regionId, countryMwmId: countryMwmId, grouped: false, categoryDescription: categoryDescription, regionLicense: regionLicense, mapNavigator: mapNavigator)
     } else {
-      switch session.currentCategory {
+      switch categoryDescription.getCategory() {
       case Listing.Category.ATTRACTIONS:
         displayMode = DisplayMode.WITH_SWIPER
-        listController = ListController(session: session, grouped: false, categoryDescription: categoryDescription)
-        swipeController = SwipeController(session: session)
+        listController = ListController(regionId: regionId, countryMwmId: countryMwmId, grouped: false, categoryDescription: categoryDescription, regionLicense: regionLicense, mapNavigator: mapNavigator)
+        swipeController = SwipeController(regionId: regionId, countryMwmId: countryMwmId)
       case Listing.Category.TRANSPORTATION:
         displayMode = DisplayMode.GROUPED_LIST
-        listController = ListController(session: session, grouped: true, categoryDescription: categoryDescription)
+        listController = ListController(regionId: regionId, countryMwmId: countryMwmId, grouped: true, categoryDescription: categoryDescription, regionLicense: regionLicense, mapNavigator: mapNavigator)
       default:
         displayMode = DisplayMode.DIRECT_LIST
-        listController = ListController(session: session, grouped: false, categoryDescription: categoryDescription)
+        listController = ListController(regionId: regionId, countryMwmId: countryMwmId, grouped: false, categoryDescription: categoryDescription, regionLicense: regionLicense, mapNavigator: mapNavigator)
       }
     }
     
-    super.init(nibName: nil, bundle: nil)
+    super.init(countryDownloadId: countryMwmId, offline: categoryDescription.item.offline)
+    edgesForExtendedLayout = .None
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -37,25 +39,14 @@ class ListingsController: UIViewController {
   }
   
   override func viewDidLoad() {
-    var barButtons = [UIBarButtonItem]()
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
-    barButtons.append(searchButton)
-    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
-    mapButton.accessibilityLabel = "Map"
-    let downloaded = DownloadService.isCountryDownloaded(session.currentCountry.getName())
-    if downloaded {
-      barButtons.append(mapButton)
-    }
-    navigationItem.rightBarButtonItems = barButtons
-
-    view.backgroundColor = UIColor.whiteColor()
+    super.viewDidLoad()
     
-    if let currentSubCategory = session.currentSubCategory {
+    if categoryDescription.item.subCategory != 0 {
       print("subcatty")
-      navigationItem.title = currentSubCategory.entityName
+      let subCategory = Listing.SubCategory(rawValue: categoryDescription.item.subCategory)!
+      navigationItem.title = subCategory.entityName
     } else {
-      print("no subcatty")
-      navigationItem.title = session.currentCategory.entityName
+      navigationItem.title = categoryDescription.getCategory().entityName
     }
     
     view.addSubview(container)
@@ -65,7 +56,7 @@ class ListingsController: UIViewController {
     segmentedControl.selectedSegmentIndex = 0
     segmentedControl.tintColor = UIColor.darkGrayColor()
     segmentedControl.backgroundColor = UIColor.whiteColor()
-    segmentedControl.addTarget(self, action: "segmentedControllerChanged:", forControlEvents: .ValueChanged)
+    segmentedControl.addTarget(self, action: #selector(ListingsController.segmentedControllerChanged(_:)), forControlEvents: .ValueChanged)
     
     let views = ["segmented": segmentedControl, "container": container]
     if displayMode == DisplayMode.WITH_SWIPER {
@@ -113,29 +104,24 @@ class ListingsController: UIViewController {
     super.viewDidLayoutSubviews()
     container.subviews[0].frame = container.bounds
   }
-  
-  func navigateToSearch() {
-    let vc = MapsAppDelegateWrapper.getMapViewController()
-    navigationController!.pushViewController(vc, animated: true)
-    MapsAppDelegateWrapper.openSearch()
-  }
-  
-  func navigateToMap() {
-    let vc = MapsAppDelegateWrapper.getMapViewController()
-    navigationController!.pushViewController(vc, animated: true)
-    FrameworkService.navigateToRegionOnMap(session.currentRegion)
-    MapsAppDelegateWrapper.openMapSearchWithQuery(session.currentCategory.entityName)
+    
+  override func navigateToMap() {
+    if !offline {
+      showAlertWhenGuideIsNotDownloaded()
+      return
+    }
+    mapNavigator.navigateToMap()
+    if categoryDescription.getCategory() == Listing.Category.ACCOMMODATION {
+      MapsAppDelegateWrapper.openMapSearchWithQuery("Hotel")
+    } else {
+      MapsAppDelegateWrapper.openMapSearchWithQuery(categoryDescription.getCategory().entityName)
+    }
   }
   
   func updateUI() {
     listController.updateUI()
   }
   
-  override func viewWillDisappear(animated: Bool) {
-    super.viewWillDisappear(animated)
-    listController.parentViewWillDisappear(self)
-  }
-    
   enum DisplayMode {
     case WITH_SWIPER
     case GROUPED_LIST

@@ -214,7 +214,31 @@ NSString * const kReportSegue = @"Map2ReportSegue";
   [self.controlsManager dismissPlacePage];
 }
 
-- (vector<TripfingerMark>)poiSupplier:(TripfingerMarkParams)params
+- (void)asyncPoiSupplier:(shared_ptr<TripfingerMarkParams>)params
+{
+  dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    CLLocationCoordinate2D topLeft = CLLocationCoordinate2DMake(params->topLeft.x, params->topLeft.y);
+    CLLocationCoordinate2D botRight = CLLocationCoordinate2DMake(params->botRight.x, params->botRight.y);
+    NSArray *tfAnnotations;
+    vector<TripfingerMark> tripfingerVector;
+    @synchronized (self) {
+      if (params->cancelled) {
+        return;
+      }
+      tfAnnotations = [TripfingerAppDelegate getPoisForArea:topLeft bottomRight:botRight category:params->category];
+      if (params->cancelled) {
+        return;
+      }
+    }
+    for (id tfAnnotation in tfAnnotations) {
+      TripfingerMark mark = [DataConverter entityToMark:tfAnnotation];
+      tripfingerVector.push_back(mark);
+    }
+    params->callback(tripfingerVector);
+  });
+}
+
+- (vector<TripfingerMark>)poiSupplier:(TripfingerMarkParams &)params
 {
   CLLocationCoordinate2D topLeft = CLLocationCoordinate2DMake(params.topLeft.x, params.topLeft.y);
   CLLocationCoordinate2D botRight = CLLocationCoordinate2DMake(params.botRight.x, params.botRight.y);
@@ -229,7 +253,6 @@ NSString * const kReportSegue = @"Map2ReportSegue";
     TripfingerMark mark = [DataConverter entityToMark:tfAnnotation];
     tripfingerVector.push_back(mark);
   }
-  
   return tripfingerVector;
 }
 
@@ -443,6 +466,8 @@ NSString * const kReportSegue = @"Map2ReportSegue";
   [self refreshAd];
 
   [self updateStatusBarStyle];
+  
+  [self.controlsManager setNavBarHidden:NO];
   GetFramework().InvalidateRendering();
   //[self showWelcomeScreenIfNeeded];
   //[self showViralAlertIfNeeded];
@@ -477,7 +502,7 @@ NSString * const kReportSegue = @"Map2ReportSegue";
     return;
 
   Class<MWMWelcomeControllerProtocol> whatsNewClass = [MWMWhatsNewDownloaderEditorController class];
-  BOOL const isFirstSession = [Alohalytics isFirstSession];
+  BOOL const isFirstSession = YES;
   Class<MWMWelcomeControllerProtocol> welcomeClass = isFirstSession ? [MWMFirstLaunchController class] : whatsNewClass;
 
   NSUserDefaults * ud = [NSUserDefaults standardUserDefaults];
@@ -588,12 +613,17 @@ NSString * const kReportSegue = @"Map2ReportSegue";
     [self.controlsManager.menuController processMyPositionStateModeEvent:mode];
   });
 
-  using PoiSupplierFnT = vector<TripfingerMark> (*)(id, SEL, TripfingerMarkParams);
+  using AsyncPoiSupplierFnT = void (*)(id, SEL, shared_ptr<TripfingerMarkParams>);
+  using PoiSupplierFnT = vector<TripfingerMark> (*)(id, SEL, TripfingerMarkParams&);
   using PoiByCoordFetcherFnT = TripfingerMark (*)(id, SEL, ms::LatLon);
   using CoordinateCheckerFnT = bool (*)(id, SEL, ms::LatLon);
   using CategoryCheckerFnT = int (*)(id, SEL, string);
   using PoiSearchFnT = vector<TripfingerMark> (*)(id, SEL, search::TripfingerSearchParams);
-  
+
+  SEL asyncPoiSupplierSelector = @selector(asyncPoiSupplier:);
+  AsyncPoiSupplierFnT asyncPoiSupplierFn = (AsyncPoiSupplierFnT)[self methodForSelector:asyncPoiSupplierSelector];
+  f.SetAsyncPoiSupplierFunction(bind(asyncPoiSupplierFn, self, asyncPoiSupplierSelector, _1));
+
   SEL poiSupplierSelector = @selector(poiSupplier:);
   PoiSupplierFnT poiSupplierFn = (PoiSupplierFnT)[self methodForSelector:poiSupplierSelector];
   f.SetPoiSupplierFunction(bind(poiSupplierFn, self, poiSupplierSelector, _1));
@@ -638,8 +668,11 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 
 - (void)openMapsDownloader
 {
+  
+  NSLog(@"Opening maps downloader");
   [Alohalytics logEvent:kAlohalyticsTapEventKey withValue:@"downloader"];
   [self performSegueWithIdentifier:kDownloaderSegue sender:self];
+  self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)openEditor
@@ -756,6 +789,9 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 
 - (void)processCountryEvent:(TCountryId const &)countryId
 {
+  if (boost::starts_with(countryId, "guide")) {
+    return;
+  }
   NodeStatuses nodeStatuses{};
   GetFramework().Storage().GetNodeStatuses(countryId, nodeStatuses);
   if (nodeStatuses.m_status != NodeStatus::Error)
@@ -878,6 +914,7 @@ NSString * const kReportSegue = @"Map2ReportSegue";
                      countries:(storage::TCountriesVec const &)countries
                        okBlock:(TMWMVoidBlock)okBlock
 {
+  NSLog(@"Presenting download alert");
   if (countries.size())
     [self.alertController presentDownloaderAlertWithCountries:countries code:code okBlock:okBlock];
   else

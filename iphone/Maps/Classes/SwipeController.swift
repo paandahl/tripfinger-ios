@@ -1,12 +1,14 @@
 import UIKit
 import MDCSwipeToChoose
 import RealmSwift
+import Firebase
 
 class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   
+  var regionId: String
+  var countryMwmId: String
   var noElementsLabel = UILabel()
   var listingStack: [Listing]?
-  let session: Session
   var cardWidth: CGFloat!
   var cardHeight: CGFloat!
 //  var filterBox: FilterBox!
@@ -17,9 +19,12 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
   var orignalFrontCardFrame: CGRect!
   var backCardView: ListingCardView!
   
-  init(session: Session) {
-    self.session = session
+  init(regionId: String, countryMwmId: String) {
+    self.regionId = regionId
+    self.countryMwmId = countryMwmId
     super.init(nibName: nil, bundle: nil)
+    edgesForExtendedLayout = .None
+    addObserver(DatabaseService.TFCountrySavedNotification, selector: #selector(countryDownloaded(_:)))
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -59,17 +64,21 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
       self.noElementsLabel.text = "Connection failed."
       self.displayCards()
     }
-    session.loadListings(failure) {
+    
+    ContentService.getCascadingListingsForRegion(regionId, withCategory: Listing.Category.ATTRACTIONS.rawValue, failure: failure) { listings in
       var newStack = [Listing]()
-      for listing in self.session.currentListings {
-        if listing.listing.notes == nil || listing.listing.notes!.likedState == GuideListingNotes.LikedState.NOT_YET_LIKED_OR_SWIPED {
+      for listing in listings {
+        let listingNotes = listing.listing.notes
+        let notYetSwiped = GuideListingNotes.LikedState.NOT_YET_LIKED_OR_SWIPED
+        if (listingNotes == nil || listingNotes!.likedState == notYetSwiped) && listing.item().images.count > 0 {
           newStack.append(listing)
         }
       }
       self.listingStack = newStack
       SyncManager.run_async {
         dispatch_async(dispatch_get_main_queue()) {
-          if !NetworkUtil.connectedToNetwork() && !self.session.currentRegion.item().offline {
+          let offlineRegion = DatabaseService.getRegionWithId(self.regionId)
+          if !NetworkUtil.connectedToNetwork() && offlineRegion == nil {
             self.noElementsLabel.text = "You are currently offline."
           } else {
             self.noElementsLabel.text = "No attractions to swipe."
@@ -78,6 +87,8 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
         }
       }
     }
+//    session.loadListings(failure) {
+//    }
   }
   
   func displayCards() {
@@ -214,7 +225,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     button.frame = CGRectMake(ChooseListingButtonHorizontalPadding, CGRectGetMaxY(self.backCardView.frame) + ChooseListingButtonVerticalPadding, image.size.width, image.size.height)
     button.setImage(image, forState: UIControlState.Normal)
     button.tintColor = UIColor(red: 247.0/255.0, green: 91.0/255.0, blue: 37.0/255.0, alpha: 1.0)
-    button.addTarget(self, action: "nopeFrontCardView", forControlEvents: UIControlEvents.TouchUpInside)
+    button.addTarget(self, action: #selector(SwipeController.nopeFrontCardView), forControlEvents: UIControlEvents.TouchUpInside)
     self.view.addSubview(button)
   }
   
@@ -224,7 +235,7 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     button.frame = CGRectMake(CGRectGetMaxX(self.view.frame) - image.size.width - ChooseListingButtonHorizontalPadding, CGRectGetMaxY(self.backCardView.frame) + ChooseListingButtonVerticalPadding, image.size.width, image.size.height)
     button.setImage(image, forState:UIControlState.Normal)
     button.tintColor = UIColor(red: 29.0/255.0, green: 245.0/255.0, blue: 106.0/255.0, alpha: 1.0)
-    button.addTarget(self, action: "likeFrontCardView", forControlEvents: UIControlEvents.TouchUpInside)
+    button.addTarget(self, action: #selector(SwipeController.likeFrontCardView), forControlEvents: UIControlEvents.TouchUpInside)
     self.view.addSubview(button)
     
   }
@@ -235,25 +246,27 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     self.frontCardView.mdc_swipe(MDCSwipeDirection.Right)
   }
   
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if segue.identifier == "showFilter" {
-      let navigationController = segue.destinationViewController as! UINavigationController
-      let filterController = navigationController.viewControllers[0] as! FilterController
-      filterController.session = session
-      filterController.delegate = self
-    }
+  func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ()) {
   }
   
-  func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ()) {
+  func countryDownloaded(notification: NSNotification) {
+    let countryName = notification.object as! String
+    let country = DatabaseService.getCountry(countryName)
+    if country.getDownloadId() == countryMwmId {
+      loadListings()
+    }
   }
 }
 
 extension SwipeController: ListingCardContainer {
   
   func showDetail(listing: Listing) {
-    self.session.currentListing = listing
     let entity = TripfingerEntity(listing: listing)
-    MapsAppDelegateWrapper.openPlacePage(entity)
+    MapsAppDelegateWrapper.openPlacePage(entity, withCountryMwmId: countryMwmId)
+    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+      kFIRParameterContentType: "listing",
+      kFIRParameterItemID: listing.item().name
+      ])
   }
 }
 

@@ -1,9 +1,28 @@
 import Foundation
 
+class FileUtils {
+  class func deviceRemainingFreeSpaceInBytes() -> Int64 {
+    let documentDirectoryPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+    var attributes: [String: AnyObject]
+    do {
+      attributes = try NSFileManager.defaultManager().attributesOfFileSystemForPath(documentDirectoryPath.last! as String)
+      let freeSize = attributes[NSFileSystemFreeSize] as! NSNumber
+      return freeSize.longLongValue
+    } catch {
+      fatalError("Could not measure free disk space.")
+    }
+  }
+}
+
 extension NSURL {
-  class func getDirectory(baseDir: NSSearchPathDirectory, withPath path: String) -> NSURL {
+  
+  class func getDirectory(baseDir: NSSearchPathDirectory, withPath path: String? = nil) -> NSURL {
     let libraryPath = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(baseDir, .UserDomainMask, true)[0])
-    return libraryPath.URLByAppendingPathComponent(path)
+    if let path = path {
+      return libraryPath.URLByAppendingPathComponent(path)
+    } else {
+      return libraryPath
+    }
   }
 
   class func createDirectory(baseDir: NSSearchPathDirectory, withPath path: String) -> NSURL {

@@ -21,14 +21,6 @@ enum EGeomType
 
 string DebugPrint(feature::EGeomType type);
 
-struct TripfingerMarkParams
-{
-  m2::PointD topLeft;
-  m2::PointD botRight;
-  int zoomLevel;
-  int category = 0;
-};
-
 class TripfingerMark
 {
 public:
@@ -60,6 +52,15 @@ public:
   bool liked = false;
 };
 
+struct TripfingerMarkParams
+{
+  bool cancelled = false;
+  m2::PointD topLeft;
+  m2::PointD botRight;
+  int zoomLevel;
+  int category = 0;
+  function<void (vector<TripfingerMark>)> callback;
+};
 
 struct FeatureID
 {

@@ -42,14 +42,14 @@ class ListingCell: UITableViewCell {
       contentView.addConstraints("H:[heart]-20-|", forViews: views)
       contentView.addConstraints("H:|-20-[desc(300)]", forViews: views)
       
-      let imageClick = UITapGestureRecognizer(target: self, action: "imageClick:")
+      let imageClick = UITapGestureRecognizer(target: self, action: #selector(ListingCell.imageClick(_:)))
       imageClick.numberOfTapsRequired = 1;
       imageClick.numberOfTouchesRequired = 1;
       mainImage.addGestureRecognizer(imageClick)
       mainImage.userInteractionEnabled = true
 
       heartImage.image = UIImage(named: "heart-24")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-      let heartClick = UITapGestureRecognizer(target: self, action: "heartClick")
+      let heartClick = UITapGestureRecognizer(target: self, action: #selector(ListingCell.heartClick))
       heartClick.numberOfTapsRequired = 1;
       heartClick.numberOfTouchesRequired = 1;
       heartImage.addGestureRecognizer(heartClick)
@@ -66,19 +66,17 @@ class ListingCell: UITableViewCell {
     mainImage.image = UIImage(named: "Placeholder")
     if let notes = listing.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
       heartImage.tintColor = UIColor.redColor()
-      contentHeight = 130
-    }
-    else {
+      contentHeight = listing.item().images.count == 0 ? 84 : 130
+    } else {
       heartImage.tintColor = UIColor.darkGrayColor()
-      contentHeight = 267
+      contentHeight = listing.item().images.count == 0 ? 84 : 267
     }
     
     mainImage.clipsToBounds = true
     mainImage.contentMode = UIViewContentMode.ScaleAspectFill
-    if listing.item().offline {
+    if listing.item().images.count > 0 && listing.item().offline {
       mainImage.image = UIImage(data: NSData(contentsOfURL: listing.item().images[0].getFileUrl())!)
-    }
-    else {
+    } else if listing.item().images.count > 0 {
       let imageUrl = DownloadService.gcsImagesUrl + listing.item().images[0].url + "-712x534"
       try! mainImage.loadImageWithUrl(imageUrl)
     }

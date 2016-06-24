@@ -194,8 +194,8 @@ extern NSString * const kAlohalyticsTapEventKey;
   [self refreshHelperPanels:UIInterfaceOrientationIsLandscape(self.ownerController.interfaceOrientation)];
 }
 
-- (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity {
-  [self.placePageManager showPlacePageWithEntityFullscreen:entity];
+- (void)showPlacePageWithEntityFullscreen:(TripfingerEntity*)entity withCountryMwmId:(NSString*)countryMwmId {
+  [self.placePageManager showPlacePageWithEntityFullscreen:entity withCountryMwmId:countryMwmId];
   [self refreshHelperPanels:UIInterfaceOrientationIsLandscape(self.ownerController.interfaceOrientation)];
 }
 
@@ -238,6 +238,8 @@ extern NSString * const kAlohalyticsTapEventKey;
       self.leftBound = self.topBound = 0.0;
     }
   }
+  NSLog(@"search state was: %lu", state);
+  [self setNavBarHidden:NO]; // the checks are in the method itself, so we send a NO not to interfere
   [self.ownerController setNeedsStatusBarAppearanceUpdate];
   if (!IPAD || (state != MWMSearchManagerStateDefault && state != MWMSearchManagerStateHidden))
     return;
@@ -377,6 +379,11 @@ extern NSString * const kAlohalyticsTapEventKey;
 {
   if (UIInterfaceOrientationIsLandscape(self.ownerController.interfaceOrientation))
     [self.navigationManager showHelperPanels];
+}
+
+- (void)navigatedToGuide {
+  self.searchManager.state = MWMSearchManagerStateHidden;
+  self.navigationManager.state = MWMNavigationDashboardStateHidden;
 }
 
 - (void)addPlacePageViews:(NSArray *)views
@@ -713,7 +720,7 @@ extern NSString * const kAlohalyticsTapEventKey;
 
 - (void)setHidden:(BOOL)hidden
 {
-  NSLog(@"setHidden");
+  NSLog(@"setHidden: %@", hidden ? @"true" : @"false");
   if (_hidden == hidden)
     return;
   _hidden = hidden;
@@ -727,12 +734,10 @@ extern NSString * const kAlohalyticsTapEventKey;
 - (void)setNavBarHidden:(BOOL)hidden {
   BOOL navMode = self.navigationManager.state != MWMNavigationDashboardStateHidden;
   BOOL isLandScape = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation);
-  BOOL mapSearch = self.searchManager.state == MWMSearchManagerStateMapSearch;
-  NSLog(@"navMode: %@", navMode ? @"true" : @"false");
-  NSLog(@"isLandscape: %@", isLandScape ? @"true" : @"false");
-  NSLog(@"mapSearch: %@", mapSearch ? @"true" : @"false");
-  NSLog(@"hidden: %@", hidden ? @"true" : @"false");
-  self.ownerController.navigationController.navigationBarHidden = navMode || isLandScape || mapSearch || hidden;
+  BOOL searchHidingBar = self.searchManager.state != MWMSearchManagerStateHidden;
+  bool navBarHidden = navMode || isLandScape || searchHidingBar || hidden;
+  NSLog(@"Setting navbar hidden: %@", navBarHidden ? @"true" : @"false");
+  self.ownerController.navigationController.navigationBarHidden = navBarHidden;
 }
 
 

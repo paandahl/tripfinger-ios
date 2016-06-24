@@ -6,39 +6,31 @@ class SuperScrollView: UIScrollView {
   }
 }
 
-class DetailController: UIViewController {
+class DetailController: ListingsParentController {
   
-  let session: Session
+  let entity: TripfingerEntity
 
   let scrollView = SuperScrollView()
   let placePageViews: [UIView]
   
-  init(session: Session, placePageViews: [UIView]) {
-    self.session = session
+  init(entity: TripfingerEntity, countryDownloadId: String, placePageViews: [UIView]) {
+    self.entity = entity
     scrollView.canCancelContentTouches = true
     self.placePageViews = placePageViews
-    super.init(nibName: nil, bundle: nil)
+    super.init(countryDownloadId: countryDownloadId, offline: entity.offline)
+    addObserver(DatabaseService.TFCountrySavedNotification, selector: #selector(countryDownloaded(_:)))
   }
   
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-
+  
   override func viewDidLoad() {
-    var barButtons = [UIBarButtonItem]()
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: "navigateToSearch")
-    barButtons.append(searchButton)
-    navigationItem.title = session.currentListing.listing.item.name
-    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: "navigateToMap")
-    mapButton.accessibilityLabel = "Map"
-    if session.currentListing.item().offline {
-      barButtons.append(mapButton)
-    }
-    navigationItem.rightBarButtonItems = barButtons
+    super.viewDidLoad()
+    navigationItem.title = entity.name
 
     let infoView = placePageViews[0]
     let actionBar = placePageViews[1]
-    view.backgroundColor = UIColor.whiteColor()
     view.addSubview(scrollView)
     let res = UIScreen.mainScreen().bounds.size
     scrollView.frame = CGRectMake(0, 0, res.width, res.height - actionBar.height)
@@ -60,17 +52,13 @@ class DetailController: UIViewController {
     return UIInterfaceOrientationMask.Portrait
   }
 
-  
-  func navigateToSearch() {
+  override func navigateToMap() {
+    if !offline {
+      showAlertWhenGuideIsNotDownloaded()
+      return 
+    }
     let vc = MapsAppDelegateWrapper.getMapViewController()
     navigationController!.pushViewController(vc, animated: true)
-    MapsAppDelegateWrapper.openSearch()
-  }
-  
-  func navigateToMap() {
-    let vc = MapsAppDelegateWrapper.getMapViewController()
-    navigationController!.pushViewController(vc, animated: true)
-    let entity = TripfingerEntity(listing: session.currentListing)
     MapsAppDelegateWrapper.selectListing(entity)
-  }
+  }  
 }

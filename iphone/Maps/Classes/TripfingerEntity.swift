@@ -30,11 +30,13 @@ import Foundation
   var artist = ""
   var originalUrl = ""
   
+  var textLicense = ""
+  
   var offline = false
   var liked = false
   
   override init() {}
-  
+    
   init(poi: SimplePOI) {
     super.init()
     self.offline = false
@@ -50,11 +52,13 @@ import Foundation
     }
   }
   
-  init(listing: Listing) {
+  convenience init(listing: Listing) {
+    self.init(guideItem: listing.item())
+
     self.category = listing.item().category
     self.offline = listing.item().offline
     self.name = listing.item().name
-    self.tripfingerId = listing.item().id
+    self.tripfingerId = listing.item().uuid
     self.lat = listing.listing.latitude
     self.lon = listing.listing.longitude
     self.type = Int32(Listing.SubCategory(rawValue: listing.item().subCategory)!.osmType)
@@ -68,14 +72,6 @@ import Foundation
     self.directions = listing.directions ?? ""
     self.price = listing.price ?? ""
     
-    if listing.item().images.count > 0 {
-      let image = listing.item().images[0]
-      self.url = image.url ?? ""
-      self.imageDescription = image.imageDescription ?? ""
-      self.license = image.license ?? ""
-      self.artist = image.artist ?? ""
-      self.originalUrl = image.originalUrl ?? ""
-    }
     if let notes = listing.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED  {
       self.liked = true
     }
@@ -85,10 +81,22 @@ import Foundation
     self.category = region.item().category
     self.offline = region.item().offline
     self.name = region.item().name
-    self.tripfingerId = region.item().id
+    self.tripfingerId = region.item().uuid
     self.lat = region.listing.latitude
     self.lon = region.listing.longitude
     self.type = Int32(Region.Category(rawValue: region.item().category)!.osmType)
+  }
+  
+  init(guideItem: GuideItem) {
+    if guideItem.images.count > 0 {
+      let image = guideItem.images[0]
+      self.url = image.url ?? ""
+      self.imageDescription = image.imageDescription ?? ""
+      self.license = image.license ?? ""
+      self.artist = image.artist ?? ""
+      self.originalUrl = image.originalUrl ?? ""
+    }
+    self.textLicense = guideItem.textLicense ?? ""
   }
   
   func isListing() -> Bool {

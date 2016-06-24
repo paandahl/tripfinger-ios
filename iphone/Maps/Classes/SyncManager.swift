@@ -2,7 +2,7 @@ import Foundation
 
 class SyncManager {
   
-  class func delay(delay:Double, closure:()->()) {
+  class func delay(delay: Double, closure: ()->()) {
     dispatch_after(
       dispatch_time(
         DISPATCH_TIME_NOW,
@@ -10,7 +10,6 @@ class SyncManager {
       ),
       dispatch_get_main_queue(), closure)
   }
-
   
   class func synchronized(lock: AnyObject, closure: () -> ()) {
     get_lock(lock)

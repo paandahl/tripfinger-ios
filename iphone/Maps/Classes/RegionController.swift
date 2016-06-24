@@ -1,139 +1,59 @@
 import RealmSwift
 import MBProgressHUD
+import Firebase
 
-protocol RegionControllerDelegate: class {
-  func categorySelected(category: Listing.Category, view: String)
-  func navigateInternally(callback: () -> ())
+protocol MapNavigator {
+  func navigateToMap()
 }
 
-class RegionController: GuideItemController {
+class RegionController: GuideItemController, MapNavigator {
   
-  var delegate: RegionControllerDelegate!
-  let refreshControl = UIRefreshControl()
-  var countryLists = [(String, List<Region>)]()
+  var countryMwmId: String
+  var region: Region
   
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    let colorImage = UIImage(withColor: UIColor.primary(), frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 64))
-    navigationController!.navigationBar.setBackgroundImage(colorImage, forBarMetrics: .Default)
-    navigationController!.navigationBar.translucent = true
-    
-    if session.currentRegion == nil && countryLists.count == 0 {
-      refreshControl.addTarget(self, action: "reffo", forControlEvents: .ValueChanged)
-      tableView.addSubview(refreshControl)
-      loadCountryLists()
+  init(region: Region, countryMwmId: String? = nil) {
+    self.region = region
+    if let countryMwmId = countryMwmId {
+      self.countryMwmId = countryMwmId
+    } else {
+      self.countryMwmId = region.getDownloadId()
     }
-    updateUI()
-    
-    dispatch_async(dispatch_get_main_queue()) {
-      MapsAppDelegateWrapper.getMapViewController().view.layoutSubviews()
-    }
+    super.init(guideItem: region.item())
+    navigationItem.title = region.getName()
+    addObserver(DatabaseService.TFCountryUpdatingNotification, selector: #selector(countryBeingDeleted(_:)))
+    addObserver(DatabaseService.TFCountryDeletingNotification, selector: #selector(countryBeingDeleted(_:)))
+    addObserver(DatabaseService.TFCountrySavedNotification, selector: #selector(countryDownloaded(_:)))
   }
   
-  func reffo() {
-    loadCountryLists()
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
   
-  override func updateUI() {
-    print("UPDATEUI, main thread: \(NSThread.isMainThread())")
-    // if nil, we are in offline mode, changeRegion returned immediately, and viewdidload will trigger this method
-    if let tableView = tableView {
-      if session.currentItem != nil {
-        navigationItem.title = session.currentItem.name
-      } else {
-        navigationItem.title = "Countries"
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    loadRegionIfNecessary()
+  }
+  
+  func loadRegionIfNecessary() {
+    let failure = {
+      self.delay(2, selector: #selector(self.loadRegionIfNecessary))
+    }
+    if region.item().loadStatus != GuideItem.LoadStatus.FULLY_LOADED {
+      ContentService.getRegionWithSlug(region.getSlug(), failure: failure) { region in
+        self.region = region
+        self.updateUI()
       }
+    }
+  }
       
-      populateTableSections()
-      tableView.reloadData {
-        self.tableView.contentOffset = CGPointZero
-      }
-    }
-    refreshControl.endRefreshing()
-  }
-  
-  override func viewWillDisappear(animated: Bool) {
-    print("view will dissappear")
-    if let navigationController = navigationController where
-      navigationController.viewControllers.indexOf(self) == nil && !contextSwitched {
-        print("moving back in hierarchy")
-        guideItemExpanded = false
-        let parentRegionController = navigationController.viewControllers.last as! RegionController
-        let failure = {
-          fatalError("Moved back but couldn't fetch parent. We're stranded.")
-        }
-        session.moveBackInHierarchy(failure) {
-          print("new currentREgion: \(self.session.currentRegion?.getName())")
-          if parentRegionController.tableSections.count == 0 {
-            dispatch_async(dispatch_get_main_queue()) {
-              parentRegionController.updateUI()
-            }
-          }
-        }
-    }
+  override func updateUI() {
+    populateTableSections()
+    tableView.reloadData {}
   }
   
   override func downloadClicked() {
-    if let mwmRegionId = session.currentCountry.mwmRegionId {
-      MapsAppDelegateWrapper.openDownloads(mwmRegionId, navigationController: navigationController)
-    } else {
-      MapsAppDelegateWrapper.openDownloads(session.currentCountry.getName(), navigationController: navigationController)
-    }
-  }
-  
-  func loadCountryLists() {
-    print("loading country lists")
-    if NetworkUtil.connectedToNetwork() {
-      let failure = { () -> () in
-        NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(2), target: self, selector: "loadCountryLists", userInfo: nil, repeats: false)
-      }
-      ContentService.getCountries(failure) {
-        countries in
-        
-        print("Fetched \(countries.count) countries.")
-        for country in countries {
-          country.item().loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED
-        }
-        self.countryLists = self.makeCountryLists(countries)
-        print("Turned \(countries.count) countries into \(self.countryLists.count) country lists.")
-        self.updateUI()
-      }
-    } else {
-      countryLists = makeCountryLists(Array<Region>(DatabaseService.getCountries()))
-      updateUI()
-    }
-  }
-  
-  private func getCountryList(worldArea: String, countryLists: [(String, List<Region>)]) -> List<Region>? {
-    for (area, countryList) in countryLists {
-      if area == worldArea {
-        return countryList
-      }
-    }
-    return nil
-  }
-  
-  private func makeCountryLists(countries: [Region]) -> [(String, List<Region>)] {
-    var countryLists = [(String, List<Region>)]()
-    let betaList = List<Region>()
-    for country in countries {
-      if country.item().status == 0 {
-        betaList.append(country)
-      } else {
-        var countryList = getCountryList(country.listing.worldArea, countryLists: countryLists)
-        if countryList == nil {
-          countryList = List<Region>()
-          countryLists.append((country.listing.worldArea, countryList!))
-        }
-        countryList!.append(country)
-      }
-    }
-    if betaList.count > 0 {
-      countryLists.append(("Unfinished test-content", betaList))
-    }
-    return countryLists
-  }  
+    MapsAppDelegateWrapper.openDownloads(region.getDownloadId(), navigationController: navigationController)
+  }    
 }
 
 // MARK: - Table data source
@@ -142,82 +62,70 @@ extension RegionController {
   override func populateTableSections() {
     tableSections = [TableSection]()
     
-    if session.currentItem == nil {
-      if !NetworkUtil.connectedToNetwork() && countryLists.count == 0 {
-        let section = TableSection(cellIdentifier: TableCellIdentifiers.textMessageCell, handler: nil)
-        section.elements.append((title: "", value: ""))
-        tableSections.append(section)
-      } else {
-        for (regionName, countryList) in countryLists {
-          let section = TableSection(title: regionName, cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
-          for country in countryList {
-            section.elements.append((title: country.listing.item.name!, value: country))
-          }
-          tableSections.append(section)
-        }
-      }
-    } else if session.currentItem.category > Region.Category.CONTINENT.rawValue {
-      let section = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell, handler: nil)
-      section.elements.append(("", ""))
-      tableSections.append(section)
-    }
+    let contentSection = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell, handler: nil)
+    contentSection.elements.append(("", ""))
+    tableSections.append(contentSection)
     
     if guideItemExpanded {
-      let section = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToSection)
-      for guideSection in session.currentItem.guideSections {
-        section.elements.append((title: guideSection.item.name, value: guideSection))
+      let textsSection = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToSection)
+      for guideSection in region.item().guideSections {
+        textsSection.elements.append((title: guideSection.item.name, value: guideSection))
       }
-      tableSections.append(section)
+      tableSections.append(textsSection)
     }
     
-    if session.currentRegion != nil {
-      var section = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
-      let section2 = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
-      var i = 0
-      for categoryDesc in session.currentRegion.item().allCategoryDescriptions {
-        let category = Listing.Category(rawValue: categoryDesc.item.category)!
-        if i > 0 {
-          section2.elements.append((title: category.entityName, value: categoryDesc))
-        } else {
-          section.elements.append((title: category.entityName, value: categoryDesc))
-        }
-        i += 1
+    let attractionsSection = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
+    let categoriesSection = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
+    var i = 0
+    for categoryDesc in region.item().allCategoryDescriptions {
+      let category = Listing.Category(rawValue: categoryDesc.item.category)!
+      if i > 0 {
+        categoriesSection.elements.append((title: category.entityName, value: categoryDesc))
+      } else {
+        attractionsSection.elements.append((title: category.entityName, value: categoryDesc))
       }
-      tableSections.append(section)
+      i += 1
+    }
+    tableSections.append(attractionsSection)
+    
+    let subRegionsSection: TableSection
+    let probablyHasChildren = region.item().loadStatus == GuideItem.LoadStatus.CHILDREN_NOT_LOADED && (region.getCategory() == Region.Category.COUNTRY || region.getCategory() == Region.Category.SUB_REGION)
+    if probablyHasChildren || region.item().subRegions.count > 0 {
+      let clickHandler: (AnyObject -> ())? = probablyHasChildren ? nil : navigateToRegion
+      switch region.getCategory() {
+      case Region.Category.CONTINENT:
+        subRegionsSection = TableSection(title: "Countries:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: clickHandler)
+      case Region.Category.COUNTRY:
+        subRegionsSection = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: clickHandler)
+      case Region.Category.SUB_REGION:
+        subRegionsSection = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: clickHandler)
+      default:
+        subRegionsSection = TableSection(title: "Neighbourhoods:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: clickHandler)
+      }
       
-      if session.currentRegion.item().subRegions.count > 0 {
-        switch session.currentRegion.item().category {
-        case Region.Category.CONTINENT.rawValue:
-          section = TableSection(title: "Countries:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
-        case Region.Category.COUNTRY.rawValue:
-          section = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
-        case Region.Category.SUB_REGION.rawValue:
-          section = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
-        default:
-          section = TableSection(title: "Neighbourhoods:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
-        }
-        
-        for subRegion in session.currentRegion.item().subRegions {
+      if probablyHasChildren {
+        subRegionsSection.elements.append((title: "Loading...", value: ""))
+      } else {
+        for subRegion in region.item().subRegions {
           var itemName = subRegion.listing.item.name
           let range = itemName.rangeOfString("/")
           if range != nil {
             itemName = itemName.substringFromIndex(range!.endIndex)
           }
-          section.elements.append((title: itemName, value: subRegion))
+          subRegionsSection.elements.append((title: itemName, value: subRegion))
         }
-        tableSections.append(section)
       }
-      tableSections.append(section2)
+      tableSections.append(subRegionsSection)
     }
+    tableSections.append(categoriesSection)
   }
-    
+  
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    
     let section = tableSections[indexPath.section]
     if section.cellIdentifier == TableCellIdentifiers.guideItemCell {
       let cell = GuideItemCell()
       cell.delegate = self
-      cell.setContentFromGuideItem(session.currentItem)
+      cell.setContentFromRegion(region)
       if (guideItemExpanded) {
         cell.expand()
       }
@@ -226,14 +134,14 @@ extension RegionController {
       
     } else {
       let cell = tableView.dequeueReusableCellWithIdentifier(section.cellIdentifier, forIndexPath: indexPath)
-      if let cell = cell as? TextMessageCell {
-        cell.setTextMessage("You are offline. Go online to view and download countries.")
-        
-      } else if cell.reuseIdentifier == TableCellIdentifiers.loadingCell {
+      if cell.reuseIdentifier == TableCellIdentifiers.loadingCell {
         let indicator = cell.viewWithTag(1000) as! UIActivityIndicatorView
         indicator.startAnimating()
-      } else if indexPath.row < section.elements.count {
+      } else if let cell = cell as? RightDetailCell where indexPath.row < section.elements.count {
         cell.textLabel!.text = section.elements[indexPath.row].0
+        if let region = section.elements[indexPath.row].1 as? Region {
+          cell.unfinishedLabel.hidden = region.item().status == 10
+        }
       } else {
         // this is just for the application not to hang when we have race conditions
         // f.ex. you navigate to a region, the cell count is calculated, but before
@@ -244,60 +152,70 @@ extension RegionController {
       
       return cell
     }
-  }
+  }    
 }
 
 // MARK: - Navigation
 extension RegionController {
   
   func navigateToRegion(object: AnyObject) {
-    guideItemExpanded = false
     let region = object as! Region
-    
-    let regionController = RegionController.constructRegionController(session)
+    let regionController = RegionController(region: region, countryMwmId: countryMwmId)
     navigationController!.pushViewController(regionController, animated: true)
-    
-    session.changeRegion(region, failure: navigationFailure) {
-      regionController.updateUI()
-    }
-  }
-    
-  func navigateToCategory(object: AnyObject) {
-    let categoryDescription = object as! GuideText
-    session.currentCategory = Listing.Category(rawValue: categoryDescription.item.category)!
-    print("set curent category to: \(session.currentCategory)")
-    
-    let listingsController = ListingsController(session: session, categoryDescription: categoryDescription)
-    listingsController.edgesForExtendedLayout = .None // offset from navigation bar
-    navigationController!.pushViewController(listingsController, animated: true)
-    session.changeSection(categoryDescription, failure: navigationFailure) {
-      listingsController.updateUI()
-    }
-  }
-    
-  class func constructRegionController(session: Session, title: String? = nil) -> RegionController {
-    let regionController = RegionController(session: session)
-    regionController.edgesForExtendedLayout = .None // offset from navigation bar
-    regionController.navigationItem.title = title
-    return regionController
+    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+      kFIRParameterContentType: "region",
+      kFIRParameterItemID: region.getName()
+      ])
   }
   
-  //extension RootController: SearchViewControllerDelegate {
-  //  func selectedSearchResult(searchResult: SimplePOI) {
-  //    dismissViewControllerAnimated(true, completion: nil)
-  //
-  //    if searchResult.category == 180 { // street
-  //      if !(currentController is MapController) {
-  //        navigateToSubview("mapController", controllerType: MapController.self)
-  //      }
-  //    }
-  //    else if String(searchResult.category).hasPrefix("2") { // Listing
-  //      if !(currentController is MapController) {
-  //        navigateToSubview("mapController", controllerType: MapController.self)
-  //      }
-  //    }
-  //    let subController = currentController as! SubController
-  //    subController.selectedSearchResult(searchResult)
-  //  }
-  //}  
+  func navigateToCategory(object: AnyObject) {
+    let categoryDescription = object as! GuideText
+    let listingsController = ListingsController(regionId: region.getId(), countryMwmId: countryMwmId, categoryDescription: categoryDescription, regionLicense: region.item().textLicense, mapNavigator: self)
+    navigationController!.pushViewController(listingsController, animated: true)
+    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+      kFIRParameterContentType: "category",
+      kFIRParameterItemID: region.getName() + ": " + categoryDescription.getCategory().entityName
+      ])
+  }
+  
+  func navigateToSection(object: AnyObject) {
+    let section = object as! GuideText
+    let sectionController = SectionController(section: section, mapNavigator: self)
+    navigationController!.pushViewController(sectionController, animated: true)
+    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+      kFIRParameterContentType: "section",
+      kFIRParameterItemID: region.getName() + ": " + section.getName()
+      ])
+  }
+  
+  override func navigateToMap() {
+    let vc = MapsAppDelegateWrapper.getMapViewController()
+    navigationController!.pushViewController(vc, animated: true)
+    FrameworkService.navigateToRegionOnMap(region)
+  }
+  
+  func belongsToCountry(country: String) -> Bool {
+    return region.listing.country == country || (region.getCategory() == Region.Category.COUNTRY && region.getName() == country)
+  }
+  
+  func countryBeingDeleted(notifiction: NSNotification) {
+    let country = notifiction.object as! String
+    if belongsToCountry(country) {
+      let country = region.listing.country
+      let category = region.getCategory()
+      region = Region.constructRegion(region.getName())
+      region.listing.country = country
+      region.item().category = category.rawValue
+      updateUI()
+    }
+  }
+  
+  func countryDownloaded(notifiction: NSNotification) {
+    let country = notifiction.object as! String
+    if belongsToCountry(country) {
+      region.item().loadStatus = GuideItem.LoadStatus.CONTENT_NOT_LOADED
+      loadRegionIfNecessary()
+      updateUI()
+    }
+  }
 }

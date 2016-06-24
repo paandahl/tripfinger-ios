@@ -162,10 +162,8 @@ using namespace storage;
     [downloadedCountries addObject:@(countryId.c_str())];
   NSInteger downloadStatus = [TripfingerAppDelegate downloadStatus:@(m_parentId.c_str())];
   NodeStatus nodeStatus = static_cast<NodeStatus>(downloadStatus);
-  NSLog(@"Download status for guide: %ld", downloadStatus);
-  if (!self.isParentRoot && nodeStatus != NodeStatus::NotDownloaded) {
+  if (!self.isParentRoot && nodeStatus != NodeStatus::NotDownloaded && nodeStatus != NodeStatus::Undefined) {
     downloadedCountries = [NSMutableArray arrayWithArray:[downloadedCountries sortedArrayUsingComparator:compareLocalNames]];
-    NSLog(@"Adding guide to downloaded section");
     [downloadedCountries insertObject:[@"guide" stringByAppendingString:self.parentCountryId] atIndex:0];
     self.downloadedCountries = downloadedCountries;
   } else {

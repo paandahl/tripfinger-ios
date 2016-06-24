@@ -101,25 +101,25 @@ void InitLocalizedStrings()
 void InitCrashTrackers()
 {
 #ifdef OMIM_PRODUCTION
-  if (![[Statistics instance] isStatisticsEnabled])
-    return;
-
-  NSString * hockeyKey = @(HOCKEY_APP_KEY);
-  if (hockeyKey.length != 0)
-  {
-    // Initialize Hockey App SDK.
-    BITHockeyManager * hockeyManager = [BITHockeyManager sharedHockeyManager];
-    [hockeyManager configureWithIdentifier:hockeyKey];
-    [hockeyManager.crashManager setCrashManagerStatus: BITCrashManagerStatusAutoSend];
-    [hockeyManager startManager];
-  }
-
-  NSString * fabricKey = @(CRASHLYTICS_IOS_KEY);
-  if (fabricKey.length != 0)
-  {
-    // Initialize Fabric/Crashlytics SDK.
-    [Fabric with:@[[Crashlytics class]]];
-  }
+//  if (![[Statistics instance] isStatisticsEnabled])
+//    return;
+//
+//  NSString * hockeyKey = @(HOCKEY_APP_KEY);
+//  if (hockeyKey.length != 0)
+//  {
+//    // Initialize Hockey App SDK.
+//    BITHockeyManager * hockeyManager = [BITHockeyManager sharedHockeyManager];
+//    [hockeyManager configureWithIdentifier:hockeyKey];
+//    [hockeyManager.crashManager setCrashManagerStatus: BITCrashManagerStatusAutoSend];
+//    [hockeyManager startManager];
+//  }
+//
+//  NSString * fabricKey = @(CRASHLYTICS_IOS_KEY);
+//  if (fabricKey.length != 0)
+//  {
+//    // Initialize Fabric/Crashlytics SDK.
+//    [Fabric with:@[[Crashlytics class]]];
+//  }
 #endif
 }
 
@@ -683,8 +683,6 @@ using namespace osm_auth_ios;
 
 + (void)customizeAppearanceForNavigationBar:(UINavigationBar *)navigationBar
 {
-  navigationBar.tintColor = [UIColor whiteColor];
-  navigationBar.barTintColor = [UIColor whiteColor];
   navigationBar.titleTextAttributes = [self navigationBarTextAttributes];
 }
 

@@ -1,5 +1,6 @@
 import XCTest
 import BrightFutures
+import SwiftyJSON
 import Result
 @testable import Tripfinger
 
@@ -7,6 +8,7 @@ class DatabaseServiceTest: XCTestCase {
   
   override func setUp() {
     DatabaseService.startTestMode()
+    continueAfterFailure = false
     super.setUp()
   }
   
@@ -47,8 +49,10 @@ class DatabaseServiceTest: XCTestCase {
       var brunei = DatabaseService.getCountry("Brunei")
       XCTAssertNotNil(brunei)
       let attractions = DatabaseService.getListingsForRegion(brunei)
+      print("count: \(attractions.count)")
       XCTAssertEqual(1, attractions.count)
-      let attractionId = attractions.first!.item().id
+      print(attractions.first!)
+      let attractionId = attractions.first!.item().uuid
       
       DatabaseService.deleteCountry(brunei.item().name)
 
