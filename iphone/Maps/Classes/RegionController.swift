@@ -89,7 +89,7 @@ extension RegionController {
     tableSections.append(attractionsSection)
     
     let subRegionsSection: TableSection
-    let probablyHasChildren = region.item().loadStatus == GuideItem.LoadStatus.CHILDREN_NOT_LOADED && region.getCategory() == Region.Category.COUNTRY || region.getCategory() == Region.Category.SUB_REGION
+    let probablyHasChildren = region.item().loadStatus == GuideItem.LoadStatus.CHILDREN_NOT_LOADED && (region.getCategory() == Region.Category.COUNTRY || region.getCategory() == Region.Category.SUB_REGION)
     if probablyHasChildren || region.item().subRegions.count > 0 {
       let clickHandler: (AnyObject -> ())? = probablyHasChildren ? nil : navigateToRegion
       switch region.getCategory() {

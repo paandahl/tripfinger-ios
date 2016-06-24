@@ -79,10 +79,7 @@ class GuideViewOnlineTest: XCTestCase {
     koSamuiRow.tap()
 
     let chawengRow = app.tables.staticTexts["Chaweng"]
-    expectationForPredicate(exists, evaluatedWithObject: chawengRow, handler: nil)
-    waitForExpectationsWithTimeout(60, handler: nil)
-    scrollToElement(chawengRow)
-    chawengRow.tap()
+    tapWhenHittable(chawengRow, parent: app.tables.element)
     
     backButton = app.navigationBars["Chaweng"].buttons["Ko Samui"]
     expectationForPredicate(exists, evaluatedWithObject: backButton, handler: nil)

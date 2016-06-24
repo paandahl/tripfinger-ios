@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DD4AC8322E4DF3472A1FCBC /* Pods_TripfingerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF333092A9B8D09DB6F8F3CD /* Pods_TripfingerTests.framework */; };
 		1D3623260D0F684500981E51 /* MapsAppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* MapsAppDelegate.mm */; };
 		1D60589B0D05DD56006BFB54 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.mm */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -629,7 +630,6 @@
 		6741AA3C1BF340DE002C974C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6741AA3D1BF340DE002C974C /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6BC1E4B1ACBE96100EF0360 /* FBSDKCoreKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6741AA3E1BF340DE002C974C /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6BC1E4C1ACBE96100EF0360 /* FBSDKShareKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		6741AA3F1BF340DE002C974C /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C9864F186C5EDE00AF7E9E /* PassKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6741AA401BF340DE002C974C /* libFlurry_7.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6671C6A1BA2EFD500548008 /* libFlurry_7.1.0.a */; };
 		6741AA411BF340DE002C974C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00511051A1101FC00A61AA4 /* CoreMedia.framework */; };
 		6741AA421BF340DE002C974C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00511031A1101F600A61AA4 /* CoreData.framework */; };
@@ -735,7 +735,6 @@
 		B00511021A1101E000A61AA4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C98655186C734000AF7E9E /* AVFoundation.framework */; };
 		B00511041A1101F600A61AA4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00511031A1101F600A61AA4 /* CoreData.framework */; };
 		B00511061A1101FC00A61AA4 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00511051A1101FC00A61AA4 /* CoreMedia.framework */; };
-		B08AA8D51A25E58500810B1C /* PassKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C9864F186C5EDE00AF7E9E /* PassKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		B08AA8D61A25E58C00810B1C /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C9864D186C5ED300AF7E9E /* Social.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		B08AA8DA1A26299A00810B1C /* TimeUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = B08AA8D91A26299A00810B1C /* TimeUtils.mm */; };
 		B0DFE6311A1B78A200B6C35E /* LocalNotifications.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0DFE62F1A1B78A200B6C35E /* LocalNotifications.plist */; };
@@ -1396,6 +1395,7 @@
 		4A7D89C21B2EBF3B00AC843E /* resources-mdpi_dark */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-mdpi_dark"; path = "../../data/resources-mdpi_dark"; sourceTree = "<group>"; };
 		4A7D89C31B2EBF3B00AC843E /* resources-xhdpi_dark */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-xhdpi_dark"; path = "../../data/resources-xhdpi_dark"; sourceTree = "<group>"; };
 		4A7D89C41B2EBF3B00AC843E /* resources-xxhdpi_dark */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "resources-xxhdpi_dark"; path = "../../data/resources-xxhdpi_dark"; sourceTree = "<group>"; };
+		4DFC0C1ADC034E571F3C119D /* Pods-TripfingerTests.simulator release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.simulator release.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.simulator release.xcconfig"; sourceTree = "<group>"; };
 		5605022E1B6211E100169CAD /* sound-strings */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "sound-strings"; path = "../../data/sound-strings"; sourceTree = "<group>"; };
 		560634F01B78804C00F3D670 /* MWMTextToSpeech.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMTextToSpeech.h; sourceTree = "<group>"; };
 		560634F11B78806100F3D670 /* MWMTextToSpeech.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMTextToSpeech.mm; sourceTree = "<group>"; };
@@ -1435,6 +1435,8 @@
 		6B9978341C89A316003B8AA0 /* editor.config */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = editor.config; path = ../../data/editor.config; sourceTree = "<group>"; };
 		6BA0BCCF1B74DDBA00CC9969 /* MWMCustomFacebookEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMCustomFacebookEvents.h; sourceTree = "<group>"; };
 		6BA0BCD01B74DDBA00CC9969 /* MWMCustomFacebookEvents.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMCustomFacebookEvents.mm; sourceTree = "<group>"; };
+		72DABF35681188F725264B8E /* Pods-TripfingerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		82D351E25AFA767C2B79BF85 /* Pods-TripfingerTests.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.adhoc.xcconfig"; sourceTree = "<group>"; };
 		845C891E1C78748000940D7F /* me.maps.enterprise.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = me.maps.enterprise.entitlements; sourceTree = "<group>"; };
 		845C89291C8981CE00940D7F /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
 		845C892B1C8981CE00940D7F /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
@@ -1445,6 +1447,7 @@
 		8B1AE6DB806B9B9C714AE10D /* Pods-Tripfinger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.debug.xcconfig"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MAPSME.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MAPSME.plist; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		8F8FF55BE4C7D95695116482 /* Pods-Tripfinger.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.adhoc.xcconfig"; sourceTree = "<group>"; };
+		9613B381E6921EB74EC0A795 /* Pods-TripfingerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.release.xcconfig"; sourceTree = "<group>"; };
 		972CDCC51887F1B7006641CA /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		974386DB19373EA400FD5659 /* ToastView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ToastView.h; sourceTree = "<group>"; };
 		974386DC19373EA400FD5659 /* ToastView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ToastView.mm; sourceTree = "<group>"; };
@@ -1474,7 +1477,6 @@
 		97C98521186AE3CF00AF7E9E /* AppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppInfo.h; sourceTree = "<group>"; };
 		97C9864B186C5EAA00AF7E9E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		97C9864D186C5ED300AF7E9E /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
-		97C9864F186C5EDE00AF7E9E /* PassKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PassKit.framework; path = System/Library/Frameworks/PassKit.framework; sourceTree = SDKROOT; };
 		97C98651186C5EF000AF7E9E /* iAd.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = iAd.framework; path = System/Library/Frameworks/iAd.framework; sourceTree = SDKROOT; };
 		97C98653186C5F0500AF7E9E /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		97C98655186C734000AF7E9E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -1507,8 +1509,11 @@
 		B08AA8D91A26299A00810B1C /* TimeUtils.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = TimeUtils.mm; path = Categories/TimeUtils.mm; sourceTree = "<group>"; };
 		B0DFE6301A1B78A200B6C35E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = en; path = en.lproj/LocalNotifications.plist; sourceTree = "<group>"; };
 		B454AEACBFC0EB1C53C688C8 /* Pods-Tripfinger.simulator.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.simulator.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.simulator.xcconfig"; sourceTree = "<group>"; };
+		BE5CD3D8F377F8C33CF32638 /* Pods-TripfingerTests.production full.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.production full.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.production full.xcconfig"; sourceTree = "<group>"; };
+		C35087D1639E742675F1F30E /* Pods-TripfingerTests.simulator.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.simulator.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.simulator.xcconfig"; sourceTree = "<group>"; };
 		CB252D6B16FF82C8001E41E9 /* Statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Statistics.h; sourceTree = "<group>"; };
 		CB252D6C16FF82C8001E41E9 /* Statistics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Statistics.mm; sourceTree = "<group>"; };
+		DF333092A9B8D09DB6F8F3CD /* Pods_TripfingerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TripfingerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED48BBB317C267F5003E7E92 /* ColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPickerView.h; sourceTree = "<group>"; };
 		ED48BBB417C267F5003E7E92 /* ColorPickerView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ColorPickerView.mm; sourceTree = "<group>"; };
 		ED48BBB817C2B1E2003E7E92 /* CircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleView.h; sourceTree = "<group>"; };
@@ -1757,7 +1762,6 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				F6BC1E4D1ACBE96100EF0360 /* FBSDKCoreKit.framework in Frameworks */,
 				F6BC1E4E1ACBE96100EF0360 /* FBSDKShareKit.framework in Frameworks */,
-				B08AA8D51A25E58500810B1C /* PassKit.framework in Frameworks */,
 				F6671C6B1BA2EFD500548008 /* libFlurry_7.1.0.a in Frameworks */,
 				34921F6A1BFA0CDC00737D6E /* MyTargetSDKCorp.framework in Frameworks */,
 				B00511061A1101FC00A61AA4 /* CoreMedia.framework in Frameworks */,
@@ -1781,6 +1785,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0DD4AC8322E4DF3472A1FCBC /* Pods_TripfingerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1844,7 +1849,6 @@
 				6741AA3C1BF340DE002C974C /* Foundation.framework in Frameworks */,
 				6741AA3D1BF340DE002C974C /* FBSDKCoreKit.framework in Frameworks */,
 				6741AA3E1BF340DE002C974C /* FBSDKShareKit.framework in Frameworks */,
-				6741AA3F1BF340DE002C974C /* PassKit.framework in Frameworks */,
 				6741AA401BF340DE002C974C /* libFlurry_7.1.0.a in Frameworks */,
 				6741AA411BF340DE002C974C /* CoreMedia.framework in Frameworks */,
 				674A7E2A1C0DA579003D48E1 /* libdrape.a in Frameworks */,
@@ -2261,7 +2265,6 @@
 				97C98655186C734000AF7E9E /* AVFoundation.framework */,
 				97C98653186C5F0500AF7E9E /* AudioToolbox.framework */,
 				97C98651186C5EF000AF7E9E /* iAd.framework */,
-				97C9864F186C5EDE00AF7E9E /* PassKit.framework */,
 				97C9864D186C5ED300AF7E9E /* Social.framework */,
 				97C9864B186C5EAA00AF7E9E /* MediaPlayer.framework */,
 				97719D471843B6F200BDD815 /* Security.framework */,
@@ -2278,6 +2281,7 @@
 				288765070DF74369002DB57D /* CoreGraphics.framework */,
 				FA87151A12B1518F00592DAF /* SystemConfiguration.framework */,
 				238C7BF3F6196FE2FBD6DD40 /* Pods_Tripfinger.framework */,
+				DF333092A9B8D09DB6F8F3CD /* Pods_TripfingerTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2901,6 +2905,12 @@
 				8F8FF55BE4C7D95695116482 /* Pods-Tripfinger.adhoc.xcconfig */,
 				ED7F34AEED8C05B66B96C292 /* Pods-Tripfinger.release.xcconfig */,
 				3ADE5E1E196F8C63BEAF3D5F /* Pods-Tripfinger.production full.xcconfig */,
+				C35087D1639E742675F1F30E /* Pods-TripfingerTests.simulator.xcconfig */,
+				4DFC0C1ADC034E571F3C119D /* Pods-TripfingerTests.simulator release.xcconfig */,
+				72DABF35681188F725264B8E /* Pods-TripfingerTests.debug.xcconfig */,
+				82D351E25AFA767C2B79BF85 /* Pods-TripfingerTests.adhoc.xcconfig */,
+				9613B381E6921EB74EC0A795 /* Pods-TripfingerTests.release.xcconfig */,
+				BE5CD3D8F377F8C33CF32638 /* Pods-TripfingerTests.production full.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -3567,10 +3577,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2581DC991CAF91150086285E /* Build configuration list for PBXNativeTarget "TripfingerTests" */;
 			buildPhases = (
+				5E164D625B672932E4D4A5E4 /* [CP] Check Pods Manifest.lock */,
 				2581DC8E1CAF91150086285E /* Sources */,
 				2581DC8F1CAF91150086285E /* Frameworks */,
 				2581DC901CAF91150086285E /* Resources */,
 				25D378EF1CAFBD1300552633 /* ShellScript */,
+				A65236512DCF14E53F81A1D3 /* [CP] Embed Pods Frameworks */,
+				C62BC48C0051ECF0A90138E2 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -3636,6 +3649,12 @@
 							};
 							com.apple.BackgroundModes = {
 								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.Wallet = {
+								enabled = 0;
 							};
 						};
 					};
@@ -4069,6 +4088,51 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E164D625B672932E4D4A5E4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A65236512DCF14E53F81A1D3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C62BC48C0051ECF0A90138E2 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EA405FFB24E9CC65F55D550D /* [CP] Embed Pods Frameworks */ = {
@@ -4701,6 +4765,7 @@
 /* Begin XCBuildConfiguration section */
 		2581DC9A1CAF91150086285E /* Simulator */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C35087D1639E742675F1F30E /* Pods-TripfingerTests.simulator.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -4728,7 +4793,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -4741,6 +4806,7 @@
 		};
 		2581DC9B1CAF91150086285E /* Simulator Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4DFC0C1ADC034E571F3C119D /* Pods-TripfingerTests.simulator release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -4763,6 +4829,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -4774,6 +4841,7 @@
 		};
 		2581DC9C1CAF91150086285E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 72DABF35681188F725264B8E /* Pods-TripfingerTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -4802,6 +4870,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -4814,6 +4883,7 @@
 		};
 		2581DC9D1CAF91150086285E /* AdHoc */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 82D351E25AFA767C2B79BF85 /* Pods-TripfingerTests.adhoc.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -4838,6 +4908,7 @@
 				LIBRARY_SEARCH_PATHS = "";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -4849,6 +4920,7 @@
 		};
 		2581DC9E1CAF91150086285E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9613B381E6921EB74EC0A795 /* Pods-TripfingerTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -4871,6 +4943,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -4882,6 +4955,7 @@
 		};
 		2581DC9F1CAF91150086285E /* Production Full */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BE5CD3D8F377F8C33CF32638 /* Pods-TripfingerTests.production full.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
@@ -4904,6 +4978,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
@@ -5332,34 +5407,6 @@
 					"-Wno-unused-local-typedef",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				OTHER_LDFLAGS = (
-					"-lstats_client",
-					"-lmap",
-					"-lsearch",
-					"-ldrape_frontend",
-					"-ldrape",
-					"-lstorage",
-					"-lrouting",
-					"-lindexer",
-					"-lplatform",
-					"-lgeometry",
-					"-lcoding",
-					"-lbase",
-					"-lfreetype",
-					"-lfribidi",
-					"-lminizip",
-					"-ljansson",
-					"-ltomcrypt",
-					"-lexpat",
-					"-lprotobuf",
-					"-losrm",
-					"-lsuccinct",
-					"-ObjC",
-					"-lopening_hours",
-					"-lpugixml",
-					"-loauthcpp",
-					"-leditor",
-				);
 				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -5398,6 +5445,83 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AdSupport\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"BrightFutures\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCrash\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"GoogleInterchangeUtilities\"",
+					"-framework",
+					"\"GoogleSymbolUtilities\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"KeychainSwift\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MDCSwipeToChoose\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"Result\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-lstats_client",
+					"-lmap",
+					"-lsearch",
+					"-ldrape_frontend",
+					"-ldrape",
+					"-lstorage",
+					"-lrouting",
+					"-lindexer",
+					"-lplatform",
+					"-lgeometry",
+					"-lcoding",
+					"-lbase",
+					"-lfreetype",
+					"-lfribidi",
+					"-lminizip",
+					"-ljansson",
+					"-ltomcrypt",
+					"-lexpat",
+					"-lprotobuf",
+					"-losrm",
+					"-lsuccinct",
+					"-ObjC",
+					"-lopening_hours",
+					"-lpugixml",
+					"-loauthcpp",
+					"-leditor",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
@@ -5466,34 +5590,6 @@
 					"-Wno-unused-local-typedef",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				OTHER_LDFLAGS = (
-					"-lstats_client",
-					"-lmap",
-					"-lsearch",
-					"-ldrape_frontend",
-					"-ldrape",
-					"-lstorage",
-					"-lrouting",
-					"-lindexer",
-					"-lplatform",
-					"-lgeometry",
-					"-lcoding",
-					"-lbase",
-					"-lfreetype",
-					"-lfribidi",
-					"-lminizip",
-					"-ljansson",
-					"-ltomcrypt",
-					"-lexpat",
-					"-lprotobuf",
-					"-losrm",
-					"-lsuccinct",
-					"-ObjC",
-					"-lopening_hours",
-					"-lpugixml",
-					"-loauthcpp",
-					"-leditor",
-				);
 				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -5530,6 +5626,83 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AdSupport\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"BrightFutures\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCrash\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"GoogleInterchangeUtilities\"",
+					"-framework",
+					"\"GoogleSymbolUtilities\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"KeychainSwift\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MDCSwipeToChoose\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"Result\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-lstats_client",
+					"-lmap",
+					"-lsearch",
+					"-ldrape_frontend",
+					"-ldrape",
+					"-lstorage",
+					"-lrouting",
+					"-lindexer",
+					"-lplatform",
+					"-lgeometry",
+					"-lcoding",
+					"-lbase",
+					"-lfreetype",
+					"-lfribidi",
+					"-lminizip",
+					"-ljansson",
+					"-ltomcrypt",
+					"-lexpat",
+					"-lprotobuf",
+					"-losrm",
+					"-lsuccinct",
+					"-ObjC",
+					"-lopening_hours",
+					"-lpugixml",
+					"-loauthcpp",
+					"-leditor",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
@@ -5603,34 +5776,6 @@
 					"-Wno-unused-local-typedef",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				OTHER_LDFLAGS = (
-					"-lstats_client",
-					"-lmap",
-					"-lsearch",
-					"-ldrape_frontend",
-					"-ldrape",
-					"-lstorage",
-					"-lrouting",
-					"-lindexer",
-					"-lplatform",
-					"-lgeometry",
-					"-lcoding",
-					"-lbase",
-					"-lfreetype",
-					"-lfribidi",
-					"-lminizip",
-					"-ljansson",
-					"-ltomcrypt",
-					"-lexpat",
-					"-lprotobuf",
-					"-losrm",
-					"-lsuccinct",
-					"-ObjC",
-					"-lopening_hours",
-					"-lpugixml",
-					"-loauthcpp",
-					"-leditor",
-				);
 				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -5673,6 +5818,83 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AdSupport\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"BrightFutures\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCrash\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"GoogleInterchangeUtilities\"",
+					"-framework",
+					"\"GoogleSymbolUtilities\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"KeychainSwift\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MDCSwipeToChoose\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"Result\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-lstats_client",
+					"-lmap",
+					"-lsearch",
+					"-ldrape_frontend",
+					"-ldrape",
+					"-lstorage",
+					"-lrouting",
+					"-lindexer",
+					"-lplatform",
+					"-lgeometry",
+					"-lcoding",
+					"-lbase",
+					"-lfreetype",
+					"-lfribidi",
+					"-lminizip",
+					"-ljansson",
+					"-ltomcrypt",
+					"-lexpat",
+					"-lprotobuf",
+					"-losrm",
+					"-lsuccinct",
+					"-ObjC",
+					"-lopening_hours",
+					"-lpugixml",
+					"-loauthcpp",
+					"-leditor",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger;
 				PRODUCT_NAME = Tripfinger;
 				PROVISIONING_PROFILE = "";
@@ -5747,34 +5969,6 @@
 					"-Wno-unused-local-typedef",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				OTHER_LDFLAGS = (
-					"-lstats_client",
-					"-lmap",
-					"-lsearch",
-					"-ldrape_frontend",
-					"-ldrape",
-					"-lstorage",
-					"-lrouting",
-					"-lindexer",
-					"-lplatform",
-					"-lgeometry",
-					"-lcoding",
-					"-lbase",
-					"-lfreetype",
-					"-lfribidi",
-					"-lminizip",
-					"-ljansson",
-					"-ltomcrypt",
-					"-lexpat",
-					"-lprotobuf",
-					"-losrm",
-					"-lsuccinct",
-					"-ObjC",
-					"-lopening_hours",
-					"-lpugixml",
-					"-loauthcpp",
-					"-leditor",
-				);
 				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = YES;
@@ -5812,6 +6006,83 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AdSupport\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"BrightFutures\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCrash\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"GoogleInterchangeUtilities\"",
+					"-framework",
+					"\"GoogleSymbolUtilities\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"KeychainSwift\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MDCSwipeToChoose\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"Result\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-lstats_client",
+					"-lmap",
+					"-lsearch",
+					"-ldrape_frontend",
+					"-ldrape",
+					"-lstorage",
+					"-lrouting",
+					"-lindexer",
+					"-lplatform",
+					"-lgeometry",
+					"-lcoding",
+					"-lbase",
+					"-lfreetype",
+					"-lfribidi",
+					"-lminizip",
+					"-ljansson",
+					"-ltomcrypt",
+					"-lexpat",
+					"-lprotobuf",
+					"-losrm",
+					"-lsuccinct",
+					"-ObjC",
+					"-lopening_hours",
+					"-lpugixml",
+					"-loauthcpp",
+					"-leditor",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
@@ -5882,7 +6153,94 @@
 					"-Wno-unused-local-typedef",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				PRODUCT_NAME = Tripfinger;
+				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		FABB561F149CD957006969C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED7F34AEED8C05B66B96C292 /* Pods-Tripfinger.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				BUNDLE_IDENTIFIER = no.tripfinger;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEAD_CODE_STRIPPING = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
+				ENABLE_BITCODE = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/PushNotifications",
+					"$(PROJECT_DIR)/Statistics",
+					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/MyTracker",
+					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
+				);
+				GCC_OPTIMIZATION_LEVEL = 0;
+				INFOPLIST_FILE = MAPSME.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = "$(inherited)";
 				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AdSupport\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"BrightFutures\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCrash\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"GoogleInterchangeUtilities\"",
+					"-framework",
+					"\"GoogleSymbolUtilities\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"KeychainSwift\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MDCSwipeToChoose\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"Result\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
 					"-lstats_client",
 					"-lmap",
 					"-lsearch",
@@ -5910,44 +6268,6 @@
 					"-loauthcpp",
 					"-leditor",
 				);
-				PRODUCT_NAME = Tripfinger;
-				SDKROOT = iphoneos;
-				STRIP_INSTALLED_PRODUCT = NO;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = Release;
-		};
-		FABB561F149CD957006969C0 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED7F34AEED8C05B66B96C292 /* Pods-Tripfinger.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				BUNDLE_IDENTIFIER = no.tripfinger;
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				DEAD_CODE_STRIPPING = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEFINES_MODULE = YES;
-				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
-				ENABLE_BITCODE = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/PushNotifications",
-					"$(PROJECT_DIR)/Statistics",
-					"$(PROJECT_DIR)",
-					"$(PROJECT_DIR)/MyTracker",
-					"$(PROJECT_DIR)/HockeySDK.embeddedframework",
-				);
-				GCC_OPTIMIZATION_LEVEL = 0;
-				INFOPLIST_FILE = MAPSME.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				ONLY_ACTIVE_ARCH = NO;
-				OTHER_CFLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PRODUCT_NAME = Tripfinger;
 				PROVISIONING_PROFILE = "";
@@ -6017,34 +6337,6 @@
 					"-Wno-unused-local-typedef",
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
-				OTHER_LDFLAGS = (
-					"-lstats_client",
-					"-lmap",
-					"-lsearch",
-					"-ldrape_frontend",
-					"-ldrape",
-					"-lstorage",
-					"-lrouting",
-					"-lindexer",
-					"-lplatform",
-					"-lgeometry",
-					"-lcoding",
-					"-lbase",
-					"-lfreetype",
-					"-lfribidi",
-					"-lminizip",
-					"-ljansson",
-					"-ltomcrypt",
-					"-lexpat",
-					"-lprotobuf",
-					"-losrm",
-					"-lsuccinct",
-					"-ObjC",
-					"-lopening_hours",
-					"-lpugixml",
-					"-loauthcpp",
-					"-leditor",
-				);
 				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
@@ -6080,6 +6372,83 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"c++\"",
+					"-l\"sqlite3\"",
+					"-l\"z\"",
+					"-framework",
+					"\"AdSupport\"",
+					"-framework",
+					"\"AddressBook\"",
+					"-framework",
+					"\"Alamofire\"",
+					"-framework",
+					"\"BrightFutures\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreTelephony\"",
+					"-framework",
+					"\"FirebaseAnalytics\"",
+					"-framework",
+					"\"FirebaseCrash\"",
+					"-framework",
+					"\"FirebaseInstanceID\"",
+					"-framework",
+					"\"GoogleInterchangeUtilities\"",
+					"-framework",
+					"\"GoogleSymbolUtilities\"",
+					"-framework",
+					"\"GoogleUtilities\"",
+					"-framework",
+					"\"KeychainSwift\"",
+					"-framework",
+					"\"MBProgressHUD\"",
+					"-framework",
+					"\"MDCSwipeToChoose\"",
+					"-framework",
+					"\"Realm\"",
+					"-framework",
+					"\"RealmSwift\"",
+					"-framework",
+					"\"Result\"",
+					"-framework",
+					"\"SafariServices\"",
+					"-framework",
+					"\"StoreKit\"",
+					"-framework",
+					"\"SwiftyJSON\"",
+					"-framework",
+					"\"SystemConfiguration\"",
+					"-lstats_client",
+					"-lmap",
+					"-lsearch",
+					"-ldrape_frontend",
+					"-ldrape",
+					"-lstorage",
+					"-lrouting",
+					"-lindexer",
+					"-lplatform",
+					"-lgeometry",
+					"-lcoding",
+					"-lbase",
+					"-lfreetype",
+					"-lfribidi",
+					"-lminizip",
+					"-ljansson",
+					"-ltomcrypt",
+					"-lexpat",
+					"-lprotobuf",
+					"-losrm",
+					"-lsuccinct",
+					"-ObjC",
+					"-lopening_hours",
+					"-lpugixml",
+					"-loauthcpp",
+					"-leditor",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";

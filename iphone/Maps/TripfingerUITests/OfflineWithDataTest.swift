@@ -55,11 +55,11 @@ class OfflineWithDataTest: XCTestCase {
     linkCoord.pressForDuration(0.2)
     tapWhenHittable(app.navigationBars["Bandar"].buttons["Brunei"])
     
-    tapWhenHittable(app.buttons["Read more"])
     tapWhenHittable(app.tables.staticTexts["History"])
     linkCoord = tableCoord.coordinateWithOffset(CGVector(dx: 36.5, dy: (63.5 + 64)))
     linkCoord.pressForDuration(0.2)
-    tapWhenHittable(app.navigationBars["Bandar"].buttons["Brunei"])
+    tapWhenHittable(app.navigationBars["Bandar"].buttons["History"])
+    tapWhenHittable(app.navigationBars["History"].buttons["Brunei"])
 
 
     // do some swiping

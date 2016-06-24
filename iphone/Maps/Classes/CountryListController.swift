@@ -89,6 +89,7 @@ class CountryListController: TableController {
       let section = TableSection(cellIdentifier: TableCellIdentifiers.textMessageCell, handler: nil)
       section.elements.append((title: "", value: ""))
       tableSections.append(section)
+      hideHuds()
     } else {
       for (regionName, countryList) in countryLists {
         let section = TableSection(title: regionName, cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)

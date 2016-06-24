@@ -1,4 +1,5 @@
 import XCTest
+import Firebase
 @testable import Tripfinger
 
 class StringUtilsTest: XCTestCase {
