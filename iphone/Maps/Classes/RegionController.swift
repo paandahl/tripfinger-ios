@@ -35,8 +35,11 @@ class RegionController: GuideItemController, MapNavigator {
   }
   
   func loadRegionIfNecessary() {
+    let failure = {
+      self.delay(2, selector: #selector(self.loadRegionIfNecessary))
+    }
     if region.item().loadStatus != GuideItem.LoadStatus.FULLY_LOADED {
-      ContentService.getRegionWithSlug(region.getSlug(), failure: showErrorHud) { region in
+      ContentService.getRegionWithSlug(region.getSlug(), failure: failure) { region in
         self.region = region
         self.updateUI()
       }
@@ -86,26 +89,31 @@ extension RegionController {
     tableSections.append(attractionsSection)
     
     let subRegionsSection: TableSection
-    if region.item().subRegions.count > 0 {
-      print("has subregions")
+    let probablyHasChildren = region.item().loadStatus == GuideItem.LoadStatus.CHILDREN_NOT_LOADED && region.getCategory() == Region.Category.COUNTRY || region.getCategory() == Region.Category.SUB_REGION
+    if probablyHasChildren || region.item().subRegions.count > 0 {
+      let clickHandler: (AnyObject -> ())? = probablyHasChildren ? nil : navigateToRegion
       switch region.getCategory() {
       case Region.Category.CONTINENT:
-        subRegionsSection = TableSection(title: "Countries:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
+        subRegionsSection = TableSection(title: "Countries:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: clickHandler)
       case Region.Category.COUNTRY:
-        subRegionsSection = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
+        subRegionsSection = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: clickHandler)
       case Region.Category.SUB_REGION:
-        subRegionsSection = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
+        subRegionsSection = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: clickHandler)
       default:
-        subRegionsSection = TableSection(title: "Neighbourhoods:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
+        subRegionsSection = TableSection(title: "Neighbourhoods:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: clickHandler)
       }
       
-      for subRegion in region.item().subRegions {
-        var itemName = subRegion.listing.item.name
-        let range = itemName.rangeOfString("/")
-        if range != nil {
-          itemName = itemName.substringFromIndex(range!.endIndex)
+      if probablyHasChildren {
+        subRegionsSection.elements.append((title: "Loading...", value: ""))
+      } else {
+        for subRegion in region.item().subRegions {
+          var itemName = subRegion.listing.item.name
+          let range = itemName.rangeOfString("/")
+          if range != nil {
+            itemName = itemName.substringFromIndex(range!.endIndex)
+          }
+          subRegionsSection.elements.append((title: itemName, value: subRegion))
         }
-        subRegionsSection.elements.append((title: itemName, value: subRegion))
       }
       tableSections.append(subRegionsSection)
     }

@@ -35,6 +35,7 @@ class NetworkUtil {
 
   
   class func getJsonFromUrl(url: String, parameters: [String: String]? = nil, method: Alamofire.Method = .GET, appendParams: Bool = true, failure: () -> (), success: (json: JSON) -> ()) -> Request {
+    startNetworkActivityIndicator()
     var parameters = parameters ?? Dictionary<String, String>()
     if appendParams {
       parameters["fetchType"] = getFetchType()
@@ -57,7 +58,8 @@ class NetworkUtil {
       responseSerializer: Request.JSONResponseSerializer(options: .AllowFragments),
       completionHandler: {
         response in
-        
+
+        stopNetworkActivityIndicator()
         if response.result.isSuccess {
           let json = JSON(data: response.data!)
           success(json: json)
@@ -182,6 +184,24 @@ class NetworkUtil {
       fallthrough
     case .TEST:
       return "NEWEST"
+    }
+  }
+  
+  static var numberOfNetworkTasksRunning = 0
+  
+  class func startNetworkActivityIndicator() {
+    dispatch_async(dispatch_get_main_queue()) {
+      numberOfNetworkTasksRunning += 1
+      UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+    }
+  }
+  
+  class func stopNetworkActivityIndicator() {
+    dispatch_async(dispatch_get_main_queue()) {
+      numberOfNetworkTasksRunning -= 1
+      if numberOfNetworkTasksRunning < 1 {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+      }
     }
   }
 }

@@ -1,11 +1,10 @@
 import Foundation
-import RealmSwift
 import Firebase
 
 class CountryListController: TableController {
   
   let refreshControl = UIRefreshControl()
-  var countryLists = [(String, List<Region>)]()
+  var countryLists = [(String, [Region])]()
   var worldAreaImageSet = Set<String>()
   
   override func viewDidLoad() {
@@ -21,6 +20,7 @@ class CountryListController: TableController {
       refreshControl.addTarget(self, action: #selector(loadCountryLists), forControlEvents: .ValueChanged)
       tableView.addSubview(refreshControl)
     }
+    showLoadingHud(disableUserInteraction: false)
     loadCountryLists()
     
     addObserver(DatabaseService.TFCountrySavedNotification, selector: #selector(countryInvalidated))
@@ -41,6 +41,9 @@ class CountryListController: TableController {
     populateTableSections()
     tableView.reloadData {}
     refreshControl.endRefreshing()
+    if countryLists.count > 0 {
+      hideHuds()
+    }
   }
   
   func loadCountryLists() {
@@ -57,38 +60,23 @@ class CountryListController: TableController {
         self.countryLists = self.makeCountryLists(countries)
         self.updateUI()
       }
-    } else {
-      countryLists = makeCountryLists(Array(DatabaseService.getCountries()))
-      updateUI()
     }
+    countryLists = makeCountryLists(Array(DatabaseService.getCountries()))
+    updateUI()
   }
   
-  private func getCountryList(worldArea: String, countryLists: [(String, List<Region>)]) -> List<Region>? {
-    for (area, countryList) in countryLists {
-      if area == worldArea {
-        return countryList
-      }
-    }
-    return nil
-  }
-  
-  private func makeCountryLists(countries: [Region]) -> [(String, List<Region>)] {
-    var countryLists = [(String, List<Region>)]()
-    var betaCountries = [(Region, List<Region>)]()
+  private func makeCountryLists(countries: [Region]) -> [(String, [Region])] {
+    var countryDict = [String: [Region]]()
     for country in countries {
-      var countryList = getCountryList(country.listing.worldArea!, countryLists: countryLists)
-      if countryList == nil {
-        countryList = List<Region>()
-        countryLists.append((country.listing.worldArea!, countryList!))
+      if countryDict[country.listing.worldArea!] == nil {
+        countryDict[country.listing.worldArea!] = []
       }
-      if country.item().status == 0 {
-        betaCountries.append((country, countryList!))
-      } else {
-        countryList!.append(country)
-      }
+      countryDict[country.listing.worldArea!]!.append(country)
     }
-    for (country, list) in betaCountries {
-      list.append(country)
+    var countryLists = [(String, [Region])]()
+    for (area, var countryList) in Array(countryDict).sort({$0.0 < $1.0}) {
+      countryList.sortInPlace { $0.getName() < $1.getName() }
+      countryLists.append((area, countryList))
     }
     return countryLists
   }
@@ -124,15 +112,23 @@ class CountryListController: TableController {
     let image = UIImageView(frame: CGRectMake(0, 0, tableView.frame.size.width, 150))
     image.contentMode = .ScaleAspectFill
     image.clipsToBounds = true
+    view.addSubview(image)
     if NSURL.fileExists(imagePath) {
       image.image = UIImage(data: NSData(contentsOfURL: imagePath)!)
-    } else if !worldAreaImageSet.contains(title!) {
-      worldAreaImageSet.insert(title!)
-      var imageUrl = DownloadService.gcsImagesUrl + title! + ".jpeg"
-      imageUrl = imageUrl.stringByReplacingOccurrencesOfString(" ", withString: "%20")
-      NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: imagePath) {
-        dispatch_async(dispatch_get_main_queue()) {
-          tableView.reloadData()
+    } else {
+      let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+      indicator.startAnimating()
+      indicator.center = image.center
+      image.addSubview(indicator)
+      if !worldAreaImageSet.contains(title!) {
+        worldAreaImageSet.insert(title!)
+        var imageUrl = DownloadService.gcsImagesUrl + title! + ".jpeg"
+        imageUrl = imageUrl.stringByReplacingOccurrencesOfString(" ", withString: "%20")
+        NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: imagePath) {
+          dispatch_async(dispatch_get_main_queue()) {
+            indicator.removeFromSuperview()
+            tableView.reloadData()
+          }
         }
       }
     }
@@ -144,7 +140,6 @@ class CountryListController: TableController {
     label.layer.shadowOpacity = 0.5
     let string = tableSections[section].title
     label.text = string
-    view.addSubview(image)
     view.addSubview(label)
     return view;
   }

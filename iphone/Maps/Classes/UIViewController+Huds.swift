@@ -21,9 +21,9 @@ extension UIViewController {
     NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(delay), target: self, selector: selector, userInfo: nil, repeats: false)
   }
 
-  func showLoadingHud() {
+  func showLoadingHud(disableUserInteraction disableUserInteraction: Bool = true) {
     print("disabling user interac")
-    self.navigationController!.view.userInteractionEnabled = false
+    self.navigationController!.view.userInteractionEnabled = !disableUserInteraction
     let loadingNotification = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
     loadingNotification.mode = MBProgressHUDMode.Indeterminate
     loadingNotification.labelText = "Loading"

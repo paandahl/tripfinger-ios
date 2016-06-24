@@ -17,7 +17,7 @@ class UniqueIdentifierService {
     }
     let keychain = KeychainSwift()
     var id = keychain.get(key)
-    if keychain.lastResultCode != noErr {
+    if keychain.lastResultCode != noErr && keychain.lastResultCode != errSecItemNotFound {
       fatalError("keychain returned error: \(keychain.lastResultCode)")
     }
     if id == nil {
