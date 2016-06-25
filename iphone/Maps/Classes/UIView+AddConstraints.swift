@@ -54,7 +54,7 @@ extension UIView {
       relatedBy: NSLayoutRelation.Equal,
       toItem: self,
       attribute: alignmentConstraint,
-      multiplier: 1.0,
+      multiplier: 1,
       constant: 0);
     centerConstraint.priority = customPriority
     self.addConstraint(centerConstraint)
