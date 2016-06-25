@@ -14,7 +14,7 @@ class GuideItemCell: UITableViewCell {
   let contentImage = UIImageView()
   let licenseButton = UIButton(type: .System)
   var paragraphs = [UITextView]()
-  var imageHeight: CGFloat = UIScreen.mainScreen().bounds.width * 0.75 - 50
+  var imageHeight: Int = Int(UIScreen.mainScreen().bounds.width * 0.75 - 50)
   var firstParagraph = UITextView()
   var contentHeight: CGFloat = 100
   var contentHeightConstraint: NSLayoutConstraint!
@@ -114,9 +114,6 @@ class GuideItemCell: UITableViewCell {
   }
   
   override func prepareForReuse() {
-    if (!contentImage.isDescendantOfView(contentView)) {
-      contentView.addSubview(contentImage)
-    }
     if (!readMoreButton.isDescendantOfView(contentView)) {
       contentView.addSubview(readMoreButton)
     }
