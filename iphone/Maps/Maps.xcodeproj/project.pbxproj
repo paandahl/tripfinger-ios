@@ -6170,8 +6170,8 @@
 				BUNDLE_IDENTIFIER = no.tripfinger;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Preben Ludviksen (BJFM9VPMT3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Preben Ludviksen (BJFM9VPMT3)";
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
@@ -6270,7 +6270,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PRODUCT_NAME = Tripfinger;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "36db4fa3-d630-4665-9795-6b17a0950910";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
