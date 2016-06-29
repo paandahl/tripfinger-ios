@@ -157,18 +157,24 @@ using namespace osm_auth_ios;
 
 - (void)initPushNotificationsWithLaunchOptions:(NSDictionary *)launchOptions
 {
-  // Do not initialize Parse for open-source version due to an error:
-  // Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: ''applicationId' should not be nil.'
-  if (!string(PARSE_APPLICATION_ID).empty())
-  {
-    [Parse enableLocalDatastore];
-    [Parse setApplicationId:@(PARSE_APPLICATION_ID) clientKey:@(PARSE_CLIENT_KEY)];
-  }
-  [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
+//  // Do not initialize Parse for open-source version due to an error:
+//  // Terminating app due to uncaught exception 'NSInternalInconsistencyException', reason: ''applicationId' should not be nil.'
+//  if (!string(PARSE_APPLICATION_ID).empty())
+//  {
+//    [Parse enableLocalDatastore];
+//    [Parse setApplicationId:@(PARSE_APPLICATION_ID) clientKey:@(PARSE_CLIENT_KEY)];
+//  }
+//  [PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
 }
 
-//- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-//{
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
+{
+  [TripfingerAppDelegate application:application didRegisterUserNotificationSettings:notificationSettings];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+  [TripfingerAppDelegate application:application didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
 //  NSLog(@"didRegisterForRemoteNotificationsWithDeviceToken");
 //
 //  PFInstallation * currentInstallation = [PFInstallation currentInstallation];
@@ -186,14 +192,15 @@ using namespace osm_auth_ios;
 //  [currentInstallation saveInBackground];
 //
 //  [Alohalytics logEvent:kPushDeviceTokenLogEvent withValue:currentInstallation.deviceToken];
-//}
+}
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-  [Statistics logEvent:kStatEventName(kStatApplication, kStatPushReceived) withParameters:userInfo];
-  if (![self handleURLPush:userInfo])
-    [PFPush handlePush:userInfo];
-  completionHandler(UIBackgroundFetchResultNoData);
+  [TripfingerAppDelegate application:application didReceiveRemoteNotification:userInfo fetchCompletionHandler:completionHandler];
+//  [Statistics logEvent:kStatEventName(kStatApplication, kStatPushReceived) withParameters:userInfo];
+//  if (![self handleURLPush:userInfo])
+//    [PFPush handlePush:userInfo];
+//  completionHandler(UIBackgroundFetchResultNoData);
 }
 
 - (BOOL)handleURLPush:(NSDictionary *)userInfo
@@ -540,6 +547,7 @@ using namespace osm_auth_ios;
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+  [TripfingerAppDelegate applicationDidEnterBackground:application];
   [self.locationManager onBackground];
   [self.mapViewController onEnterBackground];
   if (m_activeDownloadsCounter)

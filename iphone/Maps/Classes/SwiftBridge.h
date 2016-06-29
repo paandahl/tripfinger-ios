@@ -145,7 +145,12 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 + (void)setServerUrl:(NSString * __nonnull)value;
 + (UIWindow * __nonnull)applicationLaunched:(UIApplication * __nonnull)application delegate:(id <UIApplicationDelegate> __nonnull)delegate didFinishLaunchingWithOptions:(NSDictionary * __nullable)launchOptions;
 + (void)applicationDidBecomeActive:(UIApplication * __nonnull)application;
-+ (BOOL)application:(UIApplication * __nonnull)application openURL:(NSURL * __nonnull)url sourceApplication:(NSString * __nonnull)sourceApplication annotation:(id __nonnull)annotation;
++ (BOOL)application:(UIApplication * __nonnull)application openURL:(NSURL * __nonnull)url sourceApplication:(NSString * __nonnull)
+sourceApplication annotation:(id __nonnull)annotation;
++ (void)applicationDidEnterBackground:(UIApplication * __nonnull)application;
++ (void)application:(UIApplication * __nonnull)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings;
++ (void)application:(UIApplication * __nonnull)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;
++ (void)application:(UIApplication * __nonnull)application didReceiveRemoteNotification:(NSDictionary * __nonnull)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
 + (NSArray<TripfingerEntity *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight zoomLevel:(NSInteger)zoomLevel;
 + (NSArray<TripfingerEntity *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight category:(NSInteger)category;
 + (TripfingerEntity * __nonnull)getOnlineListingById:(NSString * __nonnull)listingId;

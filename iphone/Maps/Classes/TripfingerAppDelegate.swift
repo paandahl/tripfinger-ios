@@ -2,6 +2,8 @@ import UIKit
 import Alamofire
 import CoreLocation
 import Firebase
+import FirebaseInstanceID
+import FirebaseMessaging
 
 class MyNavigationController: UINavigationController {  
   override func supportedInterfaceOrientations() -> UInt {
@@ -12,23 +14,41 @@ class MyNavigationController: UINavigationController {
       return UInt(UIInterfaceOrientationMask.Portrait.rawValue)
     }
   }
+  
+  func alert(message: String) {
+    let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .Alert)
+    let defaultAction = UIAlertAction(title: "OK", style: .Default) { alertAction in
+      self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    alertController.addAction(defaultAction)
+    self.presentViewController(alertController, animated: true, completion: nil)
+  }
 }
 
 @objc public class TripfingerAppDelegate: NSObject {
   
+  static let sharedInstance = TripfingerAppDelegate()
   static var serverUrl = "https://1-3-dot-tripfinger-server.appspot.com"
   static var mode = AppMode.BETA
   static var coordinateSet = Set<Int64>()
   static let navigationController = MyNavigationController()
+  var openUrl = ""
 
   class func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
+    
+    FIRApp.configure()
 
     TripfingerAppDelegate.styleNavigationBar(TripfingerAppDelegate.navigationController.navigationBar)
     print("myuuid: \(UniqueIdentifierService.uniqueIdentifier())")
+    FIRAnalytics.setUserPropertyString(UniqueIdentifierService.uniqueIdentifier(), forName: "device_id")
+
+    let settings = UIUserNotificationSettings(forTypes: [.Alert, .Badge, .Sound], categories: nil)
+    application.registerUserNotificationSettings(settings)
     
     FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-    FIRApp.configure()
-        
+    NSNotificationCenter.defaultCenter().addObserver(sharedInstance, selector: #selector(self.tokenRefreshNotification),
+                                                     name: kFIRInstanceIDTokenRefreshNotification, object: nil)
+    
     if NSProcessInfo.processInfo().arguments.contains("TEST") {
       print("Switching to test mode")
       TripfingerAppDelegate.mode = AppMode.TEST
@@ -81,10 +101,78 @@ class MyNavigationController: UINavigationController {
   
   class func applicationDidBecomeActive(application: UIApplication) {
     FBSDKAppEvents.activateApp()
+    connectToFcm()
   }
   
   class func application(application: UIApplication, openURL url: NSURL, sourceApplication: NSString, annotation: AnyObject) -> Bool {
     return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication as String, annotation: annotation)
+  }
+  
+  class func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject],
+                   fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+    // If you are receiving a notification message while your app is in the background,
+    // this callback will not be fired till the user taps on the notification launching the application.
+    
+    // Print message ID.
+    let aps = userInfo["aps"]! as! [String: String]
+    let message = aps["alert"]!
+    let openUrl = userInfo["openUrl"]
+    let fromBackground = application.applicationState == .Inactive || application.applicationState == .Background
+
+    if let openUrl = openUrl as? String {
+      if fromBackground {
+        UIApplication.sharedApplication().openURL(NSURL(string: openUrl)!)
+      } else {
+        sharedInstance.openUrl = openUrl
+        let alert = UIAlertView(title: "", message: message, delegate: sharedInstance, cancelButtonTitle: "No thanks", otherButtonTitles: "Read more")
+        alert.show()
+      }
+    }
+    
+    completionHandler(UIBackgroundFetchResult.NoData)
+  }
+  
+  class func applicationDidEnterBackground(application: UIApplication) {
+    FIRMessaging.messaging().disconnect()
+    print("Disconnected from FCM.")
+  }
+  
+  class func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+    if notificationSettings.types != .None {
+      application.registerForRemoteNotifications()
+    }
+  }
+  
+  class func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+    let tokenChars = UnsafePointer<CChar>(deviceToken.bytes)
+    var tokenString = ""
+    
+    for i in 0..<deviceToken.length {
+      tokenString += String(format: "%02.2hhx", arguments: [tokenChars[i]])
+    }
+    
+    //Tricky line
+    FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.Unknown)
+    print("Device Token:", tokenString)
+  }
+  
+  func tokenRefreshNotification(notification: NSNotification) {
+    print("tokenRefreshNotification")
+    let refreshedToken = FIRInstanceID.instanceID().token()!
+    print("InstanceID token: \(refreshedToken)")
+    TripfingerAppDelegate.connectToFcm()
+  }
+  
+  class func connectToFcm() {
+    FIRMessaging.messaging().connectWithCompletion { error in
+      if error != nil {
+        print("Unable to connect with FCM. \(error)")
+      } else {
+        print("Connected to FCM.")
+        let refreshedToken = FIRInstanceID.instanceID().token()!
+        print("refreshedToken: \(refreshedToken)")
+      }
+    }
   }
   
   class func styleNavigationBar(bar: UINavigationBar) {
@@ -390,5 +478,14 @@ class MyNavigationController: UINavigationController {
     case DRAFT
     case BETA
     case RELEASE
+  }
+}
+
+extension TripfingerAppDelegate: UIAlertViewDelegate {
+  
+  public func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    if buttonIndex == 1 {
+      UIApplication.sharedApplication().openURL(NSURL(string: openUrl)!)
+   }
   }
 }

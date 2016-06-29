@@ -12,7 +12,6 @@ class DownloadService {
   static var downloadPath: String!
   static let gcsMapsUrl = "https://storage.googleapis.com/tripfinger-maps/"
   static let gcsImagesUrl = "https://storage.googleapis.com/tripfinger-images/"
-  
 
   class func hasMapPackage(packageId: String) -> Bool {
 //    let mapPackages = SKMapsService.sharedInstance().packagesManager.installedOfflineMapPackages as! [SKMapPackage]

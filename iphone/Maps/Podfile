@@ -13,6 +13,7 @@ pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 pod 'KeychainSwift', '~> 3.0'
 pod 'Firebase'
 pod 'Firebase/Crash'
+pod 'Firebase/Messaging'
 target 'TripfingerTests' do
   inherit! :search_paths
   pod 'Firebase'
