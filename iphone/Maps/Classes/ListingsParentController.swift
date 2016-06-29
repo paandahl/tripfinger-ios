@@ -56,7 +56,7 @@ class ListingsParentController: UIViewController {
   }
   
   func navigateToMap() {
-    fatalError("navigateToMap not implemented in class: \(self)")
+    LogUtils.assertionFailAndRemoteLog("navigateToMap not implemented in class: \(self)")
   }
 }
 

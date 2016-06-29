@@ -165,7 +165,8 @@ extension GuideItemController {
       let cityName = regionNames[2]
       ContentService.getCityWithName(cityName, countryName: countryName, failure: failure, handler: finishedHandler)
     } else {
-      fatalError("Path \(path) resulted in too many parts: \(regionNames.count)")
+      assertionFailure("Path \(path) resulted in too many parts: \(regionNames.count)")
+      failure()
     }
   }
 

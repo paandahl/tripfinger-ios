@@ -20,16 +20,22 @@ class PurchasesService: NSObject {
   private var productsRequest: SKProductsRequest?
   
   private var dispatchGroup: dispatch_group_t!
+  private var dispatchError = false
   
-  private func initPurchasing(regionUuid: String, callback: (product: SKProduct, purchased: Bool) -> ()) {
+  private func initPurchasing(regionUuid: String, connectionError: () -> (), callback: (product: SKProduct, purchased: Bool) -> ()) {
     print("Initializing PurchasesService")
     SKPaymentQueue.defaultQueue().addTransactionObserver(self)
     dispatchGroup = dispatch_group_create()
     dispatch_group_enter(dispatchGroup)
     loadPurchasesFromKeychain(dispatchGroup)
     dispatch_group_enter(dispatchGroup)
-    fetchProductIdentifiers()
+    fetchProductIdentifiers(connectionError)
     dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) {
+      if self.dispatchError {
+        connectionError()
+        self.dispatchError = false
+        return
+      }
       let productId = self.productIdentifiers![regionUuid]!
       print("Purchases:")
       print(self.purchasedProductIdentifiers)
@@ -39,9 +45,9 @@ class PurchasesService: NSObject {
     }
   }
   
-  private func fetchProductIdentifiers() {
+  private func fetchProductIdentifiers(connectionError: () -> ()) {
     let url = TripfingerAppDelegate.serverUrl + "/products"
-    NetworkUtil.getJsonFromUrl(url, failure: { fatalError("error xu67") }) { json in
+    NetworkUtil.getJsonFromUrl(url, failure: connectionError) { json in
       self.productIdentifiers = [String: ProductIdentifier]()
       for productJson in json.array! {
         let regionUuid = productJson["regionUuid"].string!
@@ -74,29 +80,29 @@ class PurchasesService: NSObject {
     dispatch_group_leave(dispatchGroup)
   }
   
-  class func purchaseCountry(country: Region, downloadStarted: () -> ()) {
-    getFirstPurchase(UniqueIdentifierService.uniqueIdentifier()) { firstCountryUuid in
+  class func purchaseCountry(country: Region, connectionError: () -> (), downloadStarted: () -> ()) {
+    getFirstPurchase(UniqueIdentifierService.uniqueIdentifier(), connectionError: connectionError) { firstCountryUuid in
       guard let firstCountryUuid = firstCountryUuid else {
-        openFirstCountryController(country, downloadStarted: downloadStarted)
+        openFirstCountryController(country, connectionError: connectionError, downloadStarted: downloadStarted)
         return
       }
       if firstCountryUuid == country.getId() {
-        proceedWithDownload(country)
+        proceedWithDownload(country, connectionError: connectionError)
         downloadStarted()
       } else {
-        openPurchaseController(country, downloadStarted: downloadStarted)
+        openPurchaseController(country, connectionError: connectionError, downloadStarted: downloadStarted)
       }
     }
   }
   
-  private class func openFirstCountryController(country: Region, downloadStarted: () -> ()) {
+  private class func openFirstCountryController(country: Region, connectionError: () -> (), downloadStarted: () -> ()) {
     let firstCountryController = FirstCountryDownloadView(country: country, cancelHandler: downloadStarted) {
-      makeCountryFirst(country) {
+      makeCountryFirst(country, connectionError: connectionError) {
         FIRAnalytics.logEventWithName("first_download", parameters: [
           "country": country.getName()
           ])
         TripfingerAppDelegate.navigationController.dismissViewControllerAnimated(true, completion: nil)
-        proceedWithDownload(country)
+        proceedWithDownload(country, connectionError: connectionError)
         downloadStarted()
       }
     }
@@ -108,25 +114,25 @@ class PurchasesService: NSObject {
     }
   }
   
-  class func makeCountryFirst(country: Region, complete: () -> ()) {
+  class func makeCountryFirst(country: Region, connectionError: () -> (), complete: () -> ()) {
     let deviceUuid = UniqueIdentifierService.uniqueIdentifier()
     let url = TripfingerAppDelegate.serverUrl + "/products/first_country/\(deviceUuid)/\(country.getId())"
     NetworkUtil.getJsonFromPost(url, body: "543gfdg3t23fevwef3tg", success: { json in
       complete()
-      }, failure: { fatalError("fail fesv3") })
+      }, failure: connectionError)
   }
   
-  private class func openPurchaseController(country: Region, downloadStarted: () -> ()) {
+  private class func openPurchaseController(country: Region, connectionError: () -> (), downloadStarted: () -> ()) {
     print("purchaseController")
     let purchaseInstance = PurchasesService()
-    purchaseInstance.initPurchasing(country.getId()) { product, purchased in
+    purchaseInstance.initPurchasing(country.getId(), connectionError: connectionError) { product, purchased in
       if purchased {
-        proceedWithDownload(country, receipt: "XZBDSF252-FA23SDFS-SFSGSZZ67")
+        proceedWithDownload(country, receipt: "XZBDSF252-FA23SDFS-SFSGSZZ67", connectionError: connectionError)
         downloadStarted()
       } else {
         let purchaseController = PurchaseCountryVC(country: country, product: product, cancelHandler: downloadStarted) {
           TripfingerAppDelegate.navigationController.dismissViewControllerAnimated(true, completion: nil)
-          proceedWithDownload(country, receipt: "XZBDSF252-FA23SDFS-SFSGSZZ67")
+          proceedWithDownload(country, receipt: "XZBDSF252-FA23SDFS-SFSGSZZ67", connectionError: connectionError)
           purchaseInstance.dispatchGroup = nil // mainly to keep instance alive
           downloadStarted()
         }
@@ -140,21 +146,18 @@ class PurchasesService: NSObject {
     }
   }
   
-  class func proceedWithDownload(country: Region, receipt: String? = nil) {
+  class func proceedWithDownload(country: Region, receipt: String? = nil, connectionError: () -> ()) {
     let mwmRegionId = country.mwmRegionId ?? country.getName()
     DownloadService.downloadCountry(mwmRegionId, receipt: receipt, progressHandler: {prog in
       MapsAppDelegateWrapper.updateDownloadProgress(prog, forMwmRegion: mwmRegionId)
-    }, failure: {fatalError("error pba78")}) {
+    }, failure: connectionError) {
       MapsAppDelegateWrapper.updateDownloadState(mwmRegionId)
     }
   }
 
-  private class func getFirstPurchase(deviceUuid: String, handler: String? -> ()) {
+  private class func getFirstPurchase(deviceUuid: String, connectionError: () -> (), handler: String? -> ()) {
     let url = TripfingerAppDelegate.serverUrl + "/products/first_country/\(deviceUuid)"
-    let failure = {
-      fatalError("Couldn't get the purchase thang")
-    }
-    NetworkUtil.getJsonFromUrl(url, failure: failure) { json in
+    NetworkUtil.getJsonFromUrl(url, failure: connectionError) { json in
       print(json)
       let countryUuid = json["productLine"]["regionUuid"].string
       handler(countryUuid)
@@ -182,7 +185,8 @@ extension PurchasesService: SKProductsRequestDelegate {
     print("Failed to load list of products.")
     print("Error: \(error.localizedDescription)")
     productsRequest = nil
-    fatalError("error 9x67")
+    dispatchError = true
+    dispatch_group_leave(dispatchGroup)
   }
 }
 

@@ -1,4 +1,5 @@
 import Foundation
+import FirebaseCrash
 
 class FileUtils {
   class func deviceRemainingFreeSpaceInBytes() -> Int64 {
@@ -8,8 +9,9 @@ class FileUtils {
       attributes = try NSFileManager.defaultManager().attributesOfFileSystemForPath(documentDirectoryPath.last! as String)
       let freeSize = attributes[NSFileSystemFreeSize] as! NSNumber
       return freeSize.longLongValue
-    } catch {
-      fatalError("Could not measure free disk space.")
+    } catch let error as NSError {
+      LogUtils.assertionFailAndRemoteLogException(error, message: "Could not measure free disk space.")
+      return 1000 * 1000 * 1000
     }
   }
 }
@@ -56,7 +58,7 @@ extension NSURL {
       try fileManager.moveItemAtPath(sourceDir.path!, toPath: destinationDir.path!)
     }
     catch let error as NSError {
-      fatalError("Ooops! Something went wrong: \(error)")
+      fatalError("Something went wrong when moving file: \(error)")
     }
   }
   

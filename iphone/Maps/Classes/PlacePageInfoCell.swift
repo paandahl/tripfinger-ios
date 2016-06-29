@@ -178,14 +178,17 @@ class PlacePageInfoCell: UITableViewCell {
 extension PlacePageInfoCell: UITextViewDelegate {
   func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
     if URL.host == "www.tripfinger.com" {
-      TripfingerAppDelegate.navigationController.navigationBarHidden = false
-      if let delegate = delegate {
-        delegate.navigatedToGuide()
+      let finishedHandler = {
+        TripfingerAppDelegate.navigationController.navigationBarHidden = false
+        if let delegate = self.delegate {
+          delegate.navigatedToGuide()
+        }
       }
+      showLoadingHud()
       if URL.path!.containsString("/l/") {
-        GuideItemController.navigateToListingWithUrlPath(URL.path!, failure: {fatalError("Failzed45")}, finishedHandler: {})
+        GuideItemController.navigateToListingWithUrlPath(URL.path!, failure: showErrorHud, finishedHandler: finishedHandler)
       } else {
-        GuideItemController.navigateToRegionWithUrlPath(URL.path!, failure: {fatalError("Failzed45")}, finishedHandler: {})
+        GuideItemController.navigateToRegionWithUrlPath(URL.path!, failure: showErrorHud, finishedHandler: finishedHandler)
       }
       return false
     }    

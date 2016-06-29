@@ -148,7 +148,8 @@ class Listing: Object {
       case .BICYCLE_RENTAL:
         return "Bicycle rentals"
       default:
-        fatalError("entityName not set for category: \(self.rawValue)")
+        assertionFailure("entityName not set for category: \(self.rawValue)")
+        return "Other"
       }
     }
     
@@ -254,9 +255,8 @@ class Listing: Object {
         return 266787 // tourism-information-office
 
       default:
-        print("osmType not defined for category: \(self.rawValue)")
+        assertionFailure("osmType not defined for category: \(self.rawValue)")
         return 4610 // amenity-bus_station
-//        fatalError("osmType not defined for category: \(self.rawValue)")
       }
     }
 

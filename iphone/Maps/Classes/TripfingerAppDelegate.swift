@@ -54,10 +54,10 @@ class MyNavigationController: UINavigationController {
 
     if NSProcessInfo.processInfo().arguments.contains("OFFLINEMAP") {
       let failure = {
-        fatalError("Connection failed")
+        assertionFailure("Connection failed")
       }
       ContentService.getCountryWithName("Brunei", failure: failure) { brunei in
-        PurchasesService.makeCountryFirst(brunei) {
+        PurchasesService.makeCountryFirst(brunei, connectionError: failure) {
           DownloadService.downloadCountry("Brunei", progressHandler: { progress in }, failure: failure) {
             regionController.tableView.accessibilityValue = "bruneiReady"
           }
@@ -150,7 +150,7 @@ class MyNavigationController: UINavigationController {
   public class func getOnlineListingById(listingId: String) -> TripfingerEntity {
     let semaphore = dispatch_semaphore_create(0)
     var retListing: Listing! = nil
-    ContentService.getListingWithId(listingId, failure: {fatalError("connection issue while fetching listing")}, withNotes: false) { listing in
+    ContentService.getListingWithId(listingId, failure: connectionError, withNotes: false) { listing in
       retListing = listing
       dispatch_semaphore_signal(semaphore)
     }
@@ -228,7 +228,7 @@ class MyNavigationController: UINavigationController {
     if region.getCategory() == Region.Category.COUNTRY {
       moveToRegion(region, countryMwmId: region.getDownloadId(), stopSpinner: stopSpinner, handler: handler)
     } else {
-      ContentService.getCountryWithName(region.listing.country!, failure: { fatalError("errorPrk") }) { country in
+      ContentService.getCountryWithName(region.listing.country!, failure: connectionError) { country in
         moveToRegion(region, countryMwmId: country.getDownloadId(), stopSpinner: stopSpinner, handler: handler)
       }
     }
@@ -342,12 +342,13 @@ class MyNavigationController: UINavigationController {
         }
       }
     }
-    fatalError("Did not find size for country: \(mwmCountryId)")
+    LogUtils.assertionFailAndRemoteLog("Did not find size for country: \(mwmCountryId)")
+    return 0
   }
 
   class func updateCountry(mwmCountryId: String, downloadStarted: () -> ()) {
-    ContentService.getCountryWithName(mwmCountryId, failure: {fatalError("fail86")}) { region in
-      PurchasesService.proceedWithDownload(region)
+    ContentService.getCountryWithName(mwmCountryId, failure: connectionError) { region in
+      PurchasesService.proceedWithDownload(region, connectionError: connectionError)
       downloadStarted()
     }
   }
@@ -361,10 +362,14 @@ class MyNavigationController: UINavigationController {
     DownloadService.deleteCountry(region.getName())
   }
   
+  private class func connectionError() {
+    TripfingerAppDelegate.navigationController.viewControllers.last!.showErrorHud()
+  }
+  
   class func purchaseCountry(mwmCountryId: String, downloadStarted: () -> ()) {
     TripfingerAppDelegate.navigationController.viewControllers.last!.showLoadingHud()
-    ContentService.getCountryWithName(mwmCountryId, failure: {fatalError("fail86")}) { region in
-      PurchasesService.purchaseCountry(region) {
+    ContentService.getCountryWithName(mwmCountryId, failure: connectionError) { region in
+      PurchasesService.purchaseCountry(region, connectionError: connectionError) {
         dispatch_async(dispatch_get_main_queue()) {
           TripfingerAppDelegate.navigationController.viewControllers.last!.hideHuds()
           downloadStarted()
