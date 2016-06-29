@@ -384,8 +384,7 @@ using namespace osm_auth_ios;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  TripfingerAppDelegate *appDelegate = [[TripfingerAppDelegate alloc] init];
-  UIWindow *window = [appDelegate applicationLaunched:application delegate:self didFinishLaunchingWithOptions:launchOptions];
+  UIWindow *window = [TripfingerAppDelegate applicationLaunched:application delegate:self didFinishLaunchingWithOptions:launchOptions];
   self.window = window;
 
   InitCrashTrackers();
@@ -736,7 +735,8 @@ using namespace osm_auth_ios;
   if ([self checkLaunchURL:url])
     return YES;
 
-  return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+//  return [[FBSDKApplicationDelegate sharedInstance] application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
+  return [TripfingerAppDelegate application:application openURL:url sourceApplication:sourceApplication annotation:annotation];
 }
 
 - (void)showLoadFileAlertIsSuccessful:(BOOL)successful

@@ -997,7 +997,6 @@
 		2581DC5B1CAE31890086285E /* JsonParserService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonParserService.swift; sourceTree = "<group>"; };
 		2581DC641CAE31B00086285E /* OnlineSearch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineSearch.swift; sourceTree = "<group>"; };
 		2581DC651CAE31B00086285E /* SearchService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchService.swift; sourceTree = "<group>"; };
-		2581DC6C1CAE31CD0086285E /* BridgingHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		2581DC6E1CAE31CD0086285E /* ErrorHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorHandler.swift; sourceTree = "<group>"; };
 		2581DC6F1CAE31CD0086285E /* NetworkUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkUtil.swift; sourceTree = "<group>"; };
 		2581DC701CAE31CD0086285E /* NSBundle+BundlePath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSBundle+BundlePath.swift"; sourceTree = "<group>"; };
@@ -2049,7 +2048,6 @@
 			isa = PBXGroup;
 			children = (
 				25DABC111D094C7300D0A839 /* Array+Utils.swift */,
-				2581DC6C1CAE31CD0086285E /* BridgingHeader.h */,
 				2581DC6E1CAE31CD0086285E /* ErrorHandler.swift */,
 				2581DC711CAE31CD0086285E /* FileUtils.swift */,
 				25401ED11D23AC32002E4A34 /* LogUtils.swift */,

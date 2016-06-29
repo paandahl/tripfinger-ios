@@ -21,11 +21,12 @@ class MyNavigationController: UINavigationController {
   static var coordinateSet = Set<Int64>()
   static let navigationController = MyNavigationController()
 
-  public func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
+  class func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
 
     TripfingerAppDelegate.styleNavigationBar(TripfingerAppDelegate.navigationController.navigationBar)
     print("myuuid: \(UniqueIdentifierService.uniqueIdentifier())")
     
+    FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     FIRApp.configure()
         
     if NSProcessInfo.processInfo().arguments.contains("TEST") {
@@ -78,15 +79,21 @@ class MyNavigationController: UINavigationController {
     return window
   }
   
+  class func applicationDidBecomeActive(application: UIApplication) {
+    FBSDKAppEvents.activateApp()
+  }
+  
+  class func application(application: UIApplication, openURL url: NSURL, sourceApplication: NSString, annotation: AnyObject) -> Bool {
+    return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication as String, annotation: annotation)
+  }
+  
   class func styleNavigationBar(bar: UINavigationBar) {
     let colorImage = UIImage(withColor: UIColor.primary(), frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 64))
     bar.setBackgroundImage(colorImage, forBarMetrics: .Default)
     bar.translucent = true
     bar.tintColor = UIColor.white()
   }
-  
-  public class func applicationDidBecomeActive(application: UIApplication) {
-  }
+
   
   public class func getPoisForArea(topLeft: CLLocationCoordinate2D, bottomRight: CLLocationCoordinate2D, zoomLevel: Int) -> [TripfingerEntity] {
     

@@ -23,7 +23,7 @@ class JsonParserServiceTest: XCTestCase {
   
   func testParseDownloadedCountry() {
     let path = "attraction-tawandang-german-brewery-โรงเบยรเยอรมนตะวนแดง-พระราม-3-1"
-    let url = NSURL.getDirectory(.LibraryDirectory, withPath: path)
+    let url = NSURL.getImageDirectory().URLByAppendingPathComponent(path)
     let data = NSData()
     let result = data.writeToURL(url, atomically: true)
     print(result)

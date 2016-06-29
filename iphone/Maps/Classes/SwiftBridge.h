@@ -143,8 +143,9 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 @interface TripfingerAppDelegate : NSObject
 + (NSString * __nonnull)serverUrl;
 + (void)setServerUrl:(NSString * __nonnull)value;
-- (UIWindow * __nonnull)applicationLaunched:(UIApplication * __nonnull)application delegate:(id <UIApplicationDelegate> __nonnull)delegate didFinishLaunchingWithOptions:(NSDictionary * __nullable)launchOptions;
++ (UIWindow * __nonnull)applicationLaunched:(UIApplication * __nonnull)application delegate:(id <UIApplicationDelegate> __nonnull)delegate didFinishLaunchingWithOptions:(NSDictionary * __nullable)launchOptions;
 + (void)applicationDidBecomeActive:(UIApplication * __nonnull)application;
++ (BOOL)application:(UIApplication * __nonnull)application openURL:(NSURL * __nonnull)url sourceApplication:(NSString * __nonnull)sourceApplication annotation:(id __nonnull)annotation;
 + (NSArray<TripfingerEntity *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight zoomLevel:(NSInteger)zoomLevel;
 + (NSArray<TripfingerEntity *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight category:(NSInteger)category;
 + (TripfingerEntity * __nonnull)getOnlineListingById:(NSString * __nonnull)listingId;

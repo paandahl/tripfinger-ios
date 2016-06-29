@@ -255,7 +255,7 @@ class Listing: Object {
         return 266787 // tourism-information-office
 
       default:
-        assertionFailure("osmType not defined for category: \(self.rawValue)")
+        print("osmType not defined for category: \(self.rawValue)")
         return 4610 // amenity-bus_station
       }
     }

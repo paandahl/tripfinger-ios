@@ -96,7 +96,8 @@ char const * kStatisticsEnabledSettingsKey = "StatisticsEnabled";
     [Alohalytics setup:@(ALOHALYTICS_URL) withLaunchOptions:launchOptions];
   }
   // Always call Facebook method, looks like it is required to handle some url schemes and sign on scenarios.
-  return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+  //  return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
+  return YES;
 }
 
 - (void)logLocation:(CLLocation *)location
@@ -146,9 +147,8 @@ char const * kStatisticsEnabledSettingsKey = "StatisticsEnabled";
 {
   if (!_enabled)
     return;
-  [FBSDKAppEvents activateApp];
-  // Special FB events to improve marketing campaigns quality.
-  [MWMCustomFacebookEvents optimizeExpenses];
+//  // Special FB events to improve marketing campaigns quality.
+//  [MWMCustomFacebookEvents optimizeExpenses];
 }
 
 + (instancetype)instance

@@ -9,4 +9,6 @@
 #import "MWMPlacePageActionBar.h"
 //#import "MWMMapViewControlsManager.h"
 #import "UIColor+MapsMeColor.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+
 

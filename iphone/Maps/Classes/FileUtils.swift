@@ -19,7 +19,13 @@ class FileUtils {
 extension NSURL {
   
   class func getImageDirectory() -> NSURL {
-    return createDirectory(.ApplicationSupportDirectory, withPath: "Images")
+    let url = createDirectory(.ApplicationSupportDirectory, withPath: "Images")
+    do {
+      try url.setResourceValue(true, forKey: NSURLIsExcludedFromBackupKey)
+    } catch let error as NSError {
+      LogUtils.assertionFailAndRemoteLogException(error, message: "Error excluding image directory from backup")
+    }
+    return url
   }
   
   private class func getDirectory(baseDir: NSSearchPathDirectory, withPath path: String? = nil) -> NSURL {
