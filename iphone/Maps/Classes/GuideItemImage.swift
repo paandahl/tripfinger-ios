@@ -10,6 +10,6 @@ class GuideItemImage: Object {
   
   func getFileUrl() -> NSURL {
     print("constructing file url: \(url)")
-    return NSURL(string: url, relativeToURL: NSURL.getDirectory(.LibraryDirectory, withPath: "/"))!
+    return NSURL(string: url, relativeToURL: NSURL.getImageDirectory())!
   }
 }

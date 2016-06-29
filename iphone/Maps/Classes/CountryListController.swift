@@ -108,7 +108,7 @@ class CountryListController: TableController {
     }
     let title = tableSections[section].title
     let view = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 160))
-    let libPath = NSURL.getDirectory(.LibraryDirectory)
+    let libPath = NSURL.getImageDirectory()
     let imagePath = libPath.URLByAppendingPathComponent(title! + ".jpeg")
     let image = UIImageView(frame: CGRectMake(0, 0, tableView.frame.size.width, 150))
     image.contentMode = .ScaleAspectFill

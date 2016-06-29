@@ -42,7 +42,7 @@ class DownloadService {
   }
   
   class func deleteTripfingerImagesForRegion(countryName: String, cityName: String! = nil) {
-    let path = NSURL.getDirectory(.LibraryDirectory, withPath: countryName)
+    let path = NSURL.getImageDirectory().getSubDirectory(countryName)
     if cityName != nil {
       path.URLByAppendingPathComponent(cityName)
     }
@@ -95,7 +95,7 @@ class DownloadService {
 
     ContentService.getCountryWithName(mwmRegionId, failure: {}) { region in
       
-      let countryPath = NSURL.createDirectory(.LibraryDirectory, withPath: region.getName())
+      let countryPath = NSURL.getImageDirectory().getSubDirectory(region.getName())
       let jsonPath = countryPath.URLByAppendingPathComponent(region.getName() + ".json")
       if (!checkIfDeviceHasEnoughFreeSpaceForRegion(region)) {
         cleanupDownload(region, taskHandle: taskHandle, jsonPath: jsonPath)
@@ -194,7 +194,7 @@ class DownloadService {
   }
   
   class func getLocalPartOfFileUrl(fileUrl: NSURL) -> String {
-    let pathIndex = fileUrl.absoluteString.rangeOfString("/Library/", options: .BackwardsSearch)
+    let pathIndex = fileUrl.absoluteString.rangeOfString("Images/", options: .BackwardsSearch)
     return fileUrl.absoluteString.substringFromIndex(pathIndex!.endIndex)
   }
   
@@ -214,7 +214,7 @@ class DownloadService {
     
     print("Fetching images in \(guideItem.name)'s \(guideItem.subRegions.count) sub regions")
     for subRegion in guideItem.subRegions {
-      let subPath = NSURL.appendToDirectory(path, pathElement: subRegion.getName())
+      let subPath = path.getSubDirectory(subRegion.getName())
       imageList.appendContentsOf(fetchImageList(subRegion, path: subPath))
     }
     return imageList

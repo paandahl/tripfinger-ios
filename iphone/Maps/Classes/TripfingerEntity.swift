@@ -104,6 +104,6 @@ import Foundation
   }
 
   func getFileUrl() -> NSURL {
-    return NSURL(string: url, relativeToURL: NSURL.getDirectory(.LibraryDirectory, withPath: "/"))!
+    return NSURL(string: url, relativeToURL: NSURL.getImageDirectory())!
   }
 }

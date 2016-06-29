@@ -18,7 +18,11 @@ class FileUtils {
 
 extension NSURL {
   
-  class func getDirectory(baseDir: NSSearchPathDirectory, withPath path: String? = nil) -> NSURL {
+  class func getImageDirectory() -> NSURL {
+    return createDirectory(.ApplicationSupportDirectory, withPath: "Images")
+  }
+  
+  private class func getDirectory(baseDir: NSSearchPathDirectory, withPath path: String? = nil) -> NSURL {
     let libraryPath = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(baseDir, .UserDomainMask, true)[0])
     if let path = path {
       return libraryPath.URLByAppendingPathComponent(path)
@@ -27,7 +31,7 @@ extension NSURL {
     }
   }
 
-  class func createDirectory(baseDir: NSSearchPathDirectory, withPath path: String) -> NSURL {
+  private class func createDirectory(baseDir: NSSearchPathDirectory, withPath path: String) -> NSURL {
     let folderPath = getDirectory(baseDir, withPath: path)
     do {
       try NSFileManager.defaultManager().createDirectoryAtPath(folderPath.path!, withIntermediateDirectories: true, attributes: nil)
@@ -62,8 +66,8 @@ extension NSURL {
     }
   }
   
-  class func appendToDirectory(baseDir: NSURL, pathElement: String) -> NSURL {
-    let folderPath = baseDir.URLByAppendingPathComponent(pathElement)
+  func getSubDirectory(pathElement: String) -> NSURL {
+    let folderPath = self.URLByAppendingPathComponent(pathElement)
     do {
       try NSFileManager.defaultManager().createDirectoryAtPath(folderPath.path!, withIntermediateDirectories: true, attributes: nil)
     } catch let error as NSError {
