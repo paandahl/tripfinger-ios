@@ -29,7 +29,7 @@ class MyNavigationController: UINavigationController {
   
   static let sharedInstance = TripfingerAppDelegate()
   static var serverUrl = "https://1-3-dot-tripfinger-server.appspot.com"
-  static var mode = AppMode.BETA
+  static var mode = AppMode.RELEASE
   static var coordinateSet = Set<Int64>()
   static let navigationController = MyNavigationController()
   var openUrl = ""
@@ -49,16 +49,20 @@ class MyNavigationController: UINavigationController {
     NSNotificationCenter.defaultCenter().addObserver(sharedInstance, selector: #selector(self.tokenRefreshNotification),
                                                      name: kFIRInstanceIDTokenRefreshNotification, object: nil)
     
+    let isRunningTestFlightBeta = NSBundle.mainBundle().appStoreReceiptURL?.lastPathComponent=="sandboxReceipt"
     if NSProcessInfo.processInfo().arguments.contains("TEST") {
       print("Switching to test mode")
       TripfingerAppDelegate.mode = AppMode.TEST
-    } else {
+    } else if !NSProcessInfo.processInfo().arguments.contains("RELEASE") && isRunningTestFlightBeta {
       let testMode = NSUserDefaults.standardUserDefaults().boolForKey("enableTestMode")
       if testMode {
         print("Switching to draft mode")
         TripfingerAppDelegate.mode = AppMode.DRAFT
+      } else {
+        TripfingerAppDelegate.mode = AppMode.BETA
       }
     }
+    print("appMode: \(TripfingerAppDelegate.mode)")
 
     let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
     configuration.timeoutIntervalForRequest = 300 // seconds
@@ -114,18 +118,22 @@ class MyNavigationController: UINavigationController {
     // this callback will not be fired till the user taps on the notification launching the application.
     
     // Print message ID.
-    let aps = userInfo["aps"]! as! [String: String]
-    let message = aps["alert"]!
-    let openUrl = userInfo["openUrl"]
-    let fromBackground = application.applicationState == .Inactive || application.applicationState == .Background
-
-    if let openUrl = openUrl as? String {
-      if fromBackground {
-        UIApplication.sharedApplication().openURL(NSURL(string: openUrl)!)
-      } else {
-        sharedInstance.openUrl = openUrl
-        let alert = UIAlertView(title: "", message: message, delegate: sharedInstance, cancelButtonTitle: "No thanks", otherButtonTitles: "Read more")
-        alert.show()
+    print("received notification: ")
+    print(userInfo)
+    if let aps = userInfo["aps"] as? [String: String] {
+      if let message = aps["alert"] {
+        let openUrl = userInfo["openUrl"]
+        let fromBackground = application.applicationState == .Inactive || application.applicationState == .Background
+        
+        if let openUrl = openUrl as? String {
+          if fromBackground {
+            UIApplication.sharedApplication().openURL(NSURL(string: openUrl)!)
+          } else {
+            sharedInstance.openUrl = openUrl
+            let alert = UIAlertView(title: "", message: message, delegate: sharedInstance, cancelButtonTitle: "No thanks", otherButtonTitles: "Read more")
+            alert.show()
+          }
+        }
       }
     }
     
@@ -158,7 +166,7 @@ class MyNavigationController: UINavigationController {
   
   func tokenRefreshNotification(notification: NSNotification) {
     print("tokenRefreshNotification")
-    let refreshedToken = FIRInstanceID.instanceID().token()!
+    let refreshedToken = FIRInstanceID.instanceID().token()
     print("InstanceID token: \(refreshedToken)")
     TripfingerAppDelegate.connectToFcm()
   }
@@ -169,7 +177,7 @@ class MyNavigationController: UINavigationController {
         print("Unable to connect with FCM. \(error)")
       } else {
         print("Connected to FCM.")
-        let refreshedToken = FIRInstanceID.instanceID().token()!
+        let refreshedToken = FIRInstanceID.instanceID().token()
         print("refreshedToken: \(refreshedToken)")
       }
     }
@@ -470,6 +478,24 @@ class MyNavigationController: UINavigationController {
           downloadStarted()
         }
       }
+    }
+  }
+  
+  class func isReleaseMode() -> Bool {
+    return mode == .RELEASE
+  }
+  
+  class func getDraftMode() -> Bool {
+    return mode == .DRAFT
+  }
+  
+  class func setDraftMode(draftMode: Bool) {
+    if draftMode {
+      NSUserDefaults.standardUserDefaults().setBool(true, forKey: "enableTestMode")
+      mode = .DRAFT
+    } else {
+      NSUserDefaults.standardUserDefaults().setBool(false, forKey: "enableTestMode")
+      mode = .BETA
     }
   }
   

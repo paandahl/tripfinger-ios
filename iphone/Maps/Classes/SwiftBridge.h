@@ -171,7 +171,9 @@ sourceApplication annotation:(id __nonnull)annotation;
 + (void)cancelDownload:(NSString * __nonnull)mwmRegionId;
 + (void)deleteCountry:(NSString * __nonnull)mwmCountryId;
 + (void)purchaseCountry:(NSString * _Nonnull)mwmCountryId downloadStarted:(void (^ _Nonnull)(void))downloadStarted;
-
++ (BOOL)isReleaseMode;
++ (BOOL)getDraftMode;
++ (void)setDraftMode:(BOOL)draftMode;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 

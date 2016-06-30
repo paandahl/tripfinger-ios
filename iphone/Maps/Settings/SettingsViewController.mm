@@ -13,6 +13,7 @@
 #import "WebViewController.h"
 
 #include "Framework.h"
+#import "SwiftBridge.h"
 
 #include "platform/settings.hpp"
 #include "platform/platform.hpp"
@@ -26,6 +27,7 @@ extern NSString * const kTTSStatusWasChangedNotification = @"TTFStatusWasChanged
 typedef NS_ENUM(NSUInteger, Section)
 {
   SectionMetrics,
+  SectionGuide,
   SectionMap,
   SectionRouting,
   SectionCalibration,
@@ -53,6 +55,9 @@ typedef NS_ENUM(NSUInteger, Section)
     sections = {SectionMetrics, SectionMap, SectionRouting, SectionCalibration, SectionStatistics};
   else
     sections = {SectionMetrics, SectionMap, SectionRouting, SectionCalibration, SectionAd, SectionStatistics};
+  if (![TripfingerAppDelegate isReleaseMode]) {
+    sections.insert(sections.begin() + 1, SectionGuide);
+  }
 }
 
 #pragma mark - Table view data source
@@ -76,6 +81,8 @@ typedef NS_ENUM(NSUInteger, Section)
     return 3;
   case SectionMap:
     return 4;
+  case SectionGuide:
+    return 1;
   }
 }
 
@@ -208,6 +215,16 @@ typedef NS_ENUM(NSUInteger, Section)
     customCell.delegate = self;
     break;
   }
+    case SectionGuide:
+    {
+      cell = [tableView dequeueReusableCellWithIdentifier:[SwitchCell className]];
+      SwitchCell * customCell = static_cast<SwitchCell *>(cell);
+      bool on = [TripfingerAppDelegate getDraftMode];
+      customCell.titleLabel.text = @"Enable draft items";
+      customCell.switchButton.on = on;
+      customCell.delegate = self;
+      break;
+    }
   }
   return cell;
 }
@@ -305,6 +322,10 @@ typedef NS_ENUM(NSUInteger, Section)
 
   case SectionMetrics:
     break;
+      
+    case SectionGuide:
+      [TripfingerAppDelegate setDraftMode:(BOOL)value];
+      break;
   }
 }
 
@@ -372,6 +393,8 @@ settings::Units unitsForIndex(NSInteger index)
   case SectionAd:
   case SectionStatistics:
     return nil;
+    case SectionGuide:
+      return @"Guide";
   }
 }
 

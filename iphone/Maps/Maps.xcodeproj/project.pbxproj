@@ -19,7 +19,6 @@
 		25401ED21D23AC32002E4A34 /* LogUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25401ED11D23AC32002E4A34 /* LogUtils.swift */; };
 		25533E231CEDED78004C7956 /* FrameworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25533E221CEDED78004C7956 /* FrameworkService.swift */; };
 		2561718B1D0ABF56008C6386 /* ListingsParentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2561718A1D0ABF56008C6386 /* ListingsParentController.swift */; };
-		2561718D1D0FE4A5008C6386 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 2561718C1D0FE4A5008C6386 /* Settings.bundle */; };
 		256570A61D03F3FE006DE901 /* PurchaseCountryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256570A51D03F3FD006DE901 /* PurchaseCountryVC.swift */; };
 		256570A91D06A888006DE901 /* UIViewController+Huds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256570A81D06A887006DE901 /* UIViewController+Huds.swift */; };
 		2571ADED1CD882F000CF2EFF /* TripfingerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */; };
@@ -954,7 +953,6 @@
 		25401ED11D23AC32002E4A34 /* LogUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogUtils.swift; sourceTree = "<group>"; };
 		25533E221CEDED78004C7956 /* FrameworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkService.swift; sourceTree = "<group>"; };
 		2561718A1D0ABF56008C6386 /* ListingsParentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingsParentController.swift; sourceTree = "<group>"; };
-		2561718C1D0FE4A5008C6386 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		256570A51D03F3FD006DE901 /* PurchaseCountryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseCountryVC.swift; sourceTree = "<group>"; };
 		256570A81D06A887006DE901 /* UIViewController+Huds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Huds.swift"; sourceTree = "<group>"; };
 		2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerEntity.swift; sourceTree = "<group>"; };
@@ -2195,7 +2193,6 @@
 				5605022E1B6211E100169CAD /* sound-strings */,
 				347FDDA01BB59B4E00871410 /* Mapsme.storyboard */,
 				34B6CF5C1BBBFC6B009203C6 /* LaunchScreen.storyboard */,
-				2561718C1D0FE4A5008C6386 /* Settings.bundle */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -3856,7 +3853,6 @@
 				F64F4B6F1B46A5380081A24A /* MWMDownloaderDialogCell.xib in Resources */,
 				3485C0131B85C20E00F7712D /* MWMSearchTableViewController.xib in Resources */,
 				F6ED13931B1EFA2F0095C6DE /* MWMBookmarkDescriptionViewController.xib in Resources */,
-				2561718D1D0FE4A5008C6386 /* Settings.bundle in Resources */,
 				4A23D15E1B8B4DD700D4EB6F /* resources-xhdpi_clear in Resources */,
 				F64F199A1AB81A00006EAF7E /* MWMAlertViewController.xib in Resources */,
 				F6588E331B15D73100EE1E58 /* MWMBookmarkColorViewController.xib in Resources */,
