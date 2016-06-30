@@ -31,8 +31,13 @@ class PurchaseCountryVC: FirstCountryDownloadView {
     numberFormatter.numberStyle = .CurrencyStyle
     numberFormatter.locale = product.priceLocale
     let formattedPrice = numberFormatter.stringFromNumber(product.price)!
-    confirmButton.setTitle("Buy (\(formattedPrice))", forState: .Normal)
-    confirmButton.addTarget(self, action: #selector(purchaseCountry), forControlEvents: .TouchUpInside)
+    if SKPaymentQueue.canMakePayments() {
+      confirmButton.setTitle("Buy (\(formattedPrice))", forState: .Normal)
+      confirmButton.addTarget(self, action: #selector(purchaseCountry), forControlEvents: .TouchUpInside)
+    } else {
+      confirmButton.setTitle("Purchases not avilable", forState: .Normal)
+      confirmButton.enabled = false
+    }
   }
   
   func purchaseCountry() {

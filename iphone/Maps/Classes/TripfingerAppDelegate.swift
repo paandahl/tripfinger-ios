@@ -52,14 +52,14 @@ class MyNavigationController: UINavigationController {
     let isRunningTestFlightBeta = NSBundle.mainBundle().appStoreReceiptURL?.lastPathComponent=="sandboxReceipt"
     if NSProcessInfo.processInfo().arguments.contains("TEST") {
       print("Switching to test mode")
-      TripfingerAppDelegate.mode = AppMode.TEST
+      TripfingerAppDelegate.mode = .TEST
     } else if !NSProcessInfo.processInfo().arguments.contains("RELEASE") && isRunningTestFlightBeta {
       let testMode = NSUserDefaults.standardUserDefaults().boolForKey("enableTestMode")
       if testMode {
         print("Switching to draft mode")
-        TripfingerAppDelegate.mode = AppMode.DRAFT
+        TripfingerAppDelegate.mode = .DRAFT
       } else {
-        TripfingerAppDelegate.mode = AppMode.BETA
+        TripfingerAppDelegate.mode = .BETA
       }
     }
     print("appMode: \(TripfingerAppDelegate.mode)")
