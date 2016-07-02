@@ -768,7 +768,7 @@ using namespace osm_auth_ios;
     m_geoURL = [url absoluteString];
     return YES;
   }
-  else if ([scheme isEqualToString:@"mapswithme"] || [scheme isEqualToString:@"mwm"])
+  else if ([scheme isEqualToString:@"tripfinger"] || [scheme isEqualToString:@"mwm"])
   {
     m_mwmURL = [url absoluteString];
     return YES;

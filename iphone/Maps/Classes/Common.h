@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-static NSString * const MAPSWITHME_PREMIUM_LOCAL_URL = @"mapswithmepro://";
+static NSString * const MAPSWITHME_PREMIUM_LOCAL_URL = @"tripfingerpro://";
 
 static NSString * const BOOKMARK_CATEGORY_DELETED_NOTIFICATION = @"BookmarkCategoryDeletedNotification";
 

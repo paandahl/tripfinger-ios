@@ -1168,6 +1168,9 @@ bool Framework::SearchInDownloader(DownloaderSearchParams const & params)
       if (it->GetResultType() != search::Result::RESULT_LATLON)
       {
         FeatureID const & fid = it->GetFeatureID();
+        if (fid.IsTripfinger()) {
+          continue;
+        }
         Index::FeaturesLoaderGuard loader(m_model.GetIndex(), fid.m_mwmId);
         FeatureType ft;
         loader.GetFeatureByIndex(fid.m_index, ft);
