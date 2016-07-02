@@ -11,6 +11,24 @@ class SyncManager {
       dispatch_get_main_queue(), closure)
   }
   
+  class func syncMain(closure: () -> ()) {
+    if NSThread.isMainThread() {
+      let backgroundThread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0)
+      dispatch_sync(backgroundThread, closure)
+    } else {
+      dispatch_sync(dispatch_get_main_queue(), closure)
+    }
+  }
+  
+  class func asyncMain(closure: () -> ()) {
+    dispatch_async(dispatch_get_main_queue(), closure)
+  }
+  
+  class func asyncBackground(closure: () -> ()) {
+    let backgroundThread = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)
+    dispatch_async(backgroundThread, closure)
+  }
+  
   class func synchronized(lock: AnyObject, closure: () -> ()) {
     get_lock(lock)
     closure()

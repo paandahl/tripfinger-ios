@@ -132,7 +132,7 @@ class DownloadService {
     var counter = 0.0
     splitImageListAndDownload(imageList, progressHandler: { requests in
       counter += 1
-      dispatch_async(dispatch_get_main_queue()) {
+      SyncManager.syncMain {
         if DatabaseService.isDownloadMarkerCancelled(region.mwmRegionId ?? region.getName()) {
           requests.forEach { $0.cancel() }
           deleteCountry(region.getName())
