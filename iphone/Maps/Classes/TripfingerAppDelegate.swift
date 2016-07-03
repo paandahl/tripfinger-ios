@@ -35,7 +35,11 @@ class MyNavigationController: UINavigationController {
   var openUrl = ""
 
   class func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
-    
+
+    let launchArgs = NSProcessInfo.processInfo().arguments
+    if launchArgs.contains("DISABLE_STATS") || launchArgs.contains("TEST") {
+      FIRAnalyticsConfiguration.sharedInstance().setAnalyticsCollectionEnabled(false)
+    }
     FIRApp.configure()
 
     TripfingerAppDelegate.styleNavigationBar(TripfingerAppDelegate.navigationController.navigationBar)
@@ -46,22 +50,23 @@ class MyNavigationController: UINavigationController {
     application.registerUserNotificationSettings(settings)
     
     FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-    NSNotificationCenter.defaultCenter().addObserver(sharedInstance, selector: #selector(self.tokenRefreshNotification),
-                                                     name: kFIRInstanceIDTokenRefreshNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(sharedInstance, selector: #selector(self.tokenRefreshNotification), name: kFIRInstanceIDTokenRefreshNotification, object: nil)
     
-    let isRunningTestFlightBeta = NSBundle.mainBundle().appStoreReceiptURL?.lastPathComponent=="sandboxReceipt"
-    if NSProcessInfo.processInfo().arguments.contains("TEST") {
+    let installedFromAppStore = !(NSBundle.mainBundle().appStoreReceiptURL?.lastPathComponent == "sandboxReceipt")
+    if launchArgs.contains("TEST") {
       print("Switching to test mode")
-      TripfingerAppDelegate.mode = .TEST
-    } else if !NSProcessInfo.processInfo().arguments.contains("RELEASE") && isRunningTestFlightBeta {
+      mode = .TEST
+    } else if !installedFromAppStore {
       let testMode = NSUserDefaults.standardUserDefaults().boolForKey("enableTestMode")
       if testMode {
         print("Switching to draft mode")
-        TripfingerAppDelegate.mode = .DRAFT
+        mode = .DRAFT
       } else {
-        TripfingerAppDelegate.mode = .BETA
+        mode = .BETA
       }
     }
+    let analyticsDraftMode = (mode == .DRAFT) ? "BETA" : String(mode)
+    FIRAnalytics.setUserPropertyString(analyticsDraftMode, forName: "app_mode")
     print("appMode: \(TripfingerAppDelegate.mode)")
 
     let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -490,13 +495,16 @@ class MyNavigationController: UINavigationController {
   }
   
   class func setDraftMode(draftMode: Bool) {
+    NSUserDefaults.standardUserDefaults().setBool(draftMode, forKey: "enableTestMode")
     if draftMode {
-      NSUserDefaults.standardUserDefaults().setBool(true, forKey: "enableTestMode")
       mode = .DRAFT
     } else {
-      NSUserDefaults.standardUserDefaults().setBool(false, forKey: "enableTestMode")
       mode = .BETA
     }
+  }
+  
+  class func setStatisticsEnabled(enabled: Bool) {
+    FIRAnalyticsConfiguration.sharedInstance().setAnalyticsCollectionEnabled(enabled)
   }
   
   enum AppMode {

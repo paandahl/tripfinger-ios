@@ -174,6 +174,8 @@ sourceApplication annotation:(id __nonnull)annotation;
 + (BOOL)isReleaseMode;
 + (BOOL)getDraftMode;
 + (void)setDraftMode:(BOOL)draftMode;
++ (void)setStatisticsEnabled:(BOOL)enabled;
+
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 

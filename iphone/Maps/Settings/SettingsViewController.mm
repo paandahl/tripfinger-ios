@@ -251,6 +251,7 @@ typedef NS_ENUM(NSUInteger, Section)
   case SectionStatistics:
     [Statistics logEvent:kStatEventName(kStatSettings, kStatToggleStatistics)
         withParameters: @{kStatAction : kStatToggleStatistics, kStatValue : (value ? kStatOn : kStatOff)}];
+    [TripfingerAppDelegate setStatisticsEnabled:value];
     if (value)
       [stat enableOnNextAppLaunch];
     else
