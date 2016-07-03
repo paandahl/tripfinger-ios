@@ -28,7 +28,7 @@ class MyNavigationController: UINavigationController {
 @objc public class TripfingerAppDelegate: NSObject {
   
   static let sharedInstance = TripfingerAppDelegate()
-  static var serverUrl = "https://1-3-dot-tripfinger-server.appspot.com"
+  static var serverUrl = "https://tripfinger-server.appspot.com/"
   static var mode = AppMode.RELEASE
   static var coordinateSet = Set<Int64>()
   static let navigationController = MyNavigationController()
