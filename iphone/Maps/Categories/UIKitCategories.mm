@@ -138,7 +138,7 @@
 
 - (void)rateVersionFrom:(NSString *)launchPlaceName
 {
-  NSString * urlString = @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=1069550451&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software";
+  NSString * urlString = @"itms-apps://itunes.apple.com/app/id1069550451";
   [self openURL:[NSURL URLWithString:urlString]];
 }
 
