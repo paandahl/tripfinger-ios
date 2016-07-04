@@ -69,6 +69,7 @@ class PurchasesService: NSObject {
   private func loadPurchasesFromKeychain(dispatchGroup: dispatch_group_t) {
     let keychain = KeychainSwift()
     guard let purchasesString = keychain.get(PurchasesService.keychainKey) else {
+      print("restoring transactions")
       SKPaymentQueue.defaultQueue().restoreCompletedTransactions()
       return
     }
@@ -168,7 +169,7 @@ class PurchasesService: NSObject {
 extension PurchasesService: SKProductsRequestDelegate {
   
   func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
-    print("Loaded list of products...")
+    print("Loaded list of products: \(response.products.count)")
     self.products = [String: SKProduct]()
     for product in response.products {
       self.products![product.productIdentifier] = product
@@ -241,6 +242,12 @@ extension PurchasesService: SKPaymentTransactionObserver {
     }
     let keychain = KeychainSwift()
     keychain.set(purchasedProductIdentifiers!.joinWithSeparator(","), forKey: PurchasesService.keychainKey)
+    dispatch_group_leave(dispatchGroup)
+  }
+  
+  func paymentQueue(queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: NSError) {
+    print("restoring transactions failed")
+    dispatchError = true
     dispatch_group_leave(dispatchGroup)
   }
   
