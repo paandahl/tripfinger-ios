@@ -27,6 +27,7 @@ void putFields(NSUInteger eTypeValue, NSUInteger ppValue)
 void initFieldsMap()
 {
   putFields(Metadata::FMD_URL, MWMPlacePageCellTypeURL);
+  putFields(Metadata::FMD_BOOKING_URL, MWMPlacePageCellTypeBooking);
   putFields(Metadata::FMD_WEBSITE, MWMPlacePageCellTypeWebsite);
   putFields(Metadata::FMD_PHONE_NUMBER, MWMPlacePageCellTypePhoneNumber);
   putFields(Metadata::FMD_OPEN_HOURS, MWMPlacePageCellTypeOpenHours);
@@ -36,7 +37,9 @@ void initFieldsMap()
   putFields(Metadata::FMD_CUISINE, MWMPlacePageCellTypeCuisine);
 
   ASSERT_EQUAL(gMetaFieldsMap[Metadata::FMD_URL], MWMPlacePageCellTypeURL, ());
+  ASSERT_EQUAL(gMetaFieldsMap[Metadata::FMD_BOOKING_URL], MWMPlacePageCellTypeBooking, ());
   ASSERT_EQUAL(gMetaFieldsMap[MWMPlacePageCellTypeURL], Metadata::FMD_URL, ());
+  ASSERT_EQUAL(gMetaFieldsMap[MWMPlacePageCellTypeBooking], Metadata::FMD_BOOKING_URL, ());
   ASSERT_EQUAL(gMetaFieldsMap[Metadata::FMD_WEBSITE], MWMPlacePageCellTypeWebsite, ());
   ASSERT_EQUAL(gMetaFieldsMap[MWMPlacePageCellTypeWebsite], Metadata::FMD_WEBSITE, ());
   ASSERT_EQUAL(gMetaFieldsMap[Metadata::FMD_POSTCODE], MWMPlacePageCellTypePostcode, ());
@@ -78,7 +81,11 @@ void initFieldsMap()
       [self setMetaField:gMetaFieldsMap[Metadata::FMD_EMAIL] value:[entity.email UTF8String]];
     }
     if (entity.website != nil) {
-      [self setMetaField:gMetaFieldsMap[Metadata::FMD_URL] value:[entity.website UTF8String]];
+      if ([entity.website hasPrefix:@"http://www.booking.com"]) {
+        [self setMetaField:gMetaFieldsMap[Metadata::FMD_BOOKING_URL] value:[entity.website UTF8String]];
+      } else {
+        [self setMetaField:gMetaFieldsMap[Metadata::FMD_URL] value:[entity.website UTF8String]];
+      }
     }
     if (entity.phone != nil) {
       [self setMetaField:gMetaFieldsMap[Metadata::FMD_PHONE_NUMBER] value:[entity.phone UTF8String]];
@@ -137,6 +144,7 @@ void initFieldsMap()
     switch (type)
     {
       case Metadata::FMD_URL:
+      case Metadata::FMD_BOOKING_URL:
       case Metadata::FMD_WEBSITE:
       case Metadata::FMD_PHONE_NUMBER:
       case Metadata::FMD_OPEN_HOURS:

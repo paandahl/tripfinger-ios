@@ -46,7 +46,7 @@ vector<MWMPlacePageCellType> const kSectionBookmarkCellTypes {
 };
 
 vector<MWMPlacePageCellType> const kSectionMetadataCellTypes {
-    MWMPlacePageCellTypePostcode, MWMPlacePageCellTypePhoneNumber, MWMPlacePageCellTypeWebsite, MWMPlacePageCellTypeURL,
+    MWMPlacePageCellTypeBooking, MWMPlacePageCellTypePostcode, MWMPlacePageCellTypePhoneNumber, MWMPlacePageCellTypeWebsite, MWMPlacePageCellTypeURL,
     MWMPlacePageCellTypeEmail, MWMPlacePageCellTypeOpenHours, MWMPlacePageCellTypeWiFi, MWMPlacePageCellTypeCoordinate
 };
 
@@ -76,7 +76,8 @@ MWMPlacePageCellTypeValueMap const kCellType2ReuseIdentifier{
     {MWMPlacePageCellTypeBookmark, "PlacePageBookmarkCell"},
     {MWMPlacePageCellTypeInfo, "PlacePageTripfingerCell"},
     {MWMPlacePageCellTypeEditButton, "MWMPlacePageButtonCell"},
-    {MWMPlacePageCellTypeReportButton, "MWMPlacePageButtonCell"}};
+    {MWMPlacePageCellTypeReportButton, "MWMPlacePageButtonCell"},
+    {MWMPlacePageCellTypeBooking, "MWMPlacePageButtonCell"}};
 
 NSString * reuseIdentifier(MWMPlacePageCellType cellType)
 {
@@ -466,6 +467,9 @@ enum class AttributePosition
       break;
     case MWMPlacePageCellTypeEditButton:
       [static_cast<MWMPlacePageButtonCell *>(cell) config:self.ownerPlacePage isReport:NO];
+      break;
+    case MWMPlacePageCellTypeBooking:
+      [static_cast<MWMPlacePageButtonCell *>(cell) configBooking:[entity getCellValue:cellType]];
       break;
     default:
     {

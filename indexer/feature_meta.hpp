@@ -123,6 +123,7 @@ public:
     FMD_DENOMINATION = 21,
     FMD_BUILDING_LEVELS = 22,
     FMD_TEST_ID = 23,
+    FMD_BOOKING_URL = 24,
     FMD_COUNT
   };
 
