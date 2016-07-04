@@ -86,13 +86,13 @@ class CountryListController: TableController {
     tableSections = [TableSection]()
     
     if !NetworkUtil.connectedToNetwork() && countryLists.count == 0 {
-      let section = TableSection(cellIdentifier: TableCellIdentifiers.textMessageCell, handler: nil)
+      let section = TableSection(cellIdentifier: TableCellIdentifiers.textMessageCell)
       section.elements.append((title: "", value: ""))
       tableSections.append(section)
       hideHuds()
     } else {
       for (regionName, countryList) in countryLists {
-        let section = TableSection(title: regionName, cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToRegion)
+        let section = TableSection(title: regionName, cellIdentifier: TableCellIdentifiers.rightDetailCell, target: self, selector: #selector(navigateToRegion))
         for country in countryList {
           section.elements.append((title: country.listing.item.name!, value: country))
         }

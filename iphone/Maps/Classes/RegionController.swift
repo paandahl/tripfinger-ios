@@ -2,7 +2,7 @@ import RealmSwift
 import MBProgressHUD
 import Firebase
 
-protocol MapNavigator {
+protocol MapNavigator: class {
   func navigateToMap()
 }
 
@@ -62,20 +62,20 @@ extension RegionController {
   override func populateTableSections() {
     tableSections = [TableSection]()
     
-    let contentSection = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell, handler: nil)
+    let contentSection = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell)
     contentSection.elements.append(("", ""))
     tableSections.append(contentSection)
     
     if guideItemExpanded {
-      let textsSection = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToSection)
+      let textsSection = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, target: self, selector: #selector(navigateToSection))
       for guideSection in region.item().guideSections {
         textsSection.elements.append((title: guideSection.item.name, value: guideSection))
       }
       tableSections.append(textsSection)
     }
     
-    let attractionsSection = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
-    let categoriesSection = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToCategory)
+    let attractionsSection = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, target: self, selector: #selector(navigateToCategory))
+    let categoriesSection = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.rightDetailCell, target: self, selector: #selector(navigateToCategory))
     var i = 0
     for categoryDesc in region.item().allCategoryDescriptions {
       let category = Listing.Category(rawValue: categoryDesc.item.category)!
@@ -91,16 +91,21 @@ extension RegionController {
     let subRegionsSection: TableSection
     let probablyHasChildren = region.item().loadStatus == GuideItem.LoadStatus.CHILDREN_NOT_LOADED && (region.getCategory() == Region.Category.COUNTRY || region.getCategory() == Region.Category.SUB_REGION)
     if probablyHasChildren || region.item().subRegions.count > 0 {
-      let clickHandler: (AnyObject -> ())? = probablyHasChildren ? nil : navigateToRegion
+      let title: String
       switch region.getCategory() {
       case Region.Category.CONTINENT:
-        subRegionsSection = TableSection(title: "Countries:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: clickHandler)
+        title = "Countries:"
       case Region.Category.COUNTRY:
-        subRegionsSection = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: clickHandler)
+        title = "Destinations:"
       case Region.Category.SUB_REGION:
-        subRegionsSection = TableSection(title: "Destinations:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: clickHandler)
+        title = "Destinations:"
       default:
-        subRegionsSection = TableSection(title: "Neighbourhoods:", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: clickHandler)
+        title = "Neighbourhoods:"
+      }
+      if probablyHasChildren {
+        subRegionsSection = TableSection(title: title, cellIdentifier: TableCellIdentifiers.rightDetailCell)
+      } else {
+        subRegionsSection = TableSection(title: title, cellIdentifier: TableCellIdentifiers.rightDetailCell, target: self, selector: #selector(navigateToRegion))
       }
       
       if probablyHasChildren {

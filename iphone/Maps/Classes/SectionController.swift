@@ -3,8 +3,8 @@ import Firebase
 
 class SectionController: GuideItemController {
   
-  let mapNavigator: MapNavigator
   var section: GuideText
+  weak var mapNavigator: MapNavigator!
   
   init(section: GuideText, mapNavigator: MapNavigator) {
     self.section = section
@@ -42,13 +42,13 @@ extension SectionController {
   override func populateTableSections() {
     tableSections = [TableSection]()
     if section.item.content != nil {
-      let section = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell, handler: nil)
+      let section = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell)
       section.elements.append(("", ""))
       tableSections.append(section)
     }
     
     if guideItemExpanded {
-      let textsSection = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToSection)
+      let textsSection = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, target: self, selector: #selector(navigateToSection))
       
       for guideSection in section.item.guideSections {
         textsSection.elements.append((title: guideSection.item.name, value: guideSection))

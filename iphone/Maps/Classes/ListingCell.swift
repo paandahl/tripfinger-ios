@@ -11,7 +11,7 @@ class ListingCell: UITableViewCell {
   let descriptionView = UIView()
   let name = UILabel()
   var listing: Listing!
-  var delegate: ListingCellContainer!
+  weak var delegate: ListingCellContainer!
   var hasSetupConstraints = false
   var heightConstraint: NSLayoutConstraint!
   var contentHeight: CGFloat!

@@ -3,12 +3,12 @@ import Foundation
 class ListingsController: ListingsParentController {
   
   let categoryDescription: GuideText
-  let mapNavigator: MapNavigator
   let displayMode: DisplayMode
   let container = UIView()
   let listController: ListController
   var swipeController: SwipeController?
-  
+  weak var mapNavigator: MapNavigator!
+
   init(regionId: String, countryMwmId: String, categoryDescription: GuideText, regionLicense: String?, mapNavigator: MapNavigator) {
     self.categoryDescription = categoryDescription
     self.mapNavigator = mapNavigator

@@ -7,9 +7,9 @@ class ListController: GuideItemController {
   let regionId: String
   let countryMwmId: String
   let regionLicense: String?
-  let mapNavigator: MapNavigator
   let categoryDescription: GuideText
   var listings: [Listing]?
+  weak var mapNavigator: MapNavigator!
   
   init(regionId: String, countryMwmId: String, grouped: Bool, categoryDescription: GuideText, regionLicense: String?, mapNavigator: MapNavigator) {
     self.regionId = regionId
@@ -73,15 +73,6 @@ class ListController: GuideItemController {
     }
   }
   
-  
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if segue.identifier == "showFilter" {
-      let navigationController = segue.destinationViewController as! UINavigationController
-      let filterController = navigationController.viewControllers[0] as! FilterController
-      filterController.delegate = self
-    }
-  }
-  
   func selectedSearchResult(searchResult: SimplePOI, stopSpinner: () -> ()) {
   }
 }
@@ -93,13 +84,13 @@ extension ListController {
     tableSections = [TableSection]()
     
     if categoryDescription.item.content != nil {
-      let section = TableSection(title: "", cellIdentifier: TableCellIdentifiers.guideItemCell, handler: nil)
+      let section = TableSection(title: "", cellIdentifier: TableCellIdentifiers.guideItemCell)
       section.elements.append((title: "", value: ""))
       tableSections.append(section)
     }
     
     if guideItemExpanded {
-      let section = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToSection)
+      let section = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, target: self, selector: #selector(navigateToSection))
       for guideSection in categoryDescription.item.guideSections {
         section.elements.append((title: guideSection.item.name, value: guideSection))
       }
@@ -107,14 +98,14 @@ extension ListController {
     }
 
     if displayGrouped {
-      let section = TableSection(title: "", cellIdentifier: TableCellIdentifiers.rightDetailCell, handler: navigateToSubCategory)
+      let section = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, target: self, selector: #selector(navigateToSubCategory))
       for subCatDesc in categoryDescription.item.categoryDescriptions {
         section.elements.append((title: "", value: subCatDesc))
       }
       tableSections.append(section)
     } else if let listings = listings {
-      let liked = TableSection(title: "Listings", cellIdentifier: TableCellIdentifiers.likedCell, handler: nil)
-      let notLiked = TableSection(title: "", cellIdentifier: TableCellIdentifiers.listingCell, handler: nil)
+      let liked = TableSection(title: "Listings", cellIdentifier: TableCellIdentifiers.likedCell)
+      let notLiked = TableSection(title: "", cellIdentifier: TableCellIdentifiers.listingCell)
       for listing in listings {
         if let notes = listing.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
           liked.elements.append((title: "", value: listing))
@@ -127,7 +118,7 @@ extension ListController {
       tableSections.append(liked)
       tableSections.append(notLiked)
     } else {
-      let section = TableSection(title: "", cellIdentifier: TableCellIdentifiers.loadingCell, handler: nil)
+      let section = TableSection(title: "", cellIdentifier: TableCellIdentifiers.loadingCell)
       section.elements.append((title: "", value: ""))
       tableSections.append(section)
     }
