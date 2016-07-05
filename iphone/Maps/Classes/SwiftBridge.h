@@ -148,9 +148,9 @@ SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 + (BOOL)application:(UIApplication * __nonnull)application openURL:(NSURL * __nonnull)url sourceApplication:(NSString * __nonnull)
 sourceApplication annotation:(id __nonnull)annotation;
 + (void)applicationDidEnterBackground:(UIApplication * __nonnull)application;
-+ (void)application:(UIApplication * __nonnull)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings;
-+ (void)application:(UIApplication * __nonnull)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken;
-+ (void)application:(UIApplication * __nonnull)application didReceiveRemoteNotification:(NSDictionary * __nonnull)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler;
++ (void)application:(UIApplication * __nonnull)application didRegisterUserNotificationSettings:(UIUserNotificationSettings * __nonnull)notificationSettings;
++ (void)application:(UIApplication * __nonnull)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData * __nonnull)deviceToken;
++ (void)application:(UIApplication * __nonnull)application didReceiveRemoteNotification:(NSDictionary * __nonnull)userInfo fetchCompletionHandler:(void (^ __nonnull)(UIBackgroundFetchResult))completionHandler;
 + (NSArray<TripfingerEntity *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight zoomLevel:(NSInteger)zoomLevel;
 + (NSArray<TripfingerEntity *> * __nonnull)getPoisForArea:(CLLocationCoordinate2D)topLeft bottomRight:(CLLocationCoordinate2D)bottomRight category:(NSInteger)category;
 + (TripfingerEntity * __nonnull)getOnlineListingById:(NSString * __nonnull)listingId;

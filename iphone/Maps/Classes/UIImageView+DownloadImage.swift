@@ -40,26 +40,4 @@ extension UIImageView {
     downloadTask.resume()
     return downloadTask
   }
-  
-  class func sizeAspectFit(aspectRatio: CGSize, var boundingSize: CGSize) -> CGSize {
-    let mW = boundingSize.width / aspectRatio.width;
-    let mH = boundingSize.height / aspectRatio.height;
-    if mH < mW {
-      boundingSize.width = mH * aspectRatio.width;
-    } else if mW < mH {
-      boundingSize.height = mW * aspectRatio.height;
-    }
-    return boundingSize;
-  }
-  
-  class func sizeAspectFill(aspectRatio: CGSize, var minimumSize: CGSize) -> CGSize {
-    let mW = minimumSize.width / aspectRatio.width;
-    let mH = minimumSize.height / aspectRatio.height;
-    if mH > mW {
-      minimumSize.width = mH * aspectRatio.width;
-    } else if mW > mH {
-      minimumSize.height = mW * aspectRatio.height;
-    }
-    return minimumSize;
-  }
 }
