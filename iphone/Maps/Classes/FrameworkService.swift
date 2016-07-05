@@ -6,11 +6,11 @@ class FrameworkService {
     let margin: Double
     switch region.getCategory() {
     case .COUNTRY:
-      margin = 6
+      margin = 4
     case .SUB_REGION:
       margin = 1
     case .CITY:
-      margin = 0.5
+      margin = 0.2
     case .NEIGHBOURHOOD:
       margin = 0.2
     default:
