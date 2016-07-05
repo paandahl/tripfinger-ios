@@ -179,6 +179,7 @@ extension PlacePageInfoCell: UITextViewDelegate {
   func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
     if URL.host == "www.tripfinger.com" {
       let finishedHandler = {
+        self.hideHuds()
         TripfingerAppDelegate.navigationController.navigationBarHidden = false
         if let delegate = self.delegate {
           delegate.navigatedToGuide()

@@ -77,6 +77,8 @@
 		2581DCA91CAF915E0086285E /* NetworkUtilTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCA41CAF915E0086285E /* NetworkUtilTest.swift */; };
 		2581DCAD1CAF917D0086285E /* SearchServiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCAB1CAF917D0086285E /* SearchServiceTest.swift */; };
 		2581DCAE1CAF917D0086285E /* OnlineSearchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */; };
+		2590ECF91D2BB5EB00D444AB /* TripfingerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590ECF81D2BB5EA00D444AB /* TripfingerNavigationController.swift */; };
+		2590ECFB1D2BB60F00D444AB /* TapLoggingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590ECFA1D2BB60F00D444AB /* TapLoggingWindow.swift */; };
 		25B563641CFCAE5000E82351 /* UnitTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B563631CFCAE5000E82351 /* UnitTestUtils.swift */; };
 		25B563661CFF584E00E82351 /* StringUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B563651CFF584D00E82351 /* StringUtilsTest.swift */; };
 		25D27B5C1D009ED500F7AA91 /* UniqueIdentifierService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D27B5B1D009ED500F7AA91 /* UniqueIdentifierService.swift */; };
@@ -1016,6 +1018,8 @@
 		2581DCA41CAF915E0086285E /* NetworkUtilTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkUtilTest.swift; sourceTree = "<group>"; };
 		2581DCAB1CAF917D0086285E /* SearchServiceTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchServiceTest.swift; sourceTree = "<group>"; };
 		2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineSearchTest.swift; sourceTree = "<group>"; };
+		2590ECF81D2BB5EA00D444AB /* TripfingerNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerNavigationController.swift; sourceTree = "<group>"; };
+		2590ECFA1D2BB60F00D444AB /* TapLoggingWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapLoggingWindow.swift; sourceTree = "<group>"; };
 		25B563631CFCAE5000E82351 /* UnitTestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTestUtils.swift; sourceTree = "<group>"; };
 		25B563651CFF584D00E82351 /* StringUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtilsTest.swift; sourceTree = "<group>"; };
 		25D27B5B1D009ED500F7AA91 /* UniqueIdentifierService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniqueIdentifierService.swift; sourceTree = "<group>"; };
@@ -1960,6 +1964,7 @@
 		2581DC171CAE30FC0086285E /* UI Components */ = {
 			isa = PBXGroup;
 			children = (
+				2590ECF71D2BB5C500D444AB /* Navigation */,
 				25D27B641D01C43000F7AA91 /* Guide */,
 				2581DC1E1CAE31340086285E /* ImageLabelView.swift */,
 				2581DC241CAE31340086285E /* TextMessageCell.swift */,
@@ -2062,6 +2067,15 @@
 				2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */,
 			);
 			name = Search;
+			sourceTree = "<group>";
+		};
+		2590ECF71D2BB5C500D444AB /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				2590ECF81D2BB5EA00D444AB /* TripfingerNavigationController.swift */,
+				2590ECFA1D2BB60F00D444AB /* TapLoggingWindow.swift */,
+			);
+			name = Navigation;
 			sourceTree = "<group>";
 		};
 		25D27B641D01C43000F7AA91 /* Guide */ = {
@@ -4267,6 +4281,7 @@
 				F6588E371B15D87A00EE1E58 /* MWMBookmarkColorCell.mm in Sources */,
 				2581DC551CAE31700086285E /* SimplePOI.swift in Sources */,
 				25533E231CEDED78004C7956 /* FrameworkService.swift in Sources */,
+				2590ECFB1D2BB60F00D444AB /* TapLoggingWindow.swift in Sources */,
 				2581DC861CAE31CD0086285E /* String+AttributedString.swift in Sources */,
 				F6D409FA1B319BD70041730F /* ContextViews.mm in Sources */,
 				251B291B1CE5AFD100B454C3 /* DataConverter.mm in Sources */,
@@ -4404,6 +4419,7 @@
 				34CFFE901B7DE83D009D0C9F /* MWMSearchView.mm in Sources */,
 				F62F1D951C3281F1006CF38E /* UIImageView+Coloring.mm in Sources */,
 				F6FE2C151B04A44E009814AA /* MWMPlacePageEntity.mm in Sources */,
+				2590ECF91D2BB5EB00D444AB /* TripfingerNavigationController.swift in Sources */,
 				34CD81CE1C92A884007D2A60 /* MWMPageController.mm in Sources */,
 				34B82AB21B8344E300180497 /* MWMSearchTextField.mm in Sources */,
 			);

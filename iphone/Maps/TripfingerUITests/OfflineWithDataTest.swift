@@ -45,12 +45,21 @@ class OfflineWithDataTest: XCTestCase {
     tapWhenHittable(app.tables.staticTexts["Airports"])
     sleep(1)
     XCTAssertEqual(1, app.tables.cells.count)
+    tapWhenHittable(app.tables.staticTexts["Brunei International Airport"])
+    waitUntilExists(app.tables.textViews["info@airport.brunei"])
+    let origin = app.coordinateWithNormalizedOffset(CGVector(dx: 0, dy: 0))
+    let busLinkCoords = origin.coordinateWithOffset(CGVector(dx: 81.0, dy: 449.0))
+    busLinkCoords.pressForDuration(0.2)
+    tapWhenHittable(app.navigationBars["Bus station"].buttons["Back"])
+    waitUntilExists(app.tables.textViews["info@airport.brunei"])
+    
+    tapWhenHittable(app.navigationBars["Brunei International Airport"].buttons["Back"])
     tapWhenHittable(app.navigationBars["Airports"].buttons["Transportation"])
     tapWhenHittable(app.navigationBars["Transportation"].buttons["Brunei"])
     
     // try to click a link
     scrollUp(2)
-    let tableCoord = XCUIApplication().tables.element.coordinateWithNormalizedOffset(CGVector(dx: 0, dy: 0))
+    let tableCoord = app.tables.element.coordinateWithNormalizedOffset(CGVector(dx: 0, dy: 0))
     var linkCoord = tableCoord.coordinateWithOffset(CGVector(dx: 65.0, dy: (118.0 + 64)))
     linkCoord.pressForDuration(0.2)
     tapWhenHittable(app.navigationBars["Bandar"].buttons["Brunei"])

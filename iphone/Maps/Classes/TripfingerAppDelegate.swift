@@ -5,33 +5,13 @@ import Firebase
 import FirebaseInstanceID
 import FirebaseMessaging
 
-class MyNavigationController: UINavigationController {  
-  override func supportedInterfaceOrientations() -> UInt {
-    let className = String(topViewController!.dynamicType)
-    if className == "MapViewController" {
-      return UInt(UIInterfaceOrientationMask.All.rawValue)
-    } else {
-      return UInt(UIInterfaceOrientationMask.Portrait.rawValue)
-    }
-  }
-  
-  func alert(message: String) {
-    let alertController = UIAlertController(title: "Alert", message: message, preferredStyle: .Alert)
-    let defaultAction = UIAlertAction(title: "OK", style: .Default) { alertAction in
-      self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    alertController.addAction(defaultAction)
-    self.presentViewController(alertController, animated: true, completion: nil)
-  }
-}
-
 @objc public class TripfingerAppDelegate: NSObject {
   
   static let sharedInstance = TripfingerAppDelegate()
   static var serverUrl = "https://tripfinger-server.appspot.com/"
   static var mode = AppMode.RELEASE
   static var coordinateSet = Set<Int64>()
-  static let navigationController = MyNavigationController()
+  static let navigationController = TripfingerNavigationController()
   var openUrl = ""
 
   class func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
@@ -67,14 +47,15 @@ class MyNavigationController: UINavigationController {
     }
     let analyticsDraftMode = (mode == .DRAFT) ? "BETA" : String(mode)
     FIRAnalytics.setUserPropertyString(analyticsDraftMode, forName: "app_mode")
-    print("appMode: \(TripfingerAppDelegate.mode)")
+    print("appMode: \(mode)")
 
     let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
     configuration.timeoutIntervalForRequest = 300 // seconds
     configuration.timeoutIntervalForResource = 60 * 60 * 48
     NetworkUtil.alamoFireManager = Alamofire.Manager(configuration: configuration)
 
-    let window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    let taploggingEnabled = mode == .TEST
+    let window = TapLoggingWindow(tapLoggingEnabled: taploggingEnabled, frame: UIScreen.mainScreen().bounds)
     window.backgroundColor = UIColor.whiteColor()
     window.makeKeyAndVisible()
     TripfingerAppDelegate.navigationController.automaticallyAdjustsScrollViewInsets = false

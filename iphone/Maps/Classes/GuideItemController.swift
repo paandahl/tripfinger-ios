@@ -30,14 +30,6 @@ class GuideItemController: TableController {
     tableView.tableFooterView = UIView.init(frame: CGRectZero)
     
     updateUI()
-    
-    let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
-    gestureRecognizer.cancelsTouchesInView = false
-    view.addGestureRecognizer(gestureRecognizer)
-  }
-
-  func handleTap(recognizer: UIGestureRecognizer) {
-    print("tapped: \(recognizer.locationInView(view))")
   }
 
   override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
