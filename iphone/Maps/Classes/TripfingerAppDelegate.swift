@@ -30,7 +30,7 @@ import FirebaseMessaging
     application.registerUserNotificationSettings(settings)
     
     FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-    NSNotificationCenter.defaultCenter().addObserver(sharedInstance, selector: #selector(self.tokenRefreshNotification), name: kFIRInstanceIDTokenRefreshNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(tokenRefreshNotification), name: kFIRInstanceIDTokenRefreshNotification, object: nil)
     
     let installedFromAppStore = !(NSBundle.mainBundle().appStoreReceiptURL?.lastPathComponent == "sandboxReceipt")
     if launchArgs.contains("TEST") {
@@ -85,6 +85,7 @@ import FirebaseMessaging
     TripfingerAppDelegate.coordinateSet = DatabaseService.getCoordinateSet()
     print("fetched coordinateSet: ")
     print(TripfingerAppDelegate.coordinateSet)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(repopulateCoordinateSet), name: DatabaseService.TFCountrySavedNotification, object: nil)
 
     return window
   }
@@ -150,7 +151,7 @@ import FirebaseMessaging
     print("Device Token:", tokenString)
   }
   
-  func tokenRefreshNotification(notification: NSNotification) {
+  class func tokenRefreshNotification(notification: NSNotification) {
     print("tokenRefreshNotification")
     let refreshedToken = FIRInstanceID.instanceID().token()
     print("InstanceID token: \(refreshedToken)")
@@ -167,6 +168,11 @@ import FirebaseMessaging
         print("refreshedToken: \(refreshedToken)")
       }
     }
+  }
+
+  class func repopulateCoordinateSet() {
+    print("repopulating coordinate set")
+    coordinateSet = DatabaseService.getCoordinateSet()
   }
   
   class func styleNavigationBar(bar: UINavigationBar) {

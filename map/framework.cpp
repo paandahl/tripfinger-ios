@@ -685,8 +685,16 @@ void Framework::FillFeatureInfo(FeatureID const & fid, place_page::Info & info) 
     Index::FeaturesLoaderGuard const guard(m_model.GetIndex(), fid.m_mwmId);
     FeatureType ft;
     guard.GetFeatureByIndex(fid.m_index, ft);
-    LOG(LINFO, (ft.DebugString(1), ""));
-    FillInfoFromFeatureType(ft, info);
+    ms::LatLon ftCoords = MercatorBounds::ToLatLon(ft.GetCenter());
+    if (m_coordinateCheckerFn(ftCoords)) {
+      TripfingerMark tripfingerMark = m_poiByCoordFetcherFn(ftCoords);
+      SelfBakedFeatureType sft(tripfingerMark);
+      sft.SetID(FeatureID(tripfingerMark));
+      FillInfoFromFeatureType(sft, info);
+    } else {
+      LOG(LINFO, (ft.DebugString(1), ""));
+      FillInfoFromFeatureType(ft, info);
+    }
   }
 }
 
