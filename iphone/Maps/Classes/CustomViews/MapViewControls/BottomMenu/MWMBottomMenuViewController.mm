@@ -37,7 +37,7 @@ typedef NS_ENUM(NSUInteger, MWMBottomMenuViewCell)
 {
   MWMBottomMenuViewCellDownload,
   MWMBottomMenuViewCellSettings,
-  MWMBottomMenuViewCellShare,
+//  MWMBottomMenuViewCellShare,
   MWMBottomMenuViewCellAd,
   MWMBottomMenuViewCellCount
 };
@@ -301,9 +301,9 @@ typedef NS_ENUM(NSUInteger, MWMBottomMenuViewCell)
   case MWMBottomMenuViewCellSettings:
     [cell configureWithImageName:@"ic_menu_settings" label:L(@"settings") badgeCount:0 isEnabled:YES];
     break;
-  case MWMBottomMenuViewCellShare:
-    [cell configureWithImageName:@"ic_menu_share" label:L(@"share_my_location") badgeCount:0 isEnabled:YES];
-    break;
+//  case MWMBottomMenuViewCellShare:
+//    [cell configureWithImageName:@"ic_menu_share" label:L(@"share_my_location") badgeCount:0 isEnabled:YES];
+//    break;
   case MWMBottomMenuViewCellAd:
   {
     MTRGNativeAppwallBanner * banner = [self.controller.appWallAd.banners firstObject];
@@ -336,9 +336,9 @@ typedef NS_ENUM(NSUInteger, MWMBottomMenuViewCell)
   case MWMBottomMenuViewCellSettings:
     [self menuActionOpenSettings];
     break;
-  case MWMBottomMenuViewCellShare:
-    [self menuActionShareLocation];
-    break;
+//  case MWMBottomMenuViewCellShare:
+//    [self menuActionShareLocation];
+//    break;
   case MWMBottomMenuViewCellAd:
     [self menuActionOpenAd];
     break;
@@ -372,28 +372,28 @@ typedef NS_ENUM(NSUInteger, MWMBottomMenuViewCell)
   [self.controller.navigationController pushViewController:vc animated:YES];
 }
 
-- (void)menuActionShareLocation
-{
-  [Statistics logEvent:kStatMenu withParameters:@{kStatButton : kStatShare}];
-  [Alohalytics logEvent:kAlohalyticsTapEventKey withValue:@"share@"];
-  CLLocation * location = [MapsAppDelegate theApp].locationManager.lastLocation;
-  if (!location)
-  {
-    [[[UIAlertView alloc] initWithTitle:L(@"unknown_current_position")
-                                message:nil
-                               delegate:nil
-                      cancelButtonTitle:L(@"ok")
-                      otherButtonTitles:nil] show];
-    return;
-  }
-  CLLocationCoordinate2D const coord = location.coordinate;
-  NSIndexPath * cellIndex = [NSIndexPath indexPathForItem:MWMBottomMenuViewCellShare inSection:0];
-  MWMBottomMenuCollectionViewCell * cell =
-      (MWMBottomMenuCollectionViewCell *)[self.additionalButtons cellForItemAtIndexPath:cellIndex];
-  MWMActivityViewController * shareVC =
-      [MWMActivityViewController shareControllerForLocationTitle:nil location:coord myPosition:YES];
-  [shareVC presentInParentViewController:self.controller anchorView:cell.icon];
-}
+//- (void)menuActionShareLocation
+//{
+//  [Statistics logEvent:kStatMenu withParameters:@{kStatButton : kStatShare}];
+//  [Alohalytics logEvent:kAlohalyticsTapEventKey withValue:@"share@"];
+//  CLLocation * location = [MapsAppDelegate theApp].locationManager.lastLocation;
+//  if (!location)
+//  {
+//    [[[UIAlertView alloc] initWithTitle:L(@"unknown_current_position")
+//                                message:nil
+//                               delegate:nil
+//                      cancelButtonTitle:L(@"ok")
+//                      otherButtonTitles:nil] show];
+//    return;
+//  }
+//  CLLocationCoordinate2D const coord = location.coordinate;
+//  NSIndexPath * cellIndex = [NSIndexPath indexPathForItem:MWMBottomMenuViewCellShare inSection:0];
+//  MWMBottomMenuCollectionViewCell * cell =
+//      (MWMBottomMenuCollectionViewCell *)[self.additionalButtons cellForItemAtIndexPath:cellIndex];
+//  MWMActivityViewController * shareVC =
+//      [MWMActivityViewController shareControllerForLocationTitle:nil location:coord myPosition:YES];
+//  [shareVC presentInParentViewController:self.controller anchorView:cell.icon];
+//}
 
 - (void)menuActionOpenAd
 {
