@@ -68,7 +68,7 @@
   FeatureID fid(mark);
   search::Result::Metadata metadata;
   m2::PointD centre(entity.lat, entity.lon);
-  search::Result searchResult(fid, centre, "Harooo", "Adreees", "Typeee", entity.type, metadata);
+  search::Result searchResult(fid, centre, "tripfingerClick", "Adreees", "Typeee", entity.type, metadata);
   GetFramework().ShowSearchResult(searchResult);
 }
 

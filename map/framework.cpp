@@ -1325,7 +1325,9 @@ void Framework::LoadSearchResultMetadata(search::Result & res) const
 
 void Framework::ShowSearchResult(search::Result const & res)
 {
-  CancelInteractiveSearch();
+  if (res.GetString() != "tripfingerClick") {
+    CancelInteractiveSearch();
+  }
   StopLocationFollow();
 
   alohalytics::LogEvent("searchShowResult", {{"pos", strings::to_string(res.GetPositionInResults())},
