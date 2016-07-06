@@ -41,6 +41,7 @@ class SearchOnlineTest: XCTestCase {
     // attraction search from guide
     app.navigationBars["Bandar"].buttons["Search"].tap()
     
+    sleep(1)
     searchField.typeText("Bang Pae")
     
     let bangPaeRow = app.tables.staticTexts["Bang Pae Waterfall"]
