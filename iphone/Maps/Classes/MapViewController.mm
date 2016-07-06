@@ -27,7 +27,6 @@
 #import "UIColor+MapsMeColor.h"
 #import "UIFont+MapsMeFonts.h"
 #import "UIViewController+Navigation.h"
-#import <MyTargetSDKCorp/MTRGManager_Corp.h>
 #import <CoreLocation/CoreLocation.h>
 
 #import "3party/Alohalytics/src/alohalytics_objc.h"
@@ -113,7 +112,7 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 
 @end
 
-@interface MapViewController ()<MTRGNativeAppwallAdDelegate, MWMFrameworkRouteBuilderObserver,
+@interface MapViewController ()<MWMFrameworkRouteBuilderObserver, // MTRGNativeAppwallAdDelegate
                                 MWMFrameworkDrapeObserver, MWMFrameworkStorageObserver,
                                 MWMPageControllerProtocol>
 
@@ -485,7 +484,7 @@ NSString * const kReportSegue = @"Map2ReportSegue";
   if (MapsAppDelegate.theApp.isDaemonMode)
     return;
   self.view.clipsToBounds = YES;
-  [MTRGManager setMyCom:YES];
+//  [MTRGManager setMyCom:YES];
 }
 
 - (void)mwm_refreshUI
@@ -861,33 +860,33 @@ NSString * const kReportSegue = @"Map2ReportSegue";
   (void)settings::Get(kAdForbiddenSettingsKey, adForbidden);
   if (isIOS7 || adServerForbidden || adForbidden)
   {
-    self.appWallAd = nil;
+//    self.appWallAd = nil;
     return;
   }
   if (self.isAppWallAdActive)
     return;
-  self.appWallAd = [[MTRGNativeAppwallAd alloc]initWithSlotId:@(MY_TARGET_KEY)];
-  self.appWallAd.handleLinksInApp = YES;
-  self.appWallAd.closeButtonTitle = L(@"close");
-  self.appWallAd.delegate = self;
-  [self.appWallAd load];
+//  self.appWallAd = [[MTRGNativeAppwallAd alloc]initWithSlotId:@(MY_TARGET_KEY)];
+//  self.appWallAd.handleLinksInApp = YES;
+//  self.appWallAd.closeButtonTitle = L(@"close");
+//  self.appWallAd.delegate = self;
+//  [self.appWallAd load];
 }
 
-- (void)onLoadWithAppwallBanners:(NSArray *)appwallBanners appwallAd:(MTRGNativeAppwallAd *)appwallAd
-{
-  if (![appwallAd isEqual:self.appWallAd])
-    return;
-  if (appwallBanners.count == 0)
-    self.appWallAd = nil;
-  [self.controlsManager refreshLayout];
-}
+//- (void)onLoadWithAppwallBanners:(NSArray *)appwallBanners appwallAd:(MTRGNativeAppwallAd *)appwallAd
+//{
+//  if (![appwallAd isEqual:self.appWallAd])
+//    return;
+//  if (appwallBanners.count == 0)
+//    self.appWallAd = nil;
+//  [self.controlsManager refreshLayout];
+//}
 
-- (void)onNoAdWithReason:(NSString *)reason appwallAd:(MTRGNativeAppwallAd *)appwallAd
-{
-  if (![appwallAd isEqual:self.appWallAd])
-    return;
-  self.appWallAd = nil;
-}
+//- (void)onNoAdWithReason:(NSString *)reason appwallAd:(MTRGNativeAppwallAd *)appwallAd
+//{
+//  if (![appwallAd isEqual:self.appWallAd])
+//    return;
+//  self.appWallAd = nil;
+//}
 
 #pragma mark - API bar
 
@@ -988,11 +987,11 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 
 #pragma mark - Properties
 
-- (void)setAppWallAd:(MTRGNativeAppwallAd *)appWallAd
-{
-  _appWallAd = appWallAd;
-  [self.controlsManager refreshLayout];
-}
+//- (void)setAppWallAd:(MTRGNativeAppwallAd *)appWallAd
+//{
+//  _appWallAd = appWallAd;
+//  [self.controlsManager refreshLayout];
+//}
 
 - (MWMMapViewControlsManager *)controlsManager
 {
@@ -1003,9 +1002,10 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 
 - (BOOL)isAppWallAdActive
 {
-  BOOL const haveAppWall = (self.appWallAd != nil);
-  BOOL const haveBanners = (self.appWallAd.banners && self.appWallAd.banners != 0);
-  return haveAppWall && haveBanners;
+//  BOOL const haveAppWall = (self.appWallAd != nil);
+//  BOOL const haveBanners = (self.appWallAd.banners && self.appWallAd.banners != 0);
+//  return haveAppWall && haveBanners;
+  return NO;
 }
 
 - (BOOL)hasNavigationBar

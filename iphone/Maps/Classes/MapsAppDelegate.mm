@@ -18,8 +18,6 @@
 #import "UIFont+MapsMeFonts.h"
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <Parse/Parse.h>
-#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import "SwiftBridge.h"
 
 #import "3party/Alohalytics/src/alohalytics_objc.h"
@@ -38,14 +36,6 @@
 
 // If you have a "missing header error" here, then please run configure.sh script in the root repo folder.
 #import "../../../private.h"
-
-#ifdef OMIM_PRODUCTION
-
-#import <Crashlytics/Crashlytics.h>
-#import <Fabric/Fabric.h>
-#import <HockeySDK/HockeySDK.h>
-
-#endif
 
 extern NSString * const MapsStatusChangedNotification = @"MapsStatusChangedNotification";
 // Alert keys.
@@ -584,7 +574,7 @@ using namespace osm_auth_ios;
 - (void)applicationWillResignActive:(UIApplication *)application
 {
   [self.mapViewController onGetFocus: NO];
-  [self.mapViewController.appWallAd close];
+//  [self.mapViewController.appWallAd close];
   [RouteState save];
   GetFramework().SetRenderingEnabled(false);
 }

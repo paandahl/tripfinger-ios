@@ -184,9 +184,6 @@
 		344825931B8DBADF00757B1B /* MWMSearchDownloadViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 344825911B8DBADF00757B1B /* MWMSearchDownloadViewController.mm */; };
 		344825941B8DBADF00757B1B /* MWMSearchDownloadViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 344825921B8DBADF00757B1B /* MWMSearchDownloadViewController.xib */; };
 		344825971B8DCEC400757B1B /* MWMSearchDownloadView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 344825961B8DCEC400757B1B /* MWMSearchDownloadView.mm */; };
-		34570A361B13217C00E6D4FD /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34570A331B13217C00E6D4FD /* Bolts.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		34570A371B13217C00E6D4FD /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34570A341B13217C00E6D4FD /* Parse.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		34570A381B13217C00E6D4FD /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34570A351B13217C00E6D4FD /* ParseFacebookUtilsV4.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		34570A391B13219600E6D4FD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C98653186C5F0500AF7E9E /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		34570A3B1B13222600E6D4FD /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 34570A3A1B13222600E6D4FD /* libz.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		34570A3D1B13223000E6D4FD /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 34570A3C1B13223000E6D4FD /* libsqlite3.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -252,8 +249,6 @@
 		3491E7CC1C06F1F10042FE24 /* MWMPlacePageButtonCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3491E7C91C06F1F10042FE24 /* MWMPlacePageButtonCell.mm */; };
 		3491E7CD1C06F1F10042FE24 /* MWMPlacePageButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3491E7CA1C06F1F10042FE24 /* MWMPlacePageButtonCell.xib */; };
 		3491E7CE1C06F1F10042FE24 /* MWMPlacePageButtonCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3491E7CA1C06F1F10042FE24 /* MWMPlacePageButtonCell.xib */; };
-		34921F6A1BFA0CDC00737D6E /* MyTargetSDKCorp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34921F691BFA0CDC00737D6E /* MyTargetSDKCorp.framework */; };
-		34921F6B1BFA0CDC00737D6E /* MyTargetSDKCorp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34921F691BFA0CDC00737D6E /* MyTargetSDKCorp.framework */; };
 		3492CC121C6DF00E0057D8E8 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		3492CC131C6DF00F0057D8E8 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		3497A93A1B5CF8A900F51E55 /* MWMNavigationDashboardManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3497A9371B5CF8A900F51E55 /* MWMNavigationDashboardManager.mm */; };
@@ -266,10 +261,6 @@
 		349C26B51BB02C6F0005DF2F /* MWMBottomMenuViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 349C26B31BB02C6F0005DF2F /* MWMBottomMenuViewController.mm */; };
 		349C26B61BB02C6F0005DF2F /* MWMBottomMenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 349C26B41BB02C6F0005DF2F /* MWMBottomMenuViewController.xib */; };
 		349C26B91BB04ED30005DF2F /* MWMBottomMenuView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 349C26B81BB04ED30005DF2F /* MWMBottomMenuView.mm */; };
-		34A62D4E1C903533007FDCB7 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A62D4C1C903533007FDCB7 /* Fabric.framework */; };
-		34A62D4F1C903533007FDCB7 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A62D4C1C903533007FDCB7 /* Fabric.framework */; };
-		34A62D501C903533007FDCB7 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A62D4D1C903533007FDCB7 /* Crashlytics.framework */; };
-		34A62D511C903533007FDCB7 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34A62D4D1C903533007FDCB7 /* Crashlytics.framework */; };
 		34ABA6161C2D185C00FE1BEC /* MWMAuthorizationOSMLoginViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 34ABA6151C2D185B00FE1BEC /* MWMAuthorizationOSMLoginViewController.mm */; };
 		34ABA6171C2D185C00FE1BEC /* MWMAuthorizationOSMLoginViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 34ABA6151C2D185B00FE1BEC /* MWMAuthorizationOSMLoginViewController.mm */; };
 		34ABA61B1C2D4DCC00FE1BEC /* UITextField+RuntimeAttributes.mm in Sources */ = {isa = PBXBuildFile; fileRef = 34ABA61A1C2D4DCC00FE1BEC /* UITextField+RuntimeAttributes.mm */; };
@@ -318,7 +309,6 @@
 		34C9BD051C6DB693000DC38D /* MWMViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 34C9BD011C6DB693000DC38D /* MWMViewController.mm */; };
 		34C9BD091C6DBCDA000DC38D /* MWMNavigationController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 34C9BD081C6DBCDA000DC38D /* MWMNavigationController.mm */; };
 		34C9BD0A1C6DBCDA000DC38D /* MWMNavigationController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 34C9BD081C6DBCDA000DC38D /* MWMNavigationController.mm */; };
-		34CA57181C292F17004D9C89 /* MyTrackerSDKCorp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F696CCBA1C2816FB00150DFD /* MyTrackerSDKCorp.framework */; };
 		34CA57191C292F50004D9C89 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C9864B186C5EAA00AF7E9E /* MediaPlayer.framework */; };
 		34CC4C091B81F3B500E44C1F /* MWMSearchTabbedViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 34CC4C071B81F3B500E44C1F /* MWMSearchTabbedViewController.mm */; };
 		34CC4C0A1B81F3B500E44C1F /* MWMSearchTabbedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 34CC4C081B81F3B500E44C1F /* MWMSearchTabbedViewController.xib */; };
@@ -626,13 +616,9 @@
 		6741AA351BF340DE002C974C /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 34570A3C1B13223000E6D4FD /* libsqlite3.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		6741AA361BF340DE002C974C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 34570A3A1B13222600E6D4FD /* libz.dylib */; settings = {ATTRIBUTES = (Required, ); }; };
 		6741AA371BF340DE002C974C /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C98653186C5F0500AF7E9E /* AudioToolbox.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		6741AA381BF340DE002C974C /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34570A331B13217C00E6D4FD /* Bolts.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		6741AA391BF340DE002C974C /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34570A341B13217C00E6D4FD /* Parse.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		6741AA3A1BF340DE002C974C /* ParseFacebookUtilsV4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 34570A351B13217C00E6D4FD /* ParseFacebookUtilsV4.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6741AA3C1BF340DE002C974C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6741AA3D1BF340DE002C974C /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6BC1E4B1ACBE96100EF0360 /* FBSDKCoreKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		6741AA3E1BF340DE002C974C /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F6BC1E4C1ACBE96100EF0360 /* FBSDKShareKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		6741AA401BF340DE002C974C /* libFlurry_7.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6671C6A1BA2EFD500548008 /* libFlurry_7.1.0.a */; };
 		6741AA411BF340DE002C974C /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00511051A1101FC00A61AA4 /* CoreMedia.framework */; };
 		6741AA421BF340DE002C974C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B00511031A1101F600A61AA4 /* CoreData.framework */; };
 		6741AA431BF340DE002C974C /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 97C98655186C734000AF7E9E /* AVFoundation.framework */; };
@@ -688,10 +674,6 @@
 		6B9978361C89A316003B8AA0 /* editor.config in Resources */ = {isa = PBXBuildFile; fileRef = 6B9978341C89A316003B8AA0 /* editor.config */; };
 		6BA0BCD11B74DDBA00CC9969 /* MWMCustomFacebookEvents.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6BA0BCD01B74DDBA00CC9969 /* MWMCustomFacebookEvents.mm */; };
 		845C891F1C78748000940D7F /* me.maps.enterprise.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 845C891E1C78748000940D7F /* me.maps.enterprise.entitlements */; };
-		845C892C1C8981CE00940D7F /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845C89291C8981CE00940D7F /* HockeySDK.framework */; };
-		845C892D1C8981CE00940D7F /* HockeySDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845C89291C8981CE00940D7F /* HockeySDK.framework */; };
-		845C892E1C8981CE00940D7F /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 845C892B1C8981CE00940D7F /* HockeySDKResources.bundle */; };
-		845C892F1C8981CE00940D7F /* HockeySDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 845C892B1C8981CE00940D7F /* HockeySDKResources.bundle */; };
 		845C89311C89837900940D7F /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845C89301C89837900940D7F /* AssetsLibrary.framework */; };
 		845C89351C8983F300940D7F /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 845C89321C8983F300940D7F /* CoreText.framework */; };
 		845C89361C8983F300940D7F /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 845C89331C8983F300940D7F /* libc++.tbd */; };
@@ -816,7 +798,6 @@
 		F6588E331B15D73100EE1E58 /* MWMBookmarkColorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6588E321B15D73100EE1E58 /* MWMBookmarkColorViewController.xib */; };
 		F6588E371B15D87A00EE1E58 /* MWMBookmarkColorCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = F6588E351B15D87A00EE1E58 /* MWMBookmarkColorCell.mm */; };
 		F6588E381B15D87A00EE1E58 /* MWMBookmarkColorCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F6588E361B15D87A00EE1E58 /* MWMBookmarkColorCell.xib */; };
-		F6671C6B1BA2EFD500548008 /* libFlurry_7.1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F6671C6A1BA2EFD500548008 /* libFlurry_7.1.0.a */; };
 		F668F6561BCD4507002D6FFC /* MWMTTSSettingsViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = F668F6551BCD4507002D6FFC /* MWMTTSSettingsViewController.mm */; };
 		F66A8FA81B09F052001B9C97 /* MWMiPhoneLandscapePlacePage.mm in Sources */ = {isa = PBXBuildFile; fileRef = F66A8FA71B09F052001B9C97 /* MWMiPhoneLandscapePlacePage.mm */; };
 		F66A8FAC1B09F137001B9C97 /* MWMiPadPlacePage.mm in Sources */ = {isa = PBXBuildFile; fileRef = F66A8FAB1B09F137001B9C97 /* MWMiPadPlacePage.mm */; };
@@ -826,7 +807,6 @@
 		F6791B141C43DF0B007A8A6E /* MWMStartButton.mm in Sources */ = {isa = PBXBuildFile; fileRef = F6791B121C43DEA7007A8A6E /* MWMStartButton.mm */; };
 		F6830F111B85F6B900C42AAE /* MWMLanesPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = F6830F101B85F6B900C42AAE /* MWMLanesPanel.mm */; };
 		F68E6BD21B8DB7AE0040566D /* MWMRouteHelperPanel.mm in Sources */ = {isa = PBXBuildFile; fileRef = F68E6BD11B8DB7AE0040566D /* MWMRouteHelperPanel.mm */; };
-		F696CCBB1C2816FB00150DFD /* MyTrackerSDKCorp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F696CCBA1C2816FB00150DFD /* MyTrackerSDKCorp.framework */; };
 		F6A218491CA3F26800BE2CC6 /* MWMEditorViralActivityItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = F6A218481CA3F26800BE2CC6 /* MWMEditorViralActivityItem.mm */; };
 		F6A2184A1CA3F26800BE2CC6 /* MWMEditorViralActivityItem.mm in Sources */ = {isa = PBXBuildFile; fileRef = F6A218481CA3F26800BE2CC6 /* MWMEditorViralActivityItem.mm */; };
 		F6A750B91BE8C74400981B41 /* MWMSearchHistoryMyPositionCell.mm in Sources */ = {isa = PBXBuildFile; fileRef = F6A750B81BE8C74400981B41 /* MWMSearchHistoryMyPositionCell.mm */; };
@@ -1144,9 +1124,6 @@
 		344825951B8DCEC400757B1B /* MWMSearchDownloadView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMSearchDownloadView.h; sourceTree = "<group>"; };
 		344825961B8DCEC400757B1B /* MWMSearchDownloadView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMSearchDownloadView.mm; sourceTree = "<group>"; };
 		344BDB021B9069810076DB31 /* MWMSearchTabbedViewProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMSearchTabbedViewProtocol.h; sourceTree = "<group>"; };
-		34570A331B13217C00E6D4FD /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Bolts.framework; path = PushNotifications/Bolts.framework; sourceTree = "<group>"; };
-		34570A341B13217C00E6D4FD /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = PushNotifications/Parse.framework; sourceTree = "<group>"; };
-		34570A351B13217C00E6D4FD /* ParseFacebookUtilsV4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ParseFacebookUtilsV4.framework; path = PushNotifications/ParseFacebookUtilsV4.framework; sourceTree = "<group>"; };
 		34570A3A1B13222600E6D4FD /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		34570A3C1B13223000E6D4FD /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		34570A3E1B13225500E6D4FD /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -1208,7 +1185,6 @@
 		3491E7C81C06F1F10042FE24 /* MWMPlacePageButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMPlacePageButtonCell.h; sourceTree = "<group>"; };
 		3491E7C91C06F1F10042FE24 /* MWMPlacePageButtonCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMPlacePageButtonCell.mm; sourceTree = "<group>"; };
 		3491E7CA1C06F1F10042FE24 /* MWMPlacePageButtonCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MWMPlacePageButtonCell.xib; sourceTree = "<group>"; };
-		34921F691BFA0CDC00737D6E /* MyTargetSDKCorp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MyTargetSDKCorp.framework; sourceTree = "<group>"; };
 		3497A9361B5CF8A900F51E55 /* MWMNavigationDashboardManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMNavigationDashboardManager.h; sourceTree = "<group>"; };
 		3497A9371B5CF8A900F51E55 /* MWMNavigationDashboardManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMNavigationDashboardManager.mm; sourceTree = "<group>"; };
 		349A35751B53D4C9009677EE /* MWMCircularProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMCircularProgress.h; sourceTree = "<group>"; };
@@ -1226,8 +1202,6 @@
 		349C26B41BB02C6F0005DF2F /* MWMBottomMenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MWMBottomMenuViewController.xib; sourceTree = "<group>"; };
 		349C26B71BB04ED30005DF2F /* MWMBottomMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMBottomMenuView.h; sourceTree = "<group>"; };
 		349C26B81BB04ED30005DF2F /* MWMBottomMenuView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMBottomMenuView.mm; sourceTree = "<group>"; };
-		34A62D4C1C903533007FDCB7 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Fabric.framework; sourceTree = "<group>"; };
-		34A62D4D1C903533007FDCB7 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		34ABA6141C2D185B00FE1BEC /* MWMAuthorizationOSMLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMAuthorizationOSMLoginViewController.h; sourceTree = "<group>"; };
 		34ABA6151C2D185B00FE1BEC /* MWMAuthorizationOSMLoginViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMAuthorizationOSMLoginViewController.mm; sourceTree = "<group>"; };
 		34ABA6191C2D4DA900FE1BEC /* UITextField+RuntimeAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+RuntimeAttributes.h"; sourceTree = "<group>"; };
@@ -1415,8 +1389,6 @@
 		72DABF35681188F725264B8E /* Pods-TripfingerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		82D351E25AFA767C2B79BF85 /* Pods-TripfingerTests.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.adhoc.xcconfig"; sourceTree = "<group>"; };
 		845C891E1C78748000940D7F /* me.maps.enterprise.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = me.maps.enterprise.entitlements; sourceTree = "<group>"; };
-		845C89291C8981CE00940D7F /* HockeySDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = HockeySDK.framework; sourceTree = "<group>"; };
-		845C892B1C8981CE00940D7F /* HockeySDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HockeySDKResources.bundle; sourceTree = "<group>"; };
 		845C89301C89837900940D7F /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		845C89321C8983F300940D7F /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		845C89331C8983F300940D7F /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -1583,7 +1555,6 @@
 		F6588E341B15D87A00EE1E58 /* MWMBookmarkColorCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMBookmarkColorCell.h; sourceTree = "<group>"; };
 		F6588E351B15D87A00EE1E58 /* MWMBookmarkColorCell.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMBookmarkColorCell.mm; sourceTree = "<group>"; };
 		F6588E361B15D87A00EE1E58 /* MWMBookmarkColorCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MWMBookmarkColorCell.xib; sourceTree = "<group>"; };
-		F6671C6A1BA2EFD500548008 /* libFlurry_7.1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libFlurry_7.1.0.a; path = Statistics/libFlurry_7.1.0.a; sourceTree = "<group>"; };
 		F668F6541BCD4507002D6FFC /* MWMTTSSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMTTSSettingsViewController.h; sourceTree = "<group>"; };
 		F668F6551BCD4507002D6FFC /* MWMTTSSettingsViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMTTSSettingsViewController.mm; sourceTree = "<group>"; };
 		F66A8FA61B09F052001B9C97 /* MWMiPhoneLandscapePlacePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMiPhoneLandscapePlacePage.h; sourceTree = "<group>"; };
@@ -1599,7 +1570,6 @@
 		F6830F101B85F6B900C42AAE /* MWMLanesPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMLanesPanel.mm; sourceTree = "<group>"; };
 		F68E6BD01B8DB7AE0040566D /* MWMRouteHelperPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMRouteHelperPanel.h; sourceTree = "<group>"; };
 		F68E6BD11B8DB7AE0040566D /* MWMRouteHelperPanel.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMRouteHelperPanel.mm; sourceTree = "<group>"; };
-		F696CCBA1C2816FB00150DFD /* MyTrackerSDKCorp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MyTrackerSDKCorp.framework; path = MyTracker/MyTrackerSDKCorp.framework; sourceTree = "<group>"; };
 		F6A218471CA3F26800BE2CC6 /* MWMEditorViralActivityItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMEditorViralActivityItem.h; sourceTree = "<group>"; };
 		F6A218481CA3F26800BE2CC6 /* MWMEditorViralActivityItem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMEditorViralActivityItem.mm; sourceTree = "<group>"; };
 		F6A750B71BE8C74400981B41 /* MWMSearchHistoryMyPositionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMSearchHistoryMyPositionCell.h; sourceTree = "<group>"; };
@@ -1717,14 +1687,12 @@
 				845C89361C8983F300940D7F /* libc++.tbd in Frameworks */,
 				845C89371C8983F300940D7F /* QuickLook.framework in Frameworks */,
 				288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */,
-				34A62D4E1C903533007FDCB7 /* Fabric.framework in Frameworks */,
 				97ECD87A18362B5400F77A46 /* MobileCoreServices.framework in Frameworks */,
 				46F26D1F10F626CB00ECCA39 /* QuartzCore.framework in Frameworks */,
 				97719D491843B6F700BDD815 /* Security.framework in Frameworks */,
 				FA87151B12B1518F00592DAF /* SystemConfiguration.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				845C89311C89837900940D7F /* AssetsLibrary.framework in Frameworks */,
-				F696CCBB1C2816FB00150DFD /* MyTrackerSDKCorp.framework in Frameworks */,
 				341876B41C28026D005A0C9A /* CoreVideo.framework in Frameworks */,
 				34751E9E1BFB8E73005299B7 /* MediaPlayer.framework in Frameworks */,
 				34570A411B13229300E6D4FD /* FBSDKLoginKit.framework in Frameworks */,
@@ -1733,26 +1701,19 @@
 				34570A3D1B13223000E6D4FD /* libsqlite3.dylib in Frameworks */,
 				34570A3B1B13222600E6D4FD /* libz.dylib in Frameworks */,
 				34570A391B13219600E6D4FD /* AudioToolbox.framework in Frameworks */,
-				34570A361B13217C00E6D4FD /* Bolts.framework in Frameworks */,
-				34570A371B13217C00E6D4FD /* Parse.framework in Frameworks */,
-				34570A381B13217C00E6D4FD /* ParseFacebookUtilsV4.framework in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				F6BC1E4D1ACBE96100EF0360 /* FBSDKCoreKit.framework in Frameworks */,
 				F6BC1E4E1ACBE96100EF0360 /* FBSDKShareKit.framework in Frameworks */,
-				F6671C6B1BA2EFD500548008 /* libFlurry_7.1.0.a in Frameworks */,
-				34921F6A1BFA0CDC00737D6E /* MyTargetSDKCorp.framework in Frameworks */,
 				B00511061A1101FC00A61AA4 /* CoreMedia.framework in Frameworks */,
 				B00511041A1101F600A61AA4 /* CoreData.framework in Frameworks */,
 				B00511021A1101E000A61AA4 /* AVFoundation.framework in Frameworks */,
 				B00510FB1A11015900A61AA4 /* CFNetwork.framework in Frameworks */,
 				97D807BE18A93C8800D416E0 /* iAd.framework in Frameworks */,
-				34A62D501C903533007FDCB7 /* Crashlytics.framework in Frameworks */,
 				97719D451843B6DC00BDD815 /* MessageUI.framework in Frameworks */,
 				97ECD87F1836594400F77A46 /* StoreKit.framework in Frameworks */,
 				97ECD87818362B3D00F77A46 /* CoreTelephony.framework in Frameworks */,
 				97ECD871183620CE00F77A46 /* AdSupport.framework in Frameworks */,
 				46F26C7310F61FD600ECCA39 /* OpenGLES.framework in Frameworks */,
-				845C892C1C8981CE00940D7F /* HockeySDK.framework in Frameworks */,
 				EEB7E22211E9079400080A68 /* CoreLocation.framework in Frameworks */,
 				3AEEEDADCFF4171D77F3D9AB /* Pods_Tripfinger.framework in Frameworks */,
 			);
@@ -1779,11 +1740,9 @@
 			files = (
 				341F09841C20138100F18AC5 /* libpugixml.a in Frameworks */,
 				3411387D1C15AE73002E3B3E /* libeditor.a in Frameworks */,
-				34921F6B1BFA0CDC00737D6E /* MyTargetSDKCorp.framework in Frameworks */,
 				6741AABD1BF356BA002C974C /* libagg.a in Frameworks */,
 				6741AABE1BF356BA002C974C /* libalohalitics.a in Frameworks */,
 				6741AAC01BF356BA002C974C /* libapi.a in Frameworks */,
-				34A62D511C903533007FDCB7 /* Crashlytics.framework in Frameworks */,
 				6741AAC11BF356BA002C974C /* libbase.a in Frameworks */,
 				6741AAC21BF356BA002C974C /* libcoding.a in Frameworks */,
 				6741AAC31BF356BA002C974C /* libexpat.a in Frameworks */,
@@ -1792,16 +1751,13 @@
 				6741AAC61BF356BA002C974C /* libgeometry.a in Frameworks */,
 				34CA57191C292F50004D9C89 /* MediaPlayer.framework in Frameworks */,
 				674A7E291C0DA576003D48E1 /* libsdf_image.a in Frameworks */,
-				34CA57181C292F17004D9C89 /* MyTrackerSDKCorp.framework in Frameworks */,
 				6741AAC91BF356BA002C974C /* libindexer.a in Frameworks */,
 				341876B51C280272005A0C9A /* CoreVideo.framework in Frameworks */,
 				6741AACA1BF356BA002C974C /* libjansson.a in Frameworks */,
 				6741AACB1BF356BA002C974C /* liblodepng.a in Frameworks */,
 				6741AACC1BF356BA002C974C /* libmap.a in Frameworks */,
-				845C892D1C8981CE00940D7F /* HockeySDK.framework in Frameworks */,
 				6741AACD1BF356BA002C974C /* libminizip.a in Frameworks */,
 				6741AACE1BF356BA002C974C /* libopening_hours.a in Frameworks */,
-				34A62D4F1C903533007FDCB7 /* Fabric.framework in Frameworks */,
 				347A4C5E1C4E76C9006BA66E /* liboauthcpp.a in Frameworks */,
 				6741AACF1BF356BA002C974C /* libosrm.a in Frameworks */,
 				6741AAD01BF356BA002C974C /* libplatform.a in Frameworks */,
@@ -1820,13 +1776,9 @@
 				6741AA371BF340DE002C974C /* AudioToolbox.framework in Frameworks */,
 				34EB5E7E1C900159002C4D37 /* AssetsLibrary.framework in Frameworks */,
 				674A7E2B1C0DA57C003D48E1 /* libdrape_frontend.a in Frameworks */,
-				6741AA381BF340DE002C974C /* Bolts.framework in Frameworks */,
-				6741AA391BF340DE002C974C /* Parse.framework in Frameworks */,
-				6741AA3A1BF340DE002C974C /* ParseFacebookUtilsV4.framework in Frameworks */,
 				6741AA3C1BF340DE002C974C /* Foundation.framework in Frameworks */,
 				6741AA3D1BF340DE002C974C /* FBSDKCoreKit.framework in Frameworks */,
 				6741AA3E1BF340DE002C974C /* FBSDKShareKit.framework in Frameworks */,
-				6741AA401BF340DE002C974C /* libFlurry_7.1.0.a in Frameworks */,
 				6741AA411BF340DE002C974C /* CoreMedia.framework in Frameworks */,
 				674A7E2A1C0DA579003D48E1 /* libdrape.a in Frameworks */,
 				6741AA421BF340DE002C974C /* CoreData.framework in Frameworks */,
@@ -2194,22 +2146,17 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				34A62D4C1C903533007FDCB7 /* Fabric.framework */,
-				34A62D4D1C903533007FDCB7 /* Crashlytics.framework */,
 				845C89321C8983F300940D7F /* CoreText.framework */,
 				845C89331C8983F300940D7F /* libc++.tbd */,
 				845C89341C8983F300940D7F /* QuickLook.framework */,
 				845C89301C89837900940D7F /* AssetsLibrary.framework */,
-				845C89281C8981CE00940D7F /* HockeySDK.embeddedframework */,
 				340DC82B1C4E72C700EAA2CC /* liboauthcpp.a */,
-				F696CCBA1C2816FB00150DFD /* MyTrackerSDKCorp.framework */,
 				341F09831C20138100F18AC5 /* libpugixml.a */,
 				3411387C1C15AE73002E3B3E /* libeditor.a */,
 				674A7E201C0DA55E003D48E1 /* libdrape_frontend.a */,
 				674A7E211C0DA55E003D48E1 /* libdrape.a */,
 				674A7E221C0DA55E003D48E1 /* libsdf_image.a */,
 				674A7E231C0DA55E003D48E1 /* libstb_image.a */,
-				34921F691BFA0CDC00737D6E /* MyTargetSDKCorp.framework */,
 				6741AAA21BF356B9002C974C /* libagg.a */,
 				6741AAA31BF356B9002C974C /* libalohalitics.a */,
 				6741AAA51BF356B9002C974C /* libapi.a */,
@@ -2233,14 +2180,10 @@
 				6741AABA1BF356BA002C974C /* libstorage.a */,
 				6741AABB1BF356BA002C974C /* libsuccinct.a */,
 				6741AABC1BF356BA002C974C /* libtomcrypt.a */,
-				F6671C6A1BA2EFD500548008 /* libFlurry_7.1.0.a */,
 				34570A401B13229300E6D4FD /* FBSDKLoginKit.framework */,
 				34570A3E1B13225500E6D4FD /* Accounts.framework */,
 				34570A3C1B13223000E6D4FD /* libsqlite3.dylib */,
 				34570A3A1B13222600E6D4FD /* libz.dylib */,
-				34570A331B13217C00E6D4FD /* Bolts.framework */,
-				34570A341B13217C00E6D4FD /* Parse.framework */,
-				34570A351B13217C00E6D4FD /* ParseFacebookUtilsV4.framework */,
 				4540406E1AD2D9C5007A9B12 /* WatchKit.framework */,
 				454040681AD2D8D2007A9B12 /* CoreVideo.framework */,
 				F6BC1E4B1ACBE96100EF0360 /* FBSDKCoreKit.framework */,
@@ -2863,23 +2806,6 @@
 				560634F11B78806100F3D670 /* MWMTextToSpeech.mm */,
 			);
 			path = Sound;
-			sourceTree = "<group>";
-		};
-		845C89281C8981CE00940D7F /* HockeySDK.embeddedframework */ = {
-			isa = PBXGroup;
-			children = (
-				845C89291C8981CE00940D7F /* HockeySDK.framework */,
-				845C892A1C8981CE00940D7F /* Resources */,
-			);
-			path = HockeySDK.embeddedframework;
-			sourceTree = "<group>";
-		};
-		845C892A1C8981CE00940D7F /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				845C892B1C8981CE00940D7F /* HockeySDKResources.bundle */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		88AE3BFA5748CC94272F9C8F /* Pods */ = {
@@ -3720,7 +3646,6 @@
 				342BB7AB1BC7CC5C00DF6443 /* PlacePageBookmarkCell.xib in Resources */,
 				EE026F0611D6AC0D00645242 /* classificator.txt in Resources */,
 				34CC4C0A1B81F3B500E44C1F /* MWMSearchTabbedViewController.xib in Resources */,
-				845C892E1C8981CE00940D7F /* HockeySDKResources.bundle in Resources */,
 				347FD86D1C60B2CE002FB65E /* MWMOpeningHoursAddScheduleTableViewCell.xib in Resources */,
 				34B82ACB1B8465C100180497 /* MWMSearchCategoryCell.xib in Resources */,
 				34CC4C0F1B82069C00E44C1F /* MWMSearchTabbedCollectionViewCell.xib in Resources */,
@@ -3885,7 +3810,6 @@
 				F623DA6F1C9C2E62006A3436 /* MWMAddPlaceNavigationBar.xib in Resources */,
 				6741A9441BF340DE002C974C /* PlacePageBookmarkCell.xib in Resources */,
 				6741A9451BF340DE002C974C /* classificator.txt in Resources */,
-				845C892F1C8981CE00940D7F /* HockeySDKResources.bundle in Resources */,
 				6741A9461BF340DE002C974C /* MWMSearchTabbedViewController.xib in Resources */,
 				6741A9471BF340DE002C974C /* MWMSearchCategoryCell.xib in Resources */,
 				6741A9481BF340DE002C974C /* MWMSearchTabbedCollectionViewCell.xib in Resources */,

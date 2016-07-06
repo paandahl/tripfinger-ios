@@ -3,9 +3,6 @@
 #import "Statistics.h"
 
 #import "3party/Alohalytics/src/alohalytics_objc.h"
-#import "Flurry.h"
-#import <MyTrackerSDKCorp/MRMyTracker.h>
-#import <MyTrackerSDKCorp/MRTrackerParams.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 
 #include "platform/settings.hpp"
@@ -83,15 +80,15 @@ char const * kStatisticsEnabledSettingsKey = "StatisticsEnabled";
   // _enabled should be already correctly set up in init method.
   if (_enabled)
   {
-    [Flurry startSession:@(FLURRY_KEY)];
-    [Flurry logAllPageViewsForTarget:application.windows.firstObject.rootViewController];
+//    [Flurry startSession:@(FLURRY_KEY)];
+//    [Flurry logAllPageViewsForTarget:application.windows.firstObject.rootViewController];
 
-    [MRMyTracker createTracker:@(MY_TRACKER_KEY)];
-#ifdef DEBUG
-    [MRMyTracker setDebugMode:YES];
-#endif
-    [MRMyTracker getTrackerParams].trackAppLaunch = YES;
-    [MRMyTracker setupTracker];
+//    [MRMyTracker createTracker:@(MY_TRACKER_KEY)];
+//#ifdef DEBUG
+//    [MRMyTracker setDebugMode:YES];
+//#endif
+//    [MRMyTracker getTrackerParams].trackAppLaunch = YES;
+//    [MRMyTracker setupTracker];
 
     [Alohalytics setup:@(ALOHALYTICS_URL) withLaunchOptions:launchOptions];
   }
@@ -108,7 +105,7 @@ char const * kStatisticsEnabledSettingsKey = "StatisticsEnabled";
   {
     _lastLocationLogTimestamp = [NSDate date];
     CLLocationCoordinate2D const coord = location.coordinate;
-    [Flurry setLatitude:coord.latitude longitude:coord.longitude horizontalAccuracy:location.horizontalAccuracy verticalAccuracy:location.verticalAccuracy];
+//    [Flurry setLatitude:coord.latitude longitude:coord.longitude horizontalAccuracy:location.horizontalAccuracy verticalAccuracy:location.verticalAccuracy];
   }
 }
 
@@ -124,7 +121,7 @@ char const * kStatisticsEnabledSettingsKey = "StatisticsEnabled";
   params[kStatCountry] = info.countryCode;
   if (info.languageId)
     params[kStatLanguage] = info.languageId;
-  [Flurry logEvent:eventName withParameters:parameters];
+//  [Flurry logEvent:eventName withParameters:parameters];
   [Alohalytics logEvent:eventName withDictionary:parameters];
 }
 
