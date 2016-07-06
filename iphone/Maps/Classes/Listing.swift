@@ -35,7 +35,7 @@ class Listing: Object {
     static let entityMap = [
       "Attractions": ATTRACTIONS,
       "Transportation": TRANSPORTATION,
-      "Accomodation": ACCOMMODATION,
+      "Accommodation": ACCOMMODATION,
       "Food and drinks": FOOD_OR_DRINK,
       "Shopping": SHOPPING,
       "Information": INFORMATION
@@ -95,7 +95,7 @@ class Listing: Object {
     case METRO_ENTRANCE = 2393
     case TRAM_STOP = 2394
     
-    // ACCOMODATION
+    // ACCOMMODATION
     case HOSTELS = 2400
     case GUESTHOUSES = 2410
     case HOTELS = 2420
