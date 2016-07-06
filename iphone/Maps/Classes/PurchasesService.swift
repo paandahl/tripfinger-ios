@@ -99,9 +99,7 @@ class PurchasesService: NSObject {
   private class func openFirstCountryController(country: Region, connectionError: () -> (), downloadStarted: () -> ()) {
     let firstCountryController = FirstCountryDownloadView(country: country, cancelHandler: downloadStarted) {
       makeCountryFirst(country, connectionError: connectionError) {
-        FIRAnalytics.logEventWithName("first_download", parameters: [
-          "country": country.getName()
-          ])
+        AnalyticsService.logDownloadFirstCountry(country)
         TripfingerAppDelegate.navigationController.dismissViewControllerAnimated(true, completion: nil)
         proceedWithDownload(country, connectionError: connectionError)
         downloadStarted()

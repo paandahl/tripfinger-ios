@@ -167,30 +167,21 @@ extension RegionController {
     let region = object as! Region
     let regionController = RegionController(region: region, countryMwmId: countryMwmId)
     navigationController!.pushViewController(regionController, animated: true)
-    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
-      kFIRParameterContentType: "region",
-      kFIRParameterItemID: region.getName()
-      ])
+    AnalyticsService.logSelectedRegion(region)
   }
   
   func navigateToCategory(object: AnyObject) {
     let categoryDescription = object as! GuideText
     let listingsController = ListingsController(regionId: region.getId(), countryMwmId: countryMwmId, categoryDescription: categoryDescription, regionLicense: region.item().textLicense, mapNavigator: self)
     navigationController!.pushViewController(listingsController, animated: true)
-    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
-      kFIRParameterContentType: "category",
-      kFIRParameterItemID: region.getName() + ": " + categoryDescription.getCategory().entityName
-      ])
+    AnalyticsService.logSelectedCategory(categoryDescription, region: region)
   }
   
   func navigateToSection(object: AnyObject) {
     let section = object as! GuideText
     let sectionController = SectionController(section: section, mapNavigator: self)
     navigationController!.pushViewController(sectionController, animated: true)
-    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
-      kFIRParameterContentType: "section",
-      kFIRParameterItemID: region.getName() + ": " + section.getName()
-      ])
+    AnalyticsService.logSelectedSection(section, region: region)
   }
   
   override func navigateToMap() {

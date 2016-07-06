@@ -313,85 +313,15 @@ import FirebaseMessaging
     DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, listing: listing, addNativeMarks: false)
   }
 
-  class func moveToRegion(region: Region, stopSpinner: () -> (), handler: (String, UINavigationController, [UIViewController]) -> ()) {
-    if region.getCategory() == Region.Category.COUNTRY {
-      moveToRegion(region, countryMwmId: region.getDownloadId(), stopSpinner: stopSpinner, handler: handler)
-    } else {
-      ContentService.getCountryWithName(region.listing.country!, failure: connectionError) { country in
-        moveToRegion(region, countryMwmId: country.getDownloadId(), stopSpinner: stopSpinner, handler: handler)
-      }
-    }
-  }
-
-  class func moveToRegion(region: Region, countryMwmId: String, stopSpinner: () -> (), handler: (String, UINavigationController, [UIViewController]) -> ()) {
-    stopSpinner()
-    
-    let nav = TripfingerAppDelegate.navigationController
-    for viewController in nav.viewControllers {
-      if let regionController = viewController as? GuideItemController {
-        regionController.contextSwitched = true
-      }
-    }
-    
-    nav.popToRootViewControllerAnimated(false)
-    let regionListing = region.listing
-    var viewControllers = [nav.viewControllers.first!]
-    if region.item().category > Region.Category.COUNTRY.rawValue {
-      let regionController = RegionController(region: Region.constructRegion(regionListing.country), countryMwmId: countryMwmId)
-      viewControllers.append(regionController)
-    }
-    if region.item().category > Region.Category.SUB_REGION.rawValue {
-      if region.listing.subRegion != nil {
-        let regionController = RegionController(region: Region.constructRegion(regionListing.subRegion), countryMwmId: countryMwmId)
-        viewControllers.append(regionController)
-      }
-    }
-    if region.item().category > Region.Category.CITY.rawValue {
-      let regionController = RegionController(region: Region.constructRegion(regionListing.city), countryMwmId: countryMwmId)
-      viewControllers.append(regionController)
-    }
-    let regionController = RegionController(region: region, countryMwmId: countryMwmId)
-    viewControllers.append(regionController)
-    
-    handler(countryMwmId, nav, viewControllers)
-  }
-
   class func selectedSearchResult(searchResult: TripfingerEntity, failure: () -> (), stopSpinner: () -> ()) {
     TripfingerAppDelegate.navigationController.navigationBarHidden = false
     if searchResult.isListing() {
-      jumpToListing(searchResult.tripfingerId, failure: failure, finishedHandler: stopSpinner)
+      navigationController.jumpToListingWithId(searchResult.tripfingerId, failure: failure, finishedHandler: stopSpinner)
     } else {
-      jumpToRegion(searchResult.tripfingerId, failure: failure, finishedHandler: stopSpinner)
-    }
-  }
-      
-  class func jumpToRegion(regionId: String, failure: () -> (), finishedHandler: () -> ()) {
-    ContentService.getRegionWithId(regionId, failure: failure) { region in
-      TripfingerAppDelegate.moveToRegion(region, stopSpinner: finishedHandler) { country, nav, viewControllers in
-        nav.setViewControllers(viewControllers, animated: true)
-      }
-      FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
-        kFIRParameterContentType: "region",
-        kFIRParameterItemID: region.getName()
-        ])
+      navigationController.jumpToRegionWithId(searchResult.tripfingerId, failure: failure, finishedHandler: stopSpinner)
     }
   }
   
-  class func jumpToListing(listingId: String, failure: () -> (), finishedHandler: () -> ()) {
-    ContentService.getListingWithId(listingId, failure: failure) { listing in
-      ContentService.getRegionWithId(listing.item().parent, failure: failure) { region in
-        TripfingerAppDelegate.moveToRegion(region, stopSpinner: finishedHandler) { countryMwmId, nav, viewControllers in
-          let entity = TripfingerEntity(listing: listing)
-          TripfingerAppDelegate.viewControllers = viewControllers
-          MapsAppDelegateWrapper.openPlacePage(entity, withCountryMwmId: countryMwmId)
-        }
-      }
-      FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
-        kFIRParameterContentType: "listing",
-        kFIRParameterItemID: listing.item().name
-        ])
-    }
-  }
   
   class func isCountryDownloaded(countryName: String) -> Bool {
     return DownloadService.isCountryDownloaded(countryName)

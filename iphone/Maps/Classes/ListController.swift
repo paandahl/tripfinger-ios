@@ -170,10 +170,7 @@ extension ListController {
     let section = object as! GuideText
     let sectionController = SectionController(section: section, mapNavigator: mapNavigator)
     navigationController!.pushViewController(sectionController, animated: true)
-    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
-      kFIRParameterContentType: "section",
-      kFIRParameterItemID: section.getName() + "(\(section.getId()))"
-      ])
+    AnalyticsService.logSelectedSection(section)
   }
 
   func countryDownloaded(notification: NSNotification) {
@@ -192,10 +189,7 @@ extension ListController: ListingCellContainer {
   func showDetail(listing: Listing) {
     let entity = TripfingerEntity(listing: listing)
     MapsAppDelegateWrapper.openPlacePage(entity, withCountryMwmId: countryMwmId)
-    FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
-      kFIRParameterContentType: "listing",
-      kFIRParameterItemID: listing.item().name
-      ])
+    AnalyticsService.logSelectedListing(listing)
   }
 }
 

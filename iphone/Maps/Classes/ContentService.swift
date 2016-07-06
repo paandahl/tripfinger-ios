@@ -65,6 +65,16 @@ class ContentService {
     }
   }
   
+  class func getCountryForRegion(region: Region, failure: () -> (), handler: Region -> ()) {
+    if region.getCategory() == Region.Category.COUNTRY {
+      handler(region)
+    } else {
+      ContentService.getCountryWithName(region.listing.country!, failure: failure) { country in
+        handler(country)
+      }
+    }
+  }
+  
   class func getSubRegionWithName(subRegionName: String, countryName: String, failure: () -> (), handler: Region -> ()) {
     if let region = DatabaseService.getSubRegionOrCity(countryName, itemName: subRegionName) {
       handler(region)

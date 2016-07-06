@@ -79,6 +79,8 @@
 		2581DCAE1CAF917D0086285E /* OnlineSearchTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */; };
 		2590ECF91D2BB5EB00D444AB /* TripfingerNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590ECF81D2BB5EA00D444AB /* TripfingerNavigationController.swift */; };
 		2590ECFB1D2BB60F00D444AB /* TapLoggingWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590ECFA1D2BB60F00D444AB /* TapLoggingWindow.swift */; };
+		2590ECFD1D2BF0BE00D444AB /* TripfingerUrl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590ECFC1D2BF0BE00D444AB /* TripfingerUrl.swift */; };
+		2590ECFF1D2BF78000D444AB /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2590ECFE1D2BF78000D444AB /* AnalyticsService.swift */; };
 		25B563641CFCAE5000E82351 /* UnitTestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B563631CFCAE5000E82351 /* UnitTestUtils.swift */; };
 		25B563661CFF584E00E82351 /* StringUtilsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25B563651CFF584D00E82351 /* StringUtilsTest.swift */; };
 		25D27B5C1D009ED500F7AA91 /* UniqueIdentifierService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D27B5B1D009ED500F7AA91 /* UniqueIdentifierService.swift */; };
@@ -1020,6 +1022,8 @@
 		2581DCAC1CAF917D0086285E /* OnlineSearchTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnlineSearchTest.swift; sourceTree = "<group>"; };
 		2590ECF81D2BB5EA00D444AB /* TripfingerNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerNavigationController.swift; sourceTree = "<group>"; };
 		2590ECFA1D2BB60F00D444AB /* TapLoggingWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TapLoggingWindow.swift; sourceTree = "<group>"; };
+		2590ECFC1D2BF0BE00D444AB /* TripfingerUrl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerUrl.swift; sourceTree = "<group>"; };
+		2590ECFE1D2BF78000D444AB /* AnalyticsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		25B563631CFCAE5000E82351 /* UnitTestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTestUtils.swift; sourceTree = "<group>"; };
 		25B563651CFF584D00E82351 /* StringUtilsTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtilsTest.swift; sourceTree = "<group>"; };
 		25D27B5B1D009ED500F7AA91 /* UniqueIdentifierService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniqueIdentifierService.swift; sourceTree = "<group>"; };
@@ -1953,6 +1957,7 @@
 			children = (
 				25DABC151D09914400D0A839 /* Listings */,
 				25DABC131D095FEC00D0A839 /* CountryListController.swift */,
+				25533E221CEDED78004C7956 /* FrameworkService.swift */,
 				2581DC151CAE30E70086285E /* GuideItemController.swift */,
 				2581DC311CAE31490086285E /* LicenseController.swift */,
 				2581DC131CAE30E10086285E /* RegionController.swift */,
@@ -1985,7 +1990,6 @@
 			isa = PBXGroup;
 			children = (
 				2510A3F81CE8E7AC00E3B654 /* DownloadMarker.swift */,
-				25533E221CEDED78004C7956 /* FrameworkService.swift */,
 				2581DC441CAE31700086285E /* GuideItem.swift */,
 				2581DC451CAE31700086285E /* GuideItemImage.swift */,
 				2581DC461CAE31700086285E /* GuideListing.swift */,
@@ -1996,6 +2000,7 @@
 				2581DC4B1CAE31700086285E /* Session.swift */,
 				2581DC4C1CAE31700086285E /* SimplePOI.swift */,
 				2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */,
+				2590ECFC1D2BF0BE00D444AB /* TripfingerUrl.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -2003,6 +2008,7 @@
 		2581DC561CAE31800086285E /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				2590ECFE1D2BF78000D444AB /* AnalyticsService.swift */,
 				2581DC581CAE31890086285E /* ContentService.swift */,
 				2581DC591CAE31890086285E /* DatabaseService.swift */,
 				2581DC5A1CAE31890086285E /* DownloadService.swift */,
@@ -4244,6 +4250,7 @@
 				2581DC7E1CAE31CD0086285E /* FileUtils.swift in Sources */,
 				2581DC191CAE311C0086285E /* TableController.swift in Sources */,
 				2581DC541CAE31700086285E /* Session.swift in Sources */,
+				2590ECFF1D2BF78000D444AB /* AnalyticsService.swift in Sources */,
 				FAFCB63613366E78001A5C59 /* WebViewController.mm in Sources */,
 				34C9BD091C6DBCDA000DC38D /* MWMNavigationController.mm in Sources */,
 				3406FA151C6E0C3300E9FAD2 /* MWMMapDownloadDialog.mm in Sources */,
@@ -4272,6 +4279,7 @@
 				F653CE1C1C7361DA00A453F1 /* MWMObjectsCategorySelectorController.mm in Sources */,
 				B08AA8DA1A26299A00810B1C /* TimeUtils.mm in Sources */,
 				F6CB216D1AF13EBD00FB8963 /* MWMPlacePageBookmarkCell.mm in Sources */,
+				2590ECFD1D2BF0BE00D444AB /* TripfingerUrl.swift in Sources */,
 				F653D4231AE9398700282659 /* MWMPlacePageViewManager.mm in Sources */,
 				341F99ED1C6B28A7001C67B8 /* MWMMapDownloaderExtendedDataSource.mm in Sources */,
 				F65243351B0B634F00BFA9D4 /* MWMPlacePage+Animation.mm in Sources */,
@@ -4966,7 +4974,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TEST_TARGET_NAME = Tripfinger;
 				USES_XCTRUNNER = YES;
-				VALID_ARCHS = "arm64 armv7 armv7s";
+				VALID_ARCHS = "i386 x86_64";
 			};
 			name = Simulator;
 		};

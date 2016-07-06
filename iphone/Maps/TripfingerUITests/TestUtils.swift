@@ -67,10 +67,16 @@ extension XCTestCase {
     }
   }
   
-  internal func waitUntilExists(element: XCUIElement) {
+  internal func waitUntilHasValue(value: String, element: XCUIElement) {
+    let hasValue = NSPredicate(format: "value = %@", value)
+    expectationForPredicate(hasValue, evaluatedWithObject: element, handler: nil)
+    waitForExpectationsWithTimeout(60, handler: nil)
+  }
+  
+  internal func waitUntilExists(element: XCUIElement, timeout: Int = 60) {
     let exists = NSPredicate(format: "exists == 1")
     expectationForPredicate(exists, evaluatedWithObject: element, handler: nil)
-    waitForExpectationsWithTimeout(60, handler: nil)
+    waitForExpectationsWithTimeout(NSTimeInterval(timeout), handler: nil)
   }
 
   internal func waitUntilHittable(element: XCUIElement) {
@@ -85,8 +91,8 @@ extension XCTestCase {
     waitForExpectationsWithTimeout(60, handler: nil)
   }
   
-  internal func tapWhenHittable(element: XCUIElement, parent: XCUIElement? = nil) {
-    waitUntilExists(element)
+  internal func tapWhenHittable(element: XCUIElement, timeout: Int = 60, parent: XCUIElement? = nil) {
+    waitUntilExists(element, timeout: timeout)
     scrollToElement(element)
     waitUntilHittable(element)
     element.tap()

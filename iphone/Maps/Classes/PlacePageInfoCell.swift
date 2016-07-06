@@ -176,8 +176,9 @@ class PlacePageInfoCell: UITableViewCell {
 }
 
 extension PlacePageInfoCell: UITextViewDelegate {
+  
   func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-    if URL.host == "www.tripfinger.com" {
+    if let tripfingerUrl = TripfingerUrl(url: URL) {
       let finishedHandler = {
         self.hideHuds()
         TripfingerAppDelegate.navigationController.navigationBarHidden = false
@@ -185,11 +186,28 @@ extension PlacePageInfoCell: UITextViewDelegate {
           delegate.navigatedToGuide()
         }
       }
+
+      // there are four outcomes for a link navigation from the placepage
+      //
+      // 1. we're in DetailsView on guide and can just push the new viewcontroller to the hierarchy
+      // 2. we're in the MapView and
+      //    a.I. we're going to an offline listing, and can select it directly on the map
+      //    a.II. we're going to a non-offline listing, and need to jump to a new guide hierarchy
+      //    b. we're going to a region and need to jump to a new guide hierarchy
+
       showLoadingHud()
-      if URL.path!.containsString("/l/") {
-        GuideItemController.navigateToListingWithUrlPath(URL.path!, failure: showErrorHud, finishedHandler: finishedHandler)
+      let nav = TripfingerAppDelegate.navigationController
+      if nav.viewControllers.last! is DetailController {
+        nav.navigateToTripfingerUrl(tripfingerUrl, failure: showErrorHud, finishedHandler: finishedHandler)
+      } else if let listingSlug = tripfingerUrl.listingSlug() {
+        if let offlineListing = DatabaseService.getListingWithSlug(listingSlug) {
+          let entity = TripfingerEntity(listing: offlineListing)
+          MapsAppDelegateWrapper.selectListing(entity)
+        } else {
+          nav.jumpToListingWithSlug(listingSlug, failure: showErrorHud, finishedHandler: finishedHandler)
+        }
       } else {
-        GuideItemController.navigateToRegionWithUrlPath(URL.path!, failure: showErrorHud, finishedHandler: finishedHandler)
+        nav.jumpToRegionWithSlug(tripfingerUrl.regionSlug(), failure: showErrorHud, finishedHandler: finishedHandler)
       }
       return false
     }    

@@ -4,8 +4,7 @@ protocol GuideItemContainerDelegate: class {
   func readMoreClicked()
   func licenseClicked()
   func downloadClicked()
-  func jumpToRegion(path: String)
-  func jumpToListing(path: String)
+  func navigateToTripfingerUrl(url: TripfingerUrl)
 }
 
 class GuideItemCell: UITableViewCell {
@@ -240,12 +239,8 @@ class GuideItemCell: UITableViewCell {
 extension GuideItemCell: UITextViewDelegate {
   
   func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-    if URL.host == "www.tripfinger.com" {
-      if URL.path!.containsString("/l/") {
-        delegate.jumpToListing(URL.path!)
-      } else {
-        delegate.jumpToRegion(URL.path!)
-      }
+    if let tripfingerUrl = TripfingerUrl(url: URL) {
+      delegate.navigateToTripfingerUrl(tripfingerUrl)
       return false
     }
     return true
