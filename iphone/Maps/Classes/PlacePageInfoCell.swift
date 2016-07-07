@@ -201,6 +201,7 @@ extension PlacePageInfoCell: UITextViewDelegate {
         nav.navigateToTripfingerUrl(tripfingerUrl, failure: showErrorHud, finishedHandler: finishedHandler)
       } else if let listingSlug = tripfingerUrl.listingSlug() {
         if let offlineListing = DatabaseService.getListingWithSlug(listingSlug) {
+          self.hideHuds()
           let entity = TripfingerEntity(listing: offlineListing)
           MapsAppDelegateWrapper.selectListing(entity)
         } else {

@@ -542,6 +542,13 @@ NSString * const kReportSegue = @"Map2ReportSegue";
   [ud synchronize];
 }
 
+- (void)willMoveToParentViewController:(UIViewController *)parent
+{
+  if (![parent isEqual:self.parentViewController]) {
+    [self dismissPlacePage];
+  }
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
   [super viewWillDisappear:animated];
