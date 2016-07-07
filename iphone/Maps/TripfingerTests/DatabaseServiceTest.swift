@@ -48,13 +48,13 @@ class DatabaseServiceTest: XCTestCase {
     DatabaseServiceTest.insertBrunei { region in
       var brunei = DatabaseService.getCountry("Brunei")
       XCTAssertNotNil(brunei)
-      let attractions = DatabaseService.getListingsForRegion(brunei)
+      let attractions = DatabaseService.getListingsForRegion(brunei!)
       print("count: \(attractions.count)")
       XCTAssertEqual(1, attractions.count)
       print(attractions.first!)
       let attractionId = attractions.first!.item().uuid
       
-      DatabaseService.deleteCountry(brunei.item().name)
+      DatabaseService.deleteCountry(brunei!.item().name)
 
       brunei = DatabaseService.getCountry("Brunei")
       XCTAssertNil(brunei)

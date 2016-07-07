@@ -34,7 +34,7 @@ class NetworkUtil {
   }
 
   
-  class func getJsonFromUrl(url: String, parameters: [String: String]? = nil, method: Alamofire.Method = .GET, appendParams: Bool = true, failure: () -> (), success: (json: JSON) -> ()) -> Request {
+  class func getJsonFromUrl(url: String, parameters: [String: String]? = nil, method: Alamofire.Method = .GET, appendParams: Bool = true, failure: () -> (), returnOnMain: Bool = true, success: (json: JSON) -> ()) -> Request {
     startNetworkActivityIndicator()
     var parameters = parameters ?? Dictionary<String, String>()
     if appendParams {
@@ -100,7 +100,7 @@ class NetworkUtil {
     }
   }
 
-  class func saveDataFromUrl(url: String, destinationPath: NSURL, parameters: [String: String]? = nil, appendParams: Bool = true, dispatchGroup: dispatch_group_t? = nil, retryTimes: Int = 100, method: Alamofire.Method = .GET, body: String? = nil, progressHandler: (Float -> ())? = nil, finishedHandler: (() -> ())? = nil) -> Request {
+  class func saveDataFromUrl(url: String, destinationPath: NSURL, parameters: [String: String]? = nil, appendParams: Bool = true, dispatchGroup: dispatch_group_t? = nil, retryTimes: Int = 100, method: Alamofire.Method = .GET, body: String? = nil, progressHandler: (Float -> ())? = nil, failure: () -> (), finishedHandler: (() -> ())? = nil) -> Request {
     var fullUrl = url
     var fullParameters = parameters ?? Dictionary<String, String>()
     if appendParams && method == .POST {
@@ -149,15 +149,17 @@ class NetworkUtil {
             } else {
               print("Error was: \(error)")
               print("Status code was \(error.code), retrying download of: \(url)")
-              saveDataFromUrl(url, destinationPath: destinationPath, parameters: parameters, appendParams: appendParams, dispatchGroup: dispatchGroup, retryTimes: retryTimes - 1, progressHandler: progressHandler, finishedHandler: finishedHandler)
+              saveDataFromUrl(url, destinationPath: destinationPath, parameters: parameters, appendParams: appendParams, dispatchGroup: dispatchGroup, retryTimes: retryTimes - 1, progressHandler: progressHandler, failure: failure, finishedHandler: finishedHandler)
             }
             if let dispatchGroup = dispatchGroup {
               dispatch_group_leave(dispatchGroup)
               print("dispatch_group_leave: \(url)")
             }
           } else {
+            LogUtils.assertionFailAndRemoteLog("\(error)")
             print(error)
-            print("response: \(error.code)")
+            print("response coe: \(error.code)")
+            failure()
             try! { throw Error.RuntimeError("ERROR: Downloading file failed: \(url)") }()
           }
         } else {

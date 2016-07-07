@@ -72,7 +72,8 @@ class DatabaseService {
   
   class func getListingNotes(listingId: String) -> GuideListingNotes? {
     let predicate = NSPredicate(format: "attractionId = %@", listingId)
-    return getRealm().objects(GuideListingNotes).filter(predicate).first
+    let listingNotes = getRealm().objects(GuideListingNotes).filter(predicate).first
+    return detachListingNotes(listingNotes)
   }
   
   class func saveRegion(region: Region, callback: (Region -> ())? = nil) throws {
@@ -108,58 +109,66 @@ class DatabaseService {
       }
     }
   }
-  
-  class func getRegionWithId(regionId: String, writeRealm: Realm! = nil) -> Region? {
+
+  private class func getAttachedRegionWithId(regionId: String, writeRealm: Realm! = nil) -> Region? {
     let regions = writeRealm != nil ? writeRealm.objects(Region) : getRealm().objects(Region)
     return regions.filter("listing.item.uuid = '\(regionId)'").first
   }
 
-  class func getRegionWithSlug(slug: String) -> Region! {
-    return getRealm().objects(Region).filter("listing.item.slug = '\(slug)'").first
+  class func getRegionWithId(regionId: String, writeRealm: Realm! = nil) -> Region? {
+    let region = getAttachedRegionWithId(regionId, writeRealm: writeRealm)
+    return detachRegion(region)
   }
 
-  class func getGuideItemWithId(uuid: String) -> GuideItem! {
-    return getRealm().objects(GuideItem).filter("uuid = '\(uuid)'").first
+  class func getRegionWithSlug(slug: String) -> Region? {
+    let region = getRealm().objects(Region).filter("listing.item.slug = '\(slug)'").first
+    return detachRegion(region)
   }
 
-  class func getCountries() -> Results<Region> {
+  class func getCountries() -> [Region] {
     let realm = getRealm()
     realm.refresh()
-    return realm.objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue)")
+    let results = realm.objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue)")
+    return detachRegions(results)
   }
   
-  class func getCountry(countryName: String) -> Region! {
-    return getRealm().objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue) and listing.item.name = '\(countryName)'").first
+  class func getCountry(countryName: String) -> Region? {
+    let country = getRealm().objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue) and listing.item.name = '\(countryName)'").first
+    return detachRegion(country)
   }
 
-  class func getCountryWithMwmId(mwmRegionId: String) -> Region! {
+  class func getCountryWithMwmId(mwmRegionId: String) -> Region? {
     let region = getRealm().objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue) and mwmRegionId = '\(mwmRegionId)'").first
     if let region = region {
-      return region
+      return detachRegion(region)
     } else {
       return getCountry(mwmRegionId)
     }
   }
 
-  class func getSubRegionOrCity(countryName: String, itemName: String) -> Region! {
-    return getRealm().objects(Region).filter("(listing.item.category = \(Region.Category.CITY.rawValue) or listing.item.category = \(Region.Category.SUB_REGION.rawValue)) and listing.country = '\(countryName)' and listing.item.name = '\(itemName)'").first
+  class func getSubRegionOrCity(countryName: String, itemName: String) -> Region? {
+    let region = getRealm().objects(Region).filter("(listing.item.category = \(Region.Category.CITY.rawValue) or listing.item.category = \(Region.Category.SUB_REGION.rawValue)) and listing.country = '\(countryName)' and listing.item.name = '\(itemName)'").first
+    return detachRegion(region)
   }
 
 
-  class func getCity(countryName: String, cityName: String) -> Region! {
-    return getRealm().objects(Region).filter("listing.item.category = \(Region.Category.CITY.rawValue) and listing.country = '\(countryName)' and listing.item.name = '\(cityName)'").first
+  class func getCity(countryName: String, cityName: String) -> Region? {
+    let city = getRealm().objects(Region).filter("listing.item.category = \(Region.Category.CITY.rawValue) and listing.country = '\(countryName)' and listing.item.name = '\(cityName)'").first
+    return detachRegion(city)
   }
 
-  class func getNeighbourhood(countryName: String, cityName: String, hoodName: String) -> Region! {
-    return getRealm().objects(Region).filter("listing.item.category = \(Region.Category.NEIGHBOURHOOD.rawValue) and listing.country = '\(countryName)' and listing.city = '\(cityName)'  and listing.item.name = '\(hoodName)'").first
+  class func getNeighbourhood(countryName: String, cityName: String, hoodName: String) -> Region? {
+    let hood = getRealm().objects(Region).filter("listing.item.category = \(Region.Category.NEIGHBOURHOOD.rawValue) and listing.country = '\(countryName)' and listing.city = '\(cityName)'  and listing.item.name = '\(hoodName)'").first
+    return detachRegion(hood)
   }
   
-  class func getListingsForRegion(region: Region) -> Results<Listing> {
+  class func getListingsForRegion(region: Region) -> [Listing] {
     let predicate = NSPredicate(format: "listing.item.parent = %@", region.getId())
-    return getRealm().objects(Listing).filter(predicate)
+    let listings = getRealm().objects(Listing).filter(predicate)
+    return detachListings(listings)
   }
   
-  class func getCascadingListingsForRegion(region: Region?, category: Int? = nil) -> List<Listing> {
+  class func getCascadingListingsForRegion(region: Region?, category: Int? = nil) -> [Listing] {
     var predicate: NSPredicate!
     var listings: Results<Listing>!
     if let region = region {
@@ -191,66 +200,54 @@ class DatabaseService {
       }
       listings = listings.filter(categoryPredicate)
     }
-    let list = List<Listing>()
-    for attraction in listings {
-      if attraction.listing.latitude != 0 && attraction.listing.longitude != 0 {
-        list.append(attraction)
+    var list = [Listing]()
+    for listing in listings {
+      if listing.listing.latitude != 0 && listing.listing.longitude != 0 {
+        list.append(detachListing(listing)!)
       }
     }
     return list
   }
+  
+  private class func getAttachedListingWithId(attractionId: String) -> Listing? {
+    let predicate = NSPredicate(format: "listing.item.uuid = %@", attractionId)
+    return getRealm().objects(Listing).filter(predicate).first
+  }
 
   class func getListingWithId(attractionId: String) -> Listing? {
-    let predicate = NSPredicate(format: "listing.item.uuid = %@", attractionId)
-    let attractions = getRealm().objects(Listing).filter(predicate)
-    print("got \(attractions.count) attractions with id \(attractionId)")
-    if attractions.count == 1 {
-      return attractions[0]
-    }
-    else {
-      return nil
-    }
+    let listing = getAttachedListingWithId(attractionId)
+    return detachListing(listing)
   }
   class func getListingWithSlug(slug: String) -> Listing? {
     let predicate = NSPredicate(format: "listing.item.slug = %@", slug)
     let listings = getRealm().objects(Listing).filter(predicate)
-    print("got \(listings.count) attractions with id \(slug)")
-    if listings.count == 1 {
-      return listings[0]
-    }
-    else {
-      return nil
-    }
+    return detachListing(listings.first)
   }
 
-  
   class func getListingByCoordinate(coord: CLLocationCoordinate2D) -> Listing? {
     let realm = getRealm()
     let margin = 0.0000005
     let minCoord = CLLocationCoordinate2DMake(coord.latitude - margin, coord.longitude - margin)
     let maxCoord = CLLocationCoordinate2DMake(coord.latitude + margin, coord.longitude + margin)
-    print("fetching listing by coordinate")
-    print("latitude \(minCoord.latitude) > < \(maxCoord.latitude)")
-    print("longitude \(minCoord.latitude) > < \(maxCoord.latitude)")
-    let attraction = realm.objects(Listing).filter("listing.latitude > \(minCoord.latitude) and listing.latitude < \(maxCoord.latitude) and listing.longitude > \(minCoord.longitude)  and listing.longitude < \(maxCoord.longitude)").first
-    return attraction
+    let listing = realm.objects(Listing).filter("listing.latitude > \(minCoord.latitude) and listing.latitude < \(maxCoord.latitude) and listing.longitude > \(minCoord.longitude)  and listing.longitude < \(maxCoord.longitude)").first
+    return detachListing(listing)
   }
   
   class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int) -> [Listing] {
     let realm = getRealm()
     let listings = realm.objects(Listing).filter("listing.latitude > \(bottomLeft.latitude) and listing.latitude < \(topRight.latitude) and listing.longitude > \(bottomLeft.longitude)  and listing.longitude < \(topRight.longitude)")
-    return Array(listings)
+    return detachListings(listings)
   }
   
   class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, category: Int) -> [Listing] {
     let realm = getRealm()
     let listings = realm.objects(Listing).filter("listing.latitude > \(bottomLeft.latitude) and listing.latitude < \(topRight.latitude) and listing.longitude > \(bottomLeft.longitude)  and listing.longitude < \(topRight.longitude) and listing.item.category = \(category)")
-    return Array(listings)
-  }  
+    return detachListings(listings)
+  }
   
-  class func search(query: String, callback: List<SimplePOI> -> ()) {
+  class func search(query: String, callback: [SimplePOI] -> ()) {
     dispatch_async(dispatch_get_main_queue()) {
-      let results = List<SimplePOI>()
+      var results = [SimplePOI]()
       let realm = getRealm()
 
       let listings = realm.objects(GuideListing).filter("item.name contains[c] '\(query)'")
@@ -264,26 +261,29 @@ class DatabaseService {
     }
   }
   
-  class func deleteGuideText(guideText: GuideText) {
+  class func deleteGuideText(guideTextToDelete: GuideText) {
+    let guideText = getAttachedGuideTextWithId(guideTextToDelete.getId())!
     for section in guideText.item.guideSections {
       deleteGuideText(section)
     }
     
-    let realm = getRealm()
+    let realm = guideText.realm!
     try! realm.write {
       realm.delete(guideText)
     }
   }
   
-  class func deleteListing(listing: Listing) {
-    let realm = getRealm()
+  class func deleteListing(listingToDelete: Listing) {
+    let listing = getAttachedListingWithId(listingToDelete.item().uuid)!
+    let realm = listing.realm!
     try! realm.write {
       realm.delete(listing)
     }
   }
   
-  class func deleteRegion(region: Region, notification: Bool = true) {
+  class func deleteRegion(regionToDelete: Region, notification: Bool = true) {
     
+    let region = getAttachedRegionWithId(regionToDelete.getId())!
     let regionCategory = region.getCategory()
     let regionName = region.getName()
     if notification && regionCategory == Region.Category.COUNTRY {
@@ -306,7 +306,7 @@ class DatabaseService {
       deleteListing(listing)
     }
 
-    let realm = getRealm()
+    let realm = region.realm!
     try! realm.write {
       realm.delete(region)
     }
@@ -322,17 +322,24 @@ class DatabaseService {
     }
   }
 
-  class func getCitiesInCountry(country: String) -> Results<Region> {
-    return getRealm().objects(Region).filter("listing.item.category = \(Region.Category.CITY.rawValue) and listing.country = '\(country)'")
+  class func getCitiesInCountry(country: String) -> [Region] {
+    let cities = getRealm().objects(Region).filter("listing.item.category = \(Region.Category.CITY.rawValue) and listing.country = '\(country)'")
+    return detachRegions(cities)
   }
 
-  class func getRegionsWithParent(parentId: String) -> Results<Region> {
-    return getRealm().objects(Region).filter("listing.item.parent = \"\(parentId)\"")
+  class func getRegionsWithParent(parentId: String) -> [Region] {
+    let regions = getRealm().objects(Region).filter("listing.item.parent = \"\(parentId)\"")
+    return detachRegions(regions)
   }
-  
-  class func getGuideTextWithId(guideTextId: String) -> GuideText? {
+
+  private class func getAttachedGuideTextWithId(guideTextId: String) -> GuideText? {
     let predicate = NSPredicate(format: "item.uuid = %@", guideTextId)
     return getRealm().objects(GuideText).filter(predicate).first
+  }
+
+  class func getGuideTextWithId(guideTextId: String) -> GuideText? {
+    let guideText = getAttachedGuideTextWithId(guideTextId)
+    return detachGuideText(guideText)
   }
   
   class func getCoordinateSet() -> Set<Int64> {
@@ -393,8 +400,81 @@ class DatabaseService {
     }
   }
   
-  class func getCountriesWithDownloadMarkers() -> Results<DownloadMarker> {
+  class func getCountriesWithDownloadMarkers() -> [DownloadMarker] {
     let realm = getRealm()
-    return realm.objects(DownloadMarker)
+    let downloadMarkers = realm.objects(DownloadMarker)
+    return detachDownloadMarkers(downloadMarkers)
+  }
+  
+  // MARK: Functions to detach models from Realm
+  
+  private class func detachRegions(results: Results<Region>) -> [Region] {
+    var regions = [Region]()
+    for result in results {
+      regions.append(detachRegion(result)!)
+    }
+    return regions
+  }
+  
+  private class func detachRegion(region: Region?) -> Region? {
+    guard let region = region else {
+      return nil
+    }
+    let detachedRegion = Region(value: region)
+    detachedRegion.listing = GuideListing(value: region.listing)
+    detachedRegion.listing.item = detachGuideItem(region.listing.item)
+    return detachedRegion
+ }
+  
+  private class func detachListings(results: Results<Listing>) -> [Listing] {
+    var listings = [Listing]()
+    for result in results {
+      listings.append(detachListing(result)!)
+    }
+    return listings
+  }
+  
+  private class func detachListing(listing: Listing?) -> Listing? {
+    guard let listing = listing else {
+      return nil
+    }
+    let detachedListing = Listing(value: listing)
+    detachedListing.listing = GuideListing(value: listing.listing)
+    detachedListing.listing.item = detachGuideItem(listing.listing.item)
+    return detachedListing
+  }
+  
+  private class func detachListingNotes(listingNotes: GuideListingNotes?) -> GuideListingNotes? {
+    guard let listingNotes = listingNotes else {
+      return nil
+    }
+    return GuideListingNotes(value: listingNotes)
+  }
+  
+  private class func detachGuideText(guideText: GuideText?) -> GuideText? {
+    guard let guideText = guideText else {
+      return nil
+    }
+    let detachedGuideText = GuideText(value: guideText)
+    detachedGuideText.item = detachGuideItem(guideText.item)
+    return detachedGuideText
+  }
+  
+  private class func detachGuideItem(guideItem: GuideItem) -> GuideItem {
+    let detachedGuideItem = GuideItem(value: guideItem)
+    let detachedImages = List<GuideItemImage>()
+    for image in detachedGuideItem.images {
+      detachedImages.append(GuideItemImage(value: image))
+    }
+    detachedGuideItem.images = detachedImages
+    return detachedGuideItem
+  }
+  
+  private class func detachDownloadMarkers(results: Results<DownloadMarker>) -> [DownloadMarker] {
+    var markers = [DownloadMarker]()
+    for result in results {
+      markers.append(DownloadMarker(value: result))
+    }
+    return markers
   }
 }

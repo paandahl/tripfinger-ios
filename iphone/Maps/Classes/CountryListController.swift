@@ -125,7 +125,7 @@ class CountryListController: TableController {
         worldAreaImageSet.insert(title!)
         var imageUrl = DownloadService.gcsImagesUrl + title! + ".jpeg"
         imageUrl = imageUrl.stringByReplacingOccurrencesOfString(" ", withString: "%20")
-        NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: imagePath) {
+        NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: imagePath, failure: {}) {
           dispatch_async(dispatch_get_main_queue()) {
             indicator.removeFromSuperview()
             tableView.reloadData()

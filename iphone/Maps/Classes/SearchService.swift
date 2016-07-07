@@ -25,7 +25,7 @@ class SearchService: NSObject {
     onlineResults = List<SimplePOI>()
     databaseResults = List<SimplePOI>()
     
-    let handleSearchResults = { (results: List<SimplePOI>) in
+    let handleSearchResults = { (results: [SimplePOI]) in
       dispatch_async(dispatch_get_main_queue()) {
         var searchResults = [SimplePOI]()
         searchResults.appendContentsOf(results)

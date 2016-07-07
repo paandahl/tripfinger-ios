@@ -20,7 +20,7 @@ class GuideItem: Object {
   dynamic var content: String?
   dynamic var textLicense: String?
     
-  let images = List<GuideItemImage>()
+  var images = List<GuideItemImage>()
   var guideSections = List<GuideText>()
   var subRegions = List<Region>()
   var simplePois = List<SimplePOI>()

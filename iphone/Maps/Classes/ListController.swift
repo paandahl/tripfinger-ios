@@ -176,7 +176,7 @@ extension ListController {
   func countryDownloaded(notification: NSNotification) {
     if tableView != nil {
       let countryName = notification.object as! String
-      let country = DatabaseService.getCountry(countryName)
+      let country = DatabaseService.getCountry(countryName)!
       if country.getDownloadId() == countryMwmId {
         loadListings()
       }

@@ -113,8 +113,8 @@ class JsonParserService {
     return simplePoi
   }
   
-  class func parseSimplePois(json: JSON) -> List<SimplePOI> {
-    let searchResults = List<SimplePOI>()
+  class func parseSimplePois(json: JSON) -> [SimplePOI] {
+    var searchResults = [SimplePOI]()
     for resultJson in json.array! {
       searchResults.append(parseSimplePoi(resultJson))
     }
@@ -140,8 +140,8 @@ class JsonParserService {
     return region
   }
   
-  class func parseListings(jsonArray: JSON) -> List<Listing> {
-    let listings = List<Listing>()
+  class func parseListings(jsonArray: JSON) -> [Listing] {
+    var listings = [Listing]()
     for json in jsonArray.array! {
       let listing = parseListing(json)
       if listing.listing.latitude != 0.0 && listing.listing.longitude != 0.0 {

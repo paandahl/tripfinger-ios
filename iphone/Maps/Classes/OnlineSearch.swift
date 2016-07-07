@@ -3,7 +3,7 @@ import RealmSwift
 import Alamofire
 
 class OnlineSearch {
-  class func search(fullSearchString: String, handler: List<SimplePOI> -> ()) -> Request {
+  class func search(fullSearchString: String, handler: [SimplePOI] -> ()) -> Request {
     
     var parameters = [String: String]()
     if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.RELEASE {
@@ -13,7 +13,7 @@ class OnlineSearch {
     }
     
     let failure = {
-      handler(List<SimplePOI>())
+      handler([SimplePOI]())
     }
     
     let url = TripfingerAppDelegate.serverUrl + "/search/\(fullSearchString)"

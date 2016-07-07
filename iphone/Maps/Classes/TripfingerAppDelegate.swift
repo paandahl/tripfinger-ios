@@ -371,26 +371,6 @@ import FirebaseMessaging
     return 0
   }
 
-  class func updateCountry(mwmCountryId: String, downloadStarted: () -> ()) {
-    ContentService.getCountryWithName(mwmCountryId, failure: connectionError) { region in
-      PurchasesService.proceedWithDownload(region, connectionError: connectionError)
-      downloadStarted()
-    }
-  }
-  
-  class func cancelDownload(mwmRegionId: String) {
-    DownloadService.cancelDownload(mwmRegionId)
-  }
-
-  class func deleteCountry(mwmCountryId: String) {
-    let region = DatabaseService.getCountryWithMwmId(mwmCountryId)
-    DownloadService.deleteCountry(region.getName())
-  }
-  
-  private class func connectionError() {
-    TripfingerAppDelegate.navigationController.viewControllers.last!.showErrorHud()
-  }
-  
   class func purchaseCountry(mwmCountryId: String, downloadStarted: () -> ()) {
     TripfingerAppDelegate.navigationController.viewControllers.last!.showLoadingHud()
     ContentService.getCountryWithName(mwmCountryId, failure: connectionError) { region in
@@ -401,6 +381,35 @@ import FirebaseMessaging
         }
       }
     }
+  }
+
+  class func updateCountry(mwmCountryId: String, downloadStarted: () -> ()) {
+    TripfingerAppDelegate.navigationController.viewControllers.last!.showLoadingHud()
+    let country = DatabaseService.getCountryWithMwmId(mwmCountryId)!
+    PurchasesService.getFirstPurchase(UniqueIdentifierService.uniqueIdentifier(), connectionError: connectionError) { firstCountryUuid in
+      if firstCountryUuid == country.getId() {
+        PurchasesService.proceedWithDownload(country, connectionError: connectionError)
+      } else {
+        PurchasesService.proceedWithDownload(country, receipt: "XZBDSF252-FA23SDFS-SFSGSZZ67", connectionError: connectionError)
+      }
+      dispatch_async(dispatch_get_main_queue()) {
+        TripfingerAppDelegate.navigationController.viewControllers.last!.hideHuds()
+        downloadStarted()
+      }
+    }
+  }
+  
+  class func cancelDownload(mwmRegionId: String) {
+    DownloadService.cancelDownload(mwmRegionId)
+  }
+
+  class func deleteCountry(mwmCountryId: String) {
+    let region = DatabaseService.getCountryWithMwmId(mwmCountryId)!
+    DownloadService.deleteCountry(region.getName())
+  }
+  
+  private class func connectionError() {
+    TripfingerAppDelegate.navigationController.viewControllers.last!.showErrorHud()
   }
   
   class func isReleaseMode() -> Bool {

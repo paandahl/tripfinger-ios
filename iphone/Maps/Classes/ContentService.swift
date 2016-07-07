@@ -10,7 +10,7 @@ class ContentService {
   
   init() {}
   
-  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int, category: Listing.Category, failure: () -> (), handler: List<SimplePOI> -> ()) -> Request {
+  class func getPois(bottomLeft: CLLocationCoordinate2D, topRight: CLLocationCoordinate2D, zoomLevel: Int, category: Listing.Category, failure: () -> (), handler: [SimplePOI] -> ()) -> Request {
     
     let bounds = "\(bottomLeft.latitude),\(bottomLeft.longitude),\(topRight.latitude),\(topRight.longitude)"
     let parameters = ["categoryId": "\(category.rawValue)"]
@@ -180,7 +180,7 @@ class ContentService {
     }
   }
     
-  class func getCascadingListingsForRegion(regionId: String, withCategory category: Int? = nil, failure: () -> (), handler: List<Listing> -> ()) {
+  class func getCascadingListingsForRegion(regionId: String, withCategory category: Int? = nil, failure: () -> (), handler: [Listing] -> ()) {
     let offlineRegion = DatabaseService.getRegionWithId(regionId)
     if !NetworkUtil.connectedToNetwork() || offlineRegion != nil {
       let attractions = DatabaseService.getCascadingListingsForRegion(offlineRegion, category: category)

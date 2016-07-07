@@ -42,7 +42,7 @@ class ListingsParentController: UIViewController {
   
   func countryDownloaded(notification: NSNotification) {
     let countryName = notification.object as! String
-    let country = DatabaseService.getCountry(countryName)
+    let country = DatabaseService.getCountry(countryName)!
     if country.getDownloadId() == countryDownloadId {
       offline = true
       mapButton.tintColor = UIColor.whiteColor().colorWithAlphaComponent(1)

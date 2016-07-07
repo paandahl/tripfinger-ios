@@ -24,26 +24,15 @@ class GuideViewOnlineTest: XCTestCase {
     tapWhenHittable(app.tables.staticTexts["Thailand"], parent: app.tables.element)
     
     sleep(2)
-    let readMoreButton = app.buttons["Read more"]
-    expectationForPredicate(hittable, evaluatedWithObject: readMoreButton, handler: nil)
-    waitForExpectationsWithTimeout(60, handler: nil)
-    readMoreButton.tap()
-
-    let understandRow = app.tables.staticTexts["Introduction"]
-    scrollToElement(understandRow)
-    understandRow.tap()
-    
-    let historyRow = app.tables.staticTexts["See"]
-    expectationForPredicate(exists, evaluatedWithObject: historyRow, handler: nil)
-    waitForExpectationsWithTimeout(60, handler: nil)
+    tapWhenHittable(app.buttons["Read more"])
+    tapWhenHittable(app.tables.staticTexts["Introduction"])
+    waitUntilExists(app.tables.staticTexts["See"])
     
     var backButton = app.navigationBars["Introduction"].buttons["Thailand"]
     backButton.tap()
 
     let chiangMaiRow = app.tables.staticTexts["Chiang Mai"]
     scrollToElement(chiangMaiRow)
-
-    print("count4 \(app.tables.staticTexts.count)")
     
     let bangkokRow = app.tables.staticTexts["Bangkok"]
     scrollToElement(bangkokRow)

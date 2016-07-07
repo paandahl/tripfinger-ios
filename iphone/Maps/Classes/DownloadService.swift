@@ -90,7 +90,7 @@ class DownloadService {
       NSNotificationCenter.defaultCenter().postNotificationName(TFDownloadStartedNotification, object: mwmRegionId)      
     }
 
-    ContentService.getCountryWithName(mwmRegionId, failure: {}) { region in
+    ContentService.getCountryWithName(mwmRegionId, failure: failure) { region in
       
       let countryPath = NSURL.getImageDirectory().getSubDirectory(region.getName())
       let jsonPath = countryPath.URLByAppendingPathComponent(region.getName() + ".json")
@@ -108,21 +108,21 @@ class DownloadService {
         url = TripfingerAppDelegate.serverUrl + "/download_first_country/\(region.getName())/\(deviceUuid)"
       }
       if NSURL.fileExists(jsonPath) {
-        processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, finishedHandler: finishedHandler)
+        processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, failure: failure, finishedHandler: finishedHandler)
       } else {
         var method = Alamofire.Method.GET
         if receipt != nil {
           method = .POST
         }
 
-        NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, method: method, body: receipt) {
-          processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, finishedHandler: finishedHandler)
+        NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, method: method, body: receipt, failure: failure) {
+          processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, failure: failure, finishedHandler: finishedHandler)
         }
       }
     }
   }
   
-  private class func processDownload(jsonPath: NSURL, countryPath: NSURL, taskHandle: UIBackgroundTaskIdentifier, progressHandler: Double -> (), finishedHandler: () -> ()) {
+  private class func processDownload(jsonPath: NSURL, countryPath: NSURL, taskHandle: UIBackgroundTaskIdentifier, progressHandler: Double -> (), failure: () -> (), finishedHandler: () -> ()) {
     let jsonData = NSData(contentsOfURL: jsonPath)!
     let json = JSON(data: jsonData)
     let region = JsonParserService.parseRegionTreeFromJson(json)
@@ -140,7 +140,7 @@ class DownloadService {
         let progress = Double(counter / Double(imageList.count))
         progressHandler(progress)
       }
-      }) {
+    }, failure: failure) {
         if DatabaseService.isDownloadMarkerCancelled(region.mwmRegionId ?? region.getName()) {
           return
         }
@@ -163,7 +163,7 @@ class DownloadService {
     NSURL.deleteFile(jsonPath)
   }
   
-  class func splitImageListAndDownload(imageList: [(String, NSURL)], progressHandler: ([Request]) -> (), finishedHandler: () -> ()) {
+  class func splitImageListAndDownload(imageList: [(String, NSURL)], progressHandler: ([Request]) -> (), failure: () -> (), finishedHandler: () -> ()) {
     var requestList = [Request]()
     let dispatchGroup = dispatch_group_create()
     for (url, destinationPath) in imageList {
@@ -172,7 +172,7 @@ class DownloadService {
         continue
       }
       let imageUrl = gcsImagesUrl + url
-      let request = NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: destinationPath, dispatchGroup: dispatchGroup) {
+      let request = NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: destinationPath, dispatchGroup: dispatchGroup, failure: failure) {
         progressHandler(requestList)
       }
       requestList.append(request)

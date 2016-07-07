@@ -20,8 +20,6 @@ class RegionController: GuideItemController, MapNavigator {
     }
     super.init(guideItem: region.item())
     navigationItem.title = region.getName()
-    addObserver(DatabaseService.TFCountryUpdatingNotification, selector: #selector(countryBeingDeleted(_:)))
-    addObserver(DatabaseService.TFCountryDeletingNotification, selector: #selector(countryBeingDeleted(_:)))
     addObserver(DatabaseService.TFCountrySavedNotification, selector: #selector(countryDownloaded(_:)))
   }
   
@@ -192,18 +190,6 @@ extension RegionController {
   
   func belongsToCountry(country: String) -> Bool {
     return region.listing.country == country || (region.getCategory() == Region.Category.COUNTRY && region.getName() == country)
-  }
-  
-  func countryBeingDeleted(notifiction: NSNotification) {
-    let country = notifiction.object as! String
-    if belongsToCountry(country) {
-      let country = region.listing.country
-      let category = region.getCategory()
-      region = Region.constructRegion(region.getName())
-      region.listing.country = country
-      region.item().category = category.rawValue
-      updateUI()
-    }
   }
   
   func countryDownloaded(notifiction: NSNotification) {

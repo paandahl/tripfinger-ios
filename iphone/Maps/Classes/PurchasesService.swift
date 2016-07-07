@@ -154,7 +154,7 @@ class PurchasesService: NSObject {
     }
   }
 
-  private class func getFirstPurchase(deviceUuid: String, connectionError: () -> (), handler: String? -> ()) {
+  class func getFirstPurchase(deviceUuid: String, connectionError: () -> (), handler: String? -> ()) {
     let url = TripfingerAppDelegate.serverUrl + "/products/first_country/\(deviceUuid)"
     NetworkUtil.getJsonFromUrl(url, failure: connectionError) { json in
       print(json)
