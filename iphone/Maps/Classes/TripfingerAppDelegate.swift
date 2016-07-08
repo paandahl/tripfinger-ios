@@ -259,8 +259,8 @@ import FirebaseMessaging
 
   
   public class func getListingByCoordinate(coord: CLLocationCoordinate2D) -> TripfingerEntity {
-    let listing = DatabaseService.getListingByCoordinate(coord)
-    let entity = TripfingerEntity(listing: listing!)
+    let listing = DatabaseService.getListingByCoordinate(coord)!
+    let entity = TripfingerEntity(listing: listing)
     return entity
   }
 
@@ -310,13 +310,11 @@ import FirebaseMessaging
   }
 
   class func bookmarkAdded(listingId: String) {
-    let listing = DatabaseService.getListingWithId(listingId)!
-    DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, listing: listing, addNativeMarks: false)
+    DatabaseService.saveLikeInTf(GuideListingNotes.LikedState.LIKED, listingId: listingId)
   }
   
   class func bookmarkRemoved(listingId: String) {
-    let listing = DatabaseService.getListingWithId(listingId)!
-    DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, listing: listing, addNativeMarks: false)
+    DatabaseService.saveLikeInTf(GuideListingNotes.LikedState.SWIPED_LEFT, listingId: listingId)
   }
 
   class func selectedSearchResult(searchResult: TripfingerEntity, failure: () -> (), stopSpinner: () -> ()) {

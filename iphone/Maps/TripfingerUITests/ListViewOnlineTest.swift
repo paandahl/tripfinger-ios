@@ -23,7 +23,12 @@ class ListViewOnlineTest: XCTestCase {
     waitUntilNotHittable(app.staticTexts["Loading..."])
 
     app.buttons["List"].tap()
-   
     XCTAssertEqual(1, app.tables.cells.count)
+    
+    tapWhenHittable(app.tables.staticTexts["Ulu Temburong National Park"])
+    tapWhenHittable(app.staticTexts["Save"])
+    tapWhenHittable(app.navigationBars["Ulu Temburong National Park"].buttons["Back"])    
+    tapWhenHittable(app.tables.staticTexts["Ulu Temburong National Park"])
+    tapWhenHittable(app.staticTexts["Delete"])
   }
 }

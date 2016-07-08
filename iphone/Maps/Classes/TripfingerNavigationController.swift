@@ -43,6 +43,7 @@ class TripfingerNavigationController: UINavigationController {
   }
   
   func navigateToListing(listing: Listing, countryMwmId: String) {
+    listing.listing.notes = DatabaseService.getListingNotes(listing.item().uuid)
     let entity = TripfingerEntity(listing: listing)
     MapsAppDelegateWrapper.openPlacePage(entity, withCountryMwmId: countryMwmId)
     AnalyticsService.logSelectedListing(listing)

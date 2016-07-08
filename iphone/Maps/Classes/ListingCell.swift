@@ -91,9 +91,9 @@ class ListingCell: UITableViewCell {
   
   func heartClick() {
     if let notes = listing.listing.notes where notes.likedState == GuideListingNotes.LikedState.LIKED {
-      DatabaseService.saveLike(GuideListingNotes.LikedState.SWIPED_LEFT, listing: listing)
+      DatabaseService.saveLikeInTfAndMwm(GuideListingNotes.LikedState.SWIPED_LEFT, listing: listing)
     } else {
-      DatabaseService.saveLike(GuideListingNotes.LikedState.LIKED, listing: listing)
+      DatabaseService.saveLikeInTfAndMwm(GuideListingNotes.LikedState.LIKED, listing: listing)
     }
     setContent(listing)
   }

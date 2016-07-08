@@ -19,6 +19,7 @@ class DetailController: ListingsParentController {
     self.placePageViews = placePageViews
     super.init(countryDownloadId: countryDownloadId, offline: entity.offline)
     addObserver(DatabaseService.TFCountrySavedNotification, selector: #selector(countryDownloaded(_:)))
+    addObserver(DatabaseService.TFLikedStatusChangedNotification, selector: #selector(likedStatusChanged))
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -43,6 +44,17 @@ class DetailController: ListingsParentController {
   }
   
   override func viewDidLayoutSubviews() {
+    calculateScrollViewSize()
+  }
+  
+  func likedStatusChanged() {
+    if let listingNotes = DatabaseService.getListingNotes(entity.tripfingerId) {
+      entity.liked = listingNotes.likedState == GuideListingNotes.LikedState.LIKED
+      calculateScrollViewSize()
+    }
+  }
+  
+  func calculateScrollViewSize() {
     let uiTableView = placePageViews[0].subviews[2].subviews[1] as! UITableView
     let height: CGFloat = uiTableView.contentSize.height + placePageViews[1].frame.size.height + 100;
     scrollView.contentSize = CGSizeMake(UIScreen.mainScreen().bounds.width, height)

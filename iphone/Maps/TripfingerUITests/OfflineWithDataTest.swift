@@ -67,6 +67,10 @@ class OfflineWithDataTest: XCTestCase {
     tapWhenHittable(app.navigationBars["Bus station"].buttons["Back"])
     waitUntilExists(app.tables.textViews["info@airport.brunei"])
     
+    // verify that bookmarks persist
+    XCUIApplication().otherElements.containingType(.NavigationBar, identifier:"Brunei International Airport").childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Other).element.childrenMatchingType(.Button).elementBoundByIndex(1).tap()
+    
+    
     tapWhenHittable(app.navigationBars["Brunei International Airport"].buttons["Back"])
     tapWhenHittable(app.navigationBars["Airports"].buttons["Transportation"])
     tapWhenHittable(app.navigationBars["Transportation"].buttons["Brunei"])
@@ -118,6 +122,7 @@ class OfflineWithDataTest: XCTestCase {
     let expandInfoPoint = origin.coordinateWithOffset(CGVector(dx: 187, dy: 572.5))
     expandInfoPoint.tap()
     sleep(1)
+    waitUntilExists(app.staticTexts["Save"])
     let seriaLinkPoint = origin.coordinateWithOffset(CGVector(dx: 121.5, dy: 545))
     seriaLinkPoint.pressForDuration(0.2)
     sleep(2)
@@ -126,9 +131,19 @@ class OfflineWithDataTest: XCTestCase {
 
     // click on a listing and on an offline listing-link in a description
     tapWhenHittable(app.tables.staticTexts["Transportation"])
+    tapWhenHittable(app.tables.staticTexts["Bus stations"])
+    tapWhenHittable(app.tables.staticTexts["Bus station"])
+    tapWhenHittable(app.staticTexts["Save"])
+    tapWhenHittable(app.navigationBars["Bus station"].buttons["Bus stations"])
+    tapWhenHittable(app.navigationBars["Bus stations"].buttons["Transportation"])
+    
     tapWhenHittable(app.navigationBars["Transportation"].buttons["Map"])
     sleep(2)
     busStationPoint.tap()
+    sleep(1)
+    expandInfoPoint.tap()
+    sleep(1)
+    tapWhenHittable(app.staticTexts["Delete"])
     sleep(1)
     expandInfoPoint.tap()
     sleep(1)

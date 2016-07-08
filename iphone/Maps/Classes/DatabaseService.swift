@@ -8,6 +8,7 @@ class DatabaseService {
   static let TFCountryUpdatingNotification = "TFCountryUpdatingNotification"
   static let TFCountryDeletingNotification = "TFCountryDeletingNotification"
   static let TFCountryDeletedNotification = "TFCountryDeletedNotification"
+  static let TFLikedStatusChangedNotification = "TFLikedStatusChangedNotification"
 
   
   static var testMode = false
@@ -45,9 +46,9 @@ class DatabaseService {
     }
   }
   
-  class func saveLike(likedState: GuideListingNotes.LikedState, listing: Listing, addNativeMarks: Bool = true) {
+  class func saveLikeInTfAndMwm(likedState: GuideListingNotes.LikedState, listing: Listing) {
     
-    if likedState == .LIKED && addNativeMarks {
+    if likedState == .LIKED {
       print("Adding bookmark")
       MapsAppDelegateWrapper.saveBookmark(TripfingerEntity(listing: listing))
     }
@@ -55,7 +56,7 @@ class DatabaseService {
     let realm = getRealm()
     try! realm.write {
       if let listingNotes = listing.listing.notes {
-        if likedState != .LIKED && listingNotes.likedState == .LIKED && addNativeMarks {
+        if likedState != .LIKED && listingNotes.likedState == .LIKED {
           print("Deleting bookmark")
           MapsAppDelegateWrapper.deleteBookmark(TripfingerEntity(listing: listing))
         }
@@ -68,11 +69,42 @@ class DatabaseService {
         listing.listing.notes = guideListingNotes
       }
     }
+    let listingId = listing.item().uuid
+    dispatch_async(dispatch_get_main_queue()) {
+      NSNotificationCenter.defaultCenter().postNotificationName(TFLikedStatusChangedNotification, object: listingId)
+    }
   }
   
-  class func getListingNotes(listingId: String) -> GuideListingNotes? {
+  class func saveLikeInTf(likedState: GuideListingNotes.LikedState, listingId: String) {
+    if let listingNotes = getAttachedListingNotes(listingId) {
+      let realm = listingNotes.realm!
+      try! realm.write {
+        listingNotes.likedState = likedState
+      }
+    } else {
+      let offlineListing = getAttachedListingWithId(listingId)
+      let realm = offlineListing?.realm! ?? getRealm()
+      try! realm.write {
+        let guideListingNotes = GuideListingNotes()
+        guideListingNotes.likedState = likedState
+        guideListingNotes.attractionId = listingId
+        realm.add(guideListingNotes)
+        offlineListing?.listing.notes = guideListingNotes
+      }
+    }
+    dispatch_async(dispatch_get_main_queue()) {
+      NSNotificationCenter.defaultCenter().postNotificationName(TFLikedStatusChangedNotification, object: listingId)
+    }
+  }
+
+
+  private class func getAttachedListingNotes(listingId: String) -> GuideListingNotes? {
     let predicate = NSPredicate(format: "attractionId = %@", listingId)
-    let listingNotes = getRealm().objects(GuideListingNotes).filter(predicate).first
+    return getRealm().objects(GuideListingNotes).filter(predicate).first
+  }
+
+  class func getListingNotes(listingId: String) -> GuideListingNotes? {
+    let listingNotes = getAttachedListingNotes(listingId)
     return detachListingNotes(listingNotes)
   }
   
@@ -110,8 +142,13 @@ class DatabaseService {
     }
   }
 
-  private class func getAttachedRegionWithId(regionId: String, writeRealm: Realm! = nil) -> Region? {
-    let regions = writeRealm != nil ? writeRealm.objects(Region) : getRealm().objects(Region)
+  private class func getAttachedRegionWithId(regionId: String, writeRealm: Realm? = nil) -> Region? {
+    let regions: Results<Region>
+    if let writeRealm = writeRealm {
+      regions = writeRealm.objects(Region)
+    } else {
+      regions = getRealm().objects(Region)
+    }
     return regions.filter("listing.item.uuid = '\(regionId)'").first
   }
 
@@ -421,8 +458,7 @@ class DatabaseService {
       return nil
     }
     let detachedRegion = Region(value: region)
-    detachedRegion.listing = GuideListing(value: region.listing)
-    detachedRegion.listing.item = detachGuideItem(region.listing.item)
+    detachedRegion.listing = detachGuideListing(detachedRegion.listing)
     return detachedRegion
  }
   
@@ -439,8 +475,7 @@ class DatabaseService {
       return nil
     }
     let detachedListing = Listing(value: listing)
-    detachedListing.listing = GuideListing(value: listing.listing)
-    detachedListing.listing.item = detachGuideItem(listing.listing.item)
+    detachedListing.listing = detachGuideListing(detachedListing.listing)
     return detachedListing
   }
   
@@ -458,6 +493,15 @@ class DatabaseService {
     let detachedGuideText = GuideText(value: guideText)
     detachedGuideText.item = detachGuideItem(guideText.item)
     return detachedGuideText
+  }
+  
+  private class func detachGuideListing(guideListing: GuideListing) -> GuideListing {
+    let detachedGuideListing = GuideListing(value: guideListing)
+    if let notes = detachedGuideListing.notes {
+      detachedGuideListing.notes = GuideListingNotes(value: notes)
+    }
+    detachedGuideListing.item = detachGuideItem(detachedGuideListing.item)
+    return detachedGuideListing
   }
   
   private class func detachGuideItem(guideItem: GuideItem) -> GuideItem {

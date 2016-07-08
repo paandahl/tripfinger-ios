@@ -187,9 +187,7 @@ extension ListController {
 extension ListController: ListingCellContainer {
   
   func showDetail(listing: Listing) {
-    let entity = TripfingerEntity(listing: listing)
-    MapsAppDelegateWrapper.openPlacePage(entity, withCountryMwmId: countryMwmId)
-    AnalyticsService.logSelectedListing(listing)
+    TripfingerAppDelegate.navigationController.navigateToListing(listing, countryMwmId: countryMwmId)
   }
 }
 
