@@ -11,13 +11,19 @@ class DetailController: ListingsParentController {
   let entity: TripfingerEntity
 
   let scrollView = SuperScrollView()
-  let placePageViews: [UIView]
+  let infoView: UIView
+  let actionBar: MWMPlacePageActionBar
   
   init(entity: TripfingerEntity, countryDownloadId: String, placePageViews: [UIView]) {
     self.entity = entity
     scrollView.canCancelContentTouches = true
-    self.placePageViews = placePageViews
+    infoView = placePageViews[0]
+    actionBar = placePageViews[1] as! MWMPlacePageActionBar
+    for placePageView in placePageViews {
+      placePageView.userInteractionEnabled = true
+    }
     super.init(countryDownloadId: countryDownloadId, offline: entity.offline)
+    actionBar.delegate = self
     addObserver(DatabaseService.TFCountrySavedNotification, selector: #selector(countryDownloaded(_:)))
     addObserver(DatabaseService.TFLikedStatusChangedNotification, selector: #selector(likedStatusChanged))
   }
@@ -30,17 +36,12 @@ class DetailController: ListingsParentController {
     super.viewDidLoad()
     navigationItem.title = entity.name
 
-    let infoView = placePageViews[0]
-    let actionBar = placePageViews[1]
     view.addSubview(scrollView)
     let res = UIScreen.mainScreen().bounds.size
     scrollView.frame = CGRectMake(0, 0, res.width, res.height - actionBar.height)
     scrollView.addSubview(infoView)
     actionBar.frame = CGRectMake(0, res.height - actionBar.height, res.width, actionBar.height)
     view.addSubview(actionBar)
-    for placePageView in placePageViews {
-      placePageView.userInteractionEnabled = true
-    }
   }
   
   override func viewDidLayoutSubviews() {
@@ -51,12 +52,13 @@ class DetailController: ListingsParentController {
     if let listingNotes = DatabaseService.getListingNotes(entity.tripfingerId) {
       entity.liked = listingNotes.likedState == GuideListingNotes.LikedState.LIKED
       calculateScrollViewSize()
+      actionBar.isBookmark = entity.liked
     }
   }
   
   func calculateScrollViewSize() {
-    let uiTableView = placePageViews[0].subviews[2].subviews[1] as! UITableView
-    let height: CGFloat = uiTableView.contentSize.height + placePageViews[1].frame.size.height + 100;
+    let uiTableView = infoView.subviews[2].subviews[1] as! UITableView
+    let height: CGFloat = uiTableView.contentSize.height + actionBar.frame.size.height + 100;
     scrollView.contentSize = CGSizeMake(UIScreen.mainScreen().bounds.width, height)
   }
   
@@ -73,4 +75,15 @@ class DetailController: ListingsParentController {
     navigationController!.pushViewController(vc, animated: true)
     MapsAppDelegateWrapper.selectListing(entity)
   }  
+}
+
+extension DetailController : MWMPlacePageActionBarDelegate {
+  
+  func addBookmark() {
+    DatabaseService.saveLinkeInMwmAndTf(GuideListingNotes.LikedState.LIKED, entity: entity)
+  }
+  
+  func removeBookmark() {
+    DatabaseService.saveLinkeInMwmAndTf(GuideListingNotes.LikedState.SWIPED_LEFT, entity: entity)
+  }
 }

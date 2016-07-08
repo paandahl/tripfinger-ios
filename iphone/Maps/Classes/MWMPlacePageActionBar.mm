@@ -5,6 +5,7 @@
 #import "MWMPlacePageActionBar.h"
 #import "MWMPlacePageEntity.h"
 #import "MWMPlacePageViewManager.h"
+#import "MapsAppDelegateWrapper.h"
 
 #include "Framework.h"
 
@@ -149,12 +150,20 @@ static NSString * const kPlacePageActionBarNibName = @"PlacePageActionBar";
   if (self.isBookmark)
   {
     [sender.imageView startAnimating];
-    [self.placePage addBookmark];
+    if (self.delegate != nil) {
+      [self.delegate addBookmark];
+    } else {
+      [self.placePage addBookmark];
+    }
     [eventName appendString:@"Add"];
   }
   else
   {
-    [self.placePage removeBookmark];
+    if (self.delegate != nil ) {
+      [self.delegate removeBookmark];
+    } else {
+      [self.placePage removeBookmark];
+    }
     [eventName appendString:@"Delete"];
   }
   [Alohalytics logEvent:kAlohalyticsTapEventKey withValue:eventName];

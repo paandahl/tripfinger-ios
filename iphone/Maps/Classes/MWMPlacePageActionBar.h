@@ -2,8 +2,16 @@
 
 @class MWMPlacePage;
 
+@protocol MWMPlacePageActionBarDelegate<NSObject>
+
+- (void)addBookmark;
+- (void)removeBookmark;
+
+@end
+
 @interface MWMPlacePageActionBar : SolidTouchView
 
+@property (weak, nonatomic) id<MWMPlacePageActionBarDelegate> _Nullable delegate;
 @property (nonatomic) BOOL isBookmark;
 @property (nonatomic) BOOL isPrepareRouteMode;
 

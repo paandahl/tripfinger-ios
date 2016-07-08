@@ -45,33 +45,26 @@ class DatabaseService {
       }
     }
   }
-  
-  class func saveLikeInTfAndMwm(likedState: GuideListingNotes.LikedState, listing: Listing) {
-    
+
+  class func saveLinkeInMwmAndTf(likedState: GuideListingNotes.LikedState, entity: TripfingerEntity) {
+    saveLikeInMwm(likedState, entity: entity)
+    saveLikeInTf(likedState, listingId: entity.tripfingerId)
+    entity.liked = likedState == GuideListingNotes.LikedState.LIKED
+  }
+
+  class func saveLinkeInMwmAndTf(likedState: GuideListingNotes.LikedState, listing: Listing) {
+    saveLikeInMwm(likedState, entity: TripfingerEntity(listing: listing))
+    saveLikeInTf(likedState, listingId: listing.item().uuid)
+    listing.listing.notes = getListingNotes(listing.item().uuid)
+  }
+
+  class func saveLikeInMwm(likedState: GuideListingNotes.LikedState, entity: TripfingerEntity) {
     if likedState == .LIKED {
-      print("Adding bookmark")
-      MapsAppDelegateWrapper.saveBookmark(TripfingerEntity(listing: listing))
-    }
-    
-    let realm = getRealm()
-    try! realm.write {
-      if let listingNotes = listing.listing.notes {
-        if likedState != .LIKED && listingNotes.likedState == .LIKED {
-          print("Deleting bookmark")
-          MapsAppDelegateWrapper.deleteBookmark(TripfingerEntity(listing: listing))
-        }
-        listingNotes.likedState = likedState
-      } else {
-        let guideListingNotes = GuideListingNotes()
-        guideListingNotes.likedState = likedState
-        guideListingNotes.attractionId = listing.item().uuid
-        realm.add(guideListingNotes)
-        listing.listing.notes = guideListingNotes
+      MapsAppDelegateWrapper.saveBookmark(entity)
+    } else if let listingNotes = DatabaseService.getAttachedListingNotes(entity.tripfingerId) {
+      if likedState != .LIKED && listingNotes.likedState == .LIKED {
+        MapsAppDelegateWrapper.deleteBookmark(entity)
       }
-    }
-    let listingId = listing.item().uuid
-    dispatch_async(dispatch_get_main_queue()) {
-      NSNotificationCenter.defaultCenter().postNotificationName(TFLikedStatusChangedNotification, object: listingId)
     }
   }
   
@@ -80,6 +73,12 @@ class DatabaseService {
       let realm = listingNotes.realm!
       try! realm.write {
         listingNotes.likedState = likedState
+      }
+      // to fix disconnected ones from earlier bugs
+      if let listing = DatabaseService.getAttachedListingWithId(listingId) {
+        try! listing.realm!.write {
+          listing.listing.notes = listingNotes
+        }
       }
     } else {
       let offlineListing = getAttachedListingWithId(listingId)
@@ -96,7 +95,6 @@ class DatabaseService {
       NSNotificationCenter.defaultCenter().postNotificationName(TFLikedStatusChangedNotification, object: listingId)
     }
   }
-
 
   private class func getAttachedListingNotes(listingId: String) -> GuideListingNotes? {
     let predicate = NSPredicate(format: "attractionId = %@", listingId)
