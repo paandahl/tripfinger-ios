@@ -15,6 +15,8 @@ import FirebaseMessaging
   var openUrl = ""
 
   class func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
+    
+    DatabaseMigrations.migrateVersion1()
 
     let launchArgs = NSProcessInfo.processInfo().arguments
     if launchArgs.contains("DISABLE_STATS") || launchArgs.contains("TEST") {

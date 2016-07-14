@@ -23,7 +23,6 @@ class GuideItem: Object {
   var images = List<GuideItemImage>()
   var guideSections = List<GuideText>()
   var subRegions = List<Region>()
-  var simplePois = List<SimplePOI>()
   var categoryDescriptions = List<GuideText>()
   
   var allCategoryDescriptions: List<GuideText> {

@@ -152,30 +152,31 @@ class DatabaseService {
 
   class func getRegionWithId(regionId: String, writeRealm: Realm! = nil) -> Region? {
     let region = getAttachedRegionWithId(regionId, writeRealm: writeRealm)
-    return detachRegion(region)
+    return detachRegion(region, includeChildren: true)
   }
 
   class func getRegionWithSlug(slug: String) -> Region? {
     let region = getRealm().objects(Region).filter("listing.item.slug = '\(slug)'").first
-    return detachRegion(region)
+    let detached = detachRegion(region, includeChildren: true)
+    return detached
   }
 
   class func getCountries() -> [Region] {
     let realm = getRealm()
     realm.refresh()
     let results = realm.objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue)")
-    return detachRegions(results)
+    return detachRegions(Array(results))
   }
   
   class func getCountry(countryName: String) -> Region? {
     let country = getRealm().objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue) and listing.item.name = '\(countryName)'").first
-    return detachRegion(country)
+    return detachRegion(country, includeChildren: true)
   }
 
   class func getCountryWithMwmId(mwmRegionId: String) -> Region? {
     let region = getRealm().objects(Region).filter("listing.item.category = \(Region.Category.COUNTRY.rawValue) and mwmRegionId = '\(mwmRegionId)'").first
     if let region = region {
-      return detachRegion(region)
+      return detachRegion(region, includeChildren: true)
     } else {
       return getCountry(mwmRegionId)
     }
@@ -183,18 +184,18 @@ class DatabaseService {
 
   class func getSubRegionOrCity(countryName: String, itemName: String) -> Region? {
     let region = getRealm().objects(Region).filter("(listing.item.category = \(Region.Category.CITY.rawValue) or listing.item.category = \(Region.Category.SUB_REGION.rawValue)) and listing.country = '\(countryName)' and listing.item.name = '\(itemName)'").first
-    return detachRegion(region)
+    return detachRegion(region, includeChildren: true)
   }
 
 
   class func getCity(countryName: String, cityName: String) -> Region? {
     let city = getRealm().objects(Region).filter("listing.item.category = \(Region.Category.CITY.rawValue) and listing.country = '\(countryName)' and listing.item.name = '\(cityName)'").first
-    return detachRegion(city)
+    return detachRegion(city, includeChildren: true)
   }
 
   class func getNeighbourhood(countryName: String, cityName: String, hoodName: String) -> Region? {
     let hood = getRealm().objects(Region).filter("listing.item.category = \(Region.Category.NEIGHBOURHOOD.rawValue) and listing.country = '\(countryName)' and listing.city = '\(cityName)'  and listing.item.name = '\(hoodName)'").first
-    return detachRegion(hood)
+    return detachRegion(hood, includeChildren: true)
   }
   
   class func getListingsForRegion(region: Region) -> [Listing] {
@@ -359,12 +360,12 @@ class DatabaseService {
 
   class func getCitiesInCountry(country: String) -> [Region] {
     let cities = getRealm().objects(Region).filter("listing.item.category = \(Region.Category.CITY.rawValue) and listing.country = '\(country)'")
-    return detachRegions(cities)
+    return detachRegions(Array(cities))
   }
 
   class func getRegionsWithParent(parentId: String) -> [Region] {
     let regions = getRealm().objects(Region).filter("listing.item.parent = \"\(parentId)\"")
-    return detachRegions(regions)
+    return detachRegions(Array(regions))
   }
 
   private class func getAttachedGuideTextWithId(guideTextId: String) -> GuideText? {
@@ -374,7 +375,7 @@ class DatabaseService {
 
   class func getGuideTextWithId(guideTextId: String) -> GuideText? {
     let guideText = getAttachedGuideTextWithId(guideTextId)
-    return detachGuideText(guideText)
+    return detachGuideText(guideText, includeChildren: true)
   }
   
   class func getCoordinateSet() -> Set<Int64> {
@@ -443,7 +444,7 @@ class DatabaseService {
   
   // MARK: Functions to detach models from Realm
   
-  private class func detachRegions(results: Results<Region>) -> [Region] {
+  private class func detachRegions(results: [Region]) -> [Region] {
     var regions = [Region]()
     for result in results {
       regions.append(detachRegion(result)!)
@@ -451,12 +452,12 @@ class DatabaseService {
     return regions
   }
   
-  private class func detachRegion(region: Region?) -> Region? {
+  private class func detachRegion(region: Region?, includeChildren: Bool = false) -> Region? {
     guard let region = region else {
       return nil
     }
     let detachedRegion = Region(value: region)
-    detachedRegion.listing = detachGuideListing(detachedRegion.listing)
+    detachedRegion.listing = detachGuideListing(detachedRegion.listing, includeChildren: includeChildren)
     return detachedRegion
  }
   
@@ -483,32 +484,50 @@ class DatabaseService {
     }
     return GuideListingNotes(value: listingNotes)
   }
-  
-  private class func detachGuideText(guideText: GuideText?) -> GuideText? {
+
+  private class func detachGuideTexts(results: List<GuideText>) -> [GuideText] {
+    var guideTexts = [GuideText]()
+    for guideText in results {
+      guideTexts.append(detachGuideText(guideText)!)
+    }
+    return guideTexts
+  }
+
+  private class func detachGuideText(guideText: GuideText?, includeChildren: Bool = false) -> GuideText? {
     guard let guideText = guideText else {
       return nil
     }
     let detachedGuideText = GuideText(value: guideText)
-    detachedGuideText.item = detachGuideItem(guideText.item)
+    detachedGuideText.item = detachGuideItem(guideText.item, includeChildren: includeChildren)
     return detachedGuideText
   }
   
-  private class func detachGuideListing(guideListing: GuideListing) -> GuideListing {
+  private class func detachGuideListing(guideListing: GuideListing, includeChildren: Bool = false) -> GuideListing {
     let detachedGuideListing = GuideListing(value: guideListing)
     if let notes = detachedGuideListing.notes {
       detachedGuideListing.notes = GuideListingNotes(value: notes)
     }
-    detachedGuideListing.item = detachGuideItem(detachedGuideListing.item)
+    detachedGuideListing.item = detachGuideItem(detachedGuideListing.item, includeChildren: includeChildren)
     return detachedGuideListing
   }
   
-  private class func detachGuideItem(guideItem: GuideItem) -> GuideItem {
+  private class func detachGuideItem(guideItem: GuideItem, includeChildren: Bool = false) -> GuideItem {
     let detachedGuideItem = GuideItem(value: guideItem)
     let detachedImages = List<GuideItemImage>()
     for image in detachedGuideItem.images {
       detachedImages.append(GuideItemImage(value: image))
     }
     detachedGuideItem.images = detachedImages
+    if includeChildren {
+      detachedGuideItem.subRegions = List<Region>(detachRegions(Array(guideItem.subRegions)))
+      detachedGuideItem.categoryDescriptions = List<GuideText>(detachGuideTexts(guideItem.categoryDescriptions))
+      detachedGuideItem.guideSections = List<GuideText>(detachGuideTexts(guideItem.guideSections))
+    } else {
+      detachedGuideItem.loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED
+      detachedGuideItem.subRegions = List<Region>()
+      detachedGuideItem.categoryDescriptions = List<GuideText>()
+      detachedGuideItem.guideSections = List<GuideText>()
+    }
     return detachedGuideItem
   }
   

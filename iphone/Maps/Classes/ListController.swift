@@ -7,7 +7,7 @@ class ListController: GuideItemController {
   let regionId: String
   let countryMwmId: String
   let regionLicense: String?
-  let categoryDescription: GuideText
+  var categoryDescription: GuideText
   var listings: [Listing]?
   weak var mapNavigator: MapNavigator!
   
@@ -33,8 +33,21 @@ class ListController: GuideItemController {
     if !displayGrouped {
       loadListings()
     } else {
+      loadCategoryDescriptionIfNecessary()
       populateTableSections()
     }    
+  }
+  
+  func loadCategoryDescriptionIfNecessary() {
+    let failure = {
+      self.delay(2, selector: #selector(self.loadCategoryDescriptionIfNecessary))
+    }
+    if categoryDescription.item.loadStatus != GuideItem.LoadStatus.FULLY_LOADED {
+      ContentService.getGuideTextWithId(categoryDescription.getId(), failure: failure) { catDesc in
+        self.categoryDescription = catDesc
+        self.updateUI()
+      }
+    }
   }
   
   /*
