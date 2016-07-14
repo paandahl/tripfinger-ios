@@ -10,6 +10,7 @@ class LogUtils {
   }
   
   class func assertionFailAndRemoteLog(message: String) {
-    
+    assertionFailure(message)
+    FIRCrashMessage(message)    
   }
 }

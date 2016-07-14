@@ -33,7 +33,7 @@ extension UIImageView {
           }
       }
       else {
-         try! { throw Error.RuntimeError("Could not load url: \(url.absoluteString)") }()
+        assertionFailure("Could not load url: \(url.absoluteString)")
       }
     }
     
