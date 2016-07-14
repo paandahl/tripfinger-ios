@@ -226,7 +226,7 @@ class Listing: Object {
         
       case .GUESTHOUSES:
         fallthrough
-      case .HOSTELS:
+      case .HOTELS:
         fallthrough
       case .APARTMENTS:
         fallthrough
