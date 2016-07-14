@@ -25,6 +25,11 @@ class GuideItem: Object {
   var subRegions = List<Region>()
   var categoryDescriptions = List<GuideText>()
   
+  func getSubRegions() -> [Region] {
+    let subs = Array(subRegions)
+    return subs.sort { a, b in a.getName() < b.getName() }
+  }
+  
   var allCategoryDescriptions: List<GuideText> {
     get {
       let allCategoryDescriptions = List<GuideText>()

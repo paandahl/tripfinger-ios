@@ -109,7 +109,7 @@ extension RegionController {
       if probablyHasChildren {
         subRegionsSection.elements.append((title: "Loading...", value: ""))
       } else {
-        for subRegion in region.item().subRegions {
+        for subRegion in region.item().getSubRegions() {
           var itemName = subRegion.listing.item.name
           let range = itemName.rangeOfString("/")
           if range != nil {
