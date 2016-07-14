@@ -158,9 +158,8 @@ class NetworkUtil {
           } else {
             LogUtils.assertionFailAndRemoteLog("\(error)")
             print(error)
-            print("response coe: \(error.code)")
+            print("response coe: \(error.code)")            
             failure()
-            try! { throw Error.RuntimeError("ERROR: Downloading file failed: \(url)") }()
           }
         } else {
           print("Wrote image to file: \(destinationPath)")
