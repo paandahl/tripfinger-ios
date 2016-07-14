@@ -30,32 +30,14 @@ class GuideItem: Object {
     return subs.sort { a, b in a.getName() < b.getName() }
   }
   
-  var allCategoryDescriptions: List<GuideText> {
+  var allCategoryDescriptions: [GuideText] {
     get {
-      let allCategoryDescriptions = List<GuideText>()
-      var categoryDescriptionsDict = Dictionary<Int, GuideText>()
+      var catDescs = [GuideText]()
       for categoryDescription in categoryDescriptions {
-        categoryDescriptionsDict[categoryDescription.item.category] = categoryDescription
+        categoryDescription.item.loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED
+        catDescs.append(categoryDescription)
       }
-      print("region \(name) had \(allCategoryDescriptions.count) category sections.")
-      
-      for category in Listing.Category.allValues {
-        var categoryDescription = categoryDescriptionsDict[category.rawValue]
-        if let categoryDescription = categoryDescription {
-          categoryDescription.item.loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED
-          allCategoryDescriptions.append(categoryDescription)
-        } else {
-          categoryDescription = GuideText()
-          categoryDescription!.item = GuideItem()
-          categoryDescription!.item.category = category.rawValue
-          categoryDescription!.item.name = category.entityName
-          categoryDescription!.item.content = nil
-          categoryDescription!.item.offline = offline
-          categoryDescription!.item.loadStatus = GuideItem.LoadStatus.FULLY_LOADED
-          allCategoryDescriptions.append(categoryDescription!)
-        }
-      }
-      return allCategoryDescriptions
+      return catDescs
     }
   }
 

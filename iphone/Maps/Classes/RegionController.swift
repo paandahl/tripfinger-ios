@@ -73,17 +73,8 @@ extension RegionController {
     }
     
     let attractionsSection = TableSection(cellIdentifier: TableCellIdentifiers.rightDetailCell, target: self, selector: #selector(navigateToCategory))
-    let categoriesSection = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.rightDetailCell, target: self, selector: #selector(navigateToCategory))
-    var i = 0
-    for categoryDesc in region.item().allCategoryDescriptions {
-      let category = Listing.Category(rawValue: categoryDesc.item.category)!
-      if i > 0 {
-        categoriesSection.elements.append((title: category.entityName, value: categoryDesc))
-      } else {
-        attractionsSection.elements.append((title: category.entityName, value: categoryDesc))
-      }
-      i += 1
-    }
+    let attractionsDesc = GuideText.constructCategoryDescription(Listing.Category.ATTRACTIONS, forRegion: region)
+    attractionsSection.elements.append((title: Listing.Category.ATTRACTIONS.entityName, value: attractionsDesc))
     tableSections.append(attractionsSection)
     
     let subRegionsSection: TableSection
@@ -119,6 +110,12 @@ extension RegionController {
         }
       }
       tableSections.append(subRegionsSection)
+    }
+    
+    let categoriesSection = TableSection(title: "Directory", cellIdentifier: TableCellIdentifiers.rightDetailCell, target: self, selector: #selector(navigateToCategory))
+    for categoryDesc in region.item().allCategoryDescriptions {
+      let category = Listing.Category(rawValue: categoryDesc.item.category)!
+      categoriesSection.elements.append((title: category.entityName, value: categoryDesc))
     }
     tableSections.append(categoriesSection)
   }

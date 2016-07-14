@@ -23,4 +23,15 @@ extension GuideText: GuideItemHolder {
   func getCategory() -> Listing.Category {
     return Listing.Category(rawValue: item.category)!
   }
+  
+  class func constructCategoryDescription(category: Listing.Category, forRegion region: Region) -> GuideText {
+    let catDesc = GuideText()
+    catDesc.item = GuideItem()
+    catDesc.item.category = category.rawValue
+    catDesc.item.name = category.entityName
+    catDesc.item.content = nil
+    catDesc.item.offline = region.item().offline
+    catDesc.item.loadStatus = GuideItem.LoadStatus.FULLY_LOADED
+    return catDesc
+  }
 }
