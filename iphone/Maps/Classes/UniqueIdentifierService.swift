@@ -1,5 +1,6 @@
 import Foundation
 import KeychainSwift
+import FirebaseCrash
 
 class UniqueIdentifierService {
   
@@ -18,6 +19,7 @@ class UniqueIdentifierService {
     let keychain = KeychainSwift()
     var id = keychain.get(key)
     if keychain.lastResultCode != noErr && keychain.lastResultCode != errSecItemNotFound {
+      FIRCrashMessage("keychain returned error: \(keychain.lastResultCode)")
       fatalError("keychain returned error: \(keychain.lastResultCode)")
     }
     if id == nil {
