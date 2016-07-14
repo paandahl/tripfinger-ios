@@ -267,7 +267,8 @@ extern NSString * const kBookmarksChangedNotification = @"BookmarksChangedNotifi
       {
         [Statistics logEvent:kStatEventName(kStatBookmarks, kStatShowOnMap)];
         // Same as "Close".
-        MapViewController * mapVC = self.navigationController.viewControllers[1];
+        NSInteger mapControllerIndex = [self.navigationController.viewControllers count] - 2;
+        MapViewController * mapVC = self.navigationController.viewControllers[mapControllerIndex];
         mapVC.controlsManager.searchHidden = YES;
         f.ShowBookmark(BookmarkAndCategory(m_categoryIndex, indexPath.row));
         [self.navigationController popViewControllerAnimated:YES];

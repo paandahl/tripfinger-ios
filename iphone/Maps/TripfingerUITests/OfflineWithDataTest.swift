@@ -129,17 +129,20 @@ class OfflineWithDataTest: XCTestCase {
     tapWhenHittable(app.navigationBars["Seria"].buttons["Brunei"])
     tapWhenHittable(app.tables.staticTexts["Bandar"])
 
-    // click on a listing and on an offline listing-link in a description
+    // save bus station as bookmark
     tapWhenHittable(app.tables.staticTexts["Transportation"])
     tapWhenHittable(app.tables.staticTexts["Bus stations"])
     tapWhenHittable(app.tables.staticTexts["Bus station"])
     tapWhenHittable(app.staticTexts["Save"])
     tapWhenHittable(app.navigationBars["Bus station"].buttons["Bus stations"])
     tapWhenHittable(app.navigationBars["Bus stations"].buttons["Transportation"])
-    
     tapWhenHittable(app.navigationBars["Transportation"].buttons["Map"])
-    sleep(2)
-    busStationPoint.tap()
+    
+    // navigate to bus station from bookmark list
+    tapWhenHittable(app.buttons["bookmarksButton"])
+    tapWhenHittable(app.tables.staticTexts["Bus station"])
+    
+    // click on a listing and on an offline listing-link in a description
     sleep(1)
     expandInfoPoint.tap()
     sleep(1)
