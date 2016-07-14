@@ -40,8 +40,7 @@ static NSString * const kAlohalyticsLocationRequestAlwaysFailed = @"$locationAlw
 
 - (void)refreshAccuracy
 {
-  UIDeviceBatteryState state = [UIDevice currentDevice].batteryState;
-  self.locationManager.desiredAccuracy = (state == UIDeviceBatteryStateCharging) ? kCLLocationAccuracyBestForNavigation : kCLLocationAccuracyBest;
+  self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
 }
 
 - (void)dealloc
@@ -76,6 +75,11 @@ static NSString * const kAlohalyticsLocationRequestAlwaysFailed = @"$locationAlw
   [self orientationChanged];
 }
 
+- (void)askForPermission
+{
+  [self.locationManager requestWhenInUseAuthorization];
+}
+
 - (void)start:(id <LocationObserver>)observer
 {
   if (!self.isStarted)
@@ -89,8 +93,6 @@ static NSString * const kAlohalyticsLocationRequestAlwaysFailed = @"$locationAlw
         case kCLAuthorizationStatusAuthorizedWhenInUse:
         case kCLAuthorizationStatusAuthorizedAlways:
         case kCLAuthorizationStatusNotDetermined:
-          if (kRequestAuthStatus == kCLAuthorizationStatusAuthorizedAlways && [self.locationManager respondsToSelector:@selector(requestAlwaysAuthorization)])
-            [self.locationManager requestAlwaysAuthorization];
           [self.locationManager startUpdatingLocation];
           if ([CLLocationManager headingAvailable])
             [self.locationManager startUpdatingHeading];

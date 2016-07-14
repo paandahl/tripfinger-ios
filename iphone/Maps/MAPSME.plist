@@ -144,8 +144,8 @@
 			</dict>
 		</dict>
 	</dict>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string></string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This is necessary to show your location on the map.</string>
 	<key>UIApplicationShortcutItems</key>
 	<array>
 		<dict>

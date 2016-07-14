@@ -434,6 +434,7 @@ typedef NS_ENUM(NSUInteger, MWMBottomMenuViewCell)
 
 - (IBAction)locationButtonTouchUpInside:(UIButton *)sender
 {
+  [[MapsAppDelegate theApp].locationManager askForPermission];
   [Statistics logEvent:kStatMenu withParameters:@{kStatButton : kStatLocation}];
   GetFramework().SwitchMyPositionNextMode();
 }

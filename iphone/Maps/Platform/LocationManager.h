@@ -35,6 +35,7 @@
 - (BOOL)enabledOnMap;
 - (void)triggerCompass;
 
+- (void)askForPermission;
 - (void)onDaemonMode;
 - (void)onForeground;
 - (void)onBackground;

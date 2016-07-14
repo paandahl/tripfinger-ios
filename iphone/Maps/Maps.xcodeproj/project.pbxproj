@@ -24,6 +24,7 @@
 		2571ADED1CD882F000CF2EFF /* TripfingerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */; };
 		2571ADEF1CD8966100CF2EFF /* PlacePageInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */; };
 		25736C811D3771CC0086CE48 /* DatabaseMigrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25736C801D3771CC0086CE48 /* DatabaseMigrations.swift */; };
+		25736C831D37AAED0086CE48 /* NotificationsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25736C821D37AAED0086CE48 /* NotificationsService.swift */; };
 		2581DC0C1CACF8AB0086285E /* TripfingerAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */; };
 		2581DC0F1CAD299C0086285E /* MapsAppDelegateWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC0E1CAD299C0086285E /* MapsAppDelegateWrapper.mm */; };
 		2581DC121CAE30D50086285E /* ListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2581DC111CAE30D50086285E /* ListController.swift */; };
@@ -943,6 +944,7 @@
 		2571ADEC1CD882F000CF2EFF /* TripfingerEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerEntity.swift; sourceTree = "<group>"; };
 		2571ADEE1CD8966100CF2EFF /* PlacePageInfoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlacePageInfoCell.swift; sourceTree = "<group>"; };
 		25736C801D3771CC0086CE48 /* DatabaseMigrations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatabaseMigrations.swift; sourceTree = "<group>"; };
+		25736C821D37AAED0086CE48 /* NotificationsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationsService.swift; sourceTree = "<group>"; };
 		2581DC071CACD8900086285E /* Tripfinger-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tripfinger-Bridging-Header.h"; sourceTree = "<group>"; };
 		2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripfingerAppDelegate.swift; sourceTree = "<group>"; };
 		2581DC0D1CAD29510086285E /* MapsAppDelegateWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapsAppDelegateWrapper.h; sourceTree = "<group>"; };
@@ -1968,6 +1970,7 @@
 				25736C801D3771CC0086CE48 /* DatabaseMigrations.swift */,
 				2581DC5A1CAE31890086285E /* DownloadService.swift */,
 				2581DC5B1CAE31890086285E /* JsonParserService.swift */,
+				25736C821D37AAED0086CE48 /* NotificationsService.swift */,
 				2581DC611CAE31A30086285E /* Search */,
 			);
 			name = Service;
@@ -4095,6 +4098,7 @@
 				978D4A291996C17300D72CA7 /* RichTextVC.mm in Sources */,
 				9747278418338F0C006B7CB7 /* UIViewController+Navigation.mm in Sources */,
 				2571ADEF1CD8966100CF2EFF /* PlacePageInfoCell.swift in Sources */,
+				25736C831D37AAED0086CE48 /* NotificationsService.swift in Sources */,
 				F6BC1E521ACBF98600EF0360 /* MWMFacebookAlert.mm in Sources */,
 				2581DC4D1CAE31700086285E /* GuideItem.swift in Sources */,
 				F64F199D1AB81A00006EAF7E /* MWMDefaultAlert.mm in Sources */,

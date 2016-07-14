@@ -275,7 +275,7 @@ using namespace osm_auth_ios;
 
   self.standbyCounter = 0;
   NSTimeInterval const minimumBackgroundFetchIntervalInSeconds = 6 * 60 * 60;
-  [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:minimumBackgroundFetchIntervalInSeconds];
+  [[UIApplication sharedApplication] setMinimumBackgroundFetchInterval:UIApplicationBackgroundFetchIntervalNever];
   [self startAdServerForbiddenCheckTimer];
   [self updateApplicationIconBadgeNumber];
 
@@ -452,81 +452,81 @@ using namespace osm_auth_ios;
   // However if all scheduled tasks complete before backgroundTimeRemaining, fetch completes as soon as last task finishes.
   // fetchResultPriority is used to determine result we must send to fetch completion block.
   // Threads synchronization is made through dispatch_async on the main queue.
-  static NSUInteger fetchRunningTasks;
-  static UIBackgroundFetchResult fetchResult;
-  static NSUInteger fetchStamp = 0;
-  NSUInteger const taskFetchStamp = fetchStamp;
-
-  fetchRunningTasks = 0;
-  fetchResult = UIBackgroundFetchResultNewData;
-
-  auto const fetchResultPriority = ^NSUInteger(UIBackgroundFetchResult result)
-  {
-    switch (result)
-    {
-    case UIBackgroundFetchResultNewData: return 2;
-    case UIBackgroundFetchResultNoData: return 1;
-    case UIBackgroundFetchResultFailed: return 3;
-    }
-  };
-  auto const callback = ^(UIBackgroundFetchResult result)
-  {
-    dispatch_async(dispatch_get_main_queue(), ^
-    {
-      if (taskFetchStamp != fetchStamp)
-        return;
-      if (fetchResultPriority(fetchResult) < fetchResultPriority(result))
-        fetchResult = result;
-      if (--fetchRunningTasks == 0)
-      {
-        fetchStamp++;
-        completionHandler(fetchResult);
-      }
-    });
-  };
-  auto const runFetchTask = ^(TMWMVoidBlock task)
-  {
-    ++fetchRunningTasks;
-    task();
-  };
-
-  dispatch_time_t const forceCompleteTime = dispatch_time(
-      DISPATCH_TIME_NOW, static_cast<int64_t>(application.backgroundTimeRemaining) * NSEC_PER_SEC);
-  dispatch_after(forceCompleteTime, dispatch_get_main_queue(), ^
-  {
-    if (taskFetchStamp != fetchStamp)
-      return;
-    fetchRunningTasks = 1;
-    callback(fetchResult);
-  });
-
-  // 1. Try to send collected statistics (if any) to our server.
-  runFetchTask(^
-  {
-    [Alohalytics forceUpload:callback];
-  });
-  // 2. Upload map edits (if any).
-  if (osm::Editor::Instance().HaveMapEditsOrNotesToUpload() && AuthorizationHaveCredentials())
-  {
-    runFetchTask(^
-    {
-      [MapsAppDelegate uploadLocalMapEdits:^(osm::Editor::UploadResult result)
-      {
-        using UploadResult = osm::Editor::UploadResult;
-        switch (result)
-        {
-          case UploadResult::Success: callback(UIBackgroundFetchResultNewData); break;
-          case UploadResult::Error: callback(UIBackgroundFetchResultFailed); break;
-          case UploadResult::NothingToUpload: callback(UIBackgroundFetchResultNoData); break;
-        }
-      } with:AuthorizationGetCredentials()];
-    });
-  }
-  // 3. Check if map for current location is already downloaded, and if not - notify user to download it.
-  runFetchTask(^
-  {
-    [[LocalNotificationManager sharedManager] showDownloadMapNotificationIfNeeded:callback];
-  });
+//  static NSUInteger fetchRunningTasks;
+//  static UIBackgroundFetchResult fetchResult;
+//  static NSUInteger fetchStamp = 0;
+//  NSUInteger const taskFetchStamp = fetchStamp;
+//
+//  fetchRunningTasks = 0;
+//  fetchResult = UIBackgroundFetchResultNewData;
+//
+//  auto const fetchResultPriority = ^NSUInteger(UIBackgroundFetchResult result)
+//  {
+//    switch (result)
+//    {
+//    case UIBackgroundFetchResultNewData: return 2;
+//    case UIBackgroundFetchResultNoData: return 1;
+//    case UIBackgroundFetchResultFailed: return 3;
+//    }
+//  };
+//  auto const callback = ^(UIBackgroundFetchResult result)
+//  {
+//    dispatch_async(dispatch_get_main_queue(), ^
+//    {
+//      if (taskFetchStamp != fetchStamp)
+//        return;
+//      if (fetchResultPriority(fetchResult) < fetchResultPriority(result))
+//        fetchResult = result;
+//      if (--fetchRunningTasks == 0)
+//      {
+//        fetchStamp++;
+//        completionHandler(fetchResult);
+//      }
+//    });
+//  };
+//  auto const runFetchTask = ^(TMWMVoidBlock task)
+//  {
+//    ++fetchRunningTasks;
+//    task();
+//  };
+//
+//  dispatch_time_t const forceCompleteTime = dispatch_time(
+//      DISPATCH_TIME_NOW, static_cast<int64_t>(application.backgroundTimeRemaining) * NSEC_PER_SEC);
+//  dispatch_after(forceCompleteTime, dispatch_get_main_queue(), ^
+//  {
+//    if (taskFetchStamp != fetchStamp)
+//      return;
+//    fetchRunningTasks = 1;
+//    callback(fetchResult);
+//  });
+//
+//  // 1. Try to send collected statistics (if any) to our server.
+//  runFetchTask(^
+//  {
+//    [Alohalytics forceUpload:callback];
+//  });
+//  // 2. Upload map edits (if any).
+//  if (osm::Editor::Instance().HaveMapEditsOrNotesToUpload() && AuthorizationHaveCredentials())
+//  {
+//    runFetchTask(^
+//    {
+//      [MapsAppDelegate uploadLocalMapEdits:^(osm::Editor::UploadResult result)
+//      {
+//        using UploadResult = osm::Editor::UploadResult;
+//        switch (result)
+//        {
+//          case UploadResult::Success: callback(UIBackgroundFetchResultNewData); break;
+//          case UploadResult::Error: callback(UIBackgroundFetchResultFailed); break;
+//          case UploadResult::NothingToUpload: callback(UIBackgroundFetchResultNoData); break;
+//        }
+//      } with:AuthorizationGetCredentials()];
+//    });
+//  }
+//  // 3. Check if map for current location is already downloaded, and if not - notify user to download it.
+//  runFetchTask(^
+//  {
+//    [[LocalNotificationManager sharedManager] showDownloadMapNotificationIfNeeded:callback];
+//  });
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
