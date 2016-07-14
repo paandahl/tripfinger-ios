@@ -52,6 +52,7 @@ extension UIViewController {
   
   func showErrorHud() {
     print("showing error hud")
+    self.navigationController?.view.userInteractionEnabled = true
     self.view.showErrorHud()
   }
   
