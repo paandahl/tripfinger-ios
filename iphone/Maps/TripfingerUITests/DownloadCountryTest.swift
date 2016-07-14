@@ -18,7 +18,6 @@ class DownloadCountryTest: XCTestCase {
   
   func testDownloadBrunei() {
     let app = XCUIApplication()
-    let hittable = NSPredicate(format: "hittable == 1")
     
     let bruneiRow = app.tables.staticTexts["Brunei"]
     tapWhenHittable(bruneiRow, parent: app.tables.element)
@@ -30,10 +29,9 @@ class DownloadCountryTest: XCTestCase {
     sleep(5)
     
     tapWhenHittable(app.tables.staticTexts["Guide content"])
-    let deleteButton = app.sheets["Guide"].collectionViews.buttons["Delete guide content"]
+    tapWhenHittable(app.sheets["Guide"].collectionViews.buttons["Delete guide content"])
 
-    expectationForPredicate(hittable, evaluatedWithObject: deleteButton, handler: nil)
-    waitForExpectationsWithTimeout(600, handler: nil)
-
+    sleep(3)
+    tapWhenHittable(app.navigationBars["Brunei"].buttons["Brunei"])
   }
 }
