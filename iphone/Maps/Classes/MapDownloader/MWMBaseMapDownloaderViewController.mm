@@ -198,13 +198,7 @@ using namespace storage;
     nodeAttrs.m_parentInfo.push_back(parentInfo);
     needsUpdate = (nodeAttrs.m_status == NodeStatus::OnDisk);
     if (nodeAttrs.m_status == NodeStatus::NotDownloaded) {
-      NSString* realCountryId = [@(m_actionSheetId.c_str()) substringFromIndex:5];
-      void(^downloadStarted)() = ^() {
-        [self configAllMapsView];
-        [self reloadData];
-      };
-
-      [TripfingerAppDelegate purchaseCountry:realCountryId downloadStarted:downloadStarted];
+      [self downloadNode:self->m_actionSheetId];
       return;
     }
   } else {
@@ -550,6 +544,16 @@ using namespace storage;
 
 - (void)downloadNode:(storage::TCountryId const &)countryId
 {
+  if (boost::starts_with(countryId, "guide")) {
+    NSString* realCountryId = @(countryId.substr(5).c_str());
+    void(^downloadStarted)() = ^() {
+      [self configAllMapsView];
+      [self reloadData];
+    };
+    [TripfingerAppDelegate purchaseCountry:realCountryId downloadStarted:downloadStarted];
+    return;
+  }
+
   [Statistics logEvent:kStatDownloaderMapAction
         withParameters:@{
           kStatAction : kStatDownload,
