@@ -8,10 +8,10 @@ class FirstCountryDownloadView: UIViewController {
   @IBOutlet weak var confirmButton: UIButton!
  
   let country: Region
-  let downloadHandler: () -> ()
+  let downloadHandler: (() -> ()) -> ()
   let cancelHandler: () -> ()
 
-  init(country: Region, cancelHandler: () -> (), downloadHandler: () -> ()) {
+  init(country: Region, cancelHandler: () -> (), downloadHandler: (() -> ()) -> ()) {
     self.country = country
     self.downloadHandler = downloadHandler
     self.cancelHandler = cancelHandler
@@ -31,8 +31,11 @@ class FirstCountryDownloadView: UIViewController {
   }
   
   func downloadCountry() {
+    showLoadingHud()
     print("relaying to downloadHandler")
-    downloadHandler()
+    downloadHandler {
+      self.hideHuds()
+    }
   }
   
   func cancel() {

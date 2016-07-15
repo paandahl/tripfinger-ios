@@ -5,11 +5,11 @@ class PurchaseCountryVC: FirstCountryDownloadView {
   
   let product: SKProduct
   
-  init(country: Region, product: SKProduct, cancelHandler: () -> (), downloadHandler: () -> ()) {
+  init(country: Region, product: SKProduct, cancelHandler: () -> (), downloadHandler: (() -> ()) -> ()) {
     self.product = product
     super.init(country: country, cancelHandler: cancelHandler, downloadHandler: downloadHandler)
     
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(downloadCountry),
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(paymentSucceeded),
                                                      name: PurchasesService.TFPurchaseNotification,
                                                      object: nil)
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(paymentFailed),
@@ -41,11 +41,18 @@ class PurchaseCountryVC: FirstCountryDownloadView {
   }
   
   func purchaseCountry() {
+    showLoadingHud()
     let payment = SKPayment(product: product)
     SKPaymentQueue.defaultQueue().addPayment(payment)
   }
   
+  func paymentSucceeded() {
+    hideHuds()
+    downloadCountry()
+  }
+  
   func paymentFailed() {
+    hideHuds()
     alertTitle.text = "Payment failed"
     alertText.text = ""
   }

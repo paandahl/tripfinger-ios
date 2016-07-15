@@ -97,8 +97,9 @@ class PurchasesService: NSObject {
   }
   
   private class func openFirstCountryController(country: Region, connectionError: () -> (), downloadStarted: () -> ()) {
-    let firstCountryController = FirstCountryDownloadView(country: country, cancelHandler: downloadStarted) {
+    let firstCountryController = FirstCountryDownloadView(country: country, cancelHandler: downloadStarted) { started in
       makeCountryFirst(country, connectionError: connectionError) {
+        started()
         AnalyticsService.logDownloadFirstCountry(country)
         TripfingerAppDelegate.navigationController.dismissViewControllerAnimated(true, completion: nil)
         proceedWithDownload(country, connectionError: connectionError)
@@ -129,7 +130,8 @@ class PurchasesService: NSObject {
         proceedWithDownload(country, receipt: "XZBDSF252-FA23SDFS-SFSGSZZ67", connectionError: connectionError)
         downloadStarted()
       } else {
-        let purchaseController = PurchaseCountryVC(country: country, product: product, cancelHandler: downloadStarted) {
+        let purchaseController = PurchaseCountryVC(country: country, product: product, cancelHandler: downloadStarted) { started in
+          started()
           TripfingerAppDelegate.navigationController.dismissViewControllerAnimated(true, completion: nil)
           proceedWithDownload(country, receipt: "XZBDSF252-FA23SDFS-SFSGSZZ67", connectionError: connectionError)
           purchaseInstance.dispatchGroup = nil // mainly to keep instance alive
