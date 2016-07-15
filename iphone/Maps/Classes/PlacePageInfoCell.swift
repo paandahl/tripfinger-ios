@@ -110,7 +110,7 @@ class PlacePageInfoCell: UITableViewCell {
       bottomElement = priceText
     }
     
-    if tripfingerEntity.directions != "" {
+    if tripfingerEntity.directions != "" && tripfingerEntity.directions != "<p></p>" {
       contentView.addSubview(directionsLabel)
       contentView.addSubview(directionsText)
       directionsLabel.text = "Directions"
