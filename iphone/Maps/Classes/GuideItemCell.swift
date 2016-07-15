@@ -167,7 +167,9 @@ class GuideItemCell: UITableViewCell {
         contentImage.clipsToBounds = true
         contentImage.contentMode = UIViewContentMode.ScaleAspectFill
         print("offline url: \(guideItem.images[0].getFileUrl())")
-        contentImage.image = UIImage(data: NSData(contentsOfURL: guideItem.images[0].getFileUrl())!)
+        if let imageData = NSData(contentsOfURL: guideItem.images[0].getFileUrl()) {
+          contentImage.image = UIImage(data: imageData)
+        }
       }
       else {
         let imageUrl = DownloadService.gcsImagesUrl + guideItem.images[0].url + "-712x534"

@@ -21,6 +21,7 @@ class RegionController: GuideItemController, MapNavigator {
     super.init(guideItem: region.item())
     navigationItem.title = region.getName()
     addObserver(DatabaseService.TFCountrySavedNotification, selector: #selector(countryDownloaded(_:)))
+    addObserver(DatabaseService.TFCountryDeletedNotification, selector: #selector(countryDeleted(_:)))
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -59,6 +60,13 @@ extension RegionController {
   
   override func populateTableSections() {
     tableSections = [TableSection]()
+
+    if region.item().loadStatus == GuideItem.LoadStatus.CONTENT_NOT_LOADED {
+      let section = TableSection(cellIdentifier: TableCellIdentifiers.loadingCell)
+      section.elements.append((title: "", value: ""))
+      tableSections.append(section)
+      return
+    }
     
     let contentSection = TableSection(cellIdentifier: TableCellIdentifiers.guideItemCell)
     contentSection.elements.append(("", ""))
@@ -192,8 +200,15 @@ extension RegionController {
   func countryDownloaded(notifiction: NSNotification) {
     let country = notifiction.object as! String
     if belongsToCountry(country) {
-      region.item().loadStatus = GuideItem.LoadStatus.CONTENT_NOT_LOADED
-      loadRegionIfNecessary()
+      region = DatabaseService.getCountry(country)!
+      updateUI()
+    }
+  }
+  
+  func countryDeleted(notification: NSNotification) {
+    let country = notification.object as! String
+    if belongsToCountry(country) {
+      region = Region.constructRegion(country)
       updateUI()
     }
   }
