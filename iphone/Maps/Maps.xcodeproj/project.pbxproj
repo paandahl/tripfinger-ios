@@ -2087,10 +2087,10 @@
 		25DABC151D09914400D0A839 /* Listings */ = {
 			isa = PBXGroup;
 			children = (
-				2561718A1D0ABF56008C6386 /* ListingsParentController.swift */,
 				2502337C1CD36896005F9943 /* DetailController.swift */,
-				2581DC321CAE31490086285E /* ListingsController.swift */,
 				2581DC111CAE30D50086285E /* ListController.swift */,
+				2581DC321CAE31490086285E /* ListingsController.swift */,
+				2561718A1D0ABF56008C6386 /* ListingsParentController.swift */,
 				2581DC341CAE31490086285E /* SwipeController.swift */,
 			);
 			name = Listings;

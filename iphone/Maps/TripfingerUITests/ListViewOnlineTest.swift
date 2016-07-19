@@ -30,5 +30,9 @@ class ListViewOnlineTest: XCTestCase {
     tapWhenHittable(app.navigationBars["Ulu Temburong National Park"].buttons["Back"])    
     tapWhenHittable(app.tables.staticTexts["Ulu Temburong National Park"])
     tapWhenHittable(app.staticTexts["Delete"])
+    tapWhenHittable(app.navigationBars["Ulu Temburong National Park"].buttons["Back"])
+    tapWhenHittable(app.navigationBars["Attractions"].buttons["Brunei"])
+    tapWhenHittable(app.tables.staticTexts["Transportation"])
+    tapWhenHittable(app.tables.staticTexts["Airports"])
   }
 }

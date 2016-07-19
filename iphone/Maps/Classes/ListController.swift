@@ -44,7 +44,8 @@ class ListController: GuideItemController {
     }
     if categoryDescription.item.loadStatus != GuideItem.LoadStatus.FULLY_LOADED {
       ContentService.getGuideTextWithId(categoryDescription.getId(), failure: failure) { catDesc in
-        self.categoryDescription = catDesc
+        self.categoryDescription.item.guideSections = catDesc.item.guideSections
+        self.categoryDescription.item.loadStatus = GuideItem.LoadStatus.FULLY_LOADED
         self.updateUI()
       }
     }
