@@ -210,9 +210,9 @@ extern NSString * const kAlohalyticsTapEventKey;
 - (void)openMapSearchWithQuery:(NSString*)query {
   [Statistics logEvent:kStatMenu withParameters:@{kStatButton : kStatSearch}];
   [Alohalytics logEvent:kAlohalyticsTapEventKey withValue:@"search"];
-  [self.searchManager searchText:[query stringByAppendingString:@" "] forInputLocale:nil];
   self.ownerController.navigationController.navigationBarHidden = YES;
   self.searchManager.state = MWMSearchManagerStateMapSearch;
+  [self.searchManager searchText:[query stringByAppendingString:@" "] forInputLocale:nil];
 }
 
 

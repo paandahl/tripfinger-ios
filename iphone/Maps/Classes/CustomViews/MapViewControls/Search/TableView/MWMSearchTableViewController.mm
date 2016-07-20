@@ -273,8 +273,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
     view.tableView.hidden = YES;
     view.noResultsView.hidden = NO;
     view.noResultsText.text = L(@"search_not_found_query");
-    if (self.searchOnMap && !self.tripfingerSearch)
-      [[[ToastView alloc] initWithMessage:view.noResultsText.text] show];
+//    if (self.searchOnMap && !self.tripfingerSearch)
+//      [[[ToastView alloc] initWithMessage:view.noResultsText.text] show];
   }
   else
   {

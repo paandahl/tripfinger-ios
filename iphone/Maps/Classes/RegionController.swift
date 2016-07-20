@@ -3,7 +3,7 @@ import MBProgressHUD
 import Firebase
 
 protocol MapNavigator: class {
-  func navigateToMap()
+  func navigateToMap(completionHandler: (() -> ())?)
 }
 
 class RegionController: GuideItemController, MapNavigator {
@@ -187,9 +187,9 @@ extension RegionController {
     AnalyticsService.logSelectedSection(section, region: region)
   }
   
-  override func navigateToMap() {
+  override func navigateToMap(completionHandler: (() -> ())? = nil) {
     let vc = MapsAppDelegateWrapper.getMapViewController()
-    navigationController!.pushViewController(vc, animated: true)
+    navigationController!.pushViewController(vc, animated: true, completion: completionHandler)
     FrameworkService.navigateToRegionOnMap(region)
   }
   

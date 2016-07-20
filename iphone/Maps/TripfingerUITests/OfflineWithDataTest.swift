@@ -40,6 +40,8 @@ class OfflineWithDataTest: XCTestCase {
     
     shouldNavigateInGuide()
     shouldDoSomeSwiping()
+    shouldDownloadMap()
+    shouldDoSomeSearching()
     shouldNavigateToMapAndClickOnLinks()
   }
   
@@ -99,6 +101,31 @@ class OfflineWithDataTest: XCTestCase {
     app.navigationBars["Attractions"].buttons["Brunei"].tap()
   }
   
+  private func shouldDownloadMap() {
+    
+    tapWhenHittable(app.tables.staticTexts["Bandar"])
+    tapWhenHittable(app.navigationBars["Bandar"].buttons["Map"])
+    sleep(4)
+    if app.buttons["Download Map"].exists {
+      tapWhenHittable(app.buttons["Download Map"])
+      sleep(2)
+    }
+    waitUntilNotHittable(app.staticTexts["Brunei"])
+    sleep(1)
+    tapWhenHittable(app.navigationBars["MapView"].buttons["Bandar"])
+    tapWhenHittable(app.navigationBars["Bandar"].buttons["Brunei"])
+  }
+
+  private func shouldDoSomeSearching() {
+    
+    app.navigationBars["Brunei"].buttons["Search"].tap()
+    let searchField = app.textFields["Search"]
+    searchField.tap()
+    searchField.typeText("saifuddien coll")
+    tapWhenHittable(app.tables.staticTexts["Sultan Omar Ali Saifuddien College"])
+    tapWhenHittable(app.navigationBars["MapView"].buttons["Brunei"])
+  }
+  
   private func shouldNavigateToMapAndClickOnLinks() {
     
     // go to brunei map and download it if necessary
@@ -107,16 +134,10 @@ class OfflineWithDataTest: XCTestCase {
     tapWhenHittable(app.navigationBars["Transportation"].buttons["Map"])
     app.tap()
     waitUntilHasValue("Transportation ", element: app.textFields["Search"])
-    sleep(4)
-    if app.buttons["Download Map"].exists {
-      tapWhenHittable(app.buttons["Download Map"])
-      sleep(2)
-    }
-    waitUntilNotHittable(app.staticTexts["Brunei"])
     sleep(2)
     
     // click on a listing and on a region-link in a description
-    let busStationPoint = origin.coordinateWithOffset(CGVector(dx: 200, dy: 346.5))
+    let busStationPoint = origin.coordinateWithOffset(CGVector(dx: 194, dy: 336))
     busStationPoint.tap()
     sleep(1)
     let expandInfoPoint = origin.coordinateWithOffset(CGVector(dx: 187, dy: 572.5))

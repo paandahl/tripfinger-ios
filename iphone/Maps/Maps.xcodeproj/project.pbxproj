@@ -104,6 +104,7 @@
 		25D379181CAFD4F500552633 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D379101CAFD4F500552633 /* TestUtils.swift */; };
 		25DABC121D094C7300D0A839 /* Array+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DABC111D094C7300D0A839 /* Array+Utils.swift */; };
 		25DABC141D095FEC00D0A839 /* CountryListController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25DABC131D095FEC00D0A839 /* CountryListController.swift */; };
+		25E1C22C1D3EC8E200556ADC /* UINavigationController+Completion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E1C22B1D3EC8E100556ADC /* UINavigationController+Completion.swift */; };
 		25E477C01CC8AB5A008C668E /* AppDelegateTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25E477BF1CC8AB5A008C668E /* AppDelegateTest.swift */; };
 		288765080DF74369002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765070DF74369002DB57D /* CoreGraphics.framework */; };
 		3400A6811CA29D7D003DA0EC /* NSString+Categories.mm in Sources */ = {isa = PBXBuildFile; fileRef = 3400A6801CA29D7D003DA0EC /* NSString+Categories.mm */; };
@@ -1031,6 +1032,7 @@
 		25D379101CAFD4F500552633 /* TestUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		25DABC111D094C7300D0A839 /* Array+Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+Utils.swift"; sourceTree = "<group>"; };
 		25DABC131D095FEC00D0A839 /* CountryListController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryListController.swift; sourceTree = "<group>"; };
+		25E1C22B1D3EC8E100556ADC /* UINavigationController+Completion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UINavigationController+Completion.swift"; sourceTree = "<group>"; };
 		25E477BF1CC8AB5A008C668E /* AppDelegateTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegateTest.swift; sourceTree = "<group>"; };
 		288765070DF74369002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28A0AB4B0D9B1048005BE974 /* Maps_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = Maps_Prefix.pch; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
@@ -1998,6 +2000,7 @@
 				2581DC731CAE31CD0086285E /* SyncManager.swift */,
 				2581DC741CAE31CD0086285E /* UIImage+ColourInit.swift */,
 				2581DC751CAE31CD0086285E /* UIImageView+DownloadImage.swift */,
+				25E1C22B1D3EC8E100556ADC /* UINavigationController+Completion.swift */,
 				2581DC761CAE31CD0086285E /* UINib+RegisterNib.swift */,
 				2581DC771CAE31CD0086285E /* UITableView+ReloadData.swift */,
 				2581DC781CAE31CD0086285E /* UIView+AddConstraints.swift */,
@@ -4199,6 +4202,7 @@
 				341138801C15B50B002E3B3E /* MWMOpeningHoursModel.mm in Sources */,
 				340F24631B14910500F874CD /* RouteState.mm in Sources */,
 				F6830F111B85F6B900C42AAE /* MWMLanesPanel.mm in Sources */,
+				25E1C22C1D3EC8E200556ADC /* UINavigationController+Completion.swift in Sources */,
 				9747264318323080006B7CB7 /* UIKitCategories.mm in Sources */,
 				2502337F1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm in Sources */,
 				F6BD33811B62403B00F2CE18 /* MWMRoutePreview.mm in Sources */,

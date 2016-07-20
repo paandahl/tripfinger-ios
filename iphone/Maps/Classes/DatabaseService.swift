@@ -485,10 +485,10 @@ class DatabaseService {
     return GuideListingNotes(value: listingNotes)
   }
 
-  private class func detachGuideTexts(results: List<GuideText>) -> [GuideText] {
+  private class func detachGuideTexts(results: List<GuideText>, includeChildren: Bool = false) -> [GuideText] {
     var guideTexts = [GuideText]()
     for guideText in results {
-      guideTexts.append(detachGuideText(guideText)!)
+      guideTexts.append(detachGuideText(guideText, includeChildren: includeChildren)!)
     }
     return guideTexts
   }
@@ -520,7 +520,7 @@ class DatabaseService {
     detachedGuideItem.images = detachedImages
     if includeChildren {
       detachedGuideItem.subRegions = List<Region>(detachRegions(Array(guideItem.subRegions)))
-      detachedGuideItem.categoryDescriptions = List<GuideText>(detachGuideTexts(guideItem.categoryDescriptions))
+      detachedGuideItem.categoryDescriptions = List<GuideText>(detachGuideTexts(guideItem.categoryDescriptions, includeChildren: true))
       detachedGuideItem.guideSections = List<GuideText>(detachGuideTexts(guideItem.guideSections))
     } else {
       detachedGuideItem.loadStatus = GuideItem.LoadStatus.CHILDREN_NOT_LOADED

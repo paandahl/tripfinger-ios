@@ -100,7 +100,7 @@ extension SectionController {
     AnalyticsService.logSelectedSection(section)
   }
   
-  override func navigateToMap() {
-    mapNavigator.navigateToMap()
+  override func navigateToMap(completionHandler: (() -> ())? = nil) {
+    mapNavigator.navigateToMap(completionHandler)
   }
 }

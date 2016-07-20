@@ -110,8 +110,11 @@ class ListingsController: ListingsParentController {
       showAlertWhenGuideIsNotDownloaded()
       return
     }
-    mapNavigator.navigateToMap()
-    MapsAppDelegateWrapper.openMapSearchWithQuery(categoryDescription.getCategory().entityName)
+    mapNavigator.navigateToMap {
+      SyncManager.delay(0.2) {
+        MapsAppDelegateWrapper.openMapSearchWithQuery(self.categoryDescription.getCategory().entityName)
+      }
+    }
   }
   
   func updateUI() {

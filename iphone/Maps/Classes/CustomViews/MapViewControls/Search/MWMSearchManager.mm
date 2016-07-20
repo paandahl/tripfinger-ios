@@ -232,6 +232,9 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
     if (!IPAD && a.routingPlaneMode != MWMRoutingPlaneModeNone)
       a.routingPlaneMode = MWMRoutingPlaneModePlacePage;
   }
+  if (self.initedFromGuide && !result.GetFeatureID().IsTripfinger()) {
+    self.initedFromGuide = NO; // make sure we set this flag to false, so that the map is not popped
+  }
   self.state = MWMSearchManagerStateHidden;
   self.initedFromGuide = NO;
 }
