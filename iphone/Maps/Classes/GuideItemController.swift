@@ -87,7 +87,7 @@ extension GuideItemController {
     MapsAppDelegateWrapper.openSearch()
   }
   
-  func navigateToMap(completionHandler: (() -> ())? = nil) {
+  func navigateToMap() {
     preconditionFailure("Navigate to map must be overridden.")
   }
 }

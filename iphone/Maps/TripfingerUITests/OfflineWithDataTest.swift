@@ -130,6 +130,9 @@ class OfflineWithDataTest: XCTestCase {
     
     // go to brunei map and download it if necessary
     tapWhenHittable(app.tables.staticTexts["Bandar"])
+    tapWhenHittable(app.navigationBars["Bandar"].buttons["Map"]) // a quick check that region->map works
+    tapWhenHittable(app.navigationBars["MapView"].buttons["Bandar"])
+
     tapWhenHittable(app.tables.staticTexts["Transportation"])
     tapWhenHittable(app.navigationBars["Transportation"].buttons["Map"])
     app.tap()

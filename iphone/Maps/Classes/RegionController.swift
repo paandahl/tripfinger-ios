@@ -187,7 +187,11 @@ extension RegionController {
     AnalyticsService.logSelectedSection(section, region: region)
   }
   
-  override func navigateToMap(completionHandler: (() -> ())? = nil) {
+  override func navigateToMap() {
+    navigateToMap(nil)
+  }
+  
+  func navigateToMap(completionHandler: (() -> ())?) {
     let vc = MapsAppDelegateWrapper.getMapViewController()
     navigationController!.pushViewController(vc, animated: true, completion: completionHandler)
     FrameworkService.navigateToRegionOnMap(region)
