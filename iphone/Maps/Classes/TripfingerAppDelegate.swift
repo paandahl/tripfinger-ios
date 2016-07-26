@@ -15,38 +15,27 @@ import FirebaseInstanceID
 
   class func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
     
+    NSUserDefaults.standardUserDefaults().registerDefaults(["statisticsEnabled": true])
+    
     DatabaseMigrations.migrateVersion1()
-
-    let launchArgs = NSProcessInfo.processInfo().arguments
-    if launchArgs.contains("DISABLE_STATS") || launchArgs.contains("TEST") {
-      FIRAnalyticsConfiguration.sharedInstance().setAnalyticsCollectionEnabled(false)
-    }
-    FIRApp.configure()
-
-    TripfingerAppDelegate.styleNavigationBar(TripfingerAppDelegate.navigationController.navigationBar)
-    print("myuuid: \(UniqueIdentifierService.uniqueIdentifier())")
-    FIRAnalytics.setUserPropertyString(UniqueIdentifierService.uniqueIdentifier(), forName: "device_id")
-
     NotificationsService.applicationLaunched(application, delegate: delegate, didFinishLaunchingWithOptions: launchOptions)
+    AnalyticsService.applicationLaunched(application, delegate: delegate, didFinishLaunchingWithOptions: launchOptions)
     
-    FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-    
+    TripfingerAppDelegate.styleNavigationBar(TripfingerAppDelegate.navigationController.navigationBar)
+
     let installedFromAppStore = !(NSBundle.mainBundle().appStoreReceiptURL?.lastPathComponent == "sandboxReceipt")
+    let launchArgs = NSProcessInfo.processInfo().arguments
     if launchArgs.contains("TEST") {
-      print("Switching to test mode")
       mode = .TEST
     } else if !installedFromAppStore {
       let testMode = NSUserDefaults.standardUserDefaults().boolForKey("enableTestMode")
       if testMode {
-        print("Switching to draft mode")
         mode = .DRAFT
       } else {
         mode = .BETA
       }
     }
-    let analyticsDraftMode = (mode == .DRAFT) ? "BETA" : String(mode)
-    FIRAnalytics.setUserPropertyString(analyticsDraftMode, forName: "app_mode")
-    print("appMode: \(mode)")
+    AnalyticsService.logAppMode(mode)
 
     let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
     configuration.timeoutIntervalForRequest = 300 // seconds
@@ -91,11 +80,11 @@ import FirebaseInstanceID
   
   class func applicationDidBecomeActive(application: UIApplication) {
     NotificationsService.applicationDidBecomeActive(application)
-    FBSDKAppEvents.activateApp()
+    AnalyticsService.applicationDidBecomeActive(application)
   }
   
   class func application(application: UIApplication, openURL url: NSURL, sourceApplication: NSString, annotation: AnyObject) -> Bool {
-    return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication as String, annotation: annotation)
+    return AnalyticsService.application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
   }
   
   class func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject],
@@ -373,7 +362,10 @@ import FirebaseInstanceID
   }
   
   class func setStatisticsEnabled(enabled: Bool) {
+    NSUserDefaults.standardUserDefaults().setBool(enabled, forKey: "statisticsEnabled")
+    NSUserDefaults.standardUserDefaults().synchronize()
     FIRAnalyticsConfiguration.sharedInstance().setAnalyticsCollectionEnabled(enabled)
+    AnalyticsService.disabled = !enabled
   }
   
   enum AppMode {

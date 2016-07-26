@@ -1,11 +1,3 @@
-//
-//  NotificationsService.swift
-//  Maps
-//
-//  Created by Preben Ludviksen on 14/07/16.
-//  Copyright © 2016 Tripfinger AS. All rights reserved.
-//
-
 import Foundation
 
 class NotificationsService {
