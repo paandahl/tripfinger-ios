@@ -83,7 +83,8 @@ class Region: Object {
   }
   
   func getSlug() -> String {
-    return getName().stringByReplacingOccurrencesOfString(" ", withString: "_")
+    return getName().stringByReplacingOccurrencesOfString("-", withString: "_")
+    .stringByReplacingOccurrencesOfString(" ", withString: "-")
   }
 }
 
