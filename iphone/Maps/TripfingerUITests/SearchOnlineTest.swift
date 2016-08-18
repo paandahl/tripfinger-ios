@@ -49,5 +49,14 @@ class SearchOnlineTest: XCTestCase {
     tapWhenHittable(backButton)
     waitUntilExists(app.tables.staticTexts["Kata"])
     tapWhenHittable(app.navigationBars["Phuket"].buttons["Search"])
+    tapWhenHittable(app.buttons["Cancel"])
+    
+    // search for online object from map
+    tapWhenHittable(app.navigationBars["Phuket"].buttons["Map"])
+    tapWhenHittable(app.buttons["searchButton"])
+    tapWhenHittable(searchField)
+    sleep(1)
+    searchField.typeText("Bang Pae")
+    tapWhenHittable(bangPaeRow)
   }
 }

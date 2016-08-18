@@ -191,7 +191,7 @@ extern NSString * const kSearchStateKey = @"SearchStateKey";
 {
   BOOL onlineFetchedTripfingerItem = result.GetFeatureID().IsTripfinger()
       && !result.GetFeatureID().tripfingerMark->offline;
-  if (self.initedFromGuide && result.GetFeatureID().IsTripfinger()) {
+  if (onlineFetchedTripfingerItem || (self.initedFromGuide && result.GetFeatureID().IsTripfinger())) {
     TripfingerEntity * entity = [DataConverter markToEntity:*result.GetFeatureID().tripfingerMark];
     void(^fail)() = ^() {
       NSLog(@"bbb");
