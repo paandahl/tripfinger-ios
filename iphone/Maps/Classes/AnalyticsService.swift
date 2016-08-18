@@ -72,7 +72,16 @@ class AnalyticsService {
         ])
     }
   }
-  
+
+  class func logSelectedMapFromView(viewType: String) {
+    if !disabled {
+      FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [
+        kFIRParameterContentType: "map",
+        kFIRParameterItemID: viewType
+        ])
+    }
+  }
+
   class func logSelectedCategory(categoryDescription: GuideText, region: Region) {
     if !disabled {
       FIRAnalytics.logEventWithName(kFIREventSelectContent, parameters: [

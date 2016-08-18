@@ -188,6 +188,7 @@ extension RegionController {
   }
   
   override func navigateToMap() {
+    AnalyticsService.logSelectedMapFromView("Region")
     navigateToMap(nil)
   }
   

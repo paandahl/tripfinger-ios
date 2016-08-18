@@ -101,6 +101,7 @@ extension SectionController {
   }
   
   override func navigateToMap() {
+    AnalyticsService.logSelectedMapFromView("Section")
     mapNavigator.navigateToMap(nil)
   }
 }

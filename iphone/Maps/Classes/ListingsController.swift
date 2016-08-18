@@ -106,6 +106,7 @@ class ListingsController: ListingsParentController {
   }
     
   override func navigateToMap() {
+    AnalyticsService.logSelectedMapFromView("Category")
     if !offline {
       showAlertWhenGuideIsNotDownloaded()
       return

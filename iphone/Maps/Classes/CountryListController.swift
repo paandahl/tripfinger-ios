@@ -173,6 +173,7 @@ class CountryListController: TableController {
   }
   
   func navigateToMap() {
+    AnalyticsService.logSelectedMapFromView("Frontpage")
     let vc = MapsAppDelegateWrapper.getMapViewController()
     navigationController!.pushViewController(vc, animated: true)
   }

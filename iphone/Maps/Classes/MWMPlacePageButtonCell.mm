@@ -1,6 +1,7 @@
 #import "MWMPlacePage.h"
 #import "MWMPlacePageButtonCell.h"
 #import "Statistics.h"
+#import <Firebase/Firebase.h>
 
 #import "UIColor+MapsMeColor.h"
 
@@ -36,6 +37,7 @@
 - (IBAction)buttonTap
 {
   if (self.isBooking) {
+    [FIRAnalytics logEventWithName:@"booking_click" parameters:@{ @"url": self.url }];
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:self.url]];
     return;
   }
