@@ -17,6 +17,10 @@
 		2510A3F91CE8E7AD00E3B654 /* DownloadMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510A3F81CE8E7AC00E3B654 /* DownloadMarker.swift */; };
 		251B291B1CE5AFD100B454C3 /* DataConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 251B291A1CE5AFD100B454C3 /* DataConverter.mm */; };
 		25401ED21D23AC32002E4A34 /* LogUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25401ED11D23AC32002E4A34 /* LogUtils.swift */; };
+		255265EC1D743E5800B0A5C0 /* SettingsDropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255265EB1D743E5800B0A5C0 /* SettingsDropdown.swift */; };
+		255265EE1D74414000B0A5C0 /* SettingsDropdownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 255265ED1D74414000B0A5C0 /* SettingsDropdownCell.xib */; };
+		255265F01D74449900B0A5C0 /* SettingsDropdownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255265EF1D74449900B0A5C0 /* SettingsDropdownCell.swift */; };
+		255265F21D746AEA00B0A5C0 /* SettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255265F11D746AEA00B0A5C0 /* SettingsButton.swift */; };
 		25533E231CEDED78004C7956 /* FrameworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25533E221CEDED78004C7956 /* FrameworkService.swift */; };
 		2561718B1D0ABF56008C6386 /* ListingsParentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2561718A1D0ABF56008C6386 /* ListingsParentController.swift */; };
 		256570A61D03F3FE006DE901 /* PurchaseCountryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256570A51D03F3FD006DE901 /* PurchaseCountryVC.swift */; };
@@ -938,6 +942,10 @@
 		251B291A1CE5AFD100B454C3 /* DataConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DataConverter.mm; sourceTree = "<group>"; };
 		251B291C1CE5AFE700B454C3 /* DataConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConverter.h; sourceTree = "<group>"; };
 		25401ED11D23AC32002E4A34 /* LogUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogUtils.swift; sourceTree = "<group>"; };
+		255265EB1D743E5800B0A5C0 /* SettingsDropdown.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDropdown.swift; sourceTree = "<group>"; };
+		255265ED1D74414000B0A5C0 /* SettingsDropdownCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingsDropdownCell.xib; sourceTree = "<group>"; };
+		255265EF1D74449900B0A5C0 /* SettingsDropdownCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDropdownCell.swift; sourceTree = "<group>"; };
+		255265F11D746AEA00B0A5C0 /* SettingsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsButton.swift; sourceTree = "<group>"; };
 		25533E221CEDED78004C7956 /* FrameworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkService.swift; sourceTree = "<group>"; };
 		2561718A1D0ABF56008C6386 /* ListingsParentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingsParentController.swift; sourceTree = "<group>"; };
 		256570A51D03F3FD006DE901 /* PurchaseCountryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseCountryVC.swift; sourceTree = "<group>"; };
@@ -2041,6 +2049,10 @@
 			children = (
 				2590ECF81D2BB5EA00D444AB /* TripfingerNavigationController.swift */,
 				2590ECFA1D2BB60F00D444AB /* TapLoggingWindow.swift */,
+				255265F11D746AEA00B0A5C0 /* SettingsButton.swift */,
+				255265EB1D743E5800B0A5C0 /* SettingsDropdown.swift */,
+				255265ED1D74414000B0A5C0 /* SettingsDropdownCell.xib */,
+				255265EF1D74449900B0A5C0 /* SettingsDropdownCell.swift */,
 			);
 			name = Navigation;
 			sourceTree = "<group>";
@@ -3653,6 +3665,7 @@
 				34CCFDE21C22A2EF00F28959 /* MWMPlacePageOpeningHoursCell.xib in Resources */,
 				452FCA3B1B6A3DF7007019AB /* colors.txt in Resources */,
 				342BB7AB1BC7CC5C00DF6443 /* PlacePageBookmarkCell.xib in Resources */,
+				255265EE1D74414000B0A5C0 /* SettingsDropdownCell.xib in Resources */,
 				EE026F0611D6AC0D00645242 /* classificator.txt in Resources */,
 				34CC4C0A1B81F3B500E44C1F /* MWMSearchTabbedViewController.xib in Resources */,
 				347FD86D1C60B2CE002FB65E /* MWMOpeningHoursAddScheduleTableViewCell.xib in Resources */,
@@ -4120,6 +4133,7 @@
 				2581DC521CAE31700086285E /* Listing.swift in Sources */,
 				25D27B621D01C09000F7AA91 /* PurchasesService.swift in Sources */,
 				349C26B51BB02C6F0005DF2F /* MWMBottomMenuViewController.mm in Sources */,
+				255265EC1D743E5800B0A5C0 /* SettingsDropdown.swift in Sources */,
 				2502337D1CD36896005F9943 /* DetailController.swift in Sources */,
 				3438CDF41B85F1170051AA78 /* MWMConsole.mm in Sources */,
 				F6AD57BA1C87039F00CED368 /* MWMEditorCategoryCell.mm in Sources */,
@@ -4289,6 +4303,7 @@
 				34CCFDE01C22A2EF00F28959 /* MWMPlacePageOpeningHoursCell.mm in Sources */,
 				341F99E11C6B1165001C67B8 /* MWMMapDownloaderTableViewCell.mm in Sources */,
 				2581DC361CAE31490086285E /* LicenseController.swift in Sources */,
+				255265F21D746AEA00B0A5C0 /* SettingsButton.swift in Sources */,
 				34BC72241B0DECAE0012A34B /* MWMMapViewControlsManager.mm in Sources */,
 				2510A3F91CE8E7AD00E3B654 /* DownloadMarker.swift in Sources */,
 				2581DC141CAE30E10086285E /* RegionController.swift in Sources */,
@@ -4330,6 +4345,7 @@
 				2581DC601CAE31890086285E /* JsonParserService.swift in Sources */,
 				F64F4B6D1B46A51F0081A24A /* MWMDownloaderDialogCell.mm in Sources */,
 				3491E7CB1C06F1F10042FE24 /* MWMPlacePageButtonCell.mm in Sources */,
+				255265F01D74449900B0A5C0 /* SettingsDropdownCell.swift in Sources */,
 				25736C811D3771CC0086CE48 /* DatabaseMigrations.swift in Sources */,
 				2581DC821CAE31CD0086285E /* UIImageView+DownloadImage.swift in Sources */,
 				97508423199522D300A7457D /* SettingsAndMoreVC.mm in Sources */,

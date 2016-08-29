@@ -1,6 +1,7 @@
 #import "MWMBottomMenuViewController.h"
 #import "MWMNavigationDashboardManager.h"
 #import "MWMRoutingProtocol.h"
+#import "MWMZoomButtons.h"
 #import "SwiftBridge.h"
 
 #include "map/user_mark.hpp"
@@ -17,6 +18,7 @@
 @property (nonatomic, readonly) MWMNavigationDashboardState navigationState;
 @property (nonatomic, readonly) MWMPlacePageEntity * placePageEntity;
 @property (nonatomic, readonly) MWMBottomMenuViewController * menuController;
+@property (nonatomic) MWMZoomButtons * zoomButtons;
 @property (nonatomic) BOOL searchHidden;
 
 - (instancetype)init __attribute__((unavailable("init is not available")));

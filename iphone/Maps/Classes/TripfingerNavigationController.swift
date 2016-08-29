@@ -130,6 +130,12 @@ class TripfingerNavigationController: UINavigationController {
     handler(countryMwmId, nav, viewControllers)
   }
   
+  func openSettings() {
+    let vc = SettingsAndMoreVC(style: .Grouped)
+    pushViewController(vc, animated: true)
+  }
+
+  
   private func connectionError() {
     viewControllers.last!.showErrorHud()
   }

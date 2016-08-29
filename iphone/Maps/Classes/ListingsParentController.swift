@@ -20,13 +20,15 @@ class ListingsParentController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(navigateToSearch))
     mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: #selector(navigateToMap))
     mapButton.accessibilityLabel = "Map"
     if !offline {
       mapButton.tintColor = UIColor.whiteColor().colorWithAlphaComponent(0.4)
     }
-    navigationItem.rightBarButtonItems = [searchButton, mapButton]
+    let settingsButton = SettingsButton(parent: self, navigateToSearch: navigateToSearch)
+    let spacer = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+    spacer.width = 10;
+    navigationItem.rightBarButtonItems = [settingsButton, spacer, mapButton]
     view.backgroundColor = UIColor.whiteColor()
   }
   
@@ -57,6 +59,14 @@ class ListingsParentController: UIViewController {
   
   func navigateToMap() {
     LogUtils.assertionFailAndRemoteLog("navigateToMap not implemented in class: \(self)")
+  }
+  
+  override func shouldAutorotate() -> Bool {
+    return false
+  }
+  
+  override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.Portrait
   }
 }
 

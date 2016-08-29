@@ -579,7 +579,6 @@ NSString * const kReportSegue = @"Map2ReportSegue";
 {
   BOOL const isNightMode = [UIColor isNightMode];
   BOOL const isLight = !self.controlsManager.searchHidden ||
-                       self.controlsManager.menuState == MWMBottomMenuStateActive ||
                        self.controlsManager.isDirectionViewShown ||
                        (isNightMode &&
                        self.controlsManager.navigationState != MWMNavigationDashboardStateHidden) ||
@@ -617,6 +616,7 @@ NSString * const kReportSegue = @"Map2ReportSegue";
     // May be better solution would be multiobservers support in the C++ core.
     [self processMyPositionStateModeEvent:mode];
     [self.controlsManager.menuController processMyPositionStateModeEvent:mode];
+    [self.controlsManager.zoomButtons processMyPositionStateModeEvent:mode];
   });
 
   using AsyncPoiSupplierFnT = void (*)(id, SEL, shared_ptr<TripfingerMarkParams>);
@@ -653,7 +653,7 @@ NSString * const kReportSegue = @"Map2ReportSegue";
   m_predictor = [[LocationPredictor alloc] initWithObserver:self];
   self.forceRoutingStateChange = ForceRoutingStateChangeNone;
   self.userTouchesAction = UserTouchesActionNone;
-  self.menuRestoreState = MWMBottomMenuStateInactive;
+  self.menuRestoreState = MWMBottomMenuStateHidden;
   GetFramework().LoadBookmarks();
   [MWMFrameworkListener addObserver:self];
 }

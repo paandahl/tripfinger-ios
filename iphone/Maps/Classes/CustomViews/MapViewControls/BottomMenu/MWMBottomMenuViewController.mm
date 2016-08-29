@@ -150,7 +150,7 @@ typedef NS_ENUM(NSUInteger, MWMBottomMenuViewCell)
 - (void)setInactive
 {
   self.p2pButton.selected = NO;
-  self.state = self.restoreState = MWMBottomMenuStateInactive;
+  self.state = self.restoreState = MWMBottomMenuStateHidden;
 }
 
 - (void)setPlanning
@@ -482,16 +482,11 @@ typedef NS_ENUM(NSUInteger, MWMBottomMenuViewCell)
   case MWMBottomMenuStateHidden:
     NSAssert(false, @"Incorrect state");
     break;
-  case MWMBottomMenuStateInactive:
   case MWMBottomMenuStatePlanning:
   case MWMBottomMenuStateGo:
   case MWMBottomMenuStateText:
     [Statistics logEvent:kStatMenu withParameters:@{kStatButton : kStatExpand}];
-    self.state = MWMBottomMenuStateActive;
-    break;
-  case MWMBottomMenuStateActive:
-    [Statistics logEvent:kStatMenu withParameters:@{kStatButton : kStatCollapse}];
-    self.state = self.restoreState;
+    self.state = MWMBottomMenuStateHidden;
     break;
   case MWMBottomMenuStateCompact:
     [Statistics logEvent:kStatMenu withParameters:@{kStatButton : kStatRegular}];
@@ -551,7 +546,6 @@ typedef NS_ENUM(NSUInteger, MWMBottomMenuViewCell)
 
 - (void)setState:(MWMBottomMenuState)state
 {
-  [self toggleDimBackgroundVisible:state == MWMBottomMenuStateActive];
   MWMBottomMenuView * view = (MWMBottomMenuView *)self.view;
   if (view.state == MWMBottomMenuStateCompact &&
       (state == MWMBottomMenuStatePlanning || state == MWMBottomMenuStateGo ||

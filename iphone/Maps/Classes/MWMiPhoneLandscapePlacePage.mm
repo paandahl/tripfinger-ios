@@ -35,6 +35,7 @@ typedef NS_ENUM(NSUInteger, MWMiPhoneLandscapePlacePageState)
   self.anchorImageView.image = nil;
   [self refresh];
   [self addPlacePageShadowToView:self.extendedPlacePageView offset:CGSizeMake(2.0, 4.0)];
+  self.extendedPlacePageView.bounds = CGRectInset(self.extendedPlacePageView.frame, 0., -50.0f);
   [self.extendedPlacePageView addSubview:self.actionBar];
   [self.manager addSubviews:@[self.extendedPlacePageView] withNavigationController:nil];
 }

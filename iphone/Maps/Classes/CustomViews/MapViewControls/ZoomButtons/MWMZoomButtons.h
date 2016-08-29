@@ -1,3 +1,5 @@
+#include "platform/location.hpp"
+
 @class MWMZoomButtonsView;
 
 @interface MWMZoomButtons : NSObject
@@ -9,5 +11,7 @@
 - (void)setTopBound:(CGFloat)bound;
 - (void)setBottomBound:(CGFloat)bound;
 - (void)mwm_refreshUI;
+
+- (void)processMyPositionStateModeEvent:(location::EMyPositionMode)mode;
 
 @end

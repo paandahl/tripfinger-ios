@@ -7,6 +7,7 @@
 #import "UIKitCategories.h"
 #import "MWMBasePlacePageView.h"
 #import "MWMPlacePageActionBar.h"
+#import "SettingsAndMoreVC.h"
 //#import "MWMMapViewControlsManager.h"
 #import "UIColor+MapsMeColor.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>

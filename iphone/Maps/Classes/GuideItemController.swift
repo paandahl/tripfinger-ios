@@ -4,6 +4,7 @@ import Firebase
 
 class GuideItemController: TableController {
   
+  weak var settingsButton: SettingsButton!
   let guideItem: GuideItem
   var contextSwitched = false
   var guideItemExpanded = false
@@ -23,17 +24,16 @@ class GuideItemController: TableController {
     
     let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: #selector(navigateToMap))
     mapButton.accessibilityLabel = "Map"
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(navigateToSearch))
-    navigationItem.rightBarButtonItems = [searchButton, mapButton]
-    
+    let settingsButton = SettingsButton(parent: self, navigateToSearch: navigateToSearch)
+    let spacer = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+    spacer.width = 10;
+    navigationItem.rightBarButtonItems = [settingsButton, spacer, mapButton]
+    self.settingsButton = settingsButton
+
     tableView.tableHeaderView = UIView.init(frame: CGRectMake(0.0, 0.0, tableView.bounds.size.width, 0.01))
     tableView.tableFooterView = UIView.init(frame: CGRectZero)
     
     updateUI()
-  }
-
-  override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-    return UIInterfaceOrientationMask.Portrait
   }
   
   func navigationFailure() {
@@ -55,6 +55,14 @@ class GuideItemController: TableController {
   }
   
   func downloadClicked() {}
+  
+  override func shouldAutorotate() -> Bool {
+    return false
+  }
+  
+  override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.Portrait
+  }
 }
 
 extension GuideItemController: GuideItemContainerDelegate {

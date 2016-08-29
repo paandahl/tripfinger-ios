@@ -2,8 +2,6 @@
 typedef NS_ENUM(NSUInteger, MWMBottomMenuState)
 {
   MWMBottomMenuStateHidden,
-  MWMBottomMenuStateInactive,
-  MWMBottomMenuStateActive,
   MWMBottomMenuStateCompact,
   MWMBottomMenuStateText,
   MWMBottomMenuStatePlanning,

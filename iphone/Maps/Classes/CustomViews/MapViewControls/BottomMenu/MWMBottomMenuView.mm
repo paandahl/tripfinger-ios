@@ -49,7 +49,7 @@
   self.downloadBadge.hidden = YES;
   self.goButton.hidden = YES;
   self.streetLabel.hidden = YES;
-  self.restoreState = MWMBottomMenuStateInactive;
+  self.restoreState = MWMBottomMenuStateHidden;
   [self.goButton setBackgroundColor:[UIColor linkBlue] forState:UIControlStateNormal];
   [self.goButton setBackgroundColor:[UIColor linkBlueHighlighted] forState:UIControlStateHighlighted];
 }
@@ -84,24 +84,6 @@
   switch (self.state)
   {
   case MWMBottomMenuStateHidden:
-    break;
-  case MWMBottomMenuStateInactive:
-    self.backgroundColor = [UIColor menuBackground];
-    self.bookmarksButton.alpha = 1.0;
-    self.downloadBadge.alpha = 1.0;
-    self.goButton.alpha = 0.0;
-    self.p2pButton.alpha = 1.0;
-    self.searchButton.alpha = 1.0;
-    self.streetLabel.alpha = 0.0;
-    break;
-  case MWMBottomMenuStateActive:
-    self.backgroundColor = [UIColor white];
-    self.bookmarksButton.alpha = 1.0;
-    self.downloadBadge.alpha = 0.0;
-    self.goButton.alpha = 0.0;
-    self.p2pButton.alpha = 1.0;
-    self.searchButton.alpha = 1.0;
-    self.streetLabel.alpha = 0.0;
     break;
   case MWMBottomMenuStateCompact:
     if (!IPAD)
@@ -138,17 +120,6 @@
   {
   case MWMBottomMenuStateHidden:
     break;
-  case MWMBottomMenuStateInactive:
-    self.additionalButtons.hidden = YES;
-    self.goButton.hidden = YES;
-    self.separator.hidden = YES;
-    self.streetLabel.hidden = YES;
-    break;
-  case MWMBottomMenuStateActive:
-    self.downloadBadge.hidden = YES;
-    self.goButton.hidden = YES;
-    self.streetLabel.hidden = YES;
-    break;
   case MWMBottomMenuStateCompact:
     if (!IPAD)
     {
@@ -159,9 +130,12 @@
     self.downloadBadge.hidden = YES;
     self.goButton.hidden = YES;
     self.streetLabel.hidden = YES;
+      self.locationButton.hidden = YES;
     break;
   case MWMBottomMenuStatePlanning:
   case MWMBottomMenuStateGo:
+    self.locationButton.hidden = YES;
+    self.menuButton.hidden = YES;
     self.bookmarksButton.hidden = YES;
     self.p2pButton.hidden = YES;
     self.searchButton.hidden = YES;
@@ -184,7 +158,6 @@
   case MWMBottomMenuStateHidden:
     self.minY = self.superview.height;
     return;
-  case MWMBottomMenuStateInactive:
   case MWMBottomMenuStateCompact:
   case MWMBottomMenuStatePlanning:
   case MWMBottomMenuStateGo:
@@ -192,40 +165,29 @@
     self.additionalButtonsHeight.constant = 0.0;
     self.separator.height = 0.0;
     break;
-  case MWMBottomMenuStateActive:
-    {
-      BOOL const isLandscape = self.width > self.layoutThreshold;
-      if (isLandscape)
-      {
-        self.additionalButtonsHeight.constant = 64.0;
-      }
-      else
-      {
-        NSUInteger const additionalButtonsCount = [self.additionalButtons numberOfItemsInSection:0];
-        CGFloat const buttonHeight = 52.0;
-        self.additionalButtonsHeight.constant = additionalButtonsCount * buttonHeight;
-      }
-    }
-    break;
   }
   CGFloat const width = MIN(self.superview.width - self.leftBound, self.superview.width);
   CGFloat const height = self.mainButtons.height + self.separator.height + self.additionalButtonsHeight.constant;
-  self.frame = {{self.superview.width - width, self.superview.height - height}, {width, height}};
+  if (self.state == MWMBottomMenuStateCompact) {
+    self.frame = {{self.superview.width - width, self.superview.height - height}, {width, height}};
+
+  } else {
+    self.frame = {{self.superview.width - width, self.superview.height - height}, {width, height}};
+  }
   self.mainButtonWidth.constant = self.separatorWidth.constant = self.additionalButtonsWidth.constant = width;
 }
 
 - (void)updateMenuButtonFromState:(MWMBottomMenuState)fromState toState:(MWMBottomMenuState)toState
 {
-  if (fromState == MWMBottomMenuStateActive || toState == MWMBottomMenuStateActive)
-    [self morphMenuButtonTemplate:@"ic_menu_" toState:toState];
-  else if (fromState == MWMBottomMenuStateCompact || toState == MWMBottomMenuStateCompact)
+  if (fromState == MWMBottomMenuStateCompact || toState == MWMBottomMenuStateCompact) {
     [self morphMenuButtonTemplate:@"ic_menu_rotate_" toState:toState];
+  }
   [self refreshMenuButtonState];
 }
 
 - (void)morphMenuButtonTemplate:(NSString *)morphTemplate toState:(MWMBottomMenuState)toState
 {
-  BOOL const direct = toState == MWMBottomMenuStateActive || toState == MWMBottomMenuStateCompact;
+  BOOL const direct = toState == MWMBottomMenuStateCompact;
   UIButton * btn = self.menuButton;
   NSUInteger const morphImagesCount = 6;
   NSUInteger const startValue = direct ? 1 : morphImagesCount;
@@ -256,14 +218,10 @@
       switch (self.state)
       {
       case MWMBottomMenuStateHidden:
-      case MWMBottomMenuStateInactive:
       case MWMBottomMenuStatePlanning:
       case MWMBottomMenuStateGo:
       case MWMBottomMenuStateText:
         name = @"ic_menu";
-        break;
-      case MWMBottomMenuStateActive:
-        name = @"ic_menu_down";
         break;
       case MWMBottomMenuStateCompact:
         name = @"ic_menu_left";
@@ -292,8 +250,6 @@
   self.layoutDuration = kDefaultAnimationDuration;
   [self setNeedsLayout];
   [self refreshButtonsColor];
-  if (self.state == MWMBottomMenuStateInactive)
-    [self updateBadge];
 }
 
 - (void)refreshButtonsColor
@@ -334,26 +290,6 @@
   {
     case MWMBottomMenuStateHidden:
       updateMenuButton = NO;
-      break;
-    case MWMBottomMenuStateInactive:
-    {
-      if (MapsAppDelegate.theApp.routingPlaneMode == MWMRoutingPlaneModeNone)
-        _leftBound = 0.0;
-      [self updateBadge];
-      self.p2pButton.hidden = self.searchButton.hidden = self.bookmarksButton.hidden = NO;
-      self.layoutDuration = (_state == MWMBottomMenuStateCompact && !IPAD) ? 0.0 : kDefaultAnimationDuration;
-      updateMenuButton = (_state != MWMBottomMenuStateGo && _state != MWMBottomMenuStatePlanning &&
-                          _state != MWMBottomMenuStateText);
-      break;
-    }
-    case MWMBottomMenuStateActive:
-      self.restoreState = _state;
-      [self updateMenuButtonFromState:_state toState:state];
-      self.additionalButtons.hidden = NO;
-      self.bookmarksButton.hidden = NO;
-      self.p2pButton.hidden = NO;
-      self.searchButton.hidden = NO;
-      self.separator.hidden = NO;
       break;
     case MWMBottomMenuStateCompact:
       self.layoutDuration = IPAD ? kDefaultAnimationDuration : 0.0;

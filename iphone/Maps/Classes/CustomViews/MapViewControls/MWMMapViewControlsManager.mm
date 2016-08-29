@@ -18,7 +18,6 @@
 #import "MWMRoutePreview.h"
 #import "MWMSearchManager.h"
 #import "MWMSearchView.h"
-#import "MWMZoomButtons.h"
 #import "RouteState.h"
 #import "Statistics.h"
 
@@ -42,7 +41,6 @@ extern NSString * const kAlohalyticsTapEventKey;
     MWMSearchManagerProtocol, MWMSearchViewProtocol, MWMBottomMenuControllerProtocol,
     MWMRoutePreviewDataSource, MWMFrameworkRouteBuilderObserver>
 
-@property (nonatomic) MWMZoomButtons * zoomButtons;
 @property (nonatomic) MWMBottomMenuViewController * menuController;
 @property (nonatomic) MWMPlacePageViewManager * placePageManager;
 @property (nonatomic) MWMNavigationDashboardManager * navigationManager;
@@ -76,7 +74,7 @@ extern NSString * const kAlohalyticsTapEventKey;
   self.searchManager = [[MWMSearchManager alloc] initWithParentView:controller delegate:self];
   self.hidden = NO;
   self.zoomHidden = NO;
-  self.menuState = MWMBottomMenuStateInactive;
+  self.menuState = MWMBottomMenuStateHidden;
   [self configRoutePoints];
   [MWMFrameworkListener addObserver:self];
   return self;
@@ -152,13 +150,6 @@ extern NSString * const kAlohalyticsTapEventKey;
 - (void)viewWillTransitionToSize:(CGSize)size
        withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
-  UIDeviceOrientation toOrientation   = [[UIDevice currentDevice] orientation];
-  if (toOrientation == UIDeviceOrientationLandscapeLeft || toOrientation == UIDeviceOrientationLandscapeRight) {
-    self.ownerController.navigationController.navigationBarHidden = YES;
-  } else {
-    self.ownerController.navigationController.navigationBarHidden = self.hidden;
-  }
-
   [self.menuController viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
   [self.placePageManager viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
   [self.navigationManager viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
@@ -358,7 +349,7 @@ extern NSString * const kAlohalyticsTapEventKey;
 
 - (void)didFinishAddingPlace
 {
-  self.menuState = MWMBottomMenuStateInactive;
+  self.menuState = MWMBottomMenuStateHidden;
   static_cast<EAGLView *>(self.ownerController.view).widgetsManager.fullScreen = NO;
 }
 
@@ -619,7 +610,7 @@ extern NSString * const kAlohalyticsTapEventKey;
   self.disableStandbyOnRouteFollowing = NO;
   [MapsAppDelegate theApp].routingPlaneMode = MWMRoutingPlaneModeNone;
   [RouteState remove];
-  self.menuState = MWMBottomMenuStateInactive;
+  self.menuState = MWMBottomMenuStateHidden;
   [self resetRoutingPoint];
   [self navigationDashBoardDidUpdate];
   if ([MapsAppDelegate isAutoNightMode])
@@ -733,9 +724,8 @@ extern NSString * const kAlohalyticsTapEventKey;
 
 - (void)setNavBarHidden:(BOOL)hidden {
   BOOL navMode = self.navigationManager.state != MWMNavigationDashboardStateHidden;
-  BOOL isLandScape = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation);
   BOOL searchHidingBar = self.searchManager.state != MWMSearchManagerStateHidden;
-  bool navBarHidden = navMode || isLandScape || searchHidingBar || hidden;
+  bool navBarHidden = navMode || searchHidingBar || hidden;
   NSLog(@"Setting navbar hidden: %@", navBarHidden ? @"true" : @"false");
   self.ownerController.navigationController.navigationBarHidden = navBarHidden;
 }
@@ -753,9 +743,6 @@ extern NSString * const kAlohalyticsTapEventKey;
   MWMBottomMenuState const state = self.hidden ? MWMBottomMenuStateHidden : menuState;
   switch (state)
   {
-    case MWMBottomMenuStateInactive:
-      [self.menuController setInactive];
-      break;
     case MWMBottomMenuStatePlanning:
       [self.menuController setPlanning];
       break;

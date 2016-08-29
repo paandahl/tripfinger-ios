@@ -6,15 +6,19 @@ class CountryListController: TableController {
   let refreshControl = UIRefreshControl()
   var countryLists = [(String, [Region])]()
   var worldAreaImageSet = Set<String>()
+  weak var settingsButton: SettingsButton!
   
   override func viewDidLoad() {
     super.viewDidLoad()
 
     navigationItem.title = "Countries"
-    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon"), style: .Plain, target: self, action: #selector(navigateToMap))
+    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: #selector(navigateToMap))
     mapButton.accessibilityLabel = "Map"
-    let searchButton = UIBarButtonItem(barButtonSystemItem: .Search, target: self, action: #selector(navigateToSearch))
-    navigationItem.rightBarButtonItems = [searchButton, mapButton]
+    let settingsButton = SettingsButton(parent: self, navigateToSearch: navigateToSearch)
+    let spacer = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+    spacer.width = 10;
+    navigationItem.rightBarButtonItems = [settingsButton, spacer, mapButton]
+    self.settingsButton = settingsButton
 
     if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.TEST {
       refreshControl.addTarget(self, action: #selector(loadCountryLists), forControlEvents: .ValueChanged)
@@ -27,11 +31,28 @@ class CountryListController: TableController {
     addObserver(DatabaseService.TFCountryDeletedNotification, selector: #selector(countryInvalidated))
     
     dispatch_async(dispatch_get_main_queue()) {
-      MapsAppDelegateWrapper.getMapViewController().view.layoutSubviews()
+      let mapViewController = MapsAppDelegateWrapper.getMapViewController()
+      mapViewController.view.layoutSubviews()
+      let settingsButton = SettingsButton(parent: self, navigateToSearch: {
+        MapsAppDelegateWrapper.openSearch()
+      })
+      mapViewController.navigationItem.rightBarButtonItems = [settingsButton]
     }
   }
   
+  override func shouldAutorotate() -> Bool {
+    return false
+  }
+  
+  override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
+    return UIInterfaceOrientationMask.Portrait
+  }
+  
   override func viewWillAppear(animated: Bool) {
+//    UIDevice.currentDevice().setValue(NSNumber(int: UIInterfaceOrientation.Portrait), forKey: "orientation")
+//    [[UIDevice currentDevice] setValue:
+//      [NSNumber numberWithInteger: UIInterfaceOrientationPortrait]
+//      forKey:@"orientation"];
     if countryLists.isEmpty {
       loadCountryLists()
     }
@@ -171,7 +192,7 @@ class CountryListController: TableController {
     navigationController!.pushViewController(regionController, animated: true)
     AnalyticsService.logSelectedRegion(region)
   }
-  
+
   func navigateToMap() {
     AnalyticsService.logSelectedMapFromView("Frontpage")
     let vc = MapsAppDelegateWrapper.getMapViewController()
