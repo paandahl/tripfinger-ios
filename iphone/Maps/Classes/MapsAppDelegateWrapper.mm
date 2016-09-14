@@ -23,8 +23,8 @@
   [[MapsAppDelegate theApp].mapViewController.controlsManager showPlacePageWithEntityFullscreen:entity withCountryMwmId:countryMwmId];
 }
 
-+ (void)openSearch {
-  [[MapsAppDelegate theApp].mapViewController.controlsManager openSearch];
++ (void)openSearch:(BOOL)fromGuide {
+  [[MapsAppDelegate theApp].mapViewController.controlsManager openSearch:fromGuide];
 }
 
 + (void)openMapSearchWithQuery:(NSString*)query {

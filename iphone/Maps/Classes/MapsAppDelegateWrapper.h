@@ -5,7 +5,7 @@
 @interface MapsAppDelegateWrapper : NSObject
 + (UIViewController*)getMapViewController;
 + (void)openPlacePage:(TripfingerEntity *)entity withCountryMwmId:(NSString*)countryMwmId;
-+ (void)openSearch;
++ (void)openSearch:(BOOL)fromGuide;
 + (void)openMapSearchWithQuery:(NSString*)query;
 + (void)openDownloads:(NSString*)countryId navigationController:(UINavigationController*)navigationController;
 + (void)updateDownloadProgress:(double)progress forMwmRegion:(NSString*)mwmRegionId;

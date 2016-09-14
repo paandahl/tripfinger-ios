@@ -92,7 +92,7 @@ extension GuideItemController {
   func navigateToSearch() {
     let vc = MapsAppDelegateWrapper.getMapViewController()
     navigationController!.pushViewController(vc, animated: true)
-    MapsAppDelegateWrapper.openSearch()
+    MapsAppDelegateWrapper.openSearch(true)
   }
   
   func navigateToMap() {

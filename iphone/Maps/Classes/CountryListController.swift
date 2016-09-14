@@ -34,7 +34,7 @@ class CountryListController: TableController {
       let mapViewController = MapsAppDelegateWrapper.getMapViewController()
       mapViewController.view.layoutSubviews()
       let settingsButton = SettingsButton(parent: self, navigateToSearch: {
-        MapsAppDelegateWrapper.openSearch()
+        MapsAppDelegateWrapper.openSearch(false)
       })
       mapViewController.navigationItem.rightBarButtonItems = [settingsButton]
     }
@@ -202,7 +202,7 @@ class CountryListController: TableController {
   func navigateToSearch() {
     let vc = MapsAppDelegateWrapper.getMapViewController()
     navigationController!.pushViewController(vc, animated: true)
-    MapsAppDelegateWrapper.openSearch()
+    MapsAppDelegateWrapper.openSearch(true)
   }
   
   func countryInvalidated() {

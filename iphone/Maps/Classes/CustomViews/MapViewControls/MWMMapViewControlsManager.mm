@@ -190,12 +190,12 @@ extern NSString * const kAlohalyticsTapEventKey;
   [self refreshHelperPanels:UIInterfaceOrientationIsLandscape(self.ownerController.interfaceOrientation)];
 }
 
-- (void)openSearch {
+- (void)openSearch:(BOOL)fromGuide {
   [Statistics logEvent:kStatMenu withParameters:@{kStatButton : kStatSearch}];
   [Alohalytics logEvent:kAlohalyticsTapEventKey withValue:@"search"];
   self.ownerController.navigationController.navigationBarHidden = YES;
   self.searchManager.state = MWMSearchManagerStateDefault;
-  self.searchManager.initedFromGuide = YES;
+  self.searchManager.initedFromGuide = fromGuide;
 }
 
 - (void)openMapSearchWithQuery:(NSString*)query {
