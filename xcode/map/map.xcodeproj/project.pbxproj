@@ -76,6 +76,8 @@
 		67F183831BD5049500AB1840 /* libminizip.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67F1837F1BD5049500AB1840 /* libminizip.a */; };
 		67F183841BD5049500AB1840 /* libtess2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 67F183801BD5049500AB1840 /* libtess2.a */; };
 		67F183881BD5050900AB1840 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67F183871BD5050900AB1840 /* SystemConfiguration.framework */; };
+		ECFFB3ABA59BAF151A835B3A /* tf_bookmark.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECFFBECFF1F27920F9FF40DC /* tf_bookmark.cpp */; };
+		ECFFBFF2A25B6B7C6D9AD438 /* tf_bookmark.hpp in Headers */ = {isa = PBXBuildFile; fileRef = ECFFBAC253047DE8EF6AD751 /* tf_bookmark.hpp */; };
 		F6B283031C1B03320081957A /* gps_track_collection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6B282FB1C1B03320081957A /* gps_track_collection.cpp */; };
 		F6B283041C1B03320081957A /* gps_track_collection.hpp in Headers */ = {isa = PBXBuildFile; fileRef = F6B282FC1C1B03320081957A /* gps_track_collection.hpp */; };
 		F6B283051C1B03320081957A /* gps_track_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F6B282FD1C1B03320081957A /* gps_track_filter.cpp */; };
@@ -175,6 +177,8 @@
 		67F183801BD5049500AB1840 /* libtess2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libtess2.a; path = "../../../omim-xcode-build/Debug/libtess2.a"; sourceTree = "<group>"; };
 		67F183851BD504ED00AB1840 /* libsystem_configuration.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsystem_configuration.tbd; path = usr/lib/system/libsystem_configuration.tbd; sourceTree = SDKROOT; };
 		67F183871BD5050900AB1840 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		ECFFBAC253047DE8EF6AD751 /* tf_bookmark.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = tf_bookmark.hpp; sourceTree = "<group>"; };
+		ECFFBECFF1F27920F9FF40DC /* tf_bookmark.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = tf_bookmark.cpp; sourceTree = "<group>"; };
 		F6B282FB1C1B03320081957A /* gps_track_collection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gps_track_collection.cpp; sourceTree = "<group>"; };
 		F6B282FC1C1B03320081957A /* gps_track_collection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = gps_track_collection.hpp; sourceTree = "<group>"; };
 		F6B282FD1C1B03320081957A /* gps_track_filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gps_track_filter.cpp; sourceTree = "<group>"; };
@@ -353,6 +357,8 @@
 				6753462F1A4054E800A0A8C3 /* user_mark_container.hpp */,
 				675346331A4054E800A0A8C3 /* user_mark.hpp */,
 				674A2A371B2715FB001A525C /* osm_opening_hours.hpp */,
+				ECFFBAC253047DE8EF6AD751 /* tf_bookmark.hpp */,
+				ECFFBECFF1F27920F9FF40DC /* tf_bookmark.cpp */,
 			);
 			name = map;
 			path = ../../map;
@@ -385,6 +391,7 @@
 				674A2A381B2715FB001A525C /* osm_opening_hours.hpp in Headers */,
 				670E39411C46C5C700E9C0A6 /* gps_tracker.hpp in Headers */,
 				F6B283041C1B03320081957A /* gps_track_collection.hpp in Headers */,
+				ECFFBFF2A25B6B7C6D9AD438 /* tf_bookmark.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -498,6 +505,7 @@
 				670E39401C46C5C700E9C0A6 /* gps_tracker.cpp in Sources */,
 				6753464A1A4054E800A0A8C3 /* bookmark.cpp in Sources */,
 				34921F671BFA0A6900737D6E /* styled_point.cpp in Sources */,
+				ECFFB3ABA59BAF151A835B3A /* tf_bookmark.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

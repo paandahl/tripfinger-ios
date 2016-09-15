@@ -575,6 +575,30 @@ bool BookmarkCategory::LoadFromKML(ReaderPtr<Reader> const & reader)
   }
 }
 
+bool BookmarkCategory::LoadFromData()
+{
+  return true;
+}
+
+BookmarkCategory * BookmarkCategory::CreateFromData(string const & file, Framework & framework)
+{
+  auto_ptr<BookmarkCategory> cat(new BookmarkCategory("", framework));
+  try
+  {
+    if (cat->LoadFromKML(make_unique<FileReader>(file)))
+      cat->m_file = file;
+    else
+      cat.reset();
+  }
+  catch (std::exception const & e)
+  {
+    LOG(LWARNING, ("Error while loading bookmarks from", file, e.what()));
+    cat.reset();
+  }
+
+  return cat.release();
+}
+
 BookmarkCategory * BookmarkCategory::CreateFromKMLFile(string const & file, Framework & framework)
 {
   auto_ptr<BookmarkCategory> cat(new BookmarkCategory("", framework));

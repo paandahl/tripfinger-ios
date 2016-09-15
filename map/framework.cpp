@@ -618,6 +618,11 @@ void Framework::LoadBookmarks()
   m_bmManager.LoadBookmarks();
 }
 
+void Framework::SetBookmarks(map<m2::PointD, BookmarkData> & bookmarks)
+{
+  m_bmManager.SetBookmarks(bookmarks);
+}
+
 size_t Framework::AddBookmark(size_t categoryIndex, const m2::PointD & ptOrg, BookmarkData & bm)
 {
   return m_bmManager.AddBookmark(categoryIndex, ptOrg, bm);

@@ -13,7 +13,7 @@ class AnalyticsService {
       disabled = true
       print("analytics was disabled")
     } else {
-      FIRApp.configure()
+      FIRAnalyticsConfiguration.sharedInstance().setAnalyticsCollectionEnabled(true)
       print("myuuid: \(UniqueIdentifierService.uniqueIdentifier())")
       FIRAnalytics.setUserPropertyString(UniqueIdentifierService.uniqueIdentifier(), forName: "device_id")
       FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)

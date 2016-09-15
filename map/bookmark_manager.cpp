@@ -60,23 +60,33 @@ void BookmarkManager::ClearItems()
 
 void BookmarkManager::LoadBookmarks()
 {
-  ClearItems();
+  LOG(LINFO, ("LoadBookmarks()", ""));
+//  ClearItems();
+//
+//  string const dir = GetPlatform().SettingsDir();
 
-  string const dir = GetPlatform().SettingsDir();
-
-  Platform::FilesList files;
-  Platform::GetFilesByExt(dir, BOOKMARKS_FILE_EXTENSION, files);
-  for (size_t i = 0; i < files.size(); ++i)
-    LoadBookmark(dir + files[i]);
+//  Platform::FilesList files;
+//  Platform::GetFilesByExt(dir, BOOKMARKS_FILE_EXTENSION, files);
+//  for (size_t i = 0; i < files.size(); ++i)
+//    LoadBookmark(dir + files[i]);
 
   LoadState();
 }
 
+void BookmarkManager::SetBookmarks(std::map<m2::PointD, BookmarkData> & bookmarks)
+{
+  ClearItems();
+
+  for (auto &bookmark : bookmarks) {
+    AddBookmark(LastEditedBMCategory(), bookmark.first, bookmark.second);
+  }
+}
+
 void BookmarkManager::LoadBookmark(string const & filePath)
 {
-  BookmarkCategory * cat = BookmarkCategory::CreateFromKMLFile(filePath, m_framework);
-  if (cat)
-    m_categories.push_back(cat);
+//  BookmarkCategory * cat = BookmarkCategory::CreateFromKMLFile(filePath, m_framework);
+//  if (cat)
+//    m_categories.push_back(cat);
 }
 
 void BookmarkManager::InitBookmarks()
@@ -99,7 +109,7 @@ size_t BookmarkManager::AddBookmark(size_t categoryIndex, m2::PointD const & ptO
   BookmarkCategory::Guard guard(*pCat);
   static_cast<Bookmark *>(guard.m_controller.CreateUserMark(ptOrg))->SetData(bm);
   guard.m_controller.SetIsVisible(true);
-  pCat->SaveToKMLFile();
+//  pCat->SaveToKMLFile();
 
   m_lastCategoryUrl = pCat->GetFileName();
   m_lastType = bm.GetType();

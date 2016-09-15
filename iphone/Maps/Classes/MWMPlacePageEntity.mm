@@ -168,6 +168,7 @@ void initFieldsMap()
   BookmarkData const & data = static_cast<Bookmark const *>(cat->GetUserMark(bac.second))->GetData();
 
   self.bookmarkTitle = @(data.GetName().c_str());
+  self.bookmarkDatabaseKey = @(data.GetDatabaseKey().c_str());
   self.bookmarkCategory = @(cat->GetName().c_str());
   string const & description = data.GetDescription();
   self.bookmarkDescription = @(description.c_str());
@@ -348,32 +349,38 @@ void initFieldsMap()
 
 - (void)synchronize
 {
-  Framework & f = GetFramework();
-  BookmarkCategory * category = f.GetBmCategory(self.bac.first);
-  if (!category)
-    return;
+//  Framework & f = GetFramework();
+//  BookmarkCategory * category = f.GetBmCategory(self.bac.first);
+//  if (!category)
+//    return;
+//
+//  {
+//    BookmarkCategory::Guard guard(*category);
+//    Bookmark * bookmark = static_cast<Bookmark *>(guard.m_controller.GetUserMarkForEdit(self.bac.second));
+//    if (!bookmark)
+//      return;
+//  
+//    if (self.bookmarkColor)
+//      bookmark->SetType(self.bookmarkColor.UTF8String);
+//
+//    if (self.bookmarkDescription)
+//    {
+//      string const description(self.bookmarkDescription.UTF8String);
+//      _isHTMLDescription = strings::IsHTML(description);
+//      bookmark->SetDescription(description);
+//    }
+//
+//    if (self.bookmarkTitle)
+//      bookmark->SetName(self.bookmarkTitle.UTF8String);
+//  }
+//  
+//  category->SaveToKMLFile();
 
-  {
-    BookmarkCategory::Guard guard(*category);
-    Bookmark * bookmark = static_cast<Bookmark *>(guard.m_controller.GetUserMarkForEdit(self.bac.second));
-    if (!bookmark)
-      return;
-  
-    if (self.bookmarkColor)
-      bookmark->SetType(self.bookmarkColor.UTF8String);
-
-    if (self.bookmarkDescription)
-    {
-      string const description(self.bookmarkDescription.UTF8String);
-      _isHTMLDescription = strings::IsHTML(description);
-      bookmark->SetDescription(description);
-    }
-
-    if (self.bookmarkTitle)
-      bookmark->SetName(self.bookmarkTitle.UTF8String);
-  }
-  
-  category->SaveToKMLFile();
+  NSLog(@"SYNC-ROH-NIZZZZE");
+  BookmarkItem * bookmark = [[BookmarkItem alloc] initWithName:self.bookmarkTitle latitude:self.latlon.lat longitude:self.latlon.lon];
+  bookmark.notes = self.bookmarkDescription;
+  bookmark.databaseKey = self.bookmarkDatabaseKey;
+  [[TripfingerAppDelegate bookmarkService] updateBookmark:bookmark];
 }
 
 @end

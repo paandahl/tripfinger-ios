@@ -166,11 +166,11 @@ class SwipeController: UIViewController, MDCSwipeToChooseDelegate {
     // MDCSwipeToChooseView shows "NOPE" on swipes to the left,
     // and "LIKED" on swipes to the right.
     if(wasChosenWithDirection == MDCSwipeDirection.Left) {
-      DatabaseService.saveLinkeInMwmAndTf(GuideListingNotes.LikedState.SWIPED_LEFT, listing: frontCardView.listing)
+      DatabaseService.saveListingLike(GuideListingNotes.LikedState.SWIPED_LEFT, listing: frontCardView.listing)
       print("You noped: \(frontCardView.listing.listing.item.name)")
     }
     else{
-      DatabaseService.saveLinkeInMwmAndTf(GuideListingNotes.LikedState.LIKED, listing: frontCardView.listing)
+      DatabaseService.saveListingLike(GuideListingNotes.LikedState.LIKED, listing: frontCardView.listing)
       print("You liked: \(frontCardView.listing.listing.item.name)")
     }
     

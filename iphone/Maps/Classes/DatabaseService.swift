@@ -46,29 +46,30 @@ class DatabaseService {
     }
   }
 
-  class func saveLinkeInMwmAndTf(likedState: GuideListingNotes.LikedState, entity: TripfingerEntity) {
-    saveLikeInMwm(likedState, entity: entity)
-    saveLikeInTf(likedState, listingId: entity.tripfingerId)
+  class func saveListingLike(likedState: GuideListingNotes.LikedState, entity: TripfingerEntity) {
+    saveLikeInRealtimeDb(likedState, entity: entity)
+    saveLikeInLocalDb(likedState, listingId: entity.tripfingerId)
     entity.liked = likedState == GuideListingNotes.LikedState.LIKED
   }
 
-  class func saveLinkeInMwmAndTf(likedState: GuideListingNotes.LikedState, listing: Listing) {
-    saveLikeInMwm(likedState, entity: TripfingerEntity(listing: listing))
-    saveLikeInTf(likedState, listingId: listing.item().uuid)
+  class func saveListingLike(likedState: GuideListingNotes.LikedState, listing: Listing) {
+    saveLikeInRealtimeDb(likedState, entity: TripfingerEntity(listing: listing))
+    saveLikeInLocalDb(likedState, listingId: listing.item().uuid)
     listing.listing.notes = getListingNotes(listing.item().uuid)
   }
-
-  class func saveLikeInMwm(likedState: GuideListingNotes.LikedState, entity: TripfingerEntity) {
+  
+  class func saveLikeInRealtimeDb(likedState: GuideListingNotes.LikedState, entity: TripfingerEntity) {
     if likedState == .LIKED {
-      MapsAppDelegateWrapper.saveBookmark(entity)
+      let bookmark = BookmarkItem(name: entity.name, latitude: entity.lat, longitude: entity.lon, listingId: entity.tripfingerId)
+      TripfingerAppDelegate.bookmarkService.addBookmark(bookmark)
     } else if let listingNotes = DatabaseService.getAttachedListingNotes(entity.tripfingerId) {
       if likedState != .LIKED && listingNotes.likedState == .LIKED {
-        MapsAppDelegateWrapper.deleteBookmark(entity)
+        TripfingerAppDelegate.bookmarkService.removeBookmarkForListing(entity.tripfingerId)
       }
     }
   }
   
-  class func saveLikeInTf(likedState: GuideListingNotes.LikedState, listingId: String) {
+  class func saveLikeInLocalDb(likedState: GuideListingNotes.LikedState, listingId: String) {
     if let listingNotes = getAttachedListingNotes(listingId) {
       let realm = listingNotes.realm!
       try! realm.write {

@@ -14,6 +14,10 @@ class GuideListingNotes: Object {
     }
   }
   
+  func swiped() -> Bool {
+    return likedStateId != LikedState.NOT_YET_LIKED_OR_SWIPED.rawValue
+  }
+  
   enum LikedState: Int {
     case NOT_YET_LIKED_OR_SWIPED = 0
     case SWIPED_LEFT = 1

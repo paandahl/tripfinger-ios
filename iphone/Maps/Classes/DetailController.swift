@@ -81,10 +81,10 @@ class DetailController: ListingsParentController {
 extension DetailController : MWMPlacePageActionBarDelegate {
   
   func addBookmark() {
-    DatabaseService.saveLinkeInMwmAndTf(GuideListingNotes.LikedState.LIKED, entity: entity)
+    DatabaseService.saveListingLike(GuideListingNotes.LikedState.LIKED, entity: entity)
   }
   
   func removeBookmark() {
-    DatabaseService.saveLinkeInMwmAndTf(GuideListingNotes.LikedState.SWIPED_LEFT, entity: entity)
+    DatabaseService.saveListingLike(GuideListingNotes.LikedState.SWIPED_LEFT, entity: entity)
   }
 }

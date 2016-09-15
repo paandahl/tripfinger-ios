@@ -46,6 +46,9 @@ public:
   string const & GetName() const { return m_name; }
   void SetName(const string & name) { m_name = name; }
 
+  string const & GetDatabaseKey() const { return m_databaseKey; }
+  void SetDatabaseKey(const string & databaseKey) { m_databaseKey = databaseKey; }
+
   string const & GetDescription() const { return m_description; }
   void SetDescription(const string & description) { m_description = description; }
 
@@ -60,6 +63,7 @@ public:
 
 private:
   string m_name;
+  string m_databaseKey; // For keeping reference to Firebase item
   string m_description;
   string m_type;  ///< Now it stores bookmark color (category style).
   double m_scale; ///< Viewport scale. -1.0 - is a default value (no scale set).
@@ -162,6 +166,7 @@ public:
   /// You don't need to call them from client code.
   //@{
   bool LoadFromKML(ReaderPtr<Reader> const & reader);
+  bool LoadFromData();
   void SaveToKML(ostream & s);
 
   /// Uses the same file name from which was loaded, or
@@ -170,6 +175,7 @@ public:
 
   /// @return 0 in the case of error
   static BookmarkCategory * CreateFromKMLFile(string const & file, Framework & framework);
+  static BookmarkCategory * CreateFromData(string const & file, Framework & framework);
 
   /// Get valid file name from input (remove illegal symbols).
   static string RemoveInvalidSymbols(string const & name);

@@ -1,5 +1,7 @@
 #include "map/framework.hpp"
+#include "map/tf_bookmark.hpp"
 #include "map/user_mark_container.hpp"
+#include "map/styled_point.hpp"
 
 #include "drape_frontend/drape_engine.hpp"
 #include "drape_frontend/tile_key.hpp"
@@ -149,12 +151,18 @@ void UserMarkContainer::ReleaseController()
 
 size_t UserMarkContainer::GetUserPointCount() const
 {
+  LOG(LINFO, ("COUNT:", m_userMarks.size()));
   return m_userMarks.size();
+//  return 1;
 }
 
 df::UserPointMark const * UserMarkContainer::GetUserPointMark(size_t index) const
 {
-  return GetUserMark(index);
+  df::UserPointMark const * mark = GetUserMark(index);
+
+//  unique_ptr<TripfingerBookmark> const mark = make_unique<TripfingerBookmark>(ms::LatLon(34.432, 43.54));
+  LOG(LINFO, ("MARK:", mark->GetPivot()));
+  return mark;
 }
 
 size_t UserMarkContainer::GetUserLineCount() const

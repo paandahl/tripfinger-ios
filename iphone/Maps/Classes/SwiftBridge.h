@@ -138,9 +138,29 @@ SWIFT_CLASS("_TtC10Tripfinger16TripfingerEntity")
 - (NSURL * __nonnull)getFileUrl;- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+SWIFT_CLASS("_TtC10Tripfinger12BookmarkItem")
+@interface BookmarkItem : NSObject
+@property (nonatomic, copy) NSString * _Nullable databaseKey;
+@property (nonatomic, readonly, copy) NSString * _Nonnull name;
+@property (nonatomic, readonly) double latitude;
+@property (nonatomic, readonly) double longitude;
+@property (nonatomic, copy) NSString * _Nullable notes;
+- (nonnull instancetype)initWithName:(NSString * _Nonnull)name latitude:(double)latitude longitude:(double)longitude OBJC_DESIGNATED_INITIALIZER;
+@end
+
+SWIFT_CLASS("_TtC10Tripfinger15BookmarkService")
+@interface BookmarkService : NSObject
+- (BOOL)isListingBookmarked:(NSString * _Nonnull)listingId;
+- (void)addBookmark:(BookmarkItem * _Nonnull)bookmark;
+- (void)updateBookmark:(BookmarkItem * _Nonnull)bookmark;
+- (void)removeBookmarkForListing:(NSString * _Nonnull)listingId;
+- (void)removeBookmark:(BookmarkItem * _Nonnull)bookmark;
+@end
+
 
 SWIFT_CLASS("_TtC10Tripfinger21TripfingerAppDelegate")
 @interface TripfingerAppDelegate : NSObject
++ (BookmarkService * _Null_unspecified)bookmarkService;
 + (NSString * __nonnull)serverUrl;
 + (void)setServerUrl:(NSString * __nonnull)value;
 + (UIWindow * __nonnull)applicationLaunched:(UIApplication * __nonnull)application delegate:(id <UIApplicationDelegate> __nonnull)delegate didFinishLaunchingWithOptions:(NSDictionary * __nullable)launchOptions;
@@ -161,8 +181,8 @@ sourceApplication annotation:(id __nonnull)annotation;
 + (BOOL)coordinateExists:(CLLocationCoordinate2D)coord;
 + (NSInteger)nameToCategoryId:(NSString * __nonnull)name;
 + (void)displayPlacePage:(NSArray<UIView *> * __nonnull)views entity:(TripfingerEntity * __nonnull)entity countryMwmId:(NSString * __nonnull)countryMwmId;
-+ (void)bookmarkAdded:(NSString * __nonnull)listingId;
-+ (void)bookmarkRemoved:(NSString * __nonnull)listingId;
++ (void)addBookmark:(TripfingerEntity * __nonnull)entity;
++ (void)removeBookmark:(TripfingerEntity * __nonnull)entity;
 + (void)selectedSearchResult:(TripfingerEntity * __nonnull)searchResult failure:(void (^ __nonnull)(void))failure stopSpinner:(void (^ __nonnull)(void))stopSpinner;
 + (BOOL)isCountryDownloaded:(NSString * __nonnull)countryName;
 + (NSInteger)downloadStatus:(NSString * __nonnull)mwmCountryId;

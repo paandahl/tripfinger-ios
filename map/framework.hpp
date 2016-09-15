@@ -222,6 +222,7 @@ public:
   //@{
   /// Scans and loads all kml files with bookmarks in WritableDir.
   void LoadBookmarks();
+  void SetBookmarks(map<m2::PointD, BookmarkData> & bookmarks);
 
   /// @return Created bookmark index in category.
   size_t AddBookmark(size_t categoryIndex, m2::PointD const & ptOrg, BookmarkData & bm);

@@ -301,47 +301,55 @@ extern NSString * const kBookmarksChangedNotification;
 
 - (void)addBookmark
 {
-  [Statistics logEvent:kStatEventName(kStatPlacePage, kStatBookmarks)
-                   withParameters:@{kStatValue : kStatAdd}];
-  Framework & f = GetFramework();
-  BookmarkData bmData = { self.entity.titleForNewBookmark, f.LastEditedBMType() };
-  size_t const categoryIndex = f.LastEditedBMCategory();
-  size_t const bookmarkIndex = f.GetBookmarkManager().AddBookmark(categoryIndex, self.entity.mercator, bmData);
-  self.entity.bac = {categoryIndex, bookmarkIndex};
-  self.entity.bookmarkTitle = @(bmData.GetName().c_str());
-  self.entity.bookmarkCategory = @(f.GetBmCategory(categoryIndex)->GetName().c_str());
+//  [Statistics logEvent:kStatEventName(kStatPlacePage, kStatBookmarks)
+//                   withParameters:@{kStatValue : kStatAdd}];
+//  Framework & f = GetFramework();
+//  BookmarkData bmData = { self.entity.titleForNewBookmark, f.LastEditedBMType() };
+//  size_t const categoryIndex = f.LastEditedBMCategory();
+//  size_t const bookmarkIndex = f.GetBookmarkManager().AddBookmark(categoryIndex, self.entity.mercator, bmData);
+//  self.entity.bac = {categoryIndex, bookmarkIndex};
+//  self.entity.bookmarkTitle = @(bmData.GetName().c_str());
+//  self.entity.bookmarkCategory = @(f.GetBmCategory(categoryIndex)->GetName().c_str());
   [NSNotificationCenter.defaultCenter postNotificationName:kBookmarksChangedNotification
                                                     object:nil
                                                   userInfo:nil];
   [self updateDistance];
   if (self.entity.isTripfinger) {
-    [TripfingerAppDelegate bookmarkAdded:self.entity.tripfingerEntity.tripfingerId];
-  }  
+    [TripfingerAppDelegate addBookmark:self.entity.tripfingerEntity];
+  }  else {
+    BookmarkItem * bookmark = [[BookmarkItem alloc] initWithName:@(self.entity.titleForNewBookmark.c_str()) latitude:self.entity.latlon.lat longitude:self.entity.latlon.lon];
+    [[TripfingerAppDelegate bookmarkService] addBookmark:bookmark];
+  }
 }
 
 - (void)removeBookmark
 {
   [Statistics logEvent:kStatEventName(kStatPlacePage, kStatBookmarks)
                    withParameters:@{kStatValue : kStatRemove}];
-  Framework & f = GetFramework();
-  BookmarkCategory * bookmarkCategory = f.GetBookmarkManager().GetBmCategory(self.entity.bac.first);
-  if (bookmarkCategory)
-  {
-    {
-      BookmarkCategory::Guard guard(*bookmarkCategory);
-      guard.m_controller.DeleteUserMark(self.entity.bac.second);
-    }
-    bookmarkCategory->SaveToKMLFile();
-  }
-  self.entity.bac = MakeEmptyBookmarkAndCategory();
-  self.entity.bookmarkTitle = nil;
-  self.entity.bookmarkCategory = nil;
+//  Framework & f = GetFramework();
+//  BookmarkCategory * bookmarkCategory = f.GetBookmarkManager().GetBmCategory(self.entity.bac.first);
+//  if (bookmarkCategory)
+//  {
+//    {
+//      BookmarkCategory::Guard guard(*bookmarkCategory);
+//      guard.m_controller.DeleteUserMark(self.entity.bac.second);
+//    }
+//    bookmarkCategory->SaveToKMLFile();
+//  }
+//  self.entity.bac = MakeEmptyBookmarkAndCategory();
+//  self.entity.bookmarkTitle = nil;
+//  self.entity.bookmarkCategory = nil;
   [NSNotificationCenter.defaultCenter postNotificationName:kBookmarksChangedNotification
                                                     object:nil
                                                   userInfo:nil];
   [self updateDistance];
   if (self.entity.isTripfinger) {
-    [TripfingerAppDelegate bookmarkRemoved:self.entity.tripfingerEntity.tripfingerId];
+    [TripfingerAppDelegate removeBookmark:self.entity.tripfingerEntity];
+  } else {
+    BookmarkItem * bookmark = [[BookmarkItem alloc] initWithName:self.entity.bookmarkTitle latitude:self.entity.latlon.lat longitude:self.entity.latlon.lon];
+    bookmark.databaseKey = self.entity.bookmarkDatabaseKey;
+    [[TripfingerAppDelegate bookmarkService] removeBookmark:bookmark];
+
   }
 }
 

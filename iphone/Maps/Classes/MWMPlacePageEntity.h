@@ -37,6 +37,7 @@ using MWMPlacePageCellTypeValueMap = map<MWMPlacePageCellType, string>;
 @property (copy, nonatomic) NSString * category;
 @property (copy, nonatomic) NSString * address;
 @property (copy, nonatomic) NSString * bookmarkTitle;
+@property (copy, nonatomic) NSString * bookmarkDatabaseKey;
 @property (copy, nonatomic) NSString * bookmarkCategory;
 @property (copy, nonatomic) NSString * bookmarkDescription;
 @property (nonatomic, readonly) BOOL isHTMLDescription;

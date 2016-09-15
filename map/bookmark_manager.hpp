@@ -35,6 +35,7 @@ public:
   /// Scans and loads all kml files with bookmarks in WritableDir.
   void LoadBookmarks();
   void LoadBookmark(string const & filePath);
+  void SetBookmarks(std::map<m2::PointD, BookmarkData> & bookmarks);
 
   void InitBookmarks();
 

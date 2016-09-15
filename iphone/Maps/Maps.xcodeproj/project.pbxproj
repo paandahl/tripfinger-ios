@@ -22,6 +22,9 @@
 		255265F01D74449900B0A5C0 /* SettingsDropdownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255265EF1D74449900B0A5C0 /* SettingsDropdownCell.swift */; };
 		255265F21D746AEA00B0A5C0 /* SettingsButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255265F11D746AEA00B0A5C0 /* SettingsButton.swift */; };
 		25533E231CEDED78004C7956 /* FrameworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25533E221CEDED78004C7956 /* FrameworkService.swift */; };
+		255C7BF21D89CC670098F09D /* BookmarkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C7BF11D89CC670098F09D /* BookmarkService.swift */; };
+		255C7BF51D89DD080098F09D /* BookmarkList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C7BF41D89DD080098F09D /* BookmarkList.swift */; };
+		255C7BF71D8A91CE0098F09D /* BookmarkItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255C7BF61D8A91CE0098F09D /* BookmarkItem.swift */; };
 		2561718B1D0ABF56008C6386 /* ListingsParentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2561718A1D0ABF56008C6386 /* ListingsParentController.swift */; };
 		256570A61D03F3FE006DE901 /* PurchaseCountryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256570A51D03F3FD006DE901 /* PurchaseCountryVC.swift */; };
 		256570A91D06A888006DE901 /* UIViewController+Huds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 256570A81D06A887006DE901 /* UIViewController+Huds.swift */; };
@@ -947,6 +950,9 @@
 		255265EF1D74449900B0A5C0 /* SettingsDropdownCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsDropdownCell.swift; sourceTree = "<group>"; };
 		255265F11D746AEA00B0A5C0 /* SettingsButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsButton.swift; sourceTree = "<group>"; };
 		25533E221CEDED78004C7956 /* FrameworkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameworkService.swift; sourceTree = "<group>"; };
+		255C7BF11D89CC670098F09D /* BookmarkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkService.swift; sourceTree = "<group>"; };
+		255C7BF41D89DD080098F09D /* BookmarkList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkList.swift; sourceTree = "<group>"; };
+		255C7BF61D8A91CE0098F09D /* BookmarkItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookmarkItem.swift; sourceTree = "<group>"; };
 		2561718A1D0ABF56008C6386 /* ListingsParentController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListingsParentController.swift; sourceTree = "<group>"; };
 		256570A51D03F3FD006DE901 /* PurchaseCountryVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PurchaseCountryVC.swift; sourceTree = "<group>"; };
 		256570A81D06A887006DE901 /* UIViewController+Huds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Huds.swift"; sourceTree = "<group>"; };
@@ -1889,6 +1895,16 @@
 			name = "Bridging code";
 			sourceTree = "<group>";
 		};
+		255C7BF31D89D3F60098F09D /* Bookmarks */ = {
+			isa = PBXGroup;
+			children = (
+				255C7BF11D89CC670098F09D /* BookmarkService.swift */,
+				255C7BF41D89DD080098F09D /* BookmarkList.swift */,
+				255C7BF61D8A91CE0098F09D /* BookmarkItem.swift */,
+			);
+			name = Bookmarks;
+			sourceTree = "<group>";
+		};
 		256570A71D040125006DE901 /* Purchases */ = {
 			isa = PBXGroup;
 			children = (
@@ -1905,10 +1921,11 @@
 			isa = PBXGroup;
 			children = (
 				2581DC0B1CACF8AB0086285E /* TripfingerAppDelegate.swift */,
-				256570A71D040125006DE901 /* Purchases */,
+				255C7BF31D89D3F60098F09D /* Bookmarks */,
 				2581DC3A1CAE31550086285E /* Controllers */,
 				2581DC101CAE30C30086285E /* Guide */,
 				2581DC431CAE31660086285E /* Model */,
+				256570A71D040125006DE901 /* Purchases */,
 				2581DC561CAE31800086285E /* Service */,
 				2581DC171CAE30FC0086285E /* UI Components */,
 				2581DC6B1CAE31C00086285E /* Utils */,
@@ -4295,8 +4312,10 @@
 				344825931B8DBADF00757B1B /* MWMSearchDownloadViewController.mm in Sources */,
 				345FDD261C3BB3AF0070C459 /* MWMEditorViewController.mm in Sources */,
 				34B82ABA1B837FFD00180497 /* MWMSearchHistoryRequestCell.mm in Sources */,
+				255C7BF71D8A91CE0098F09D /* BookmarkItem.swift in Sources */,
 				2581DC2D1CAE31340086285E /* RightDetailCell.swift in Sources */,
 				34BAB6E91BB2DA0C00DB941B /* MWMBottomMenuLayout.mm in Sources */,
+				255C7BF51D89DD080098F09D /* BookmarkList.swift in Sources */,
 				F785EB4016386FC4003A38A8 /* BookmarkCell.mm in Sources */,
 				2581DC4F1CAE31700086285E /* GuideListing.swift in Sources */,
 				34BAB6ED1BB2DFCE00DB941B /* MWMBottomMenuCollectionViewCell.mm in Sources */,
@@ -4328,6 +4347,7 @@
 				2581DC831CAE31CD0086285E /* UINib+RegisterNib.swift in Sources */,
 				256570A91D06A888006DE901 /* UIViewController+Huds.swift in Sources */,
 				34BC722A1B0DECAE0012A34B /* MWMZoomButtonsView.mm in Sources */,
+				255C7BF21D89CC670098F09D /* BookmarkService.swift in Sources */,
 				34CE8A671C7740E100F4351A /* MWMStorage.mm in Sources */,
 				2581DC161CAE30E70086285E /* GuideItemController.swift in Sources */,
 				F6F533A31B3C248900C1940B /* UIColor+MapsMeColor.mm in Sources */,

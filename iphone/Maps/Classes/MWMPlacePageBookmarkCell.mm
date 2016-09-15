@@ -6,7 +6,7 @@
 #import "MWMTextView.h"
 #import "Statistics.h"
 
-extern CGFloat const kBookmarkCellHeight = 136.0;
+extern CGFloat const kBookmarkCellHeight = 136.0 - 45.0;
 
 static CGFloat const kSeparatorAndTitleHeight = 52.0;
 
@@ -36,6 +36,7 @@ static NSUInteger sWebViewHeight = 0;
 
 - (void)config:(MWMPlacePage *)placePage forHeight:(BOOL)forHeight
 {
+  self.categoryButton.hidden = YES;
   self.placePage = placePage;
   self.forHeight = forHeight;
 

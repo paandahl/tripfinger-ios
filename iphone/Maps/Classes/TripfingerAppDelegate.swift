@@ -11,6 +11,7 @@ import FirebaseInstanceID
   static var mode = AppMode.RELEASE
   static var coordinateSet = Set<Int64>()
   static let navigationController = TripfingerNavigationController()
+  static var bookmarkService: BookmarkService!
   var openUrl = ""
 
   class func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
@@ -19,8 +20,9 @@ import FirebaseInstanceID
     
     DatabaseMigrations.migrateVersion1()
     NotificationsService.applicationLaunched(application, delegate: delegate, didFinishLaunchingWithOptions: launchOptions)
+    FIRApp.configure()
     AnalyticsService.applicationLaunched(application, delegate: delegate, didFinishLaunchingWithOptions: launchOptions)
-    
+    bookmarkService = BookmarkService(delegate: sharedInstance)
     TripfingerAppDelegate.styleNavigationBar(TripfingerAppDelegate.navigationController.navigationBar)
 
     let installedFromAppStore = !(NSBundle.mainBundle().appStoreReceiptURL?.lastPathComponent == "sandboxReceipt")
@@ -74,10 +76,14 @@ import FirebaseInstanceID
     print("fetched coordinateSet: ")
     print(TripfingerAppDelegate.coordinateSet)
     NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(repopulateCoordinateSet), name: DatabaseService.TFCountrySavedNotification, object: nil)
-
+    
+    //    BookmarkData data("Hallais", LastEditedBMType(), "Lol");
+//    let bookmark = TripfingerBookmark(title: "Tjoholf", latitude: 41.704298, longitude: 44.789413)
+//    let bookmarks = [bookmark]
+//    MapsAppDelegateWrapper.setBookmarks(bookmarks)
     return window
   }
-  
+    
   class func applicationDidBecomeActive(application: UIApplication) {
     NotificationsService.applicationDidBecomeActive(application)
     AnalyticsService.applicationDidBecomeActive(application)
@@ -243,12 +249,12 @@ import FirebaseInstanceID
     }
   }
 
-  class func bookmarkAdded(listingId: String) {
-    DatabaseService.saveLikeInTf(GuideListingNotes.LikedState.LIKED, listingId: listingId)
+  class func addBookmarkForEntity(entity: TripfingerEntity) {
+    DatabaseService.saveListingLike(GuideListingNotes.LikedState.LIKED, entity: entity)
   }
   
-  class func bookmarkRemoved(listingId: String) {
-    DatabaseService.saveLikeInTf(GuideListingNotes.LikedState.SWIPED_LEFT, listingId: listingId)
+  class func removeBookmark(entity: TripfingerEntity) {
+    DatabaseService.saveListingLike(GuideListingNotes.LikedState.SWIPED_LEFT, entity: entity)
   }
 
   class func selectedSearchResult(searchResult: TripfingerEntity, failure: () -> (), stopSpinner: () -> ()) {
@@ -373,6 +379,12 @@ import FirebaseInstanceID
     case DRAFT
     case BETA
     case RELEASE
+  }
+}
+
+extension TripfingerAppDelegate: BookmarkListener {
+  func bookmarksUpdated(bookmarks: [BookmarkItem]) {
+    MapsAppDelegateWrapper.setBookmarks(bookmarks)
   }
 }
 
