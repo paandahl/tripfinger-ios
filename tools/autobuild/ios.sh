@@ -23,32 +23,19 @@ fi
 export SDK_ROOT
 
 SHADOW_DIR="$MY_PATH/../../../omim-iphone"
-
-if [[ $CONFIGURATION == *production* ]]; then
-  QMAKE_PARAMS="CONFIG+=production CONFIG+=release"
-  SHADOW_DIR="${SHADOW_DIR}-production"
-elif [[ $CONFIGURATION == *release* ]]; then
-  QMAKE_PARAMS="CONFIG+=release"
-  SHADOW_DIR="${SHADOW_DIR}-release"
-elif [[ $CONFIGURATION == *debug* || $CONFIGURATION == "simulator" ]]; then
-  QMAKE_PARAMS="CONFIG+=debug"
-  SHADOW_DIR="${SHADOW_DIR}-debug"
-else
-  echo "Unrecognized configuration passed to the script: $CONFIGURATION"
-  exit 1
-fi
+QMAKE_PARAMS="CONFIG+=debug"
 
 if [[ $CONFIGURATION == *simulator* ]]; then
+echo "MKspecced iphone simulator"
+  SHADOW_DIR="${SHADOW_DIR}-debug"
   MKSPEC="$MY_PATH/../mkspecs/iphonesimulator"
 else
+  SHADOW_DIR="${SHADOW_DIR}-release"
+  echo "MKspecced iphone device"
   MKSPEC="$MY_PATH/../mkspecs/iphonedevice"
 fi
 
-if [[ $GCC_VERSION == *clang* ]]; then
-  MKSPEC="${MKSPEC}-clang"
-else
-  MKSPEC="${MKSPEC}-llvm"
-fi
+MKSPEC="${MKSPEC}-clang"
 
 # Build libs for each architecture in separate folders
 for ARCH in $VALID_ARCHS; do
@@ -58,6 +45,8 @@ for ARCH in $VALID_ARCHS; do
   else
     # pass build architecture to qmake as an environment variable, see mkspecs/iphone*/qmake.conf
     export BUILD_ARCHITECTURE="$ARCH"
+    echo "Building the fucking thing"
+    echo $BUILD_ARCHITECTURE
     BuildQt "$SHADOW_DIR-$ARCH" "$MKSPEC" "$QMAKE_PARAMS" || ( echo "ERROR while building $CONFIGURATION config"; exit 1 )
   fi
 done

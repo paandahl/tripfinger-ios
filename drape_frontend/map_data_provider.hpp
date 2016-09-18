@@ -26,11 +26,6 @@ public:
 
   TPoiSupplierCallback m_poiSupplierCallback;
 
-  inline void SetPoiSupplierCallback(TPoiSupplierCallback const & callback)
-  {
-    m_poiSupplierCallback = callback;
-  }
-
   MapDataProvider(TReadIDsFn const & idsReader,
                   TReadFeaturesFn const & featureReader,
                   TIsCountryLoadedByNameFn const & isCountryLoadedByNameFn,
