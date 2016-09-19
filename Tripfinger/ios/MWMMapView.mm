@@ -1,24 +1,26 @@
 #import <UIKit/UIKit.h>
 #import "RCTViewManager.h"
 #import "Framework.h"
-#import "EAGLView.h"
+#import "MWMMapView.h"
 
-@interface MWMMapView : EAGLView
-@end
+@implementation MWMMapView
 
-@implementation MWMMapView {
-  UILabel * label;
-  function<vector<TripfingerMark>(TripfingerMarkParams&)> x1;
-}
-
--(void)dealloc
++ (instancetype)sharedInstance
 {
-  NSLog(@"deallocing mapview");
+  static MWMMapView *sharedInstance = nil;
+  static dispatch_once_t onceToken;
+  if (sharedInstance != nil) {
+    [sharedInstance viewFetched];
+  }
+  dispatch_once(&onceToken, ^{
+    sharedInstance = [[MWMMapView alloc] initWithFrame:CGRectZero];
+  });
+  [(EAGLView *)sharedInstance setPresentAvailable:YES];
+  return sharedInstance;
 }
 
 - (id)initWithFrame:(CGRect)frame
 {
-  x1 = [=](TripfingerMarkParams& a) -> vector<TripfingerMark>{NSLog(@"poiSupplier called"); return vector<TripfingerMark>();};
   self = [super initWithFrame:frame];
   [self initializeFramework];
   return self;
@@ -29,25 +31,12 @@
   Framework & f = GetFramework();
   
   f.SetPoiSupplierFunction([self](TripfingerMarkParams& params) {
-    NSLog(@"poiSupplier called");
     return [self poiSupplier:params];
   });
   
-//  f.SetPoiSupplierFunction(x1);
-
-  //  using PoiSupplierFnT = vector<TripfingerMark> (*)(id, SEL, TripfingerMarkParams&);
-//  SEL poiSupplierSelector = @selector(poiSupplier:);
-//  PoiSupplierFnT poiSupplierFn = (PoiSupplierFnT)[self methodForSelector:poiSupplierSelector];
-//  f.SetPoiSupplierFunction(bind(poiSupplierFn, self, poiSupplierSelector, _1));
-
   f.SetCoordinateCheckerFunction([self](ms::LatLon latlon) {
     return [self coordinateChecker:latlon];
   });
-  
-//  using CoordinateCheckerFnT = bool (*)(id, SEL, ms::LatLon);
-//  SEL coordinateCheckerSelector = @selector(coordinateChecker:);
-//  CoordinateCheckerFnT coordinateCheckerFn = (CoordinateCheckerFnT)[self methodForSelector:coordinateCheckerSelector];
-//  f.SetCoordinateCheckerFunction(bind(coordinateCheckerFn, self, coordinateCheckerSelector, _1));
 }
 
 - (vector<TripfingerMark>)poiSupplier:(TripfingerMarkParams &)params
@@ -63,12 +52,14 @@
 
 - (void)layoutSubviews
 {
-  NSLog(@"Bounds: %@", NSStringFromCGRect(self.bounds));
   [super layoutSubviews];
-  NSLog(@"layoutSubviews");
   
   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIDeviceOrientationDidChangeNotification object:nil];
   
+  GetFramework().InvalidateRendering();
+}
+
+- (void)viewFetched {
   GetFramework().InvalidateRendering();
 }
 
@@ -183,7 +174,7 @@ RCT_EXPORT_MODULE()
 
 - (UIView *)view
 {
-  return [[MWMMapView alloc] initWithFrame:CGRectZero];
+  return [MWMMapView sharedInstance];
 }
 
 @end

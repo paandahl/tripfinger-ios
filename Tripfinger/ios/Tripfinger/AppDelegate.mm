@@ -11,8 +11,15 @@
 
 #import "RCTBundleURLProvider.h"
 #import "RCTRootView.h"
+#import "UIImage+initWithColor.h"
+#import "MWMMapView.h"
 
 @implementation AppDelegate
+
+-(CGFloat)scaled:(CGFloat)f
+{
+  return f / 255.;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -25,12 +32,27 @@
                                                initialProperties:nil
                                                    launchOptions:launchOptions];
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
-
+  
+  UIColor * primary = [UIColor colorWithRed:[self scaled:36.] green:[self scaled:182.] blue:[self scaled:243.] alpha:1.0];
+  UIImage *gradientImage44 = [UIImage imageWithColor:primary];
+  UIImage *gradientImage32 = [UIImage imageWithColor:primary];
+  [[UINavigationBar appearance] setBackgroundImage:gradientImage44 forBarMetrics:UIBarMetricsDefault];
+  [[UINavigationBar appearance] setBackgroundImage:gradientImage32 forBarMetrics:UIBarMetricsLandscapePhone];
+  [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
+  
+  [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
+  [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationNone];
+  
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  dispatch_async(dispatch_get_main_queue(), ^{
+    MWMMapView * mapView = [MWMMapView sharedInstance];
+    mapView.frame = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+    [mapView layoutSubviews];
+  });
   return YES;
 }
 

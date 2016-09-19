@@ -9,28 +9,70 @@ import {
   AppRegistry,
   StyleSheet,
   Text,
-  View
+  View,
+  NavigatorIOS
 } from 'react-native';
-import TestView from './TestView';
-import MWMMapView from './MWMMapView'
+import CountriesScene from './CountriesScene'
+import MapScene from './MapScene'
 
 class Tripfinger extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      navHidden: false
+    };
+  }
+
+  toggleNavHidden() {
+    console.log("Setting navHidden to: " + !this.state.navHidden);
+    this.setState({
+      navHidden: !this.state.navHidden
+    });
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        {/*<Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <TestView style={{width: 200, height: 60}} />*/}
-        <MWMMapView style={styles.map} />
-        {/*<Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>*/}
-      </View>
+      <NavigatorIOS
+      navigationBarHidden={this.state.navHidden}
+      translucent={true}
+      tintColor="#FFF"
+      titleTextColor="#FFF"
+      initialRoute={{
+        component: CountriesScene,
+        title: 'Countries',
+        passProps: {
+          hideBar: () => {this.toggleNavHidden()}
+        }
+      }}
+    //  renderScene={(route, navigator) => {
+    //    if (route.title == "Countries") {
+    //      return <CountriesScene title={route.title} onForward={ () => {
+    //              const nextIndex = route.index + 1;
+    //              navigator.push({
+    //                title: 'Map',
+    //                index: 1
+    //              });
+    //            }} />
+    //    } else {
+    //      return <MapScene title={route.title} />
+    //    }
+    //  }}
+    //  navigationBar={
+    // <Navigator.NavigationBar
+    //   routeMapper={{
+    //     LeftButton: (route, navigator, index, navState) =>
+    //      { return (<Text>Cancel</Text>); },
+    //     RightButton: (route, navigator, index, navState) =>
+    //       { return (<Text>Done</Text>); },
+    //     Title: (route, navigator, index, navState) =>
+    //       { return (<Text>Awesome Nav Bar</Text>); },
+    //   }}
+    //   style={{backgroundColor: 'gray'}}
+    // />
+    //}
+    style={{flex: 1}}
+    />
     );
   }
 }

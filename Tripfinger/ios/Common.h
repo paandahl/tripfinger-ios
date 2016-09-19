@@ -49,14 +49,14 @@ static inline BOOL firstVersionIsLessThanSecond(NSString * first, NSString * sec
   return f.count < s.count;
 }
 
-static inline BOOL isIOSVersionLessThan(NSString * version)
+static inline BOOL isIOSVersionStringLessThan(NSString * version)
 {
   return firstVersionIsLessThanSecond([UIDevice currentDevice].systemVersion, version);
 }
 
 static inline BOOL isIOSVersionLessThan(NSUInteger version)
 {
-  return isIOSVersionLessThan([NSString stringWithFormat:@"%@", @(version)]);
+  return isIOSVersionStringLessThan([NSString stringWithFormat:@"%@", @(version)]);
 }
 
 static BOOL const isIOS7 = isIOSVersionLessThan(8);
