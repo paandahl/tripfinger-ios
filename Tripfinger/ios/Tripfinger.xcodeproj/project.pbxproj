@@ -84,6 +84,14 @@
 		255C7DC61D8D4ED30098F09D /* WorldCoasts_obsolete.mwm in Resources */ = {isa = PBXBuildFile; fileRef = 255C7D5F1D8D4CC60098F09D /* WorldCoasts_obsolete.mwm */; };
 		255C7DC71D8D4ED70098F09D /* WorldCoasts.mwm in Resources */ = {isa = PBXBuildFile; fileRef = 255C7D601D8D4CC60098F09D /* WorldCoasts.mwm */; };
 		255C7DC91D8D6DF90098F09D /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 255C7DC81D8D6DF90098F09D /* libc++.tbd */; };
+		255C7DD71D8FE3330098F09D /* NavBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 255C7DD61D8FE3330098F09D /* NavBarManager.m */; };
+		255C7DE51D9022330098F09D /* TFRCTNavigator.m in Sources */ = {isa = PBXBuildFile; fileRef = 255C7DE41D9022330098F09D /* TFRCTNavigator.m */; };
+		255C7DE81D9054430098F09D /* TFRCTNavigatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 255C7DE71D9054430098F09D /* TFRCTNavigatorManager.m */; };
+		255C7DEA1D905C1F0098F09D /* TFRCTWrapperViewController.h in Resources */ = {isa = PBXBuildFile; fileRef = 255C7DE91D905C1F0098F09D /* TFRCTWrapperViewController.h */; };
+		255C7DEC1D905C540098F09D /* TFRCTWrapperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 255C7DEB1D905C540098F09D /* TFRCTWrapperViewController.m */; };
+		255C7DEF1D9122250098F09D /* TFRCTNavItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 255C7DEE1D9122250098F09D /* TFRCTNavItem.m */; };
+		255C7DF21D91227F0098F09D /* TFRCTNavItemManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 255C7DF11D91227F0098F09D /* TFRCTNavItemManager.m */; };
+		255C7DF51D9181BA0098F09D /* TFRCTAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 255C7DF41D9181BA0098F09D /* TFRCTAction.m */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 /* End PBXBuildFile section */
 
@@ -258,6 +266,19 @@
 		255C7DC81D8D6DF90098F09D /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		255C7DCA1D8F07070098F09D /* UIImage+initWithColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "UIImage+initWithColor.h"; path = "Tripfinger/UIImage+initWithColor.h"; sourceTree = "<group>"; };
 		255C7DCB1D8F31D10098F09D /* MWMMapView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMMapView.h; sourceTree = "<group>"; };
+		255C7DD61D8FE3330098F09D /* NavBarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NavBarManager.m; path = Tripfinger/NavBarManager.m; sourceTree = "<group>"; };
+		255C7DE31D90211E0098F09D /* TFRCTNavigator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFRCTNavigator.h; sourceTree = "<group>"; };
+		255C7DE41D9022330098F09D /* TFRCTNavigator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFRCTNavigator.m; sourceTree = "<group>"; };
+		255C7DE61D9054340098F09D /* TFRCTNavigatorManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFRCTNavigatorManager.h; sourceTree = "<group>"; };
+		255C7DE71D9054430098F09D /* TFRCTNavigatorManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFRCTNavigatorManager.m; sourceTree = "<group>"; };
+		255C7DE91D905C1F0098F09D /* TFRCTWrapperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFRCTWrapperViewController.h; sourceTree = "<group>"; };
+		255C7DEB1D905C540098F09D /* TFRCTWrapperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFRCTWrapperViewController.m; sourceTree = "<group>"; };
+		255C7DED1D9121E90098F09D /* TFRCTNavItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFRCTNavItem.h; sourceTree = "<group>"; };
+		255C7DEE1D9122250098F09D /* TFRCTNavItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFRCTNavItem.m; sourceTree = "<group>"; };
+		255C7DF01D91225B0098F09D /* TFRCTNavItemManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFRCTNavItemManager.h; sourceTree = "<group>"; };
+		255C7DF11D91227F0098F09D /* TFRCTNavItemManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFRCTNavItemManager.m; sourceTree = "<group>"; };
+		255C7DF31D9180920098F09D /* TFRCTAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TFRCTAction.h; sourceTree = "<group>"; };
+		255C7DF41D9181BA0098F09D /* TFRCTAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TFRCTAction.m; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -379,7 +400,9 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				255C7D091D8C7A8E0098F09D /* TestView.m */,
 				255C7D0C1D8D2A430098F09D /* MapsComponent */,
+				255C7DE21D9020E80098F09D /* TFNavigator */,
 				255C7DCA1D8F07070098F09D /* UIImage+initWithColor.h */,
+				255C7DD61D8FE3330098F09D /* NavBarManager.m */,
 			);
 			name = Tripfinger;
 			sourceTree = "<group>";
@@ -488,6 +511,25 @@
 				255C7D601D8D4CC60098F09D /* WorldCoasts.mwm */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		255C7DE21D9020E80098F09D /* TFNavigator */ = {
+			isa = PBXGroup;
+			children = (
+				255C7DE31D90211E0098F09D /* TFRCTNavigator.h */,
+				255C7DE41D9022330098F09D /* TFRCTNavigator.m */,
+				255C7DE61D9054340098F09D /* TFRCTNavigatorManager.h */,
+				255C7DE71D9054430098F09D /* TFRCTNavigatorManager.m */,
+				255C7DE91D905C1F0098F09D /* TFRCTWrapperViewController.h */,
+				255C7DEB1D905C540098F09D /* TFRCTWrapperViewController.m */,
+				255C7DED1D9121E90098F09D /* TFRCTNavItem.h */,
+				255C7DEE1D9122250098F09D /* TFRCTNavItem.m */,
+				255C7DF01D91225B0098F09D /* TFRCTNavItemManager.h */,
+				255C7DF11D91227F0098F09D /* TFRCTNavItemManager.m */,
+				255C7DF31D9180920098F09D /* TFRCTAction.h */,
+				255C7DF41D9181BA0098F09D /* TFRCTAction.m */,
+			);
+			name = TFNavigator;
 			sourceTree = "<group>";
 		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
@@ -756,6 +798,7 @@
 				255C7D9E1D8D4E370098F09D /* colors.txt in Resources */,
 				255C7D951D8D4E050098F09D /* 01_dejavusans.ttf in Resources */,
 				255C7DA21D8D4E510098F09D /* countries.txt in Resources */,
+				255C7DEA1D905C1F0098F09D /* TFRCTWrapperViewController.h in Resources */,
 				255C7DA11D8D4E420098F09D /* countries-strings in Resources */,
 				255C7D981D8D4E220098F09D /* 04_padauk.ttf in Resources */,
 				255C7DA61D8D4E600098F09D /* drules_proto_dark.bin in Resources */,
@@ -850,11 +893,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				255C7DE51D9022330098F09D /* TFRCTNavigator.m in Sources */,
+				255C7DD71D8FE3330098F09D /* NavBarManager.m in Sources */,
+				255C7DE81D9054430098F09D /* TFRCTNavigatorManager.m in Sources */,
 				255C7D0A1D8C7A8E0098F09D /* TestView.m in Sources */,
 				255C7D281D8D2F7E0098F09D /* iosOGLContextFactory.mm in Sources */,
 				255C7D271D8D2F7E0098F09D /* iosOGLContext.mm in Sources */,
 				255C7D161D8D2AF30098F09D /* MWMMapWidgets.mm in Sources */,
 				255C7D131D8D2ABF0098F09D /* Framework.mm in Sources */,
+				255C7DF51D9181BA0098F09D /* TFRCTAction.m in Sources */,
+				255C7DF21D91227F0098F09D /* TFRCTNavItemManager.m in Sources */,
+				255C7DEC1D905C540098F09D /* TFRCTWrapperViewController.m in Sources */,
+				255C7DEF1D9122250098F09D /* TFRCTNavItem.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				255C7D0F1D8D2A860098F09D /* EAGLView.mm in Sources */,
 				255C7D1A1D8D2B6F0098F09D /* MWMMapView.mm in Sources */,
@@ -935,6 +985,7 @@
 					../../,
 					../../3party/boost,
 					../../3party/glm,
+					"$(SRCROOT)/../node_modules/react-native/Libraries/Image",
 				);
 				INFOPLIST_FILE = Tripfinger/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1006,6 +1057,7 @@
 					../../,
 					../../3party/boost,
 					../../3party/glm,
+					"$(SRCROOT)/../node_modules/react-native/Libraries/Image",
 				);
 				INFOPLIST_FILE = Tripfinger/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

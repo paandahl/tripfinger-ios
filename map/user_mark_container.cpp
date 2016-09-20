@@ -151,9 +151,7 @@ void UserMarkContainer::ReleaseController()
 
 size_t UserMarkContainer::GetUserPointCount() const
 {
-  LOG(LINFO, ("COUNT:", m_userMarks.size()));
   return m_userMarks.size();
-//  return 1;
 }
 
 df::UserPointMark const * UserMarkContainer::GetUserPointMark(size_t index) const
