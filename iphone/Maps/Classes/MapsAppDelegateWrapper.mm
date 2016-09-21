@@ -85,9 +85,6 @@
     bookmarkMap[coord] = bookmarkData;
   }
   f.SetBookmarks(bookmarkMap);
-//  BookmarkData bmData();
-//  size_t const categoryIndex = f.LastEditedBMCategory();
-//  size_t const bookmarkIndex = f.GetBookmarkManager().AddBookmark(categoryIndex, self.entity.mercator, bmData);
 }
 
 @end

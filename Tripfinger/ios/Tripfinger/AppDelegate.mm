@@ -56,4 +56,25 @@
   return YES;
 }
 
++ (void)setBookmarks:(NSArray*)bookmarks {
+  Framework & f = GetFramework();
+  map<m2::PointD, BookmarkData> bookmarkMap;
+  for (NSDictionary *bookmark in bookmarks) {
+    NSNumber * latitude = bookmark[@"latitude"];
+    NSNumber * longitude = bookmark[@"longitude"];
+    NSString * databaseKey = bookmark[@"databaseKey"];
+    NSString * name = bookmark[@"name"];
+    NSString * notes = bookmark[@"notes"];
+    
+    m2::PointD coord = MercatorBounds::FromLatLon(latitude.doubleValue, longitude.doubleValue);
+    BookmarkData bookmarkData([name UTF8String], f.GetBookmarkManager().LastEditedBMType(), "");
+    bookmarkData.SetDatabaseKey([databaseKey UTF8String]);
+    if (notes != nil) {
+      bookmarkData.SetDescription([notes UTF8String]);
+    }
+    bookmarkMap[coord] = bookmarkData;
+  }
+  f.SetBookmarks(bookmarkMap);
+}
+
 @end

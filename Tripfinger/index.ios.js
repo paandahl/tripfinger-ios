@@ -1,10 +1,14 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
+  NativeModules,
   StyleSheet
 } from 'react-native';
 import TFNavigator from './components/TFNavigator'
 import CountriesScene from './scenes/CountriesScene'
+
+const BookmarkService = NativeModules.BookmarkService;
+BookmarkService.initializeFirebase();
 
 class Tripfinger extends Component {
 

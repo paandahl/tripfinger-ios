@@ -13,4 +13,6 @@
 
 @property (nonatomic, strong) UIWindow *window;
 
++ (void)setBookmarks:(NSArray*)bookmarks;
+
 @end

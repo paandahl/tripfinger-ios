@@ -1,0 +1,14 @@
+# Uncomment this line to define a global platform for your project
+platform :ios, '8.0'
+use_frameworks!
+
+target 'Tripfinger' do
+  pod 'Firebase'
+  pod 'Firebase/Crash'
+  pod 'Firebase/Auth'
+  pod 'Firebase/Database'
+  target 'TripfingerTests' do
+    inherit! :search_paths
+    pod 'Firebase'
+  end
+end
