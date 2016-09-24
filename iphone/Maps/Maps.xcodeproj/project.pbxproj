@@ -15,6 +15,7 @@
 		2502337D1CD36896005F9943 /* DetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2502337C1CD36896005F9943 /* DetailController.swift */; };
 		2502337F1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2502337E1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm */; };
 		2510A3F91CE8E7AD00E3B654 /* DownloadMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2510A3F81CE8E7AC00E3B654 /* DownloadMarker.swift */; };
+		251696DC1D96E7DF005FA5EE /* run-script-for-target.sh in Resources */ = {isa = PBXBuildFile; fileRef = 251696DB1D96E7DF005FA5EE /* run-script-for-target.sh */; };
 		251B291B1CE5AFD100B454C3 /* DataConverter.mm in Sources */ = {isa = PBXBuildFile; fileRef = 251B291A1CE5AFD100B454C3 /* DataConverter.mm */; };
 		25401ED21D23AC32002E4A34 /* LogUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25401ED11D23AC32002E4A34 /* LogUtils.swift */; };
 		255265EC1D743E5800B0A5C0 /* SettingsDropdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 255265EB1D743E5800B0A5C0 /* SettingsDropdown.swift */; };
@@ -942,6 +943,7 @@
 		2502337E1CD36BEE005F9943 /* MWMiPhoneFullscreenPlacePage.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMiPhoneFullscreenPlacePage.mm; sourceTree = "<group>"; };
 		250233801CD36C00005F9943 /* MWMiPhoneFullscreenPlacePage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMiPhoneFullscreenPlacePage.h; sourceTree = "<group>"; };
 		2510A3F81CE8E7AC00E3B654 /* DownloadMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadMarker.swift; sourceTree = "<group>"; };
+		251696DB1D96E7DF005FA5EE /* run-script-for-target.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "run-script-for-target.sh"; sourceTree = "<group>"; };
 		251B291A1CE5AFD100B454C3 /* DataConverter.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = DataConverter.mm; sourceTree = "<group>"; };
 		251B291C1CE5AFE700B454C3 /* DataConverter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DataConverter.h; sourceTree = "<group>"; };
 		25401ED11D23AC32002E4A34 /* LogUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogUtils.swift; sourceTree = "<group>"; };
@@ -2158,6 +2160,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
+				251696DB1D96E7DF005FA5EE /* run-script-for-target.sh */,
 				28A0AB4B0D9B1048005BE974 /* Maps_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.mm */,
 			);
@@ -3811,6 +3814,7 @@
 				F64F4B6F1B46A5380081A24A /* MWMDownloaderDialogCell.xib in Resources */,
 				3485C0131B85C20E00F7712D /* MWMSearchTableViewController.xib in Resources */,
 				F6ED13931B1EFA2F0095C6DE /* MWMBookmarkDescriptionViewController.xib in Resources */,
+				251696DC1D96E7DF005FA5EE /* run-script-for-target.sh in Resources */,
 				4A23D15E1B8B4DD700D4EB6F /* resources-xhdpi_clear in Resources */,
 				F64F199A1AB81A00006EAF7E /* MWMAlertViewController.xib in Resources */,
 				F6588E331B15D73100EE1E58 /* MWMBookmarkColorViewController.xib in Resources */,

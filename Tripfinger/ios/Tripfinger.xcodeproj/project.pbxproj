@@ -951,14 +951,14 @@
 		};
 		255C7D2D1D8D37FF0098F09D /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "./run-script-for-target.sh";
 		};
@@ -1143,6 +1143,19 @@
 				ENABLE_BITCODE = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_FAST_MATH = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					OMIM_PRODUCTION,
+					RELEASE,
+					_RELEASE,
+					NDEBUG,
+					TARGET_OS_IPHONE,
+					"NS_BLOCK_ASSERTIONS=1",
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*]" = (
+					TARGET_OS_IPHONE,
+					DEBUG,
+					_DEBUG,
+				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
@@ -1154,11 +1167,10 @@
 				);
 				INFOPLIST_FILE = Tripfinger/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../omim-iphone-debug-$(CURRENT_ARCH)/out/debug\"";
-				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "\"$(SRCROOT)/../../../omim-iphone-release-$(CURRENT_ARCH)/out/debug\"";
-				MWM_BUILD_PROFILE = "";
-				"MWM_BUILD_PROFILE[sdk=iphoneos*]" = "debug-device";
-				"MWM_BUILD_PROFILE[sdk=iphonesimulator*]" = "debug-simulator";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../omim-iphone-release-$(CURRENT_ARCH)/out/release\"";
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "\"$(SRCROOT)/../../../omim-iphone-debug-$(CURRENT_ARCH)/out/debug\"";
+				MWM_BUILD_PROFILE = release;
+				"MWM_BUILD_PROFILE[sdk=iphonesimulator*]" = simulator;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wall",
@@ -1214,7 +1226,19 @@
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_FAST_MATH = YES;
 				GCC_OPTIMIZATION_LEVEL = s;
-				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=0";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					OMIM_PRODUCTION,
+					RELEASE,
+					_RELEASE,
+					NDEBUG,
+					TARGET_OS_IPHONE,
+					"NS_BLOCK_ASSERTIONS=1",
+				);
+				"GCC_PREPROCESSOR_DEFINITIONS[sdk=iphonesimulator*]" = (
+					TARGET_OS_IPHONE,
+					DEBUG,
+					_DEBUG,
+				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1227,11 +1251,10 @@
 				);
 				INFOPLIST_FILE = Tripfinger/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../omim-iphone-production-$(CURRENT_ARCH)/out/debug\"";
-				"LIBRARY_SEARCH_PATHS[sdk=iphoneos*]" = "\"$(SRCROOT)/../../../omim-iphone-release-$(CURRENT_ARCH)/out/debug\"";
-				MWM_BUILD_PROFILE = Production;
-				"MWM_BUILD_PROFILE[sdk=iphoneos*]" = "production-device";
-				"MWM_BUILD_PROFILE[sdk=iphonesimulator*]" = "production-simulator";
+				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../omim-iphone-release-$(CURRENT_ARCH)/out/release\"";
+				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "\"$(SRCROOT)/../../../omim-iphone-debug-$(CURRENT_ARCH)/out/debug\"";
+				MWM_BUILD_PROFILE = release;
+				"MWM_BUILD_PROFILE[sdk=iphonesimulator*]" = simulator;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-Wall",

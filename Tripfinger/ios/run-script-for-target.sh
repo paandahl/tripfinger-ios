@@ -5,25 +5,7 @@
 echo "Running C++ MWM build pipeline with build profile:"
 echo $MWM_BUILD_PROFILE
 LOWERED_CONFIG=`echo $MWM_BUILD_PROFILE | tr [A-Z] [a-z]`
-CONF="simulator"
 DRAPE_CONF="old_renderer"
-if [[ "$LOWERED_CONFIG" == *production* || "$LOWERED_CONFIG" == *adhoc* ]]; then
-  CONF="production"
-elif [[ "$LOWERED_CONFIG" == *debug* ]]; then
-  if [[ "$LOWERED_CONFIG" == *simulator* ]]; then
-    CONF="simulator-debug"
-  else
-    CONF="debug"
-  fi
-elif [[ "$LOWERED_CONFIG" == *release* ]]; then
-  if [[ "$LOWERED_CONFIG" == *simulator* ]]; then
-    CONF="simulator-release"
-  else
-    CONF="release"
-  fi
-fi
-echo "Build profile was translated into internal configuration:"
-echo $CONF
 
 if [[ "$LOWERED_CONFIG" == *drape* ]]; then
   echo "Drape renderer building"
@@ -38,4 +20,4 @@ if [[ "$ONLY_ACTIVE_ARCH" == YES ]]; then
 fi
 
 echo "Building $CONF configuration"
-bash "$SRCROOT/../../tools/autobuild/ios.sh" $CONF $DRAPE_CONF
+bash "$SRCROOT/../../tools/autobuild/ios.sh" $MWM_BUILD_PROFILE $DRAPE_CONF
