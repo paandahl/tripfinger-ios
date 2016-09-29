@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,9 +25,6 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
-
-import java.io.Serializable;
-import java.util.Stack;
 
 import com.mapswithme.maps.Framework.MapObjectListener;
 import com.mapswithme.maps.activity.CustomNavigateUpListener;
@@ -88,20 +86,26 @@ import com.mapswithme.util.sharing.SharingHelper;
 import com.mapswithme.util.statistics.AlohaHelper;
 import com.mapswithme.util.statistics.MytargetHelper;
 import com.mapswithme.util.statistics.Statistics;
+
+import java.io.Serializable;
+import java.util.Stack;
+
 import ru.mail.android.mytarget.nativeads.NativeAppwallAd;
 import ru.mail.android.mytarget.nativeads.banners.NativeAppwallBanner;
 
 public class MwmActivity extends BaseMwmFragmentActivity
-                      implements LocationHelper.LocationListener,
-                                 MapObjectListener,
-                                 View.OnTouchListener,
-                                 BasePlacePageAnimationController.OnVisibilityChangedListener,
-                                 OnClickListener,
-                                 MapFragment.MapRenderingListener,
-                                 CustomNavigateUpListener,
-                                 ChooseBookmarkCategoryFragment.Listener,
-                                 RoutingController.Container
+    implements LocationHelper.LocationListener,
+    MapObjectListener,
+    Framework.PoiSupplier,
+    View.OnTouchListener,
+    BasePlacePageAnimationController.OnVisibilityChangedListener,
+    OnClickListener,
+    MapFragment.MapRenderingListener,
+    CustomNavigateUpListener,
+    ChooseBookmarkCategoryFragment.Listener,
+    RoutingController.Container
 {
+  private static final String TAG = MWMActivity.class.getSimpleName();
   public static final String EXTRA_TASK = "map_task";
   private static final String EXTRA_CONSUMED = "mwm.extra.intent.processed";
   private static final String EXTRA_UPDATE_COUNTRIES = ".extra.update.countries";
@@ -147,6 +151,11 @@ public class MwmActivity extends BaseMwmFragmentActivity
   private LocationPredictor mLocationPredictor;
   private FloatingSearchToolbarController mSearchController;
   private LastCompassData mLastCompassData;
+
+  @Override
+  public void poiSupplier() {
+    Log.d(TAG, "poiSupplier was called!");
+  }
 
   public interface LeftAnimationTrackListener
   {
@@ -358,6 +367,7 @@ public class MwmActivity extends BaseMwmFragmentActivity
     Statistics.INSTANCE.trackConnectionState();
 
     Framework.nativeSetMapObjectListener(this);
+    Framework.nativeSetPoiSupplier(this);
 
     mSearchController = new FloatingSearchToolbarController(this);
     mLocationPredictor = new LocationPredictor(new Handler(), this);

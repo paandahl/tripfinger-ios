@@ -17,6 +17,10 @@ export default class CountriesScene extends Component {
     navigator: PropTypes.object.isRequired
   };
 
+  static title() {
+    return "Countries";
+  }
+
   static rightButtonActions() {
     return [
       {action: MAP_ACTION, res: resolveAssetSource(require('../assets/maps_icon.png'))},
@@ -61,6 +65,10 @@ export default class CountriesScene extends Component {
     NavBarManager.toggleNavBarHidden();
   }
 
+  componentWillUpdate() {
+    console.log("CountriesScene will updatesz");
+  }
+
   render() {
     let settings;
     if (this.state.displaySettings) {
@@ -74,7 +82,7 @@ export default class CountriesScene extends Component {
       <View style={styles.container}>
         {settings}
         <Text style={styles.welcome}>
-          Welcome to React!
+          Welcome, Naya!
         </Text>
         <TouchableHighlight style={styles.mapButton} underlayColor="#AAA"
           onPress={() => this.hideNavBar()}>

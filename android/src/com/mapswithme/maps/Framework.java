@@ -31,6 +31,10 @@ public class Framework
     void onDismiss(boolean switchFullScreenMode);
   }
 
+  public interface PoiSupplier {
+    void poiSupplier();
+  }
+
   @SuppressWarnings("unused")
   public interface RoutingListener
   {
@@ -82,6 +86,8 @@ public class Framework
   public static native String nativeGetNameAndAddress(double lat, double lon);
 
   public static native void nativeSetMapObjectListener(MapObjectListener listener);
+
+  public static native void nativeSetPoiSupplier(PoiSupplier supplier);
 
   public static native void nativeRemoveMapObjectListener();
 

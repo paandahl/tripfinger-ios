@@ -2,6 +2,10 @@
 
 syntax: glob
 *~
+.externalNativeBuild
+*.xcworkspace
+gradle-wrapper.jar
+
 .DS_Store
 Makefile
 Makefile.Debug

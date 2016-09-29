@@ -45,6 +45,7 @@ namespace
 }
 
 jobject g_mapObjectListener;
+jobject g_poiSupplier;
 }  // namespace
 
 namespace android
@@ -507,6 +508,25 @@ Java_com_mapswithme_maps_Framework_nativeSetMapObjectListener(JNIEnv * env, jcla
     JNIEnv * env = jni::GetEnv();
     g_framework->SetPlacePageInfo({});
     env->CallVoidMethod(g_mapObjectListener, dismissId, switchFullScreenMode);
+  });
+}
+
+JNIEXPORT void JNICALL
+Java_com_mapswithme_maps_Framework_nativeSetPoiSupplier(JNIEnv * env, jclass clazz, jobject jSupplier)
+{
+  LOG(LINFO, ("Setting tha poiSupplierz", ""));
+  g_poiSupplier = env->NewGlobalRef(jSupplier);
+  // void poiSupplier();
+  jmethodID const supplierId = jni::GetMethodID(env, g_poiSupplier, "poiSupplier", "()V");
+  frm()->SetPoiSupplierFunction([supplierId](TripfingerMarkParams& params) {
+    JNIEnv * env = jni::GetEnv();
+    env->CallVoidMethod(g_poiSupplier, supplierId);
+
+    vector<TripfingerMark> tripfingerVector;
+    return tripfingerVector;
+  });
+  frm()->SetCoordinateCheckerFunction([](ms::LatLon latlon) {
+    return false;
   });
 }
 

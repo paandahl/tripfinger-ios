@@ -1,0 +1,17 @@
+**/.deps/
+
+protobuf.pc
+config.log
+config.status
+gtest/build-aux/config.h
+gtest/build-aux/stamp-h1
+gtest/config.log
+gtest/config.status
+gtest/libtool
+gtest/scripts/gtest-config
+libtool
+protobuf-lite.pc
+python/google/protobuf/compiler/
+python/build/
+python/dist/
+stamp-h1

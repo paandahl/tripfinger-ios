@@ -19,8 +19,7 @@ class Tripfinger extends Component {
       tintColor="#FFF"
       titleTextColor="#FFF"
       initialRoute={{
-        component: CountriesScene,
-        title: 'Countries'
+        component: CountriesScene
       }}
       style={styles.navigator}
     />

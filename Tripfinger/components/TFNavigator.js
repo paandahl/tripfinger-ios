@@ -55,7 +55,6 @@ class NavigatorTransitionerIOS extends React.Component {
 
 type Route = {
   component: Function,
-  title: string,
   titleImage?: Object,
   passProps?: Object,
   backButtonTitle?: string,
@@ -295,12 +294,6 @@ var TFNavigator = React.createClass({
        * The React Class to render for this route
        */
       component: PropTypes.func.isRequired,
-
-      /**
-       * The title displayed in the navigation bar and the back button for this
-       * route.
-       */
-      title: PropTypes.string.isRequired,
 
       /**
        * If set, a title image will appear instead of the text title.
@@ -820,12 +813,17 @@ var TFNavigator = React.createClass({
     var Component = component;
     var rightButtonActions = [];
     if (Component.rightButtonActions) {
-      var rightButtonActions = Component.rightButtonActions();
+      rightButtonActions = Component.rightButtonActions();
+    }
+    var title = "";
+    if (Component.title) {
+      title = Component.title();
     }
     return (
       <StaticContainer key={'nav' + i} shouldUpdate={shouldUpdateChild}>
         <TFRCTNavigatorItem
           rightButtonActions={rightButtonActions}
+          title={title}
           {...props}
           {...route}
           onRightButtonPress={(ev) => {

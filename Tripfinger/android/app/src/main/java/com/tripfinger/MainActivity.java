@@ -1,8 +1,12 @@
 package com.tripfinger;
 
-import com.facebook.react.ReactActivity;
+import android.os.Bundle;
+import android.util.Log;
 
-public class MainActivity extends ReactActivity {
+import com.facebook.react.ReactActivity;
+import com.tripfinger.map.Framework;
+
+public class MainActivity extends ReactActivity implements Framework.PoiSupplier {
 
     /**
      * Returns the name of the main component registered from JavaScript.
@@ -12,4 +16,22 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "Tripfinger";
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        MainApplication.get().initNativeCore();
+        Framework.nativeSetPoiSupplier(this);
+
+        // Example of a call to a native method
+//    TextView tv = (TextView) findViewById(R.id.sample_text);
+//    tv.setText(stringFromJNI());
+    }
+
+    @Override
+    public void poiSupplier() {
+        Log.e("FACK", "poiSupplier was called, aight!");
+    }
+
 }

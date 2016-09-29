@@ -28,7 +28,7 @@ fi
 if [[ $# > 1 ]] ; then
   NDK_ABI_LIST=$2
 else
-  NDK_ABI_LIST=(armeabi-v7a-hard x86)
+  NDK_ABI_LIST=(armeabi-v7a x86)
 fi
 
 
