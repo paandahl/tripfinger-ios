@@ -1,6 +1,8 @@
 #import <Foundation/Foundation.h>
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <netinet/in.h>
+#import "RCTBridgeModule.h"
+
 
 
 typedef enum : NSInteger {
@@ -16,7 +18,7 @@ typedef enum : NSInteger {
 extern NSString *kReachabilityChangedNotification;
 
 
-@interface Reachability : NSObject
+@interface Reachability : NSObject <RCTBridgeModule>
 
 + (BOOL)isOnline;
 

@@ -96,6 +96,8 @@
 		255C7DFA1D91BD2D0098F09D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 255C7DF91D91BD2D0098F09D /* Podfile */; };
 		255C7E061D91C02E0098F09D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 255C7E051D91C02E0098F09D /* GoogleService-Info.plist */; };
 		255C7E141D91C80A0098F09D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 255C7E131D91C80A0098F09D /* Reachability.m */; };
+		25AABCA21D9E756000178E0B /* FSComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AABCA11D9E756000178E0B /* FSComponent.m */; };
+		25AABCA61D9E76D700178E0B /* NetworkComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AABCA51D9E76D700178E0B /* NetworkComponent.m */; };
 		30D99DD979D7CF9743AB4D09 /* Pods_TripfingerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC79B1CC2C0A6FCBD028B9B /* Pods_TripfingerTests.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		D02FBC34DC9C9958C1E2A5B3 /* Pods_Tripfinger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB339040E75BB56D22749A18 /* Pods_Tripfinger.framework */; };
@@ -291,6 +293,9 @@
 		255C7E051D91C02E0098F09D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		255C7E121D91C7EA0098F09D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		255C7E131D91C80A0098F09D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		25AABCA11D9E756000178E0B /* FSComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSComponent.m; sourceTree = "<group>"; };
+		25AABCA41D9E76C800178E0B /* NetworkComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkComponent.h; sourceTree = "<group>"; };
+		25AABCA51D9E76D700178E0B /* NetworkComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkComponent.m; sourceTree = "<group>"; };
 		6BE16475EC68D76BB863E147 /* Pods-Tripfinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.release.xcconfig"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -420,6 +425,8 @@
 				13B07FB71A68108700A75B9A /* main.m */,
 				255C7D091D8C7A8E0098F09D /* TestView.m */,
 				255C7DF61D91B9360098F09D /* Bookmarks */,
+				25AABC961D9E753B00178E0B /* FSComponent */,
+				25AABCA31D9E76A900178E0B /* NetworkComponent */,
 				255C7D0C1D8D2A430098F09D /* MapsComponent */,
 				255C7DE21D9020E80098F09D /* TFNavigator */,
 				255C7DCA1D8F07070098F09D /* UIImage+initWithColor.h */,
@@ -570,6 +577,23 @@
 				255C7E131D91C80A0098F09D /* Reachability.m */,
 			);
 			name = Reachability;
+			sourceTree = "<group>";
+		};
+		25AABC961D9E753B00178E0B /* FSComponent */ = {
+			isa = PBXGroup;
+			children = (
+				25AABCA11D9E756000178E0B /* FSComponent.m */,
+			);
+			name = FSComponent;
+			sourceTree = "<group>";
+		};
+		25AABCA31D9E76A900178E0B /* NetworkComponent */ = {
+			isa = PBXGroup;
+			children = (
+				25AABCA41D9E76C800178E0B /* NetworkComponent.h */,
+				25AABCA51D9E76D700178E0B /* NetworkComponent.m */,
+			);
+			name = NetworkComponent;
 			sourceTree = "<group>";
 		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
@@ -1053,6 +1077,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				25AABCA21D9E756000178E0B /* FSComponent.m in Sources */,
 				255C7DE51D9022330098F09D /* TFRCTNavigator.m in Sources */,
 				255C7DF81D91B95C0098F09D /* BookmarkService.m in Sources */,
 				255C7DD71D8FE3330098F09D /* NavBarManager.m in Sources */,
@@ -1061,6 +1086,7 @@
 				255C7D281D8D2F7E0098F09D /* iosOGLContextFactory.mm in Sources */,
 				255C7D271D8D2F7E0098F09D /* iosOGLContext.mm in Sources */,
 				255C7D161D8D2AF30098F09D /* MWMMapWidgets.mm in Sources */,
+				25AABCA61D9E76D700178E0B /* NetworkComponent.m in Sources */,
 				255C7D131D8D2ABF0098F09D /* Framework.mm in Sources */,
 				255C7DF51D9181BA0098F09D /* TFRCTAction.m in Sources */,
 				255C7DF21D91227F0098F09D /* TFRCTNavItemManager.m in Sources */,
@@ -1166,6 +1192,7 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/Image",
 				);
 				INFOPLIST_FILE = Tripfinger/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../omim-iphone-release-$(CURRENT_ARCH)/out/release\"";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "\"$(SRCROOT)/../../../omim-iphone-debug-$(CURRENT_ARCH)/out/debug\"";
@@ -1250,6 +1277,7 @@
 					"$(SRCROOT)/../node_modules/react-native/Libraries/Image",
 				);
 				INFOPLIST_FILE = Tripfinger/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = "\"$(SRCROOT)/../../../omim-iphone-release-$(CURRENT_ARCH)/out/release\"";
 				"LIBRARY_SEARCH_PATHS[sdk=iphonesimulator*]" = "\"$(SRCROOT)/../../../omim-iphone-debug-$(CURRENT_ARCH)/out/debug\"";

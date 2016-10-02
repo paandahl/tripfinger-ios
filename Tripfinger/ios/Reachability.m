@@ -59,6 +59,16 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
   SCNetworkReachabilityRef _reachabilityRef;
 }
 
+RCT_EXPORT_MODULE();
+
+RCT_REMAP_METHOD(isOnline,
+                 resolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+  BOOL isOnline = [Reachability isOnline];
+  resolve([NSNumber numberWithBool:isOnline]);
+}
+
 + (BOOL)isOnline
 {
   Reachability *networkReachability = [Reachability reachabilityForInternetConnection];

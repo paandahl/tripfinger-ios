@@ -1,4 +1,3 @@
-import { requireNativeComponent } from 'react-native';
+import ReactNative from 'react-native';
 
-// requireNativeComponent automatically resolves this to "MWMMApViewManager"
-module.exports = requireNativeComponent('MWMMapView', null);
+export default ReactNative.requireNativeComponent('MWMMapView', null);

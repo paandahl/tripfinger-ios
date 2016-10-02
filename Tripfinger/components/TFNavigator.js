@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Copyright (c) 2015-present, Facebook, Inc.
  * All rights reserved.
@@ -28,7 +29,6 @@ var requireNativeComponent = require('requireNativeComponent');
 
 var TRANSITIONER_REF = 'transitionerRef';
 var NAVIGATOR_ITEM_REF = 'navigatorItemRef';
-var COMPONENT_REF = 'componentRef';
 
 var PropTypes = React.PropTypes;
 
@@ -39,6 +39,7 @@ function getuid() {
 
 class NavigatorTransitionerIOS extends React.Component {
   requestSchedulingNavigation = (cb) => {
+    //noinspection JSUnresolvedFunction
     TFRCTNavigatorManager.requestSchedulingJavaScriptNavigation(
       ReactNative.findNodeHandle(this),
       logError,
@@ -94,6 +95,7 @@ type Event = Object;
  * (after the pop of a child has been fully completed/animated out).
  */
 
+//noinspection JSUnusedGlobalSymbols
 /**
  * `NavigatorIOS` is a wrapper around
  * [`UINavigationController`](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UINavigationController_Class/),
@@ -814,10 +816,13 @@ var TFNavigator = React.createClass({
     var rightButtonActions = [];
     if (Component.rightButtonActions) {
       rightButtonActions = Component.rightButtonActions();
+      for (let rightButtonAction of rightButtonActions) {
+        rightButtonAction.res = resolveAssetSource(rightButtonAction.res);
+      }
     }
     var title = "";
     if (Component.title) {
-      title = Component.title();
+      title = Component.title(passProps);
     }
     return (
       <StaticContainer key={'nav' + i} shouldUpdate={shouldUpdateChild}>
