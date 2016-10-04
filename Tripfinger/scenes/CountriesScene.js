@@ -88,9 +88,6 @@ export default class CountriesScene extends Component {
     if (isConnected) {
       try {
         const countries = await getCountries();
-        for (const country of countries) {
-          country.loadStatus = 'CHILDREN_NOT_LOADED';
-        }
         this.setState({
           dataSource: this.makeCountryLists(countries),
         });

@@ -11,14 +11,14 @@ class CountryListController: TableController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    navigationItem.title = "Countries"
-    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: #selector(navigateToMap))
-    mapButton.accessibilityLabel = "Map"
-    let settingsButton = SettingsButton(parent: self, navigateToSearch: navigateToSearch)
-    let spacer = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
-    spacer.width = 10;
-    navigationItem.rightBarButtonItems = [settingsButton, spacer, mapButton]
-    self.settingsButton = settingsButton
+//    navigationItem.title = "Countries"
+//    let mapButton = UIBarButtonItem(image: UIImage(named: "maps_icon")?.imageWithRenderingMode(.AlwaysTemplate), style: .Plain, target: self, action: #selector(navigateToMap))
+//    mapButton.accessibilityLabel = "Map"
+//    let settingsButton = SettingsButton(parent: self, navigateToSearch: navigateToSearch)
+//    let spacer = UIBarButtonItem(barButtonSystemItem: .FixedSpace, target: nil, action: nil)
+//    spacer.width = 10;
+//    navigationItem.rightBarButtonItems = [settingsButton, spacer, mapButton]
+//    self.settingsButton = settingsButton
 
     if TripfingerAppDelegate.mode != TripfingerAppDelegate.AppMode.TEST {
       refreshControl.addTarget(self, action: #selector(loadCountryLists), forControlEvents: .ValueChanged)
@@ -123,47 +123,47 @@ class CountryListController: TableController {
   }
   
   func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    let tableSection = tableSections[section]
-    guard tableSection.cellIdentifier == TableCellIdentifiers.rightDetailCell else {
-      return nil
-    }
-    let title = tableSections[section].title
-    let view = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 160))
-    let libPath = NSURL.getImageDirectory()
-    let imagePath = libPath.URLByAppendingPathComponent(title! + ".jpeg")
-    let image = UIImageView(frame: CGRectMake(0, 0, tableView.frame.size.width, 150))
-    image.contentMode = .ScaleAspectFill
-    image.clipsToBounds = true
-    view.addSubview(image)
-    if NSURL.fileExists(imagePath) {
-      image.image = UIImage(data: NSData(contentsOfURL: imagePath)!)
-    } else {
-      let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-      indicator.startAnimating()
-      indicator.center = image.center
-      image.addSubview(indicator)
-      if !worldAreaImageSet.contains(title!) {
-        worldAreaImageSet.insert(title!)
-        var imageUrl = DownloadService.gcsImagesUrl + title! + ".jpeg"
-        imageUrl = imageUrl.stringByReplacingOccurrencesOfString(" ", withString: "%20")
-        NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: imagePath, failure: {}) {
-          dispatch_async(dispatch_get_main_queue()) {
-            indicator.removeFromSuperview()
-            tableView.reloadData()
-          }
-        }
-      }
-    }
-    let label = UILabel(frame: CGRectMake(10, 120, tableView.frame.size.width, 18))
-    label.font = UIFont.boldSystemFontOfSize(18)
-    label.textColor = UIColor.lightGrayColor()
-    label.shadowColor = UIColor.blackColor()
-    label.shadowOffset = CGSizeMake(0, 1)
-    label.layer.shadowOpacity = 0.5
-    let string = tableSections[section].title
-    label.text = string
-    view.addSubview(label)
-    return view;
+//    let tableSection = tableSections[section]
+//    guard tableSection.cellIdentifier == TableCellIdentifiers.rightDetailCell else {
+//      return nil
+//    }
+//    let title = tableSections[section].title
+//    let view = UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 160))
+//    let libPath = NSURL.getImageDirectory()
+//    let imagePath = libPath.URLByAppendingPathComponent(title! + ".jpeg")
+//    let image = UIImageView(frame: CGRectMake(0, 0, tableView.frame.size.width, 150))
+//    image.contentMode = .ScaleAspectFill
+//    image.clipsToBounds = true
+//    view.addSubview(image)
+//    if NSURL.fileExists(imagePath) {
+//      image.image = UIImage(data: NSData(contentsOfURL: imagePath)!)
+//    } else {
+//      let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+//      indicator.startAnimating()
+//      indicator.center = image.center
+//      image.addSubview(indicator)
+//      if !worldAreaImageSet.contains(title!) {
+//        worldAreaImageSet.insert(title!)
+//        var imageUrl = DownloadService.gcsImagesUrl + title! + ".jpeg"
+//        imageUrl = imageUrl.stringByReplacingOccurrencesOfString(" ", withString: "%20")
+//        NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: imagePath, failure: {}) {
+//          dispatch_async(dispatch_get_main_queue()) {
+//            indicator.removeFromSuperview()
+//            tableView.reloadData()
+//          }
+//        }
+//      }
+//    }
+//    let label = UILabel(frame: CGRectMake(10, 120, tableView.frame.size.width, 18))
+//    label.font = UIFont.boldSystemFontOfSize(18)
+//    label.textColor = UIColor.lightGrayColor()
+//    label.shadowColor = UIColor.blackColor()
+//    label.shadowOffset = CGSizeMake(0, 1)
+//    label.layer.shadowOpacity = 0.5
+//    let string = tableSections[section].title
+//    label.text = string
+//    view.addSubview(label)
+//    return view;
   }
   
   func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

@@ -104,18 +104,18 @@ class ContentService {
   }
 
   class func getRegionWithSlug(slug: String, failure: () -> (), handler: Region -> ()) {
-    if let region = DatabaseService.getRegionWithSlug(slug) {
-      handler(region)
-      return
-    }
-    let parameters: [String: String] = ["slug": "true"]
-    let url = TripfingerAppDelegate.serverUrl + "/regions/\(slug)"
-    NetworkUtil.getJsonFromUrl(url, parameters: parameters, failure: failure) { json in
-      let region = JsonParserService.parseRegion(json)
-      dispatch_async(dispatch_get_main_queue()) {
-        handler(region)
-      }
-    }
+//    if let region = DatabaseService.getRegionWithSlug(slug) {
+//      handler(region)
+//      return
+//    }
+//    let parameters: [String: String] = ["slug": "true"]
+//    let url = TripfingerAppDelegate.serverUrl + "/regions/\(slug)"
+//    NetworkUtil.getJsonFromUrl(url, parameters: parameters, failure: failure) { json in
+//      let region = JsonParserService.parseRegion(json)
+//      dispatch_async(dispatch_get_main_queue()) {
+//        handler(region)
+//      }
+//    }
   }
 
   class func getRegionWithId(regionId: String, failure: () -> (), handler: Region -> ()) {

@@ -1,5 +1,4 @@
 #import <UIKit/UIKit.h>
-#import "RCTViewManager.h"
 #import "Framework.h"
 #import "MWMMapView.h"
 
@@ -29,6 +28,17 @@
 - (void)initializeFramework
 {
   Framework & f = GetFramework();
+  
+  f.SetMapSelectionListeners([self](place_page::Info const & info) {
+    self.onMapObjectSelected(@{
+                               @"info": @{
+                                   @"title": @(info.GetTitle().c_str()),
+                                   @"address": @(info.GetAddress().c_str()),
+                                   },
+                               });
+  }, [self](bool switchFullScreen) {
+    self.onMapObjectDeselected(@{@"switchFullScreen": switchFullScreen ? @"true" : @"false"});
+  });
   
   f.SetPoiSupplierFunction([self](TripfingerMarkParams& params) {
     return [self poiSupplier:params];
@@ -171,6 +181,9 @@
 @implementation MWMMapViewManager
 
 RCT_EXPORT_MODULE()
+
+RCT_EXPORT_VIEW_PROPERTY(onMapObjectSelected, RCTBubblingEventBlock)
+RCT_EXPORT_VIEW_PROPERTY(onMapObjectDeselected, RCTBubblingEventBlock)
 
 - (UIView *)view
 {

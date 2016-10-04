@@ -10,11 +10,38 @@ const View = ReactNative.View;
 
 export default class MapScene extends Component {
 
+  onMapObjectSelected = (switchFullScreen) => {
+    console.log('Objektet vart da selektert.');
+    console.log(switchFullScreen);
+    // self.controlsManager.hidden = NO;
+    // if (info.GetID().IsTripfinger()) {
+    //   TripfingerMark mark = *info.GetID().tripfingerMark;
+    //   TripfingerEntity *entity = [DataConverter markToEntity:mark];
+    //   [self.controlsManager showPlacePageWithEntity:entity];
+    // } else {
+    //   [self.controlsManager showPlacePage:info];
+    // }
+  };
+
+  onMapObjectDeselected = (info) => {
+    console.log('Objektet vart da avselektert.');
+    console.log(info);
+    // [self dismissPlacePage];
+    //
+    // auto & f = GetFramework();
+    // if (switchFullScreenMode && self.controlsManager.searchHidden && !f.IsRouteNavigable())
+    //   self.controlsManager.hidden = !self.controlsManager.hidden;
+  };
+
   // noinspection JSMethodCanBeStatic
   render() {
     return (
       <View style={styles.container}>
-        <MWMMapView style={styles.map} />
+        <MWMMapView
+          style={styles.map}
+          onMapObjectSelected={this.onMapObjectSelected}
+          onMapObjectDeselected={this.onMapObjectDeselected}
+        />
       </View>
     );
   }

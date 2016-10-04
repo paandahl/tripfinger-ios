@@ -10,6 +10,7 @@
         "no-use-before-define": "off",
         "no-console": "off",
         "react/prefer-stateless-function": "off",
-        "react/jsx-filename-extension": "off"
+        "react/jsx-filename-extension": "off",
+        "react/forbid-prop-types": "off"
     }
 }

@@ -4,26 +4,24 @@ import ReactNative from 'react-native';
 import GuideItemCell from '../components/GuideItemCell';
 import StandardCell from '../components/StandardCell';
 import ListCellSeparator from '../components/ListCellSeparator';
-import { getRegionWithSlug } from '../modules/ContentService';
-import SectionScene from './SectionScene';
 import Globals from '../modules/Globals';
+import { getGuideTextWithId } from '../modules/ContentService';
 
 const Component = React.Component;
 const ListView = ReactNative.ListView;
 const StyleSheet = ReactNative.StyleSheet;
-const Text = ReactNative.Text;
 // </editor-fold>
 
-export default class RegionScene extends Component {
+export default class SectionScene extends Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
     navigator: Globals.propTypes.navigator,
-    region: Globals.propTypes.guideItem,
+    section: Globals.propTypes.guideItem,
   };
 
   // noinspection JSUnusedGlobalSymbols
-  static title = props => props.region.name;
+  static title = props => props.section.name;
 
   constructor(props) {
     super(props);
@@ -37,27 +35,23 @@ export default class RegionScene extends Component {
       expanded: false,
       dataSource: ds.cloneWithRowsAndSections(this.data),
     };
-    this.loadRegionIfNecessary();
+    this.loadSectionIfNecessary();
   }
 
-  async loadRegionIfNecessary() {
-    if (this.props.region.loadStatus !== 'FULLY_LOADED') {
+  async loadSectionIfNecessary() {
+    if (this.props.section.loadStatus !== 'FULLY_LOADED') {
       try {
-        const region = await getRegionWithSlug(this.props.region.slug);
+        const section = await getGuideTextWithId(this.props.section.uuid);
         // noinspection JSUnresolvedVariable
-        this.data.sections = region.guideSections;
+        this.data.sections = section.guideSections;
         const dataSource = this.state.dataSource.cloneWithRowsAndSections(this.data, this.sections);
         this.setState({ dataSource });
       } catch (error) {
-        console.log(`loadRegionIfNecessary error: ${error}`);
-        setTimeout(() => this.loadRegionIfNecessary(), 2000);
+        console.log(`loadSectionIfNecessary error: ${error}`);
+        setTimeout(() => this.loadSectionIfNecessary(), 2000);
       }
     }
   }
-
-  expandRegion = () => {
-    this.setState({ expanded: true });
-  };
 
   navigateToSection = (section) => {
     this.props.navigator.push({
@@ -70,8 +64,8 @@ export default class RegionScene extends Component {
 
   renderRow = (data, sectionId, rowId, highlightRow) => {
     if (sectionId === 'guideItem') {
-      return <GuideItemCell guideItem={this.props.region} expandRegion={this.expandRegion} />;
-    } else if (sectionId === 'sections' && this.state.expanded) {
+      return <GuideItemCell guideItem={this.props.section} initialExpand />;
+    } else if (sectionId === 'sections') {
       return (
         <StandardCell
           rowId={rowId} sectionId={sectionId} highlightRow={highlightRow}
@@ -80,18 +74,13 @@ export default class RegionScene extends Component {
           text={data.name}
         />
       );
-    } else if (sectionId === 'attractions') {
-      return <Text>{data}</Text>;
     }
     return null;
   };
 
-  renderSeparator = (sectionId, rowId, highlighted) => {
-    if (sectionId === 'sections' && !this.state.expanded) {
-      return null;
-    }
-    return <ListCellSeparator key={`${sectionId}:${rowId}:sep`} highlighted={highlighted} />;
-  };
+  renderSeparator = (sectionId, rowId, highlighted) => (
+    <ListCellSeparator key={`${sectionId}:${rowId}:sep`} highlighted={highlighted} />
+  );
 
   render() {
     return (

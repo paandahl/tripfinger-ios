@@ -33,18 +33,18 @@ class RegionController: GuideItemController, MapNavigator {
     loadRegionIfNecessary()
   }
   
-  func loadRegionIfNecessary() {
-    let failure = {
-      self.delay(2, selector: #selector(self.loadRegionIfNecessary))
-    }
-    if region.item().loadStatus != GuideItem.LoadStatus.FULLY_LOADED {
-      ContentService.getRegionWithSlug(region.getSlug(), failure: failure) { region in
-        self.region = region
-        self.updateUI()
-      }
-    }
-  }
-      
+//  func loadRegionIfNecessary() {
+//    let failure = {
+//      self.delay(2, selector: #selector(self.loadRegionIfNecessary))
+//    }
+//    if region.item().loadStatus != GuideItem.LoadStatus.FULLY_LOADED {
+//      ContentService.getRegionWithSlug(region.getSlug(), failure: failure) { region in
+//        self.region = region
+//        self.updateUI()
+//      }
+//    }
+//  }
+  
   override func updateUI() {
     populateTableSections()
     tableView.reloadData {}

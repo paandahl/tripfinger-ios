@@ -2,6 +2,7 @@
 import React from 'react';
 import ReactNative from 'react-native';
 import { imagesBaseUrl } from '../modules/ContentService';
+import Globals from '../modules/Globals';
 
 const Component = React.Component;
 const PropTypes = React.PropTypes;
@@ -18,16 +19,20 @@ export default class GuideItemCell extends Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    region: PropTypes.shape({
-      description: PropTypes.string.isRequired,
-      images: PropTypes.array.isRequired,
-    }),
+    initialExpand: PropTypes.bool,
+    expandRegion: PropTypes.func,
+    guideItem: Globals.propTypes.guideItem,
+  };
+
+  static defaultProps = {
+    initialExpand: false,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      webViewHeight: 80,
+      expanded: this.props.initialExpand,
+      webViewHeight: 0,
     };
   }
 
@@ -36,28 +41,53 @@ export default class GuideItemCell extends Component {
     // noinspection JSUnresolvedVariable
     const htmlHeight = parseInt(event.jsEvaluationValue, 10);
     console.log(`htmlHeight: ${htmlHeight}`);
-    // this.setState({ webViewHeight: htmlHeight });
+    this.setState({ webViewHeight: htmlHeight });
+  };
+
+  renderReadMoreButton() {
+    if (this.state.expanded) {
+      return null;
+    }
+    return (
+      <TouchableHighlight
+        style={styles.button}
+        onPress={() => {
+          this.setState({
+            expanded: true,
+          });
+          this.props.expandRegion();
+        }}
+        underlayColor="#FFFFFF"
+      >
+        <Text style={styles.buttonText}>Read more</Text>
+      </TouchableHighlight>
+    );
+  }
+
+  renderImage = () => {
+    if (this.props.guideItem.images.length > 0) {
+      const imageUri = `${imagesBaseUrl()}${this.props.guideItem.images[0].url}-712x534`;
+      const height = (Dimensions.get('window').width * 0.75) - 50;
+      return <Image source={{ uri: imageUri }} style={{ height }} />;
+    }
+    return null;
   };
 
   render() {
-    const html = htmlStyle + this.props.region.description;
-    const imageUri = `${imagesBaseUrl()}${this.props.region.images[0].url}-712x534`;
-    const height = (Dimensions.get('window').width * 0.75) - 50;
+    const html = htmlStyle + this.props.guideItem.description;
     return (
       <View style={styles.container}>
-        <Image source={{ uri: imageUri }} style={{ height }} />
+        {this.renderImage()}
         <WebView
           source={{ html }}
           injectedJavaScript="document.body.scrollHeight;"
           onNavigationStateChange={this.updateWebViewHeight}
           style={[
             styles.text,
-            { height: this.state.webViewHeight },
+            { height: this.state.expanded ? this.state.webViewHeight : 80 },
           ]}
         />
-        <TouchableHighlight style={styles.button} onPress={() => {}} underlayColor="#FFFFFF">
-          <Text style={styles.buttonText}>Read more</Text>
-        </TouchableHighlight>
+        {this.renderReadMoreButton()}
       </View>
     );
   }

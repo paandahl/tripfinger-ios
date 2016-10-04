@@ -17,17 +17,17 @@ class SectionController: GuideItemController {
   }
   
   override func viewDidLoad() {
-    super.viewDidLoad()
-    
-    navigationItem.title = section.getName()
-
-    guideItemExpanded = true
-    if section.item.loadStatus != GuideItem.LoadStatus.FULLY_LOADED {
-      ContentService.getGuideTextWithId(section.getId(), failure: showErrorHud) { section in
-        self.section = section
-        self.updateUI()
-      }
-    }
+//    super.viewDidLoad()
+//    
+//    navigationItem.title = section.getName()
+//
+//    guideItemExpanded = true
+//    if section.item.loadStatus != GuideItem.LoadStatus.FULLY_LOADED {
+//      ContentService.getGuideTextWithId(section.getId(), failure: showErrorHud) { section in
+//        self.section = section
+//        self.updateUI()
+//      }
+//    }
   }
   
   override func updateUI() {
