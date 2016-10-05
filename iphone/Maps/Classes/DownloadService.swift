@@ -95,7 +95,7 @@ class DownloadService {
       let countryPath = NSURL.getImageDirectory().getSubDirectory(region.getName())
       let jsonPath = countryPath.URLByAppendingPathComponent(region.getName() + ".json")
       if (!checkIfDeviceHasEnoughFreeSpaceForRegion(region)) {
-        cleanupDownload(region, taskHandle: taskHandle, jsonPath: jsonPath)
+        cleanupDownload(region, taskHandle: taskHandle, jsonPath: jsonPath!)
         finishedHandler()
         return
       }
@@ -107,16 +107,16 @@ class DownloadService {
         let deviceUuid = UniqueIdentifierService.uniqueIdentifier()
         url = TripfingerAppDelegate.serverUrl + "/download_first_country/\(region.getName())/\(deviceUuid)"
       }
-      if NSURL.fileExists(jsonPath) {
-        processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, failure: failure, finishedHandler: finishedHandler)
+      if NSURL.fileExists(jsonPath!) {
+        processDownload(jsonPath!, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, failure: failure, finishedHandler: finishedHandler)
       } else {
         var method = Alamofire.Method.GET
         if receipt != nil {
           method = .POST
         }
 
-        NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath, method: method, body: receipt, failure: failure) {
-          processDownload(jsonPath, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, failure: failure, finishedHandler: finishedHandler)
+        NetworkUtil.saveDataFromUrl(url, destinationPath: jsonPath!, method: method, body: receipt, failure: failure) {
+          processDownload(jsonPath!, countryPath: countryPath, taskHandle: taskHandle, progressHandler: progressHandler, failure: failure, finishedHandler: finishedHandler)
         }
       }
     }
@@ -191,16 +191,16 @@ class DownloadService {
   }
   
   class func getLocalPartOfFileUrl(fileUrl: NSURL) -> String {
-    let pathIndex = fileUrl.absoluteString.rangeOfString("Images/", options: .BackwardsSearch)
-    return fileUrl.absoluteString.substringFromIndex(pathIndex!.endIndex)
+    let pathIndex = fileUrl.absoluteString!.rangeOfString("Images/", options: .BackwardsSearch)
+    return fileUrl.absoluteString!.substringFromIndex(pathIndex!.endIndex)
   }
   
   class func fetchImageList(guideItem: GuideItem, path: NSURL) -> [(String, NSURL)] {
     var imageList = [(String, NSURL)]()
     for image in guideItem.images {
       let destinationPath = path.URLByAppendingPathComponent(image.url)
-      imageList.append((image.url, destinationPath))
-      image.url = getLocalPartOfFileUrl(destinationPath)
+      imageList.append((image.url, destinationPath!))
+      image.url = getLocalPartOfFileUrl(destinationPath!)
     }
     for guideSection in guideItem.guideSections {
       imageList.appendContentsOf(fetchImageList(guideSection.item, path: path))

@@ -15,6 +15,7 @@ import FirebaseInstanceID
 
   class func applicationLaunched(application: UIApplication, delegate: UIApplicationDelegate, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> UIWindow {
     
+    print("my uuid: \(UniqueIdentifierService.uniqueIdentifier())")
     NSUserDefaults.standardUserDefaults().registerDefaults(["statisticsEnabled": true])
     
     DatabaseMigrations.migrateVersion1()

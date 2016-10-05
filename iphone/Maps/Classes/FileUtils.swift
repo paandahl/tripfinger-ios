@@ -31,7 +31,7 @@ extension NSURL {
   private class func getDirectory(baseDir: NSSearchPathDirectory, withPath path: String? = nil) -> NSURL {
     let libraryPath = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(baseDir, .UserDomainMask, true)[0])
     if let path = path {
-      return libraryPath.URLByAppendingPathComponent(path)
+      return libraryPath.URLByAppendingPathComponent(path)!
     } else {
       return libraryPath
     }
@@ -75,11 +75,11 @@ extension NSURL {
   func getSubDirectory(pathElement: String) -> NSURL {
     let folderPath = self.URLByAppendingPathComponent(pathElement)
     do {
-      try NSFileManager.defaultManager().createDirectoryAtPath(folderPath.path!, withIntermediateDirectories: true, attributes: nil)
+      try NSFileManager.defaultManager().createDirectoryAtPath(folderPath!.path!, withIntermediateDirectories: true, attributes: nil)
     } catch let error as NSError {
       NSLog("Unable to create directory \(error.debugDescription)")
     }
-    return folderPath
+    return folderPath!
   }
   
   class func deleteFolder(path: NSURL) {

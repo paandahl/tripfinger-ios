@@ -114,8 +114,8 @@ class CountryListController: TableController {
     image.contentMode = .ScaleAspectFill
     image.clipsToBounds = true
     view.addSubview(image)
-    if NSURL.fileExists(imagePath) {
-      image.image = UIImage(data: NSData(contentsOfURL: imagePath)!)
+    if NSURL.fileExists(imagePath!) {
+      image.image = UIImage(data: NSData(contentsOfURL: imagePath!)!)
     } else {
       let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
       indicator.startAnimating()
@@ -125,7 +125,7 @@ class CountryListController: TableController {
         worldAreaImageSet.insert(title!)
         var imageUrl = DownloadService.gcsImagesUrl + title! + ".jpeg"
         imageUrl = imageUrl.stringByReplacingOccurrencesOfString(" ", withString: "%20")
-        NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: imagePath, failure: {}) {
+        NetworkUtil.saveDataFromUrl(imageUrl, destinationPath: imagePath!, failure: {}) {
           dispatch_async(dispatch_get_main_queue()) {
             indicator.removeFromSuperview()
             tableView.reloadData()

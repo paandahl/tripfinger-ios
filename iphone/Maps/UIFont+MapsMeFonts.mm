@@ -50,61 +50,61 @@ NSString * fontName(FontWeight weight, CGFloat size)
 + (UIFont *)regular10
 {
   CGFloat const size = 10;
-  return [UIFont fontWithName:fontName(FontWeightRegular, size) size:size];
+  return [UIFont systemFontOfSize:size];
 }
 
 + (UIFont *)regular12
 {
   CGFloat const size = 12;
-  return [UIFont fontWithName:fontName(FontWeightRegular, size) size:size];
+  return [UIFont systemFontOfSize:size];
 }
 
 + (UIFont *)regular14
 {
   CGFloat const size = 14;
-  return [UIFont fontWithName:fontName(FontWeightRegular, size) size:size];
+  return [UIFont systemFontOfSize:size];
 }
 
 + (UIFont *)regular15
 {
   CGFloat const size = 15;
-  return [UIFont fontWithName:fontName(FontWeightRegular, size) size:size];
+  return [UIFont systemFontOfSize:size];
 }
 
 + (UIFont *)regular16
 {
   CGFloat const size = 16;
-  return [UIFont fontWithName:fontName(FontWeightRegular, size) size:size];
+  return [UIFont systemFontOfSize:size];
 }
 
 + (UIFont *)regular17
 {
   CGFloat const size = 17;
-  return [UIFont fontWithName:fontName(FontWeightRegular, size) size:size];
+  return [UIFont systemFontOfSize:size];
 }
 
 + (UIFont *)regular18
 {
   CGFloat const size = 18;
-  return [UIFont fontWithName:fontName(FontWeightRegular, size) size:size];
+  return [UIFont systemFontOfSize:size];
 }
 
 + (UIFont *)regular24
 {
   CGFloat const size = 24;
-  return [UIFont fontWithName:fontName(FontWeightRegular, size) size:size];
+  return [UIFont systemFontOfSize:size];
 }
 
 + (UIFont *)regular32
 {
   CGFloat const size = 32;
-  return [UIFont fontWithName:fontName(FontWeightRegular, size) size:size];
+  return [UIFont systemFontOfSize:size];
 }
 
 + (UIFont *)regular52
 {
   CGFloat const size = 52;
-  return [UIFont fontWithName:fontName(FontWeightRegular, size) size:size];
+  return [UIFont systemFontOfSize:size];
 }
 
 + (UIFont *)medium10

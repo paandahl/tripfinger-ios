@@ -151,7 +151,7 @@ class PlacePageInfoCell: UITableViewCell {
     inImage.drawInRect(CGRectMake(0, 0, inImage.size.width, inImage.size.height))
     let rect: CGRect = CGRectMake(atPoint.x, atPoint.y, inImage.size.width, inImage.size.height)
     drawText.drawInRect(rect, withAttributes: textFontAttributes)
-    let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()
+    let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
     
     UIGraphicsEndImageContext()
     

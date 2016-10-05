@@ -3564,11 +3564,15 @@
 				TargetAttributes = {
 					1D6058900D05DD3D006BFB54 = {
 						DevelopmentTeam = BJFM9VPMT3;
+						LastSwiftMigration = 0800;
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
 							};
 							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
 								enabled = 1;
 							};
 							com.apple.Push = {
@@ -3581,10 +3585,12 @@
 					};
 					2581DC911CAF91150086285E = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 1D6058900D05DD3D006BFB54;
 					};
 					25D378FA1CAFD4C000552633 = {
 						CreatedOnToolsVersion = 7.2.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = 1D6058900D05DD3D006BFB54;
 					};
 					6741A93D1BF340DE002C974C = {
@@ -3632,6 +3638,7 @@
 				id,
 			);
 			mainGroup = 29B97314FDCFA39411CA2CEA /* Maps */;
+			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -3990,7 +3997,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		35DD017651455C8BBF781647 /* [CP] Copy Pods Resources */ = {
@@ -4020,7 +4027,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A65236512DCF14E53F81A1D3 /* [CP] Embed Pods Frameworks */ = {
@@ -4697,6 +4704,7 @@
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4732,6 +4740,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4774,6 +4783,7 @@
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
 				VALID_ARCHS = i386;
 			};
@@ -4811,6 +4821,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4846,6 +4857,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4881,6 +4893,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_VERSION = 2.3;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -4908,6 +4921,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = Tripfinger;
 				USES_XCTRUNNER = YES;
 				VALID_ARCHS = "i386 x86_64";
@@ -4930,6 +4944,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = Tripfinger;
 				USES_XCTRUNNER = YES;
 				VALIDATE_PRODUCT = YES;
@@ -4958,6 +4973,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = Tripfinger;
 				USES_XCTRUNNER = YES;
 				VALID_ARCHS = i386;
@@ -4981,6 +4997,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = Tripfinger;
 				USES_XCTRUNNER = YES;
 				VALIDATE_PRODUCT = YES;
@@ -5004,6 +5021,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = Tripfinger;
 				USES_XCTRUNNER = YES;
 				VALIDATE_PRODUCT = YES;
@@ -5027,6 +5045,7 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger.TripfingerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 2.3;
 				TEST_TARGET_NAME = Tripfinger;
 				USES_XCTRUNNER = YES;
 				VALIDATE_PRODUCT = YES;
@@ -5308,6 +5327,7 @@
 				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = i386;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -5328,6 +5348,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = BJFM9VPMT3;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				ENABLE_TESTABILITY = YES;
@@ -5421,9 +5442,11 @@
 					"-leditor",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "25f817ca-abf7-4db1-a6e2-d0028fbcab04";
+				PROVISIONING_PROFILE_SPECIFIER = "Tripfinger Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Simulator;
@@ -5491,6 +5514,7 @@
 				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -5509,6 +5533,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEAD_CODE_STRIPPING = NO;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = BJFM9VPMT3;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -5602,9 +5627,11 @@
 					"-leditor",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "25f817ca-abf7-4db1-a6e2-d0028fbcab04";
+				PROVISIONING_PROFILE_SPECIFIER = "Tripfinger Development";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = i386;
 			};
@@ -5677,6 +5704,7 @@
 				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = NO;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -5698,6 +5726,7 @@
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = BJFM9VPMT3;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				ENABLE_NS_ASSERTIONS = YES;
@@ -5795,10 +5824,12 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.tripfinger;
 				PRODUCT_NAME = Tripfinger;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "e70d9bae-9111-4416-ba00-683a631a8620";
+				PROVISIONING_PROFILE_SPECIFIER = "Tripfinger Development (.com)";
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
 			};
@@ -5870,6 +5901,7 @@
 				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = YES;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -5988,6 +6020,7 @@
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Production Full";
@@ -6058,6 +6091,7 @@
 				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -6072,11 +6106,12 @@
 				BUNDLE_IDENTIFIER = no.tripfinger;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Entitlements/me.maps.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Preben Ludviksen (BJFM9VPMT3)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Preben Ludviksen (BJFM9VPMT3)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Tripfinger AS (BJFM9VPMT3)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Tripfinger AS (BJFM9VPMT3)";
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = BJFM9VPMT3;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = "$(inherited)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -6172,8 +6207,10 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PRODUCT_NAME = Tripfinger;
-				PROVISIONING_PROFILE = "36db4fa3-d630-4665-9795-6b17a0950910";
+				PROVISIONING_PROFILE = "25f817ca-abf7-4db1-a6e2-d0028fbcab04";
+				PROVISIONING_PROFILE_SPECIFIER = "Tripfinger Distribution";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
@@ -6242,6 +6279,7 @@
 				PRODUCT_NAME = Tripfinger;
 				SDKROOT = iphoneos;
 				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = i386;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -6354,6 +6392,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "${BUNDLE_IDENTIFIER}";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Classes/Tripfinger-Bridging-Header.h";
+				SWIFT_VERSION = 2.3;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = "Simulator Release";
