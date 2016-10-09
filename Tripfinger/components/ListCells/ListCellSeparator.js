@@ -1,4 +1,3 @@
-// <editor-fold desc="Imports">
 import React from 'react';
 import ReactNative from 'react-native';
 
@@ -6,7 +5,6 @@ const Component = React.Component;
 const PropTypes = React.PropTypes;
 const StyleSheet = ReactNative.StyleSheet;
 const View = ReactNative.View;
-// </editor-fold>
 
 export default class ListCellSeparator extends Component {
 

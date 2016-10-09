@@ -1,4 +1,3 @@
-// <editor-fold desc="Imports">
 import React from 'react';
 import ReactNative from 'react-native';
 
@@ -8,7 +7,6 @@ const StyleSheet = ReactNative.StyleSheet;
 const Text = ReactNative.Text;
 const TouchableHighlight = ReactNative.TouchableHighlight;
 const View = ReactNative.View;
-// </editor-fold>
 
 export default class StandardCell extends Component {
 
@@ -16,15 +14,27 @@ export default class StandardCell extends Component {
   static propTypes = {
     rowId: PropTypes.string.isRequired,
     sectionId: PropTypes.string.isRequired,
-    highlightRow: PropTypes.func.isRequired,
+    highlightRow: PropTypes.func,
     text: PropTypes.string.isRequired,
-    onPress: PropTypes.func.isRequired,
+    onPress: PropTypes.func,
     firstRowInSectionStyles: PropTypes.object,
   };
 
   // noinspection JSUnusedGlobalSymbols
   static defaultProps = {
     firstRowInSectionStyles: {},
+  };
+
+  pressIn = () => {
+    if (this.props.highlightRow) {
+      this.props.highlightRow(this.props.sectionId, this.props.rowId);
+    }
+  };
+
+  pressOut = () => {
+    if (this.props.highlightRow) {
+      this.props.highlightRow(null);
+    }
   };
 
   render() {
@@ -37,8 +47,8 @@ export default class StandardCell extends Component {
         key={`${this.props.sectionId}:${this.props.rowId}`}
         style={rowStyles}
         underlayColor="#DDDDDD"
-        onPressIn={() => this.props.highlightRow(this.props.sectionId, this.props.rowId)}
-        onPressOut={() => this.props.highlightRow(null)}
+        onPressIn={this.pressIn}
+        onPressOut={this.pressOut}
         onPress={this.props.onPress}
       >
         <View style={styles.innerRow}>

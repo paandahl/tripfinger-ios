@@ -98,6 +98,8 @@
 		255C7E141D91C80A0098F09D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 255C7E131D91C80A0098F09D /* Reachability.m */; };
 		25AABCA21D9E756000178E0B /* FSComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AABCA11D9E756000178E0B /* FSComponent.m */; };
 		25AABCA61D9E76D700178E0B /* NetworkComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AABCA51D9E76D700178E0B /* NetworkComponent.m */; };
+		25F0420C1DAA867D00C5D07E /* libReactNativeHeading.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25F0420B1DAA7CEA00C5D07E /* libReactNativeHeading.a */; };
+		25F042111DAAA62B00C5D07E /* MWMFrameworkListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25F042101DAAA62B00C5D07E /* MWMFrameworkListener.mm */; };
 		30D99DD979D7CF9743AB4D09 /* Pods_TripfingerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC79B1CC2C0A6FCBD028B9B /* Pods_TripfingerTests.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		D02FBC34DC9C9958C1E2A5B3 /* Pods_Tripfinger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB339040E75BB56D22749A18 /* Pods_Tripfinger.framework */; };
@@ -166,6 +168,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
+		};
+		25F0420A1DAA7CEA00C5D07E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25F042061DAA7CEA00C5D07E /* ReactNativeHeading.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9D23B34F1C767B80008B4819;
+			remoteInfo = ReactNativeHeading;
 		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -296,6 +305,10 @@
 		25AABCA11D9E756000178E0B /* FSComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSComponent.m; sourceTree = "<group>"; };
 		25AABCA41D9E76C800178E0B /* NetworkComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkComponent.h; sourceTree = "<group>"; };
 		25AABCA51D9E76D700178E0B /* NetworkComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkComponent.m; sourceTree = "<group>"; };
+		25F042061DAA7CEA00C5D07E /* ReactNativeHeading.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHeading.xcodeproj; path = "../node_modules/react-native-heading/ReactNativeHeading.xcodeproj"; sourceTree = "<group>"; };
+		25F0420D1DAAA41B00C5D07E /* MWMFrameworkObservers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMFrameworkObservers.h; sourceTree = "<group>"; };
+		25F0420F1DAAA5F800C5D07E /* MWMFrameworkListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMFrameworkListener.h; sourceTree = "<group>"; };
+		25F042101DAAA62B00C5D07E /* MWMFrameworkListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMFrameworkListener.mm; sourceTree = "<group>"; };
 		6BE16475EC68D76BB863E147 /* Pods-Tripfinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.release.xcconfig"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -319,6 +332,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25F0420C1DAA867D00C5D07E /* libReactNativeHeading.a in Frameworks */,
 				255C7DC91D8D6DF90098F09D /* libc++.tbd in Frameworks */,
 				255C7D2C1D8D312D0098F09D /* SystemConfiguration.framework in Frameworks */,
 				255C7D2A1D8D31270098F09D /* AdSupport.framework in Frameworks */,
@@ -458,6 +472,7 @@
 				255C7D141D8D2AE00098F09D /* MWMMapWidgets.h */,
 				255C7D151D8D2AF30098F09D /* MWMMapWidgets.mm */,
 				255C7D171D8D2B020098F09D /* MWMTypes.h */,
+				25F0420E1DAAA5DD00C5D07E /* Framework */,
 				255C7D1C1D8D2EA30098F09D /* Other Sources */,
 				255C7D221D8D2F610098F09D /* Platform */,
 				255C7D941D8D4CE20098F09D /* Resources */,
@@ -596,6 +611,24 @@
 			name = NetworkComponent;
 			sourceTree = "<group>";
 		};
+		25F042071DAA7CEA00C5D07E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				25F0420B1DAA7CEA00C5D07E /* libReactNativeHeading.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		25F0420E1DAAA5DD00C5D07E /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				25F0420D1DAAA41B00C5D07E /* MWMFrameworkObservers.h */,
+				25F0420F1DAAA5F800C5D07E /* MWMFrameworkListener.h */,
+				25F042101DAAA62B00C5D07E /* MWMFrameworkListener.mm */,
+			);
+			name = Framework;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -607,6 +640,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				25F042061DAA7CEA00C5D07E /* ReactNativeHeading.xcodeproj */,
 				255C7D2B1D8D312D0098F09D /* SystemConfiguration.framework */,
 				255C7D291D8D31260098F09D /* AdSupport.framework */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -731,7 +765,12 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = BJFM9VPMT3;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = BJFM9VPMT3;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -786,6 +825,10 @@
 				{
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
+				},
+				{
+					ProductGroup = 25F042071DAA7CEA00C5D07E /* Products */;
+					ProjectRef = 25F042061DAA7CEA00C5D07E /* ReactNativeHeading.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -851,6 +894,13 @@
 			fileType = archive.ar;
 			path = libReact.a;
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		25F0420B1DAA7CEA00C5D07E /* libReactNativeHeading.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeHeading.a;
+			remoteRef = 25F0420A1DAA7CEA00C5D07E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
@@ -1094,6 +1144,7 @@
 				255C7DEF1D9122250098F09D /* TFRCTNavItem.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				255C7D0F1D8D2A860098F09D /* EAGLView.mm in Sources */,
+				25F042111DAAA62B00C5D07E /* MWMFrameworkListener.mm in Sources */,
 				255C7E141D91C80A0098F09D /* Reachability.m in Sources */,
 				255C7D1A1D8D2B6F0098F09D /* MWMMapView.mm in Sources */,
 			);
@@ -1129,6 +1180,7 @@
 				"ARCHS[sdk=iphoneos*]" = "$(ARCHS_STANDARD)";
 				"ARCHS[sdk=iphonesimulator*]" = "$(ARCHS_STANDARD)";
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = BJFM9VPMT3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -1147,6 +1199,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = BJFM9VPMT3;
 				INFOPLIST_FILE = TripfingerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -1166,6 +1219,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = BJFM9VPMT3;
 				ENABLE_BITCODE = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_FAST_MATH = YES;
@@ -1238,6 +1292,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PRODUCT_NAME = Tripfinger;
+				PROVISIONING_PROFILE = "25f817ca-abf7-4db1-a6e2-d0028fbcab04";
+				PROVISIONING_PROFILE_SPECIFIER = "Tripfinger Development";
 				VALID_ARCHS = "arm64 armv7 armv7s";
 			};
 			name = Debug;
@@ -1248,7 +1304,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				DEVELOPMENT_TEAM = BJFM9VPMT3;
 				ENABLE_BITCODE = NO;
 				GCC_ENABLE_PASCAL_STRINGS = NO;
 				GCC_FAST_MATH = YES;
@@ -1323,6 +1381,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = no.tripfinger;
 				PRODUCT_NAME = Tripfinger;
+				PROVISIONING_PROFILE = "25f817ca-abf7-4db1-a6e2-d0028fbcab04";
+				PROVISIONING_PROFILE_SPECIFIER = "Tripfinger Development";
 			};
 			name = Release;
 		};

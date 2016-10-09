@@ -47,12 +47,15 @@ static NSString * DB_BOOKMARK_ITEMS = @"bookmarkItems";
     NSLog(@"Firebase already initialized.");
     return;
   }
-  NSLog(@"Initializing firebase");
-  initialized = YES;
-  [FIRApp configure];
-  [FIRDatabase database].persistenceEnabled = YES;
-  [self populateUserId];
-//  FIRDatabaseReference * ref = [db reference];
+  dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0ul);
+  dispatch_async(queue, ^{
+    NSLog(@"Initializing firebase");
+    initialized = YES;
+    [FIRApp configure];
+    [FIRDatabase database].persistenceEnabled = YES;
+    [self populateUserId];
+    //  FIRDatabaseReference * ref = [db reference];
+  });
 }
 
 - (void)populateUserId

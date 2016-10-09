@@ -2,11 +2,12 @@
 import React from 'react';
 import ReactNative from 'react-native';
 import GuideItemCell from '../components/GuideItemCell';
-import StandardCell from '../components/StandardCell';
-import ListCellSeparator from '../components/ListCellSeparator';
+import StandardCell from '../components/ListCells/StandardCell';
+import ListCellSeparator from '../components/ListCells/ListCellSeparator';
 import { getRegionWithSlug } from '../modules/ContentService';
 import SectionScene from './SectionScene';
 import Globals from '../modules/Globals';
+import Utils from '../modules/Utils';
 
 const Component = React.Component;
 const ListView = ReactNative.ListView;
@@ -28,10 +29,7 @@ export default class RegionScene extends Component {
   constructor(props) {
     super(props);
     // noinspection JSUnusedGlobalSymbols
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-    });
+    const ds = Utils.simpleDataSource();
     this.data = { guideItem: [{}] };
     this.state = {
       expanded: false,

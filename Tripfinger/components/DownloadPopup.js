@@ -1,36 +1,36 @@
-// <editor-fold desc="Imports">
 import React from 'react';
 import ReactNative from 'react-native';
+import Utils from '../modules/Utils';
 
 const Component = React.Component;
 const PropTypes = React.PropTypes;
 const StyleSheet = ReactNative.StyleSheet;
 const Text = ReactNative.Text;
+const TouchableHighlight = ReactNative.TouchableHighlight;
 const View = ReactNative.View;
-// </editor-fold>
 
-export default class PlacePage extends Component {
+export default class DownloadPopup extends Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    info: PropTypes.object.isRequired,
+    style: PropTypes.any,
   };
 
   render() {
     return (
-      <View>
-        <View style={styles.info}><Text>{this.props.info.title}</Text></View>
-        <View style={styles.actionBar} />
+      <View style={styles.box}>
+        <Text>Download Georgia</Text>
       </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  info: {
-    backgroundColor: '#FFFFFF',
-  },
-  actionBar: {
-    backgroundColor: '#CCCCCC',
+  box: {
+    position: 'absolute',
+    height: 200,
+    width: 300,
+    top: Utils.getScreenHeight() - 100,
+    left: Utils.getScreenWidth() - 150,
   },
 });

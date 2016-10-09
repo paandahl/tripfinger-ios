@@ -2,8 +2,8 @@
 import React from 'react';
 import ReactNative from 'react-native';
 import GuideItemCell from '../components/GuideItemCell';
-import StandardCell from '../components/StandardCell';
-import ListCellSeparator from '../components/ListCellSeparator';
+import StandardCell from '../components/ListCells/StandardCell';
+import ListCellSeparator from '../components/ListCells/ListCellSeparator';
 import Globals from '../modules/Globals';
 import { getGuideTextWithId } from '../modules/ContentService';
 

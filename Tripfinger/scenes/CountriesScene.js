@@ -6,6 +6,7 @@ import MapScene from './MapScene';
 import WorldAreaHeader from '../components/WorldAreaHeader';
 import Reachability from '../modules/Reachability';
 import RegionScene from './RegionScene';
+import Utils from '../modules/Utils';
 
 const Component = React.Component;
 const StyleSheet = ReactNative.StyleSheet;
@@ -46,10 +47,7 @@ export default class CountriesScene extends Component {
   constructor(props) {
     super(props);
     // noinspection JSUnusedGlobalSymbols
-    const ds = new ListView.DataSource({
-      rowHasChanged: (r1, r2) => r1 !== r2,
-      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
-    });
+    const ds = Utils.simpleDataSource();
     this.state = {
       displaySettings: false,
       dataSource: ds.cloneWithRowsAndSections({}),

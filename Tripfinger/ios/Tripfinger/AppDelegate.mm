@@ -76,5 +76,27 @@
   }
   f.SetBookmarks(bookmarkMap);
 }
+ 
+- (void)applicationWillResignActive:(UIApplication *)application
+{
+  NSLog(@"applicationWillResignActive");
+  MWMMapView * mapView = [MWMMapView sharedInstance];
+  [mapView onGetFocus: NO];
+  GetFramework().SetRenderingEnabled(false);
+}
+  
+- (void)applicationDidBecomeActive:(UIApplication *)application
+{
+  NSLog(@"applicationDidBecomeActive");
+  if (application.applicationState == UIApplicationStateBackground)
+    return;
+  MWMMapView * mapView = [MWMMapView sharedInstance];
+  [mapView onGetFocus: YES];
+  GetFramework().SetRenderingEnabled(true);
+}
+
+- (void)onTerminate
+{
+}
 
 @end
