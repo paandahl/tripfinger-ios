@@ -100,6 +100,7 @@
 		25AABCA61D9E76D700178E0B /* NetworkComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AABCA51D9E76D700178E0B /* NetworkComponent.m */; };
 		25F0420C1DAA867D00C5D07E /* libReactNativeHeading.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25F0420B1DAA7CEA00C5D07E /* libReactNativeHeading.a */; };
 		25F042111DAAA62B00C5D07E /* MWMFrameworkListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25F042101DAAA62B00C5D07E /* MWMFrameworkListener.mm */; };
+		25F0423D1DABF49400C5D07E /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25F042311DABF48300C5D07E /* libART.a */; };
 		30D99DD979D7CF9743AB4D09 /* Pods_TripfingerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC79B1CC2C0A6FCBD028B9B /* Pods_TripfingerTests.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		D02FBC34DC9C9958C1E2A5B3 /* Pods_Tripfinger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB339040E75BB56D22749A18 /* Pods_Tripfinger.framework */; };
@@ -175,6 +176,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 9D23B34F1C767B80008B4819;
 			remoteInfo = ReactNativeHeading;
+		};
+		25F042301DABF48300C5D07E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 25F0422C1DABF48300C5D07E /* ART.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 0CF68AC11AF0540F00FF9E5C;
+			remoteInfo = ART;
 		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -309,6 +317,7 @@
 		25F0420D1DAAA41B00C5D07E /* MWMFrameworkObservers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMFrameworkObservers.h; sourceTree = "<group>"; };
 		25F0420F1DAAA5F800C5D07E /* MWMFrameworkListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMFrameworkListener.h; sourceTree = "<group>"; };
 		25F042101DAAA62B00C5D07E /* MWMFrameworkListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMFrameworkListener.mm; sourceTree = "<group>"; };
+		25F0422C1DABF48300C5D07E /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
 		6BE16475EC68D76BB863E147 /* Pods-Tripfinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.release.xcconfig"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -332,6 +341,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				25F0423D1DABF49400C5D07E /* libART.a in Frameworks */,
 				25F0420C1DAA867D00C5D07E /* libReactNativeHeading.a in Frameworks */,
 				255C7DC91D8D6DF90098F09D /* libc++.tbd in Frameworks */,
 				255C7D2C1D8D312D0098F09D /* SystemConfiguration.framework in Frameworks */,
@@ -629,6 +639,14 @@
 			name = Framework;
 			sourceTree = "<group>";
 		};
+		25F0422D1DABF48300C5D07E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				25F042311DABF48300C5D07E /* libART.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -640,6 +658,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				25F0422C1DABF48300C5D07E /* ART.xcodeproj */,
 				25F042061DAA7CEA00C5D07E /* ReactNativeHeading.xcodeproj */,
 				255C7D2B1D8D312D0098F09D /* SystemConfiguration.framework */,
 				255C7D291D8D31260098F09D /* AdSupport.framework */,
@@ -787,6 +806,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 25F0422D1DABF48300C5D07E /* Products */;
+					ProjectRef = 25F0422C1DABF48300C5D07E /* ART.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302A81ABCB8CE00DB3ED1 /* Products */;
 					ProjectRef = 00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */;
 				},
@@ -901,6 +924,13 @@
 			fileType = archive.ar;
 			path = libReactNativeHeading.a;
 			remoteRef = 25F0420A1DAA7CEA00C5D07E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		25F042311DABF48300C5D07E /* libART.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libART.a;
+			remoteRef = 25F042301DABF48300C5D07E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
@@ -1078,7 +1108,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		CF66568EDE4B90A906AD094F /* [CP] Copy Pods Resources */ = {
@@ -1108,7 +1138,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */

@@ -4,10 +4,12 @@
 #import "MWMFrameworkListener.h"
 #import "MWMFrameworkObservers.h"
 
-@interface MWMMapView ()<MWMFrameworkDrapeObserver>
+@interface MWMMapView ()<MWMFrameworkDrapeObserver, MWMFrameworkStorageObserver>
 @end
 
-@implementation MWMMapView
+@implementation MWMMapView{
+  TCountryId currentCountryId;
+}
   
 + (instancetype)sharedInstance {
   static MWMMapView *sharedInstance = nil;
@@ -24,6 +26,7 @@
   
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
+  currentCountryId = kInvalidCountryId;
   [self initializeFramework];
   return self;
 }
@@ -66,10 +69,15 @@
 }
   
   - (void)processViewportCountryEvent:(TCountryId const &)countryId {
-    auto & s = GetFramework().Storage();
-    if (countryId != kInvalidCountryId) {
+    currentCountryId = countryId;
+    [self sendZoomedInToMapRegionEvent:countryId];
+  }
+  
+  - (void)sendZoomedInToMapRegionEvent:(TCountryId)mapRegionId {
+    if (mapRegionId != kInvalidCountryId) {
       NodeAttrs nodeAttrs;
-      s.GetNodeAttrs(countryId, nodeAttrs);
+      auto & s = GetFramework().Storage();
+      s.GetNodeAttrs(mapRegionId, nodeAttrs);
       if (!nodeAttrs.m_present) {
         BOOL const isMultiParent = nodeAttrs.m_parentInfo.size() > 1;
         BOOL const noParrent = (nodeAttrs.m_parentInfo[0].m_id == s.GetRootId());
@@ -79,18 +87,44 @@
         if (!hideParent) {
           parentName = @(nodeAttrs.m_parentInfo[0].m_localName.c_str());
         }
-        self.onZoomedInToMapRegion(@{
-                                     @"mapRegion": @{
-                                         @"mapRegionId": @(countryId.c_str()),
-                                         @"localName": @(nodeAttrs.m_nodeLocalName.c_str()),
-                                         @"downloadSize": formattedSize(nodeAttrs.m_mwmSize),
-                                         @"parentName": parentName != nil ? parentName : [NSNull null],
-                                         },
-                                     });
+        if (self.onZoomedInToMapRegion != nil) {
+          self.onZoomedInToMapRegion(@{
+                                       @"mapRegion": @{
+                                           @"mapRegionId": @(mapRegionId.c_str()),
+                                           @"localName": @(nodeAttrs.m_nodeLocalName.c_str()),
+                                           @"downloadSize": formattedSize(nodeAttrs.m_mwmSize),
+                                           @"parentName": parentName != nil ? parentName : [NSNull null],
+                                           @"status": [MWMMapView nodeStatusToString:nodeAttrs.m_status],
+                                           @"progress": [NSNumber numberWithInteger:nodeAttrs.m_downloadingProgress.first],
+                                           @"size": [NSNumber numberWithInteger:nodeAttrs.m_downloadingProgress.second],
+                                           },
+                                       });
+        }
         return;
       }
     }
     self.onZoomedOutOfMapRegion(@{});
+}
+  
+  + (NSString*)nodeStatusToString:(storage::NodeStatus)status {
+    switch (status) {
+      case storage::NodeStatus::Downloading:
+      return @"downloading";
+      case storage::NodeStatus::Undefined:
+      return @"undefined";
+      case storage::NodeStatus::OnDisk:
+      return @"on_disk";
+      case storage::NodeStatus::OnDiskOutOfDate:
+      return @"on_disk_out_of_date";
+      case storage::NodeStatus::InQueue:
+      return @"in_queue";
+      case storage::NodeStatus::NotDownloaded:
+      return @"not_downloaded";
+      case storage::NodeStatus::Partly:
+      return @"partly_downloaded";
+      case storage::NodeStatus::Error:
+      return @"error";
+    }
   }
   
 - (NSString*)processMyPositionStateModeEvent:(location::EMyPositionMode)mode {
@@ -104,6 +138,20 @@
     return @"located";
     case location::MODE_ROTATE_AND_FOLLOW:
     return @"following";
+  }
+}
+  
+#pragma mark - MWMFrameworkStorageObserver
+  
+- (void)processCountryEvent:(TCountryId const &)countryId {
+  if (countryId == currentCountryId) {
+    [self sendZoomedInToMapRegionEvent:countryId];
+  }
+}
+  
+- (void)processCountry:(TCountryId const &)countryId progress:(TLocalAndRemoteSize const &)progress {
+  if (countryId == currentCountryId) {
+    [self sendZoomedInToMapRegionEvent:countryId];
   }
 }
   
@@ -282,8 +330,7 @@
   
   RCT_EXPORT_MODULE()
   
-  RCT_EXPORT_METHOD(deactivateMapSelection)
-  {
+  RCT_EXPORT_METHOD(deactivateMapSelection) {
     GetFramework().DeactivateMapSelection(false);
   }
   
@@ -291,6 +338,24 @@
     GetFramework().SwitchMyPositionNextMode();
   }
   
+  RCT_EXPORT_METHOD(downloadMapRegion:(NSString*)regionId) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+      GetFramework().Storage().DownloadNode([regionId UTF8String]);
+    });
+  }
+  
+  RCT_EXPORT_METHOD(cancelMapRegionDownload:(NSString*)regionId) {
+    GetFramework().Storage().CancelDownloadNode([regionId UTF8String]);
+  }
+  
+  RCT_EXPORT_METHOD(zoomIn) {
+    GetFramework().Scale(Framework::SCALE_MAG, true);
+  }
+
+  RCT_EXPORT_METHOD(zoomOut) {
+    GetFramework().Scale(Framework::SCALE_MIN, true);
+  }
+
   RCT_EXPORT_VIEW_PROPERTY(onMapObjectSelected, RCTBubblingEventBlock)
   RCT_EXPORT_VIEW_PROPERTY(onMapObjectDeselected, RCTBubblingEventBlock)
   RCT_EXPORT_VIEW_PROPERTY(onLocationStateChanged, RCTBubblingEventBlock)

@@ -9,7 +9,8 @@
     "firebase": "^3.4.0",
     "react": "15.3.1",
     "react-native": "^0.34.1",
-    "react-native-heading": "0.0.1"
+    "react-native-heading": "0.0.1",
+    "react-native-progress": "^3.1.0"
   },
   "devDependencies": {
     "babel-eslint": "^7.0.0",

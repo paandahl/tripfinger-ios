@@ -4,6 +4,7 @@ import MWMMapView from '../components/MWMMapView';
 import PlacePage from '../components/PlacePage/PlacePage';
 import DownloadPopup from '../components/DownloadPopup';
 import LocationButton from '../components/LocationButton';
+import ZoomButtons from '../components/ZoomButtons';
 import locationManager from '../modules/LocationManager';
 
 const Component = React.Component;
@@ -53,7 +54,6 @@ export default class MapScene extends Component {
   };
 
   _onLocationStateChanged = (locationState) => {
-    console.log(`new location state: ${locationState}`);
     this.setState({ locationState });
     if (locationState === 'pending') {
       locationManager.pushLocation();
@@ -61,18 +61,22 @@ export default class MapScene extends Component {
   };
 
   _onZoomedInToMapRegion = (mapRegion) => {
-    console.log(`zoomed in to map region: ${JSON.stringify(mapRegion)}`);
     this.setState({ currentMapRegion: mapRegion });
   };
 
   _onZoomedOutOfMapRegion = () => {
-    console.log('zoomed out of map region');
     this.setState({ currentMapRegion: null });
   };
 
   _renderDownloadPopup = () => {
     if (this.state.currentMapRegion) {
-      return <DownloadPopup mapRegion={this.state.currentMapRegion} />;
+      return (
+        <DownloadPopup
+          mapRegion={this.state.currentMapRegion}
+          downloadMap={MWMMapView.downloadMapRegion}
+          cancelMapDownload={MWMMapView.cancelMapRegionDownload}
+        />
+      );
     }
     return null;
   };
@@ -90,6 +94,9 @@ export default class MapScene extends Component {
           onZoomedOutOfMapRegion={this._onZoomedOutOfMapRegion}
           location={this.state.location}
           heading={this.state.heading}
+        />
+        <ZoomButtons
+          zoomIn={MWMMapView.zoomIn} zoomOut={MWMMapView.zoomOut} style={styles.zoomButtons}
         />
         <LocationButton
           style={StyleSheet.flatten(styles.locationButton)}
@@ -110,6 +117,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  zoomButtons: {
+    position: 'absolute',
+    bottom: 265,
+    right: 10,
   },
   locationButton: {
     position: 'absolute',

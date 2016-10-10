@@ -28,6 +28,26 @@ export default class MWMMapView extends React.Component {
     NativeMapViewManager.switchToNextPositionMode();
   }
 
+  static downloadMapRegion(regionId) {
+    // noinspection JSUnresolvedFunction
+    NativeMapViewManager.downloadMapRegion(regionId);
+  }
+
+  static cancelMapRegionDownload(regionId) {
+    // noinspection JSUnresolvedFunction
+    NativeMapViewManager.cancelMapRegionDownload(regionId);
+  }
+
+  static zoomIn() {
+    // noinspection JSUnresolvedFunction
+    NativeMapViewManager.zoomIn();
+  }
+
+  static zoomOut() {
+    // noinspection JSUnresolvedFunction
+    NativeMapViewManager.zoomOut();
+  }
+
   // noinspection JSMethodCanBeStatic
   componentWillUnmount() {
     MWMMapView.deactivateMapSelection();

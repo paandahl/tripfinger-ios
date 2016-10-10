@@ -41,4 +41,10 @@ void GetServerListFromRequest(HttpRequest const & request, vector<string> & urls
   LOG(LWARNING, ("Can't get servers list from request, using default servers:", urls));
 }
 
+  void GetServerListFromJson(vector<string> & urls)
+  {
+    VERIFY(ParseServerList(GetPlatform().DefaultUrlsJSON(), urls), ());
+  }
+
+
 } // namespace downloader

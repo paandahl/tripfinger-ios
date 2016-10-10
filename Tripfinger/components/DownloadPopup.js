@@ -1,3 +1,5 @@
+import CircleSnail from 'react-native-progress/CircleSnail';
+import ProgressCircle from 'react-native-progress/Circle';
 import React from 'react';
 import ReactNative from 'react-native';
 import Utils from '../modules/Utils';
@@ -8,12 +10,23 @@ const Text = ReactNative.Text;
 const TouchableHighlight = ReactNative.TouchableHighlight;
 const View = ReactNative.View;
 
+
 export default class DownloadPopup extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
     style: React.PropTypes.any,
-    mapRegion: React.PropTypes.object.isRequired,
+    mapRegion: React.PropTypes.shape({
+      mapRegionId: React.PropTypes.string.isRequired,
+      localName: React.PropTypes.string.isRequired,
+      status: React.PropTypes.string.isRequired,
+      downloadSize: React.PropTypes.string.isRequired,
+      parentName: React.PropTypes.string,
+      progress: React.PropTypes.number,
+      size: React.PropTypes.number,
+    }),
+    downloadMap: React.PropTypes.func.isRequired,
+    cancelMapDownload: React.PropTypes.func.isRequired,
   };
 
   _renderParentName() {
@@ -23,15 +36,57 @@ export default class DownloadPopup extends React.Component {
     return null;
   }
 
+  _renderCancelButton() {
+    return (
+      <TouchableHighlight
+        style={[styles.button, styles.cancelButton]}
+        onPress={() => this.props.cancelMapDownload(this.props.mapRegion.mapRegionId)}
+      >
+        <Text style={styles.buttonText}>Cancel</Text>
+      </TouchableHighlight>
+    );
+  }
+
+  _renderButtonOrProgress() {
+    if (this.props.mapRegion.status === 'in_queue') {
+      return (
+        <View style={styles.progressContainer}>
+          <Text style={styles.progressHeading}>In queue:</Text>
+          <CircleSnail />
+          {this._renderCancelButton()}
+        </View>
+      );
+    } else if (this.props.mapRegion.status === 'downloading') {
+      const progress = this.props.mapRegion.progress / this.props.mapRegion.size;
+      let progressView = <CircleSnail />;
+      if (progress > 0) {
+        progressView = <ProgressCircle progress={progress} showsText thickness={6} />;
+      }
+      return (
+        <View style={styles.progressContainer}>
+          <Text style={styles.progressHeading}>Downloading:</Text>
+          {progressView}
+          {this._renderCancelButton()}
+        </View>
+      );
+    }
+    return (
+      <TouchableHighlight
+        style={[styles.button, styles.downloadButton]}
+        onPress={() => this.props.downloadMap(this.props.mapRegion.mapRegionId)}
+      >
+        <Text style={styles.buttonText}>Download Map</Text>
+      </TouchableHighlight>
+    );
+  }
+
   render() {
     return (
       <View style={styles.box}>
         {this._renderParentName()}
         <Text style={styles.regionName}>{this.props.mapRegion.localName}</Text>
         <Text style={styles.downloadSize}>{this.props.mapRegion.downloadSize}</Text>
-        <TouchableHighlight style={styles.button}>
-          <Text style={styles.buttonText}>Download Map</Text>
-        </TouchableHighlight>
+        {this._renderButtonOrProgress()}
       </View>
     );
   }
@@ -69,12 +124,26 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 20,
     marginBottom: 20,
-    backgroundColor: Globals.colors.tripfingerBlue,
     padding: 10,
     borderRadius: 8,
   },
   buttonText: {
     fontSize: 16,
     color: '#fff',
+  },
+  downloadButton: {
+    backgroundColor: Globals.colors.tripfingerBlue,
+  },
+  cancelButton: {
+    backgroundColor: Globals.colors.cancelRed,
+  },
+
+  progressContainer: {
+    marginTop: 10,
+    alignItems: 'center',
+  },
+  progressHeading: {
+    color: '#666',
+    marginBottom: 10,
   },
 });

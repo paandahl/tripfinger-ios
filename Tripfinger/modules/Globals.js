@@ -1,8 +1,6 @@
-// <editor-fold desc="Imports">
 import React from 'react';
 
 const PropTypes = React.PropTypes;
-// </editor-fold>
 
 const Globals = {
   propTypes: {
@@ -25,6 +23,7 @@ const Globals = {
 
   colors: {
     tripfingerBlue: '#2FADF2',
+    cancelRed: '#d9534f',
   },
 };
 

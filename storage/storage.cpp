@@ -566,8 +566,9 @@ void Storage::DownloadNextFile(QueuedCountry const & country)
   }
 
   // send Country name for statistics
-  m_downloader->GetServersList(GetCurrentDataVersion(), countryFile.GetName(),
-                               bind(&Storage::OnServerListDownloaded, this, _1));
+  vector<string> urls;
+  downloader::GetServerListFromJson(urls);
+  Storage::OnServerListDownloaded(urls);
 }
 
 void Storage::DeleteFromDownloader(TCountryId const & countryId)

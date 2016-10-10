@@ -9,4 +9,5 @@ namespace downloader
   class HttpRequest;
 
   void GetServerListFromRequest(HttpRequest const & request, vector<string> & urls);
+  void GetServerListFromJson(vector<string> & urls);
 }
