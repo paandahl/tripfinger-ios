@@ -65,6 +65,34 @@
   [MWMFrameworkListener addObserver:self];
 }
   
+  - (void)processViewportCountryEvent:(TCountryId const &)countryId {
+    auto & s = GetFramework().Storage();
+    if (countryId != kInvalidCountryId) {
+      NodeAttrs nodeAttrs;
+      s.GetNodeAttrs(countryId, nodeAttrs);
+      if (!nodeAttrs.m_present) {
+        BOOL const isMultiParent = nodeAttrs.m_parentInfo.size() > 1;
+        BOOL const noParrent = (nodeAttrs.m_parentInfo[0].m_id == s.GetRootId());
+        BOOL const sameName = nodeAttrs.m_nodeLocalName == nodeAttrs.m_parentInfo[0].m_localName;
+        BOOL const hideParent = (noParrent || isMultiParent || sameName);
+        NSString* parentName = nil;
+        if (!hideParent) {
+          parentName = @(nodeAttrs.m_parentInfo[0].m_localName.c_str());
+        }
+        self.onZoomedInToMapRegion(@{
+                                     @"mapRegion": @{
+                                         @"mapRegionId": @(countryId.c_str()),
+                                         @"localName": @(nodeAttrs.m_nodeLocalName.c_str()),
+                                         @"downloadSize": formattedSize(nodeAttrs.m_mwmSize),
+                                         @"parentName": parentName != nil ? parentName : [NSNull null],
+                                         },
+                                     });
+        return;
+      }
+    }
+    self.onZoomedOutOfMapRegion(@{});
+  }
+  
 - (NSString*)processMyPositionStateModeEvent:(location::EMyPositionMode)mode {
   switch (mode) {
     case location::MODE_UNKNOWN_POSITION:
@@ -245,12 +273,6 @@
   return info;
 }
   
-- (void)processViewportCountryEvent:(TCountryId const &)countryId {
-  NSLog(@"processViewportCountryEvent: %@", @(countryId.c_str()));
-//  [self.downloadDialog processViewportCountryEvent:countryId];
-}
-
-  
 @end
 
 @interface MWMMapViewManager : RCTViewManager
@@ -272,9 +294,11 @@
   RCT_EXPORT_VIEW_PROPERTY(onMapObjectSelected, RCTBubblingEventBlock)
   RCT_EXPORT_VIEW_PROPERTY(onMapObjectDeselected, RCTBubblingEventBlock)
   RCT_EXPORT_VIEW_PROPERTY(onLocationStateChanged, RCTBubblingEventBlock)
+  RCT_EXPORT_VIEW_PROPERTY(onZoomedInToMapRegion, RCTBubblingEventBlock)
+  RCT_EXPORT_VIEW_PROPERTY(onZoomedOutOfMapRegion, RCTBubblingEventBlock)
   RCT_EXPORT_VIEW_PROPERTY(location, NSDictionary)
   RCT_EXPORT_VIEW_PROPERTY(heading, double)
-  
+
 - (UIView *)view {
   return [MWMMapView sharedInstance];
 }

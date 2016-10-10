@@ -8,6 +8,8 @@
 @property (nonatomic, copy) RCTBubblingEventBlock onMapObjectSelected;
 @property (nonatomic, copy) RCTBubblingEventBlock onMapObjectDeselected;
 @property (nonatomic, copy) RCTBubblingEventBlock onLocationStateChanged;
+@property (nonatomic, copy) RCTBubblingEventBlock onZoomedInToMapRegion;
+@property (nonatomic, copy) RCTBubblingEventBlock onZoomedOutOfMapRegion;
 
 + (instancetype)sharedInstance;
 - (void)onEnterBackground;

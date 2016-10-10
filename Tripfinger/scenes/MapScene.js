@@ -17,13 +17,13 @@ export default class MapScene extends Component {
     this.state = {
       currentItem: null,
       locationState: 'not_located',
+      currentMapRegion: null,
     };
   }
 
   componentDidMount() {
     locationManager.addObserver('MapScene', (location, heading) => {
       this.setState({ location, heading });
-      console.log(`New coords: ${JSON.stringify(location)}`);
     });
   }
 
@@ -31,7 +31,7 @@ export default class MapScene extends Component {
     locationManager.removeObserver('MapScene');
   }
 
-  onMapObjectSelected = (info) => {
+  _onMapObjectSelected = (info) => {
     this.setState({ currentItem: info });
     // self.controlsManager.hidden = NO;
     // if (info.GetID().IsTripfinger()) {
@@ -43,7 +43,7 @@ export default class MapScene extends Component {
     // }
   };
 
-  onMapObjectDeselected = (switchFullScreen) => {
+  _onMapObjectDeselected = (switchFullScreen) => {
     this.setState({ currentItem: null });
     // [self dismissPlacePage];
     //
@@ -52,12 +52,29 @@ export default class MapScene extends Component {
     //   self.controlsManager.hidden = !self.controlsManager.hidden;
   };
 
-  onLocationStateChanged = (locationState) => {
+  _onLocationStateChanged = (locationState) => {
     console.log(`new location state: ${locationState}`);
     this.setState({ locationState });
     if (locationState === 'pending') {
       locationManager.pushLocation();
     }
+  };
+
+  _onZoomedInToMapRegion = (mapRegion) => {
+    console.log(`zoomed in to map region: ${JSON.stringify(mapRegion)}`);
+    this.setState({ currentMapRegion: mapRegion });
+  };
+
+  _onZoomedOutOfMapRegion = () => {
+    console.log('zoomed out of map region');
+    this.setState({ currentMapRegion: null });
+  };
+
+  _renderDownloadPopup = () => {
+    if (this.state.currentMapRegion) {
+      return <DownloadPopup mapRegion={this.state.currentMapRegion} />;
+    }
+    return null;
   };
 
   // noinspection JSMethodCanBeStatic
@@ -66,9 +83,11 @@ export default class MapScene extends Component {
       <View style={styles.container}>
         <MWMMapView
           style={styles.map}
-          onMapObjectSelected={this.onMapObjectSelected}
-          onMapObjectDeselected={this.onMapObjectDeselected}
-          onLocationStateChanged={this.onLocationStateChanged}
+          onMapObjectSelected={this._onMapObjectSelected}
+          onMapObjectDeselected={this._onMapObjectDeselected}
+          onLocationStateChanged={this._onLocationStateChanged}
+          onZoomedInToMapRegion={this._onZoomedInToMapRegion}
+          onZoomedOutOfMapRegion={this._onZoomedOutOfMapRegion}
           location={this.state.location}
           heading={this.state.heading}
         />
@@ -79,7 +98,7 @@ export default class MapScene extends Component {
             MWMMapView.switchToNextPositionMode();
           }}
         />
-        <DownloadPopup />
+        {this._renderDownloadPopup()}
         <PlacePage info={this.state.currentItem} />
       </View>
     );

@@ -4,7 +4,7 @@ import React from 'react';
 const PropTypes = React.PropTypes;
 // </editor-fold>
 
-export default {
+const Globals = {
   propTypes: {
     navigator: PropTypes.shape({
       push: PropTypes.func.isRequired,
@@ -22,5 +22,10 @@ export default {
       images: PropTypes.array.isRequired,
     }),
   },
+
+  colors: {
+    tripfingerBlue: '#2FADF2',
+  },
 };
 
+export default Globals;

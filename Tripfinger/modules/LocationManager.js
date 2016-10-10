@@ -21,6 +21,7 @@ class LocationManager {
   }
 
   _gotPosition = (position) => {
+    console.log(`New coords: ${JSON.stringify(position)}`);
     this.currentLocation = position;
     for (const key of Object.keys(this.observers)) {
       this.observers[key](position, this.currentHeading);

@@ -11,6 +11,8 @@ export default class MWMMapView extends React.Component {
     onMapObjectSelected: React.PropTypes.func,
     onMapObjectDeselected: React.PropTypes.func,
     onLocationStateChanged: React.PropTypes.func,
+    onZoomedInToMapRegion: React.PropTypes.func,
+    onZoomedOutOfMapRegion: React.PropTypes.func,
     location: React.PropTypes.object,
     heading: React.PropTypes.number,
     style: React.PropTypes.any,
@@ -31,7 +33,7 @@ export default class MWMMapView extends React.Component {
     MWMMapView.deactivateMapSelection();
   }
 
-  onMapObjectSelected = (event) => {
+  _onMapObjectSelected = (event) => {
     if (!this.props.onMapObjectSelected) {
       return;
     }
@@ -39,7 +41,7 @@ export default class MWMMapView extends React.Component {
     this.props.onMapObjectSelected(event.nativeEvent.info);
   };
 
-  onMapObjectDeselected = (event) => {
+  _onMapObjectDeselected = (event) => {
     if (!this.props.onMapObjectDeselected) {
       return;
     }
@@ -47,7 +49,7 @@ export default class MWMMapView extends React.Component {
     this.props.onMapObjectDeselected(event.nativeEvent.switchFullScreen);
   };
 
-  onLocationStateChanged = (event) => {
+  _onLocationStateChanged = (event) => {
     if (!this.props.onLocationStateChanged) {
       return;
     }
@@ -55,12 +57,30 @@ export default class MWMMapView extends React.Component {
     this.props.onLocationStateChanged(event.nativeEvent.locationState);
   };
 
+  _onZoomedInToMapRegion = (event) => {
+    if (!this.props.onZoomedInToMapRegion) {
+      return;
+    }
+    // noinspection JSUnresolvedVariable
+    this.props.onZoomedInToMapRegion(event.nativeEvent.mapRegion);
+  };
+
+  _onZoomedOutOfMapRegion = () => {
+    if (!this.props.onZoomedOutOfMapRegion) {
+      return;
+    }
+    // noinspection JSUnresolvedVariable
+    this.props.onZoomedOutOfMapRegion();
+  };
+
   render() {
     return (
       <NativeMapView
-        onMapObjectSelected={this.onMapObjectSelected}
-        onMapObjectDeselected={this.onMapObjectDeselected}
-        onLocationStateChanged={this.onLocationStateChanged}
+        onMapObjectSelected={this._onMapObjectSelected}
+        onMapObjectDeselected={this._onMapObjectDeselected}
+        onLocationStateChanged={this._onLocationStateChanged}
+        onZoomedInToMapRegion={this._onZoomedInToMapRegion}
+        onZoomedOutOfMapRegion={this._onZoomedOutOfMapRegion}
         location={this.props.location}
         heading={this.props.heading}
         style={this.props.style}
