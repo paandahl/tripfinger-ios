@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactNative from 'react-native';
-import Globals from '../../modules/Globals';
+import Globals from '../../../modules/Globals';
+import ClosedHours from './ClosedHours';
+import ExpandedView from './ExpandedView';
 
 const Image = ReactNative.Image;
 const StyleSheet = ReactNative.StyleSheet;
 const Text = ReactNative.Text;
 const TouchableHighlight = ReactNative.TouchableHighlight;
 const View = ReactNative.View;
-const openHoursIcon = require('../../assets/placepage/open_hours.png');
-const arrowUpIcon = require('../../assets/placepage/arrow_up.png');
-const arrowDownIcon = require('../../assets/placepage/arrow_down.png');
+const openHoursIcon = require('../../../assets/placepage/open_hours.png');
+const arrowUpIcon = require('../../../assets/placepage/arrow_up.png');
+const arrowDownIcon = require('../../../assets/placepage/arrow_down.png');
 
 export default class OpeningHoursCell extends React.Component {
 
@@ -17,25 +19,6 @@ export default class OpeningHoursCell extends React.Component {
   static propTypes = {
     openingHours: React.PropTypes.object.isRequired,
   };
-
-  static _renderBreaks(day, currentDay = false) {
-    if (day.breaks.length > 0) {
-      const lineHeight = currentDay ? 14 : 13;
-      const breaksHeight = { height: (day.breaks.length * lineHeight) + 5 };
-      const textStyle = currentDay ? styles.currentDayBreaksText : styles.breaksText;
-      return (
-        <View key={`${day.label}-breaks`} style={breaksHeight}>
-          <Text style={textStyle}>Hours Closed</Text>
-          <View style={styles.breaks}>
-            {day.breaks.map(breakHours =>
-              <Text key={`${day.label}-brk-${breakHours}`} style={textStyle}>{breakHours}</Text>
-            )}
-          </View>
-        </View>
-      );
-    }
-    return null;
-  }
 
   static _renderClosedText(day) {
     if (day.closed) {
@@ -71,38 +54,6 @@ export default class OpeningHoursCell extends React.Component {
     return null;
   }
 
-  _renderClosedDays() {
-    if (this.props.openingHours.closedDays) {
-      return (
-        <View key="closed" style={styles.weekday}>
-          <Text style={styles.weekdayText}>{this.props.openingHours.closedDays}</Text>
-          <Text style={styles.weekdayValue}>Closed</Text>
-        </View>
-      );
-    }
-    return null;
-  }
-
-  _renderExpandedView() {
-    if (this.state.expanded) {
-      return (
-        <View style={styles.expandedView}>
-          {this.props.openingHours.weekdays.map(day =>
-            <View key={day.label} style={styles.weekday}>
-              <View style={styles.weekdayOpenHours}>
-                <Text style={styles.weekdayText}>{day.label}</Text>
-                <Text style={styles.weekdayValue}>{day.openTime}</Text>
-              </View>
-              {OpeningHoursCell._renderBreaks(day)}
-            </View>
-          )}
-          {this._renderClosedDays()}
-        </View>
-      );
-    }
-    return null;
-  }
-
   _renderCurrentDay() {
     const hours = this.props.openingHours;
     if (hours.plainText) {
@@ -115,7 +66,7 @@ export default class OpeningHoursCell extends React.Component {
           <Text style={styles.rowValue}>{hours.currentDay.openTime}</Text>
           {this._renderExpandIcon()}
         </View>
-        {OpeningHoursCell._renderBreaks(hours.currentDay, true)}
+        <ClosedHours day={hours.currentDay} isCurrent />
         {OpeningHoursCell._renderClosedText(hours.currentDay)}
       </View>
     );
@@ -133,7 +84,10 @@ export default class OpeningHoursCell extends React.Component {
           <Image style={styles.icon} source={openHoursIcon} />
           <View style={styles.innerRow}>
             {this._renderCurrentDay()}
-            {this._renderExpandedView()}
+            <ExpandedView
+              expanded={this.state.expanded} weekdays={this.props.openingHours.weekdays}
+              closedDays={this.props.openingHours.closedDays}
+            />
           </View>
         </View>
       </TouchableHighlight>
@@ -145,9 +99,6 @@ const styles = StyleSheet.create({
   row: {
     paddingLeft: 15,
     backgroundColor: '#FFFFFF',
-  },
-  firstRowInSection: {
-    marginTop: 20,
   },
   container: {
     paddingLeft: 40,
@@ -171,9 +122,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     alignItems: 'center',
   },
-  rowHighlight: {
-    flex: 1,
-  },
   rowLabel: {
     fontSize: 16,
   },
@@ -188,44 +136,6 @@ const styles = StyleSheet.create({
     right: 10,
     top: 10,
     tintColor: '#5D5D5D',
-  },
-  expandedView: {
-    borderTopWidth: 1,
-    borderTopColor: '#f3f3f3',
-    marginRight: 40,
-    paddingTop: 5,
-    paddingBottom: 5,
-  },
-  weekday: {
-    marginTop: 5,
-  },
-  weekdayOpenHours: {
-    height: 20,
-  },
-  weekdayText: {
-    color: '#777',
-  },
-  weekdayValue: {
-    color: '#777',
-    position: 'absolute',
-    left: 100,
-    top: 0,
-  },
-  breaksContainer: {
-    paddingBottom: 10,
-  },
-  breaks: {
-    position: 'absolute',
-    left: 100,
-    top: 0,
-  },
-  breaksText: {
-    color: '#888',
-    fontSize: 12,
-  },
-  currentDayBreaksText: {
-    color: '#777',
-    fontSize: 13,
   },
   closedText: {
     fontSize: 13,

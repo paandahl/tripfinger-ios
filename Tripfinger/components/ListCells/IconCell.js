@@ -2,73 +2,39 @@ import React from 'react';
 import ReactNative from 'react-native';
 import Globals from '../../modules/Globals';
 
-const Component = React.Component;
-const PropTypes = React.PropTypes;
 const Image = ReactNative.Image;
 const StyleSheet = ReactNative.StyleSheet;
 const Text = ReactNative.Text;
-const TouchableHighlight = ReactNative.TouchableHighlight;
 const View = ReactNative.View;
 
-export default class IconCell extends Component {
+export default class IconCell extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    rowId: PropTypes.string.isRequired,
-    sectionId: PropTypes.string.isRequired,
-    highlightRow: PropTypes.func,
-    text: PropTypes.string.isRequired,
-    onPress: PropTypes.func,
-    firstRowInSectionStyles: PropTypes.object,
-    icon: PropTypes.any,
-    textStyle: PropTypes.oneOf(['normal', 'link']),
+    text: React.PropTypes.string.isRequired,
+    icon: React.PropTypes.any.isRequired,
+    textColor: React.PropTypes.string,
+    iconTintColor: React.PropTypes.string,
   };
 
   // noinspection JSUnusedGlobalSymbols
   static defaultProps = {
-    firstRowInSectionStyles: {},
-    textStyle: 'normal',
-  };
-
-  pressIn = () => {
-    if (this.props.highlightRow) {
-      this.props.highlightRow(this.props.sectionId, this.props.rowId);
-    }
-  };
-
-  pressOut = () => {
-    if (this.props.highlightRow) {
-      this.props.highlightRow(null);
-    }
+    textColor: '#000',
+    iconTintColor: '#5D5D5D',
   };
 
   render() {
-    const rowStyles = [styles.row];
-    if (this.props.rowId === '0') {
-      rowStyles.push(this.props.firstRowInSectionStyles);
-    }
-    const rowTextStyles = [styles.rowText];
-    const iconStyles = [styles.icon];
-    if (this.props.textStyle === 'link') {
-      rowTextStyles.push(styles.link);
-      iconStyles.push(styles.linkIcon);
-    }
+    const rowTextStyles = [{ color: this.props.textColor }, styles.rowText];
+    const iconStyles = [{ tintColor: this.props.iconTintColor }, styles.icon];
     return (
-      <TouchableHighlight
-        key={`${this.props.sectionId}:${this.props.rowId}`}
-        style={rowStyles}
-        underlayColor="#DDDDDD"
-        onPressIn={this.pressIn}
-        onPressOut={this.pressOut}
-        onPress={this.props.onPress}
-      >
+      <View style={styles.row}>
         <View style={styles.container}>
           <Image style={iconStyles} source={this.props.icon} />
           <View style={styles.innerRow}>
             <Text style={rowTextStyles}>{this.props.text}</Text>
           </View>
         </View>
-      </TouchableHighlight>
+      </View>
     );
   }
 }
@@ -87,7 +53,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   icon: {
-    tintColor: '#5D5D5D',
     marginRight: 15,
   },
   linkIcon: {

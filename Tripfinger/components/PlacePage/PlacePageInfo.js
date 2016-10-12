@@ -1,19 +1,14 @@
 import React from 'react';
 import ReactNative from 'react-native';
 import IconCell from '../ListCells/IconCell';
-import OpeningHoursCell from '../ListCells/OpeningHoursCell';
-import ViewState from './PlacePageViewState';
+import LinkCell from '../ListCells/LinkCell';
+import OpeningHoursCell from '../ListCells/OpeningHours/OpeningHoursCell';
+import InfoHeader from './InfoHeader';
 import Utils from '../../modules/Utils';
 
-const Image = ReactNative.Image;
-const Linking = ReactNative.Linking;
 const ListView = ReactNative.ListView;
 const StyleSheet = ReactNative.StyleSheet;
-const Text = ReactNative.Text;
-const TouchableHighlight = ReactNative.TouchableHighlight;
 const View = ReactNative.View;
-const expandImage = require('../../assets/placepage/placepage_tip.png');
-const collapseImage = require('../../assets/placepage/placepage_collapse.png');
 const coordinatesIcon = require('../../assets/placepage/coordinates.png');
 const phoneIcon = require('../../assets/placepage/number.png');
 const websiteIcon = require('../../assets/placepage/website.png');
@@ -74,77 +69,33 @@ export default class PlacePageInfo extends React.Component {
     });
   }
 
-  _getDistance() {
-    if (this.props.location) {
-      const locLat = this.props.location.coords.latitude;
-      const locLon = this.props.location.coords.longitude;
-      const infoLat = this.props.info.lat / 1000000;
-      const infoLon = this.props.info.lon / 1000000;
-      const distance = Utils.distanceOnEarth(locLat, locLon, infoLat, infoLon);
-      return Utils.formatDistance(distance);
-    }
-    return '';
-  }
-
   renderRow = (data, sectionId, rowId) => {
+    const key = `${sectionId}:${rowId}`;
     if (rowId === 'gps') {
       const text = `${data.lat} ${data.lon}`;
-      return <IconCell sectionId={sectionId} rowId={rowId} text={text} icon={coordinatesIcon} />;
+      return <IconCell key={key} text={text} icon={coordinatesIcon} />;
     } else if (rowId === 'phoneNumber') {
-      return (
-        <IconCell
-          sectionId={sectionId} rowId={rowId} text={data} icon={phoneIcon} textStyle="link"
-          onPress={() => Linking.openURL(`telprompt:${data}`)}
-        />
-      );
+      return <LinkCell key={key} text={data} icon={phoneIcon} url={`telprompt:${data}`} />;
     } else if (rowId === 'website') {
-      return (
-        <IconCell
-          sectionId={sectionId} rowId={rowId} text={data} icon={websiteIcon} textStyle="link"
-          onPress={() => Linking.openURL(data)}
-        />
-      );
+      return <LinkCell key={key} text={data} icon={websiteIcon} url={data} />;
     } else if (rowId === 'email') {
-      return (
-        <IconCell
-          sectionId={sectionId} rowId={rowId} text={data} icon={emailIcon} textStyle="link"
-          onPress={() => Linking.openURL(`mailto:${data}`)}
-        />
-      );
+      return <IconCell key={key} text={data} icon={emailIcon} url={`mailto:${data}`} />;
     } else if (rowId === 'openHours') {
-      return (
-        <OpeningHoursCell openingHours={data} />
-      );
+      return <OpeningHoursCell openingHours={data} />;
     } else if (rowId === 'wifi') {
-      return (
-        <IconCell sectionId={sectionId} rowId={rowId} text="Yes" icon={wifiIcon} />
-      );
+      return <IconCell key={key} text="Yes" icon={wifiIcon} />;
     }
     return null;
   };
 
   render() {
-    const headerTip = this.props.viewState === ViewState.EXPANDED ? collapseImage : expandImage;
     if (this.props.info !== null) {
       this.featureView = (
         <View style={styles.info} {...this.props.panHandlers}>
-          <TouchableHighlight
-            style={styles.header}
-            underlayColor="#FFF"
-            onPress={this.props.headerClicked}
-            onLayout={(event) => {
-              this.props.headerHeightUpdated(event.nativeEvent.layout.height);
-            }}
-          >
-            <View>
-              <Image style={styles.tip} source={headerTip} />
-              <Text style={styles.name}>{this.props.info.title}</Text>
-              <View>
-                <Text style={styles.type}>{this.props.info.category}</Text>
-                <Text style={styles.distance}>{this._getDistance()}</Text>
-              </View>
-            </View>
-          </TouchableHighlight>
+          <InfoHeader
+            info={this.props.info} onClick={this.props.headerClicked} location={this.props.location}
+            onHeaderHeightUpdate={this.props.headerHeightUpdated} viewState={this.props.viewState}
+          />
           <View style={styles.featureDetails}>
             <ListView
               removeClippedSubviews={false}
@@ -157,7 +108,6 @@ export default class PlacePageInfo extends React.Component {
         </View>
       );
     }
-
     return this.featureView;
   }
 }
@@ -166,31 +116,6 @@ const styles = StyleSheet.create({
   info: {
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
-  },
-  header: {
-    paddingBottom: 18,
-    alignSelf: 'stretch',
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
-  tip: {
-    alignSelf: 'center',
-  },
-  name: {
-    fontSize: 21,
-    fontWeight: '500',
-    marginTop: 4,
-    marginBottom: 6,
-  },
-  type: {
-    color: '#777',
-  },
-  distance: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    fontWeight: '500',
-    color: '#1C80EC',
   },
   featureDetails: {
     alignSelf: 'stretch',
@@ -201,6 +126,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   hiddenFooter: {
-    height: 147,
+    height: 147, // 47pt actionbar + 100pt extra for when openinghours collapses
   },
 });
