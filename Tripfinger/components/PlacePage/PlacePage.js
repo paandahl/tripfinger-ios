@@ -16,6 +16,7 @@ export default class PlacePage extends React.Component {
   static propTypes = {
     info: React.PropTypes.object,
     onDismiss: React.PropTypes.func.isRequired,
+    location: React.PropTypes.object,
   };
 
   constructor(props) {
@@ -121,7 +122,7 @@ export default class PlacePage extends React.Component {
           }}
         >
           <PlacePageInfo
-            info={this.props.info} viewState={this.state.viewState}
+            info={this.props.info} viewState={this.state.viewState} location={this.props.location}
             panHandlers={this.panResponder.panHandlers()} headerClicked={this._headerClicked}
             headerHeightUpdated={this._headerHeightUpdated} collapseHours={this._expand}
           />

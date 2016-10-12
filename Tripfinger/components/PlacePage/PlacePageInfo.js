@@ -29,6 +29,7 @@ export default class PlacePageInfo extends React.Component {
     info: React.PropTypes.object,
     viewState: React.PropTypes.string.isRequired,
     panHandlers: React.PropTypes.any,
+    location: React.PropTypes.object,
   };
 
   constructor(props) {
@@ -71,6 +72,18 @@ export default class PlacePageInfo extends React.Component {
     this.setState({
       dataSource: this.state.dataSource.cloneWithRows(data, rows),
     });
+  }
+
+  _getDistance() {
+    if (this.props.location) {
+      const locLat = this.props.location.coords.latitude;
+      const locLon = this.props.location.coords.longitude;
+      const infoLat = this.props.info.lat / 1000000;
+      const infoLon = this.props.info.lon / 1000000;
+      const distance = Utils.distanceOnEarth(locLat, locLon, infoLat, infoLon);
+      return Utils.formatDistance(distance);
+    }
+    return '';
   }
 
   renderRow = (data, sectionId, rowId) => {
@@ -128,7 +141,7 @@ export default class PlacePageInfo extends React.Component {
               <Text style={styles.name}>{this.props.info.title}</Text>
               <View>
                 <Text style={styles.type}>{this.props.info.category}</Text>
-                <Text style={styles.distance}>968 km</Text>
+                <Text style={styles.distance}>{this._getDistance()}</Text>
               </View>
             </View>
           </TouchableHighlight>

@@ -109,6 +109,7 @@ export default class MapScene extends Component {
         {this._renderDownloadPopup()}
         <PlacePage
           info={this.state.currentItem}
+          location={this.state.location}
           onDismiss={() => this.setState({ currentItem: null })}
         />
       </View>
