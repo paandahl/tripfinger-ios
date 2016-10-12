@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
+import Globals from '../../modules/Globals';
 
 const Component = React.Component;
 const PropTypes = React.PropTypes;
@@ -20,11 +21,13 @@ export default class IconCell extends Component {
     onPress: PropTypes.func,
     firstRowInSectionStyles: PropTypes.object,
     icon: PropTypes.any,
+    textStyle: PropTypes.oneOf(['normal', 'link']),
   };
 
   // noinspection JSUnusedGlobalSymbols
   static defaultProps = {
     firstRowInSectionStyles: {},
+    textStyle: 'normal',
   };
 
   pressIn = () => {
@@ -44,6 +47,12 @@ export default class IconCell extends Component {
     if (this.props.rowId === '0') {
       rowStyles.push(this.props.firstRowInSectionStyles);
     }
+    const rowTextStyles = [styles.rowText];
+    const iconStyles = [styles.icon];
+    if (this.props.textStyle === 'link') {
+      rowTextStyles.push(styles.link);
+      iconStyles.push(styles.linkIcon);
+    }
     return (
       <TouchableHighlight
         key={`${this.props.sectionId}:${this.props.rowId}`}
@@ -54,9 +63,9 @@ export default class IconCell extends Component {
         onPress={this.props.onPress}
       >
         <View style={styles.container}>
-          <Image style={styles.icon} source={this.props.icon} />
+          <Image style={iconStyles} source={this.props.icon} />
           <View style={styles.innerRow}>
-            <Text style={styles.rowText}>{this.props.text}</Text>
+            <Text style={rowTextStyles}>{this.props.text}</Text>
           </View>
         </View>
       </TouchableHighlight>
@@ -81,14 +90,23 @@ const styles = StyleSheet.create({
     tintColor: '#5D5D5D',
     marginRight: 15,
   },
+  linkIcon: {
+    tintColor: Globals.colors.linkBlue,
+  },
   innerRow: {
     height: 50,
+    flex: 1,
     justifyContent: 'center',
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
   },
   rowHighlight: {
     flex: 1,
   },
   rowText: {
     fontSize: 16,
+  },
+  link: {
+    color: Globals.colors.linkBlue,
   },
 });

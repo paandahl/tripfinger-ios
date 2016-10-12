@@ -33,6 +33,7 @@ export default class MapScene extends Component {
   }
 
   _onMapObjectSelected = (info) => {
+    console.log(`object selected: ${JSON.stringify(info)}`);
     this.setState({ currentItem: info });
     // self.controlsManager.hidden = NO;
     // if (info.GetID().IsTripfinger()) {
@@ -44,7 +45,7 @@ export default class MapScene extends Component {
     // }
   };
 
-  _onMapObjectDeselected = (switchFullScreen) => {
+  _onMapObjectDeselected = () => {
     this.setState({ currentItem: null });
     // [self dismissPlacePage];
     //
@@ -106,7 +107,10 @@ export default class MapScene extends Component {
           }}
         />
         {this._renderDownloadPopup()}
-        <PlacePage info={this.state.currentItem} />
+        <PlacePage
+          info={this.state.currentItem}
+          onDismiss={() => this.setState({ currentItem: null })}
+        />
       </View>
     );
   }

@@ -1,29 +1,34 @@
 import React from 'react';
 import ReactNative from 'react-native';
 import IconCell from '../ListCells/IconCell';
+import OpeningHoursCell from '../ListCells/OpeningHoursCell';
 import ViewState from './PlacePageViewState';
 import Utils from '../../modules/Utils';
 
-const Component = React.Component;
-const PropTypes = React.PropTypes;
 const Image = ReactNative.Image;
+const Linking = ReactNative.Linking;
 const ListView = ReactNative.ListView;
 const StyleSheet = ReactNative.StyleSheet;
 const Text = ReactNative.Text;
 const TouchableHighlight = ReactNative.TouchableHighlight;
 const View = ReactNative.View;
-const expandImage = require('../../assets/placepage_tip.png');
-const collapseImage = require('../../assets/placepage_collapse.png');
-const coordinatesIcon = require('../../assets/ic_placepage_coordinate.png');
+const expandImage = require('../../assets/placepage/placepage_tip.png');
+const collapseImage = require('../../assets/placepage/placepage_collapse.png');
+const coordinatesIcon = require('../../assets/placepage/coordinates.png');
+const phoneIcon = require('../../assets/placepage/number.png');
+const websiteIcon = require('../../assets/placepage/website.png');
+const emailIcon = require('../../assets/placepage/email.png');
+const wifiIcon = require('../../assets/placepage/wifi.png');
 
-export default class PlacePageInfo extends Component {
+export default class PlacePageInfo extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    headerClicked: PropTypes.func.isRequired,
-    info: PropTypes.object,
-    viewState: PropTypes.string.isRequired,
-    panHandlers: PropTypes.any,
+    headerClicked: React.PropTypes.func.isRequired,
+    headerHeightUpdated: React.PropTypes.func.isRequired,
+    info: React.PropTypes.object,
+    viewState: React.PropTypes.string.isRequired,
+    panHandlers: React.PropTypes.any,
   };
 
   constructor(props) {
@@ -41,12 +46,30 @@ export default class PlacePageInfo extends Component {
   }
 
   fillDatasource(info) {
+    const data = {};
+    const rows = [];
+    if (info.phoneNumber) {
+      data.phoneNumber = info.phoneNumber;
+      rows.push('phoneNumber');
+    }
+    if (info.website) {
+      data.website = info.website;
+      rows.push('website');
+    }
+    if (info.email) {
+      data.email = info.email;
+      rows.push('email');
+    }
+    if (info.openHours) {
+      data.openHours = info.openHours;
+      rows.push('openHours');
+    }
     const lat = info.lat / 1000000;
     const lon = info.lon / 1000000;
-    const data = { gps: { lat, lon } };
-
+    data.gps = { lat, lon };
+    rows.push('gps');
     this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(data, ['gps']),
+      dataSource: this.state.dataSource.cloneWithRows(data, rows),
     });
   }
 
@@ -54,11 +77,39 @@ export default class PlacePageInfo extends Component {
     if (rowId === 'gps') {
       const text = `${data.lat} ${data.lon}`;
       return <IconCell sectionId={sectionId} rowId={rowId} text={text} icon={coordinatesIcon} />;
+    } else if (rowId === 'phoneNumber') {
+      return (
+        <IconCell
+          sectionId={sectionId} rowId={rowId} text={data} icon={phoneIcon} textStyle="link"
+          onPress={() => Linking.openURL(`telprompt:${data}`)}
+        />
+      );
+    } else if (rowId === 'website') {
+      return (
+        <IconCell
+          sectionId={sectionId} rowId={rowId} text={data} icon={websiteIcon} textStyle="link"
+          onPress={() => Linking.openURL(data)}
+        />
+      );
+    } else if (rowId === 'email') {
+      return (
+        <IconCell
+          sectionId={sectionId} rowId={rowId} text={data} icon={emailIcon} textStyle="link"
+          onPress={() => Linking.openURL(`mailto:${data}`)}
+        />
+      );
+    } else if (rowId === 'openHours') {
+      return (
+        <OpeningHoursCell openingHours={data} />
+      );
+    } else if (rowId === 'wifi') {
+      return (
+        <IconCell sectionId={sectionId} rowId={rowId} text="Yes" icon={wifiIcon} />
+      );
     }
     return null;
   };
 
-  // noinspection JSMethodCanBeStatic
   render() {
     const headerTip = this.props.viewState === ViewState.EXPANDED ? collapseImage : expandImage;
     if (this.props.info !== null) {
@@ -68,6 +119,9 @@ export default class PlacePageInfo extends Component {
             style={styles.header}
             underlayColor="#FFF"
             onPress={this.props.headerClicked}
+            onLayout={(event) => {
+              this.props.headerHeightUpdated(event.nativeEvent.layout.height);
+            }}
           >
             <View>
               <Image style={styles.tip} source={headerTip} />
@@ -101,7 +155,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   header: {
-    height: 78,
+    paddingBottom: 18,
     alignSelf: 'stretch',
     paddingLeft: 20,
     paddingRight: 20,
@@ -134,6 +188,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   hiddenFooter: {
-    height: 47,
+    height: 147,
   },
 });

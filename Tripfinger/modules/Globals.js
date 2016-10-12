@@ -23,6 +23,7 @@ const Globals = {
 
   colors: {
     tripfingerBlue: '#2FADF2',
+    linkBlue: '#3586FF',
     cancelRed: '#d9534f',
   },
 };

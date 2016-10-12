@@ -24,6 +24,7 @@ export default class GuideItemCell extends Component {
     guideItem: Globals.propTypes.guideItem,
   };
 
+  // noinspection JSUnusedGlobalSymbols
   static defaultProps = {
     initialExpand: false,
   };
@@ -117,6 +118,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 16,
     fontWeight: '400',
-    color: '#3586FF',
+    color: Globals.colors.linkBlue,
   },
 });

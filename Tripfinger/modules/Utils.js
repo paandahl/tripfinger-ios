@@ -44,14 +44,8 @@ export default {
 
   simpleDataSource: () =>
     new ListView.DataSource({
-      rowHasChanged: (r1, r2) => {
-        console.log(`row has Changedy: ${r1} ${r2}`);
-        return true;
-      },
-      sectionHeaderHasChanged: (s1, s2) => {
-        console.log(`sectionHeader has Changed: ${s1} ${s2}`);
-        return true;
-      },
+      rowHasChanged: (r1, r2) => r1 !== r2,
+      sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
     }),
 
   PanResponderWrapper,

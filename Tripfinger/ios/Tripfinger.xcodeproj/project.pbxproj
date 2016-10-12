@@ -101,6 +101,7 @@
 		25F0420C1DAA867D00C5D07E /* libReactNativeHeading.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25F0420B1DAA7CEA00C5D07E /* libReactNativeHeading.a */; };
 		25F042111DAAA62B00C5D07E /* MWMFrameworkListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25F042101DAAA62B00C5D07E /* MWMFrameworkListener.mm */; };
 		25F0423D1DABF49400C5D07E /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25F042311DABF48300C5D07E /* libART.a */; };
+		25F042401DAD7D8000C5D07E /* MWMOpeningHours.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25F0423F1DAD7D8000C5D07E /* MWMOpeningHours.mm */; };
 		30D99DD979D7CF9743AB4D09 /* Pods_TripfingerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC79B1CC2C0A6FCBD028B9B /* Pods_TripfingerTests.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		D02FBC34DC9C9958C1E2A5B3 /* Pods_Tripfinger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB339040E75BB56D22749A18 /* Pods_Tripfinger.framework */; };
@@ -318,6 +319,8 @@
 		25F0420F1DAAA5F800C5D07E /* MWMFrameworkListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMFrameworkListener.h; sourceTree = "<group>"; };
 		25F042101DAAA62B00C5D07E /* MWMFrameworkListener.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMFrameworkListener.mm; sourceTree = "<group>"; };
 		25F0422C1DABF48300C5D07E /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
+		25F0423E1DAD7D6700C5D07E /* MWMOpeningHours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMOpeningHours.h; sourceTree = "<group>"; };
+		25F0423F1DAD7D8000C5D07E /* MWMOpeningHours.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMOpeningHours.mm; sourceTree = "<group>"; };
 		6BE16475EC68D76BB863E147 /* Pods-Tripfinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.release.xcconfig"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
@@ -481,6 +484,8 @@
 				255C7D191D8D2B6F0098F09D /* MWMMapView.mm */,
 				255C7D141D8D2AE00098F09D /* MWMMapWidgets.h */,
 				255C7D151D8D2AF30098F09D /* MWMMapWidgets.mm */,
+				25F0423E1DAD7D6700C5D07E /* MWMOpeningHours.h */,
+				25F0423F1DAD7D8000C5D07E /* MWMOpeningHours.mm */,
 				255C7D171D8D2B020098F09D /* MWMTypes.h */,
 				25F0420E1DAAA5DD00C5D07E /* Framework */,
 				255C7D1C1D8D2EA30098F09D /* Other Sources */,
@@ -1166,6 +1171,7 @@
 				255C7D281D8D2F7E0098F09D /* iosOGLContextFactory.mm in Sources */,
 				255C7D271D8D2F7E0098F09D /* iosOGLContext.mm in Sources */,
 				255C7D161D8D2AF30098F09D /* MWMMapWidgets.mm in Sources */,
+				25F042401DAD7D8000C5D07E /* MWMOpeningHours.mm in Sources */,
 				25AABCA61D9E76D700178E0B /* NetworkComponent.m in Sources */,
 				255C7D131D8D2ABF0098F09D /* Framework.mm in Sources */,
 				255C7DF51D9181BA0098F09D /* TFRCTAction.m in Sources */,

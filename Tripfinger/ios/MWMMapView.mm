@@ -3,12 +3,30 @@
 #import "MWMMapView.h"
 #import "MWMFrameworkListener.h"
 #import "MWMFrameworkObservers.h"
+#import "MWMOpeningHours.h"
 
 @interface MWMMapView ()<MWMFrameworkDrapeObserver, MWMFrameworkStorageObserver>
 @end
 
 @implementation MWMMapView{
   TCountryId currentCountryId;
+  
+  enum EType : int8_t
+  {
+    FMD_CUISINE = 1,
+    FMD_OPEN_HOURS = 2,
+    FMD_PHONE_NUMBER = 3,
+    FMD_STARS = 5,
+    FMD_URL = 7,
+    FMD_WEBSITE = 8,
+    FMD_INTERNET = 9,
+    FMD_EMAIL = 14,
+    FMD_HEIGHT = 19,
+    FMD_MIN_HEIGHT = 20,
+    FMD_DENOMINATION = 21,
+    FMD_BOOKING_URL = 24,
+    FMD_COUNT
+  };
 }
   
 + (instancetype)sharedInstance {
@@ -37,15 +55,43 @@
   f.SetMapSelectionListeners([self](place_page::Info const & info) {
     int lat = (int)(info.GetLatLon().lat * 1000000 + 0.5);
     int lon = (int)(info.GetLatLon().lon * 1000000 + 0.5);
-    self.onMapObjectSelected(@{
-                               @"info": @{
-                                   @"title": @(info.GetTitle().c_str()),
-                                   @"address": @(info.GetAddress().c_str()),
-                                   @"lat": [NSNumber numberWithInt:lat],
-                                   @"lon": [NSNumber numberWithInt:lon],
-                                   @"category": @(info.GetSubtitle().c_str()),
-                                   },
-                               });
+    NSMutableDictionary* infoDict = [@{
+                                       @"title": @(info.GetTitle().c_str()),
+                                       @"address": @(info.GetAddress().c_str()),
+                                       @"lat": [NSNumber numberWithInt:lat],
+                                       @"lon": [NSNumber numberWithInt:lon],
+                                       @"category": @(info.GetSubtitle().c_str()),
+                                      } mutableCopy];
+    feature::Metadata const & md = info.GetMetadata();
+    for (auto const type : md.GetPresentTypes()) {
+      switch (type) {
+        case FMD_URL:
+        if (![infoDict objectForKey:@"website"]) {
+          infoDict[@"website"] = @(md.Get(type).c_str());
+        }
+        break;
+        case FMD_BOOKING_URL:
+        case FMD_WEBSITE:
+        infoDict[@"website"] = @(md.Get(type).c_str());
+        break;
+        case FMD_PHONE_NUMBER:
+        infoDict[@"phoneNumber"] = @(md.Get(type).c_str());
+        break;
+        case FMD_OPEN_HOURS:
+        infoDict[@"openHours"] = [MWMOpeningHours createOpeningHoursDict:@(md.Get(type).c_str())];
+        break;
+        case FMD_EMAIL:
+        infoDict[@"email"] = @(md.Get(type).c_str());
+        break;
+        case FMD_INTERNET:
+        infoDict[@"hasWifi"] = [NSNumber numberWithBool:YES];
+        break;
+        default:
+        break;
+      }
+    }
+
+    self.onMapObjectSelected(@{@"info": infoDict});
   }, [self](bool switchFullScreen) {
     self.onMapObjectDeselected(@{@"switchFullScreen": switchFullScreen ? @"true" : @"false"});
   });
@@ -105,7 +151,7 @@
     }
     self.onZoomedOutOfMapRegion(@{});
 }
-  
+    
   + (NSString*)nodeStatusToString:(storage::NodeStatus)status {
     switch (status) {
       case storage::NodeStatus::Downloading:

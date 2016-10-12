@@ -6,17 +6,16 @@ import PlacePageInfo from './PlacePageInfo';
 import ViewState from './PlacePageViewState';
 import Utils from '../../modules/Utils';
 
-const Component = React.Component;
-const PropTypes = React.PropTypes;
 const Animated = ReactNative.Animated;
 const StyleSheet = ReactNative.StyleSheet;
 const View = ReactNative.View;
 
-export default class PlacePage extends Component {
+export default class PlacePage extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    info: PropTypes.object,
+    info: React.PropTypes.object,
+    onDismiss: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -26,6 +25,7 @@ export default class PlacePage extends Component {
       actionTop: new Animated.Value(0),
       viewState: ViewState.HIDDEN,
     };
+    this._headerHeight = 125;
     this.state.featureTop.addListener(({ value }) => {
       this.featureTopValue = value;
     });
@@ -36,25 +36,25 @@ export default class PlacePage extends Component {
       getStartValue: () => this.featureTopValue,
       onPanResponderMove: (evt, gestureState, startY) => {
         const newY = startY + gestureState.dy;
-        this.state.featureTop.setValue(Math.max(newY, -this.height));
+        this.state.featureTop.setValue(Math.max(newY, -(this.height - 100)));
       },
       onPanResponderRelease: (evt, gestureState) => {
         if (this.state.viewState === ViewState.HEADER) {
           if (gestureState.vy < -0.01 || gestureState.dy < -10) { // swipe up or dragged 10px up
-            this.expand();
+            this._expand();
           } else if (gestureState.vy > 0.01 || gestureState.dy > 10) { // swipe or dragged down
-            this.popDown();
+            this._popDown();
           } else {
-            this.popToHeader();
+            this._popToHeader();
           }
         } else if (this.state.viewState === ViewState.EXPANDED) {
           const directDropLimit = Utils.getScreenHeight() - 75;
           if (gestureState.moveY > directDropLimit) {
-            this.popDown();
+            this._popDown();
           } else if (gestureState.vy > 0.01 || gestureState.dy > 20) { // swipe or dragged down
-            this.popToHeader();
+            this._popToHeader();
           } else {
-            this.expand();
+            this._expand();
           }
         }
       },
@@ -63,36 +63,47 @@ export default class PlacePage extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.info === null) {
-      this.popDown();
-    } else {
-      this.popToHeader();
+    if (newProps.info === null && this.props.info !== null) {
+      this._popDown();
+    } else if (newProps.info !== this.props.info) {
+      this._popToHeader();
     }
   }
 
-  popToHeader() {
-    Utils.animateTo(this.state.featureTop, 150, -125);
+  _popToHeader() {
+    Utils.animateTo(this.state.featureTop, 150, -this._headerHeight);
     Utils.animateTo(this.state.actionTop, 150, -47);
     this.setState({ viewState: ViewState.HEADER });
   }
 
-  popDown() {
+  _popDown() {
     Utils.animateTo(this.state.featureTop, 100, 0);
     Utils.animateTo(this.state.actionTop, 100, 0);
     MWMMapView.deactivateMapSelection();
     this.setState({ viewState: ViewState.HIDDEN });
+    if (this.props.info) {
+      this.props.onDismiss();
+    }
   }
 
-  expand = () => {
-    Utils.animateTo(this.state.featureTop, 150, -this.height);
+  _expand = () => {
+    Utils.animateTo(this.state.featureTop, 150, -(this.height - 100));
     this.setState({ viewState: ViewState.EXPANDED });
   };
 
-  headerClicked = () => {
+  _headerClicked = () => {
     if (this.state.viewState === ViewState.HEADER) {
-      this.expand();
+      this._expand();
     } else {
-      this.popToHeader();
+      this._popToHeader();
+    }
+  };
+
+  _headerHeightUpdated = (newHeight) => {
+    const oldHeight = this._headerHeight;
+    this._headerHeight = Math.max(125, newHeight + 47);
+    if (oldHeight !== this._headerHeight && this.state.viewState === ViewState.HEADER) {
+      this._popToHeader();
     }
   };
 
@@ -102,12 +113,17 @@ export default class PlacePage extends Component {
         <Animated.View
           style={[{ top: this.state.featureTop }, styles.featureContainer]}
           onLayout={(event) => {
+            const oldHeight = this.height;
             this.height = event.nativeEvent.layout.height;
+            if (this.state.viewState === ViewState.EXPANDED && this.height < oldHeight) {
+              this._expand();
+            }
           }}
         >
           <PlacePageInfo
             info={this.props.info} viewState={this.state.viewState}
-            panHandlers={this.panResponder.panHandlers()} headerClicked={this.headerClicked}
+            panHandlers={this.panResponder.panHandlers()} headerClicked={this._headerClicked}
+            headerHeightUpdated={this._headerHeightUpdated} collapseHours={this._expand}
           />
         </Animated.View>
         <Animated.View style={[{ top: this.state.actionTop }, styles.actionContainer]}>
@@ -119,6 +135,14 @@ export default class PlacePage extends Component {
 }
 
 const styles = StyleSheet.create({
-  featureContainer: { position: 'absolute', left: 0, right: 0 },
-  actionContainer: { position: 'absolute', left: 0, right: 0 },
+  featureContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+  },
+  actionContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+  },
 });
