@@ -22,6 +22,13 @@ export default class InfoHeader extends React.Component {
     viewState: React.PropTypes.string.isRequired,
   };
 
+  _renderAddress() {
+    if (this.props.info.address) {
+      return <Text style={styles.address}>{this.props.info.address}</Text>;
+    }
+    return null;
+  }
+
   render() {
     const headerTip = this.props.viewState === ViewState.EXPANDED ? collapseImage : expandImage;
     return (
@@ -40,6 +47,7 @@ export default class InfoHeader extends React.Component {
             <Text style={styles.type}>{this.props.info.category}</Text>
             <DistanceLabel info={this.props.info} location={this.props.location} />
           </View>
+          {this._renderAddress()}
         </View>
       </TouchableHighlight>
     );
@@ -64,5 +72,9 @@ const styles = StyleSheet.create({
   },
   type: {
     color: '#777',
+  },
+  address: {
+    color: '#777',
+    marginTop: 5,
   },
 });
