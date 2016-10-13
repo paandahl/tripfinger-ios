@@ -136,21 +136,46 @@ static NSString * DB_BOOKMARK_ITEMS = @"bookmarkItems";
     [AppDelegate setBookmarks:bookmarks];
   }];  
 }
+  
+- (NSString*)BSaddBookmark:(NSDictionary*)bookmark {
+  NSLog(@"native addBookmark");
+  if (listId == nil) {
+    return nil;
+  }
+  NSLog(@"native adding Bookmark");
+  FIRDatabaseReference * itemRef = [[[[[FIRDatabase database] reference] child:DB_BOOKMARK_ITEMS] child:listId] childByAutoId];
+  [itemRef setValue:bookmark];
+  return [itemRef key];
+}
 
-- (void)addBookmark:(NSDictionary *)bookmark {
+- (void)BSremoveBookmark:(NSString*)databaseKey {
+  NSLog(@"native removeBookmark");
   if (listId == nil) {
     return;
   }
-  FIRDatabaseReference * itemRef = [[[[[FIRDatabase database] reference] child:DB_BOOKMARK_ITEMS] child:listId] childByAutoId];
-  [itemRef setValue:bookmark];
+  FIRDatabaseReference * itemRef = [[[[[FIRDatabase database] reference] child:DB_BOOKMARK_ITEMS] child:listId] child:databaseKey];
+  [itemRef setValue:nil];
 }
-
 
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(initializeFirebase)
 {
   [BookmarkService.sharedInstance BSinitializeFirebase];
+}
+  
+RCT_EXPORT_METHOD(addBookmark:(NSDictionary*)bookmark resolver:(RCTPromiseResolveBlock)resolve
+                    rejecter:(RCTPromiseRejectBlock)reject) {
+  NSString* key = [BookmarkService.sharedInstance BSaddBookmark:bookmark];
+  if (key == nil) {
+    NSError* error = [NSError errorWithDomain:@"tripfinger.com" code:10 userInfo:nil];
+    reject(@"no_events", @"There were no events", error);
+  }
+  resolve(key);
+}
+  
+RCT_EXPORT_METHOD(removeBookmark:(NSString*)databaseKey) {
+  [BookmarkService.sharedInstance BSremoveBookmark:databaseKey];
 }
 
 //RCT_EXPORT_METHOD(setNavBarHidden:(BOOL *)hidden)

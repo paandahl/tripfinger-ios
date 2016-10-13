@@ -17,6 +17,8 @@ export default class PlacePage extends React.Component {
     info: React.PropTypes.object,
     onDismiss: React.PropTypes.func.isRequired,
     location: React.PropTypes.object,
+    addBookmark: React.PropTypes.func.isRequired,
+    removeBookmark: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -112,7 +114,7 @@ export default class PlacePage extends React.Component {
     return (
       <View>
         <Animated.View
-          style={[{ top: this.state.featureTop }, styles.featureContainer]}
+          style={[{ top: this.state.featureTop }, styles.floatingContainer]}
           onLayout={(event) => {
             const oldHeight = this.height;
             this.height = event.nativeEvent.layout.height;
@@ -127,8 +129,11 @@ export default class PlacePage extends React.Component {
             headerHeightUpdated={this._headerHeightUpdated} collapseHours={this._expand}
           />
         </Animated.View>
-        <Animated.View style={[{ top: this.state.actionTop }, styles.actionContainer]}>
-          <ActionBar info={this.props.info} />
+        <Animated.View style={[{ top: this.state.actionTop }, styles.floatingContainer]}>
+          <ActionBar
+            info={this.props.info}
+            addBookmark={this.props.addBookmark} removeBookmark={this.props.removeBookmark}
+          />
         </Animated.View>
       </View>
     );
@@ -136,12 +141,7 @@ export default class PlacePage extends React.Component {
 }
 
 const styles = StyleSheet.create({
-  featureContainer: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-  },
-  actionContainer: {
+  floatingContainer: {
     position: 'absolute',
     left: 0,
     right: 0,

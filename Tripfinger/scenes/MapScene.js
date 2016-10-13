@@ -5,6 +5,7 @@ import PlacePage from '../components/PlacePage/PlacePage';
 import DownloadPopup from '../components/DownloadPopup';
 import LocationButton from '../components/LocationButton';
 import ZoomButtons from '../components/ZoomButtons';
+import BookmarkService from '../modules/BookmarkService';
 import locationManager from '../modules/LocationManager';
 
 const Component = React.Component;
@@ -36,19 +37,10 @@ export default class MapScene extends Component {
     console.log(`object selected: ${JSON.stringify(info)}`);
     this.setState({ currentItem: info });
     // self.controlsManager.hidden = NO;
-    // if (info.GetID().IsTripfinger()) {
-    //   TripfingerMark mark = *info.GetID().tripfingerMark;
-    //   TripfingerEntity *entity = [DataConverter markToEntity:mark];
-    //   [self.controlsManager showPlacePageWithEntity:entity];
-    // } else {
-    //   [self.controlsManager showPlacePage:info];
-    // }
   };
 
   _onMapObjectDeselected = () => {
     this.setState({ currentItem: null });
-    // [self dismissPlacePage];
-    //
     // auto & f = GetFramework();
     // if (switchFullScreenMode && self.controlsManager.searchHidden && !f.IsRouteNavigable())
     //   self.controlsManager.hidden = !self.controlsManager.hidden;
@@ -82,6 +74,19 @@ export default class MapScene extends Component {
     return null;
   };
 
+  _addBookmark = async (item) => {
+    const bookmarkKey = await BookmarkService.addBookmarkForItem(item);
+    this.setState({ currentItem: { ...this.state.currentItem, bookmarkKey } });
+  };
+
+  _removeBookmark = (item) => {
+    console.log('removing bookmark');
+    BookmarkService.removeBookmarkForItem(item);
+    const newCurrentItem = { ...this.state.currentItem };
+    delete newCurrentItem.bookmarkKey;
+    this.setState({ currentItem: newCurrentItem });
+  };
+
   // noinspection JSMethodCanBeStatic
   render() {
     return (
@@ -111,6 +116,8 @@ export default class MapScene extends Component {
           info={this.state.currentItem}
           location={this.state.location}
           onDismiss={() => this.setState({ currentItem: null })}
+          addBookmark={this._addBookmark}
+          removeBookmark={this._removeBookmark}
         />
       </View>
     );

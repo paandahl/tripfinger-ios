@@ -79,7 +79,7 @@ export default class PlacePageInfo extends React.Component {
     } else if (rowId === 'website') {
       return <LinkCell key={key} text={data} icon={websiteIcon} url={data} />;
     } else if (rowId === 'email') {
-      return <IconCell key={key} text={data} icon={emailIcon} url={`mailto:${data}`} />;
+      return <LinkCell key={key} text={data} icon={emailIcon} url={`mailto:${data}`} />;
     } else if (rowId === 'openHours') {
       return <OpeningHoursCell openingHours={data} />;
     } else if (rowId === 'wifi') {

@@ -1,22 +1,22 @@
-// <editor-fold desc="Imports">
 import React from 'react';
 import ReactNative from 'react-native';
 
-const Component = React.Component;
-const PropTypes = React.PropTypes;
 const Image = ReactNative.Image;
 const StyleSheet = ReactNative.StyleSheet;
 const Text = ReactNative.Text;
+const TouchableHighlight = ReactNative.TouchableHighlight;
 const View = ReactNative.View;
 const addBookmarkImage = require('../../assets/bookmark_add.png');
+const removeBookmarkImage = require('../../assets/bookmark_remove.png');
 const routeImage = require('../../assets/ic_route.png');
-// </editor-fold>
 
-export default class ActionBar extends Component {
+export default class ActionBar extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    info: PropTypes.object,
+    info: React.PropTypes.object,
+    addBookmark: React.PropTypes.func.isRequired,
+    removeBookmark: React.PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -24,19 +24,45 @@ export default class ActionBar extends Component {
     this.actionView = <View />;
   }
 
+  _renderBookmarkButton() {
+    if (this.props.info.bookmarkKey) {
+      return (
+        <TouchableHighlight
+          onPress={() => this.props.removeBookmark(this.props.info)}
+          underlayColor="transparent"
+        >
+          <View style={styles.actionButton}>
+            <Image source={removeBookmarkImage} />
+            <Text style={styles.buttonText}>Delete</Text>
+          </View>
+        </TouchableHighlight>
+      );
+    }
+    return (
+      <TouchableHighlight
+        onPress={() => this.props.addBookmark(this.props.info)}
+        underlayColor="transparent"
+      >
+        <View style={styles.actionButton}>
+          <Image source={addBookmarkImage} style={styles.buttonIcon} />
+          <Text style={styles.buttonText}>Save</Text>
+        </View>
+      </TouchableHighlight>
+    );
+  }
+
   // noinspection JSMethodCanBeStatic
   render() {
     if (this.props.info !== null) {
       this.actionView = (
         <View style={styles.actionBar}>
-          <View style={styles.actionButton}>
-            <Image source={addBookmarkImage} style={styles.buttonIcon} />
-            <Text style={styles.buttonText}>Save</Text>
-          </View>
-          <View style={styles.actionButton}>
-            <Image source={routeImage} style={styles.buttonIcon} />
-            <Text style={styles.buttonText}>Route</Text>
-          </View>
+          {this._renderBookmarkButton()}
+          <TouchableHighlight onPress={() => console.log('routePressed')}>
+            <View style={styles.actionButton}>
+              <Image source={routeImage} style={styles.buttonIcon} />
+              <Text style={styles.buttonText}>Route</Text>
+            </View>
+          </TouchableHighlight>
         </View>
       );
     }

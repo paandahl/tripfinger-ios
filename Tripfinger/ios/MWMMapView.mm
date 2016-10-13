@@ -90,6 +90,13 @@
         break;
       }
     }
+    
+    if (info.IsBookmark()) {
+      auto const bac = info.GetBookmarkAndCategory();
+      BookmarkCategory * cat = GetFramework().GetBmCategory(bac.first);
+      BookmarkData const & data = static_cast<Bookmark const *>(cat->GetUserMark(bac.second))->GetData();
+      infoDict[@"bookmarkKey"] = @(data.GetDatabaseKey().c_str());
+    }
 
     self.onMapObjectSelected(@{@"info": infoDict});
   }, [self](bool switchFullScreen) {

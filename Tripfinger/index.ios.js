@@ -23,6 +23,7 @@ class Tripfinger extends Component {
           component: CountriesScene,
         }}
         style={styles.navigator}
+        interactivePopGestureEnabled={false}
       />
     );
   }
