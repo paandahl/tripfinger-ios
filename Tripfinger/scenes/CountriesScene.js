@@ -1,4 +1,3 @@
-// <editor-fold desc="Imports">
 import React from 'react';
 import ReactNative from 'react-native';
 import { getCountries } from '../modules/ContentService';
@@ -15,7 +14,6 @@ const ListView = ReactNative.ListView;
 const View = ReactNative.View;
 const TouchableHighlight = ReactNative.TouchableHighlight;
 const PropTypes = React.PropTypes;
-// </editor-fold>
 
 const MAP_ICON = require('../assets/maps_icon.png');
 const SETTINGS_ICON = require('../assets/ic_menu.png');

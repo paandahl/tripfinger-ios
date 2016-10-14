@@ -102,7 +102,9 @@
 		25F042111DAAA62B00C5D07E /* MWMFrameworkListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25F042101DAAA62B00C5D07E /* MWMFrameworkListener.mm */; };
 		25F0423D1DABF49400C5D07E /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25F042311DABF48300C5D07E /* libART.a */; };
 		25F042401DAD7D8000C5D07E /* MWMOpeningHours.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25F0423F1DAD7D8000C5D07E /* MWMOpeningHours.mm */; };
+		2FEE74E1CA694777B0DCC05D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 39378EEFFB054693802EDA01 /* libz.tbd */; };
 		30D99DD979D7CF9743AB4D09 /* Pods_TripfingerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FC79B1CC2C0A6FCBD028B9B /* Pods_TripfingerTests.framework */; };
+		5264A8D1CC554AD7A021B685 /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7959563A99D9483499EA597B /* libRealmReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		D02FBC34DC9C9958C1E2A5B3 /* Pods_Tripfinger.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB339040E75BB56D22749A18 /* Pods_Tripfinger.framework */; };
 /* End PBXBuildFile section */
@@ -184,6 +186,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 0CF68AC11AF0540F00FF9E5C;
 			remoteInfo = ART;
+		};
+		25F0425D1DAFC90600C5D07E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 788F95DAE3124F68BF7FDECD /* RealmReact.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F60690131CA2766F0003FB26;
+			remoteInfo = RealmReact;
 		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -321,8 +330,11 @@
 		25F0422C1DABF48300C5D07E /* ART.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ART.xcodeproj; path = "../node_modules/react-native/Libraries/ART/ART.xcodeproj"; sourceTree = "<group>"; };
 		25F0423E1DAD7D6700C5D07E /* MWMOpeningHours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMOpeningHours.h; sourceTree = "<group>"; };
 		25F0423F1DAD7D8000C5D07E /* MWMOpeningHours.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMOpeningHours.mm; sourceTree = "<group>"; };
+		39378EEFFB054693802EDA01 /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		6BE16475EC68D76BB863E147 /* Pods-Tripfinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.release.xcconfig"; sourceTree = "<group>"; };
+		788F95DAE3124F68BF7FDECD /* RealmReact.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RealmReact.xcodeproj; path = "../node_modules/realm/react-native/ios/RealmReact.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
+		7959563A99D9483499EA597B /* libRealmReact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRealmReact.a; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		98BBA3272DFD64AB96797E12 /* Pods-TripfingerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9FC79B1CC2C0A6FCBD028B9B /* Pods_TripfingerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TripfingerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -360,6 +372,8 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				D02FBC34DC9C9958C1E2A5B3 /* Pods_Tripfinger.framework in Frameworks */,
+				5264A8D1CC554AD7A021B685 /* libRealmReact.a in Frameworks */,
+				2FEE74E1CA694777B0DCC05D /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -652,6 +666,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		25F0424E1DAFC90600C5D07E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				25F0425E1DAFC90600C5D07E /* libRealmReact.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -677,6 +699,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				788F95DAE3124F68BF7FDECD /* RealmReact.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -717,6 +740,7 @@
 			children = (
 				AB339040E75BB56D22749A18 /* Pods_Tripfinger.framework */,
 				9FC79B1CC2C0A6FCBD028B9B /* Pods_TripfingerTests.framework */,
+				39378EEFFB054693802EDA01 /* libz.tbd */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -784,7 +808,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -857,6 +881,10 @@
 				{
 					ProductGroup = 25F042071DAA7CEA00C5D07E /* Products */;
 					ProjectRef = 25F042061DAA7CEA00C5D07E /* ReactNativeHeading.xcodeproj */;
+				},
+				{
+					ProductGroup = 25F0424E1DAFC90600C5D07E /* Products */;
+					ProjectRef = 788F95DAE3124F68BF7FDECD /* RealmReact.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -936,6 +964,13 @@
 			fileType = archive.ar;
 			path = libART.a;
 			remoteRef = 25F042301DABF48300C5D07E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		25F0425E1DAFC90600C5D07E /* libRealmReact.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRealmReact.a;
+			remoteRef = 25F0425D1DAFC90600C5D07E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
@@ -1224,6 +1259,10 @@
 				INFOPLIST_FILE = TripfingerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
 			};
@@ -1239,6 +1278,10 @@
 				INFOPLIST_FILE = TripfingerTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
@@ -1280,6 +1323,7 @@
 					../../3party/boost,
 					../../3party/glm,
 					"$(SRCROOT)/../node_modules/react-native/Libraries/Image",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				INFOPLIST_FILE = Tripfinger/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1369,6 +1413,7 @@
 					../../3party/boost,
 					../../3party/glm,
 					"$(SRCROOT)/../node_modules/react-native/Libraries/Image",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				INFOPLIST_FILE = Tripfinger/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1460,6 +1505,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1500,6 +1546,7 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

@@ -10,7 +10,8 @@
     "react": "15.3.1",
     "react-native": "^0.34.1",
     "react-native-heading": "0.0.1",
-    "react-native-progress": "^3.1.0"
+    "react-native-progress": "^3.1.0",
+    "realm": "^0.14.3"
   },
   "devDependencies": {
     "babel-eslint": "^7.0.0",
