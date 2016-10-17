@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactNative from 'react-native';
-import TFNavigator from './components/TFNavigator';
-import CountriesScene from './scenes/CountriesScene';
-import BookmarkService from './modules/BookmarkService';
+import TFNavigator from './universal/shared/native/TFNavigator';
+import CountriesScene from './universal/guide/regions/CountriesScene';
+import BookmarkService from './universal/shared/native/BookmarkService';
 
 const Component = React.Component;
 const AppRegistry = ReactNative.AppRegistry;

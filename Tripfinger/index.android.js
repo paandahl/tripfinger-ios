@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactNative from 'react-native';
-import CountriesScene from './scenes/CountriesScene';
-import MapScene from './scenes/MapScene';
+import CountriesScene from './universal/guide/regions/CountriesScene';
+import MapScene from './universal/map/MapScene';
 
 const Component = React.Component;
 const AppRegistry = ReactNative.AppRegistry;

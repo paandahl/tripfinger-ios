@@ -11,6 +11,7 @@
     "react-native": "^0.34.1",
     "react-native-heading": "0.0.1",
     "react-native-progress": "^3.1.0",
+    "react-native-radio-buttons": "^0.12.2",
     "realm": "^0.14.3"
   },
   "devDependencies": {
