@@ -12,13 +12,13 @@ export default class StandardCell extends React.Component {
   static propTypes = {
     text: React.PropTypes.string.isRequired,
     onPress: React.PropTypes.func,
-    row: React.PropTypes.string,
+    isFirstRow: React.PropTypes.bool,
     isLastRow: React.PropTypes.bool,
   };
 
   render() {
     const rowStyles = [styles.row];
-    if (this.props.row === '0') {
+    if (this.props.isFirstRow) {
       rowStyles.push(styles.firstRowInSection);
     }
     if (this.props.isLastRow) {

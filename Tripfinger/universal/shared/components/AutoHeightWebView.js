@@ -59,7 +59,7 @@ const codeInject = html => html + styleBlock;
 export default class AutoHeightWebView extends React.Component {
 
   static propTypes = {
-    html: React.PropTypes.object.isRequired,
+    html: React.PropTypes.string.isRequired,
     minHeight: React.PropTypes.number,
     style: React.PropTypes.any,
   };

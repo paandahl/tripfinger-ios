@@ -7,9 +7,9 @@ import SectionScene from './SectionScene';
 import Globals from '../../shared/Globals';
 import Utils from '../../shared/Utils';
 import CategoryScene from '../listings/CategoryScene';
+import ListViewContainer from '../../shared/components/ListViewContainer';
 
 const Component = React.Component;
-const ListView = ReactNative.ListView;
 const StyleSheet = ReactNative.StyleSheet;
 
 export default class RegionScene extends Component {
@@ -41,7 +41,8 @@ export default class RegionScene extends Component {
         // noinspection JSUnresolvedVariable
         this.data.sections = region.guideSections;
         this.data.attractions = ['Attractions'];
-        const dataSource = this.state.dataSource.cloneWithRowsAndSections(this.data, this.sections);
+        this.data.subRegions = region.subRegions.sort((a, b) => a.name.localeCompare(b.name));
+        const dataSource = this.state.dataSource.cloneWithRowsAndSections(this.data);
         this.setState({ dataSource });
       } catch (error) {
         console.log(`loadRegionIfNecessary error: ${error}`);
@@ -75,38 +76,39 @@ export default class RegionScene extends Component {
     });
   };
 
+  navigateToSubRegion = (subRegion) => {
+    this.props.navigator.push({
+      component: RegionScene,
+      passProps: {
+        region: subRegion,
+      },
+    });
+  };
+
   navigateToCategory = () => {
 
   };
 
-  renderRow = (data, sectionId, rowId) => {
-    const key = `${sectionId}:${rowId}`;
-    const isLastRow = parseInt(rowId, 10) === this.data[sectionId].length - 1;
+  renderRow = (data, sectionId, isFirstRow, isLastRow) => {
+    const props = { isFirstRow, isLastRow };
     if (sectionId === 'guideItem') {
-      return (
-        <GuideItemCell key={key} guideItem={this.props.region} expandRegion={this.expandRegion} />
-      );
+      const region = this.props.region;
+      return <GuideItemCell guideItem={region} expandRegion={this.expandRegion} {...props} />;
     } else if (sectionId === 'sections' && this.state.expanded) {
-      return (
-        <StandardCell
-          key={key} onPress={() => this.navigateToSection(data)} row={rowId} isLastRow={isLastRow}
-          text={data.name}
-        />
-      );
+      const text = data.name;
+      return <StandardCell onPress={() => this.navigateToSection(data)} text={text} {...props} />;
     } else if (sectionId === 'attractions') {
-      return (
-        <StandardCell
-          onPress={() => this.navigateToAttractions()}
-          key={key} text="Attractions" row={rowId} isLastRow={isLastRow}
-        />
-      );
+      return <StandardCell onPress={this.navigateToAttractions} text="Attractions" {...props} />;
+    } else if (sectionId === 'subRegions') {
+      const text = data.name;
+      return <StandardCell onPress={() => this.navigateToSubRegion(data)} text={text} {...props} />;
     }
     return null;
   };
 
   render() {
     return (
-      <ListView
+      <ListViewContainer
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         style={styles.list}
