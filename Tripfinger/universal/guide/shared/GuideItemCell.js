@@ -45,7 +45,9 @@ export default class GuideItemCell extends Component {
           this.setState({
             expanded: true,
           });
-          this.props.expandRegion();
+          if (this.props.expandRegion) {
+            this.props.expandRegion();
+          }
         }}
         underlayColor="#FFFFFF"
       >
@@ -79,7 +81,7 @@ export default class GuideItemCell extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#fff',
   },
   button: {
     marginTop: 20,

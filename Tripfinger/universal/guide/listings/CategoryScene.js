@@ -18,7 +18,13 @@ export default class CategoryScene extends React.Component {
   };
 
   // noinspection JSUnusedGlobalSymbols
-  static title = props => Utils.categoryName(props.categoryDesc.category);
+  static title = (props) => {
+    if (props.categoryDesc.subCategory) {
+      return Utils.categoryName(props.categoryDesc.subCategory);
+    } else {
+      return Utils.categoryName(props.categoryDesc.category);
+    }
+  };
 
   constructor(props) {
     super(props);
@@ -45,25 +51,25 @@ export default class CategoryScene extends React.Component {
       return null;
     }
     return (
-      <SegmentedControls
-        options={['Swipe', 'List']}
-        selectedOption={this.state.selectedOption}
-        onSelection={opt => this.setState({ selectedOption: opt })}
-        tint={'#555'}
-        selectedTint={'#fff'}
-        backTint={'#fff'}
-        paddingTop={8}
-        paddingBottom={8}
-      />
+      <View style={styles.segmented}>
+        <SegmentedControls
+          options={['Swipe', 'List']}
+          selectedOption={this.state.selectedOption}
+          onSelection={opt => this.setState({ selectedOption: opt })}
+          tint={'#555'}
+          selectedTint={'#fff'}
+          backTint={'#fff'}
+          paddingTop={8}
+          paddingBottom={8}
+        />
+      </View>
     );
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.segmented}>
-          {this._renderHeader()}
-        </View>
+        {this._renderHeader()}
         <View style={styles.subContainer}>
           {this._renderContent()}
         </View>
@@ -74,12 +80,13 @@ export default class CategoryScene extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 80,
+    marginTop: 64,
     alignItems: 'center',
     flex: 1,
   },
   segmented: {
     width: 200,
+    paddingTop: 20,
     paddingBottom: 20,
   },
   subContainer: {

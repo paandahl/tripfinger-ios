@@ -7,8 +7,10 @@ import Utils from '../../shared/Utils';
 import { getCascadingListingsForRegion } from '../../shared/ContentService';
 import ListingScene from './ListingScene';
 import MWMOpeningHours from '../../shared/native/MWMOpeningHours';
+import ListViewContainer from '../../shared/components/ListViewContainer';
+import StandardCell from '../../shared/components/StandardCell';
+import CategoryScene from './CategoryScene';
 
-const ListView = ReactNative.ListView;
 const StyleSheet = ReactNative.StyleSheet;
 
 export default class ListingsList extends React.Component {
@@ -23,7 +25,14 @@ export default class ListingsList extends React.Component {
   constructor(props) {
     super(props);
     const ds = Utils.simpleDataSource();
-    this.data = { };
+    this.data = {};
+    this.sections = [];
+    const notAttractions = this.props.categoryDesc.category !== Globals.categories.attractions;
+    const desc = this.props.categoryDesc.description;
+    if (notAttractions && desc && desc !== '<p></p>') {
+      this.data.guideItem = [this.props.categoryDesc];
+      this.sections.push('guideItem');
+    }
     this.state = {
       expanded: false,
       dataSource: ds.cloneWithRowsAndSections(this.data),
@@ -32,8 +41,9 @@ export default class ListingsList extends React.Component {
   }
 
   loadListings = async () => {
-    const subCatValue = this.props.categoryDesc.subCategory;
-    const category = subCatValue || this.props.categoryDesc.category;
+    const catDesc = this.props.categoryDesc;
+    const subCatValue = catDesc.subCategory;
+    const category = subCatValue || catDesc.category;
     const listings = await getCascadingListingsForRegion(this.props.region.uuid, category);
     const likedListings = [];
     const notLikedListings = [];
@@ -44,11 +54,27 @@ export default class ListingsList extends React.Component {
         notLikedListings.push(listing);
       }
     }
-    const sortedListings = likedListings.concat(notLikedListings);
-    const data = { listings: sortedListings };
-    const sections = ['listings'];
-    const dataSource = this.state.dataSource.cloneWithRowsAndSections(data, sections);
+    if (catDesc.category === Globals.categories.transportation
+        && catDesc.categoryDescriptions.length > 0) {
+      this.data.subCats =
+        catDesc.categoryDescriptions.sort((a, b) => a.subCategory - b.subCategory);
+      this.sections.push('subCats');
+    } else {
+      this.data.listings = likedListings.concat(notLikedListings);
+      this.sections.push('listings');
+    }
+    const dataSource = this.state.dataSource.cloneWithRowsAndSections(this.data, this.sections);
     this.setState({ dataSource });
+  };
+
+  _navigateToSubCategory = (subCatDesc) => {
+    this.props.navigator.push({
+      component: CategoryScene,
+      passProps: {
+        region: this.props.region,
+        categoryDesc: subCatDesc,
+      },
+    });
   };
 
   _navigateToListing = async (listing) => {
@@ -65,23 +91,25 @@ export default class ListingsList extends React.Component {
     });
   };
 
-  renderRow = (data, sectionId, rowId) => {
+  renderRow = (data, sectionId, isFirstRow, isLastRow) => {
+    const props = { isFirstRow, isLastRow };
     if (sectionId === 'guideItem') {
-      return <GuideItemCell guideItem={this.props.categoryDesc} initialExpand />;
+      return <GuideItemCell guideItem={this.props.categoryDesc} />;
     } else if (sectionId === 'listings') {
-      return (
-        <ListingCell
-          rowId={rowId} listing={data}
-          onPress={() => this._navigateToListing(data)}
-        />
-      );
+      const onPress = () => this._navigateToListing(data);
+      return <ListingCell listing={data} onPress={onPress} {...props} />;
+    } else if (sectionId === 'subCats') {
+      const text = Utils.categoryName(data.subCategory);
+      const onPress = () => this._navigateToSubCategory(data);
+      return <StandardCell onPress={onPress} text={text} {...props} />;
     }
     return null;
   };
 
   render() {
     return (
-      <ListView
+      <ListViewContainer
+        automaticallyAdjustContentInsets={false}
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         renderSeparator={this.renderSeparator}

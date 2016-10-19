@@ -35,6 +35,21 @@ const Globals = {
     shopping: 260,
     information: 270,
   },
+
+  subCategories: {
+    airport: 2300,
+    trainStation: 2310,
+    busStation: 2320,
+    ferryTerminal: 2330,
+    carRental: 2340,
+    motorbikeRental: 2350,
+    bicycleRental: 2360,
+    busStop: 2390,
+    ferryStop: 2391,
+    metroStation: 2391,
+    metroEntrance: 2393,
+    tramStop: 2394,
+  },
 };
 
 export default Globals;

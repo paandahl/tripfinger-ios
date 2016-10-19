@@ -46,11 +46,12 @@ export default class ListViewContainer extends React.Component {
   };
 
   render() {
+    // noinspection JSUnusedLocalSymbols, Eslint
+    const { renderRow, ...restProps } = this.props;
     return (
       <ListView
-        dataSource={this.props.dataSource}
-        style={this.props.style}
         renderRow={this._renderRow}
+        {...restProps}
       />
     );
   }

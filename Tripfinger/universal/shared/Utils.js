@@ -68,6 +68,25 @@ export default class Utils {
         return 'Information';
       case Globals.categories.shopping:
         return 'Shopping';
+      case Globals.subCategories.airport:
+        return 'Airports';
+      case Globals.subCategories.trainStation:
+        return 'Trains';
+      case Globals.subCategories.busStation:
+      case Globals.subCategories.busStop:
+        return 'Bus stations';
+      case Globals.subCategories.ferryTerminal:
+      case Globals.subCategories.ferryStop:
+        return 'Ferry terminals';
+      case Globals.subCategories.carRental:
+        return 'Car';
+      case Globals.subCategories.bicycleRental:
+        return 'Bicycle';
+      case Globals.subCategories.metroStation:
+      case Globals.subCategories.metroEntrance:
+        return 'Metro';
+      case Globals.subCategories.tramStop:
+        return 'Tram';
       default:
         throw new Error(`Unknown category id: ${category}`);
     }

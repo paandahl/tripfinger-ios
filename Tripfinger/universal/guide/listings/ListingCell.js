@@ -8,13 +8,13 @@ const Text = ReactNative.Text;
 const TouchableHighlight = ReactNative.TouchableHighlight;
 const View = ReactNative.View;
 
-export default class xListingCell extends React.Component {
+export default class ListingCell extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
     listing: React.PropTypes.object.isRequired,
     onPress: React.PropTypes.func,
-    row: React.PropTypes.string,
+    isFirstRow: React.PropTypes.bool,
     isLastRow: React.PropTypes.bool,
   };
 
@@ -37,7 +37,7 @@ export default class xListingCell extends React.Component {
 
   render() {
     const rowStyles = [styles.row];
-    if (this.props.row === '0') {
+    if (this.props.isFirstRow) {
       rowStyles.push(styles.firstRowInSection);
     }
     if (this.props.isLastRow) {
