@@ -58,6 +58,16 @@ export default class Utils {
     switch (category) {
       case Globals.categories.attractions:
         return 'Attractions';
+      case Globals.categories.transportation:
+        return 'Transportation';
+      case Globals.categories.accommodation:
+        return 'Accommodation';
+      case Globals.categories.foodOrDrink:
+        return 'Food and drinks';
+      case Globals.categories.information:
+        return 'Information';
+      case Globals.categories.shopping:
+        return 'Shopping';
       default:
         throw new Error(`Unknown category id: ${category}`);
     }

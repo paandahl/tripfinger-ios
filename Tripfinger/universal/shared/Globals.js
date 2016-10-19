@@ -29,6 +29,11 @@ const Globals = {
 
   categories: {
     attractions: 210,
+    transportation: 230,
+    accommodation: 240,
+    foodOrDrink: 250,
+    shopping: 260,
+    information: 270,
   },
 };
 

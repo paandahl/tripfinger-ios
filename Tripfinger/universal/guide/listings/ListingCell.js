@@ -32,7 +32,7 @@ export default class xListingCell extends React.Component {
       const imageSource = { uri: imageUrl };
       return <Image style={styles.image} source={imageSource}>{this._renderInnerView()}</Image>;
     }
-    return <View>{this._renderInnerView()}</View>;
+    return <View style={styles.container}>{this._renderInnerView()}</View>;
   }
 
   render() {
@@ -63,6 +63,9 @@ const styles = StyleSheet.create({
   },
   image: {
     height: 200,
+  },
+  container: {
+    height: 80,
   },
   firstRowInSection: {
     marginTop: 20,

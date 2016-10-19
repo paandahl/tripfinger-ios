@@ -42,6 +42,7 @@ export default class RegionScene extends Component {
         this.data.sections = region.guideSections;
         this.data.attractions = ['Attractions'];
         this.data.subRegions = region.subRegions.sort((a, b) => a.name.localeCompare(b.name));
+        this.data.catDescs = region.categoryDescriptions;
         const dataSource = this.state.dataSource.cloneWithRowsAndSections(this.data);
         this.setState({ dataSource });
       } catch (error) {
@@ -65,15 +66,10 @@ export default class RegionScene extends Component {
   };
 
   navigateToAttractions = () => {
-    this.props.navigator.push({
-      component: CategoryScene,
-      passProps: {
-        categoryDesc: {
-          category: Globals.categories.attractions,
-        },
-        region: this.props.region,
-      },
-    });
+    const catDesc = {
+      category: Globals.categories.attractions,
+    };
+    this.navigateToCategory(catDesc);
   };
 
   navigateToSubRegion = (subRegion) => {
@@ -85,8 +81,14 @@ export default class RegionScene extends Component {
     });
   };
 
-  navigateToCategory = () => {
-
+  navigateToCategory = (catDesc) => {
+    this.props.navigator.push({
+      component: CategoryScene,
+      passProps: {
+        categoryDesc: catDesc,
+        region: this.props.region,
+      },
+    });
   };
 
   renderRow = (data, sectionId, isFirstRow, isLastRow) => {
@@ -102,6 +104,9 @@ export default class RegionScene extends Component {
     } else if (sectionId === 'subRegions') {
       const text = data.name;
       return <StandardCell onPress={() => this.navigateToSubRegion(data)} text={text} {...props} />;
+    } else if (sectionId === 'catDescs') {
+      const text = Utils.categoryName(data.category);
+      return <StandardCell onPress={() => this.navigateToCategory(data)} text={text} {...props} />;
     }
     return null;
   };

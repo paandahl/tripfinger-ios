@@ -22,8 +22,9 @@ export default class CategoryScene extends React.Component {
 
   constructor(props) {
     super(props);
+    const isAttractions = this.props.categoryDesc.category === Globals.categories.attractions;
     this.state = {
-      selectedOption: 'Swipe',
+      selectedOption: isAttractions ? 'Swipe' : 'List',
     };
   }
 
@@ -39,20 +40,29 @@ export default class CategoryScene extends React.Component {
     return null;
   };
 
+  _renderHeader() {
+    if (this.props.categoryDesc.category !== Globals.categories.attractions) {
+      return null;
+    }
+    return (
+      <SegmentedControls
+        options={['Swipe', 'List']}
+        selectedOption={this.state.selectedOption}
+        onSelection={opt => this.setState({ selectedOption: opt })}
+        tint={'#555'}
+        selectedTint={'#fff'}
+        backTint={'#fff'}
+        paddingTop={8}
+        paddingBottom={8}
+      />
+    );
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.segmented}>
-          <SegmentedControls
-            options={['Swipe', 'List']}
-            selectedOption={this.state.selectedOption}
-            onSelection={opt => this.setState({ selectedOption: opt })}
-            tint={'#555'}
-            selectedTint={'#fff'}
-            backTint={'#fff'}
-            paddingTop={8}
-            paddingBottom={8}
-          />
+          {this._renderHeader()}
         </View>
         <View style={styles.subContainer}>
           {this._renderContent()}
