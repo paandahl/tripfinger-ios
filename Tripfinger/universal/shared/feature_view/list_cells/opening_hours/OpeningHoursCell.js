@@ -57,10 +57,10 @@ export default class OpeningHoursCell extends React.Component {
   _renderCurrentDay() {
     const hours = this.props.openingHours;
     if (hours.plainText) {
-      return <View style={styles.currentDay}><Text>{hours.plainText}</Text></View>;
+      return <View style={styles.plainText}><Text>{hours.plainText}</Text></View>;
     }
     return (
-      <View style={styles.currentDay}>
+      <View>
         <View style={styles.currentDayHeader}>
           <Text style={styles.rowLabel}>{hours.currentDay.label}</Text>
           <Text style={styles.rowValue}>{hours.currentDay.openTime}</Text>
@@ -96,6 +96,10 @@ export default class OpeningHoursCell extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  plainText: {
+    height: 44,
+    justifyContent: 'center',
+  },
   row: {
     paddingLeft: 15,
     backgroundColor: '#FFFFFF',

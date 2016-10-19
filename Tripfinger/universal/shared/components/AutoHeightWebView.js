@@ -19,6 +19,9 @@ body, html, #height-wrapper {
     left: 0;
     right: 0;
 }
+h2 {
+  font-size: 18px;
+}
 </style>
 <script>
 (function() {

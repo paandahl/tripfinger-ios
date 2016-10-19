@@ -35,10 +35,19 @@ export default class ListingDetails extends React.Component {
    */
   render() {
     if (this.props.listing !== null) {
+      let html = this.props.listing.description;
+      if (this.props.listing.price && this.props.listing.price !== '<p></p>') {
+        html += '<h2>Price</h2>';
+        html += this.props.listing.price;
+      }
+      if (this.props.listing.directions && this.props.listing.directions !== '<p></p>') {
+        html += '<h2>Directions</h2>';
+        html += this.props.listing.directions;
+      }
       this.listingDetails = (
         <View style={styles.listingDetails}>
           {this._renderImage()}
-          <AutoHeightWebView html={this.props.listing.description} />
+          <AutoHeightWebView html={html} />
         </View>
       );
     }
