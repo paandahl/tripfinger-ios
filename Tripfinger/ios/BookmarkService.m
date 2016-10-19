@@ -41,7 +41,7 @@ static NSString * DB_BOOKMARK_ITEMS = @"bookmarkItems";
 
 }
 
-- (void)BSinitializeFirebase
+- (void)initializeFirebase
 {
   if (initialized) {
     NSLog(@"Firebase already initialized.");
@@ -137,19 +137,16 @@ static NSString * DB_BOOKMARK_ITEMS = @"bookmarkItems";
   }];  
 }
   
-- (NSString*)BSaddBookmark:(NSDictionary*)bookmark {
-  NSLog(@"native addBookmark");
+- (NSString*)addBookmark:(NSDictionary*)bookmark {
   if (listId == nil) {
     return nil;
   }
-  NSLog(@"native adding Bookmark");
   FIRDatabaseReference * itemRef = [[[[[FIRDatabase database] reference] child:DB_BOOKMARK_ITEMS] child:listId] childByAutoId];
   [itemRef setValue:bookmark];
   return [itemRef key];
 }
 
-- (void)BSremoveBookmark:(NSString*)databaseKey {
-  NSLog(@"native removeBookmark");
+- (void)removeBookmark:(NSString*)databaseKey {
   if (listId == nil) {
     return;
   }
@@ -159,14 +156,14 @@ static NSString * DB_BOOKMARK_ITEMS = @"bookmarkItems";
 
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(initializeFirebase)
+RCT_REMAP_METHOD(initializeFirebase, exportedInitializeFirebase)
 {
-  [BookmarkService.sharedInstance BSinitializeFirebase];
+  [BookmarkService.sharedInstance initializeFirebase];
 }
   
-RCT_EXPORT_METHOD(addBookmark:(NSDictionary*)bookmark resolver:(RCTPromiseResolveBlock)resolve
+RCT_REMAP_METHOD(addBookmark, addBookmark:(NSDictionary*)bookmark resolver:(RCTPromiseResolveBlock)resolve
                     rejecter:(RCTPromiseRejectBlock)reject) {
-  NSString* key = [BookmarkService.sharedInstance BSaddBookmark:bookmark];
+  NSString* key = [BookmarkService.sharedInstance addBookmark:bookmark];
   if (key == nil) {
     NSError* error = [NSError errorWithDomain:@"tripfinger.com" code:10 userInfo:nil];
     reject(@"no_events", @"There were no events", error);
@@ -174,8 +171,8 @@ RCT_EXPORT_METHOD(addBookmark:(NSDictionary*)bookmark resolver:(RCTPromiseResolv
   resolve(key);
 }
   
-RCT_EXPORT_METHOD(removeBookmark:(NSString*)databaseKey) {
-  [BookmarkService.sharedInstance BSremoveBookmark:databaseKey];
+RCT_REMAP_METHOD(removeBookmark, exportedRemoveBookmark:(NSString*)databaseKey) {
+  [BookmarkService.sharedInstance removeBookmark:databaseKey];
 }
 
 //RCT_EXPORT_METHOD(setNavBarHidden:(BOOL *)hidden)

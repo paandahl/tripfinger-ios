@@ -700,7 +700,7 @@ void Framework::FillFeatureInfo(FeatureID const & fid, place_page::Info & info) 
         return;
       }
     }
-    LOG(LINFO, (ft.DebugString(1), ""));
+//    LOG(LINFO, (ft.DebugString(1), ""));
     FillInfoFromFeatureType(ft, info);
   }
 }

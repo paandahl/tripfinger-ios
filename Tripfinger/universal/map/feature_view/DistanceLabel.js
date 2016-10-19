@@ -17,8 +17,8 @@ export default class DistanceLabel extends React.Component {
     if (this.props.location) {
       const locLat = this.props.location.coords.latitude;
       const locLon = this.props.location.coords.longitude;
-      const infoLat = this.props.info.lat / 1000000;
-      const infoLon = this.props.info.lon / 1000000;
+      const infoLat = this.props.info.lat;
+      const infoLon = this.props.info.lon;
       const distance = Utils.distanceOnEarth(locLat, locLon, infoLat, infoLon);
       return Utils.formatDistance(distance);
     }

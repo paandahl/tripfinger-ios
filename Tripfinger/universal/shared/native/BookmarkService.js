@@ -11,9 +11,10 @@ export default class BookmarkService {
 
   static async addBookmarkForItem(item) {
     const bookmark = {};
-    bookmark.name = item.title;
-    bookmark.latitude = item.lat / 1000000;
-    bookmark.longitude = item.lon / 1000000;
+    bookmark.name = item.name;
+    bookmark.latitude = item.latitude;
+    bookmark.longitude = item.longitude;
+    console.log(`adding bookmark with latlon: ${bookmark.latitude} , ${bookmark.longitude}`);
     return await NativeBookmarkService.addBookmark(bookmark);
   }
 

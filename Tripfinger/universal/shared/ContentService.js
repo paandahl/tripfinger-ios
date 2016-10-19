@@ -65,13 +65,12 @@ export async function getCascadingListingsForRegion(regionId, category) {
   if (category) {
     url = addParam(url, 'categoryId', category);
   }
-  const listings = await fetchJson(addPass(url));
   // for listing in listings {
   //   if let notes = DatabaseService.getListingNotes(listing.item().uuid) {
   //     listing.listing.notes = notes
   //   }
   // }
-  return listings;
+  return await fetchJson(addPass(url));
 }
 
 

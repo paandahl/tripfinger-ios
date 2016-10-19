@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactNative from 'react-native';
-import MWMMapView from '../MWMMapView';
-import ActionBar from './ActionBar';
-import PlacePageInfo from './PlacePageInfo';
-import ViewState from './PlacePageViewState';
+import MWMMapView from '../../shared/native/MWMMapView';
+import ActionBar from '../../shared/feature_view/ActionBar';
+import FeatureViewContainer from './FeatureViewContainer';
+import ViewState from './FeatureViewState';
 import Utils from '../../shared/Utils';
 
 const Animated = ReactNative.Animated;
 const StyleSheet = ReactNative.StyleSheet;
 const View = ReactNative.View;
 
-export default class PlacePage extends React.Component {
+export default class FeatureViewPopup extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
@@ -123,7 +123,7 @@ export default class PlacePage extends React.Component {
             }
           }}
         >
-          <PlacePageInfo
+          <FeatureViewContainer
             info={this.props.info} viewState={this.state.viewState} location={this.props.location}
             panHandlers={this.panResponder.panHandlers()} headerClicked={this._headerClicked}
             headerHeightUpdated={this._headerHeightUpdated} collapseHours={this._expand}

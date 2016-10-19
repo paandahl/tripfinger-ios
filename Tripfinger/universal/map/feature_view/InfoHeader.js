@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
-import ViewState from './PlacePageViewState';
+import ViewState from './FeatureViewState';
 import DistanceLabel from './DistanceLabel';
 
 const Image = ReactNative.Image;
@@ -42,7 +42,7 @@ export default class InfoHeader extends React.Component {
       >
         <View>
           <Image style={styles.tip} source={headerTip} />
-          <Text style={styles.name}>{this.props.info.title}</Text>
+          <Text style={styles.name}>{this.props.info.name}</Text>
           <View>
             <Text style={styles.type}>{this.props.info.category}</Text>
             <DistanceLabel info={this.props.info} location={this.props.location} />

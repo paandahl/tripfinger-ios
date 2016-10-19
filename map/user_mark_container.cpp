@@ -157,9 +157,6 @@ size_t UserMarkContainer::GetUserPointCount() const
 df::UserPointMark const * UserMarkContainer::GetUserPointMark(size_t index) const
 {
   df::UserPointMark const * mark = GetUserMark(index);
-
-//  unique_ptr<TripfingerBookmark> const mark = make_unique<TripfingerBookmark>(ms::LatLon(34.432, 43.54));
-  LOG(LINFO, ("MARK:", mark->GetPivot()));
   return mark;
 }
 

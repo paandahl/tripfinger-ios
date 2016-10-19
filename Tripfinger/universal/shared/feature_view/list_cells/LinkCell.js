@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
-import Globals from '../../../shared/Globals';
+import Globals from '../../Globals';
 import IconCell from './IconCell';
 
 const Linking = ReactNative.Linking;

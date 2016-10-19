@@ -5,6 +5,8 @@ import ListingCell from './ListingCell';
 import Globals from '../../shared/Globals';
 import Utils from '../../shared/Utils';
 import { getCascadingListingsForRegion } from '../../shared/ContentService';
+import ListingScene from './ListingScene';
+import MWMOpeningHours from '../../shared/native/MWMOpeningHours';
 
 const ListView = ReactNative.ListView;
 const StyleSheet = ReactNative.StyleSheet;
@@ -13,7 +15,7 @@ export default class ListingsList extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    navigator: Globals.propTypes.navigator,
+    navigator: Globals.propTypes.navigator.isRequired,
     region: Globals.propTypes.guideItem.isRequired,
     categoryDesc: React.PropTypes.object.isRequired,
   };
@@ -49,13 +51,23 @@ export default class ListingsList extends React.Component {
     this.setState({ dataSource });
   };
 
-  _navigateToListing = (listing) => {
-    console.log('navigating to listing');
+  _navigateToListing = async (listing) => {
+    let openListing = listing;
+    if (listing.openingHours) {
+      const openingHours = await MWMOpeningHours.createOpeningHoursDict(listing.openingHours);
+      openListing = { ...listing, openingHours };
+    }
+    this.props.navigator.push({
+      component: ListingScene,
+      passProps: {
+        listing: openListing,
+      },
+    });
   };
 
   renderRow = (data, sectionId, rowId) => {
     if (sectionId === 'guideItem') {
-      return <GuideItemCell guideItem={this.props.section} initialExpand />;
+      return <GuideItemCell guideItem={this.props.categoryDesc} initialExpand />;
     } else if (sectionId === 'listings') {
       return (
         <ListingCell

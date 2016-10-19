@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
-import Globals from '../../../../shared/Globals';
+import Globals from '../../../Globals';
 import ClosedHours from './ClosedHours';
 import ExpandedView from './ExpandedView';
 

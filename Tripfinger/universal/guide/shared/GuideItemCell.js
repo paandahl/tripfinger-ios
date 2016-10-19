@@ -1,8 +1,8 @@
-// <editor-fold desc="Imports">
 import React from 'react';
 import ReactNative from 'react-native';
 import { imagesBaseUrl } from '../../shared/ContentService';
 import Globals from '../../shared/Globals';
+import AutoHeightWebView from '../../shared/components/AutoHeightWebView';
 
 const Component = React.Component;
 const PropTypes = React.PropTypes;
@@ -12,8 +12,6 @@ const StyleSheet = ReactNative.StyleSheet;
 const Text = ReactNative.Text;
 const TouchableHighlight = ReactNative.TouchableHighlight;
 const View = ReactNative.View;
-const WebView = ReactNative.WebView;
-// </editor-fold>
 
 export default class GuideItemCell extends Component {
 
@@ -33,17 +31,8 @@ export default class GuideItemCell extends Component {
     super(props);
     this.state = {
       expanded: this.props.initialExpand,
-      webViewHeight: 0,
     };
   }
-
-  updateWebViewHeight = (event) => {
-    // jsEvaluationValue contains result of injected JS
-    // noinspection JSUnresolvedVariable
-    const htmlHeight = parseInt(event.jsEvaluationValue, 10);
-    console.log(`htmlHeight: ${htmlHeight}`);
-    this.setState({ webViewHeight: htmlHeight });
-  };
 
   renderReadMoreButton() {
     if (this.state.expanded) {
@@ -75,18 +64,12 @@ export default class GuideItemCell extends Component {
   };
 
   render() {
-    const html = htmlStyle + this.props.guideItem.description;
     return (
       <View style={styles.container}>
         {this.renderImage()}
-        <WebView
-          source={{ html }}
-          injectedJavaScript="document.body.scrollHeight;"
-          onNavigationStateChange={this.updateWebViewHeight}
-          style={[
-            styles.text,
-            { height: this.state.expanded ? this.state.webViewHeight : 80 },
-          ]}
+        <AutoHeightWebView
+          html={this.props.guideItem.description}
+          style={this.state.expanded ? {} : { height: 88 }}
         />
         {this.renderReadMoreButton()}
       </View>
@@ -94,21 +77,9 @@ export default class GuideItemCell extends Component {
   }
 }
 
-const htmlStyle = `
-<style type="text/css">
-  body {
-    font: -apple-system-body 
-  }
-</style>`;
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
-  },
-  text: {
-    marginTop: 20,
-    marginLeft: 10,
-    marginRight: 10,
   },
   button: {
     marginTop: 20,

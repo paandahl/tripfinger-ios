@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactNative from 'react-native';
 import GuideItemCell from '../shared/GuideItemCell';
-import StandardCell from '../../shared/StandardCell';
+import StandardCell from '../../shared/components/StandardCell';
 import { getRegionWithSlug } from '../../shared/ContentService';
 import SectionScene from './SectionScene';
 import Globals from '../../shared/Globals';

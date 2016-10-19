@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactNative from 'react-native';
-import MWMMapView from './MWMMapView';
-import PlacePage from './PlacePage/PlacePage';
+import MWMMapView from '../shared/native/MWMMapView';
+import FeatureViewPopup from './feature_view/FeatureViewPopup';
 import DownloadPopup from './DownloadPopup';
 import LocationButton from './LocationButton';
 import ZoomButtons from './ZoomButtons';
@@ -75,12 +75,12 @@ export default class MapScene extends Component {
   };
 
   _addBookmark = async (item) => {
+    console.log(`adding bookmark for item: ${JSON.stringify(item)}`);
     const bookmarkKey = await BookmarkService.addBookmarkForItem(item);
     this.setState({ currentItem: { ...this.state.currentItem, bookmarkKey } });
   };
 
   _removeBookmark = (item) => {
-    console.log('removing bookmark');
     BookmarkService.removeBookmarkForItem(item);
     const newCurrentItem = { ...this.state.currentItem };
     delete newCurrentItem.bookmarkKey;
@@ -112,7 +112,7 @@ export default class MapScene extends Component {
           }}
         />
         {this._renderDownloadPopup()}
-        <PlacePage
+        <FeatureViewPopup
           info={this.state.currentItem}
           location={this.state.location}
           onDismiss={() => this.setState({ currentItem: null })}

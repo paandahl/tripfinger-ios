@@ -3,7 +3,7 @@ import ReactNative from 'react-native';
 import { getCountries } from '../../shared/ContentService';
 import MapScene from '../../map/MapScene';
 import WorldAreaHeader from './WorldAreaHeader';
-import StandardCell from '../../shared/StandardCell';
+import StandardCell from '../../shared/components/StandardCell';
 import Reachability from '../../shared/native/Reachability';
 import RegionScene from './RegionScene';
 import Utils from '../../shared/Utils';

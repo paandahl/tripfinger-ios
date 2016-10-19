@@ -53,52 +53,7 @@
   Framework & f = GetFramework();
   
   f.SetMapSelectionListeners([self](place_page::Info const & info) {
-    int lat = (int)(info.GetLatLon().lat * 1000000 + 0.5);
-    int lon = (int)(info.GetLatLon().lon * 1000000 + 0.5);
-    NSMutableDictionary* infoDict = [@{
-                                       @"title": @(info.GetTitle().c_str()),
-                                       @"address": @(info.GetAddress().c_str()),
-                                       @"lat": [NSNumber numberWithInt:lat],
-                                       @"lon": [NSNumber numberWithInt:lon],
-                                       @"category": @(info.GetSubtitle().c_str()),
-                                      } mutableCopy];
-    feature::Metadata const & md = info.GetMetadata();
-    for (auto const type : md.GetPresentTypes()) {
-      switch (type) {
-        case FMD_URL:
-        if (![infoDict objectForKey:@"website"]) {
-          infoDict[@"website"] = @(md.Get(type).c_str());
-        }
-        break;
-        case FMD_BOOKING_URL:
-        case FMD_WEBSITE:
-        infoDict[@"website"] = @(md.Get(type).c_str());
-        break;
-        case FMD_PHONE_NUMBER:
-        infoDict[@"phoneNumber"] = @(md.Get(type).c_str());
-        break;
-        case FMD_OPEN_HOURS:
-        infoDict[@"openHours"] = [MWMOpeningHours createOpeningHoursDict:@(md.Get(type).c_str())];
-        break;
-        case FMD_EMAIL:
-        infoDict[@"email"] = @(md.Get(type).c_str());
-        break;
-        case FMD_INTERNET:
-        infoDict[@"hasWifi"] = [NSNumber numberWithBool:YES];
-        break;
-        default:
-        break;
-      }
-    }
-    
-    if (info.IsBookmark()) {
-      auto const bac = info.GetBookmarkAndCategory();
-      BookmarkCategory * cat = GetFramework().GetBmCategory(bac.first);
-      BookmarkData const & data = static_cast<Bookmark const *>(cat->GetUserMark(bac.second))->GetData();
-      infoDict[@"bookmarkKey"] = @(data.GetDatabaseKey().c_str());
-    }
-
-    self.onMapObjectSelected(@{@"info": infoDict});
+    [self onMapObjectSelectedBridge:info];
   }, [self](bool switchFullScreen) {
     self.onMapObjectDeselected(@{@"switchFullScreen": switchFullScreen ? @"true" : @"false"});
   });
@@ -121,44 +76,92 @@
   [MWMFrameworkListener addObserver:self];
 }
   
-  - (void)processViewportCountryEvent:(TCountryId const &)countryId {
-    currentCountryId = countryId;
-    [self sendZoomedInToMapRegionEvent:countryId];
+- (void)onMapObjectSelectedBridge:(place_page::Info)info {
+  NSMutableDictionary* infoDict = [@{
+                                     @"name": @(info.GetTitle().c_str()),
+                                     @"address": @(info.GetAddress().c_str()),
+                                     @"latitude": [NSNumber numberWithDouble:info.GetLatLon().lat],
+                                     @"longitude": [NSNumber numberWithDouble:info.GetLatLon().lon],
+                                     @"category": @(info.GetSubtitle().c_str()),
+                                     } mutableCopy];
+  feature::Metadata const & md = info.GetMetadata();
+  for (auto const type : md.GetPresentTypes()) {
+    switch (type) {
+      case FMD_URL:
+      if (![infoDict objectForKey:@"url"]) {
+        infoDict[@"url"] = @(md.Get(type).c_str());
+      }
+      break;
+      case FMD_BOOKING_URL:
+      case FMD_WEBSITE:
+      infoDict[@"url"] = @(md.Get(type).c_str());
+      break;
+      case FMD_PHONE_NUMBER:
+      infoDict[@"phone"] = @(md.Get(type).c_str());
+      break;
+      case FMD_OPEN_HOURS:
+      infoDict[@"openingHours"] = [MWMOpeningHours createOpeningHoursDict:@(md.Get(type).c_str())];
+      break;
+      case FMD_EMAIL:
+      infoDict[@"email"] = @(md.Get(type).c_str());
+      break;
+      case FMD_INTERNET:
+      infoDict[@"wifi"] = [NSNumber numberWithBool:YES];
+      break;
+      default:
+      break;
+    }
   }
   
-  - (void)sendZoomedInToMapRegionEvent:(TCountryId)mapRegionId {
-    if (mapRegionId != kInvalidCountryId) {
-      NodeAttrs nodeAttrs;
-      auto & s = GetFramework().Storage();
-      s.GetNodeAttrs(mapRegionId, nodeAttrs);
-      if (!nodeAttrs.m_present) {
-        BOOL const isMultiParent = nodeAttrs.m_parentInfo.size() > 1;
-        BOOL const noParrent = (nodeAttrs.m_parentInfo[0].m_id == s.GetRootId());
-        BOOL const sameName = nodeAttrs.m_nodeLocalName == nodeAttrs.m_parentInfo[0].m_localName;
-        BOOL const hideParent = (noParrent || isMultiParent || sameName);
-        NSString* parentName = nil;
-        if (!hideParent) {
-          parentName = @(nodeAttrs.m_parentInfo[0].m_localName.c_str());
-        }
-        if (self.onZoomedInToMapRegion != nil) {
-          self.onZoomedInToMapRegion(@{
-                                       @"mapRegion": @{
-                                           @"mapRegionId": @(mapRegionId.c_str()),
-                                           @"localName": @(nodeAttrs.m_nodeLocalName.c_str()),
-                                           @"downloadSize": formattedSize(nodeAttrs.m_mwmSize),
-                                           @"parentName": parentName != nil ? parentName : [NSNull null],
-                                           @"status": [MWMMapView nodeStatusToString:nodeAttrs.m_status],
-                                           @"progress": [NSNumber numberWithInteger:nodeAttrs.m_downloadingProgress.first],
-                                           @"size": [NSNumber numberWithInteger:nodeAttrs.m_downloadingProgress.second],
-                                           },
-                                       });
-        }
-        return;
-      }
-    }
-    self.onZoomedOutOfMapRegion(@{});
+  if (info.IsBookmark()) {
+    auto const bac = info.GetBookmarkAndCategory();
+    BookmarkCategory * cat = GetFramework().GetBmCategory(bac.first);
+    BookmarkData const & data = static_cast<Bookmark const *>(cat->GetUserMark(bac.second))->GetData();
+    infoDict[@"name"] = @(data.GetName().c_str());
+    infoDict[@"bookmarkKey"] = @(data.GetDatabaseKey().c_str());
+  }
+  
+  self.onMapObjectSelected(@{@"info": infoDict});
 }
-    
+  
+- (void)processViewportCountryEvent:(TCountryId const &)countryId {
+  currentCountryId = countryId;
+  [self sendZoomedInToMapRegionEvent:countryId];
+}
+  
+- (void)sendZoomedInToMapRegionEvent:(TCountryId)mapRegionId {
+  if (mapRegionId != kInvalidCountryId) {
+    NodeAttrs nodeAttrs;
+    auto & s = GetFramework().Storage();
+    s.GetNodeAttrs(mapRegionId, nodeAttrs);
+    if (!nodeAttrs.m_present) {
+      BOOL const isMultiParent = nodeAttrs.m_parentInfo.size() > 1;
+      BOOL const noParrent = (nodeAttrs.m_parentInfo[0].m_id == s.GetRootId());
+      BOOL const sameName = nodeAttrs.m_nodeLocalName == nodeAttrs.m_parentInfo[0].m_localName;
+      BOOL const hideParent = (noParrent || isMultiParent || sameName);
+      NSString* parentName = nil;
+      if (!hideParent) {
+        parentName = @(nodeAttrs.m_parentInfo[0].m_localName.c_str());
+      }
+      if (self.onZoomedInToMapRegion != nil) {
+        self.onZoomedInToMapRegion(@{
+                                     @"mapRegion": @{
+                                         @"mapRegionId": @(mapRegionId.c_str()),
+                                         @"localName": @(nodeAttrs.m_nodeLocalName.c_str()),
+                                         @"downloadSize": formattedSize(nodeAttrs.m_mwmSize),
+                                         @"parentName": parentName != nil ? parentName : [NSNull null],
+                                         @"status": [MWMMapView nodeStatusToString:nodeAttrs.m_status],
+                                         @"progress": [NSNumber numberWithInteger:nodeAttrs.m_downloadingProgress.first],
+                                         @"size": [NSNumber numberWithInteger:nodeAttrs.m_downloadingProgress.second],
+                                         },
+                                     });
+      }
+      return;
+    }
+  }
+  self.onZoomedOutOfMapRegion(@{});
+}
+  
   + (NSString*)nodeStatusToString:(storage::NodeStatus)status {
     switch (status) {
       case storage::NodeStatus::Downloading:

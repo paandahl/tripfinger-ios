@@ -12,6 +12,7 @@ export default class CategoryScene extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
+    navigator: Globals.propTypes.navigator.isRequired,
     categoryDesc: React.PropTypes.object.isRequired,
     region: Globals.propTypes.guideItem.isRequired,
   };
@@ -28,7 +29,12 @@ export default class CategoryScene extends React.Component {
 
   _renderContent = () => {
     if (this.state.selectedOption === 'List') {
-      return <ListingsList categoryDesc={this.props.categoryDesc} region={this.props.region} />;
+      return (
+        <ListingsList
+          categoryDesc={this.props.categoryDesc} region={this.props.region}
+          navigator={this.props.navigator}
+        />
+      );
     }
     return null;
   };

@@ -9,6 +9,14 @@ using namespace osmoh;
 
 @implementation MWMOpeningHours
   
+  RCT_EXPORT_MODULE();
+  
+  RCT_REMAP_METHOD(createOpeningHoursDict, timeString:(NSString*)timeString resolver:(RCTPromiseResolveBlock)resolve
+                   rejecter:(RCTPromiseRejectBlock)reject)
+  {
+    resolve([MWMOpeningHours createOpeningHoursDict:timeString]);
+  }
+
   + (NSDictionary*)createOpeningHoursDict:(NSString*)timeString {
     ui::TimeTableSet timeTableSet;
     osmoh::OpeningHours oh(timeString.UTF8String);

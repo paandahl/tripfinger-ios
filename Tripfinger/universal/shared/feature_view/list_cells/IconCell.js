@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
-import Globals from '../../../shared/Globals';
+import Globals from '../../Globals';
 
 const Image = ReactNative.Image;
 const StyleSheet = ReactNative.StyleSheet;
