@@ -40,7 +40,6 @@ class DownloadRequest {
 
   _setComplete = (taskId) => {
     if (taskId === this._taskId) {
-      console.log(`resolving with: ${this._absolutePath}`);
       this._finishedPromiseResolver(this._absolutePath);
       return true;
     }
