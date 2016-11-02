@@ -89,10 +89,6 @@ export default class AutoHeightWebView extends React.Component {
   render() {
     const { html, style, minHeight, ...otherProps } = this.props;
 
-    if (!html) {
-      throw new Error('WebViewAutoHeight supports only source.html');
-    }
-
     const heightStyle = { height: Math.max(this.state.realContentHeight, minHeight) };
     return (
       <View>

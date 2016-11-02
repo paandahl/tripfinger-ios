@@ -1,11 +1,9 @@
 import React from 'react';
 import ReactNative from 'react-native';
-import { imagesBaseUrl } from '../../shared/ContentService';
 import Globals from '../../shared/Globals';
 import AutoHeightWebView from '../../shared/components/AutoHeightWebView';
+import DownloadButton from './DownloadButton';
 
-const Component = React.Component;
-const PropTypes = React.PropTypes;
 const Dimensions = ReactNative.Dimensions;
 const Image = ReactNative.Image;
 const StyleSheet = ReactNative.StyleSheet;
@@ -13,12 +11,13 @@ const Text = ReactNative.Text;
 const TouchableHighlight = ReactNative.TouchableHighlight;
 const View = ReactNative.View;
 
-export default class GuideItemCell extends Component {
+export default class GuideItemCell extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    initialExpand: PropTypes.bool,
-    expandRegion: PropTypes.func,
+    onDownloadButtonPress: React.PropTypes.func,
+    initialExpand: React.PropTypes.bool,
+    expandRegion: React.PropTypes.func,
     guideItem: Globals.propTypes.guideItem,
   };
 
@@ -34,7 +33,7 @@ export default class GuideItemCell extends Component {
     };
   }
 
-  renderReadMoreButton() {
+  _renderReadMoreButton() {
     if (this.state.expanded) {
       return null;
     }
@@ -56,24 +55,41 @@ export default class GuideItemCell extends Component {
     );
   }
 
-  renderImage = () => {
-    if (this.props.guideItem.images.length > 0) {
-      const imageUri = `${imagesBaseUrl()}${this.props.guideItem.images[0].url}-712x534`;
-      const height = (Dimensions.get('window').width * 0.75) - 50;
-      return <Image source={{ uri: imageUri }} style={{ height }} />;
+  _renderDownloadButton(inImage) {
+    if (this.props.guideItem.category !== Globals.categories.country) {
+      return null;
     }
-    return null;
-  };
+    const buttonStyle = inImage ? styles.downloadButtonImage : styles.downloadButtonSeparate;
+    return (
+      <DownloadButton
+        onPress={this.props.onDownloadButtonPress} style={buttonStyle}
+        downloadStatus="notDownloaded"
+      />
+    );
+  }
+
+  _renderImageAndDownloadButton() {
+    if (this.props.guideItem.images.length > 0) {
+      const imageUri = `${Globals.imagesUrl}${this.props.guideItem.images[0].url}-712x534`;
+      const height = (Dimensions.get('window').width * 0.75) - 50;
+      return (
+        <Image source={{ uri: imageUri }} style={{ height }}>
+          {this._renderDownloadButton(true)}
+        </Image>
+      );
+    }
+    return this._renderDownloadButton(false);
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        {this.renderImage()}
+        {this._renderImageAndDownloadButton()}
         <AutoHeightWebView
           html={this.props.guideItem.description}
           style={this.state.expanded ? {} : { height: 88 }}
         />
-        {this.renderReadMoreButton()}
+        {this._renderReadMoreButton()}
       </View>
     );
   }
@@ -92,5 +108,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '400',
     color: Globals.colors.linkBlue,
+  },
+  downloadButtonImage: {
+    position: 'absolute',
+    top: 15,
+    right: 15,
+  },
+  downloadButtonSeparate: {
+    right: 10,
+    top: 10,
+    marginBottom: 10,
   },
 });

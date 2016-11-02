@@ -13,6 +13,7 @@
 #import "RCTRootView.h"
 #import "UIImage+initWithColor.h"
 #import "MWMMapView.h"
+#import "UniqueIdentifier.h"
 
 @implementation AppDelegate
 
@@ -23,6 +24,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  NSString *uniqueIdentifer = [UniqueIdentifier getIdentifier];
+  NSLog(@"Device uuid: %@", uniqueIdentifer);
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];

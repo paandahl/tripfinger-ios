@@ -2,7 +2,7 @@ import React from 'react';
 import ReactNative from 'react-native';
 import AutoHeightWebView from '../components/AutoHeightWebView';
 import Utils from '../Utils';
-import { imagesBaseUrl } from '../ContentService';
+import Globals from '../Globals';
 
 const Image = ReactNative.Image;
 const StyleSheet = ReactNative.StyleSheet;
@@ -24,7 +24,7 @@ export default class ListingDetails extends React.Component {
     if (this.props.listing.images.length === 0) {
       return null;
     }
-    const imageUrl = `${imagesBaseUrl()}${this.props.listing.images[0].url}-712x534`;
+    const imageUrl = `${Globals.imagesUrl}${this.props.listing.images[0].url}-712x534`;
     const imageSource = { uri: imageUrl };
     const height = (Utils.getScreenWidth() * 0.75);
     return <Image style={[styles.image, { height }]} source={imageSource} />;

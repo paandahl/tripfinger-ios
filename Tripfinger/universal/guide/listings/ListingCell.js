@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
-import { imagesBaseUrl } from '../../shared/ContentService';
+import Globals from '../../shared/Globals';
 
 const Image = ReactNative.Image;
 const StyleSheet = ReactNative.StyleSheet;
@@ -28,7 +28,7 @@ export default class ListingCell extends React.Component {
 
   _renderContainer() {
     if (this.props.listing.images.length > 0) {
-      const imageUrl = `${imagesBaseUrl()}${this.props.listing.images[0].url}-712x534`;
+      const imageUrl = `${Globals.imagesUrl}${this.props.listing.images[0].url}-712x534`;
       const imageSource = { uri: imageUrl };
       return <Image style={styles.image} source={imageSource}>{this._renderInnerView()}</Image>;
     }

@@ -4,7 +4,7 @@ import GuideItemCell from '../shared/GuideItemCell';
 import ListingCell from './ListingCell';
 import Globals from '../../shared/Globals';
 import Utils from '../../shared/Utils';
-import { getCascadingListingsForRegion } from '../../shared/ContentService';
+import { getCascadingListingsForRegion } from '../../shared/OnlineDatabaseService';
 import ListingScene from './ListingScene';
 import MWMOpeningHours from '../../shared/native/MWMOpeningHours';
 import ListViewContainer from '../../shared/components/ListViewContainer';

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactNative from 'react-native';
 import CountriesScene from './universal/guide/regions/CountriesScene';
 import MapScene from './universal/map/MapScene';
+import Utils from './universal/shared/Utils';
 
 const Component = React.Component;
 const AppRegistry = ReactNative.AppRegistry;
@@ -46,6 +47,11 @@ class Tripfinger extends Component {
         </TouchableHighlight>
       </View>
     );
+  }
+
+  constructor(props) {
+    super(props);
+    Utils.initializeApp();
   }
 
   render() {

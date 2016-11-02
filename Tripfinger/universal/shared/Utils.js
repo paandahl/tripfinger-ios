@@ -6,6 +6,7 @@ const Dimensions = ReactNative.Dimensions;
 const Easing = ReactNative.Easing;
 const ListView = ReactNative.ListView;
 const PanResponder = ReactNative.PanResponder;
+const Settings = ReactNative.Settings;
 
 const EARTH_RADIUS_IN_METERS = 6378000;
 
@@ -92,6 +93,18 @@ export default class Utils {
     }
   }
 
+  static disableIdleTimer() {}
+
+  static enableIdleTimer() {}
+
+  static beginBackgroundTask() {}
+
+  static endBackgroundTask() {}
+
+  static checkIfDeviceHasEnoughFreeSpaceForRegion() {
+    return true;
+  }
+
   static distanceOnEarth = (sourceLat, sourceLon, targetLat, targetLon) =>
     EARTH_RADIUS_IN_METERS * Utils.distanceOnSphere(sourceLat, sourceLon, targetLat, targetLon);
 
@@ -131,5 +144,12 @@ export default class Utils {
       return v.toFixed(1) + highLabel;
     }
     return Math.round(lowCount, 0) + lowLabel;
+  }
+
+  static initializeApp() {
+    const mode = Settings.get(Globals.modeKey);
+    if (!mode) {
+      Settings.set({ [Globals.modeKey]: Globals.modes.test });
+    }
   }
 }

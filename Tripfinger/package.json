@@ -3,23 +3,32 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start"
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "jest": {
+    "preset": "jest-react-native"
   },
   "dependencies": {
     "firebase": "^3.4.0",
     "react": "15.3.1",
     "react-native": "^0.34.1",
+    "react-native-filesystem": "../../tripfinger-commons/react-native-filesystem/",
     "react-native-heading": "0.0.1",
     "react-native-progress": "^3.1.0",
     "react-native-radio-buttons": "^0.12.2",
     "realm": "^0.14.3"
   },
   "devDependencies": {
-    "babel-eslint": "^7.0.0",
+    "babel-eslint": "7.0.0",
+    "babel-jest": "16.0.0",
+    "babel-preset-react-native": "^1.9.0",
     "eslint": "^3.7.0",
     "eslint-config-airbnb": "^12.0.0",
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-jsx-a11y": "^2.2.2",
-    "eslint-plugin-react": "^6.3.0"
+    "eslint-plugin-react": "^6.3.0",
+    "jest": "^16.0.2",
+    "jest-react-native": "^16.0.0"
   }
 }

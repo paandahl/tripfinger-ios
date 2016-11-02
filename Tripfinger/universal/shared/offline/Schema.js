@@ -11,32 +11,10 @@ export class GuideItemImage {
   }
 }
 
-export class GuideItem {
+export class GuideItemNotes {
   // noinspection JSUnusedGlobalSymbols
   static schema = {
-    name: GuideItem.name,
-    properties: {
-      uuid: 'string',
-      name: 'string',
-      slug: { type: 'string', optional: true },
-      category: 'int',
-      subCategory: 'int',
-      status: 'int',
-      parent: 'string',
-      content: { type: 'string', optional: true },
-      textLicense: { type: 'string', optional: true },
-      images: { type: 'list', objectType: GuideItemImage.name },
-      guideSections: { type: 'list', objectType: 'GuideText' },
-      subRegions: { type: 'list', objectType: 'Region' },
-      categoryDescriptions: { type: 'list', objectType: 'GuideText' },
-    },
-  }
-}
-
-export class GuideListingNotes {
-  // noinspection JSUnusedGlobalSymbols
-  static schema = {
-    name: GuideListingNotes.name,
+    name: GuideItemNotes.name,
     properties: {
       listingId: 'string',
       likedState: 'int',
@@ -44,31 +22,38 @@ export class GuideListingNotes {
   }
 }
 
-export class GuideListing {
+export class GuideItem {
   // noinspection JSUnusedGlobalSymbols
   static schema = {
-    name: GuideListing.name,
+    name: GuideItem.name,
     properties: {
-      item: GuideItem.name,
-      longitude: 'float',
-      latitude: 'float',
+      entityType: { type: 'string' },
+      uuid: 'string',
+      name: 'string',
+      slug: { type: 'string', optional: true },
+      category: 'int',
+      subCategory: 'int',
+      status: 'int',
+      parentUuid: { type: 'string', optional: true },
+      description: { type: 'string', optional: true },
+      textLicense: { type: 'string', optional: true },
+      images: { type: 'list', objectType: GuideItemImage.name },
+      guideSections: { type: 'list', objectType: GuideItem.name },
+      subRegions: { type: 'list', objectType: GuideItem.name },
+      categoryDescriptions: { type: 'list', objectType: GuideItem.name },
+
+      // GuideListing
+      longitude: { type: 'float', optional: true },
+      latitude: { type: 'float', optional: true },
       continent: { type: 'string', optional: true },
       worldArea: { type: 'string', optional: true },
       country: { type: 'string', optional: true },
       region: { type: 'string', optional: true },
       subRegion: { type: 'string', optional: true },
       city: { type: 'string', optional: true },
-      notes: { type: GuideListingNotes.name, optional: true },
-    },
-  }
-}
+      notes: { type: GuideItemNotes.name, optional: true },
 
-export class Listing {
-  // noinspection JSUnusedGlobalSymbols
-  static schema = {
-    name: Listing.name,
-    properties: {
-      listing: GuideListing.name,
+      // Listing
       website: { type: 'string', optional: true },
       email: { type: 'string', optional: true },
       address: { type: 'string', optional: true },
@@ -76,21 +61,14 @@ export class Listing {
       price: { type: 'string', optional: true },
       openingHours: { type: 'string', optional: true },
       directions: { type: 'string', optional: true },
-    },
-  }
-}
 
-export class Region {
-  // noinspection JSUnusedGlobalSymbols
-  static schema = {
-    name: Region.name,
-    properties: {
-      listing: GuideListing.name,
-      mwmRegionId: 'string',
+      // Region
+      mwmRegionId: { type: 'string', optional: true },
       draftSizeInBytes: { type: 'double', optional: true },
       stagedSizeInBytes: { type: 'double', optional: true },
       publishedSizeInBytes: { type: 'double', optional: true },
-      listings: { type: 'list', objectType: Listing.name },
+      listings: { type: 'list', objectType: GuideItem.name },
+
     },
   }
 }
@@ -101,15 +79,4 @@ export const LikedState = {
   LIKED: 2,
 };
 
-export class GuideText {
-  // noinspection JSUnusedGlobalSymbols
-  static schema = {
-    name: GuideText.name,
-    properties: {
-      item: GuideItem.name,
-    },
-  }
-}
-
-export const schemas = [Region, Listing, GuideListing, GuideListingNotes, GuideText,
-  GuideItem, GuideItemImage];
+export const schemas = [GuideItemNotes, GuideItem, GuideItemImage];

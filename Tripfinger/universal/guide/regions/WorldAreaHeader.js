@@ -1,7 +1,7 @@
 // <editor-fold desc="Imports">
 import React from 'react';
 import ReactNative from 'react-native';
-import FSComponent from '../../shared/native/FSComponent';
+import SimpleNetworking from '../../shared/native/SimpleNetworking';
 
 const Component = React.Component;
 const PropTypes = React.PropTypes;
@@ -39,11 +39,12 @@ export default class WorldAreaHeader extends Component {
     }
   }
 
-  loadImage(url) {
-    FSComponent.downloadFile(url, this.props.fileName, (error, filePath) => {
-      this.setState({
-        localImagePath: filePath,
-      });
+  async loadImage(url) {
+    const imageRequest = await SimpleNetworking.downloadFile({ url, path: this.props.fileName });
+    const absolutePath = await imageRequest.onComplete();
+    console.log(`got filePath: ${absolutePath}`);
+    this.setState({
+      localImagePath: absolutePath,
     });
   }
 

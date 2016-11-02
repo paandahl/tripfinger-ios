@@ -13,6 +13,7 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* TripfingerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* TripfingerTests.m */; };
+		052CBEB45A6443C9968153EB /* libRNFileSystem.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 69207FA9AFCD4C8087E7E764 /* libRNFileSystem.a */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
 		139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
@@ -96,8 +97,10 @@
 		255C7DFA1D91BD2D0098F09D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 255C7DF91D91BD2D0098F09D /* Podfile */; };
 		255C7E061D91C02E0098F09D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 255C7E051D91C02E0098F09D /* GoogleService-Info.plist */; };
 		255C7E141D91C80A0098F09D /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 255C7E131D91C80A0098F09D /* Reachability.m */; };
-		25AABCA21D9E756000178E0B /* FSComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AABCA11D9E756000178E0B /* FSComponent.m */; };
-		25AABCA61D9E76D700178E0B /* NetworkComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AABCA51D9E76D700178E0B /* NetworkComponent.m */; };
+		257B66FC1DC9E77A0039479B /* RNSimpleNetworkingEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 257B66FB1DC9E77A0039479B /* RNSimpleNetworkingEmitter.m */; };
+		25AABCA61D9E76D700178E0B /* RNSimpleNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 25AABCA51D9E76D700178E0B /* RNSimpleNetworking.m */; };
+		25BF7BFB1DBF982200CB3A3E /* UniqueIdentifier.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25BF7BFA1DBF982100CB3A3E /* UniqueIdentifier.mm */; };
+		25BF7BFD1DBFE07600CB3A3E /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 25BF7BFC1DBFE07600CB3A3E /* KeychainWrapper.m */; };
 		25F0420C1DAA867D00C5D07E /* libReactNativeHeading.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25F0420B1DAA7CEA00C5D07E /* libReactNativeHeading.a */; };
 		25F042111DAAA62B00C5D07E /* MWMFrameworkListener.mm in Sources */ = {isa = PBXBuildFile; fileRef = 25F042101DAAA62B00C5D07E /* MWMFrameworkListener.mm */; };
 		25F0423D1DABF49400C5D07E /* libART.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 25F042311DABF48300C5D07E /* libART.a */; };
@@ -172,6 +175,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
+		};
+		25B7DF7F1DC23DF600A39DC4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AA57D10395C241F5896022D0 /* RNFileSystem.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25BF7C2E1DC139EC00CB3A3E;
+			remoteInfo = RNFileSystem;
 		};
 		25F0420A1DAA7CEA00C5D07E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -320,9 +330,14 @@
 		255C7E051D91C02E0098F09D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		255C7E121D91C7EA0098F09D /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
 		255C7E131D91C80A0098F09D /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
-		25AABCA11D9E756000178E0B /* FSComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FSComponent.m; sourceTree = "<group>"; };
-		25AABCA41D9E76C800178E0B /* NetworkComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkComponent.h; sourceTree = "<group>"; };
-		25AABCA51D9E76D700178E0B /* NetworkComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkComponent.m; sourceTree = "<group>"; };
+		257B66EC1DC9E7660039479B /* RNSimpleNetworkingEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNSimpleNetworkingEmitter.h; sourceTree = "<group>"; };
+		257B66FB1DC9E77A0039479B /* RNSimpleNetworkingEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNSimpleNetworkingEmitter.m; sourceTree = "<group>"; };
+		25AABCA41D9E76C800178E0B /* RNSimpleNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNSimpleNetworking.h; sourceTree = "<group>"; };
+		25AABCA51D9E76D700178E0B /* RNSimpleNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNSimpleNetworking.m; sourceTree = "<group>"; };
+		25BF7BFA1DBF982100CB3A3E /* UniqueIdentifier.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = UniqueIdentifier.mm; sourceTree = "<group>"; };
+		25BF7BFC1DBFE07600CB3A3E /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
+		25BF7BFE1DBFE08700CB3A3E /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
+		25BF7BFF1DBFE2AE00CB3A3E /* UniqueIdentifier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UniqueIdentifier.h; sourceTree = "<group>"; };
 		25F042061DAA7CEA00C5D07E /* ReactNativeHeading.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeHeading.xcodeproj; path = "../node_modules/react-native-heading/ReactNativeHeading.xcodeproj"; sourceTree = "<group>"; };
 		25F0420D1DAAA41B00C5D07E /* MWMFrameworkObservers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMFrameworkObservers.h; sourceTree = "<group>"; };
 		25F0420F1DAAA5F800C5D07E /* MWMFrameworkListener.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MWMFrameworkListener.h; sourceTree = "<group>"; };
@@ -331,6 +346,7 @@
 		25F0423E1DAD7D6700C5D07E /* MWMOpeningHours.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMOpeningHours.h; sourceTree = "<group>"; };
 		25F0423F1DAD7D8000C5D07E /* MWMOpeningHours.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMOpeningHours.mm; sourceTree = "<group>"; };
 		39378EEFFB054693802EDA01 /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		69207FA9AFCD4C8087E7E764 /* libRNFileSystem.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFileSystem.a; sourceTree = "<group>"; };
 		6BE16475EC68D76BB863E147 /* Pods-Tripfinger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.release.xcconfig"; sourceTree = "<group>"; };
 		788F95DAE3124F68BF7FDECD /* RealmReact.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RealmReact.xcodeproj; path = "../node_modules/realm/react-native/ios/RealmReact.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
@@ -338,6 +354,7 @@
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		98BBA3272DFD64AB96797E12 /* Pods-TripfingerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		9FC79B1CC2C0A6FCBD028B9B /* Pods_TripfingerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TripfingerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA57D10395C241F5896022D0 /* RNFileSystem.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFileSystem.xcodeproj; path = "../node_modules/react-native-filesystem/ios/RNFileSystem.xcodeproj"; sourceTree = "<group>"; };
 		AB339040E75BB56D22749A18 /* Pods_Tripfinger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tripfinger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2595CA6BAF4D21E11533292 /* Pods-TripfingerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TripfingerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TripfingerTests/Pods-TripfingerTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -374,6 +391,7 @@
 				D02FBC34DC9C9958C1E2A5B3 /* Pods_Tripfinger.framework in Frameworks */,
 				5264A8D1CC554AD7A021B685 /* libRealmReact.a in Frameworks */,
 				2FEE74E1CA694777B0DCC05D /* libz.tbd in Frameworks */,
+				052CBEB45A6443C9968153EB /* libRNFileSystem.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -465,9 +483,9 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				255C7D091D8C7A8E0098F09D /* TestView.m */,
+				25BF7BEC1DBF97F600CB3A3E /* UniqueIdentifier */,
 				255C7DF61D91B9360098F09D /* Bookmarks */,
-				25AABC961D9E753B00178E0B /* FSComponent */,
-				25AABCA31D9E76A900178E0B /* NetworkComponent */,
+				25AABCA31D9E76A900178E0B /* RNSimpleNetworking */,
 				255C7D0C1D8D2A430098F09D /* MapsComponent */,
 				255C7DE21D9020E80098F09D /* TFNavigator */,
 				255C7DCA1D8F07070098F09D /* UIImage+initWithColor.h */,
@@ -623,21 +641,34 @@
 			name = Reachability;
 			sourceTree = "<group>";
 		};
-		25AABC961D9E753B00178E0B /* FSComponent */ = {
+		25AABCA31D9E76A900178E0B /* RNSimpleNetworking */ = {
 			isa = PBXGroup;
 			children = (
-				25AABCA11D9E756000178E0B /* FSComponent.m */,
+				25AABCA41D9E76C800178E0B /* RNSimpleNetworking.h */,
+				25AABCA51D9E76D700178E0B /* RNSimpleNetworking.m */,
+				257B66EC1DC9E7660039479B /* RNSimpleNetworkingEmitter.h */,
+				257B66FB1DC9E77A0039479B /* RNSimpleNetworkingEmitter.m */,
 			);
-			name = FSComponent;
+			name = RNSimpleNetworking;
 			sourceTree = "<group>";
 		};
-		25AABCA31D9E76A900178E0B /* NetworkComponent */ = {
+		25B7DF6F1DC23DF600A39DC4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				25AABCA41D9E76C800178E0B /* NetworkComponent.h */,
-				25AABCA51D9E76D700178E0B /* NetworkComponent.m */,
+				25B7DF801DC23DF600A39DC4 /* libRNFileSystem.a */,
 			);
-			name = NetworkComponent;
+			name = Products;
+			sourceTree = "<group>";
+		};
+		25BF7BEC1DBF97F600CB3A3E /* UniqueIdentifier */ = {
+			isa = PBXGroup;
+			children = (
+				25BF7BFF1DBFE2AE00CB3A3E /* UniqueIdentifier.h */,
+				25BF7BFA1DBF982100CB3A3E /* UniqueIdentifier.mm */,
+				25BF7BFE1DBFE08700CB3A3E /* KeychainWrapper.h */,
+				25BF7BFC1DBFE07600CB3A3E /* KeychainWrapper.m */,
+			);
+			name = UniqueIdentifier;
 			sourceTree = "<group>";
 		};
 		25F042071DAA7CEA00C5D07E /* Products */ = {
@@ -700,6 +731,7 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				788F95DAE3124F68BF7FDECD /* RealmReact.xcodeproj */,
+				AA57D10395C241F5896022D0 /* RNFileSystem.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -886,6 +918,10 @@
 					ProductGroup = 25F0424E1DAFC90600C5D07E /* Products */;
 					ProjectRef = 788F95DAE3124F68BF7FDECD /* RealmReact.xcodeproj */;
 				},
+				{
+					ProductGroup = 25B7DF6F1DC23DF600A39DC4 /* Products */;
+					ProjectRef = AA57D10395C241F5896022D0 /* RNFileSystem.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -950,6 +986,13 @@
 			fileType = archive.ar;
 			path = libReact.a;
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		25B7DF801DC23DF600A39DC4 /* libRNFileSystem.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFileSystem.a;
+			remoteRef = 25B7DF7F1DC23DF600A39DC4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		25F0420B1DAA7CEA00C5D07E /* libReactNativeHeading.a */ = {
@@ -1197,7 +1240,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
-				25AABCA21D9E756000178E0B /* FSComponent.m in Sources */,
 				255C7DE51D9022330098F09D /* TFRCTNavigator.m in Sources */,
 				255C7DF81D91B95C0098F09D /* BookmarkService.m in Sources */,
 				255C7DD71D8FE3330098F09D /* NavBarManager.m in Sources */,
@@ -1205,14 +1247,17 @@
 				255C7D0A1D8C7A8E0098F09D /* TestView.m in Sources */,
 				255C7D281D8D2F7E0098F09D /* iosOGLContextFactory.mm in Sources */,
 				255C7D271D8D2F7E0098F09D /* iosOGLContext.mm in Sources */,
+				25BF7BFD1DBFE07600CB3A3E /* KeychainWrapper.m in Sources */,
 				255C7D161D8D2AF30098F09D /* MWMMapWidgets.mm in Sources */,
 				25F042401DAD7D8000C5D07E /* MWMOpeningHours.mm in Sources */,
-				25AABCA61D9E76D700178E0B /* NetworkComponent.m in Sources */,
+				25BF7BFB1DBF982200CB3A3E /* UniqueIdentifier.mm in Sources */,
+				25AABCA61D9E76D700178E0B /* RNSimpleNetworking.m in Sources */,
 				255C7D131D8D2ABF0098F09D /* Framework.mm in Sources */,
 				255C7DF51D9181BA0098F09D /* TFRCTAction.m in Sources */,
 				255C7DF21D91227F0098F09D /* TFRCTNavItemManager.m in Sources */,
 				255C7DEC1D905C540098F09D /* TFRCTWrapperViewController.m in Sources */,
 				255C7DEF1D9122250098F09D /* TFRCTNavItem.m in Sources */,
+				257B66FC1DC9E77A0039479B /* RNSimpleNetworkingEmitter.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				255C7D0F1D8D2A860098F09D /* EAGLView.mm in Sources */,
 				25F042111DAAA62B00C5D07E /* MWMFrameworkListener.mm in Sources */,
@@ -1262,6 +1307,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Tripfinger.app/Tripfinger";
@@ -1280,6 +1326,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				ONLY_ACTIVE_ARCH = YES;
@@ -1324,6 +1371,7 @@
 					../../3party/glm,
 					"$(SRCROOT)/../node_modules/react-native/Libraries/Image",
 					"$(SRCROOT)/../node_modules/realm/src/**",
+					"$(SRCROOT)/../node_modules/react-native-filesystem/ios/RNFileSystem",
 				);
 				INFOPLIST_FILE = Tripfinger/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1414,6 +1462,7 @@
 					../../3party/glm,
 					"$(SRCROOT)/../node_modules/react-native/Libraries/Image",
 					"$(SRCROOT)/../node_modules/realm/src/**",
+					"$(SRCROOT)/../node_modules/react-native-filesystem/ios/RNFileSystem",
 				);
 				INFOPLIST_FILE = Tripfinger/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -1506,6 +1555,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/realm/src/**",
+					"$(SRCROOT)/../node_modules/react-native-filesystem/ios/RNFileSystem",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -1547,6 +1597,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/realm/src/**",
+					"$(SRCROOT)/../node_modules/react-native-filesystem/ios/RNFileSystem",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

@@ -4,7 +4,7 @@ import GuideItemCell from '../shared/GuideItemCell';
 import StandardCell from '../../shared/components/StandardCell';
 import Globals from '../../shared/Globals';
 import Utils from '../../shared/Utils';
-import { getGuideTextWithId } from '../../shared/ContentService';
+import { getGuideTextWithId } from '../../shared/OnlineDatabaseService';
 
 const ListView = ReactNative.ListView;
 const StyleSheet = ReactNative.StyleSheet;

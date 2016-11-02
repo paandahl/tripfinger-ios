@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
-import { getCountries } from '../../shared/ContentService';
+import { getCountries } from '../../shared/OnlineDatabaseService';
 import MapScene from '../../map/MapScene';
 import WorldAreaHeader from './WorldAreaHeader';
 import StandardCell from '../../shared/components/StandardCell';
@@ -129,15 +129,18 @@ export default class CountriesScene extends Component {
     />
   );
 
-  renderSectionHeader = (sectionData, sectionId) => (
-    <WorldAreaHeader
-      key={sectionId}
-      url={`https://storage.googleapis.com/tripfinger-images/${sectionId}.jpeg`}
-      height={150}
-      fileName={`${sectionId}.jpeg`}
-      title={sectionId}
-    />
-  );
+  renderSectionHeader = (sectionData, sectionId) => {
+    const escapedId = sectionId.replace(/ /g, '%20');
+    return (
+      <WorldAreaHeader
+        key={sectionId}
+        url={`https://storage.googleapis.com/tripfinger-images/${escapedId}.jpeg`}
+        height={150}
+        fileName={`${sectionId}.jpeg`}
+        title={sectionId}
+      />
+    );
+  };
 
   renderSettings = () => {
     if (!this.state.displaySettings) {

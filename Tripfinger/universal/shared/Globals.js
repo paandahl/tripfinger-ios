@@ -3,6 +3,19 @@ import React from 'react';
 const PropTypes = React.PropTypes;
 
 const Globals = {
+
+
+  modeKey: 'mode',
+  modes: {
+    release: 'release',
+    test: 'test',
+    draft: 'draft',
+    beta: 'beta',
+  },
+
+  serverUrl: 'https://server.tripfinger.com',
+  imagesUrl: 'https://storage.googleapis.com/tripfinger-images/',
+
   propTypes: {
     navigator: PropTypes.shape({
       push: PropTypes.func.isRequired,
@@ -25,9 +38,16 @@ const Globals = {
     tripfingerBlue: '#2FADF2',
     linkBlue: '#3586FF',
     cancelRed: '#d9534f',
+    okBlue: '#337ab7',
+    successGreen: '#5cb85c',
   },
 
   categories: {
+    country: 130,
+    subRegion: 130,
+    city: 130,
+    neighbourhood: 130,
+
     attractions: 210,
     transportation: 230,
     accommodation: 240,
@@ -49,6 +69,12 @@ const Globals = {
     metroStation: 2391,
     metroEntrance: 2393,
     tramStop: 2394,
+  },
+
+  downloadStatus: {
+    notDownloaded: 'notDownloaded',
+    downloading: 'downloading',
+    downloaded: 'downloaded',
   },
 };
 

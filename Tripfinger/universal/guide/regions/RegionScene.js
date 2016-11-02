@@ -2,12 +2,13 @@ import React from 'react';
 import ReactNative from 'react-native';
 import GuideItemCell from '../shared/GuideItemCell';
 import StandardCell from '../../shared/components/StandardCell';
-import { getRegionWithSlug } from '../../shared/ContentService';
+import { getRegionWithSlug } from '../../shared/OnlineDatabaseService';
 import SectionScene from './SectionScene';
 import Globals from '../../shared/Globals';
 import Utils from '../../shared/Utils';
 import CategoryScene from '../listings/CategoryScene';
 import ListViewContainer from '../../shared/components/ListViewContainer';
+import DownloadScene from './DownloadScene';
 
 const Component = React.Component;
 const StyleSheet = ReactNative.StyleSheet;
@@ -91,11 +92,25 @@ export default class RegionScene extends Component {
     });
   };
 
+  _onDownloadButtonPress = () => {
+    this.props.navigator.push({
+      component: DownloadScene,
+      passProps: {
+        country: this.props.region,
+      },
+    });
+  };
+
   renderRow = (data, sectionId, isFirstRow, isLastRow) => {
     const props = { isFirstRow, isLastRow };
     if (sectionId === 'guideItem') {
       const region = this.props.region;
-      return <GuideItemCell guideItem={region} expandRegion={this.expandRegion} {...props} />;
+      return (
+        <GuideItemCell
+          onDownloadButtonPress={this._onDownloadButtonPress}
+          guideItem={region} expandRegion={this.expandRegion} {...props}
+        />
+      );
     } else if (sectionId === 'sections' && this.state.expanded) {
       const text = data.name;
       return <StandardCell onPress={() => this.navigateToSection(data)} text={text} {...props} />;
