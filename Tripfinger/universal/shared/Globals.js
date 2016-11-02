@@ -15,6 +15,7 @@ const Globals = {
 
   serverUrl: 'https://server.tripfinger.com',
   imagesUrl: 'https://storage.googleapis.com/tripfinger-images/',
+  imageFolder: 'Images',
 
   propTypes: {
     navigator: PropTypes.shape({

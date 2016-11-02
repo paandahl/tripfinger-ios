@@ -42,7 +42,6 @@ export default class WorldAreaHeader extends Component {
   async loadImage(url) {
     const imageRequest = await SimpleNetworking.downloadFile({ url, path: this.props.fileName });
     const absolutePath = await imageRequest.onComplete();
-    console.log(`got filePath: ${absolutePath}`);
     this.setState({
       localImagePath: absolutePath,
     });

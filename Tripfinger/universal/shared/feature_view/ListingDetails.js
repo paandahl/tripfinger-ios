@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
+import FileSystem from 'react-native-filesystem';
 import AutoHeightWebView from '../components/AutoHeightWebView';
 import Utils from '../Utils';
 import Globals from '../Globals';
@@ -24,7 +25,15 @@ export default class ListingDetails extends React.Component {
     if (this.props.listing.images.length === 0) {
       return null;
     }
-    const imageUrl = `${Globals.imagesUrl}${this.props.listing.images[0].url}-712x534`;
+    const imageLocation = this.props.listing.images[0].url;
+    let imageUrl;
+    if (imageLocation.includes('/')) {
+      const relativePath = `/${Globals.imageFolder}/${imageLocation}`;
+      imageUrl = FileSystem.absolutePath(relativePath, FileSystem.storage.important);
+    } else {
+      imageUrl = `${Globals.imagesUrl}${imageLocation}-712x534`;
+    }
+
     const imageSource = { uri: imageUrl };
     const height = (Utils.getScreenWidth() * 0.75);
     return <Image style={[styles.image, { height }]} source={imageSource} />;

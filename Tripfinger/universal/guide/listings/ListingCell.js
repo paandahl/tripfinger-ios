@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
+import FileSystem from 'react-native-filesystem';
 import Globals from '../../shared/Globals';
 
 const Image = ReactNative.Image;
@@ -28,7 +29,14 @@ export default class ListingCell extends React.Component {
 
   _renderContainer() {
     if (this.props.listing.images.length > 0) {
-      const imageUrl = `${Globals.imagesUrl}${this.props.listing.images[0].url}-712x534`;
+      const imageLocation = this.props.listing.images[0].url;
+      let imageUrl;
+      if (imageLocation.includes('/')) {
+        const relativePath = `/${Globals.imageFolder}/${imageLocation}`;
+        imageUrl = FileSystem.absolutePath(relativePath, FileSystem.storage.important);
+      } else {
+        imageUrl = `${Globals.imagesUrl}${imageLocation}-712x534`;
+      }
       const imageSource = { uri: imageUrl };
       return <Image style={styles.image} source={imageSource}>{this._renderInnerView()}</Image>;
     }

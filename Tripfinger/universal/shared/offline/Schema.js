@@ -3,10 +3,11 @@ export class GuideItemImage {
   static schema = {
     name: GuideItemImage.name,
     properties: {
-      imageDescription: 'string',
-      license: 'string',
-      artist: 'string',
-      originalUrl: 'string',
+      url: 'string',
+      imageDescription: { type: 'string', optional: true },
+      license: { type: 'string', optional: true },
+      artist: { type: 'string', optional: true },
+      originalUrl: { type: 'string', optional: true },
     },
   }
 }

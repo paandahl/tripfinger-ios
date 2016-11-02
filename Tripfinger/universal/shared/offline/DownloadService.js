@@ -1,7 +1,7 @@
 import FileSystem from 'react-native-filesystem';
 import Utils from '../Utils';
 import Globals from '../Globals';
-import SimpleNetworkingg from '../native/SimpleNetworking';
+import SimpleNetworking from '../native/SimpleNetworking';
 import LocalDatabaseService from './LocalDatabaseService';
 import { getDownloadUrl } from '../OnlineDatabaseService';
 
@@ -19,8 +19,8 @@ export default class DownloadService {
     // object: mwmRegionId)
     // }
 
-    const countryPath = `${country.name}`;
-    const jsonPath = `${countryPath}/${country.name}.json`;
+    const countryPath = `${Globals.imageFolder}/${country.slug}`;
+    const jsonPath = `${countryPath}/${country.slug}.json`;
     const hasEnoughFreeSpace = await Utils.checkIfDeviceHasEnoughFreeSpaceForRegion(country);
     if (!hasEnoughFreeSpace) {
       DownloadService.cleanupDownload(country, taskHandle, jsonPath);
@@ -32,7 +32,7 @@ export default class DownloadService {
     if (jsonExists) {
       await DownloadService.processDownload(jsonPath, countryPath, taskHandle, progressHandler);
     } else {
-      const jsonRequest = await SimpleNetworkingg.downloadFile({
+      const jsonRequest = await SimpleNetworking.downloadFile({
         url,
         path: jsonPath,
         storage: FileSystem.storage.AUXILIARY_IMPORTANT,
@@ -46,7 +46,7 @@ export default class DownloadService {
   }
 
   static async processDownload(jsonPath, countryPath, taskHandle, progressHandler) {
-    const jsonData = await FileSystem.readFile(jsonPath);
+    const jsonData = await FileSystem.readFile(jsonPath, FileSystem.storage.important);
     const region = JSON.parse(jsonData);
     const imageList = DownloadService.fetchImageListForRegion(region, countryPath);
     let counter = 0.0;
@@ -66,22 +66,24 @@ export default class DownloadService {
     if (LocalDatabaseService.isDownloadMarkerCancelled(region.mwmRegionId || region.name)) {
       return;
     }
-    console.log('Finished image downloads');
-    await LocalDatabaseService.saveRegion(region);
-    console.log('Persisted region to database');
+    LocalDatabaseService.saveRegion(region);
     if (progressHandler) {
       progressHandler(1.0);
     }
     DownloadService.cleanupDownload(region, taskHandle, jsonPath);
   }
 
-  static deleteCountry() {}
+  static async deleteCountry(country) {
+    const countryPath = `${Globals.imageFolder}/${country.slug}`;
+    await FileSystem.delete(countryPath, FileSystem.storage.important);
+    LocalDatabaseService.deleteRegion(country.uuid);
+  }
 
   static cleanupDownload(region, taskHandle, jsonPath) {
     LocalDatabaseService.removeDownloadMarker(region.mwmRegionId || region.name);
     Utils.enableIdleTimer();
     Utils.endBackgroundTask(taskHandle);
-    FileSystem.deleteFile(jsonPath);
+    FileSystem.delete(jsonPath, FileSystem.storage.important);
   }
 
   static fetchImageListForRegion(region, path) {
@@ -90,22 +92,25 @@ export default class DownloadService {
       imageList = imageList.concat(DownloadService.fetchImageListForGuideItem(listing, path));
     }
     for (const subRegion of region.subRegions) {
-      const subPath = `${path}/${subRegion.name}`;
+      const subPath = `${path}/${subRegion.slug}`;
       imageList = imageList.concat(DownloadService.fetchImageListForRegion(subRegion, subPath));
     }
     return imageList;
   }
 
   static getLocalPartOfFileUrl(fileUrl) {
-    const flag = 'Images/';
+    const flag = `${Globals.imageFolder}/`;
     const startIndex = fileUrl.lastIndexOf(flag) + flag.length;
     return fileUrl.substring(startIndex);
   }
 
+  /*
+   * Warning: This method mutates the url of the images found
+   */
   static fetchImageListForGuideItem(guideItem, path) {
     let imageList = [];
     for (const image of guideItem.images) {
-      const destinationPath = `${path}/${image.url}`;
+      const destinationPath = `${path}/${image.url}.jpg`;
       imageList.push({ url: image.url, path: destinationPath });
       image.url = DownloadService.getLocalPartOfFileUrl(destinationPath);
     }
@@ -131,7 +136,7 @@ export default class DownloadService {
         progressHandler(requestList);
       } else {
         const imageUrl = Globals.imagesUrl + url;
-        const request = await SimpleNetworkingg.downloadFile({ url: imageUrl, path });
+        const request = await SimpleNetworking.downloadFile({ url: imageUrl, path });
         request.onComplete().then(() => {
           progressHandler(requestList);
         });

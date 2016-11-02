@@ -32,7 +32,6 @@ NSString *const kDownloadProgress = @"RNSimpleNetworkingEmitter/downloadProgress
 }
 
 - (void)downloadStatusChanged:(NSNotification *)notification {
-  NSLog(@"sending event: %@", notification.userInfo);
   [self sendEventWithName:kDownloadStatusChanged body:notification.userInfo];
 }
 

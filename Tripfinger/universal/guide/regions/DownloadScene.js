@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactNative from 'react-native';
+import Button from '../../shared/components/Button';
 import Globals from '../../shared/Globals';
 import DownloadService from '../../shared/offline/DownloadService';
 import UniqueIdentifier from '../../shared/native/UniqueIdentifier';
+import LocalDatabaseService from '../../shared/offline/LocalDatabaseService';
 
 const StyleSheet = ReactNative.StyleSheet;
 const Text = ReactNative.Text;
@@ -20,19 +22,44 @@ export default class DownloadScene extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      statusFetched: true,
+      statusFetched: false,
       guideStatus: Globals.downloadStatus.notDownloaded,
       mapStatus: Globals.downloadStatus.notDownloaded,
     };
+  }
+
+  componentDidMount() {
     this._loadStatus();
   }
 
-  async _loadStatus() {}
+  async _loadStatus() {
+    const guideStatus = LocalDatabaseService.getDownloadStatusForId(this.props.country.uuid);
+    const mapStatus = Globals.downloadStatus.notDownloaded;
+    this.setState({ guideStatus, mapStatus, statusFetched: true });
+  }
 
   _downloadGuide = async () => {
     const deviceUuid = await UniqueIdentifier.getIdentifier();
-    DownloadService.downloadCountry(this.props.country, deviceUuid);
+    await DownloadService.downloadCountry(this.props.country, deviceUuid);
+    this._loadStatus();
   };
+
+  _deleteGuide = async () => {
+    await DownloadService.deleteCountry(this.props.country);
+    this._loadStatus();
+  };
+
+  _renderDeleteGuideButton() {
+    if (this.state.guideStatus !== Globals.downloadStatus.downloaded) {
+      return null;
+    }
+    return (
+      <Button style={styles.deleteBtn} onPress={this._deleteGuide}>
+        <Text style={styles.buttonText}>Dete guide</Text>
+        <Text style={styles.downloadSize}>56 MB</Text>
+      </Button>
+    );
+  }
 
   _renderDownloadGuideAndMapButton() {
     if (this.state.guideStatus !== Globals.downloadStatus.notDownloaded
@@ -40,12 +67,10 @@ export default class DownloadScene extends React.Component {
       return null;
     }
     return (
-      <TouchableHighlight style={[styles.button, styles.mainButton]} onPress={this._downloadGuide}>
-        <View style={styles.buttonContainer}>
-          <Text style={[styles.buttonText, styles.mainButtonText]}>Guide + Map</Text>
-          <Text style={[styles.downloadSize, styles.mainButtonText]}>96 MB</Text>
-        </View>
-      </TouchableHighlight>
+      <Button style={styles.mainButton} onPress={this._downloadGuide}>
+        <Text style={styles.buttonText}>Guide + Map</Text>
+        <Text style={styles.downloadSize}>96 MB</Text>
+      </Button>
     );
   }
 
@@ -53,13 +78,13 @@ export default class DownloadScene extends React.Component {
     if (this.state.guideStatus !== Globals.downloadStatus.notDownloaded) {
       return null;
     }
+    const buttonText =
+      this.state.mapStatus === Globals.downloadStatus.downloaded ? 'Download guide' : 'Only guide';
     return (
-      <TouchableHighlight style={styles.button}>
-        <View style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>Only guide</Text>
-          <Text style={styles.downloadSize}>56 MB</Text>
-        </View>
-      </TouchableHighlight>
+      <Button onPress={this._downloadGuide}>
+        <Text style={styles.buttonText}>{buttonText}</Text>
+        <Text style={styles.downloadSize}>56 MB</Text>
+      </Button>
     );
   }
 
@@ -67,13 +92,13 @@ export default class DownloadScene extends React.Component {
     if (this.state.mapStatus !== Globals.downloadStatus.notDownloaded) {
       return null;
     }
+    const buttonText =
+      this.state.guideStatus === Globals.downloadStatus.downloaded ? 'Download map' : 'Only map';
     return (
-      <TouchableHighlight style={styles.button}>
-        <View style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>Only map</Text>
-          <Text style={styles.downloadSize}>40 MB</Text>
-        </View>
-      </TouchableHighlight>
+      <Button onPress={this._downloadMap}>
+        <Text style={styles.buttonText}>{buttonText}</Text>
+        <Text style={styles.downloadSize}>40 MB</Text>
+      </Button>
     );
   }
 
@@ -87,6 +112,7 @@ export default class DownloadScene extends React.Component {
         {this._renderDownloadGuideAndMapButton()}
         {this._renderDownloadGuideButton()}
         {this._renderDownloadMapButton()}
+        {this._renderDeleteGuideButton()}
       </View>
     );
   }
@@ -99,23 +125,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
   },
-  buttonContainer: {
-    alignItems: 'center',
-  },
   mainButton: {
     backgroundColor: Globals.colors.successGreen,
     borderColor: '#4cae4c',
   },
+  deleteBtn: {
+    backgroundColor: Globals.colors.cancelRed,
+  },
   mainButtonText: {
     color: '#fff',
-  },
-  button: {
-    alignItems: 'center',
-    padding: 15,
-    marginBottom: 20,
-    width: 200,
-    borderWidth: 1,
-    borderRadius: 10,
   },
   buttonText: {
     fontSize: 16,

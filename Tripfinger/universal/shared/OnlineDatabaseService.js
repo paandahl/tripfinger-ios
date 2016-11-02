@@ -86,7 +86,6 @@ export async function getGuideTextWithId(guideTextId) {
 export async function getCascadingListingsForRegion(regionId, category) {
   const offlineRegion = LocalDatabaseService.getGuideItemWithId(regionId);
   if (offlineRegion) {
-    console.log('got offline listings');
     return LocalDatabaseService.getCascadingListingsForRegion(offlineRegion);
   }
 

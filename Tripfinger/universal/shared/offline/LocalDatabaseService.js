@@ -1,4 +1,5 @@
 import Realm from 'realm';
+import FileSystem from 'react-native-filesystem';
 import { schemas, GuideItem, GuideItemNotes } from './Schema';
 import Globals from '../Globals';
 
@@ -46,9 +47,11 @@ function detachImages(guideItem) {
 
 export default class LocalDatabaseService {
 
-  static addDownloadMarker(mwmRegionId) {}
+  static addDownloadMarker(countryId) {}
 
   static isDownloadMarkerCancelled() {}
+
+  static hasDownloadMarker(countryId) {}
 
   static removeDownloadMarker() {}
 
@@ -62,12 +65,31 @@ export default class LocalDatabaseService {
   }
 
   static getGuideItemWithId(id) {
+    const attachedGuideItem = LocalDatabaseService._getAttachedGuideItemWithId(id);
+    if (attachedGuideItem == null) {
+      return null;
+    } else {
+      return detachGuideItem(attachedGuideItem);
+    }
+  }
+
+  static _getAttachedGuideItemWithId(id) {
     const allItems = realm.objects(GuideItem.name);
     const items = allItems.filtered(`uuid = "${id}"`);
     if (items.length > 0) {
-      return detachGuideItem(items[0]);
+      return items[0];
     }
     return null;
+  }
+
+  static getDownloadStatusForId(id) {
+    if (LocalDatabaseService.getGuideItemWithId(id)) {
+      return Globals.downloadStatus.downloaded;
+    } else if (LocalDatabaseService.hasDownloadMarker(id)) {
+      return Globals.downloadStatus.downloading;
+    } else {
+      return Globals.downloadStatus.notDownloaded;
+    }
   }
 
   static getCascadingListingsForRegion(region) {
@@ -90,10 +112,8 @@ export default class LocalDatabaseService {
     }
     const listings = realm.objects(GuideItem.name).filtered(query);
     const list = [];
-    console.log(listings.length);
     for (let i = 0; i < listings.length; i += 1) {
       const listing = listings[i];
-      console.log(listing);
       if (listing.latitude !== 0 && listing.longitude !== 0) {
         list.push(detachGuideItem(listing));
       }
@@ -101,13 +121,51 @@ export default class LocalDatabaseService {
     return list;
   }
 
+  static fixFetchedJsonForDb(region) {
+    region.listings = region.attractions;
+    if (region.subRegions) {
+      for (const subRegion of region.subRegions) {
+        LocalDatabaseService.fixFetchedJsonForDb(subRegion);
+      }
+    }
+  }
+
   static saveRegion(region) {
-    return new Promise((resolve) => {
-      realm.write(() => {
-        realm.create(GuideItem.name, region);
-      });
-      resolve();
+    LocalDatabaseService.fixFetchedJsonForDb(region);
+    realm.write(() => {
+      realm.create(GuideItem.name, region);
     });
+  }
+
+  static deleteRegion(regionId) {
+    const attachedRegion = LocalDatabaseService._getAttachedGuideItemWithId(regionId);
+    realm.write(() => {
+      LocalDatabaseService._deleteGuideItem(attachedRegion);
+    });
+  }
+
+  static _deleteGuideItem(guideItem) {
+    while (guideItem.subRegions.length > 0) {
+      const subRegion = guideItem.subRegions[0];
+      LocalDatabaseService._deleteGuideItem(subRegion);
+    }
+    while (guideItem.listings.length > 0) {
+      const listing = guideItem.listings[0];
+      LocalDatabaseService._deleteGuideItem(listing);
+    }
+    while (guideItem.guideSections.length > 0) {
+      const section = guideItem.guideSections[0];
+      LocalDatabaseService._deleteGuideItem(section);
+    }
+    while (guideItem.categoryDescriptions.length > 0) {
+      const catDesc = guideItem.categoryDescriptions[0];
+      LocalDatabaseService._deleteGuideItem(catDesc);
+    }
+    while (guideItem.images.length > 0) {
+      const image = guideItem.images[0];
+      realm.delete(image);
+    }
+    realm.delete(guideItem);
   }
 
   static saveLikeInLocalDb(likedState, listingId) {

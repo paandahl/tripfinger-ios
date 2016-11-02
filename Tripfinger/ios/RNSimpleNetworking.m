@@ -101,6 +101,7 @@ RCT_EXPORT_METHOD(downloadFile:(NSString*)url relativePath:(NSString*)relativePa
     taskIdentifier = [networking downloadFile:url toPath:relativePath storage:storage requestMethod:method body:body];
   }
   NSString *absolutePath = [RNFileSystem absolutePath:relativePath inStorage:storage];
+  NSLog(@"resolving on the dark side with: %@", absolutePath);
   resolve(@{@"taskId": taskIdentifier, @"absolutePath": absolutePath});
 }
 

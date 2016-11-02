@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactNative from 'react-native';
+import FileSystem from 'react-native-filesystem';
 import Globals from '../../shared/Globals';
 import AutoHeightWebView from '../../shared/components/AutoHeightWebView';
 import DownloadButton from './DownloadButton';
+import LocalDatabaseService from '../../shared/offline/LocalDatabaseService';
 
 const Dimensions = ReactNative.Dimensions;
 const Image = ReactNative.Image;
@@ -59,21 +61,29 @@ export default class GuideItemCell extends React.Component {
     if (this.props.guideItem.category !== Globals.categories.country) {
       return null;
     }
+    const downloadStatus = LocalDatabaseService.getDownloadStatusForId(this.props.guideItem.uuid);
     const buttonStyle = inImage ? styles.downloadButtonImage : styles.downloadButtonSeparate;
     return (
       <DownloadButton
         onPress={this.props.onDownloadButtonPress} style={buttonStyle}
-        downloadStatus="notDownloaded"
+        downloadStatus={downloadStatus}
       />
     );
   }
 
   _renderImageAndDownloadButton() {
     if (this.props.guideItem.images.length > 0) {
-      const imageUri = `${Globals.imagesUrl}${this.props.guideItem.images[0].url}-712x534`;
+      const imageLocation = this.props.guideItem.images[0].url;
+      let imageUrl;
+      if (imageLocation.includes('/')) {
+        const relativePath = `/${Globals.imageFolder}/${imageLocation}`;
+        imageUrl = FileSystem.absolutePath(relativePath, FileSystem.storage.important);
+      } else {
+        imageUrl = `${Globals.imagesUrl}${imageLocation}-712x534`;
+      }
       const height = (Dimensions.get('window').width * 0.75) - 50;
       return (
-        <Image source={{ uri: imageUri }} style={{ height }}>
+        <Image source={{ uri: imageUrl }} style={{ height }}>
           {this._renderDownloadButton(true)}
         </Image>
       );
