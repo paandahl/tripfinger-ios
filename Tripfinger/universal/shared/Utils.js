@@ -1,5 +1,7 @@
 import ReactNative from 'react-native';
 import Globals from './Globals';
+import MWMMapView from './native/MWMMapView';
+import LocalDatabaseService from './offline/LocalDatabaseService';
 
 const Animated = ReactNative.Animated;
 const Dimensions = ReactNative.Dimensions;
@@ -151,5 +153,8 @@ export default class Utils {
     if (!mode) {
       Settings.set({ [Globals.modeKey]: Globals.modes.test });
     }
+    const customFeatures = LocalDatabaseService.getCustomFeatures();
+    MWMMapView.setCustomFeatures(customFeatures);
   }
+
 }

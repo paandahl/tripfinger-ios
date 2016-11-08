@@ -594,7 +594,7 @@ class PreResult2Maker
       f.SetID(id);
 
       center = feature::GetCenter(f);
-      name = id.tripfingerMark->name;
+      f.GetReadableName(name);
       country = m_query.m_countryCheckerFn(center);
 
     } else {
@@ -680,7 +680,7 @@ public:
   {
     unique_ptr<FeatureType> ft;
     if (res1.GetID().IsTripfinger()) {
-      ft = make_unique<SelfBakedFeatureType>(*res1.GetID().tripfingerMark);
+      ft = make_unique<SelfBakedFeatureType>(m_query.m_featureCache->GetFeatureById(res1.GetID().m_tripfingerId));
     } else {
       ft = make_unique<FeatureType>();
     }
@@ -926,7 +926,7 @@ void Query::AddPreResult1(MwmSet::MwmId const & mwmId, uint32_t featureId, doubl
 void Query::AddPreResult1(FeatureID const & mwmId, double priority,
                           v2::PreRankingInfo const & info, ViewportID viewportId /* = DEFAULT_V */)
 {
-  FeatureID id(*mwmId.tripfingerMark);
+  FeatureID id(mwmId.m_tripfingerId);
   m_results.emplace_back(id, priority, viewportId, info);
 }
 

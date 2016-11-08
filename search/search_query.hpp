@@ -25,6 +25,8 @@
 #include "std/unordered_set.hpp"
 #include "std/vector.hpp"
 
+#include "indexer/feature_cache.hpp"
+
 #define FIND_LOCALITY_TEST
 
 #ifdef FIND_LOCALITY_TEST
@@ -74,6 +76,7 @@ public:
   TPoiSearchFn m_poiSearchFn;
   TCoordinateCheckerFn m_coordinateCheckerFn;
   TCountryCheckerFn m_countryCheckerFn;
+  shared_ptr<FeatureCache> m_featureCache;
 
   // Maximum result candidates count for each viewport/criteria.
   static size_t const kPreResultsCount = 200;

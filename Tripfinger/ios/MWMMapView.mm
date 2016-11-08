@@ -4,6 +4,7 @@
 #import "MWMFrameworkListener.h"
 #import "MWMFrameworkObservers.h"
 #import "MWMOpeningHours.h"
+#include "geometry/mercator.hpp"
 
 @interface MWMMapView ()<MWMFrameworkDrapeObserver, MWMFrameworkStorageObserver>
 @end
@@ -385,7 +386,23 @@
 @implementation MWMMapViewManager
   
   RCT_EXPORT_MODULE()
-  
+
+  RCT_EXPORT_METHOD(setCustomFeatures:(NSArray*)featureDicts) {
+    vector<SelfBakedFeatureType> features;
+    for (NSDictionary* featureDict in featureDicts) {
+      NSNumber *latitude = [featureDict objectForKey:@"latitude"];
+      NSNumber *longitude = [featureDict objectForKey:@"longitude"];
+      
+      m2::PointD mercator = MercatorBounds::FromLatLon([latitude doubleValue], [longitude doubleValue]);
+      NSString *name = [featureDict objectForKey:@"name"];
+      NSNumber *type = [featureDict objectForKey:@"type"];
+      SelfBakedFeatureType feature(mercator, [name UTF8String], [type unsignedIntValue]);
+      features.push_back(feature);
+    }
+    NSLog(@"Setting the feature cache with %lu items.", features.size());
+    GetFramework().SetFeatureCacheItems(move(features));
+  }
+
   RCT_EXPORT_METHOD(deactivateMapSelection) {
     GetFramework().DeactivateMapSelection(false);
   }

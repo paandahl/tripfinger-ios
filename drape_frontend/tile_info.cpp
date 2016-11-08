@@ -77,18 +77,13 @@ void TileInfo::ReadFeatures(MapDataProvider const & model)
     // ADD TRIPFINGER SHIT
 //    if (SelfBakedFeatureType::shouldAddTripfingerPois > 0) {
     TripfingerMarkParams params;
-    ms::LatLon topLeftCoord = MercatorBounds::ToLatLon(GetGlobalRect().LeftTop());
-    ms::LatLon botRightCoord = MercatorBounds::ToLatLon(GetGlobalRect().RightBottom());
-    params.topLeft = m2::PointD(topLeftCoord.lat, topLeftCoord.lon);
-    params.botRight = m2::PointD(botRightCoord.lat, botRightCoord.lon);
+    params.topLeft = GetGlobalRect().LeftTop();
+    params.botRight = GetGlobalRect().RightBottom();
     params.zoomLevel = GetZoomLevel();
-    vector<TripfingerMark> tripfingerMarks = model.m_poiSupplierCallback(params);
-    unsigned long size = tripfingerMarks.size();
+    vector<SelfBakedFeatureType> tripfingerFeatures = model.m_featureCache.GetFeatures(params);
+    unsigned long size = tripfingerFeatures.size();
     for (int i = 0; i < size; i++) {
-      TripfingerMark tripfingerMark = tripfingerMarks[i];
-      SelfBakedFeatureType tripfingerFeature(tripfingerMark);
-      FeatureID fid(tripfingerMark);
-      tripfingerFeature.SetID(fid);
+      SelfBakedFeatureType tripfingerFeature = tripfingerFeatures[i];
       tripfingerFeature.ParseTypes();
       drawer.operator()(tripfingerFeature);
     }

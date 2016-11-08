@@ -2,6 +2,7 @@
 
 #include "storage/index.hpp"
 #include "storage/storage_defines.hpp"
+#include "indexer/feature_cache.hpp"
 
 #include "indexer/feature.hpp"
 #include "geometry/rect2d.hpp"
@@ -22,16 +23,14 @@ public:
   using TUpdateCurrentCountryFn = function<void (m2::PointD const &, int)>;
   using TCoordinateCheckerFn = function<bool (ms::LatLon coord)>;
 
-  typedef function<vector<TripfingerMark>(TripfingerMarkParams&)> TPoiSupplierCallback;
-
-  TPoiSupplierCallback m_poiSupplierCallback;
+  const FeatureCache& m_featureCache;
 
   MapDataProvider(TReadIDsFn const & idsReader,
                   TReadFeaturesFn const & featureReader,
                   TIsCountryLoadedByNameFn const & isCountryLoadedByNameFn,
                   TUpdateCurrentCountryFn const & updateCurrentCountryFn,
                   TCoordinateCheckerFn const & coordinateCheckerFn,
-                  TPoiSupplierCallback const & poiSupplierFn);
+                  FeatureCache const & featureCache);
 
   void ReadFeaturesID(TReadCallback<FeatureID> const & fn, m2::RectD const & r, int scale) const;
   void ReadFeatures(TReadCallback<FeatureType> const & fn, vector<FeatureID> const & ids) const;

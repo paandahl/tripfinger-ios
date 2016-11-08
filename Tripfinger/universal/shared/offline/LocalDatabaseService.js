@@ -216,4 +216,105 @@ export default class LocalDatabaseService {
   static getAttachedListingWithId(listingId) {
     return null;
   }
+
+  static getCustomFeatures() {
+    const allListings = realm.objects(GuideItem.name).filtered('entityType = "listing"');
+    const iterator = allListings.values();
+    const features = [];
+    let iter = iterator.next();
+    while (!iter.done) {
+      const listing = iter.value;
+      features.push({
+        latitude: listing.latitude,
+        longitude: listing.longitude,
+        name: listing.name,
+        type: LocalDatabaseService.getOsmType(listing.subCategory),
+      });
+      iter = iterator.next();
+    }
+    return features;
+  }
+
+  static getOsmType(subCategoryId) {
+    switch (subCategoryId) {
+      case 2100: // sights nnd landmarks
+        return 4259; // tourism-attraction
+      case 2110: // tours
+        return 4259; // tourism-attraction
+      case 2120: // museums
+        return 4771; // tourism-museum
+      case 2130: // park
+        return 4498; // leisure-park
+      case 2140: // hood
+        return 4259; // tourism-attraction
+      case 2145: // nature
+        return 4498; // leisure-park
+      case 2150: // daytrips
+        return 4259; // tourism-attraction
+      case 2155: // sports
+        return 4259; // tourism-attraction
+      case 2160: // amusement park
+        return 4259; // tourism-attraction
+      case 2165: // fun and games
+        return 4259; // tourism-attraction
+      case 2170: // class or workshop
+        return 4259; // tourism-attraction
+      case 2175: // spa or wellness
+        return 4259; // tourism-attraction
+      case 2180: // theater and concernts:
+        return 7042; // amenity-theatre
+      case 2185: // festivals
+        return 4259; // tourism-attraction
+
+      case 2300: // airport
+        return 4097; // aeroway-aerodrome
+      case 2310: // train station
+        return 5279; // railway-station
+      case 2320: // bus station
+        return 4610; // amenity-bus_station
+      case 2392: // metro station
+        return 271519; // railway-station-subway
+      case 2394: // tram stop
+        return 4610; // amenity-bus_station
+      case 2330: // ferry terminal
+        return 4610; // amenity-bus_station
+      case 2340: // car rental
+        return 4610; // amenity-bus_station
+      case 2350: // motorbike rental
+        return 4610; // amenity-bus_station
+      case 2360: // bicycle rental
+        return 4610; // amenity-bus_station
+
+      case 2410: // guesthouses
+      case 2420: // hotels
+      case 2430: // apartments
+      case 2400: // hostels
+        return 4579; // tourism-hotel
+
+      case 2500:
+        return 4674; // amenity-cafe
+      case 2510:
+        return 6658; // amenity-restaurant
+      case 2530:
+        return 4226; // amenity-bar
+      case 2540:
+        return 6274; // amenity-nightclub
+      case 2520:
+        return 5570; // amenity-fast_food
+
+      case 2600:
+        return 6210; // amenity-marketplace
+      case 2610:
+        return 5985; // shop-mall
+      case 2620:
+        return 97; // shop
+
+      case 2700:
+        return 266787; // tourism-information-office
+
+      default:
+        console.log(`osmType not defined for category: ${subCategoryId}`);
+        return 4610; // amenity-bus_station
+    }
+  }
 }

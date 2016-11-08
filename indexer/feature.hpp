@@ -377,7 +377,8 @@ class SelfBakedFeatureType : public FeatureType
 {
 public:
   SelfBakedFeatureType(TripfingerMark const & mark);
-  
+  SelfBakedFeatureType(m2::PointD mercator, string name, uint32_t type);
+
   inline bool HasName() const
   {
     return true;

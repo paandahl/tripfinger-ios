@@ -18,6 +18,11 @@ export default class MWMMapView extends React.Component {
     style: React.PropTypes.any,
   };
 
+  static setCustomFeatures(customFeatures) {
+    // noinspection JSUnresolvedFunction
+    NativeMapViewManager.setCustomFeatures(customFeatures);
+  }
+
   static deactivateMapSelection() {
     // noinspection JSUnresolvedFunction
     NativeMapViewManager.deactivateMapSelection();

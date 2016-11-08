@@ -660,6 +660,16 @@ SelfBakedFeatureType::SelfBakedFeatureType(TripfingerMark const & mark)
   m_limitRect.Add(m_center);
 }
 
+SelfBakedFeatureType::SelfBakedFeatureType(m2::PointD mercator, string name, uint32_t type)
+{
+  m_center = mercator;
+  m_name = name;
+  m_names.AddString(StringUtf8Multilang::kDefaultCode, m_name);
+  m_types[0] = type;
+  m_params.layer = 0;
+  m_limitRect.Add(m_center);
+}
+
 
 void SelfBakedFeatureType::ParseTypes() const
 {

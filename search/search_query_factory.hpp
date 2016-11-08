@@ -2,6 +2,7 @@
 
 #include "search/suggest.hpp"
 #include "search/v2/search_query_v2.hpp"
+#include "indexer/feature_cache.hpp"
 
 #include "std/unique_ptr.hpp"
 #include "geometry/point2d.hpp"
@@ -23,6 +24,7 @@ public:
   TPoiSearchFn m_poiSearchFn;
   TCoordinateCheckerFn m_coordinateCheckerFn;
   TCountryCheckerFn m_countryCheckerFn;
+  shared_ptr<FeatureCache> m_featureCache;
 
 
   virtual ~SearchQueryFactory() = default;
@@ -35,6 +37,7 @@ public:
     queryPtr->m_poiSearchFn = m_poiSearchFn;
     queryPtr->m_coordinateCheckerFn = m_coordinateCheckerFn;
     queryPtr->m_countryCheckerFn = m_countryCheckerFn;
+    queryPtr->m_featureCache = m_featureCache;
     return queryPtr;
   }
 };

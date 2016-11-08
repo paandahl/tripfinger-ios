@@ -7,6 +7,7 @@
 #include "map/feature_vec_model.hpp"
 #include "map/mwm_url.hpp"
 #include "map/track.hpp"
+#include "indexer/feature_cache.hpp"
 
 #include "drape_frontend/gui/skin.hpp"
 #include "drape_frontend/drape_engine.hpp"
@@ -272,6 +273,10 @@ public:
   void SetMapSelectionListeners(TActivateMapSelectionFn const & activator,
                                 TDeactivateMapSelectionFn const & deactivator);
 
+  void SetFeatureCacheItems(vector<SelfBakedFeatureType> && features) {
+    featureCache.SetFeatures(move(features));
+  }
+
   using TPoiSupplierFn = function<vector<TripfingerMark> (TripfingerMarkParams & params)>;
   void SetPoiSupplierFunction(TPoiSupplierFn const & fn) { m_poiSupplierFn = fn; }
 
@@ -308,6 +313,8 @@ private:
   unique_ptr<location::CompassInfo> m_lastCompassInfo;
   unique_ptr<location::GpsInfo> m_lastGPSInfo;
 #endif
+
+  FeatureCache featureCache;
 
   void OnTapEvent(df::TapInfo const & tapInfo);
   /// outInfo is valid only if return value is not df::SelectionShape::OBJECT_EMPTY.

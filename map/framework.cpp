@@ -682,7 +682,7 @@ void Framework::FillFeatureInfo(FeatureID const & fid, place_page::Info & info) 
   }
 
   if (fid.IsTripfinger()) {
-    SelfBakedFeatureType ft(*fid.tripfingerMark);
+    SelfBakedFeatureType ft = featureCache.GetFeatureById(fid.m_tripfingerId);
     ft.SetID(fid);
     FillInfoFromFeatureType(ft, info);
   }
@@ -1282,6 +1282,7 @@ void Framework::InitSearchEngine()
     queryFactory->m_poiSearchFn = bind(&Framework::PoiSearch, this, _1);
     queryFactory->m_coordinateCheckerFn = bind(&Framework::CheckIfCoordinateIsTripfingered, this, _1);
     queryFactory->m_countryCheckerFn = bind(&Framework::GetCountryIndex, this, _1);
+    queryFactory->m_featureCache = make_shared<FeatureCache>(featureCache);
 
     m_searchEngine.reset(new search::Engine(const_cast<Index &>(m_model.GetIndex()),
                                             GetDefaultCategories(), *m_infoGetter,
@@ -1540,7 +1541,8 @@ void Framework::CreateDrapeEngine(ref_ptr<dp::OGLContextFactory> contextFactory,
   df::DrapeEngine::Params p(contextFactory,
                             make_ref(&m_stringsBundle),
                             df::Viewport(0, 0, params.m_surfaceWidth, params.m_surfaceHeight),
-                            df::MapDataProvider(idReadFn, featureReadFn, isCountryLoadedByNameFn, updateCurrentCountryFn, m_coordinateCheckerFn, m_poiSupplierFn),
+                            df::MapDataProvider(idReadFn, featureReadFn, isCountryLoadedByNameFn, updateCurrentCountryFn,
+                                m_coordinateCheckerFn, featureCache),
                             params.m_visualScale, move(params.m_widgetsInitInfo),
                             make_pair(params.m_initialMyPositionState, params.m_hasMyPositionState),
                             allow3dBuildings, params.m_isChoosePositionMode, params.m_isChoosePositionMode);
@@ -1878,7 +1880,8 @@ unique_ptr<FeatureType> Framework::GetFeatureByID(FeatureID const & fid, bool pa
 
   // check for tripfinger prefix
   if (fid.IsTripfinger()) {
-    unique_ptr<FeatureType> ft = make_unique<SelfBakedFeatureType>(*fid.tripfingerMark);
+    unique_ptr<FeatureType> ft = make_unique<SelfBakedFeatureType>(featureCache.GetFeatureById(fid.m_tripfingerId));
+//    unique_ptr<FeatureType> ft = make_unique<SelfBakedFeatureType>(*fid.tripfingerMark);
     return ft;
   } else {
     unique_ptr<FeatureType> feature(new FeatureType);

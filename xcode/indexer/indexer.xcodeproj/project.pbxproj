@@ -154,6 +154,8 @@
 		6758AED31BB4413000C26E27 /* drules_selector.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6758AECF1BB4413000C26E27 /* drules_selector.cpp */; };
 		6758AED41BB4413000C26E27 /* drules_selector.hpp in Headers */ = {isa = PBXBuildFile; fileRef = 6758AED01BB4413000C26E27 /* drules_selector.hpp */; };
 		67F183731BD4FCF500AB1840 /* map_style.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 67F183721BD4FCF500AB1840 /* map_style.cpp */; };
+		ECFFB2791567B7E87A5562FA /* feature_cache.hpp in Headers */ = {isa = PBXBuildFile; fileRef = ECFFBA4C6E6A04B93E9A7768 /* feature_cache.hpp */; };
+		ECFFBD6491E2B494B949631F /* feature_cache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ECFFB1A589F2627AA8881C20 /* feature_cache.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -322,6 +324,8 @@
 		6758AECF1BB4413000C26E27 /* drules_selector.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drules_selector.cpp; sourceTree = "<group>"; };
 		6758AED01BB4413000C26E27 /* drules_selector.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = drules_selector.hpp; sourceTree = "<group>"; };
 		67F183721BD4FCF500AB1840 /* map_style.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = map_style.cpp; sourceTree = "<group>"; };
+		ECFFB1A589F2627AA8881C20 /* feature_cache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = feature_cache.cpp; sourceTree = "<group>"; };
+		ECFFBA4C6E6A04B93E9A7768 /* feature_cache.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = feature_cache.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -549,6 +553,8 @@
 				675340FB1A3F540F00A0A8C3 /* types_mapping.cpp */,
 				675340FC1A3F540F00A0A8C3 /* types_mapping.hpp */,
 				670EE56B1B60033A001E8064 /* unique_index.hpp */,
+				ECFFB1A589F2627AA8881C20 /* feature_cache.cpp */,
+				ECFFBA4C6E6A04B93E9A7768 /* feature_cache.hpp */,
 			);
 			name = indexer;
 			path = ../../indexer;
@@ -626,6 +632,7 @@
 				6753410A1A3F540F00A0A8C3 /* data_header.hpp in Headers */,
 				6753411B1A3F540F00A0A8C3 /* feature_impl.hpp in Headers */,
 				675341111A3F540F00A0A8C3 /* drules_struct.pb.h in Headers */,
+				ECFFB2791567B7E87A5562FA /* feature_cache.hpp in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -784,6 +791,7 @@
 				675341101A3F540F00A0A8C3 /* drules_struct.pb.cc in Sources */,
 				6758AED11BB4413000C26E27 /* drules_selector_parser.cpp in Sources */,
 				6753413B1A3F540F00A0A8C3 /* point_to_int64.cpp in Sources */,
+				ECFFBD6491E2B494B949631F /* feature_cache.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

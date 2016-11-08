@@ -26,6 +26,7 @@ SOURCES += \
     edits_migration.cpp \
     feature.cpp \
     feature_algo.cpp \
+    feature_cache.cpp \
     feature_covering.cpp \
     feature_data.cpp \
     feature_decl.cpp \
@@ -75,6 +76,7 @@ HEADERS += \
     edits_migration.hpp \
     feature.hpp \
     feature_algo.hpp \
+    feature_cache.hpp \
     feature_covering.hpp \
     feature_data.hpp \
     feature_decl.hpp \

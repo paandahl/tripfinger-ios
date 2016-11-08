@@ -69,12 +69,13 @@ struct FeatureID
 
   MwmSet::MwmId m_mwmId;
   uint32_t m_index;
-  shared_ptr<TripfingerMark> tripfingerMark = nullptr;
+  string m_tripfingerId;
 
   FeatureID() : m_index(0) {}
   FeatureID(MwmSet::MwmId const & mwmId, uint32_t index) : m_mwmId(mwmId), m_index(index) {}
+  FeatureID(string tripfingerId) : m_tripfingerId(tripfingerId) {}
   FeatureID(TripfingerMark const & mark) : m_mwmId(MwmSet::MwmId()), m_index(0) {
-    tripfingerMark = make_shared<TripfingerMark>(mark);
+    m_tripfingerId = mark.tripfingerId;
   }
 
   bool IsValid() const {
@@ -86,13 +87,13 @@ struct FeatureID
   }
 
   bool IsTripfinger() const {
-    return tripfingerMark != nullptr;
+    return !m_tripfingerId.empty();
   }
 
   inline bool operator<(FeatureID const & r) const
   {
     if (IsTripfinger() && r.IsTripfinger()) {
-      return tripfingerMark->tripfingerId < r.tripfingerMark->tripfingerId;
+      return m_tripfingerId < r.m_tripfingerId;
     } else if (IsTripfinger()) {
       return false;
     } else if (r.IsTripfinger()) {
@@ -107,7 +108,7 @@ struct FeatureID
   inline bool operator==(FeatureID const & r) const
   {
     if (IsTripfinger() && r.IsTripfinger()) {
-      return tripfingerMark->tripfingerId == r.tripfingerMark->tripfingerId;
+      return m_tripfingerId == r.m_tripfingerId;
     } else {
       return (m_mwmId == r.m_mwmId && m_index == r.m_index);
     }
