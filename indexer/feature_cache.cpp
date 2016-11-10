@@ -2,12 +2,15 @@
 #include "base/logging.hpp"
 
 void FeatureCache::SetFeatures(vector<SelfBakedFeatureType> && features) {
-  this->features = features;
+  for (auto const & feature : features) {
+    featureMap.insert(make_pair(feature.GetID().m_tripfingerId, feature));
+  }
 }
 
 vector<SelfBakedFeatureType> FeatureCache::GetFeatures(TripfingerMarkParams const & params) const {
   vector<SelfBakedFeatureType> results;
-  for (SelfBakedFeatureType const & feature : features) {
+  for (auto& kv : featureMap) {
+    SelfBakedFeatureType const & feature = kv.second;
     if (feature.GetCenter().x > params.topLeft.x && feature.GetCenter().x < params.botRight.x
         && feature.GetCenter().y > params.botRight.y && feature.GetCenter().y < params.topLeft.y) {
       results.push_back(feature);

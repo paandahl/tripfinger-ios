@@ -14,7 +14,7 @@ export default class ActionBar extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    info: React.PropTypes.object,
+    feature: React.PropTypes.object,
     addBookmark: React.PropTypes.func.isRequired,
     removeBookmark: React.PropTypes.func.isRequired,
   };
@@ -25,10 +25,10 @@ export default class ActionBar extends React.Component {
   }
 
   _renderBookmarkButton() {
-    if (this.props.info.bookmarkKey) {
+    if (this.props.feature.bookmarkKey) {
       return (
         <TouchableHighlight
-          onPress={() => this.props.removeBookmark(this.props.info)}
+          onPress={() => this.props.removeBookmark(this.props.feature)}
           underlayColor="transparent"
         >
           <View style={styles.actionButton}>
@@ -40,7 +40,7 @@ export default class ActionBar extends React.Component {
     }
     return (
       <TouchableHighlight
-        onPress={() => this.props.addBookmark(this.props.info)}
+        onPress={() => this.props.addBookmark(this.props.feature)}
         underlayColor="transparent"
       >
         <View style={styles.actionButton}>
@@ -53,7 +53,7 @@ export default class ActionBar extends React.Component {
 
   // noinspection JSMethodCanBeStatic
   render() {
-    if (this.props.info !== null) {
+    if (this.props.feature !== null) {
       this.actionView = (
         <View style={styles.actionBar}>
           {this._renderBookmarkButton()}

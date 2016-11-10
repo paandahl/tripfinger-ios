@@ -2,6 +2,7 @@ import React from 'react';
 import ReactNative from 'react-native';
 import InfoHeader from './InfoHeader';
 import FeatureTable from '../../shared/feature_view/FeatureTable';
+import ListingDetails from '../../shared/feature_view/ListingDetails';
 
 const StyleSheet = ReactNative.StyleSheet;
 const View = ReactNative.View;
@@ -12,7 +13,7 @@ export default class FeatureViewContainer extends React.Component {
   static propTypes = {
     headerClicked: React.PropTypes.func.isRequired,
     headerHeightUpdated: React.PropTypes.func.isRequired,
-    info: React.PropTypes.object,
+    feature: React.PropTypes.object,
     viewState: React.PropTypes.string.isRequired,
     panHandlers: React.PropTypes.any,
     location: React.PropTypes.object,
@@ -23,15 +24,24 @@ export default class FeatureViewContainer extends React.Component {
     this.featureView = <View />;
   }
 
+  _renderListingDetails = () => {
+    if (!this.props.feature.entityType) {
+      return null;
+    }
+    return <ListingDetails listing={this.props.feature} />;
+  };
+
   render() {
-    if (this.props.info !== null) {
+    if (this.props.feature !== null) {
       this.featureView = (
         <View style={styles.info} {...this.props.panHandlers}>
           <InfoHeader
-            info={this.props.info} onClick={this.props.headerClicked} location={this.props.location}
-            onHeaderHeightUpdate={this.props.headerHeightUpdated} viewState={this.props.viewState}
+            info={this.props.feature} onClick={this.props.headerClicked}
+            location={this.props.location} onHeaderHeightUpdate={this.props.headerHeightUpdated}
+            viewState={this.props.viewState}
           />
-          <FeatureTable listing={this.props.info} />
+          {this._renderListingDetails()}
+          <FeatureTable listing={this.props.feature} />
           <View style={styles.hiddenFooter} />
         </View>
       );

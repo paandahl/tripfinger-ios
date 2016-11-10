@@ -7,6 +7,7 @@ import LocationButton from './LocationButton';
 import ZoomButtons from './ZoomButtons';
 import BookmarkService from '../shared/native/BookmarkService';
 import locationManager from '../shared/native/LocationManager';
+import LocalDatabaseService from '../shared/offline/LocalDatabaseService';
 
 const Component = React.Component;
 const StyleSheet = ReactNative.StyleSheet;
@@ -35,11 +36,19 @@ export default class MapScene extends Component {
 
   _onMapObjectSelected = (info) => {
     console.log(`object selected: ${JSON.stringify(info)}`);
-    this.setState({ currentItem: info });
+    if (info.tripfingerId) {
+      console.log('got a custom feature');
+      const listing = LocalDatabaseService.getGuideItemWithId(info.tripfingerId);
+      this.setState({ currentItem: listing });
+    } else {
+      console.log('got an mwm feature');
+      this.setState({ currentItem: info });
+    }
     // self.controlsManager.hidden = NO;
   };
 
   _onMapObjectDeselected = () => {
+    console.log('setting item to null');
     this.setState({ currentItem: null });
     // auto & f = GetFramework();
     // if (switchFullScreenMode && self.controlsManager.searchHidden && !f.IsRouteNavigable())
@@ -113,7 +122,7 @@ export default class MapScene extends Component {
         />
         {this._renderDownloadPopup()}
         <FeatureViewPopup
-          info={this.state.currentItem}
+          feature={this.state.currentItem}
           location={this.state.location}
           onDismiss={() => this.setState({ currentItem: null })}
           addBookmark={this._addBookmark}

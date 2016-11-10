@@ -114,6 +114,10 @@
     }
   }
   
+  if (!info.tripfingerId.empty()) {
+    infoDict[@"tripfingerId"] = @(info.tripfingerId.c_str());
+  }
+  
   if (info.IsBookmark()) {
     auto const bac = info.GetBookmarkAndCategory();
     BookmarkCategory * cat = GetFramework().GetBmCategory(bac.first);
@@ -122,7 +126,7 @@
     infoDict[@"bookmarkKey"] = @(data.GetDatabaseKey().c_str());
   }
   
-  self.onMapObjectSelected(@{@"info": infoDict});
+  self.onMapObjectSelected(@{@"feature": infoDict});
 }
   
 - (void)processViewportCountryEvent:(TCountryId const &)countryId {
@@ -392,11 +396,11 @@
     for (NSDictionary* featureDict in featureDicts) {
       NSNumber *latitude = [featureDict objectForKey:@"latitude"];
       NSNumber *longitude = [featureDict objectForKey:@"longitude"];
-      
       m2::PointD mercator = MercatorBounds::FromLatLon([latitude doubleValue], [longitude doubleValue]);
       NSString *name = [featureDict objectForKey:@"name"];
       NSNumber *type = [featureDict objectForKey:@"type"];
-      SelfBakedFeatureType feature(mercator, [name UTF8String], [type unsignedIntValue]);
+      NSString *tripfingerId = [featureDict objectForKey:@"id"];
+      SelfBakedFeatureType feature(mercator, [name UTF8String], [type unsignedIntValue], [tripfingerId UTF8String]);
       features.push_back(feature);
     }
     NSLog(@"Setting the feature cache with %lu items.", features.size());

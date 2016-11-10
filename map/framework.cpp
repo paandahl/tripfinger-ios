@@ -720,7 +720,7 @@ void Framework::FillPointInfo(m2::PointD const & mercator, string const & custom
 void Framework::FillInfoFromFeatureType(FeatureType const & ft, place_page::Info & info) const
 {
   if (ft.GetID().IsTripfinger()) {
-    info.tripfingerId = ft.GetID().m_index;
+    info.tripfingerId = ft.GetID().m_tripfingerId;
   }
 
   info.SetFromFeatureType(ft);

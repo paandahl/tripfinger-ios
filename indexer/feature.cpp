@@ -660,7 +660,7 @@ SelfBakedFeatureType::SelfBakedFeatureType(TripfingerMark const & mark)
   m_limitRect.Add(m_center);
 }
 
-SelfBakedFeatureType::SelfBakedFeatureType(m2::PointD mercator, string name, uint32_t type)
+SelfBakedFeatureType::SelfBakedFeatureType(m2::PointD mercator, string name, uint32_t type, string tripfingerId)
 {
   m_center = mercator;
   m_name = name;
@@ -668,6 +668,8 @@ SelfBakedFeatureType::SelfBakedFeatureType(m2::PointD mercator, string name, uin
   m_types[0] = type;
   m_params.layer = 0;
   m_limitRect.Add(m_center);
+  FeatureID featureID(tripfingerId);
+  SetID(featureID);
 }
 
 

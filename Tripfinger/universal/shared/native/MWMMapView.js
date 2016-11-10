@@ -63,7 +63,7 @@ export default class MWMMapView extends React.Component {
       return;
     }
     // noinspection JSUnresolvedVariable
-    this.props.onMapObjectSelected(event.nativeEvent.info);
+    this.props.onMapObjectSelected(event.nativeEvent.feature);
   };
 
   _onMapObjectDeselected = (event) => {

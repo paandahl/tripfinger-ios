@@ -229,6 +229,7 @@ export default class LocalDatabaseService {
         longitude: listing.longitude,
         name: listing.name,
         type: LocalDatabaseService.getOsmType(listing.subCategory),
+        id: listing.uuid,
       });
       iter = iterator.next();
     }

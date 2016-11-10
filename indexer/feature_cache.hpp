@@ -16,7 +16,6 @@ public:
   SelfBakedFeatureType GetFeatureById(string const & id) const;
 
 private:
-  vector<SelfBakedFeatureType> features;
   map<string, const SelfBakedFeatureType> featureMap;
   set<string> coordinateSet;
 };

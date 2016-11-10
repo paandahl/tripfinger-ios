@@ -14,7 +14,7 @@ export default class FeatureViewPopup extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    info: React.PropTypes.object,
+    feature: React.PropTypes.object,
     onDismiss: React.PropTypes.func.isRequired,
     location: React.PropTypes.object,
     addBookmark: React.PropTypes.func.isRequired,
@@ -51,12 +51,12 @@ export default class FeatureViewPopup extends React.Component {
             this._popToHeader();
           }
         } else if (this.state.viewState === ViewState.EXPANDED) {
-          const directDropLimit = Utils.getScreenHeight() - 75;
-          if (gestureState.moveY > directDropLimit) {
+          const expandPoint = -(Math.min(this.height, 600) - 100);
+          if (this.featureTopValue > -100) {
             this._popDown();
-          } else if (gestureState.vy > 0.01 || gestureState.dy > 20) { // swipe or dragged down
+          } else if (this.featureTopValue > expandPoint) {
             this._popToHeader();
-          } else {
+          } else if (gestureState.vy >= 1) {
             this._expand();
           }
         }
@@ -66,9 +66,9 @@ export default class FeatureViewPopup extends React.Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (newProps.info === null && this.props.info !== null) {
+    if (newProps.feature === null && this.props.feature !== null) {
       this._popDown();
-    } else if (newProps.info !== this.props.info) {
+    } else if (newProps.feature !== this.props.feature) {
       this._popToHeader();
     }
   }
@@ -84,13 +84,14 @@ export default class FeatureViewPopup extends React.Component {
     Utils.animateTo(this.state.actionTop, 100, 0);
     MWMMapView.deactivateMapSelection();
     this.setState({ viewState: ViewState.HIDDEN });
-    if (this.props.info) {
+    if (this.props.feature) {
       this.props.onDismiss();
     }
   }
 
   _expand = () => {
-    Utils.animateTo(this.state.featureTop, 150, -(this.height - 100));
+    const expandPoint = -(Math.min(this.height, 600) - 100);
+    Utils.animateTo(this.state.featureTop, 150, expandPoint);
     this.setState({ viewState: ViewState.EXPANDED });
   };
 
@@ -124,14 +125,14 @@ export default class FeatureViewPopup extends React.Component {
           }}
         >
           <FeatureViewContainer
-            info={this.props.info} viewState={this.state.viewState} location={this.props.location}
+            feature={this.props.feature} location={this.props.location} collapseHours={this._expand}
             panHandlers={this.panResponder.panHandlers()} headerClicked={this._headerClicked}
-            headerHeightUpdated={this._headerHeightUpdated} collapseHours={this._expand}
+            headerHeightUpdated={this._headerHeightUpdated} viewState={this.state.viewState}
           />
         </Animated.View>
         <Animated.View style={[{ top: this.state.actionTop }, styles.floatingContainer]}>
           <ActionBar
-            info={this.props.info}
+            feature={this.props.feature}
             addBookmark={this.props.addBookmark} removeBookmark={this.props.removeBookmark}
           />
         </Animated.View>

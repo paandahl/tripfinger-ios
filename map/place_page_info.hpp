@@ -17,7 +17,7 @@ namespace place_page
 class Info : public osm::MapObject
 {
 public:
-  int tripfingerId = 0;
+  string tripfingerId;
   static char const * kSubtitleSeparator;
   static char const * kStarSymbol;
   static char const * kMountainSymbol;
