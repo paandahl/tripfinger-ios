@@ -16,8 +16,9 @@ namespace v2
 {
 SearchQueryV2::SearchQueryV2(Index & index, CategoriesHolder const & categories,
                              vector<Suggest> const & suggests,
-                             storage::CountryInfoGetter const & infoGetter)
-  : Query(index, categories, suggests, infoGetter), m_geocoder(index, infoGetter)
+                             storage::CountryInfoGetter const & infoGetter,
+    FeatureCache const & featureCache)
+  : Query(index, categories, suggests, infoGetter, featureCache), m_geocoder(index, infoGetter)
 {
   m_keepHouseNumberInQuery = true;
 }
@@ -54,21 +55,28 @@ void SearchQueryV2::Search(Results & res, size_t resCount)
   search::TripfingerSearchParams tfSearchParams;
   tfSearchParams.query = m_query;
   tfSearchParams.includeRegions = m_includesTripfingerRegions;
-  vector<TripfingerMark> tfMarks = m_poiSearchFn(tfSearchParams);
+  vector<SelfBakedFeatureType> customFeatures = m_poiSearchFn(tfSearchParams);
 
-  for (const auto& tfMark : tfMarks) {
+  for (const auto& customFeature : customFeatures) {
     Geocoder::TResult result;
-    result.first = FeatureID(tfMark);
+    result.first = customFeature.GetID();
     PreRankingInfo rankingInfo;
     rankingInfo.m_distanceToPivot = 5;
     rankingInfo.m_startToken = 0;
     rankingInfo.m_endToken = 1;
     rankingInfo.m_rank = 10;
-    rankingInfo.m_searchType = tfMark.searchType;
+    uint32_t type = customFeature.m_types[0];
+    if (type == 4252) { // only countries
+      rankingInfo.m_searchType = search::v2::SearchModel::SearchType::SEARCH_TYPE_COUNTRY;
+    } else {
+      rankingInfo.m_searchType = search::v2::SearchModel::SearchType::SEARCH_TYPE_POI;
+    }
     result.second = rankingInfo;
     results.push_back(result);
-    if (std::to_string(tfMark.category)[0] == '1') {
-      m_tripfingerRegions.insert(tfMark.name);
+    if (type == 4252 || type == 4188 || type == 5020 || type == 17825820) { // all region types
+      string name;
+      customFeature.GetReadableName(name);
+      m_tripfingerRegions.insert(name);
     }
   }
 

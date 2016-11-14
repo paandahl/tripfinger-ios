@@ -292,7 +292,7 @@ public:
   using TPoiByCoordFetcherFn = function<TripfingerMark (ms::LatLon coord)>;
   void SetPoiByCoordFetcherFunction(TPoiByCoordFetcherFn const & fn) { m_poiByCoordFetcherFn = fn; }
 
-  using TPoiSearchFn = function<vector<TripfingerMark> (search::TripfingerSearchParams const &)>;
+  using TPoiSearchFn = function<vector<SelfBakedFeatureType> (search::TripfingerSearchParams const &)>;
   void SetPoiSearchFn(TPoiSearchFn const & fn) { m_poiSearchFn = fn; }
 
   void ResetLastTapEvent();
@@ -334,7 +334,7 @@ private:
   TCategoryCheckerFn m_categoryCheckerFn;
   TPoiSearchFn m_poiSearchFn;
 
-  vector<TripfingerMark> PoiSearch(search::TripfingerSearchParams params);
+  vector<SelfBakedFeatureType> PoiSearch(search::TripfingerSearchParams params);
   bool CheckIfCoordinateIsTripfingered(ms::LatLon const & coord);
 
 public:

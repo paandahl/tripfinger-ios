@@ -23,6 +23,8 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		254676851DD5AFB800DAAA6F /* MWMSearch.mm in Sources */ = {isa = PBXBuildFile; fileRef = 254676841DD5AFB800DAAA6F /* MWMSearch.mm */; };
+		254676881DD5BB2000DAAA6F /* MWMSearchEmitter.m in Sources */ = {isa = PBXBuildFile; fileRef = 254676871DD5BB2000DAAA6F /* MWMSearchEmitter.m */; };
 		255C7D0A1D8C7A8E0098F09D /* TestView.m in Sources */ = {isa = PBXBuildFile; fileRef = 255C7D091D8C7A8E0098F09D /* TestView.m */; };
 		255C7D0F1D8D2A860098F09D /* EAGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 255C7D0E1D8D2A860098F09D /* EAGLView.mm */; };
 		255C7D131D8D2ABF0098F09D /* Framework.mm in Sources */ = {isa = PBXBuildFile; fileRef = 255C7D121D8D2ABF0098F09D /* Framework.mm */; };
@@ -241,6 +243,9 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Tripfinger/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		192A6DD5D1EC9547453B8EA8 /* Pods-Tripfinger.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tripfinger.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tripfinger/Pods-Tripfinger.debug.xcconfig"; sourceTree = "<group>"; };
+		254676841DD5AFB800DAAA6F /* MWMSearch.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MWMSearch.mm; sourceTree = "<group>"; };
+		254676861DD5BAE900DAAA6F /* MWMSearchEmitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MWMSearchEmitter.h; sourceTree = "<group>"; };
+		254676871DD5BB2000DAAA6F /* MWMSearchEmitter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MWMSearchEmitter.m; sourceTree = "<group>"; };
 		255C7D091D8C7A8E0098F09D /* TestView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestView.m; sourceTree = "<group>"; };
 		255C7D0D1D8D2A700098F09D /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EAGLView.h; path = Tripfinger/EAGLView.h; sourceTree = "<group>"; };
 		255C7D0E1D8D2A860098F09D /* EAGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EAGLView.mm; sourceTree = "<group>"; };
@@ -518,6 +523,9 @@
 				255C7D151D8D2AF30098F09D /* MWMMapWidgets.mm */,
 				25F0423E1DAD7D6700C5D07E /* MWMOpeningHours.h */,
 				25F0423F1DAD7D8000C5D07E /* MWMOpeningHours.mm */,
+				254676841DD5AFB800DAAA6F /* MWMSearch.mm */,
+				254676861DD5BAE900DAAA6F /* MWMSearchEmitter.h */,
+				254676871DD5BB2000DAAA6F /* MWMSearchEmitter.m */,
 				255C7D171D8D2B020098F09D /* MWMTypes.h */,
 				25F0420E1DAAA5DD00C5D07E /* Framework */,
 				255C7D1C1D8D2EA30098F09D /* Other Sources */,
@@ -1249,11 +1257,13 @@
 				255C7D271D8D2F7E0098F09D /* iosOGLContext.mm in Sources */,
 				25BF7BFD1DBFE07600CB3A3E /* KeychainWrapper.m in Sources */,
 				255C7D161D8D2AF30098F09D /* MWMMapWidgets.mm in Sources */,
+				254676851DD5AFB800DAAA6F /* MWMSearch.mm in Sources */,
 				25F042401DAD7D8000C5D07E /* MWMOpeningHours.mm in Sources */,
 				25BF7BFB1DBF982200CB3A3E /* UniqueIdentifier.mm in Sources */,
 				25AABCA61D9E76D700178E0B /* RNSimpleNetworking.m in Sources */,
 				255C7D131D8D2ABF0098F09D /* Framework.mm in Sources */,
 				255C7DF51D9181BA0098F09D /* TFRCTAction.m in Sources */,
+				254676881DD5BB2000DAAA6F /* MWMSearchEmitter.m in Sources */,
 				255C7DF21D91227F0098F09D /* TFRCTNavItemManager.m in Sources */,
 				255C7DEC1D905C540098F09D /* TFRCTWrapperViewController.m in Sources */,
 				255C7DEF1D9122250098F09D /* TFRCTNavItem.m in Sources */,

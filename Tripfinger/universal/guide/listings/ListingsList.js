@@ -24,7 +24,6 @@ export default class ListingsList extends React.Component {
 
   constructor(props) {
     super(props);
-    const ds = Utils.simpleDataSource();
     this.data = {};
     this.sections = [];
     const notAttractions = this.props.categoryDesc.category !== Globals.categories.attractions;
@@ -33,6 +32,7 @@ export default class ListingsList extends React.Component {
       this.data.guideItem = [this.props.categoryDesc];
       this.sections.push('guideItem');
     }
+    const ds = Utils.simpleDataSource();
     this.state = {
       expanded: false,
       dataSource: ds.cloneWithRowsAndSections(this.data),

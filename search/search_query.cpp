@@ -217,11 +217,12 @@ double const Query::kMinViewportRadiusM = 5.0 * 1000;
 double const Query::kMaxViewportRadiusM = 50.0 * 1000;
 
 Query::Query(Index & index, CategoriesHolder const & categories, vector<Suggest> const & suggests,
-             storage::CountryInfoGetter const & infoGetter)
+             storage::CountryInfoGetter const & infoGetter, FeatureCache const & featureCache)
   : m_index(index)
   , m_categories(categories)
   , m_suggests(suggests)
   , m_infoGetter(infoGetter)
+    , m_featureCache(featureCache)
 #ifdef FIND_LOCALITY_TEST
   , m_locality(&index)
 #endif
@@ -680,7 +681,7 @@ public:
   {
     unique_ptr<FeatureType> ft;
     if (res1.GetID().IsTripfinger()) {
-      ft = make_unique<SelfBakedFeatureType>(m_query.m_featureCache->GetFeatureById(res1.GetID().m_tripfingerId));
+      ft = make_unique<SelfBakedFeatureType>(m_query.m_featureCache.GetFeatureById(res1.GetID().m_tripfingerId));
     } else {
       ft = make_unique<FeatureType>();
     }

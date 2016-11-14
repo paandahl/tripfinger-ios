@@ -122,6 +122,8 @@ public:
       f(m_types[i]);
   }
 
+  mutable uint32_t m_types[feature::kMaxTypesCount];
+
 protected:
   /// @name Need for FeatureBuilder.
   //@{
@@ -137,8 +139,6 @@ protected:
   feature::LoaderBase * m_pLoader;
 
   uint8_t m_header;
-
-  mutable uint32_t m_types[feature::kMaxTypesCount];
 
   mutable FeatureParamsBase m_params;
 
@@ -402,6 +402,7 @@ public:
   {
     return 1;
   }
+  bool hiddenFromMap = false;
 
 private:
   mutable string m_name;

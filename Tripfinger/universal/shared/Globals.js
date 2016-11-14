@@ -41,6 +41,8 @@ const Globals = {
     cancelRed: '#d9534f',
     okBlue: '#337ab7',
     successGreen: '#5cb85c',
+    tintGrey: '#333',
+    rowBackgroundGrey: '#EFEFF4',
   },
 
   categories: {

@@ -7,8 +7,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.benwixen.rnfilesystem.RNFileSystemPackage;
 import com.facebook.react.ReactApplication;
-import io.realm.react.RealmReactPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -17,6 +17,8 @@ import com.tripfinger.map.MWMMapPackage;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+
+import io.realm.react.RealmReactPackage;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -49,6 +51,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.asList(
           new MainReactPackage(),
+            new RNFileSystemPackage(),
             new RealmReactPackage(),
           new MWMMapPackage()
       );

@@ -35,13 +35,10 @@ export default class MapScene extends Component {
   }
 
   _onMapObjectSelected = (info) => {
-    console.log(`object selected: ${JSON.stringify(info)}`);
     if (info.tripfingerId) {
-      console.log('got a custom feature');
       const listing = LocalDatabaseService.getGuideItemWithId(info.tripfingerId);
       this.setState({ currentItem: listing });
     } else {
-      console.log('got an mwm feature');
       this.setState({ currentItem: info });
     }
     // self.controlsManager.hidden = NO;

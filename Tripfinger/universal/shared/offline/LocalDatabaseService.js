@@ -217,7 +217,7 @@ export default class LocalDatabaseService {
     return null;
   }
 
-  static getCustomFeatures() {
+  static getCustomListingFeatures() {
     const allListings = realm.objects(GuideItem.name).filtered('entityType = "listing"');
     const iterator = allListings.values();
     const features = [];
@@ -228,7 +228,7 @@ export default class LocalDatabaseService {
         latitude: listing.latitude,
         longitude: listing.longitude,
         name: listing.name,
-        type: LocalDatabaseService.getOsmType(listing.subCategory),
+        type: LocalDatabaseService.getOsmListingType(listing.subCategory),
         id: listing.uuid,
       });
       iter = iterator.next();
@@ -236,7 +236,44 @@ export default class LocalDatabaseService {
     return features;
   }
 
-  static getOsmType(subCategoryId) {
+  static getCustomRegionFeatures() {
+    const allListings = realm.objects(GuideItem.name).filtered('entityType = "region"');
+    const iterator = allListings.values();
+    const features = [];
+    let iter = iterator.next();
+    while (!iter.done) {
+      const listing = iter.value;
+      features.push({
+        latitude: listing.latitude,
+        longitude: listing.longitude,
+        name: listing.name,
+        type: LocalDatabaseService.getOsmRegionType(listing.category),
+        id: listing.uuid,
+      });
+      iter = iterator.next();
+    }
+    return features;
+  }
+
+  static getOsmRegionType(categoryId) {
+    switch (categoryId) {
+      case 110: // continent
+        return 4188;
+      case 120: // world area
+      case 140: // country region
+      case 150: // subregion
+        return 5020; // county
+      case 130: // country
+        return 4252;
+      case 160: // city
+        return 17825820;
+      default:
+        console.log(`osmType not defined for category: ${categoryId}`);
+        return 17825820; // amenity-bus_station
+    }
+  }
+
+  static getOsmListingType(subCategoryId) {
     switch (subCategoryId) {
       case 2100: // sights nnd landmarks
         return 4259; // tourism-attraction

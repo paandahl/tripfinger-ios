@@ -1278,11 +1278,10 @@ void Framework::InitSearchEngine()
     search::Engine::Params params;
     params.m_locale = languages::GetCurrentOrig();
     params.m_numThreads = 1;
-    unique_ptr<search::SearchQueryFactory> queryFactory = make_unique<search::SearchQueryFactory>();
+    unique_ptr<search::SearchQueryFactory> queryFactory = make_unique<search::SearchQueryFactory>(featureCache);
     queryFactory->m_poiSearchFn = bind(&Framework::PoiSearch, this, _1);
     queryFactory->m_coordinateCheckerFn = bind(&Framework::CheckIfCoordinateIsTripfingered, this, _1);
     queryFactory->m_countryCheckerFn = bind(&Framework::GetCountryIndex, this, _1);
-    queryFactory->m_featureCache = make_shared<FeatureCache>(featureCache);
 
     m_searchEngine.reset(new search::Engine(const_cast<Index &>(m_model.GetIndex()),
                                             GetDefaultCategories(), *m_infoGetter,
@@ -1960,8 +1959,8 @@ void Framework::SetMapSelectionListeners(TActivateMapSelectionFn const & activat
 }
 
 
-vector<TripfingerMark> Framework::PoiSearch(search::TripfingerSearchParams params) {
-  return m_poiSearchFn(params);
+vector<SelfBakedFeatureType> Framework::PoiSearch(search::TripfingerSearchParams params) {
+  return featureCache.Search(params.query, params.includeRegions);
 }
 
 bool Framework::CheckIfCoordinateIsTripfingered(ms::LatLon const & coord) {

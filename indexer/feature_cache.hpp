@@ -13,6 +13,7 @@ class FeatureCache {
 public:
   void SetFeatures(vector<SelfBakedFeatureType> &&);
   vector<SelfBakedFeatureType> GetFeatures(TripfingerMarkParams const & params) const;
+  vector<SelfBakedFeatureType> Search(string const & query, bool includeHidden) const;
   SelfBakedFeatureType GetFeatureById(string const & id) const;
 
 private:

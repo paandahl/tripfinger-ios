@@ -153,7 +153,9 @@ export default class Utils {
     if (!mode) {
       Settings.set({ [Globals.modeKey]: Globals.modes.test });
     }
-    const customFeatures = LocalDatabaseService.getCustomFeatures();
+    const customFeatures = LocalDatabaseService.getCustomListingFeatures();
+    const regionFeatures = LocalDatabaseService.getCustomRegionFeatures();
+    customFeatures.push(...regionFeatures);
     MWMMapView.setCustomFeatures(customFeatures);
   }
 

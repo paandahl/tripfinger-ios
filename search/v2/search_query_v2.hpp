@@ -11,7 +11,8 @@ class SearchQueryV2 : public Query
 {
 public:
   SearchQueryV2(Index & index, CategoriesHolder const & categories,
-                vector<Suggest> const & suggests, storage::CountryInfoGetter const & infoGetter);
+                vector<Suggest> const & suggests, storage::CountryInfoGetter const & infoGetter,
+                FeatureCache const & featureCache);
 
   // my::Cancellable overrides:
   void Reset() override;

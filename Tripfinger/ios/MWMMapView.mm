@@ -78,13 +78,17 @@
 }
   
 - (void)onMapObjectSelectedBridge:(place_page::Info)info {
-  NSMutableDictionary* infoDict = [@{
-                                     @"name": @(info.GetTitle().c_str()),
+  NSMutableDictionary* infoDict = [@{@"name": @(info.GetTitle().c_str()),
                                      @"address": @(info.GetAddress().c_str()),
                                      @"latitude": [NSNumber numberWithDouble:info.GetLatLon().lat],
                                      @"longitude": [NSNumber numberWithDouble:info.GetLatLon().lon],
                                      @"category": @(info.GetSubtitle().c_str()),
                                      } mutableCopy];
+  NSString *typeString = @"";
+  for (const unsigned int & type : info.GetTypes()) {
+    typeString = [NSString stringWithFormat:@"%@:%u", typeString, type];
+  }
+  NSLog(@"Types of selected obj: %@", typeString);
   feature::Metadata const & md = info.GetMetadata();
   for (auto const type : md.GetPresentTypes()) {
     switch (type) {

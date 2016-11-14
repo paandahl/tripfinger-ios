@@ -7,46 +7,38 @@ import StandardCell from '../../shared/components/StandardCell';
 import Reachability from '../../shared/native/Reachability';
 import RegionScene from './RegionScene';
 import Utils from '../../shared/Utils';
+import ModalMenu from '../../shared/components/ModalMenu';
 
-const Component = React.Component;
-const StyleSheet = ReactNative.StyleSheet;
 const ListView = ReactNative.ListView;
+const StyleSheet = ReactNative.StyleSheet;
 const View = ReactNative.View;
-const PropTypes = React.PropTypes;
 
 const MAP_ICON = require('../../../assets/maps_icon.png');
-const SETTINGS_ICON = require('../../../assets/ic_menu.png');
 
 const MAP_ACTION = 'mapAction';
-const SETTINGS_ACTION = 'settingsAction';
 
-export default class CountriesScene extends Component {
+export default class CountriesScene extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    navigator: PropTypes.shape({
-      push: PropTypes.func.isRequired,
+    navigator: React.PropTypes.shape({
+      push: React.PropTypes.func.isRequired,
     }),
   };
 
   // noinspection JSUnusedGlobalSymbols
-  static title() {
-    return 'Countries';
-  }
+  static title = () => 'Countries';
 
-  static rightButtonActions() {
-    return [
-      { action: MAP_ACTION, res: MAP_ICON },
-      { action: SETTINGS_ACTION, res: SETTINGS_ICON },
-    ];
-  }
+  static rightButtonActions = () => [
+    { action: MAP_ACTION, res: MAP_ICON },
+    ModalMenu.actionDescription(),
+  ];
 
   constructor(props) {
     super(props);
     // noinspection JSUnusedGlobalSymbols
     const ds = Utils.simpleDataSource();
     this.state = {
-      displaySettings: false,
       dataSource: ds.cloneWithRowsAndSections({}),
     };
     this.loadCountryLists();
@@ -57,8 +49,8 @@ export default class CountriesScene extends Component {
       case MAP_ACTION:
         this.navigateToMap();
         break;
-      case SETTINGS_ACTION:
-        this.toggleSettings();
+      case ModalMenu.actionDescription().action:
+        this.modalMenu.toggleSettings();
         break;
       default:
         throw new Error(`Unrecognized action: ${action}`);
@@ -69,12 +61,6 @@ export default class CountriesScene extends Component {
     this.props.navigator.push({
       component: MapScene,
       title: 'Map',
-    });
-  }
-
-  toggleSettings() {
-    this.setState({
-      displaySettings: !this.state.displaySettings,
     });
   }
 
@@ -142,21 +128,13 @@ export default class CountriesScene extends Component {
     );
   };
 
-  renderSettings = () => {
-    if (!this.state.displaySettings) {
-      return null;
-    }
-    return (
-      <View style={styles.settingsOverlay}>
-        <View style={styles.settings} />
-      </View>
-    );
-  };
-
   render() {
     return (
       <View style={styles.container}>
-        {this.renderSettings()}
+        <ModalMenu
+          ref={(instance) => { this.modalMenu = instance; }}
+          navigator={this.props.navigator}
+        />
         <ListView
           dataSource={this.state.dataSource}
           style={styles.list}
@@ -214,18 +192,5 @@ const styles = StyleSheet.create({
   mapButtonLabel: {
     fontSize: 20,
     textAlign: 'center',
-  },
-  settingsOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    zIndex: 100,
-    backgroundColor: '#00000077',
-  },
-  settings: {
-    backgroundColor: '#FFF',
-    height: 200,
   },
 });

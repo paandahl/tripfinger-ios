@@ -70,13 +70,13 @@ struct PreRankingInfo;
 class Query : public my::Cancellable
 {
 public:
-  using TPoiSearchFn = function<vector<TripfingerMark> (search::TripfingerSearchParams const &)>;
+  using TPoiSearchFn = function<vector<SelfBakedFeatureType> (search::TripfingerSearchParams const &)>;
   using TCoordinateCheckerFn = function<bool (ms::LatLon const &)>;
   using TCountryCheckerFn = function<string (m2::PointD const &)>;
   TPoiSearchFn m_poiSearchFn;
   TCoordinateCheckerFn m_coordinateCheckerFn;
   TCountryCheckerFn m_countryCheckerFn;
-  shared_ptr<FeatureCache> m_featureCache;
+  const FeatureCache& m_featureCache;
 
   // Maximum result candidates count for each viewport/criteria.
   static size_t const kPreResultsCount = 200;
@@ -85,7 +85,7 @@ public:
   static double const kMaxViewportRadiusM;
 
   Query(Index & index, CategoriesHolder const & categories, vector<Suggest> const & suggests,
-        storage::CountryInfoGetter const & infoGetter);
+        storage::CountryInfoGetter const & infoGetter, FeatureCache const & featureCache);
 
   inline void SupportOldFormat(bool b) { m_supportOldFormat = b; }
 
