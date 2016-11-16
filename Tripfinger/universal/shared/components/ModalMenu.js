@@ -11,17 +11,15 @@ const View = ReactNative.View;
 
 const SEARCH_ICON = require('../../../assets/search_icon.png');
 const SETTINGS_ICON = require('../../../assets/settings_icon.png');
-const MENU_ICON = require('../../../assets/ic_menu.png');
-
 
 export default class ModalMenu extends React.Component {
+
+  static MENU_ICON = require('../../../assets/ic_menu.png');
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
     navigator: React.PropTypes.object,
   };
-
-  static actionDescription = () => ({ action: 'menuAction', res: MENU_ICON });
 
   constructor(props) {
     super(props);
@@ -39,8 +37,7 @@ export default class ModalMenu extends React.Component {
   _navigateToSearch = async () => {
     // const dataProps = await SearchScene.fetchData();
     this.props.navigator.push({
-      component: SearchScene,
-      // passProps: { ...dataProps },
+      scene: SearchScene,
     });
     this.setState({
       displayMenu: false,

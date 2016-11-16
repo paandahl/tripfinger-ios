@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
+import NavBar from '../../NavBar';
 import Button from '../../shared/components/Button';
 import Globals from '../../shared/Globals';
 import DownloadService from '../../shared/offline/DownloadService';
@@ -16,6 +17,8 @@ export default class DownloadScene extends React.Component {
   static title = () => 'Download';
 
   static propTypes = {
+    navigator: React.PropTypes.object,
+    sceneProps: React.PropTypes.object,
     country: Globals.propTypes.region.isRequired,
   };
 
@@ -109,6 +112,9 @@ export default class DownloadScene extends React.Component {
     }
     return (
       <View style={styles.container}>
+        <NavBar
+          style={styles.navBar} navigator={this.props.navigator} sceneProps={this.props.sceneProps}
+        />
         {this._renderDownloadGuideAndMapButton()}
         {this._renderDownloadGuideButton()}
         {this._renderDownloadMapButton()}
@@ -120,10 +126,15 @@ export default class DownloadScene extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 64,
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,
+  },
+  navBar: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
   },
   mainButton: {
     backgroundColor: Globals.colors.successGreen,

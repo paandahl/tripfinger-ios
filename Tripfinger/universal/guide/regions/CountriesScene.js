@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
+import NavBar from '../../NavBar';
 import { getCountries } from '../../shared/OnlineDatabaseService';
 import MapScene from '../../map/MapScene';
 import WorldAreaHeader from './WorldAreaHeader';
@@ -11,28 +12,22 @@ import ModalMenu from '../../shared/components/ModalMenu';
 
 const ListView = ReactNative.ListView;
 const StyleSheet = ReactNative.StyleSheet;
+const Text = ReactNative.Text;
+const TouchableHighlight = ReactNative.TouchableHighlight;
 const View = ReactNative.View;
 
 const MAP_ICON = require('../../../assets/maps_icon.png');
-
-const MAP_ACTION = 'mapAction';
 
 export default class CountriesScene extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    navigator: React.PropTypes.shape({
-      push: React.PropTypes.func.isRequired,
-    }),
+    navigator: React.PropTypes.object,
+    sceneProps: React.PropTypes.object,
   };
 
   // noinspection JSUnusedGlobalSymbols
   static title = () => 'Countries';
-
-  static rightButtonActions = () => [
-    { action: MAP_ACTION, res: MAP_ICON },
-    ModalMenu.actionDescription(),
-  ];
 
   constructor(props) {
     super(props);
@@ -44,25 +39,9 @@ export default class CountriesScene extends React.Component {
     this.loadCountryLists();
   }
 
-  rightButtonPressed(action) {
-    switch (action) {
-      case MAP_ACTION:
-        this.navigateToMap();
-        break;
-      case ModalMenu.actionDescription().action:
-        this.modalMenu.toggleSettings();
-        break;
-      default:
-        throw new Error(`Unrecognized action: ${action}`);
-    }
-  }
-
-  navigateToMap() {
-    this.props.navigator.push({
-      component: MapScene,
-      title: 'Map',
-    });
-  }
+  navigateToMap = () => {
+    this.props.navigator.push({ scene: MapScene });
+  };
 
   async loadCountryLists() {
     const isConnected = await Reachability.isOnline();
@@ -100,8 +79,8 @@ export default class CountriesScene extends React.Component {
 
   navigateToCountry(country) {
     this.props.navigator.push({
-      component: RegionScene,
-      passProps: {
+      scene: RegionScene,
+      props: {
         region: country,
       },
     });
@@ -129,12 +108,15 @@ export default class CountriesScene extends React.Component {
   };
 
   render() {
+    const actions = [
+      { action: this.navigateToMap, res: MAP_ICON },
+      { action: () => this.modalMenu.toggleSettings(), res: ModalMenu.MENU_ICON },
+    ];
+    const { navigator, sceneProps } = this.props;
     return (
       <View style={styles.container}>
-        <ModalMenu
-          ref={(instance) => { this.modalMenu = instance; }}
-          navigator={this.props.navigator}
-        />
+        <NavBar navigator={navigator} sceneProps={sceneProps} actions={actions} />
+        <ModalMenu ref={(instance) => { this.modalMenu = instance; }} navigator={navigator} />
         <ListView
           dataSource={this.state.dataSource}
           style={styles.list}
@@ -151,6 +133,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   list: {
+    paddingTop: 64,
     flex: 1,
     alignSelf: 'stretch',
     backgroundColor: '#EBEBF1',

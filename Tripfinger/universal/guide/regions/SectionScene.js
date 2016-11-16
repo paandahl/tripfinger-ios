@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
+import NavBar from '../../NavBar';
 import GuideItemCell from '../shared/GuideItemCell';
 import StandardCell from '../../shared/components/StandardCell';
 import Globals from '../../shared/Globals';
@@ -8,12 +9,14 @@ import { getGuideTextWithId } from '../../shared/OnlineDatabaseService';
 
 const ListView = ReactNative.ListView;
 const StyleSheet = ReactNative.StyleSheet;
+const View = ReactNative.View;
 
 export default class SectionScene extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    navigator: Globals.propTypes.navigator,
+    navigator: React.PropTypes.object,
+    sceneProps: React.PropTypes.object,
     section: Globals.propTypes.guideItem,
   };
 
@@ -73,17 +76,24 @@ export default class SectionScene extends React.Component {
 
   render() {
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        style={styles.list}
-      />
+      <View style={styles.container}>
+        <NavBar navigator={this.props.navigator} sceneProps={this.props.sceneProps} />
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow}
+          style={styles.list}
+        />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   list: {
+    paddingTop: 64,
     flex: 1,
     alignSelf: 'stretch',
     backgroundColor: '#EBEBF1',

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactNative from 'react-native';
 import TFNavigator from './universal/shared/native/TFNavigator';
 import CountriesScene from './universal/guide/regions/CountriesScene';
+import NavigatorComponent from './universal/SuperNavigator';
 import BookmarkService from './universal/shared/native/BookmarkService';
 import Utils from './universal/shared/Utils';
 
@@ -21,16 +22,17 @@ class Tripfinger extends Component {
   // noinspection JSMethodCanBeStatic
   render() {
     return (
-      <TFNavigator
-        translucent
-        tintColor="#FFF"
-        titleTextColor="#FFF"
-        initialRoute={{
-          component: CountriesScene,
-        }}
-        style={styles.navigator}
-        interactivePopGestureEnabled={false}
-      />
+      // <TFNavigator
+      //   translucent
+      //   tintColor="#FFF"
+      //   titleTextColor="#FFF"
+      //   initialRoute={{
+      //     component: CountriesScene,
+      //   }}
+      //   style={styles.navigator}
+      //   interactivePopGestureEnabled={false}
+      // />
+      <NavigatorComponent />
     );
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
+import NavBar from '../NavBar';
 import Globals from '../shared/Globals';
 import Utils from '../shared/Utils';
 import ListViewContainer from '../shared/components/ListViewContainer';
@@ -22,6 +23,8 @@ export default class SearchScene extends React.Component {
   static title = () => 'Search';
 
   static propTypes = {
+    navigator: React.PropTypes.object,
+    sceneProps: React.PropTypes.object,
     // lastQueries: React.PropTypes.array.isRequired,
   };
 
@@ -114,6 +117,7 @@ export default class SearchScene extends React.Component {
     // const scrollVeiwHeight = Utils.getScreenHeight() - 64 - 64;
     return (
       <View style={styles.container}>
+        <NavBar navigator={this.props.navigator} sceneProps={this.props.sceneProps} />
         <View style={styles.header}>
           <TextInput
             style={styles.input} autoFocus autoCorrect={false}
@@ -145,10 +149,10 @@ export default class SearchScene extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 64,
     flex: 1,
   },
   header: {
+    marginTop: 64,
     backgroundColor: Globals.colors.tripfingerBlue,
     padding: 10,
   },

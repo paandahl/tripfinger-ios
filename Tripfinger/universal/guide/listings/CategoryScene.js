@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactNative from 'react-native';
 import { SegmentedControls } from 'react-native-radio-buttons';
+import NavBar from '../../NavBar';
 import Globals from '../../shared/Globals';
 import Utils from '../../shared/Utils';
 import ListingsList from './ListingsList';
@@ -12,7 +13,8 @@ export default class CategoryScene extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    navigator: Globals.propTypes.navigator.isRequired,
+    navigator: React.PropTypes.object,
+    sceneProps: React.PropTypes.object,
     categoryDesc: React.PropTypes.object.isRequired,
     region: Globals.propTypes.guideItem.isRequired,
   };
@@ -69,6 +71,7 @@ export default class CategoryScene extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+        <NavBar navigator={this.props.navigator} sceneProps={this.props.sceneProps} />
         {this._renderHeader()}
         <View style={styles.subContainer}>
           {this._renderContent()}
@@ -80,11 +83,11 @@ export default class CategoryScene extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 64,
     alignItems: 'center',
     flex: 1,
   },
   segmented: {
+    marginTop: 64,
     width: 200,
     paddingTop: 20,
     paddingBottom: 20,

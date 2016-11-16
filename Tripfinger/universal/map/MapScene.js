@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
+import NavBar from '../NavBar';
 import MWMMapView from '../shared/native/MWMMapView';
 import FeatureViewPopup from './feature_view/FeatureViewPopup';
 import DownloadPopup from './DownloadPopup';
@@ -9,11 +10,17 @@ import BookmarkService from '../shared/native/BookmarkService';
 import locationManager from '../shared/native/LocationManager';
 import LocalDatabaseService from '../shared/offline/LocalDatabaseService';
 
-const Component = React.Component;
 const StyleSheet = ReactNative.StyleSheet;
 const View = ReactNative.View;
 
-export default class MapScene extends Component {
+export default class MapScene extends React.Component {
+
+  static propTypes = {
+    navigator: React.PropTypes.object,
+    sceneProps: React.PropTypes.object,
+  };
+
+  static title = () => 'Map';
 
   constructor(props) {
     super(props);
@@ -95,8 +102,10 @@ export default class MapScene extends Component {
 
   // noinspection JSMethodCanBeStatic
   render() {
+    const { navigator, sceneProps } = this.props;
     return (
       <View style={styles.container}>
+        <NavBar navigator={navigator} sceneProps={sceneProps} />
         <MWMMapView
           style={styles.map}
           onMapObjectSelected={this._onMapObjectSelected}

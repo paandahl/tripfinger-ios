@@ -69,8 +69,8 @@ export default class ListingsList extends React.Component {
 
   _navigateToSubCategory = (subCatDesc) => {
     this.props.navigator.push({
-      component: CategoryScene,
-      passProps: {
+      scene: CategoryScene,
+      props: {
         region: this.props.region,
         categoryDesc: subCatDesc,
       },
@@ -84,8 +84,8 @@ export default class ListingsList extends React.Component {
       openListing = { ...listing, openingHours };
     }
     this.props.navigator.push({
-      component: ListingScene,
-      passProps: {
+      scene: ListingScene,
+      props: {
         listing: openListing,
       },
     });

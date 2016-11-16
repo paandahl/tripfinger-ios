@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
+import NavBar from '../../NavBar';
 import Globals from '../../shared/Globals';
 import FeatureTable from '../../shared/feature_view/FeatureTable';
 import ListingDetails from '../../shared/feature_view/ListingDetails';
@@ -15,6 +16,8 @@ export default class ListingScene extends React.Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
+    navigator: React.PropTypes.object,
+    sceneProps: React.PropTypes.object,
     listing: Globals.propTypes.guideItem.isRequired,
   };
 
@@ -43,13 +46,14 @@ export default class ListingScene extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView>
-          <Text style={styles.title}>{this.props.listing.name}</Text>
+        <NavBar navigator={this.props.navigator} sceneProps={this.props.sceneProps} />
+        <ScrollView style={styles.scrollView}>
+          {/*<Text style={styles.title}>{this.props.listing.name}</Text>*/}
           <ListingDetails listing={this.props.listing} />
           <FeatureTable listing={this.props.listing} />
         </ScrollView>
         <ActionBar
-          info={this.state.listing}
+          feature={this.state.listing}
           addBookmark={this._addBookmark}
           removeBookmark={this._removeBookmark}
         />
@@ -61,8 +65,13 @@ export default class ListingScene extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollView: {
+    paddingTop: 64,
   },
   title: {
+    paddingTop: 80,
     fontWeight: '500',
     fontSize: 20,
     padding: 20,

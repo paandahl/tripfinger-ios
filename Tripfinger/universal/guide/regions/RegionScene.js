@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactNative from 'react-native';
+import NavBar from '../../NavBar';
 import GuideItemCell from '../shared/GuideItemCell';
 import StandardCell from '../../shared/components/StandardCell';
 import { getRegionWithSlug } from '../../shared/OnlineDatabaseService';
@@ -12,12 +13,14 @@ import DownloadScene from './DownloadScene';
 
 const Component = React.Component;
 const StyleSheet = ReactNative.StyleSheet;
+const View = ReactNative.View;
 
 export default class RegionScene extends Component {
 
   // noinspection JSUnusedGlobalSymbols
   static propTypes = {
-    navigator: Globals.propTypes.navigator,
+    navigator: React.PropTypes.object,
+    sceneProps: React.PropTypes.object,
     region: Globals.propTypes.guideItem,
   };
 
@@ -59,8 +62,8 @@ export default class RegionScene extends Component {
 
   navigateToSection = (section) => {
     this.props.navigator.push({
-      component: SectionScene,
-      passProps: {
+      scene: SectionScene,
+      props: {
         section,
       },
     });
@@ -75,8 +78,8 @@ export default class RegionScene extends Component {
 
   navigateToSubRegion = (subRegion) => {
     this.props.navigator.push({
-      component: RegionScene,
-      passProps: {
+      scene: RegionScene,
+      props: {
         region: subRegion,
       },
     });
@@ -84,8 +87,8 @@ export default class RegionScene extends Component {
 
   navigateToCategory = (catDesc) => {
     this.props.navigator.push({
-      component: CategoryScene,
-      passProps: {
+      scene: CategoryScene,
+      props: {
         categoryDesc: catDesc,
         region: this.props.region,
       },
@@ -94,8 +97,8 @@ export default class RegionScene extends Component {
 
   _onDownloadButtonPress = () => {
     this.props.navigator.push({
-      component: DownloadScene,
-      passProps: {
+      scene: DownloadScene,
+      props: {
         country: this.props.region,
       },
     });
@@ -128,17 +131,24 @@ export default class RegionScene extends Component {
 
   render() {
     return (
-      <ListViewContainer
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRow}
-        style={styles.list}
-      />
+      <View style={styles.container}>
+        <NavBar navigator={this.props.navigator} sceneProps={this.props.sceneProps} />
+        <ListViewContainer
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow}
+          style={styles.list}
+        />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   list: {
+    paddingTop: 64,
     flex: 1,
     alignSelf: 'stretch',
     backgroundColor: '#EBEBF1',
