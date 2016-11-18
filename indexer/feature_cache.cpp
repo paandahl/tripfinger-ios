@@ -1,5 +1,6 @@
 #include "indexer/feature_cache.hpp"
 #include "base/logging.hpp"
+#include <boost/algorithm/string.hpp>
 
 void FeatureCache::SetFeatures(vector<SelfBakedFeatureType> && features) {
   for (auto const & feature : features) {
@@ -11,7 +12,7 @@ vector<SelfBakedFeatureType> FeatureCache::GetFeatures(TripfingerMarkParams cons
   vector<SelfBakedFeatureType> results;
   for (auto& kv : featureMap) {
     SelfBakedFeatureType const & feature = kv.second;
-    if (!feature.hiddenFromMap
+    if (!feature.hiddenFromMap && (params.category == 0 || params.category == feature.m_category)
         && feature.GetCenter().x > params.topLeft.x && feature.GetCenter().x < params.botRight.x
         && feature.GetCenter().y > params.botRight.y && feature.GetCenter().y < params.topLeft.y) {
       results.push_back(feature);
@@ -38,4 +39,20 @@ vector<SelfBakedFeatureType> FeatureCache::Search(string const & query, bool inc
     }
   }
   return results;
+}
+
+void FeatureCache::SetCategories(map<string, int> && categories) {
+  categoryMap = categories;
+  LOG(LINFO, ("Set mapped categories: ", categoryMap.size()));
+}
+
+int FeatureCache::GetCategory(string const & category) {
+  string lowerCaseCategory = category;
+  boost::algorithm::to_lower(lowerCaseCategory);
+  boost::replace_all(lowerCaseCategory, " ", "");
+  if (categoryMap.count(lowerCaseCategory) > 0) {
+    return categoryMap.at(lowerCaseCategory);
+  } else {
+    return 0;
+  }
 }

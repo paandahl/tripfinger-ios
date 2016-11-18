@@ -47,7 +47,7 @@ export default class SearchResultCell extends React.Component {
             <Text style={styles.name}>{this.props.result.string}</Text>
             {this._renderGuideBadge()}
           </View>
-          <Text style={styles.type}>{this.props.result.type}</Text>
+          <Text style={styles.type}>{this.props.result.typeStr}</Text>
           <Text style={styles.address}>{this.props.result.address}</Text>
         </View>
       </TouchableHighlight>

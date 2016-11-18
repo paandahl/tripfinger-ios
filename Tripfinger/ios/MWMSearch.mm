@@ -51,13 +51,22 @@ void emitSearchResults(search::Results const & results) {
   
   for (int i = 0; i < results.GetCount(); i++) {
     search::Result const & result = results.GetResult(i);
-    NSMutableDictionary *resultDict = [@{@"string": @(result.GetString().c_str()),
-                                 @"address": @(result.GetAddress().c_str()),
-                                 @"type": @(result.GetFeatureType().c_str())} mutableCopy];
-    if (result.GetFeatureID().IsTripfinger()) {
-      resultDict[@"tripfingerId"] = @(result.GetFeatureID().m_tripfingerId.c_str());
+    if (!result.IsSuggest()) {
+      ms::LatLon latlon = MercatorBounds::ToLatLon(result.GetFeatureCenter());
+      NSMutableDictionary *resultDict = [@{@"string": @(result.GetString().c_str()),
+                                           @"address": @(result.GetAddress().c_str()),
+                                           @"typeStr": @(result.GetFeatureType().c_str()),
+                                           @"latitude": [NSNumber numberWithDouble:latlon.lat],
+                                           @"longitude": [NSNumber numberWithDouble:latlon.lon],
+                                           @"type": [NSNumber numberWithUnsignedInt:result.m_featureType]} mutableCopy];
+      if (result.GetFeatureID().IsTripfinger()) {
+        resultDict[@"tripfingerId"] = @(result.GetFeatureID().m_tripfingerId.c_str());
+      } else {
+        resultDict[@"featureIndex"] = [NSNumber numberWithUnsignedInt:result.GetFeatureID().m_index];
+        resultDict[@"countryName"] = @(result.GetFeatureID().m_mwmId.GetInfo()->GetCountryName().c_str());
+      }
+      [resultsArr addObject:resultDict];
     }
-    [resultsArr addObject:resultDict];
   }
   NSDictionary *eventData = @{@"results": resultsArr};
   [[NSNotificationCenter defaultCenter] postNotificationName:kSearchResults object:nil userInfo:eventData];

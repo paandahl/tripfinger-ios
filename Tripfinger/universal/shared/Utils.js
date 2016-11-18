@@ -157,6 +157,17 @@ export default class Utils {
     const regionFeatures = LocalDatabaseService.getCustomRegionFeatures();
     customFeatures.push(...regionFeatures);
     MWMMapView.setCustomFeatures(customFeatures);
+    MWMMapView.setCategoryMap({
+      attractions: Globals.categories.attractions,
+      hotels: Globals.categories.accommodation,
+      information: Globals.categories.information,
+      foodanddrinks: Globals.categories.foodOrDrink,
+      transport: Globals.categories.transportation,
+      shopping: Globals.categories.shopping,
+    });
   }
 
+  static nameToSlug(name) {
+    return name.replace(/-/g, '_').replace(/ /g, '-');
+  }
 }

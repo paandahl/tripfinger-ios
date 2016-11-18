@@ -34,7 +34,7 @@ export default class ModalMenu extends React.Component {
     });
   };
 
-  _navigateToSearch = async () => {
+  _navigateToSearch = () => {
     // const dataProps = await SearchScene.fetchData();
     this.props.navigator.push({
       scene: SearchScene,

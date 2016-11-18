@@ -228,6 +228,7 @@ export default class LocalDatabaseService {
         latitude: listing.latitude,
         longitude: listing.longitude,
         name: listing.name,
+        category: listing.category,
         type: LocalDatabaseService.getOsmListingType(listing.subCategory),
         id: listing.uuid,
       });
@@ -247,6 +248,7 @@ export default class LocalDatabaseService {
         latitude: listing.latitude,
         longitude: listing.longitude,
         name: listing.name,
+        category: listing.category,
         type: LocalDatabaseService.getOsmRegionType(listing.category),
         id: listing.uuid,
       });

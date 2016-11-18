@@ -111,7 +111,6 @@ private:
   FeatureID m_id;
   m2::PointD m_center;
   string m_str, m_address, m_type;
-  uint32_t m_featureType;
   string m_suggestionStr;
   buffer_vector<pair<uint16_t, uint16_t>, 4> m_hightlightRanges;
 
@@ -123,6 +122,7 @@ private:
 
 public:
   Metadata m_metadata;
+  uint32_t m_featureType;
 };
 
 class Results

@@ -47,9 +47,9 @@ const Globals = {
 
   categories: {
     country: 130,
-    subRegion: 130,
-    city: 130,
-    neighbourhood: 130,
+    subRegion: 150,
+    city: 160,
+    neighbourhood: 170,
 
     attractions: 210,
     transportation: 230,

@@ -16,7 +16,11 @@ public:
   vector<SelfBakedFeatureType> Search(string const & query, bool includeHidden) const;
   SelfBakedFeatureType GetFeatureById(string const & id) const;
 
+  void SetCategories(map<string, int> &&);
+  int GetCategory(string const & category);
+
 private:
   map<string, const SelfBakedFeatureType> featureMap;
+  map<string, int> categoryMap;
   set<string> coordinateSet;
 };

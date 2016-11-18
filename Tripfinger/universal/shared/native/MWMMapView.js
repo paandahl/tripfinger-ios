@@ -15,12 +15,18 @@ export default class MWMMapView extends React.Component {
     onZoomedOutOfMapRegion: React.PropTypes.func,
     location: React.PropTypes.object,
     heading: React.PropTypes.number,
+    query: React.PropTypes.string,
     style: React.PropTypes.any,
   };
 
   static setCustomFeatures(customFeatures) {
     // noinspection JSUnresolvedFunction
     NativeMapViewManager.setCustomFeatures(customFeatures);
+  }
+
+  static setCategoryMap(categoryMap) {
+    // noinspection JSUnresolvedFunction
+    NativeMapViewManager.setCategoryMap(categoryMap);
   }
 
   static deactivateMapSelection() {
@@ -51,6 +57,11 @@ export default class MWMMapView extends React.Component {
   static zoomOut() {
     // noinspection JSUnresolvedFunction
     NativeMapViewManager.zoomOut();
+  }
+
+  static selectFeature(feature) {
+    // noinspection JSUnresolvedFunction
+    NativeMapViewManager.selectFeature(feature);
   }
 
   // noinspection JSMethodCanBeStatic
@@ -108,6 +119,7 @@ export default class MWMMapView extends React.Component {
         onZoomedOutOfMapRegion={this._onZoomedOutOfMapRegion}
         location={this.props.location}
         heading={this.props.heading}
+        query={this.props.query}
         style={this.props.style}
       />
     );

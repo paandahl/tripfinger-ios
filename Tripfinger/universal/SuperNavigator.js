@@ -48,12 +48,23 @@ export default class NavigatorComponent extends React.Component {
         this.setState({ navigationState });
       }
     },
+    replace: ({ scene, props = {} }) => {
+      NavigatorComponent.idCounter += 1;
+      const title = scene.title ? scene.title(props) : '';
+      const route = { key: String(NavigatorComponent.idCounter), component: scene, title, props };
+      let { navigationState } = this.state;
+      navigationState =
+        NavigationStateUtils.replaceAtIndex(navigationState, navigationState.index, route);
+      if (this.state.navigationState !== navigationState) {
+        this.setState({ navigationState });
+      }
+    },
     jump: (sceneDicts) => {
       let { navigationState } = this.state;
       const routes = [];
       for (const sceneDict of sceneDicts) {
         NavigatorComponent.idCounter += 1;
-        const title = sceneDict.scene.title ? sceneDicts.scene.title(sceneDicts.props) : '';
+        const title = sceneDict.scene.title ? sceneDict.scene.title(sceneDict.props) : '';
         const route = {
           key: String(NavigatorComponent.idCounter),
           component: sceneDict.scene,

@@ -74,6 +74,11 @@
     return [self coordinateChecker:latlon];
   });
   
+  f.SetCategoryCheckerFn([self](string query) {
+    return 0;
+  });
+
+  
   [MWMFrameworkListener addObserver:self];
 }
   
@@ -375,6 +380,10 @@
 }
 
 - (void)setHeading:(double)heading {
+  if (heading == _heading) {
+    return;
+  }
+  _heading = heading;
   auto const info = [MWMMapView compasInfoFromHeading:heading];
   Framework & frm = GetFramework();
   frm.OnCompassUpdate(info);
@@ -385,7 +394,22 @@
   info.m_bearing = my::DegToRad(heading);
   return info;
 }
-  
+
+- (void)setQuery:(NSString*)query {
+  if (query == _query) {
+    return;
+  }
+  _query = query;
+  Framework & frm = GetFramework();
+  frm.CancelInteractiveSearch();
+  if ([query length] > 0) {
+    search::SearchParams searchParams;
+    searchParams.m_query = [query UTF8String];
+    searchParams.SetForceSearch(true);
+    frm.StartInteractiveSearch(searchParams);
+  }
+}
+
 @end
 
 @interface MWMMapViewManager : RCTViewManager
@@ -403,12 +427,21 @@
       m2::PointD mercator = MercatorBounds::FromLatLon([latitude doubleValue], [longitude doubleValue]);
       NSString *name = [featureDict objectForKey:@"name"];
       NSNumber *type = [featureDict objectForKey:@"type"];
+      NSNumber *category = [featureDict objectForKey:@"category"];
       NSString *tripfingerId = [featureDict objectForKey:@"id"];
-      SelfBakedFeatureType feature(mercator, [name UTF8String], [type unsignedIntValue], [tripfingerId UTF8String]);
+      SelfBakedFeatureType feature(mercator, [name UTF8String], [type unsignedIntValue], [tripfingerId UTF8String], [category intValue]);
       features.push_back(feature);
     }
-    NSLog(@"Setting the feature cache with %lu items.", features.size());
     GetFramework().SetFeatureCacheItems(move(features));
+  }
+
+  RCT_EXPORT_METHOD(setCategoryMap:(NSDictionary*)categoryDict) {
+    map<string, int> categoryMap;
+    for (NSString *key in categoryDict) {
+      NSNumber *category = categoryDict[key];
+      categoryMap[[key UTF8String]] = [category intValue];
+    }
+    GetFramework().SetCategoryMap(move(categoryMap));
   }
 
   RCT_EXPORT_METHOD(deactivateMapSelection) {
@@ -437,6 +470,28 @@
     GetFramework().Scale(Framework::SCALE_MIN, true);
   }
 
+  RCT_EXPORT_METHOD(selectFeature:(NSDictionary*)featureDict) {
+    NSString *tripfingerId = featureDict[@"tripfingerId"];
+    search::Result::Metadata metadata;
+    NSNumber *latitude = [featureDict objectForKey:@"latitude"];
+    NSNumber *longitude = [featureDict objectForKey:@"longitude"];
+    NSNumber *type = featureDict[@"type"];
+//    m2::PointD mercator = MercatorBounds::FromLatLon([latitude doubleValue], [longitude doubleValue]);
+    m2::PointD mercator([latitude doubleValue], [longitude doubleValue]);
+    FeatureID fid;
+    if (tripfingerId != nil) {
+      fid = FeatureID([tripfingerId UTF8String]);
+    } else {
+      NSNumber *featureIndex = featureDict[@"featureIndex"];
+      NSString *countryName = featureDict[@"countryName"];
+      MwmSet::MwmId mwmId = GetFramework().GetMwmIdByCountryName([countryName UTF8String]);
+      fid = FeatureID(mwmId, [featureIndex unsignedIntValue]);
+    }
+
+    search::Result searchResult(fid, mercator, "tripfingerClick", "Adreees", "Typeee", [type unsignedIntValue], metadata);
+    GetFramework().ShowSearchResult(searchResult);
+  }
+
   RCT_EXPORT_VIEW_PROPERTY(onMapObjectSelected, RCTBubblingEventBlock)
   RCT_EXPORT_VIEW_PROPERTY(onMapObjectDeselected, RCTBubblingEventBlock)
   RCT_EXPORT_VIEW_PROPERTY(onLocationStateChanged, RCTBubblingEventBlock)
@@ -444,6 +499,7 @@
   RCT_EXPORT_VIEW_PROPERTY(onZoomedOutOfMapRegion, RCTBubblingEventBlock)
   RCT_EXPORT_VIEW_PROPERTY(location, NSDictionary)
   RCT_EXPORT_VIEW_PROPERTY(heading, double)
+  RCT_EXPORT_VIEW_PROPERTY(query, NSString)
 
 - (UIView *)view {
   return [MWMMapView sharedInstance];

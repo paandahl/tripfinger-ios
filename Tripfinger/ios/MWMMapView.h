@@ -5,6 +5,7 @@
 
 @property (nonatomic, copy) NSDictionary* location;
 @property (nonatomic, assign) double heading;
+@property (nonatomic, copy) NSString* query;
 @property (nonatomic, copy) RCTBubblingEventBlock onMapObjectSelected;
 @property (nonatomic, copy) RCTBubblingEventBlock onMapObjectDeselected;
 @property (nonatomic, copy) RCTBubblingEventBlock onLocationStateChanged;

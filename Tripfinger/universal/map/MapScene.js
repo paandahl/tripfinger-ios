@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactNative from 'react-native';
 import NavBar from '../NavBar';
+import ModalMenu from '../shared/components/ModalMenu';
 import MWMMapView from '../shared/native/MWMMapView';
 import FeatureViewPopup from './feature_view/FeatureViewPopup';
 import DownloadPopup from './DownloadPopup';
@@ -9,15 +10,22 @@ import ZoomButtons from './ZoomButtons';
 import BookmarkService from '../shared/native/BookmarkService';
 import locationManager from '../shared/native/LocationManager';
 import LocalDatabaseService from '../shared/offline/LocalDatabaseService';
+import SearchScene from '../search/SearchScene';
+import SearchBar from '../search/SearchBar';
+import Utils from '../shared/Utils';
 
 const StyleSheet = ReactNative.StyleSheet;
 const View = ReactNative.View;
+
+const SEARCH_ICON = require('../../assets/search_icon_nav.png');
 
 export default class MapScene extends React.Component {
 
   static propTypes = {
     navigator: React.PropTypes.object,
     sceneProps: React.PropTypes.object,
+    selected: React.PropTypes.object,
+    query: React.PropTypes.string,
   };
 
   static title = () => 'Map';
@@ -28,6 +36,7 @@ export default class MapScene extends React.Component {
       currentItem: null,
       locationState: 'not_located',
       currentMapRegion: null,
+      query: this.props.query,
     };
   }
 
@@ -35,6 +44,9 @@ export default class MapScene extends React.Component {
     locationManager.addObserver('MapScene', (location, heading) => {
       this.setState({ location, heading });
     });
+    if (this.props.selected) {
+      MWMMapView.selectFeature(this.props.selected);
+    }
   }
 
   componentWillUnmount() {
@@ -43,7 +55,9 @@ export default class MapScene extends React.Component {
 
   _onMapObjectSelected = (info) => {
     if (info.tripfingerId) {
+      console.log('mapobj selected');
       const listing = LocalDatabaseService.getGuideItemWithId(info.tripfingerId);
+      listing.category = Utils.categoryName(listing.category);
       this.setState({ currentItem: listing });
     } else {
       this.setState({ currentItem: info });
@@ -52,7 +66,6 @@ export default class MapScene extends React.Component {
   };
 
   _onMapObjectDeselected = () => {
-    console.log('setting item to null');
     this.setState({ currentItem: null });
     // auto & f = GetFramework();
     // if (switchFullScreenMode && self.controlsManager.searchHidden && !f.IsRouteNavigable())
@@ -100,12 +113,44 @@ export default class MapScene extends React.Component {
     this.setState({ currentItem: newCurrentItem });
   };
 
+  _navigateToSearch = () => {
+    this.setState({ query: null });
+    this.props.navigator.push({
+      scene: SearchScene,
+      props: {
+        initedFromMap: true,
+        setMapQuery: query => this.setState({ query }),
+        query: this.state.query,
+      },
+    });
+  };
+
+  _cancelSearch = () => {
+    this.setState({ query: null });
+  };
+
+  _renderNavBarOrSearchBar() {
+    if (this.state.query) {
+      return(
+        <SearchBar
+          query={this.state.query} onClick={this._navigateToSearch} cancel={this._cancelSearch}
+        />
+    );
+    } else {
+      const actions = [
+        { action: this._navigateToSearch, res: SEARCH_ICON },
+        { action: () => this.modalMenu.toggleSettings(), res: ModalMenu.MENU_ICON },
+      ];
+      const { navigator, sceneProps } = this.props;
+      return <NavBar navigator={navigator} sceneProps={sceneProps} actions={actions} />;
+    }
+  }
+
   // noinspection JSMethodCanBeStatic
   render() {
-    const { navigator, sceneProps } = this.props;
     return (
       <View style={styles.container}>
-        <NavBar navigator={navigator} sceneProps={sceneProps} />
+        {this._renderNavBarOrSearchBar()}
         <MWMMapView
           style={styles.map}
           onMapObjectSelected={this._onMapObjectSelected}
@@ -115,6 +160,7 @@ export default class MapScene extends React.Component {
           onZoomedOutOfMapRegion={this._onZoomedOutOfMapRegion}
           location={this.state.location}
           heading={this.state.heading}
+          query={this.state.query}
         />
         <ZoomButtons
           zoomIn={MWMMapView.zoomIn} zoomOut={MWMMapView.zoomOut} style={styles.zoomButtons}

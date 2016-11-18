@@ -277,6 +277,10 @@ public:
     featureCache.SetFeatures(move(features));
   }
 
+  void SetCategoryMap(map<string, int> && categories) {
+    featureCache.SetCategories(move(categories));
+  }
+
   using TPoiSupplierFn = function<vector<TripfingerMark> (TripfingerMarkParams & params)>;
   void SetPoiSupplierFunction(TPoiSupplierFn const & fn) { m_poiSupplierFn = fn; }
 
@@ -665,7 +669,9 @@ public:
   void Load3dMode(bool & allow3d, bool & allow3dBuildings);
 
 public:
-  /// @name Editor interface.
+  MwmSet::MwmId GetMwmIdByCountryName(string const & name);
+
+    /// @name Editor interface.
   //@{
   /// Initializes feature for Create Object UI.
   /// @returns false in case when coordinate is in the ocean or mwm is not downloaded.

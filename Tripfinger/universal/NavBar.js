@@ -30,14 +30,16 @@ export default class NavBar extends React.Component {
     if (this.props.sceneProps.scene.index === 0) {
       return null;
     }
+    const titleLength = this.props.sceneProps.scene.route.title.length;
     const previousSceneIndex = this.props.sceneProps.scene.index - 1;
-    const title = this.props.sceneProps.scenes[previousSceneIndex].route.title;
+    const previousSceneTitle = this.props.sceneProps.scenes[previousSceneIndex].route.title;
+    const backTitle = titleLength <= 25 ? previousSceneTitle : '';
     const pop = this.props.navigator.pop;
     return (
       <TouchableOpacity style={styles.backButton} onPress={pop}>
         <View style={styles.backButtonContainer}>
           <Image style={styles.backButtonIcon} source={BACK_ICON} />
-          <Text style={styles.backButtonText}>{title}</Text>
+          <Text style={styles.backButtonText}>{backTitle}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
   },
   rightButton: {
     padding: 5,
-    paddingLeft: 10,
+    paddingLeft: 15,
   },
   rightButtonImage: {
     tintColor: '#fff',

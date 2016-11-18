@@ -1075,7 +1075,7 @@ void Framework::UpdateUserViewportChanged()
 {
   if (IsInteractiveSearchActive())
   {
-    int tfCategory = m_categoryCheckerFn(m_lastInteractiveSearchParams.m_query);
+    int tfCategory = featureCache.GetCategory(m_lastInteractiveSearchParams.m_query);
     (void)GetCurrentPosition(m_lastInteractiveSearchParams.m_lat,
         m_lastInteractiveSearchParams.m_lon);
     if (tfCategory != 0) {
@@ -1094,27 +1094,21 @@ void Framework::TripfingerSearch(search::SearchParams const & params, int & tfCa
   m_lastQueryParams = m_lastInteractiveSearchParams;
   m_lastQueryViewport = viewport;
 
-  shared_ptr<TripfingerMarkParams> tfMarkParams = make_shared<TripfingerMarkParams>();
-  ms::LatLon topLeftCoord = MercatorBounds::ToLatLon(viewport.LeftTop());
-  ms::LatLon botRightCoord = MercatorBounds::ToLatLon(viewport.RightBottom());
-  tfMarkParams->topLeft = m2::PointD(topLeftCoord.lat, topLeftCoord.lon);
-  tfMarkParams->botRight = m2::PointD(botRightCoord.lat, botRightCoord.lon);
-  tfMarkParams->category = tfCategory;
-  if (m_lastTfMarkParams != nullptr) {
-    m_lastTfMarkParams->cancelled = true;
+  TripfingerMarkParams tfMarkParams;
+  tfMarkParams.topLeft = viewport.LeftTop();
+  tfMarkParams.botRight = viewport.RightBottom();
+  tfMarkParams.category = tfCategory;
+  vector<SelfBakedFeatureType> features = featureCache.GetFeatures(tfMarkParams);
+  search::Results results;
+  for (const auto& feature : features) {
+    FeatureID fid(feature.GetID().m_tripfingerId);
+    search::Result::Metadata metadata;
+    string name;
+    feature.GetReadableName(name);
+    search::Result result(fid, feature.GetCenter(), name, "Adreees", "Typeee", feature.m_types[0], metadata);
+    results.AddResult(move(result));
   }
-  tfMarkParams->callback = [&] (vector<TripfingerMark> tfMarks) {
-    search::Results results;
-    for (const auto& tfMark : tfMarks) {
-      FeatureID fid(tfMark);
-      search::Result::Metadata metadata;
-      search::Result result(fid, tfMark.mercator, tfMark.name, "Adreees", "Typeee", tfMark.type, metadata);
-      results.AddResult(move(result));
-    }
-    m_lastInteractiveSearchParams.m_onResults(results);
-  };
-  m_lastTfMarkParams = tfMarkParams;
-  m_asyncPoiSupplierFn(tfMarkParams);
+  params.m_onResults(results);
 }
 
 bool Framework::Search(search::SearchParams const & params)
@@ -2606,6 +2600,17 @@ vector<string> FilterNearbyStreets(vector<search::ReverseGeocoder::Street> const
   return results;
 }
 }  // namespace
+
+MwmSet::MwmId Framework::GetMwmIdByCountryName(string const & name) {
+  vector<shared_ptr<MwmInfo>> infos;
+  m_model.GetIndex().GetMwmsInfo(infos);
+  for (shared_ptr<MwmInfo> info : infos) {
+    if (info->GetCountryName() == name) {
+      return MwmSet::MwmId(info);
+    }
+  }
+  return MwmSet::MwmId();
+}
 
 bool Framework::CreateMapObject(m2::PointD const & mercator, uint32_t const featureType,
                                 osm::EditableMapObject & emo) const

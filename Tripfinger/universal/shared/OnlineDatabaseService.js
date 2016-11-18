@@ -73,6 +73,16 @@ export async function getRegionWithSlug(slug) {
   return await fetchJson(url);
 }
 
+export async function getGuideItemWithId(guideItemId) {
+  const offlineItem = LocalDatabaseService.getGuideItemWithId(guideItemId);
+  if (offlineItem) {
+    return offlineItem;
+  }
+
+  const url = `${BASE_URL}/guideItems/${guideItemId}`;
+  return await fetchJson(addPass(addFetchType(url)));
+}
+
 export async function getGuideTextWithId(guideTextId) {
   const offlineGuideText = LocalDatabaseService.getGuideItemWithId(guideTextId);
   if (offlineGuideText) {
