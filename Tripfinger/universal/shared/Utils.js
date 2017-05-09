@@ -21,7 +21,9 @@ class PanResponderWrapperClass {
       onMoveShouldSetPanResponderCapture: () => true,
       onPanResponderGrant: () => {
         // noinspection JSUnresolvedFunction
-        this.panStartY = handlers.getStartValue();
+        if (handlers.getStartValue) {
+          this.panStartY = handlers.getStartValue();
+        }
       },
       onPanResponderMove: (evt, gestureState) => {
         handlers.onPanResponderMove(evt, gestureState, this.panStartY);

@@ -92,7 +92,7 @@ export default class LocalDatabaseService {
     }
   }
 
-  static getCascadingListingsForRegion(region) {
+  static getCascadingListingsForRegion(region, category) {
     let query;
     switch (region.category) {
       case Globals.categories.country:
@@ -110,6 +110,10 @@ export default class LocalDatabaseService {
       default:
         throw new Error(`Cascade not supported for type: ${region.category}`);
     }
+    if (category) {
+      query = `${query} and category = ${category}`;
+    }
+
     const listings = realm.objects(GuideItem.name).filtered(query);
     const list = [];
     for (let i = 0; i < listings.length; i += 1) {

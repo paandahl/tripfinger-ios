@@ -96,7 +96,7 @@ export async function getGuideTextWithId(guideTextId) {
 export async function getCascadingListingsForRegion(regionId, category) {
   const offlineRegion = LocalDatabaseService.getGuideItemWithId(regionId);
   if (offlineRegion) {
-    return LocalDatabaseService.getCascadingListingsForRegion(offlineRegion);
+    return LocalDatabaseService.getCascadingListingsForRegion(offlineRegion, category);
   }
 
   let url = `${BASE_URL}/regions/${regionId}/attractions`;

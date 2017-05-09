@@ -5,6 +5,7 @@ import NavBar from '../../NavBar';
 import Globals from '../../shared/Globals';
 import Utils from '../../shared/Utils';
 import ListingsList from './ListingsList';
+import ListingsSwiper from './ListingsSwiper';
 
 const View = ReactNative.View;
 const StyleSheet = ReactNative.StyleSheet;
@@ -44,8 +45,14 @@ export default class CategoryScene extends React.Component {
           navigator={this.props.navigator}
         />
       );
+    } else {
+      return (
+        <ListingsSwiper
+          navigator={this.props.navigator} region={this.props.region}
+          categoryDesc={this.props.categoryDesc}
+        />
+      );
     }
-    return null;
   };
 
   _renderHeader() {

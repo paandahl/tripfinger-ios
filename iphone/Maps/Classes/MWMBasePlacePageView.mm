@@ -66,18 +66,18 @@ vector<TCellTypesSectionMap> const kCellTypesSectionMap {
 
 MWMPlacePageCellTypeValueMap const kCellType2ReuseIdentifier{
     {MWMPlacePageCellTypeWiFi, "PlacePageInfoCell"},
-    {MWMPlacePageCellTypeCoordinate, "PlacePageInfoCell"},
-    {MWMPlacePageCellTypePostcode, "PlacePageInfoCell"},
-    {MWMPlacePageCellTypeURL, "PlacePageLinkCell"},
-    {MWMPlacePageCellTypeWebsite, "PlacePageLinkCell"},
+//    {MWMPlacePageCellTypeCoordinate, "PlacePageInfoCell"},
+//    {MWMPlacePageCellTypePostcode, "PlacePageInfoCell"},
+//    {MWMPlacePageCellTypeURL, "PlacePageLinkCell"},
+//    {MWMPlacePageCellTypeWebsite, "PlacePageLinkCell"},
     {MWMPlacePageCellTypeEmail, "PlacePageLinkCell"},
-    {MWMPlacePageCellTypePhoneNumber, "PlacePageLinkCell"},
+//    {MWMPlacePageCellTypePhoneNumber, "PlacePageLinkCell"},
     {MWMPlacePageCellTypeOpenHours, "MWMPlacePageOpeningHoursCell"},
-    {MWMPlacePageCellTypeBookmark, "PlacePageBookmarkCell"},
-    {MWMPlacePageCellTypeInfo, "PlacePageTripfingerCell"},
-    {MWMPlacePageCellTypeEditButton, "MWMPlacePageButtonCell"},
-    {MWMPlacePageCellTypeReportButton, "MWMPlacePageButtonCell"},
-    {MWMPlacePageCellTypeBooking, "MWMPlacePageButtonCell"}};
+//    {MWMPlacePageCellTypeBookmark, "PlacePageBookmarkCell"},
+//    {MWMPlacePageCellTypeInfo, "PlacePageTripfingerCell"},
+//    {MWMPlacePageCellTypeEditButton, "MWMPlacePageButtonCell"},
+//    {MWMPlacePageCellTypeReportButton, "MWMPlacePageButtonCell"},
+//    {MWMPlacePageCellTypeBooking, "MWMPlacePageButtonCell"}};
 
 NSString * reuseIdentifier(MWMPlacePageCellType cellType)
 {
